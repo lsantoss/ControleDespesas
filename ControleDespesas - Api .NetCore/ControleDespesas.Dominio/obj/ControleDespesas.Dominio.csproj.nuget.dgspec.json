@@ -1,23 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Santos\\Desktop\\ControleDespesas\\ControleDespesas - Api C#\\ControleDespesas.Dominio\\ControleDespesas.Dominio.csproj": {}
+    "C:\\Users\\l_san\\Documents\\GitHub\\ControleDespesas\\ControleDespesas - Api .NetCore\\ControleDespesas.Dominio\\ControleDespesas.Dominio.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Santos\\Desktop\\ControleDespesas\\ControleDespesas - Api C#\\ControleDespesas.Dominio\\ControleDespesas.Dominio.csproj": {
+    "C:\\Users\\l_san\\Documents\\GitHub\\ControleDespesas\\ControleDespesas - Api .NetCore\\ControleDespesas.Dominio\\ControleDespesas.Dominio.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Santos\\Desktop\\ControleDespesas\\ControleDespesas - Api C#\\ControleDespesas.Dominio\\ControleDespesas.Dominio.csproj",
+        "projectUniqueName": "C:\\Users\\l_san\\Documents\\GitHub\\ControleDespesas\\ControleDespesas - Api .NetCore\\ControleDespesas.Dominio\\ControleDespesas.Dominio.csproj",
         "projectName": "ControleDespesas.Dominio",
-        "projectPath": "C:\\Users\\Santos\\Desktop\\ControleDespesas\\ControleDespesas - Api C#\\ControleDespesas.Dominio\\ControleDespesas.Dominio.csproj",
-        "packagesPath": "C:\\Users\\Santos\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Santos\\Desktop\\ControleDespesas\\ControleDespesas - Api C#\\ControleDespesas.Dominio\\obj\\",
+        "projectPath": "C:\\Users\\l_san\\Documents\\GitHub\\ControleDespesas\\ControleDespesas - Api .NetCore\\ControleDespesas.Dominio\\ControleDespesas.Dominio.csproj",
+        "packagesPath": "C:\\Users\\l_san\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\l_san\\Documents\\GitHub\\ControleDespesas\\ControleDespesas - Api .NetCore\\ControleDespesas.Dominio\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\"
+          "C:\\Microsoft\\Xamarin\\NuGet\\",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Santos\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\l_san\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],

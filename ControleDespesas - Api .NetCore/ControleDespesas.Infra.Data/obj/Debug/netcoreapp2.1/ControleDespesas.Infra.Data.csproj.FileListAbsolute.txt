@@ -10,3 +10,15 @@ C:\Users\Santos\Desktop\ControleDespesas\ControleDespesas - Api C#\ControleDespe
 C:\Users\Santos\Desktop\ControleDespesas\ControleDespesas - Api C#\ControleDespesas.Infra.Data\obj\Debug\netcoreapp2.1\ControleDespesas.Infra.Data.csproj.CopyComplete
 C:\Users\Santos\Desktop\ControleDespesas\ControleDespesas - Api C#\ControleDespesas.Infra.Data\obj\Debug\netcoreapp2.1\ControleDespesas.Infra.Data.dll
 C:\Users\Santos\Desktop\ControleDespesas\ControleDespesas - Api C#\ControleDespesas.Infra.Data\obj\Debug\netcoreapp2.1\ControleDespesas.Infra.Data.pdb
+C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Infra.Data\bin\Debug\netcoreapp2.1\ControleDespesas.Infra.Data.deps.json
+C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Infra.Data\bin\Debug\netcoreapp2.1\ControleDespesas.Infra.Data.dll
+C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Infra.Data\bin\Debug\netcoreapp2.1\ControleDespesas.Infra.Data.pdb
+C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Infra.Data\bin\Debug\netcoreapp2.1\ControleDespesas.Dominio.dll
+C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Infra.Data\bin\Debug\netcoreapp2.1\ControleDespesas.Dominio.pdb
+C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Infra.Data\obj\Debug\netcoreapp2.1\ControleDespesas.Infra.Data.csprojAssemblyReference.cache
+C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Infra.Data\obj\Debug\netcoreapp2.1\ControleDespesas.Infra.Data.AssemblyInfoInputs.cache
+C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Infra.Data\obj\Debug\netcoreapp2.1\ControleDespesas.Infra.Data.AssemblyInfo.cs
+C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Infra.Data\obj\Debug\netcoreapp2.1\ControleDespesas.Infra.Data.csproj.CoreCompileInputs.cache
+C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Infra.Data\obj\Debug\netcoreapp2.1\ControleDespesas.Infra.Data.csproj.CopyComplete
+C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Infra.Data\obj\Debug\netcoreapp2.1\ControleDespesas.Infra.Data.dll
+C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Infra.Data\obj\Debug\netcoreapp2.1\ControleDespesas.Infra.Data.pdb

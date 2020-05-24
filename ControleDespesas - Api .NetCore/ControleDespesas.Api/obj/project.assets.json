@@ -9695,7 +9695,7 @@
       ]
     },
     "System.Diagnostics.Process/4.1.0": {
-      "sha512": "mpVZ5bnlSs3tTeJ6jYyDJEIa6tavhAd88lxq1zbYhkkCu0Pno2+gHXcvZcoygq2d8JxW3gojXqNJMTAshduqZA==",
+      "sha512": "4dlFhzwmI3hl32P+8c9hnytYtV7Xldhsokm5i7Fvv5PmTS68TQCfsuJrREIyF9N1B8zlsSomp7AVrXLe45kKFQ==",
       "type": "package",
       "path": "system.diagnostics.process/4.1.0",
       "files": [
@@ -13947,7 +13947,7 @@
       ]
     },
     "System.Xml.XPath.XmlDocument/4.0.1": {
-      "sha512": "Zm2BdeanuncYs3NhCj4c9e1x3EXFzFBVv2wPEc/Dj4ZbI9R8ecLSR5frAsx4zJCPBtKQreQ7Q/KxJEohJZbfzA==",
+      "sha512": "gQQaCNO5FYxD37SNQvE+yZUNfCt/Y+FgCnead3hu37RsUiwy2cxqRDWPv+Ee+6DlOeV47xaSYYZ6GQW4EhoEXQ==",
       "type": "package",
       "path": "system.xml.xpath.xmldocument/4.0.1",
       "files": [
@@ -14006,23 +14006,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Santos\\.nuget\\packages\\": {},
-    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
+    "C:\\Users\\l_san\\.nuget\\packages\\": {},
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Santos\\Desktop\\ControleDespesas\\ControleDespesas - Api C#\\ControleDespesas.Api\\ControleDespesas.Api.csproj",
+      "projectUniqueName": "C:\\Users\\l_san\\Documents\\GitHub\\ControleDespesas\\ControleDespesas - Api .NetCore\\ControleDespesas.Api\\ControleDespesas.Api.csproj",
       "projectName": "ControleDespesas.Api",
-      "projectPath": "C:\\Users\\Santos\\Desktop\\ControleDespesas\\ControleDespesas - Api C#\\ControleDespesas.Api\\ControleDespesas.Api.csproj",
-      "packagesPath": "C:\\Users\\Santos\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Santos\\Desktop\\ControleDespesas\\ControleDespesas - Api C#\\ControleDespesas.Api\\obj\\",
+      "projectPath": "C:\\Users\\l_san\\Documents\\GitHub\\ControleDespesas\\ControleDespesas - Api .NetCore\\ControleDespesas.Api\\ControleDespesas.Api.csproj",
+      "packagesPath": "C:\\Users\\l_san\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\l_san\\Documents\\GitHub\\ControleDespesas\\ControleDespesas - Api .NetCore\\ControleDespesas.Api\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Microsoft\\Xamarin\\NuGet\\"
+        "C:\\Microsoft\\Xamarin\\NuGet\\",
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Santos\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\l_san\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
@@ -14036,11 +14038,11 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "C:\\Users\\Santos\\Desktop\\ControleDespesas\\ControleDespesas - Api C#\\ControleDespesas.Dominio\\ControleDespesas.Dominio.csproj": {
-              "projectPath": "C:\\Users\\Santos\\Desktop\\ControleDespesas\\ControleDespesas - Api C#\\ControleDespesas.Dominio\\ControleDespesas.Dominio.csproj"
+            "C:\\Users\\l_san\\Documents\\GitHub\\ControleDespesas\\ControleDespesas - Api .NetCore\\ControleDespesas.Dominio\\ControleDespesas.Dominio.csproj": {
+              "projectPath": "C:\\Users\\l_san\\Documents\\GitHub\\ControleDespesas\\ControleDespesas - Api .NetCore\\ControleDespesas.Dominio\\ControleDespesas.Dominio.csproj"
             },
-            "C:\\Users\\Santos\\Desktop\\ControleDespesas\\ControleDespesas - Api C#\\ControleDespesas.Infra.Data\\ControleDespesas.Infra.Data.csproj": {
-              "projectPath": "C:\\Users\\Santos\\Desktop\\ControleDespesas\\ControleDespesas - Api C#\\ControleDespesas.Infra.Data\\ControleDespesas.Infra.Data.csproj"
+            "C:\\Users\\l_san\\Documents\\GitHub\\ControleDespesas\\ControleDespesas - Api .NetCore\\ControleDespesas.Infra.Data\\ControleDespesas.Infra.Data.csproj": {
+              "projectPath": "C:\\Users\\l_san\\Documents\\GitHub\\ControleDespesas\\ControleDespesas - Api .NetCore\\ControleDespesas.Infra.Data\\ControleDespesas.Infra.Data.csproj"
             }
           }
         }

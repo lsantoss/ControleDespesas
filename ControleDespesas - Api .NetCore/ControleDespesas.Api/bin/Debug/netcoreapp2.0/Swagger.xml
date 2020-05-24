@@ -37,7 +37,7 @@
             <response code="401">Unauthorized</response>
             <response code="500">Internal Server Error</response>
         </member>
-        <member name="M:ControleDespesas.Api.Controllers.ControleDespesas.EmpresaController.EmpresaNovo(ControleDespesas.Dominio.Command.Empresa.Input.AdicionarEmpresaCommand)">
+        <member name="M:ControleDespesas.Api.Controllers.ControleDespesas.EmpresaController.EmpresaNovo(ControleDespesas.Dominio.Commands.Empresa.Input.AdicionarEmpresaCommand)">
             <summary>
             Incluir Empresa 
             </summary>                
@@ -48,7 +48,7 @@
             <response code="401">Unauthorized</response>
             <response code="500">Internal Server Error</response>
         </member>
-        <member name="M:ControleDespesas.Api.Controllers.ControleDespesas.EmpresaController.EmpresaAlterar(ControleDespesas.Dominio.Command.Empresa.Input.AtualizarEmpresaCommand)">
+        <member name="M:ControleDespesas.Api.Controllers.ControleDespesas.EmpresaController.EmpresaAlterar(ControleDespesas.Dominio.Commands.Empresa.Input.AtualizarEmpresaCommand)">
             <summary>
             Alterar Empresa
             </summary>        
@@ -59,7 +59,7 @@
             <response code="401">Unauthorized</response>
             <response code="500">Internal Server Error</response>
         </member>
-        <member name="M:ControleDespesas.Api.Controllers.ControleDespesas.EmpresaController.EmpresaExcluir(ControleDespesas.Dominio.Command.Empresa.Input.ApagarEmpresaCommand)">
+        <member name="M:ControleDespesas.Api.Controllers.ControleDespesas.EmpresaController.EmpresaExcluir(ControleDespesas.Dominio.Commands.Empresa.Input.ApagarEmpresaCommand)">
             <summary>
             Excluir Empresa
             </summary>                
@@ -103,7 +103,7 @@
             <response code="401">Unauthorized</response>
             <response code="500">Internal Server Error</response>
         </member>
-        <member name="M:ControleDespesas.Api.Controllers.ControleDespesas.PagamentoController.PagamentoNovo(ControleDespesas.Dominio.Command.Pagamento.Input.AdicionarPagamentoCommand)">
+        <member name="M:ControleDespesas.Api.Controllers.ControleDespesas.PagamentoController.PagamentoNovo(ControleDespesas.Dominio.Commands.Pagamento.Input.AdicionarPagamentoCommand)">
             <summary>
             Incluir Pagamento 
             </summary>                
@@ -114,7 +114,7 @@
             <response code="401">Unauthorized</response>
             <response code="500">Internal Server Error</response>
         </member>
-        <member name="M:ControleDespesas.Api.Controllers.ControleDespesas.PagamentoController.PagamentoAlterar(ControleDespesas.Dominio.Command.Pagamento.Input.AtualizarPagamentoCommand)">
+        <member name="M:ControleDespesas.Api.Controllers.ControleDespesas.PagamentoController.PagamentoAlterar(ControleDespesas.Dominio.Commands.Pagamento.Input.AtualizarPagamentoCommand)">
             <summary>
             Alterar Pagamento
             </summary>        
@@ -125,7 +125,7 @@
             <response code="401">Unauthorized</response>
             <response code="500">Internal Server Error</response>
         </member>
-        <member name="M:ControleDespesas.Api.Controllers.ControleDespesas.PagamentoController.PagamentoExcluir(ControleDespesas.Dominio.Command.Pagamento.Input.ApagarPagamentoCommand)">
+        <member name="M:ControleDespesas.Api.Controllers.ControleDespesas.PagamentoController.PagamentoExcluir(ControleDespesas.Dominio.Commands.Pagamento.Input.ApagarPagamentoCommand)">
             <summary>
             Excluir Pagamento
             </summary>                
@@ -169,7 +169,7 @@
             <response code="401">Unauthorized</response>
             <response code="500">Internal Server Error</response>
         </member>
-        <member name="M:ControleDespesas.Api.Controllers.ControleDespesas.PessoaController.PessoaNovo(ControleDespesas.Dominio.Command.Pessoa.Input.AdicionarPessoaCommand)">
+        <member name="M:ControleDespesas.Api.Controllers.ControleDespesas.PessoaController.PessoaNovo(ControleDespesas.Dominio.Commands.Pessoa.Input.AdicionarPessoaCommand)">
             <summary>
             Incluir Pessoa 
             </summary>                
@@ -180,7 +180,7 @@
             <response code="401">Unauthorized</response>
             <response code="500">Internal Server Error</response>
         </member>
-        <member name="M:ControleDespesas.Api.Controllers.ControleDespesas.PessoaController.PessoaAlterar(ControleDespesas.Dominio.Command.Pessoa.Input.AtualizarPessoaCommand)">
+        <member name="M:ControleDespesas.Api.Controllers.ControleDespesas.PessoaController.PessoaAlterar(ControleDespesas.Dominio.Commands.Pessoa.Input.AtualizarPessoaCommand)">
             <summary>
             Alterar Pessoa
             </summary>        
@@ -191,7 +191,7 @@
             <response code="401">Unauthorized</response>
             <response code="500">Internal Server Error</response>
         </member>
-        <member name="M:ControleDespesas.Api.Controllers.ControleDespesas.PessoaController.PessoaExcluir(ControleDespesas.Dominio.Command.Pessoa.Input.ApagarPessoaCommand)">
+        <member name="M:ControleDespesas.Api.Controllers.ControleDespesas.PessoaController.PessoaExcluir(ControleDespesas.Dominio.Commands.Pessoa.Input.ApagarPessoaCommand)">
             <summary>
             Excluir Pessoa
             </summary>                
@@ -235,7 +235,7 @@
             <response code="401">Unauthorized</response>
             <response code="500">Internal Server Error</response>
         </member>
-        <member name="M:ControleDespesas.Api.Controllers.ControleDespesas.TipoPagamentoController.TipoPagamentoNovo(ControleDespesas.Dominio.Command.TipoPagamento.Input.AdicionarTipoPagamentoCommand)">
+        <member name="M:ControleDespesas.Api.Controllers.ControleDespesas.TipoPagamentoController.TipoPagamentoNovo(ControleDespesas.Dominio.Commands.TipoPagamento.Input.AdicionarTipoPagamentoCommand)">
             <summary>
             Incluir Tipo de Pagamento 
             </summary>                
@@ -246,7 +246,7 @@
             <response code="401">Unauthorized</response>
             <response code="500">Internal Server Error</response>
         </member>
-        <member name="M:ControleDespesas.Api.Controllers.ControleDespesas.TipoPagamentoController.TipoPagamentoAlterar(ControleDespesas.Dominio.Command.TipoPagamento.Input.AtualizarTipoPagamentoCommand)">
+        <member name="M:ControleDespesas.Api.Controllers.ControleDespesas.TipoPagamentoController.TipoPagamentoAlterar(ControleDespesas.Dominio.Commands.TipoPagamento.Input.AtualizarTipoPagamentoCommand)">
             <summary>
             Alterar Tipo de Pagamento
             </summary>        
@@ -257,7 +257,7 @@
             <response code="401">Unauthorized</response>
             <response code="500">Internal Server Error</response>
         </member>
-        <member name="M:ControleDespesas.Api.Controllers.ControleDespesas.TipoPagamentoController.TipoPagamentoExcluir(ControleDespesas.Dominio.Command.TipoPagamento.Input.ApagarTipoPagamentoCommand)">
+        <member name="M:ControleDespesas.Api.Controllers.ControleDespesas.TipoPagamentoController.TipoPagamentoExcluir(ControleDespesas.Dominio.Commands.TipoPagamento.Input.ApagarTipoPagamentoCommand)">
             <summary>
             Excluir Tipo de Pagamento
             </summary>                

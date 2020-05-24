@@ -1,5 +1,5 @@
-﻿using ControleDespesas.Dominio.Command.TipoPagamento.Input;
-using ControleDespesas.Dominio.Command.TipoPagamento.Output;
+﻿using ControleDespesas.Dominio.Commands.TipoPagamento.Input;
+using ControleDespesas.Dominio.Commands.TipoPagamento.Output;
 using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Interfaces;
 using LSCode.Facilitador.Api.InterfacesCommand;

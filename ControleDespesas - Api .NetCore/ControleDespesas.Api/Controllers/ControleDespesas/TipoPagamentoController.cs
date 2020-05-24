@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using ControleDespesas.Api.Controllers.Comum;
-using ControleDespesas.Dominio.Command.TipoPagamento.Input;
-using ControleDespesas.Dominio.Command.TipoPagamento.Output;
+using ControleDespesas.Dominio.Commands.TipoPagamento.Input;
+using ControleDespesas.Dominio.Commands.TipoPagamento.Output;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Interfaces;
 using ControleDespesas.Dominio.Query;

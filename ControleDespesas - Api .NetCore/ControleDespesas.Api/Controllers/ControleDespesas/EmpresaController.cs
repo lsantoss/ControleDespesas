@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using ControleDespesas.Api.Controllers.Comum;
-using ControleDespesas.Dominio.Command.Empresa.Input;
-using ControleDespesas.Dominio.Command.Empresa.Output;
+using ControleDespesas.Dominio.Commands.Empresa.Input;
+using ControleDespesas.Dominio.Commands.Empresa.Output;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Interfaces;
 using ControleDespesas.Dominio.Query;

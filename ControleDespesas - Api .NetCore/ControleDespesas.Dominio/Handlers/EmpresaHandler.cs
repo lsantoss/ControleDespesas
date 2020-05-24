@@ -1,5 +1,5 @@
-﻿using ControleDespesas.Dominio.Command.Empresa.Input;
-using ControleDespesas.Dominio.Command.Empresa.Output;
+﻿using ControleDespesas.Dominio.Commands.Empresa.Input;
+using ControleDespesas.Dominio.Commands.Empresa.Output;
 using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Interfaces;
 using LSCode.Facilitador.Api.InterfacesCommand;

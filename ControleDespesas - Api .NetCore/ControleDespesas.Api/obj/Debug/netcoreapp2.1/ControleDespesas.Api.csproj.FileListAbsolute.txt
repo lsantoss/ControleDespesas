@@ -30,12 +30,6 @@ C:\Users\Santos\Desktop\ControleDespesas\ControleDespesas - Api C#\ControleDespe
 C:\Users\Santos\Desktop\ControleDespesas\ControleDespesas - Api C#\ControleDespesas.Api\obj\Debug\netcoreapp2.1\ControleDespesas.Api.dll
 C:\Users\Santos\Desktop\ControleDespesas\ControleDespesas - Api C#\ControleDespesas.Api\obj\Debug\netcoreapp2.1\ControleDespesas.Api.pdb
 C:\Users\Santos\Desktop\ControleDespesas\ControleDespesas - Api C#\ControleDespesas.Api\obj\Debug\netcoreapp2.1\ControleDespesas.Api.genruntimeconfig.cache
-C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Api\obj\Debug\netcoreapp2.1\ControleDespesas.Api.csprojAssemblyReference.cache
-C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Api\obj\Debug\netcoreapp2.1\ControleDespesas.Api.AssemblyInfoInputs.cache
-C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Api\obj\Debug\netcoreapp2.1\ControleDespesas.Api.AssemblyInfo.cs
-C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Api\obj\Debug\netcoreapp2.1\ControleDespesas.Api.csproj.CoreCompileInputs.cache
-C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Api\obj\Debug\netcoreapp2.1\ControleDespesas.Api.RazorAssemblyInfo.cache
-C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Api\obj\Debug\netcoreapp2.1\ControleDespesas.Api.RazorAssemblyInfo.cs
 C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Api\bin\Debug\netcoreapp2.1\appsettings.Development.json
 C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Api\bin\Debug\netcoreapp2.1\appsettings.json
 C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Api\bin\Debug\netcoreapp2.1\Properties\launchSettings.json
@@ -51,6 +45,12 @@ C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore
 C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Api\bin\Debug\netcoreapp2.1\ControleDespesas.Infra.Data.dll
 C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Api\bin\Debug\netcoreapp2.1\ControleDespesas.Dominio.pdb
 C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Api\bin\Debug\netcoreapp2.1\ControleDespesas.Infra.Data.pdb
+C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Api\obj\Debug\netcoreapp2.1\ControleDespesas.Api.csprojAssemblyReference.cache
+C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Api\obj\Debug\netcoreapp2.1\ControleDespesas.Api.AssemblyInfoInputs.cache
+C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Api\obj\Debug\netcoreapp2.1\ControleDespesas.Api.AssemblyInfo.cs
+C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Api\obj\Debug\netcoreapp2.1\ControleDespesas.Api.csproj.CoreCompileInputs.cache
+C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Api\obj\Debug\netcoreapp2.1\ControleDespesas.Api.RazorAssemblyInfo.cache
+C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Api\obj\Debug\netcoreapp2.1\ControleDespesas.Api.RazorAssemblyInfo.cs
 C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Api\obj\Debug\netcoreapp2.1\ControleDespesas.Api.TagHelpers.input.cache
 C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Api\obj\Debug\netcoreapp2.1\ControleDespesas.Api.TagHelpers.output.cache
 C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Api\obj\Debug\netcoreapp2.1\ControleDespesas.Api.RazorCoreGenerate.cache

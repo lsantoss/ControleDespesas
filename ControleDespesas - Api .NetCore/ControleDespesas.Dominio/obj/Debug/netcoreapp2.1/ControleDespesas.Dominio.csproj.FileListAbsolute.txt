@@ -15,4 +15,3 @@ C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore
 C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Dominio\obj\Debug\netcoreapp2.1\ControleDespesas.Dominio.csproj.CoreCompileInputs.cache
 C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Dominio\obj\Debug\netcoreapp2.1\ControleDespesas.Dominio.dll
 C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Dominio\obj\Debug\netcoreapp2.1\ControleDespesas.Dominio.pdb
-C:\Users\l_san\Documents\GitHub\ControleDespesas\ControleDespesas - Api .NetCore\ControleDespesas.Dominio\obj\Debug\netcoreapp2.1\ControleDespesas.Dominio.csprojAssemblyReference.cache

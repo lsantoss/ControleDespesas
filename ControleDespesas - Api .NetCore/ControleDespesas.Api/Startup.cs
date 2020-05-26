@@ -1,6 +1,7 @@
 ﻿using System;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Interfaces;
+using ControleDespesas.Infra.Data;
 using ControleDespesas.Infra.Data.Repositorio;
 using LSCode.ConexoesBD.DbContext;
 using Microsoft.AspNetCore.Builder;
@@ -24,6 +25,8 @@ namespace ControleDespesas.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().AddControllersAsServices();
+
+            services.Configure<SettingsInfraData>(options => Configuration.GetSection("SettingsInfraData").Bind(options));
 
             services.AddTransient<DbContext, DbContext>();
 

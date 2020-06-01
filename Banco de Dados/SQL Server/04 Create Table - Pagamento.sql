@@ -1,7 +1,6 @@
 USE [ControleDespesas]
 GO
 
-/****** Object:  Table [dbo].[Pagamento]    Script Date: 23/05/2020 22:15:01 ******/
 SET ANSI_NULLS ON
 GO
 

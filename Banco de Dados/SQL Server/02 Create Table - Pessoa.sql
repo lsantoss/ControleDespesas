@@ -1,20 +1,20 @@
 USE [ControleDespesas]
 GO
 
-/****** Object:  Table [dbo].[TipoPagamento]    Script Date: 23/05/2020 22:12:35 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE TABLE [dbo].[TipoPagamento](
+CREATE TABLE [dbo].[Pessoa](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Descricao] [nvarchar](250) NOT NULL,
- CONSTRAINT [PK_TipoPagamento] PRIMARY KEY CLUSTERED 
+	[Nome] [nvarchar](100) NOT NULL,
+	[ImagemPerfil] [text] NOT NULL,
+ CONSTRAINT [PK_Pessoa] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO

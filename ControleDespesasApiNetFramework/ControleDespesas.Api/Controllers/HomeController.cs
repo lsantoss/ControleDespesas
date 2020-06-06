@@ -1,14 +1,25 @@
-﻿using System.Web.Mvc;
+﻿using System.Reflection;
+using System.Web.Http.Description;
+using System.Web.Mvc;
 
 namespace ControleDespesas.Api.Controllers
 {
+    [RequireHttps]
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        [HttpGet]
+        [Route("")]
+        public object Index()
         {
-            ViewBag.Title = "Home Page";
+            return "Versão do Assembly da WebApi ==> " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        }
 
-            return View();
+        [HttpGet]
+        [Route("error")]
+        public object Error()
+        {
+            return "Ocorreu algum erro em sua solicitação!";
         }
     }
 }

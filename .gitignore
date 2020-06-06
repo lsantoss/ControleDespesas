@@ -8,3 +8,13 @@ ControleDespesasApiNetCore/ControleDespesas.Infra.Data/bin/
 ControleDespesasApiNetCore/ControleDespesas.Infra.Data/obj/
 ControleDespesasApiNetCore/ControleDespesas.Testes/bin/
 ControleDespesasApiNetCore/ControleDespesas.Testes/obj/
+
+/ControleDespesasApiNetFramework/.vs/
+/ControleDespesasApiNetFramework/ControleDespesas.Api/bin/
+/ControleDespesasApiNetFramework/ControleDespesas.Api/obj/
+/ControleDespesasApiNetFramework/ControleDespesas.Dominio/bin/
+/ControleDespesasApiNetFramework/ControleDespesas.Dominio/obj/
+/ControleDespesasApiNetFramework/ControleDespesas.Infra.Data/bin/
+/ControleDespesasApiNetFramework/ControleDespesas.Infra.Data/obj/
+/ControleDespesasApiNetFramework/ControleDespesas.Testes/bin/
+/ControleDespesasApiNetFramework/ControleDespesas.Testes/obj/

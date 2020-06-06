@@ -156,12 +156,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Factory\DbFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorio\EmpresaRepositorio.cs" />
     <Compile Include="Repositorio\PagamentoRepositorio.cs" />
     <Compile Include="Repositorio\PessoaRepositorio.cs" />
     <Compile Include="Repositorio\TipoPagamentoRepositorio.cs" />
-    <Compile Include="SettingsInfraData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

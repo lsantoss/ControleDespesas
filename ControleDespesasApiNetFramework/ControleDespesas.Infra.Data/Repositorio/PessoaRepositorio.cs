@@ -3,7 +3,6 @@ using ControleDespesas.Dominio.Interfaces;
 using ControleDespesas.Dominio.Query;
 using Dapper;
 using LSCode.ConexoesBD.DbContext;
-using LSCode.ConexoesBD.Enums;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -18,10 +17,9 @@ namespace ControleDespesas.Infra.Data.Repositorio
         DynamicParameters parametros = new DynamicParameters();
         private readonly DbContext _ctx;
 
-        public PessoaRepositorio()
+        public PessoaRepositorio(DbContext ctx)
         {
-            string connectionString = System.Configuration.ConfigurationSettings.AppSettings["ConnectionString"];
-            _ctx = new DbContext(EBancoDadosRelacional.SQLServer, connectionString);
+            _ctx = ctx;
         }
 
         public string Salvar(Pessoa pessoa)

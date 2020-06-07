@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.2.0.35\lib\net461\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="LSCode.Facilitador.Api, Version=2019.5.10.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\LSCode.Facilitador.Api.1.5.1\lib\netstandard2.0\LSCode.Facilitador.Api.dll</HintPath>
     </Reference>
@@ -74,10 +77,12 @@
     <Compile Include="Commands\TipoPagamento\Output\AdicionarTipoPagamentoCommandResult.cs" />
     <Compile Include="Commands\TipoPagamento\Output\ApagarTipoPagamentoCommandResult.cs" />
     <Compile Include="Commands\TipoPagamento\Output\AtualizarTipoPagamentoCommandResult.cs" />
+    <Compile Include="DataContext\DbContext.cs" />
     <Compile Include="Entidades\Empresa.cs" />
     <Compile Include="Entidades\Pagamento.cs" />
     <Compile Include="Entidades\Pessoa.cs" />
     <Compile Include="Entidades\TipoPagamento.cs" />
+    <Compile Include="Factory\DbFactory.cs" />
     <Compile Include="Handlers\EmpresaHandler.cs" />
     <Compile Include="Handlers\PagamentoHandler.cs" />
     <Compile Include="Handlers\PessoaHandler.cs" />
@@ -91,6 +96,10 @@
     <Compile Include="Query\PagamentoQueryResult.cs" />
     <Compile Include="Query\PessoaQueryResult.cs" />
     <Compile Include="Query\TipoPagamentoQueryResult.cs" />
+    <Compile Include="Repositorio\EmpresaRepositorio.cs" />
+    <Compile Include="Repositorio\PagamentoRepositorio.cs" />
+    <Compile Include="Repositorio\PessoaRepositorio.cs" />
+    <Compile Include="Repositorio\TipoPagamentoRepositorio.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

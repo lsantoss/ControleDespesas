@@ -1,7 +1,7 @@
-﻿using ControleDespesas.Dominio.Entidades;
+﻿using ControleDespesas.Dominio.DataContext;
+using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Interfaces;
 using ControleDespesas.Dominio.Query;
-using ControleDespesas.Infra.Data.DataContext;
 using Dapper;
 using System;
 using System.Collections.Generic;
@@ -9,33 +9,30 @@ using System.Data;
 using System.Linq;
 using System.Text;
 
-namespace ControleDespesas.Infra.Data.Repositorio
+namespace ControleDespesas.Dominio.Repositorio
 {
-    public class PessoaRepositorio : IPessoaRepositorio
+    public class TipoPagamentoRepositorio : ITipoPagamentoRepositorio
     {
         StringBuilder Sql = new StringBuilder();
         DynamicParameters parametros = new DynamicParameters();
         private readonly DbContext _ctx;
 
-        public PessoaRepositorio(DbContext ctx)
+        public TipoPagamentoRepositorio(DbContext ctx)
         {
             _ctx = ctx;
         }
 
-        public string Salvar(Pessoa pessoa)
+        public string Salvar(TipoPagamento tipoPagamento)
         {
             try
             {
-                parametros.Add("Nome", pessoa.Nome.ToString(), DbType.String);
-                parametros.Add("ImagemPerfil", pessoa.ImagemPerfil, DbType.String);
+                parametros.Add("Descricao", tipoPagamento.Descricao.ToString(), DbType.String);
 
                 Sql.Clear();
-                Sql.Append("INSERT INTO Pessoa (");
-                Sql.Append("Nome, ");
-                Sql.Append("ImagemPerfil) ");
+                Sql.Append("INSERT INTO TipoPagamento (");
+                Sql.Append("Descricao) ");
                 Sql.Append("VALUES(");
-                Sql.Append("@Nome, ");
-                Sql.Append("@ImagemPerfil)");
+                Sql.Append("@Descricao)");
 
                 _ctx.SQLServerConexao.Execute(Sql.ToString(), parametros);
 
@@ -47,18 +44,16 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
         }
 
-        public string Atualizar(Pessoa pessoa)
+        public string Atualizar(TipoPagamento tipoPagamento)
         {
             try
             {
-                parametros.Add("Id", pessoa.Id, DbType.Int32);
-                parametros.Add("Nome", pessoa.Nome.ToString(), DbType.String);
-                parametros.Add("ImagemPerfil", pessoa.ImagemPerfil, DbType.String);
+                parametros.Add("Id", tipoPagamento.Id, DbType.Int32);
+                parametros.Add("Descricao", tipoPagamento.Descricao.ToString(), DbType.String);
 
                 Sql.Clear();
-                Sql.Append("UPDATE Pessoa SET ");
-                Sql.Append("Nome = @Nome, ");
-                Sql.Append("ImagemPerfil = @ImagemPerfil ");
+                Sql.Append("UPDATE TipoPagamento SET ");
+                Sql.Append("Descricao = @Descricao ");
                 Sql.Append("WHERE Id = @Id");
 
                 _ctx.SQLServerConexao.Execute(Sql.ToString(), parametros);
@@ -78,7 +73,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
                 parametros.Add("Id", id, DbType.Int32);
 
                 Sql.Clear();
-                Sql.Append("DELETE FROM Pessoa ");
+                Sql.Append("DELETE FROM TipoPagamento ");
                 Sql.Append("WHERE Id = @Id");
 
                 _ctx.SQLServerConexao.Execute(Sql.ToString(), parametros);
@@ -91,37 +86,35 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
         }
 
-        public PessoaQueryResult ObterPessoa(int id)
+        public TipoPagamentoQueryResult ObterTipoPagamento(int id)
         {
             Sql.Clear();
             Sql.Append("SELECT ");
             Sql.Append("Id AS Id,");
-            Sql.Append("Nome AS Nome,");
-            Sql.Append("ImagemPerfil AS ImagemPerfil ");
-            Sql.Append("FROM Pessoa ");
+            Sql.Append("Descricao AS Descricao ");
+            Sql.Append("FROM TipoPagamento ");
             Sql.Append("WHERE Id = @Id ");
 
-            return _ctx.SQLServerConexao.Query<PessoaQueryResult>(Sql.ToString(), new { Id = id }).FirstOrDefault();
+            return _ctx.SQLServerConexao.Query<TipoPagamentoQueryResult>(Sql.ToString(), new { Id = id }).FirstOrDefault();
         }
 
-        public List<PessoaQueryResult> ListarPessoas()
+        public List<TipoPagamentoQueryResult> ListarTipoPagamentos()
         {
             Sql.Clear();
             Sql.Append("SELECT ");
             Sql.Append("Id AS Id,");
-            Sql.Append("Nome AS Nome,");
-            Sql.Append("ImagemPerfil AS ImagemPerfil ");
-            Sql.Append("FROM Pessoa ");
+            Sql.Append("Descricao AS Descricao ");
+            Sql.Append("FROM TipoPagamento ");
             Sql.Append("ORDER BY Id ASC ");
 
-            return _ctx.SQLServerConexao.Query<PessoaQueryResult>(Sql.ToString()).ToList();
+            return _ctx.SQLServerConexao.Query<TipoPagamentoQueryResult>(Sql.ToString()).ToList();
         }
 
         public bool CheckId(int id)
         {
             Sql.Clear();
             Sql.Append("SELECT Id ");
-            Sql.Append("FROM Pessoa ");
+            Sql.Append("FROM TipoPagamento ");
             Sql.Append("where Id = @Id ");
 
             return _ctx.SQLServerConexao.Query<bool>(Sql.ToString(), new { Id = id }).FirstOrDefault();
@@ -131,7 +124,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
         {
             Sql.Clear();
             Sql.Append("SELECT MAX(Id) ");
-            Sql.Append("FROM Pessoa");
+            Sql.Append("FROM TipoPagamento");
 
             return _ctx.SQLServerConexao.Query<int>(Sql.ToString()).FirstOrDefault();
         }

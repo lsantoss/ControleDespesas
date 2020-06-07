@@ -1,7 +1,7 @@
 ﻿using ControleDespesas.Dominio.Commands.Pagamento.Input;
 using ControleDespesas.Dominio.Commands.Pagamento.Output;
 using ControleDespesas.Dominio.Entidades;
-using ControleDespesas.Dominio.Interfaces;
+using ControleDespesas.Dominio.Repositorio;
 using LSCode.Facilitador.Api.InterfacesCommand;
 using LSCode.Validador.ValidacoesNotificacoes;
 using LSCode.Validador.ValueObjects;
@@ -13,9 +13,9 @@ namespace ControleDespesas.Dominio.Handlers
                                                   ICommandHandler<AtualizarPagamentoCommand>,
                                                   ICommandHandler<ApagarPagamentoCommand>
     {
-        private readonly IPagamentoRepositorio _repository;
+        private readonly PagamentoRepositorio _repository;
 
-        public PagamentoHandler(IPagamentoRepositorio repository)
+        public PagamentoHandler(PagamentoRepositorio repository)
         {
             _repository = repository;
         }

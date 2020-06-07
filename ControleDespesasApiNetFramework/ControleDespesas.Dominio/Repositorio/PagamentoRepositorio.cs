@@ -1,7 +1,7 @@
-﻿using ControleDespesas.Dominio.Entidades;
+﻿using ControleDespesas.Dominio.DataContext;
+using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Interfaces;
 using ControleDespesas.Dominio.Query;
-using ControleDespesas.Infra.Data.DataContext;
 using Dapper;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 
-namespace ControleDespesas.Infra.Data.Repositorio
+namespace ControleDespesas.Dominio.Repositorio
 {
     public class PagamentoRepositorio : IPagamentoRepositorio
     {

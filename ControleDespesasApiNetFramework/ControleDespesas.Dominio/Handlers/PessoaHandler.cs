@@ -1,7 +1,7 @@
 ﻿using ControleDespesas.Dominio.Commands.Pessoa.Input;
 using ControleDespesas.Dominio.Commands.Pessoa.Output;
 using ControleDespesas.Dominio.Entidades;
-using ControleDespesas.Dominio.Interfaces;
+using ControleDespesas.Dominio.Repositorio;
 using LSCode.Facilitador.Api.InterfacesCommand;
 using LSCode.Validador.ValidacoesNotificacoes;
 using LSCode.Validador.ValueObjects;
@@ -12,9 +12,9 @@ namespace ControleDespesas.Dominio.Handlers
                                                ICommandHandler<AtualizarPessoaCommand>,
                                                ICommandHandler<ApagarPessoaCommand>
     {
-        private readonly IPessoaRepositorio _repository;
+        private readonly PessoaRepositorio _repository;
 
-        public PessoaHandler(IPessoaRepositorio repository)
+        public PessoaHandler(PessoaRepositorio repository)
         {
             _repository = repository;
         }

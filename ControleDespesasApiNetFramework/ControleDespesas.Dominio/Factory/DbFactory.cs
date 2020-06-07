@@ -1,8 +1,8 @@
-﻿using ControleDespesas.Infra.Data.DataContext;
-using ControleDespesas.Infra.Data.Repositorio;
+﻿using ControleDespesas.Dominio.DataContext;
+using ControleDespesas.Dominio.Repositorio;
 using System;
 
-namespace ControleDespesas.Infra.Data.Factory
+namespace ControleDespesas.Dominio.Factory
 {
     public class DbFactory
     {

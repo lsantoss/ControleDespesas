@@ -2,7 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 
-namespace ControleDespesas.Infra.Data.DataContext
+namespace ControleDespesas.Dominio.DataContext
 {
     public class DbContext : IDisposable
     {

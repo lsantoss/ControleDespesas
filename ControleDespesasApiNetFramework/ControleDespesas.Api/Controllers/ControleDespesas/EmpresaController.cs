@@ -1,8 +1,8 @@
 ﻿using ControleDespesas.Dominio.Commands.Empresa.Input;
 using ControleDespesas.Dominio.Commands.Empresa.Output;
+using ControleDespesas.Dominio.Factory;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Query;
-using ControleDespesas.Infra.Data.Factory;
 using LSCode.Facilitador.Api.InterfacesCommand;
 using System;
 using System.Collections.Generic;
@@ -14,6 +14,13 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
     [RoutePrefix("Empresa")]
     public class EmpresaController : ApiController
     {
+        private readonly EmpresaHandler _handler;
+
+        public EmpresaController()
+        {
+            _handler = new EmpresaHandler(DbFactory.Instance.EmpresaRepositorio);
+        }
+
         /// <summary>
         /// Health Check
         /// </summary>        
@@ -62,52 +69,52 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
             return DbFactory.Instance.EmpresaRepositorio.ObterEmpresa(Id);
         }
 
-        ///// <summary>
-        ///// Incluir Empresa 
-        ///// </summary>                
-        ///// <remarks><h2><b>Inclui nova Empresa na base de dados.</b></h2></remarks>
-        ///// <param name="command">Parâmetro requerido command de Insert</param>
-        ///// <response code="200">OK Request</response>
-        ///// <response code="400">Bad Request</response>
-        ///// <response code="401">Unauthorized</response>
-        ///// <response code="500">Internal Server Error</response>
-        //[HttpPost]
-        //[Route("v1/EmpresaNovo")]
-        //public ICommandResult EmpresaNovo([FromBody] AdicionarEmpresaCommand command)
-        //{
-        //    return (AdicionarEmpresaCommandResult)_handler.Handle(command);
-        //}
+        /// <summary>
+        /// Incluir Empresa 
+        /// </summary>                
+        /// <remarks><h2><b>Inclui nova Empresa na base de dados.</b></h2></remarks>
+        /// <param name="command">Parâmetro requerido command de Insert</param>
+        /// <response code="200">OK Request</response>
+        /// <response code="400">Bad Request</response>
+        /// <response code="401">Unauthorized</response>
+        /// <response code="500">Internal Server Error</response>
+        [HttpPost]
+        [Route("v1/EmpresaNovo")]
+        public ICommandResult EmpresaNovo([FromBody] AdicionarEmpresaCommand command)
+        {
+            return (AdicionarEmpresaCommandResult)_handler.Handle(command);
+        }
 
-        ///// <summary>
-        ///// Alterar Empresa
-        ///// </summary>        
-        ///// <remarks><h2><b>Altera Empresa na base de dados.</b></h2></remarks>        
-        ///// <param name="command">Parâmetro requerido command de Update</param>
-        ///// <response code="200">OK Request</response>
-        ///// <response code="400">Bad Request</response>
-        ///// <response code="401">Unauthorized</response>
-        ///// <response code="500">Internal Server Error</response>
-        //[HttpPut]
-        //[Route("v1/EmpresaAlterar")]
-        //public ICommandResult EmpresaAlterar([FromBody] AtualizarEmpresaCommand command)
-        //{
-        //    return (AtualizarEmpresaCommandResult)_handler.Handle(command);
-        //}
+        /// <summary>
+        /// Alterar Empresa
+        /// </summary>        
+        /// <remarks><h2><b>Altera Empresa na base de dados.</b></h2></remarks>        
+        /// <param name="command">Parâmetro requerido command de Update</param>
+        /// <response code="200">OK Request</response>
+        /// <response code="400">Bad Request</response>
+        /// <response code="401">Unauthorized</response>
+        /// <response code="500">Internal Server Error</response>
+        [HttpPut]
+        [Route("v1/EmpresaAlterar")]
+        public ICommandResult EmpresaAlterar([FromBody] AtualizarEmpresaCommand command)
+        {
+            return (AtualizarEmpresaCommandResult)_handler.Handle(command);
+        }
 
-        ///// <summary>
-        ///// Excluir Empresa
-        ///// </summary>                
-        ///// <remarks><h2><b>Exclui Empresa na base de dados.</b></h2></remarks>
-        ///// <param name="command">Parâmetro requerido command de Delete</param>
-        ///// <response code="200">OK Request</response>
-        ///// <response code="400">Bad Request</response>
-        ///// <response code="401">Unauthorized</response>
-        ///// <response code="500">Internal Server Error</response>
-        //[HttpDelete]
-        //[Route("v1/EmpresaExcluir")]
-        //public ICommandResult EmpresaExcluir([FromBody] ApagarEmpresaCommand command)
-        //{
-        //    return (ApagarEmpresaCommandResult)_handler.Handle(command);
-        //}
+        /// <summary>
+        /// Excluir Empresa
+        /// </summary>                
+        /// <remarks><h2><b>Exclui Empresa na base de dados.</b></h2></remarks>
+        /// <param name="command">Parâmetro requerido command de Delete</param>
+        /// <response code="200">OK Request</response>
+        /// <response code="400">Bad Request</response>
+        /// <response code="401">Unauthorized</response>
+        /// <response code="500">Internal Server Error</response>
+        [HttpDelete]
+        [Route("v1/EmpresaExcluir")]
+        public ICommandResult EmpresaExcluir([FromBody] ApagarEmpresaCommand command)
+        {
+            return (ApagarEmpresaCommandResult)_handler.Handle(command);
+        }
     }
 }

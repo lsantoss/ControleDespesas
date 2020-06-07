@@ -1,8 +1,8 @@
 ﻿using ControleDespesas.Dominio.Commands.TipoPagamento.Input;
 using ControleDespesas.Dominio.Commands.TipoPagamento.Output;
+using ControleDespesas.Dominio.Factory;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Query;
-using ControleDespesas.Infra.Data.Factory;
 using LSCode.Facilitador.Api.InterfacesCommand;
 using System;
 using System.Collections.Generic;
@@ -14,6 +14,13 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
     [RoutePrefix("TipoPagamento")]
     public class TipoPagamentoController : ApiController
     {
+        private readonly TipoPagamentoHandler _handler;
+
+        public TipoPagamentoController()
+        {
+            _handler = new TipoPagamentoHandler(DbFactory.Instance.TipoPagamentoRepositorio);
+        }
+
         /// <summary>
         /// Health Check
         /// </summary>        
@@ -62,55 +69,52 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
             return DbFactory.Instance.TipoPagamentoRepositorio.ObterTipoPagamento(Id);
         }
 
-        ///// <summary>
-        ///// Incluir Tipo de Pagamento 
-        ///// </summary>                
-        ///// <remarks><h2><b>Inclui novo Tipo de Pagamento na base de dados.</b></h2></remarks>
-        ///// <param name="command">Parâmetro requerido command de Insert</param>
-        ///// <response code="200">OK Request</response>
-        ///// <response code="400">Bad Request</response>
-        ///// <response code="401">Unauthorized</response>
-        ///// <response code="500">Internal Server Error</response>
-        //[HttpPost]
-        //[Route("v1/TipoPagamentoNovo")]
-        //public ICommandResult TipoPagamentoNovo([FromBody] AdicionarTipoPagamentoCommand command)
-        //{
-        //    var result = (AdicionarTipoPagamentoCommandResult)_handler.Handle(command);
-        //    return result;
-        //}
+        /// <summary>
+        /// Incluir Tipo de Pagamento 
+        /// </summary>                
+        /// <remarks><h2><b>Inclui novo Tipo de Pagamento na base de dados.</b></h2></remarks>
+        /// <param name="command">Parâmetro requerido command de Insert</param>
+        /// <response code="200">OK Request</response>
+        /// <response code="400">Bad Request</response>
+        /// <response code="401">Unauthorized</response>
+        /// <response code="500">Internal Server Error</response>
+        [HttpPost]
+        [Route("v1/TipoPagamentoNovo")]
+        public ICommandResult TipoPagamentoNovo([FromBody] AdicionarTipoPagamentoCommand command)
+        {
+            return (AdicionarTipoPagamentoCommandResult)_handler.Handle(command);
+        }
 
-        ///// <summary>
-        ///// Alterar Tipo de Pagamento
-        ///// </summary>        
-        ///// <remarks><h2><b>Altera Tipo de Pagamento na base de dados.</b></h2></remarks>        
-        ///// <param name="command">Parâmetro requerido command de Update</param>
-        ///// <response code="200">OK Request</response>
-        ///// <response code="400">Bad Request</response>
-        ///// <response code="401">Unauthorized</response>
-        ///// <response code="500">Internal Server Error</response>
-        //[HttpPut]
-        //[Route("v1/TipoPagamentoAlterar")]
-        //public ICommandResult TipoPagamentoAlterar([FromBody] AtualizarTipoPagamentoCommand command)
-        //{
-        //    var result = (AtualizarTipoPagamentoCommandResult)_handler.Handle(command);
-        //    return result;
-        //}
+        /// <summary>
+        /// Alterar Tipo de Pagamento
+        /// </summary>        
+        /// <remarks><h2><b>Altera Tipo de Pagamento na base de dados.</b></h2></remarks>        
+        /// <param name="command">Parâmetro requerido command de Update</param>
+        /// <response code="200">OK Request</response>
+        /// <response code="400">Bad Request</response>
+        /// <response code="401">Unauthorized</response>
+        /// <response code="500">Internal Server Error</response>
+        [HttpPut]
+        [Route("v1/TipoPagamentoAlterar")]
+        public ICommandResult TipoPagamentoAlterar([FromBody] AtualizarTipoPagamentoCommand command)
+        {
+            return (AtualizarTipoPagamentoCommandResult)_handler.Handle(command);
+        }
 
-        ///// <summary>
-        ///// Excluir Tipo de Pagamento
-        ///// </summary>                
-        ///// <remarks><h2><b>Exclui Tipo de Pagamento na base de dados.</b></h2></remarks>
-        ///// <param name="command">Parâmetro requerido command de Delete</param>
-        ///// <response code="200">OK Request</response>
-        ///// <response code="400">Bad Request</response>
-        ///// <response code="401">Unauthorized</response>
-        ///// <response code="500">Internal Server Error</response>
-        //[HttpDelete]
-        //[Route("v1/TipoPagamentoExcluir")]
-        //public ICommandResult TipoPagamentoExcluir([FromBody] ApagarTipoPagamentoCommand command)
-        //{
-        //    var result = (ApagarTipoPagamentoCommandResult)_handler.Handle(command);
-        //    return result;
-        //}
+        /// <summary>
+        /// Excluir Tipo de Pagamento
+        /// </summary>                
+        /// <remarks><h2><b>Exclui Tipo de Pagamento na base de dados.</b></h2></remarks>
+        /// <param name="command">Parâmetro requerido command de Delete</param>
+        /// <response code="200">OK Request</response>
+        /// <response code="400">Bad Request</response>
+        /// <response code="401">Unauthorized</response>
+        /// <response code="500">Internal Server Error</response>
+        [HttpDelete]
+        [Route("v1/TipoPagamentoExcluir")]
+        public ICommandResult TipoPagamentoExcluir([FromBody] ApagarTipoPagamentoCommand command)
+        {
+            return (ApagarTipoPagamentoCommandResult)_handler.Handle(command);
+        }
     }
 }

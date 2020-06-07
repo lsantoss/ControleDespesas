@@ -86,8 +86,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [Route("v1/TipoPagamentoNovo")]
         public ICommandResult TipoPagamentoNovo([FromBody] AdicionarTipoPagamentoCommand command)
         {
-            var result = (AdicionarTipoPagamentoCommandResult)_handler.Handle(command);
-            return result;
+            return (AdicionarTipoPagamentoCommandResult)_handler.Handle(command);
         }
 
         /// <summary>
@@ -103,8 +102,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [Route("v1/TipoPagamentoAlterar")]
         public ICommandResult TipoPagamentoAlterar([FromBody] AtualizarTipoPagamentoCommand command)
         {
-            var result = (AtualizarTipoPagamentoCommandResult)_handler.Handle(command);
-            return result;
+            return (AtualizarTipoPagamentoCommandResult)_handler.Handle(command);
         }
 
         /// <summary>
@@ -120,8 +118,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [Route("v1/TipoPagamentoExcluir")]
         public ICommandResult TipoPagamentoExcluir([FromBody] ApagarTipoPagamentoCommand command)
         {
-            var result = (ApagarTipoPagamentoCommandResult)_handler.Handle(command);
-            return result;
+            return (ApagarTipoPagamentoCommandResult)_handler.Handle(command);
         }
     }
 }

@@ -2,7 +2,7 @@
 using System.Web.Http.Description;
 using System.Web.Mvc;
 
-namespace ControleDespesas.Api.Controllers
+namespace ControleDespesas.Api.Controllers.Comum
 {
     [RequireHttps]
     [ApiExplorerSettings(IgnoreApi = true)]

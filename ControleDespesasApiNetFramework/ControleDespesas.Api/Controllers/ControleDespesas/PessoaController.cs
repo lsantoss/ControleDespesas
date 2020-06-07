@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Web.Http;
 
-namespace ControleDespesas.Api.Controllers
+namespace ControleDespesas.Api.Controllers.ControleDespesas
 {
     //[RequireHttps]
     [RoutePrefix("Pessoa")]

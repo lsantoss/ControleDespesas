@@ -47,7 +47,7 @@ namespace ControleDespesas.Dominio.Factory
             try
             {
                 //string connectionString = System.Configuration.ConfigurationSettings.AppSettings["ConnectionString"];
-                string connectionString = "Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ControleDespesas;Data Source=SANTOS-NOTE\\SQLEXPRESS;";
+                string connectionString = "Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ControleDespesas;Data Source=SANTOS-PC\\SQLEXPRESS;";
                 _ctx = new DbContext(connectionString);
             }
             catch (Exception ex)

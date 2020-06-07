@@ -171,7 +171,10 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\Comum\HomeController.cs" />
+    <Compile Include="Controllers\ControleDespesas\EmpresaController.cs" />
+    <Compile Include="Controllers\ControleDespesas\PagamentoController.cs" />
     <Compile Include="Controllers\ControleDespesas\PessoaController.cs" />
+    <Compile Include="Controllers\ControleDespesas\TipoPagamentoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -264,6 +267,10 @@
     <ProjectReference Include="..\ControleDespesas.Dominio\ControleDespesas.Dominio.csproj">
       <Project>{AD5B33A8-A5FD-4738-8BCA-CF3C87456188}</Project>
       <Name>ControleDespesas.Dominio</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ControleDespesas.Infra.Data\ControleDespesas.Infra.Data.csproj">
+      <Project>{9404b53e-11c7-4e5a-a65e-42302a6dc51c}</Project>
+      <Name>ControleDespesas.Infra.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

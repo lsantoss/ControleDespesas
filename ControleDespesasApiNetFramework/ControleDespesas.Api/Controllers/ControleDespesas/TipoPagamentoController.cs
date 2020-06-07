@@ -1,5 +1,5 @@
-﻿using ControleDespesas.Dominio.Commands.Pessoa.Input;
-using ControleDespesas.Dominio.Commands.Pessoa.Output;
+﻿using ControleDespesas.Dominio.Commands.TipoPagamento.Input;
+using ControleDespesas.Dominio.Commands.TipoPagamento.Output;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Query;
 using ControleDespesas.Infra.Data.Factory;
@@ -11,8 +11,8 @@ using System.Web.Http;
 namespace ControleDespesas.Api.Controllers.ControleDespesas
 {
     //[RequireHttps]
-    [RoutePrefix("Pessoa")]
-    public class PessoaController : ApiController
+    [RoutePrefix("TipoPagamento")]
+    public class TipoPagamentoController : ApiController
     {
         /// <summary>
         /// Health Check
@@ -24,90 +24,93 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [Route("v1/HealthCheck")]
-        public String PessoaHealthCheck()
+        public String TipoPagamentoHealthCheck()
         {
             return "DISPONÍVEL!";
         }
 
         /// <summary>
-        /// Pessoas
+        /// Tipos de Pagamentos
         /// </summary>                
-        /// <remarks><h2><b>Lista todas as Pessoas.</b></h2></remarks>
+        /// <remarks><h2><b>Lista todos os Tipos de Pagamentos.</b></h2></remarks>
         /// <response code="200">OK Request</response>
         /// <response code="204">Not Content</response>
         /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
-        [Route("v1/Pessoas")]
-        public IEnumerable<PessoaQueryResult> Pessoas()
+        [Route("v1/TipoPagamentos")]
+        public IEnumerable<TipoPagamentoQueryResult> TipoPagamentos()
         {
-            return DbFactory.Instance.PessoaRepositorio.ListarPessoas();
+            return DbFactory.Instance.TipoPagamentoRepositorio.ListarTipoPagamentos();
         }
 
         /// <summary>
-        /// Pessoa
+        /// Tipo de Pagamento
         /// </summary>                
-        /// <remarks><h2><b>Consulta a Pessoa.</b></h2></remarks>
-        /// <param name="Id">Parâmetro requerido Id da Pessoa</param>
+        /// <remarks><h2><b>Consulta o Tipo de Pagamento.</b></h2></remarks>
+        /// <param name="Id">Parâmetro requerido Id do Tipo de Pagamento</param>
         /// <response code="200">OK Request</response>
         /// <response code="204">Not Content</response>
         /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
-        [Route("v1/Pessoa/{Id:int}")]
-        public PessoaQueryResult Pessoa(int Id)
+        [Route("v1/TipoPagamento/{Id:int}")]
+        public TipoPagamentoQueryResult TipoPagamento(int Id)
         {
-            return DbFactory.Instance.PessoaRepositorio.ObterPessoa(Id);
+            return DbFactory.Instance.TipoPagamentoRepositorio.ObterTipoPagamento(Id);
         }
 
         ///// <summary>
-        ///// Incluir Pessoa 
+        ///// Incluir Tipo de Pagamento 
         ///// </summary>                
-        ///// <remarks><h2><b>Inclui nova Pessoa na base de dados.</b></h2></remarks>
+        ///// <remarks><h2><b>Inclui novo Tipo de Pagamento na base de dados.</b></h2></remarks>
         ///// <param name="command">Parâmetro requerido command de Insert</param>
         ///// <response code="200">OK Request</response>
         ///// <response code="400">Bad Request</response>
         ///// <response code="401">Unauthorized</response>
         ///// <response code="500">Internal Server Error</response>
         //[HttpPost]
-        //[Route("v1/PessoaNovo")]
-        //public ICommandResult PessoaNovo([FromBody] AdicionarPessoaCommand command)
+        //[Route("v1/TipoPagamentoNovo")]
+        //public ICommandResult TipoPagamentoNovo([FromBody] AdicionarTipoPagamentoCommand command)
         //{
-        //    return (AdicionarPessoaCommandResult)_handler.Handle(command);
+        //    var result = (AdicionarTipoPagamentoCommandResult)_handler.Handle(command);
+        //    return result;
         //}
 
         ///// <summary>
-        ///// Alterar Pessoa
+        ///// Alterar Tipo de Pagamento
         ///// </summary>        
-        ///// <remarks><h2><b>Altera Pessoa na base de dados.</b></h2></remarks>        
+        ///// <remarks><h2><b>Altera Tipo de Pagamento na base de dados.</b></h2></remarks>        
         ///// <param name="command">Parâmetro requerido command de Update</param>
         ///// <response code="200">OK Request</response>
         ///// <response code="400">Bad Request</response>
         ///// <response code="401">Unauthorized</response>
         ///// <response code="500">Internal Server Error</response>
         //[HttpPut]
-        //[Route("v1/PessoaAlterar")]
-        //public ICommandResult PessoaAlterar([FromBody] AtualizarPessoaCommand command)
+        //[Route("v1/TipoPagamentoAlterar")]
+        //public ICommandResult TipoPagamentoAlterar([FromBody] AtualizarTipoPagamentoCommand command)
         //{
-        //    return (AtualizarPessoaCommandResult)_handler.Handle(command);
+        //    var result = (AtualizarTipoPagamentoCommandResult)_handler.Handle(command);
+        //    return result;
         //}
 
         ///// <summary>
-        ///// Excluir Pessoa
+        ///// Excluir Tipo de Pagamento
         ///// </summary>                
-        ///// <remarks><h2><b>Exclui Pessoa na base de dados.</b></h2></remarks>
+        ///// <remarks><h2><b>Exclui Tipo de Pagamento na base de dados.</b></h2></remarks>
         ///// <param name="command">Parâmetro requerido command de Delete</param>
         ///// <response code="200">OK Request</response>
         ///// <response code="400">Bad Request</response>
         ///// <response code="401">Unauthorized</response>
         ///// <response code="500">Internal Server Error</response>
         //[HttpDelete]
-        //[Route("v1/PessoaExcluir")]
-        //public ICommandResult PessoaExcluir([FromBody] ApagarPessoaCommand command)
+        //[Route("v1/TipoPagamentoExcluir")]
+        //public ICommandResult TipoPagamentoExcluir([FromBody] ApagarTipoPagamentoCommand command)
         //{
-        //    return (ApagarPessoaCommandResult)_handler.Handle(command);
+        //    var result = (ApagarTipoPagamentoCommandResult)_handler.Handle(command);
+        //    return result;
         //}
     }
 }

@@ -1,5 +1,5 @@
-﻿using ControleDespesas.Dominio.Commands.Pessoa.Input;
-using ControleDespesas.Dominio.Commands.Pessoa.Output;
+﻿using ControleDespesas.Dominio.Commands.Empresa.Input;
+using ControleDespesas.Dominio.Commands.Empresa.Output;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Query;
 using ControleDespesas.Infra.Data.Factory;
@@ -11,8 +11,8 @@ using System.Web.Http;
 namespace ControleDespesas.Api.Controllers.ControleDespesas
 {
     //[RequireHttps]
-    [RoutePrefix("Pessoa")]
-    public class PessoaController : ApiController
+    [RoutePrefix("Empresa")]
+    public class EmpresaController : ApiController
     {
         /// <summary>
         /// Health Check
@@ -24,90 +24,90 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [Route("v1/HealthCheck")]
-        public String PessoaHealthCheck()
+        public String EmpresaHealthCheck()
         {
             return "DISPONÍVEL!";
         }
 
         /// <summary>
-        /// Pessoas
+        /// Empresas
         /// </summary>                
-        /// <remarks><h2><b>Lista todas as Pessoas.</b></h2></remarks>
+        /// <remarks><h2><b>Lista todas as Empresas.</b></h2></remarks>
         /// <response code="200">OK Request</response>
         /// <response code="204">Not Content</response>
         /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
-        [Route("v1/Pessoas")]
-        public IEnumerable<PessoaQueryResult> Pessoas()
+        [Route("v1/Empresas")]
+        public IEnumerable<EmpresaQueryResult> Empresas()
         {
-            return DbFactory.Instance.PessoaRepositorio.ListarPessoas();
+            return DbFactory.Instance.EmpresaRepositorio.ListarEmpresas();
         }
 
         /// <summary>
-        /// Pessoa
+        /// Empresa
         /// </summary>                
-        /// <remarks><h2><b>Consulta a Pessoa.</b></h2></remarks>
-        /// <param name="Id">Parâmetro requerido Id da Pessoa</param>
+        /// <remarks><h2><b>Consulta a Empresa.</b></h2></remarks>
+        /// <param name="Id">Parâmetro requerido Id da Empresa</param>
         /// <response code="200">OK Request</response>
         /// <response code="204">Not Content</response>
         /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
-        [Route("v1/Pessoa/{Id:int}")]
-        public PessoaQueryResult Pessoa(int Id)
+        [Route("v1/Empresa/{Id:int}")]
+        public EmpresaQueryResult Empresa(int Id)
         {
-            return DbFactory.Instance.PessoaRepositorio.ObterPessoa(Id);
+            return DbFactory.Instance.EmpresaRepositorio.ObterEmpresa(Id);
         }
 
         ///// <summary>
-        ///// Incluir Pessoa 
+        ///// Incluir Empresa 
         ///// </summary>                
-        ///// <remarks><h2><b>Inclui nova Pessoa na base de dados.</b></h2></remarks>
+        ///// <remarks><h2><b>Inclui nova Empresa na base de dados.</b></h2></remarks>
         ///// <param name="command">Parâmetro requerido command de Insert</param>
         ///// <response code="200">OK Request</response>
         ///// <response code="400">Bad Request</response>
         ///// <response code="401">Unauthorized</response>
         ///// <response code="500">Internal Server Error</response>
         //[HttpPost]
-        //[Route("v1/PessoaNovo")]
-        //public ICommandResult PessoaNovo([FromBody] AdicionarPessoaCommand command)
+        //[Route("v1/EmpresaNovo")]
+        //public ICommandResult EmpresaNovo([FromBody] AdicionarEmpresaCommand command)
         //{
-        //    return (AdicionarPessoaCommandResult)_handler.Handle(command);
+        //    return (AdicionarEmpresaCommandResult)_handler.Handle(command);
         //}
 
         ///// <summary>
-        ///// Alterar Pessoa
+        ///// Alterar Empresa
         ///// </summary>        
-        ///// <remarks><h2><b>Altera Pessoa na base de dados.</b></h2></remarks>        
+        ///// <remarks><h2><b>Altera Empresa na base de dados.</b></h2></remarks>        
         ///// <param name="command">Parâmetro requerido command de Update</param>
         ///// <response code="200">OK Request</response>
         ///// <response code="400">Bad Request</response>
         ///// <response code="401">Unauthorized</response>
         ///// <response code="500">Internal Server Error</response>
         //[HttpPut]
-        //[Route("v1/PessoaAlterar")]
-        //public ICommandResult PessoaAlterar([FromBody] AtualizarPessoaCommand command)
+        //[Route("v1/EmpresaAlterar")]
+        //public ICommandResult EmpresaAlterar([FromBody] AtualizarEmpresaCommand command)
         //{
-        //    return (AtualizarPessoaCommandResult)_handler.Handle(command);
+        //    return (AtualizarEmpresaCommandResult)_handler.Handle(command);
         //}
 
         ///// <summary>
-        ///// Excluir Pessoa
+        ///// Excluir Empresa
         ///// </summary>                
-        ///// <remarks><h2><b>Exclui Pessoa na base de dados.</b></h2></remarks>
+        ///// <remarks><h2><b>Exclui Empresa na base de dados.</b></h2></remarks>
         ///// <param name="command">Parâmetro requerido command de Delete</param>
         ///// <response code="200">OK Request</response>
         ///// <response code="400">Bad Request</response>
         ///// <response code="401">Unauthorized</response>
         ///// <response code="500">Internal Server Error</response>
         //[HttpDelete]
-        //[Route("v1/PessoaExcluir")]
-        //public ICommandResult PessoaExcluir([FromBody] ApagarPessoaCommand command)
+        //[Route("v1/EmpresaExcluir")]
+        //public ICommandResult EmpresaExcluir([FromBody] ApagarEmpresaCommand command)
         //{
-        //    return (ApagarPessoaCommandResult)_handler.Handle(command);
+        //    return (ApagarEmpresaCommandResult)_handler.Handle(command);
         //}
     }
 }

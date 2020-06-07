@@ -1,8 +1,8 @@
 ﻿using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Interfaces;
 using ControleDespesas.Dominio.Query;
+using ControleDespesas.Infra.Data.DataContext;
 using Dapper;
-using LSCode.ConexoesBD.DbContext;
 using System;
 using System.Collections.Generic;
 using System.Data;

@@ -1,8 +1,6 @@
-﻿using ControleDespesas.Infra.Data.Repositorio;
-using LSCode.ConexoesBD.DbContext;
-using LSCode.ConexoesBD.Enums;
+﻿using ControleDespesas.Infra.Data.DataContext;
+using ControleDespesas.Infra.Data.Repositorio;
 using System;
-using System.Data;
 
 namespace ControleDespesas.Infra.Data.Factory
 {
@@ -12,14 +10,20 @@ namespace ControleDespesas.Infra.Data.Factory
         private DbContext _ctx;
 
         public PessoaRepositorio PessoaRepositorio { get; set; }
+        public EmpresaRepositorio EmpresaRepositorio { get; set; }
+        public TipoPagamentoRepositorio TipoPagamentoRepositorio { get; set; }
+        public PagamentoRepositorio PagamentoRepositorio { get; set; }
 
         private DbFactory()
         {
             try
             {
-                Conectar();
+                InstanciarDbContext();
 
                 PessoaRepositorio = new PessoaRepositorio(_ctx);
+                EmpresaRepositorio = new EmpresaRepositorio(_ctx);
+                TipoPagamentoRepositorio = new TipoPagamentoRepositorio(_ctx);
+                PagamentoRepositorio = new PagamentoRepositorio(_ctx);
             }
             catch (Exception ex)
             {
@@ -38,22 +42,17 @@ namespace ControleDespesas.Infra.Data.Factory
             }
         }
 
-        private void Conectar()
+        private void InstanciarDbContext()
         {
             try
             {
                 //string connectionString = System.Configuration.ConfigurationSettings.AppSettings["ConnectionString"];
-                string connectionString = "Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ControleDespesas;Data Source=SANTOS-PC\\SQLEXPRESS;";
-                _ctx = new DbContext(EBancoDadosRelacional.SQLServer, connectionString);
+                string connectionString = "Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ControleDespesas;Data Source=SANTOS-NOTE\\SQLEXPRESS;";
+                _ctx = new DbContext(connectionString);
             }
             catch (Exception ex)
             {
                 throw new Exception("Não foi possível conectar ao banco de dados. " + ex.Message);
-            }
-            finally
-            {
-                if (_ctx.SQLServerConexao.State != ConnectionState.Closed)
-                    _ctx.SQLServerConexao.Close();
             }
         }
     }

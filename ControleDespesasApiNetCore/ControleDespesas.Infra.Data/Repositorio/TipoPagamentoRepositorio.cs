@@ -1,6 +1,6 @@
 ﻿using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Interfaces;
-using ControleDespesas.Dominio.Query;
+using ControleDespesas.Dominio.Query.TipoPagamento;
 using Dapper;
 using LSCode.ConexoesBD.DbContext;
 using LSCode.ConexoesBD.Enums;

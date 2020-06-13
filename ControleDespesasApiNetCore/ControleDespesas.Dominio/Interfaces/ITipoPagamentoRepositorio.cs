@@ -1,5 +1,5 @@
 ﻿using ControleDespesas.Dominio.Entidades;
-using ControleDespesas.Dominio.Query;
+using ControleDespesas.Dominio.Query.TipoPagamento;
 using System.Collections.Generic;
 
 namespace ControleDespesas.Dominio.Interfaces

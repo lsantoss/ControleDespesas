@@ -5,7 +5,7 @@ using ControleDespesas.Dominio.Commands.TipoPagamento.Input;
 using ControleDespesas.Dominio.Commands.TipoPagamento.Output;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Interfaces;
-using ControleDespesas.Dominio.Query;
+using ControleDespesas.Dominio.Query.TipoPagamento;
 using LSCode.Facilitador.Api.InterfacesCommand;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,6 +1,6 @@
 ﻿using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Interfaces;
-using ControleDespesas.Dominio.Query;
+using ControleDespesas.Dominio.Query.Empresa;
 using Dapper;
 using LSCode.ConexoesBD.DbContext;
 using LSCode.ConexoesBD.Enums;

@@ -5,7 +5,7 @@ using ControleDespesas.Dominio.Commands.Pessoa.Input;
 using ControleDespesas.Dominio.Commands.Pessoa.Output;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Interfaces;
-using ControleDespesas.Dominio.Query;
+using ControleDespesas.Dominio.Query.Pessoa;
 using LSCode.Facilitador.Api.InterfacesCommand;
 using Microsoft.AspNetCore.Mvc;
 

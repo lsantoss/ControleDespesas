@@ -1,6 +1,9 @@
-﻿using System;
+﻿using ControleDespesas.Dominio.Query.Empresa;
+using ControleDespesas.Dominio.Query.Pessoa;
+using ControleDespesas.Dominio.Query.TipoPagamento;
+using System;
 
-namespace ControleDespesas.Dominio.Query
+namespace ControleDespesas.Dominio.Query.Pagamento
 {
     public class PagamentoQueryResult
     {

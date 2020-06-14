@@ -14,33 +14,42 @@ namespace ControleDespesas.Api
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().AddControllersAsServices();
 
+            #region AppSettings
             services.Configure<SettingsInfraData>(options => Configuration.GetSection("SettingsInfraData").Bind(options));
+            #endregion
 
+            #region DataContext
             services.AddTransient<DbContext, DbContext>();
+            #endregion
 
+            #region Repositorios
             services.AddTransient<IPessoaRepositorio, PessoaRepositorio>();
             services.AddTransient<IEmpresaRepositorio, EmpresaRepositorio>();
             services.AddTransient<ITipoPagamentoRepositorio, TipoPagamentoRepositorio>();
             services.AddTransient<IPagamentoRepositorio, PagamentoRepositorio>();
+            services.AddTransient<IUsuarioRepositorio, UsuarioRepositorio>();
+            #endregion
 
+            #region Handler
             services.AddTransient<PessoaHandler, PessoaHandler>();
             services.AddTransient<EmpresaHandler, EmpresaHandler>();
             services.AddTransient<TipoPagamentoHandler, TipoPagamentoHandler>();
             services.AddTransient<PagamentoHandler, PagamentoHandler>();
+            services.AddTransient<UsuarioHandler, UsuarioHandler>();
+            #endregion
 
-            //Configurando o serviço de documentação do Swagger
+            #region Swagger
             services.AddSwaggerGen(c =>
             {
                 c.IncludeXmlComments(GetXmlCommentsPath());
@@ -52,9 +61,9 @@ namespace ControleDespesas.Api
                         Description = "WebApi do Projeto Controle de Despesas",
                     });
             });
+            #endregion
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -70,7 +79,6 @@ namespace ControleDespesas.Api
 
             app.UseStaticFiles();
 
-            // Ativando middlewares para uso do Swagger
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
@@ -80,7 +88,6 @@ namespace ControleDespesas.Api
             app.UseMvc();
         }
 
-        // Documentação XML para Swagger e Redoc
         protected static string GetXmlCommentsPath()
         {
             return String.Format(@"{0}\Swagger.xml", AppDomain.CurrentDomain.BaseDirectory);

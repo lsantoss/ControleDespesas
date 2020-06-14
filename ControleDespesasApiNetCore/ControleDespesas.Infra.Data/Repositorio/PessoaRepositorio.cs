@@ -95,6 +95,8 @@ namespace ControleDespesas.Infra.Data.Repositorio
 
         public PessoaQueryResult ObterPessoa(int id)
         {
+            parametros.Add("Id", id, DbType.Int32);
+
             Sql.Clear();
             Sql.Append("SELECT ");
             Sql.Append("Id AS Id,");
@@ -103,7 +105,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             Sql.Append("FROM Pessoa ");
             Sql.Append("WHERE Id = @Id ");
 
-            return _ctx.SQLServerConexao.Query<PessoaQueryResult>(Sql.ToString(), new { Id = id }).FirstOrDefault();
+            return _ctx.SQLServerConexao.Query<PessoaQueryResult>(Sql.ToString(), parametros).FirstOrDefault();
         }
 
         public List<PessoaQueryResult> ListarPessoas()
@@ -121,19 +123,18 @@ namespace ControleDespesas.Infra.Data.Repositorio
 
         public bool CheckId(int id)
         {
-            Sql.Clear();
-            Sql.Append("SELECT Id ");
-            Sql.Append("FROM Pessoa ");
-            Sql.Append("where Id = @Id ");
+            parametros.Add("Id", id, DbType.Int32);
 
-            return _ctx.SQLServerConexao.Query<bool>(Sql.ToString(), new { Id = id }).FirstOrDefault();
+            Sql.Clear();
+            Sql.Append("SELECT Id FROM Pessoa WHERE Id = @Id ");
+
+            return _ctx.SQLServerConexao.Query<bool>(Sql.ToString(), parametros).FirstOrDefault();
         }
 
         public int LocalizarMaxId()
         {
             Sql.Clear();
-            Sql.Append("SELECT MAX(Id) ");
-            Sql.Append("FROM Pessoa");
+            Sql.Append("SELECT MAX(Id) FROM Pessoa");
 
             return _ctx.SQLServerConexao.Query<int>(Sql.ToString()).FirstOrDefault();
         }

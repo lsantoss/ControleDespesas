@@ -34,25 +34,21 @@ namespace ControleDespesas.Dominio.Handlers
             if (Invalido)
                 return new AdicionarPessoaCommandResult(false, "Por favor, corrija as inconsistências abaixo", Notificacoes);
 
-            //Persiste os dados
             string retorno = _repository.Salvar(pessoa);
 
-            //Notifica
             if (retorno == "Sucesso")
             {
-                Pessoa pessoaSalvo = new Pessoa(_repository.LocalizarMaxId(), pessoa.Nome, pessoa.ImagemPerfil);
+                int id = _repository.LocalizarMaxId();
 
-                // Retornar o resultado para tela
                 return new AdicionarPessoaCommandResult(true, "Pessoa gravada com sucesso!", new
                 {
-                    Id = pessoaSalvo.Id,
-                    Nome = pessoaSalvo.Nome.ToString(),
-                    ImagemPerfil = pessoaSalvo.ImagemPerfil
+                    Id = id,
+                    Nome = pessoa.Nome.ToString(),
+                    ImagemPerfil = pessoa.ImagemPerfil
                 });
             }
             else
             {
-                // Retornar o resultado para tela
                 return new AdicionarPessoaCommandResult(false, "Por favor, corrija as inconsistências abaixo", retorno);
             }
         }
@@ -70,25 +66,19 @@ namespace ControleDespesas.Dominio.Handlers
 
             AddNotificacao(nome.Notificacoes);
 
-            //Validando dependências
             if (pessoa.Id == 0)
-            {
                 AddNotificacao("Id", "Id não está vinculado à operação solicitada");
-            }
 
             if (!_repository.CheckId(pessoa.Id))
-                AddNotificacao("Id", "Este Id não está cadastrado! Impossível prosseguir com este Id.");
+                AddNotificacao("Id", "Este id não está cadastrado! Impossível prosseguir com este id.");
 
             if (Invalido)
                 return new AtualizarPessoaCommandResult(false, "Por favor, corrija as inconsistências abaixo", Notificacoes);
 
-            //Persiste os dados
             string retorno = _repository.Atualizar(pessoa);
 
-            //Notifica
             if (retorno == "Sucesso")
             {
-                // Retornar o resultado para tela
                 return new AtualizarPessoaCommandResult(true, "Pessoa atualizada com sucesso!", new
                 {
                     Id = pessoa.Id,
@@ -98,7 +88,6 @@ namespace ControleDespesas.Dominio.Handlers
             }
             else
             {
-                // Retornar o resultado para tela
                 return new AtualizarPessoaCommandResult(false, "Por favor, corrija as inconsistências abaixo", retorno);
             }
         }
@@ -109,25 +98,16 @@ namespace ControleDespesas.Dominio.Handlers
                 return new ApagarPessoaCommandResult(false, "Por favor, corrija as inconsistências abaixo", command.Notificacoes);
 
             if (!_repository.CheckId(command.Id))
-                AddNotificacao("Id", "Este Id não está cadastrado! Impossível prosseguir sem um Id válido.");
+                AddNotificacao("Id", "Este id não está cadastrado! Impossível prosseguir sem um id válido.");
 
             if (Invalido)
                 return new ApagarPessoaCommandResult(false, "Por favor, corrija as inconsistências abaixo", Notificacoes);
 
-            //Persiste os dados
             string retorno = _repository.Deletar(command.Id);
 
-            //Notifica
-            if (retorno == "Sucesso")
-            {
-                // Retornar o resultado para tela
-                return new ApagarPessoaCommandResult(true, "Pessoa excluída com sucesso!", new { Id = command.Id });
-            }
-            else
-            {
-                // Retornar o resultado para tela
-                return new ApagarPessoaCommandResult(false, "Por favor, corrija as inconsistências abaixo", retorno);
-            }
+            return retorno == "Sucesso"
+                ? new ApagarPessoaCommandResult(true, "Pessoa excluída com sucesso!", new { Id = command.Id })
+                : new ApagarPessoaCommandResult(false, "Por favor, corrija as inconsistências abaixo", retorno);
         }
     }
 }

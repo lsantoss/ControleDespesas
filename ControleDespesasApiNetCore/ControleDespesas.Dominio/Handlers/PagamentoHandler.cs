@@ -40,31 +40,26 @@ namespace ControleDespesas.Dominio.Handlers
             if (Invalido)
                 return new AdicionarPagamentoCommandResult(false, "Por favor, corrija as inconsistências abaixo", Notificacoes);
 
-            //Persiste os dados
             string retorno = _repository.Salvar(pagamento);
 
-            //Notifica
             if (retorno == "Sucesso")
             {
-                Pagamento pagamentoSalvo = new Pagamento(_repository.LocalizarMaxId(), pagamento.TipoPagamento, pagamento.Empresa, pagamento.Pessoa,
-                                           pagamento.Descricao, pagamento.Valor, pagamento.DataPagamento, pagamento.DataVencimento);
+                int id = _repository.LocalizarMaxId();
 
-                // Retornar o resultado para tela
                 return new AdicionarPagamentoCommandResult(true, "Pagamento gravado com sucesso!", new
                 {
-                    Id = pagamentoSalvo.Id,
-                    IdTipoPagamento = pagamentoSalvo.TipoPagamento.Id,
-                    IdEmpresa = pagamentoSalvo.Empresa.Id,
-                    IdPessoa = pagamentoSalvo.Pessoa.Id,
-                    Descricao = pagamentoSalvo.Descricao.ToString(),
-                    Valor = pagamentoSalvo.Valor,
-                    DataPagamento = pagamentoSalvo.DataPagamento,
-                    DataVencimento = pagamentoSalvo.DataVencimento
+                    Id = id,
+                    IdTipoPagamento = pagamento.TipoPagamento.Id,
+                    IdEmpresa = pagamento.Empresa.Id,
+                    IdPessoa = pagamento.Pessoa.Id,
+                    Descricao = pagamento.Descricao.ToString(),
+                    Valor = pagamento.Valor,
+                    DataPagamento = pagamento.DataPagamento,
+                    DataVencimento = pagamento.DataVencimento
                 });
             }
             else
             {
-                // Retornar o resultado para tela
                 return new AdicionarPagamentoCommandResult(false, "Por favor, corrija as inconsistências abaixo", retorno);
             }
         }
@@ -87,25 +82,19 @@ namespace ControleDespesas.Dominio.Handlers
 
             AddNotificacao(descricao.Notificacoes);
 
-            //Validando dependências
             if (pagamento.Id == 0)
-            {
                 AddNotificacao("Id", "Id não está vinculado à operação solicitada");
-            }
 
             if (!_repository.CheckId(pagamento.Id))
-                AddNotificacao("Id", "Este Id não está cadastrado! Impossível prosseguir com este Id.");
+                AddNotificacao("Id", "Este id não está cadastrado! Impossível prosseguir com este id.");
 
             if (Invalido)
                 return new AtualizarPagamentoCommandResult(false, "Por favor, corrija as inconsistências abaixo", Notificacoes);
 
-            //Persiste os dados
             string retorno = _repository.Atualizar(pagamento);
 
-            //Notifica
             if (retorno == "Sucesso")
             {
-                // Retornar o resultado para tela
                 return new AtualizarPagamentoCommandResult(true, "Pagamento atualizado com sucesso!", new
                 {
                     Id = pagamento.Id,
@@ -120,7 +109,6 @@ namespace ControleDespesas.Dominio.Handlers
             }
             else
             {
-                // Retornar o resultado para tela
                 return new AtualizarPagamentoCommandResult(false, "Por favor, corrija as inconsistências abaixo", retorno);
             }
         }
@@ -131,25 +119,16 @@ namespace ControleDespesas.Dominio.Handlers
                 return new ApagarPagamentoCommandResult(false, "Por favor, corrija as inconsistências abaixo", command.Notificacoes);
 
             if (!_repository.CheckId(command.Id))
-                AddNotificacao("Id", "Este Id não está cadastrado! Impossível prosseguir sem um Id válido.");
+                AddNotificacao("Id", "Este id não está cadastrado! Impossível prosseguir sem um id válido.");
 
             if (Invalido)
                 return new ApagarPagamentoCommandResult(false, "Por favor, corrija as inconsistências abaixo", Notificacoes);
 
-            //Persiste os dados
             string retorno = _repository.Deletar(command.Id);
 
-            //Notifica
-            if (retorno == "Sucesso")
-            {
-                // Retornar o resultado para tela
-                return new ApagarPagamentoCommandResult(true, "Pagamento excluído com sucesso!", new { Id = command.Id });
-            }
-            else
-            {
-                // Retornar o resultado para tela
-                return new ApagarPagamentoCommandResult(false, "Por favor, corrija as inconsistências abaixo", retorno);
-            }
+            return retorno == "Sucesso"
+                ? new ApagarPagamentoCommandResult(true, "Pagamento excluído com sucesso!", new { Id = command.Id })
+                : new ApagarPagamentoCommandResult(false, "Por favor, corrija as inconsistências abaixo", retorno);
         }
     }
 }

@@ -12,7 +12,9 @@ namespace ControleDespesas.Dominio.Interfaces
 
         UsuarioQueryResult ObterUsuario(int id);
         List<UsuarioQueryResult> ListarUsuarios();
+        UsuarioQueryResult LogarUsuario(string login, string senha);
 
+        bool CheckLogin(string login);
         bool CheckId(int id);
         int LocalizarMaxId();
     }

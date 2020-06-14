@@ -90,6 +90,8 @@ namespace ControleDespesas.Infra.Data.Repositorio
 
         public TipoPagamentoQueryResult ObterTipoPagamento(int id)
         {
+            parametros.Add("Id", id, DbType.Int32);
+
             Sql.Clear();
             Sql.Append("SELECT ");
             Sql.Append("Id AS Id,");
@@ -97,7 +99,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             Sql.Append("FROM TipoPagamento ");
             Sql.Append("WHERE Id = @Id ");
 
-            return _ctx.SQLServerConexao.Query<TipoPagamentoQueryResult>(Sql.ToString(), new { Id = id }).FirstOrDefault();
+            return _ctx.SQLServerConexao.Query<TipoPagamentoQueryResult>(Sql.ToString(), parametros).FirstOrDefault();
         }
 
         public List<TipoPagamentoQueryResult> ListarTipoPagamentos()
@@ -114,19 +116,18 @@ namespace ControleDespesas.Infra.Data.Repositorio
 
         public bool CheckId(int id)
         {
-            Sql.Clear();
-            Sql.Append("SELECT Id ");
-            Sql.Append("FROM TipoPagamento ");
-            Sql.Append("where Id = @Id ");
+            parametros.Add("Id", id, DbType.Int32);
 
-            return _ctx.SQLServerConexao.Query<bool>(Sql.ToString(), new { Id = id }).FirstOrDefault();
+            Sql.Clear();
+            Sql.Append("SELECT Id FROM TipoPagamento WHERE Id = @Id ");
+
+            return _ctx.SQLServerConexao.Query<bool>(Sql.ToString(), parametros).FirstOrDefault();
         }
 
         public int LocalizarMaxId()
         {
             Sql.Clear();
-            Sql.Append("SELECT MAX(Id) ");
-            Sql.Append("FROM TipoPagamento");
+            Sql.Append("SELECT MAX(Id) FROM TipoPagamento");
 
             return _ctx.SQLServerConexao.Query<int>(Sql.ToString()).FirstOrDefault();
         }

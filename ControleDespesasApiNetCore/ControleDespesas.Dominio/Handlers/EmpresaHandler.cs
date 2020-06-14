@@ -34,25 +34,21 @@ namespace ControleDespesas.Dominio.Handlers
             if (Invalido)
                 return new AdicionarEmpresaCommandResult(false, "Por favor, corrija as inconsistências abaixo", Notificacoes);
 
-            //Persiste os dados
             string retorno = _repository.Salvar(empresa);
 
-            //Notifica
             if (retorno == "Sucesso")
             {
-                Empresa empresaSalvo = new Empresa(_repository.LocalizarMaxId(), empresa.Nome, empresa.Logo);
+                int id = _repository.LocalizarMaxId();
 
-                // Retornar o resultado para tela
                 return new AdicionarEmpresaCommandResult(true, "Empresa gravada com sucesso!", new
                 {
-                    Id = empresaSalvo.Id,
-                    Nome = empresaSalvo.Nome.ToString(),
-                    Logo = empresaSalvo.Logo
+                    Id = id,
+                    Nome = empresa.Nome.ToString(),
+                    Logo = empresa.Logo
                 });
             }
             else
             {
-                // Retornar o resultado para tela
                 return new AdicionarEmpresaCommandResult(false, "Por favor, corrija as inconsistências abaixo", retorno);
             }
         }
@@ -70,25 +66,19 @@ namespace ControleDespesas.Dominio.Handlers
 
             AddNotificacao(nome.Notificacoes);
 
-            //Validando dependências
             if (empresa.Id == 0)
-            {
                 AddNotificacao("Id", "Id não está vinculado à operação solicitada");
-            }
 
             if (!_repository.CheckId(empresa.Id))
-                AddNotificacao("Id", "Este Id não está cadastrado! Impossível prosseguir com este Id.");
+                AddNotificacao("Id", "Este id não está cadastrado! Impossível prosseguir com este id.");
 
             if (Invalido)
                 return new AtualizarEmpresaCommandResult(false, "Por favor, corrija as inconsistências abaixo", Notificacoes);
 
-            //Persiste os dados
             string retorno = _repository.Atualizar(empresa);
 
-            //Notifica
             if (retorno == "Sucesso")
             {
-                // Retornar o resultado para tela
                 return new AtualizarEmpresaCommandResult(true, "Empresa atualizada com sucesso!", new
                 {
                     Id = empresa.Id,
@@ -98,7 +88,6 @@ namespace ControleDespesas.Dominio.Handlers
             }
             else
             {
-                // Retornar o resultado para tela
                 return new AtualizarEmpresaCommandResult(false, "Por favor, corrija as inconsistências abaixo", retorno);
             }
         }
@@ -109,25 +98,16 @@ namespace ControleDespesas.Dominio.Handlers
                 return new ApagarEmpresaCommandResult(false, "Por favor, corrija as inconsistências abaixo", command.Notificacoes);
 
             if (!_repository.CheckId(command.Id))
-                AddNotificacao("Id", "Este Id não está cadastrado! Impossível prosseguir sem um Id válido.");
+                AddNotificacao("Id", "Este id não está cadastrado! Impossível prosseguir sem um id válido.");
 
             if (Invalido)
                 return new ApagarEmpresaCommandResult(false, "Por favor, corrija as inconsistências abaixo", Notificacoes);
 
-            //Persiste os dados
             string retorno = _repository.Deletar(command.Id);
 
-            //Notifica
-            if (retorno == "Sucesso")
-            {
-                // Retornar o resultado para tela
-                return new ApagarEmpresaCommandResult(true, "Empresa excluída com sucesso!", new { Id = command.Id });
-            }
-            else
-            {
-                // Retornar o resultado para tela
-                return new ApagarEmpresaCommandResult(false, "Por favor, corrija as inconsistências abaixo", retorno);
-            }
+            return retorno == "Sucesso"
+                ? new ApagarEmpresaCommandResult(true, "Empresa excluída com sucesso!", new { Id = command.Id })
+                : new ApagarEmpresaCommandResult(false, "Por favor, corrija as inconsistências abaixo", retorno);
         }
     }
 }

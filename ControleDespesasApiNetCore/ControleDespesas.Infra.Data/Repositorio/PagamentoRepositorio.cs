@@ -123,6 +123,8 @@ namespace ControleDespesas.Infra.Data.Repositorio
 
         public PagamentoQueryResult ObterPagamento(int id)
         {
+            parametros.Add("Id", id, DbType.Int32);
+
             Sql.Clear();
             Sql.Append("SELECT ");
             Sql.Append("Pagamento.Id AS Id,");
@@ -165,7 +167,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
                         pagamento.Pessoa = pessoa;
                         return pagamento;
                     },
-                    new { Id = id },
+                    parametros,
                     splitOn: "Id, Id, Id, Id").FirstOrDefault();
         }
 
@@ -218,19 +220,18 @@ namespace ControleDespesas.Infra.Data.Repositorio
 
         public bool CheckId(int id)
         {
-            Sql.Clear();
-            Sql.Append("SELECT Id ");
-            Sql.Append("FROM Pagamento ");
-            Sql.Append("where Id = @Id ");
+            parametros.Add("Id", id, DbType.Int32);
 
-            return _ctx.SQLServerConexao.Query<bool>(Sql.ToString(), new { Id = id }).FirstOrDefault();
+            Sql.Clear();
+            Sql.Append("SELECT Id FROM Pagamento WHERE Id = @Id ");
+
+            return _ctx.SQLServerConexao.Query<bool>(Sql.ToString(), parametros).FirstOrDefault();
         }
 
         public int LocalizarMaxId()
         {
             Sql.Clear();
-            Sql.Append("SELECT MAX(Id) ");
-            Sql.Append("FROM Pagamento");
+            Sql.Append("SELECT MAX(Id) FROM Pagamento");
 
             return _ctx.SQLServerConexao.Query<int>(Sql.ToString()).FirstOrDefault();
         }

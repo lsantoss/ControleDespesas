@@ -151,7 +151,9 @@ namespace ControleDespesas.Infra.Data.Repositorio
             Sql.Clear();
             Sql.Append("SELECT Login FROM Usuario WHERE Login = @Login ");
 
-            return _ctx.SQLServerConexao.Query<bool>(Sql.ToString(), parametros).FirstOrDefault();
+            string retono = _ctx.SQLServerConexao.Query<string>(Sql.ToString(), parametros).FirstOrDefault();
+
+            return retono != null ? true : false;
         }
 
         public bool CheckId(int id)

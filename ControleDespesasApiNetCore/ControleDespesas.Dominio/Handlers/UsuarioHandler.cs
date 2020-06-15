@@ -121,7 +121,7 @@ namespace ControleDespesas.Dominio.Handlers
             string retorno = _repository.Deletar(command.Id);
 
             return retorno == "Sucesso"
-                ? new ApagarUsuarioCommandResult(true, "Pessoa excluída com sucesso!", new { Id = command.Id })
+                ? new ApagarUsuarioCommandResult(true, "Usuário excluído com sucesso!", new { Id = command.Id })
                 : new ApagarUsuarioCommandResult(false, "Por favor, corrija as inconsistências abaixo", retorno);
         }
 
@@ -133,7 +133,7 @@ namespace ControleDespesas.Dominio.Handlers
             string login = command.Login;
             string senha = command.Senha;
 
-            if (_repository.CheckLogin(login))
+            if (!_repository.CheckLogin(login))
                 AddNotificacao("Login", "Login incorreto! Esse login de usuário não existe");
 
             if (Invalido)
@@ -144,7 +144,7 @@ namespace ControleDespesas.Dominio.Handlers
             if (retorno == null)
             {
                 AddNotificacao("Senha", "Senha incorreta!");
-                return new LoginUsuarioCommandResult(false, "Por favor, corrija as inconsistências abaixo", retorno);
+                return new LoginUsuarioCommandResult(false, "Por favor, corrija as inconsistências abaixo", Notificacoes);
             }
             else
             {

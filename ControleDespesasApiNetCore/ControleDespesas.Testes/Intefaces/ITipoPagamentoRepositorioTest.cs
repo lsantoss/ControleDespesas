@@ -52,8 +52,8 @@ namespace ControleDespesas.Testes.Intefaces
             };
 
             Mock<ITipoPagamentoRepositorio> mock = new Mock<ITipoPagamentoRepositorio>();
-            mock.Setup(m => m.ObterTipoPagamento(tipoPagamento.Id)).Returns(tipoPagamentoQueryResult);
-            TipoPagamentoQueryResult resultado = mock.Object.ObterTipoPagamento(tipoPagamento.Id);
+            mock.Setup(m => m.Obter(tipoPagamento.Id)).Returns(tipoPagamentoQueryResult);
+            TipoPagamentoQueryResult resultado = mock.Object.Obter(tipoPagamento.Id);
             Assert.Equal(tipoPagamentoQueryResult, resultado);
         }
 
@@ -75,8 +75,8 @@ namespace ControleDespesas.Testes.Intefaces
             });
 
             Mock<ITipoPagamentoRepositorio> mock = new Mock<ITipoPagamentoRepositorio>();
-            mock.Setup(m => m.ListarTipoPagamentos()).Returns(listaTipoPagamentoQueryResult);
-            List<TipoPagamentoQueryResult> resultado = mock.Object.ListarTipoPagamentos();
+            mock.Setup(m => m.Listar()).Returns(listaTipoPagamentoQueryResult);
+            List<TipoPagamentoQueryResult> resultado = mock.Object.Listar();
             Assert.Equal(listaTipoPagamentoQueryResult, resultado);
         }
 

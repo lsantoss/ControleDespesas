@@ -1,21 +1,21 @@
 ﻿using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Interfaces;
 using ControleDespesas.Dominio.Query.Empresa;
+using ControleDespesas.Infra.Data.Queries;
 using Dapper;
 using LSCode.ConexoesBD.DbContext;
 using LSCode.ConexoesBD.Enums;
+using LSCode.Facilitador.Api.Exceptions;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 
 namespace ControleDespesas.Infra.Data.Repositorio
 {
     public class EmpresaRepositorio : IEmpresaRepositorio
     {
-        StringBuilder Sql = new StringBuilder();
         DynamicParameters parametros = new DynamicParameters();
         private readonly DbContext _ctx;
 
@@ -31,21 +31,13 @@ namespace ControleDespesas.Infra.Data.Repositorio
                 parametros.Add("Nome", empresa.Nome.ToString(), DbType.String);
                 parametros.Add("Logo", empresa.Logo, DbType.String);
 
-                Sql.Clear();
-                Sql.Append("INSERT INTO Empresa (");
-                Sql.Append("Nome, ");
-                Sql.Append("Logo) ");
-                Sql.Append("VALUES(");
-                Sql.Append("@Nome, ");
-                Sql.Append("@Logo)");
-
-                _ctx.SQLServerConexao.Execute(Sql.ToString(), parametros);
+                _ctx.SQLServerConexao.Execute(EmpresaQueries.Salvar, parametros);
 
                 return "Sucesso";
             }
             catch (Exception e)
             {
-                return e.Message;
+                throw new RepositoryException("RepositoryException: EmpresaRepositorio.Salvar() - " + e.Message);
             }
         }
 
@@ -57,19 +49,13 @@ namespace ControleDespesas.Infra.Data.Repositorio
                 parametros.Add("Nome", empresa.Nome.ToString(), DbType.String);
                 parametros.Add("Logo", empresa.Logo, DbType.String);
 
-                Sql.Clear();
-                Sql.Append("UPDATE Empresa SET ");
-                Sql.Append("Nome = @Nome, ");
-                Sql.Append("Logo = @Logo ");
-                Sql.Append("WHERE Id = @Id");
-
-                _ctx.SQLServerConexao.Execute(Sql.ToString(), parametros);
+                _ctx.SQLServerConexao.Execute(EmpresaQueries.Atualizar, parametros);
 
                 return "Sucesso";
             }
             catch (Exception e)
             {
-                return e.Message;
+                throw new RepositoryException("RepositoryException: EmpresaRepositorio.Atualizar() - " + e.Message);
             }
         }
 
@@ -77,66 +63,68 @@ namespace ControleDespesas.Infra.Data.Repositorio
         {
             try
             {
-                parametros.Add("Id", id, DbType.Int32);
+                parametros.Add("Id", id, DbType.Int32);                
 
-                Sql.Clear();
-                Sql.Append("DELETE FROM Empresa ");
-                Sql.Append("WHERE Id = @Id");
-
-                _ctx.SQLServerConexao.Execute(Sql.ToString(), parametros);
+                _ctx.SQLServerConexao.Execute(EmpresaQueries.Deletar, parametros);
 
                 return "Sucesso";
             }
             catch (Exception e)
             {
-                return e.Message;
+                throw new RepositoryException("RepositoryException: EmpresaRepositorio.Deletar() - " + e.Message);
             }
         }
 
-        public EmpresaQueryResult ObterEmpresa(int id)
+        public EmpresaQueryResult Obter(int id)
         {
-            parametros.Add("Id", id, DbType.Int32);
+            try
+            {
+                parametros.Add("Id", id, DbType.Int32);
 
-            Sql.Clear();
-            Sql.Append("SELECT ");
-            Sql.Append("Id AS Id,");
-            Sql.Append("Nome AS Nome,");
-            Sql.Append("Logo AS Logo ");
-            Sql.Append("FROM Empresa ");
-            Sql.Append("WHERE Id = @Id ");
-
-            return _ctx.SQLServerConexao.Query<EmpresaQueryResult>(Sql.ToString(), parametros).FirstOrDefault();
+                return _ctx.SQLServerConexao.Query<EmpresaQueryResult>(EmpresaQueries.Obter, parametros).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                throw new RepositoryException("RepositoryException: EmpresaRepositorio.Obter() - " + e.Message);
+            }
         }
 
-        public List<EmpresaQueryResult> ListarEmpresas()
+        public List<EmpresaQueryResult> Listar()
         {
-            Sql.Clear();
-            Sql.Append("SELECT ");
-            Sql.Append("Id AS Id,");
-            Sql.Append("Nome AS Nome,");
-            Sql.Append("Logo AS Logo ");
-            Sql.Append("FROM Empresa ");
-            Sql.Append("ORDER BY Id ASC ");
-
-            return _ctx.SQLServerConexao.Query<EmpresaQueryResult>(Sql.ToString()).ToList();
+            try
+            {
+                return _ctx.SQLServerConexao.Query<EmpresaQueryResult>(EmpresaQueries.Listar).ToList();
+            }
+            catch (Exception e)
+            {
+                throw new RepositoryException("RepositoryException: EmpresaRepositorio.Listar() - " + e.Message);
+            }
         }
 
         public bool CheckId(int id)
         {
-            parametros.Add("Id", id, DbType.Int32);
+            try
+            {
+                parametros.Add("Id", id, DbType.Int32);
 
-            Sql.Clear();
-            Sql.Append("SELECT Id FROM Empresa WHERE Id = @Id ");
-
-            return _ctx.SQLServerConexao.Query<bool>(Sql.ToString(), parametros).FirstOrDefault();
+                return _ctx.SQLServerConexao.Query<bool>(EmpresaQueries.CheckId, parametros).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                throw new RepositoryException("RepositoryException: EmpresaRepositorio.CheckId() - " + e.Message);
+            }
         }
 
         public int LocalizarMaxId()
         {
-            Sql.Clear();
-            Sql.Append("SELECT MAX(Id) FROM Empresa");
-
-            return _ctx.SQLServerConexao.Query<int>(Sql.ToString()).FirstOrDefault();
+            try
+            {
+                return _ctx.SQLServerConexao.Query<int>(EmpresaQueries.LocalizarMaxId).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                throw new RepositoryException("RepositoryException: EmpresaRepositorio.LocalizarMaxId() - " + e.Message);
+            }
         }
     }
 }

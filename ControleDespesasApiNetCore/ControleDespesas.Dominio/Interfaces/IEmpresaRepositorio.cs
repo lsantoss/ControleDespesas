@@ -10,8 +10,8 @@ namespace ControleDespesas.Dominio.Interfaces
         string Atualizar(Empresa empresa);
         string Deletar(int id);
 
-        EmpresaQueryResult ObterEmpresa(int id);
-        List<EmpresaQueryResult> ListarEmpresas();
+        EmpresaQueryResult Obter(int id);
+        List<EmpresaQueryResult> Listar();
 
         bool CheckId(int id);
         int LocalizarMaxId();

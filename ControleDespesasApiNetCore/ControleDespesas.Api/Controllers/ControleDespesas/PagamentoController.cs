@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ControleDespesas.Api.Controllers.ControleDespesas
 {
-    //[RequireHttps]
     [Route("Pagamento")]
     public class PagamentoController : ApiController
     {
@@ -52,7 +51,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [Route("v1/Pagamentos")]
         public IEnumerable<PagamentoQueryResult> Pagamentos()
         {
-            return _repositorio.ListarPagamentos();
+            return _repositorio.Listar();
         }
 
         /// <summary>
@@ -69,7 +68,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [Route("v1/Pagamento/{Id:int}")]
         public PagamentoQueryResult Pagamento(int Id)
         {
-            return _repositorio.ObterPagamento(Id);
+            return _repositorio.Obter(Id);
         }
 
         /// <summary>

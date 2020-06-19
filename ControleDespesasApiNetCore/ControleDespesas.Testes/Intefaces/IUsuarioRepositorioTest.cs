@@ -78,8 +78,8 @@ namespace ControleDespesas.Testes.Intefaces
             };
 
             Mock<IUsuarioRepositorio> mock = new Mock<IUsuarioRepositorio>();
-            mock.Setup(m => m.ObterUsuario(usuario.Id)).Returns(usuarioQueryResult);
-            UsuarioQueryResult resultado = mock.Object.ObterUsuario(usuario.Id);
+            mock.Setup(m => m.Obter(usuario.Id)).Returns(usuarioQueryResult);
+            UsuarioQueryResult resultado = mock.Object.Obter(usuario.Id);
             Assert.Equal(usuarioQueryResult, resultado);
         }
 
@@ -103,8 +103,8 @@ namespace ControleDespesas.Testes.Intefaces
             });
 
             Mock<IUsuarioRepositorio> mock = new Mock<IUsuarioRepositorio>();
-            mock.Setup(m => m.ListarUsuarios()).Returns(listaUsuariosQueryResult);
-            List<UsuarioQueryResult> resultado = mock.Object.ListarUsuarios();
+            mock.Setup(m => m.Listar()).Returns(listaUsuariosQueryResult);
+            List<UsuarioQueryResult> resultado = mock.Object.Listar();
             Assert.Equal(listaUsuariosQueryResult, resultado);
         }
 
@@ -127,8 +127,8 @@ namespace ControleDespesas.Testes.Intefaces
             };
 
             Mock<IUsuarioRepositorio> mock = new Mock<IUsuarioRepositorio>();
-            mock.Setup(m => m.LogarUsuario(usuario.Login.ToString(), usuario.Senha.ToString())).Returns(usuarioQueryResult);
-            UsuarioQueryResult resultado = mock.Object.LogarUsuario(usuario.Login.ToString(), usuario.Senha.ToString());
+            mock.Setup(m => m.Logar(usuario.Login.ToString(), usuario.Senha.ToString())).Returns(usuarioQueryResult);
+            UsuarioQueryResult resultado = mock.Object.Logar(usuario.Login.ToString(), usuario.Senha.ToString());
             Assert.Equal(usuarioQueryResult, resultado);
         }
 

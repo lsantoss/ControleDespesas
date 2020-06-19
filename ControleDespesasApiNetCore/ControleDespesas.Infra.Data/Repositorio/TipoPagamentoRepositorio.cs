@@ -1,21 +1,21 @@
 ﻿using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Interfaces;
 using ControleDespesas.Dominio.Query.TipoPagamento;
+using ControleDespesas.Infra.Data.Queries;
 using Dapper;
 using LSCode.ConexoesBD.DbContext;
 using LSCode.ConexoesBD.Enums;
+using LSCode.Facilitador.Api.Exceptions;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 
 namespace ControleDespesas.Infra.Data.Repositorio
 {
     public class TipoPagamentoRepositorio : ITipoPagamentoRepositorio
     {
-        StringBuilder Sql = new StringBuilder();
         DynamicParameters parametros = new DynamicParameters();
         private readonly DbContext _ctx;
 
@@ -30,19 +30,13 @@ namespace ControleDespesas.Infra.Data.Repositorio
             {
                 parametros.Add("Descricao", tipoPagamento.Descricao.ToString(), DbType.String);
 
-                Sql.Clear();
-                Sql.Append("INSERT INTO TipoPagamento (");
-                Sql.Append("Descricao) ");
-                Sql.Append("VALUES(");
-                Sql.Append("@Descricao)");
-
-                _ctx.SQLServerConexao.Execute(Sql.ToString(), parametros);
+                _ctx.SQLServerConexao.Execute(TipoPagamentoQueries.Salvar, parametros);
 
                 return "Sucesso";
             }
             catch (Exception e)
             {
-                return e.Message;
+                throw new RepositoryException("RepositoryException: TipoPagamentoRepositorio.Salvar() - " + e.Message);
             }
         }
 
@@ -53,18 +47,13 @@ namespace ControleDespesas.Infra.Data.Repositorio
                 parametros.Add("Id", tipoPagamento.Id, DbType.Int32);
                 parametros.Add("Descricao", tipoPagamento.Descricao.ToString(), DbType.String);
 
-                Sql.Clear();
-                Sql.Append("UPDATE TipoPagamento SET ");
-                Sql.Append("Descricao = @Descricao ");
-                Sql.Append("WHERE Id = @Id");
-
-                _ctx.SQLServerConexao.Execute(Sql.ToString(), parametros);
+                _ctx.SQLServerConexao.Execute(TipoPagamentoQueries.Atualizar, parametros);
 
                 return "Sucesso";
             }
             catch (Exception e)
             {
-                return e.Message;
+                throw new RepositoryException("RepositoryException: TipoPagamentoRepositorio.Atualizar() - " + e.Message);
             }
         }
 
@@ -74,62 +63,66 @@ namespace ControleDespesas.Infra.Data.Repositorio
             {
                 parametros.Add("Id", id, DbType.Int32);
 
-                Sql.Clear();
-                Sql.Append("DELETE FROM TipoPagamento ");
-                Sql.Append("WHERE Id = @Id");
-
-                _ctx.SQLServerConexao.Execute(Sql.ToString(), parametros);
+                _ctx.SQLServerConexao.Execute(TipoPagamentoQueries.Deletar, parametros);
 
                 return "Sucesso";
             }
             catch (Exception e)
             {
-                return e.Message;
+                throw new RepositoryException("RepositoryException: TipoPagamentoRepositorio.Deletar() - " + e.Message);
             }
         }
 
-        public TipoPagamentoQueryResult ObterTipoPagamento(int id)
+        public TipoPagamentoQueryResult Obter(int id)
         {
-            parametros.Add("Id", id, DbType.Int32);
+            try
+            {
+                parametros.Add("Id", id, DbType.Int32);
 
-            Sql.Clear();
-            Sql.Append("SELECT ");
-            Sql.Append("Id AS Id,");
-            Sql.Append("Descricao AS Descricao ");
-            Sql.Append("FROM TipoPagamento ");
-            Sql.Append("WHERE Id = @Id ");
-
-            return _ctx.SQLServerConexao.Query<TipoPagamentoQueryResult>(Sql.ToString(), parametros).FirstOrDefault();
+                return _ctx.SQLServerConexao.Query<TipoPagamentoQueryResult>(TipoPagamentoQueries.Obter, parametros).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                throw new RepositoryException("RepositoryException: TipoPagamentoRepositorio.Obter() - " + e.Message);
+            }
         }
 
-        public List<TipoPagamentoQueryResult> ListarTipoPagamentos()
+        public List<TipoPagamentoQueryResult> Listar()
         {
-            Sql.Clear();
-            Sql.Append("SELECT ");
-            Sql.Append("Id AS Id,");
-            Sql.Append("Descricao AS Descricao ");
-            Sql.Append("FROM TipoPagamento ");
-            Sql.Append("ORDER BY Id ASC ");
-
-            return _ctx.SQLServerConexao.Query<TipoPagamentoQueryResult>(Sql.ToString()).ToList();
+            try
+            {
+                return _ctx.SQLServerConexao.Query<TipoPagamentoQueryResult>(TipoPagamentoQueries.Listar).ToList();
+            }
+            catch (Exception e)
+            {
+                throw new RepositoryException("RepositoryException: TipoPagamentoRepositorio.Listar() - " + e.Message);
+            }
         }
 
         public bool CheckId(int id)
         {
-            parametros.Add("Id", id, DbType.Int32);
+            try
+            {
+                parametros.Add("Id", id, DbType.Int32);
 
-            Sql.Clear();
-            Sql.Append("SELECT Id FROM TipoPagamento WHERE Id = @Id ");
-
-            return _ctx.SQLServerConexao.Query<bool>(Sql.ToString(), parametros).FirstOrDefault();
+                return _ctx.SQLServerConexao.Query<bool>(TipoPagamentoQueries.CheckId, parametros).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                throw new RepositoryException("RepositoryException: TipoPagamentoRepositorio.CheckId() - " + e.Message);
+            }
         }
 
         public int LocalizarMaxId()
         {
-            Sql.Clear();
-            Sql.Append("SELECT MAX(Id) FROM TipoPagamento");
-
-            return _ctx.SQLServerConexao.Query<int>(Sql.ToString()).FirstOrDefault();
+            try
+            {
+                return _ctx.SQLServerConexao.Query<int>(TipoPagamentoQueries.LocalizarMaxId).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                throw new RepositoryException("RepositoryException: TipoPagamentoRepositorio.LocalizarMaxId() - " + e.Message);
+            }
         }
     }
 }

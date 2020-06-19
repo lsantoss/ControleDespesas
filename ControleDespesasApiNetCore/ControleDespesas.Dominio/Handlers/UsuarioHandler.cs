@@ -139,7 +139,7 @@ namespace ControleDespesas.Dominio.Handlers
             if (Invalido)
                 return new LoginUsuarioCommandResult(false, "Por favor, corrija as inconsistências abaixo", Notificacoes);
 
-            UsuarioQueryResult retorno = _repository.LogarUsuario(login, senha);
+            UsuarioQueryResult retorno = _repository.Logar(login, senha);
 
             if (retorno == null)
             {

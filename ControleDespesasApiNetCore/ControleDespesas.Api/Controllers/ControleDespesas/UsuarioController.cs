@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ControleDespesas.Api.Controllers.ControleDespesas
 {
-    //[RequireHttps]
     [Route("Usuario")]
     [ApiController]
     public class UsuarioController : ApiController
@@ -53,7 +52,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [Route("v1/Usuarios")]
         public IEnumerable<UsuarioQueryResult> Usuarios()
         {
-            return _repositorio.ListarUsuarios();
+            return _repositorio.Listar();
         }
 
         /// <summary>
@@ -70,7 +69,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [Route("v1/Usuario/{Id:int}")]
         public UsuarioQueryResult Usuario(int Id)
         {
-            return _repositorio.ObterUsuario(Id);
+            return _repositorio.Obter(Id);
         }
 
         /// <summary>

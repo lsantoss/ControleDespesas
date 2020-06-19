@@ -10,8 +10,8 @@ namespace ControleDespesas.Dominio.Interfaces
         string Atualizar(Pessoa pessoa);
         string Deletar(int id);
 
-        PessoaQueryResult ObterPessoa(int id);
-        List<PessoaQueryResult> ListarPessoas();
+        PessoaQueryResult Obter(int id);
+        List<PessoaQueryResult> Listar();
 
         bool CheckId(int id);
         int LocalizarMaxId();

@@ -1,21 +1,21 @@
 ﻿using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Interfaces;
 using ControleDespesas.Dominio.Query.Usuario;
+using ControleDespesas.Infra.Data.Queries;
 using Dapper;
 using LSCode.ConexoesBD.DbContext;
 using LSCode.ConexoesBD.Enums;
+using LSCode.Facilitador.Api.Exceptions;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 
 namespace ControleDespesas.Infra.Data.Repositorio
 {
     public class UsuarioRepositorio : IUsuarioRepositorio
     {
-        StringBuilder Sql = new StringBuilder();
         DynamicParameters parametros = new DynamicParameters();
         private readonly DbContext _ctx;
 
@@ -32,23 +32,13 @@ namespace ControleDespesas.Infra.Data.Repositorio
                 parametros.Add("Senha", usuario.Senha.ToString(), DbType.String);
                 parametros.Add("Privilegio", usuario.Privilegio, DbType.Int16);
 
-                Sql.Clear();
-                Sql.Append("INSERT INTO Usuario (");
-                Sql.Append("Login, ");
-                Sql.Append("Senha, ");
-                Sql.Append("Privilegio) ");
-                Sql.Append("VALUES(");
-                Sql.Append("@Login, ");
-                Sql.Append("@Senha, ");
-                Sql.Append("@Privilegio)");
-
-                _ctx.SQLServerConexao.Execute(Sql.ToString(), parametros);
+                _ctx.SQLServerConexao.Execute(UsuarioQueries.Salvar, parametros);
 
                 return "Sucesso";
             }
             catch (Exception e)
             {
-                return e.Message;
+                throw new RepositoryException("RepositoryException: UsuarioRepositorio.Salvar() - " + e.Message);
             }
         }
 
@@ -61,20 +51,13 @@ namespace ControleDespesas.Infra.Data.Repositorio
                 parametros.Add("Senha", usuario.Senha.ToString(), DbType.String);
                 parametros.Add("Privilegio", usuario.Privilegio, DbType.Int16);
 
-                Sql.Clear();
-                Sql.Append("UPDATE Usuario SET ");
-                Sql.Append("Login = @Login, ");
-                Sql.Append("Senha = @Senha, ");
-                Sql.Append("Privilegio = @Privilegio ");
-                Sql.Append("WHERE Id = @Id");
-
-                _ctx.SQLServerConexao.Execute(Sql.ToString(), parametros);
+                _ctx.SQLServerConexao.Execute(UsuarioQueries.Atualizar, parametros);
 
                 return "Sucesso";
             }
             catch (Exception e)
             {
-                return e.Message;
+                throw new RepositoryException("RepositoryException: UsuarioRepositorio.Atualizar() - " + e.Message);
             }
         }
 
@@ -84,94 +67,97 @@ namespace ControleDespesas.Infra.Data.Repositorio
             {
                 parametros.Add("Id", id, DbType.Int32);
 
-                Sql.Clear();
-                Sql.Append("DELETE FROM Usuario ");
-                Sql.Append("WHERE Id = @Id");
-
-                _ctx.SQLServerConexao.Execute(Sql.ToString(), parametros);
+                _ctx.SQLServerConexao.Execute(UsuarioQueries.Deletar, parametros);
 
                 return "Sucesso";
             }
             catch (Exception e)
             {
-                return e.Message;
+                throw new RepositoryException("RepositoryException: UsuarioRepositorio.Deletar() - " + e.Message);
             }
         }
 
-        public UsuarioQueryResult ObterUsuario(int id)
+        public UsuarioQueryResult Obter(int id)
         {
-            parametros.Add("Id", id, DbType.Int32);
+            try
+            {
+                parametros.Add("Id", id, DbType.Int32);
 
-            Sql.Clear();
-            Sql.Append("SELECT ");
-            Sql.Append("Id AS Id,");
-            Sql.Append("Login AS Login,");
-            Sql.Append("Senha AS Senha,");
-            Sql.Append("Privilegio AS Privilegio ");
-            Sql.Append("FROM Usuario ");
-            Sql.Append("WHERE Id = @Id ");
-
-            return _ctx.SQLServerConexao.Query<UsuarioQueryResult>(Sql.ToString(), parametros).FirstOrDefault();
+                return _ctx.SQLServerConexao.Query<UsuarioQueryResult>(UsuarioQueries.Obter, parametros).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                throw new RepositoryException("RepositoryException: UsuarioRepositorio.Obter() - " + e.Message);
+            }
         }
 
-        public List<UsuarioQueryResult> ListarUsuarios()
+        public List<UsuarioQueryResult> Listar()
         {
-            Sql.Clear();
-            Sql.Append("SELECT ");
-            Sql.Append("Id AS Id,");
-            Sql.Append("Login AS Login,");
-            Sql.Append("Senha AS Senha,");
-            Sql.Append("Privilegio AS Privilegio ");
-            Sql.Append("FROM Usuario ");
-
-            return _ctx.SQLServerConexao.Query<UsuarioQueryResult>(Sql.ToString()).ToList();
+            try
+            {
+                return _ctx.SQLServerConexao.Query<UsuarioQueryResult>(UsuarioQueries.Listar).ToList();
+            }
+            catch (Exception e)
+            {
+                throw new RepositoryException("RepositoryException: UsuarioRepositorio.Listar() - " + e.Message);
+            }
         }
 
-        public UsuarioQueryResult LogarUsuario(string login, string senha)
+        public UsuarioQueryResult Logar(string login, string senha)
         {
-            parametros.Add("Login", login, DbType.String);
-            parametros.Add("Senha", senha, DbType.String);
+            try
+            {
+                parametros.Add("Login", login, DbType.String);
+                parametros.Add("Senha", senha, DbType.String);
 
-            Sql.Clear();
-            Sql.Append("SELECT ");
-            Sql.Append("Id AS Id,");
-            Sql.Append("Login AS Login,");
-            Sql.Append("Senha AS Senha,");
-            Sql.Append("Privilegio AS Privilegio ");
-            Sql.Append("FROM Usuario ");
-            Sql.Append("WHERE Login = @Login and Senha = @Senha ");
-
-            return _ctx.SQLServerConexao.Query<UsuarioQueryResult>(Sql.ToString(), parametros).FirstOrDefault();
+                return _ctx.SQLServerConexao.Query<UsuarioQueryResult>(UsuarioQueries.Logar, parametros).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                throw new RepositoryException("RepositoryException: UsuarioRepositorio.Logar() - " + e.Message);
+            }
         }
 
         public bool CheckLogin(string login)
         {
-            parametros.Add("Login", login, DbType.String);
+            try
+            {
+                parametros.Add("Login", login, DbType.String);
 
-            Sql.Clear();
-            Sql.Append("SELECT Login FROM Usuario WHERE Login = @Login ");
+                string retono = _ctx.SQLServerConexao.Query<string>(UsuarioQueries.CheckLogin, parametros).FirstOrDefault();
 
-            string retono = _ctx.SQLServerConexao.Query<string>(Sql.ToString(), parametros).FirstOrDefault();
-
-            return retono != null ? true : false;
+                return retono != null ? true : false;
+            }
+            catch (Exception e)
+            {
+                throw new RepositoryException("RepositoryException: UsuarioRepositorio.CheckLogin() - " + e.Message);
+            }
         }
 
         public bool CheckId(int id)
         {
-            parametros.Add("Id", id, DbType.Int32);
+            try
+            {
+                parametros.Add("Id", id, DbType.Int32);
 
-            Sql.Clear();
-            Sql.Append("SELECT Id FROM Usuario WHERE Id = @Id ");
-
-            return _ctx.SQLServerConexao.Query<bool>(Sql.ToString(), parametros).FirstOrDefault();
+                return _ctx.SQLServerConexao.Query<bool>(UsuarioQueries.CheckId, parametros).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                throw new RepositoryException("RepositoryException: UsuarioRepositorio.CheckId() - " + e.Message);
+            }
         }
 
         public int LocalizarMaxId()
         {
-            Sql.Clear();
-            Sql.Append("SELECT MAX(Id) FROM Usuario");
-
-            return _ctx.SQLServerConexao.Query<int>(Sql.ToString()).FirstOrDefault();
+            try
+            {
+                return _ctx.SQLServerConexao.Query<int>(UsuarioQueries.LocalizarMaxId).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                throw new RepositoryException("RepositoryException: UsuarioRepositorio.LocalizarMaxId() - " + e.Message);
+            }
         }
     }
 }

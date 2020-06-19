@@ -4,21 +4,21 @@ using ControleDespesas.Dominio.Query.Empresa;
 using ControleDespesas.Dominio.Query.Pagamento;
 using ControleDespesas.Dominio.Query.Pessoa;
 using ControleDespesas.Dominio.Query.TipoPagamento;
+using ControleDespesas.Infra.Data.Queries;
 using Dapper;
 using LSCode.ConexoesBD.DbContext;
 using LSCode.ConexoesBD.Enums;
+using LSCode.Facilitador.Api.Exceptions;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 
 namespace ControleDespesas.Infra.Data.Repositorio
 {
     public class PagamentoRepositorio : IPagamentoRepositorio
     {
-        StringBuilder Sql = new StringBuilder();
         DynamicParameters parametros = new DynamicParameters();
         private readonly DbContext _ctx;
 
@@ -37,33 +37,15 @@ namespace ControleDespesas.Infra.Data.Repositorio
                 parametros.Add("Descricao", pagamento.Descricao.ToString(), DbType.String);
                 parametros.Add("Valor", pagamento.Valor, DbType.Double);
                 parametros.Add("DataPagamento", pagamento.DataPagamento, DbType.Date);
-                parametros.Add("DataVencimento", pagamento.DataVencimento, DbType.Date);
+                parametros.Add("DataVencimento", pagamento.DataVencimento, DbType.Date);                
 
-                Sql.Clear();
-                Sql.Append("INSERT INTO Pagamento (");
-                Sql.Append("IdTipoPagamento, ");
-                Sql.Append("IdEmpresa, ");
-                Sql.Append("IdPessoa, ");
-                Sql.Append("Descricao, ");
-                Sql.Append("Valor, ");
-                Sql.Append("DataPagamento, ");
-                Sql.Append("DataVencimento) ");
-                Sql.Append("VALUES(");
-                Sql.Append("@IdTipoPagamento, ");
-                Sql.Append("@IdEmpresa, ");
-                Sql.Append("@IdPessoa, ");
-                Sql.Append("@Descricao, ");
-                Sql.Append("@Valor, ");
-                Sql.Append("@DataPagamento, ");
-                Sql.Append("@DataVencimento)");
-
-                _ctx.SQLServerConexao.Execute(Sql.ToString(), parametros);
+                _ctx.SQLServerConexao.Execute(PagamentoQueries.Salvar, parametros);
 
                 return "Sucesso";
             }
             catch (Exception e)
             {
-                return e.Message;
+                throw new RepositoryException("RepositoryException: PagamentoRepositorio.Salvar() - " + e.Message);
             }
         }
 
@@ -80,24 +62,13 @@ namespace ControleDespesas.Infra.Data.Repositorio
                 parametros.Add("DataPagamento", pagamento.DataPagamento, DbType.Date);
                 parametros.Add("DataVencimento", pagamento.DataVencimento, DbType.Date);
 
-                Sql.Clear();
-                Sql.Append("UPDATE Pagamento SET ");
-                Sql.Append("IdTipoPagamento = @IdTipoPagamento, ");
-                Sql.Append("IdEmpresa = @IdEmpresa, ");
-                Sql.Append("IdPessoa = @IdPessoa, ");
-                Sql.Append("Descricao = @Descricao, ");
-                Sql.Append("Valor = @Valor, ");
-                Sql.Append("DataPagamento = @DataPagamento, ");
-                Sql.Append("DataVencimento = @DataVencimento ");
-                Sql.Append("WHERE Id = @Id");
-
-                _ctx.SQLServerConexao.Execute(Sql.ToString(), parametros);
+                _ctx.SQLServerConexao.Execute(PagamentoQueries.Atualizar, parametros);
 
                 return "Sucesso";
             }
             catch (Exception e)
             {
-                return e.Message;
+                throw new RepositoryException("RepositoryException: PagamentoRepositorio.Atualizar() - " + e.Message);
             }
         }
 
@@ -107,107 +78,54 @@ namespace ControleDespesas.Infra.Data.Repositorio
             {
                 parametros.Add("Id", id, DbType.Int32);
 
-                Sql.Clear();
-                Sql.Append("DELETE FROM Pagamento ");
-                Sql.Append("WHERE Id = @Id");
-
-                _ctx.SQLServerConexao.Execute(Sql.ToString(), parametros);
+                _ctx.SQLServerConexao.Execute(PagamentoQueries.Deletar, parametros);
 
                 return "Sucesso";
             }
             catch (Exception e)
             {
-                return e.Message;
+                throw new RepositoryException("RepositoryException: PagamentoRepositorio.Deletar() - " + e.Message);
             }
         }
 
-        public PagamentoQueryResult ObterPagamento(int id)
+        public PagamentoQueryResult Obter(int id)
         {
-            parametros.Add("Id", id, DbType.Int32);
+            try
+            {
+                parametros.Add("Id", id, DbType.Int32);
 
-            Sql.Clear();
-            Sql.Append("SELECT ");
-            Sql.Append("Pagamento.Id AS Id,");
-            Sql.Append("Pagamento.IdTipoPagamento AS IdTipoPagamento,");
-            Sql.Append("Pagamento.IdEmpresa AS IdEmpresa,");
-            Sql.Append("Pagamento.IdPessoa AS IdPessoa,");
-            Sql.Append("Pagamento.Descricao AS Descricao,");
-            Sql.Append("Pagamento.Valor AS Valor,");
-            Sql.Append("Pagamento.DataPagamento AS DataPagamento,");
-            Sql.Append("Pagamento.DataVencimento AS DataVencimento,");
-
-            Sql.Append("TipoPagamento.Id AS Id,");
-            Sql.Append("TipoPagamento.Descricao AS Descricao,");
-
-            Sql.Append("Empresa.Id AS Id,");
-            Sql.Append("Empresa.Nome AS Nome,");
-            Sql.Append("Empresa.Logo AS Logo,");
-
-            Sql.Append("Pessoa.Id AS Id,");
-            Sql.Append("Pessoa.Nome AS Nome,");
-            Sql.Append("Pessoa.ImagemPerfil AS ImagemPerfil ");
-
-            Sql.Append("FROM Pagamento ");
-            Sql.Append("INNER JOIN TipoPagamento ON Pagamento.IdTipoPagamento = TipoPagamento.Id ");
-            Sql.Append("INNER JOIN Empresa ON Pagamento.IdEmpresa = Empresa.Id ");
-            Sql.Append("INNER JOIN Pessoa ON Pagamento.IdPessoa = Pessoa.Id ");
-
-            Sql.Append("WHERE Pagamento.Id = @Id ");
-
-            return _ctx.SQLServerConexao.Query<PagamentoQueryResult, 
-                                               TipoPagamentoQueryResult, 
-                                               EmpresaQueryResult, 
-                                               PessoaQueryResult,
-                                               PagamentoQueryResult>(
-                    Sql.ToString(),
-                    map: (pagamento, tipoPagamento, empresa, pessoa) =>
-                    {
-                        pagamento.TipoPagamento = tipoPagamento;
-                        pagamento.Empresa = empresa;
-                        pagamento.Pessoa = pessoa;
-                        return pagamento;
-                    },
-                    parametros,
-                    splitOn: "Id, Id, Id, Id").FirstOrDefault();
+                return _ctx.SQLServerConexao.Query<PagamentoQueryResult,
+                                                   TipoPagamentoQueryResult,
+                                                   EmpresaQueryResult,
+                                                   PessoaQueryResult,
+                                                   PagamentoQueryResult>(
+                        PagamentoQueries.Obter,
+                        map: (pagamento, tipoPagamento, empresa, pessoa) =>
+                        {
+                            pagamento.TipoPagamento = tipoPagamento;
+                            pagamento.Empresa = empresa;
+                            pagamento.Pessoa = pessoa;
+                            return pagamento;
+                        },
+                        parametros,
+                        splitOn: "Id, Id, Id, Id").FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                throw new RepositoryException("RepositoryException: PagamentoRepositorio.Obter() - " + e.Message);
+            }
         }
 
-        public List<PagamentoQueryResult> ListarPagamentos()
+        public List<PagamentoQueryResult> Listar()
         {
-            Sql.Clear();
-            Sql.Append("SELECT ");
-            Sql.Append("Pagamento.Id AS Id,");
-            Sql.Append("Pagamento.IdTipoPagamento AS IdTipoPagamento,");
-            Sql.Append("Pagamento.IdEmpresa AS IdEmpresa,");
-            Sql.Append("Pagamento.IdPessoa AS IdPessoa,");
-            Sql.Append("Pagamento.Descricao AS Descricao,");
-            Sql.Append("Pagamento.Valor AS Valor,");
-            Sql.Append("Pagamento.DataPagamento AS DataPagamento,");
-            Sql.Append("Pagamento.DataVencimento AS DataVencimento,");
-
-            Sql.Append("TipoPagamento.Id AS Id,");
-            Sql.Append("TipoPagamento.Descricao AS Descricao,");
-
-            Sql.Append("Empresa.Id AS Id,");
-            Sql.Append("Empresa.Nome AS Nome,");
-            Sql.Append("Empresa.Logo AS Logo,");
-
-            Sql.Append("Pessoa.Id AS Id,");
-            Sql.Append("Pessoa.Nome AS Nome,");
-            Sql.Append("Pessoa.ImagemPerfil AS ImagemPerfil ");
-
-            Sql.Append("FROM Pagamento ");
-            Sql.Append("INNER JOIN TipoPagamento ON Pagamento.IdTipoPagamento = TipoPagamento.Id ");
-            Sql.Append("INNER JOIN Empresa ON Pagamento.IdEmpresa = Empresa.Id ");
-            Sql.Append("INNER JOIN Pessoa ON Pagamento.IdPessoa = Pessoa.Id ");
-
-            Sql.Append("ORDER BY Pagamento.Id ASC ");
-
-            return _ctx.SQLServerConexao.Query<PagamentoQueryResult,
+            try
+            {
+                return _ctx.SQLServerConexao.Query<PagamentoQueryResult,
                                                TipoPagamentoQueryResult,
                                                EmpresaQueryResult,
                                                PessoaQueryResult,
                                                PagamentoQueryResult>(
-                    Sql.ToString(),
+                    PagamentoQueries.Listar,
                     map: (pagamento, tipoPagamento, empresa, pessoa) =>
                     {
                         pagamento.TipoPagamento = tipoPagamento;
@@ -216,24 +134,37 @@ namespace ControleDespesas.Infra.Data.Repositorio
                         return pagamento;
                     },
                     splitOn: "Id, Id, Id, Id").Distinct().ToList();
+            }
+            catch (Exception e)
+            {
+                throw new RepositoryException("RepositoryException: PagamentoRepositorio.Listar() - " + e.Message);
+            }
         }
 
         public bool CheckId(int id)
         {
-            parametros.Add("Id", id, DbType.Int32);
+            try
+            {
+                parametros.Add("Id", id, DbType.Int32);
 
-            Sql.Clear();
-            Sql.Append("SELECT Id FROM Pagamento WHERE Id = @Id ");
-
-            return _ctx.SQLServerConexao.Query<bool>(Sql.ToString(), parametros).FirstOrDefault();
+                return _ctx.SQLServerConexao.Query<bool>(PagamentoQueries.CheckId, parametros).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                throw new RepositoryException("RepositoryException: PagamentoRepositorio.CheckId() - " + e.Message);
+            }
         }
 
         public int LocalizarMaxId()
         {
-            Sql.Clear();
-            Sql.Append("SELECT MAX(Id) FROM Pagamento");
-
-            return _ctx.SQLServerConexao.Query<int>(Sql.ToString()).FirstOrDefault();
+            try
+            {
+                return _ctx.SQLServerConexao.Query<int>(PagamentoQueries.LocalizarMaxId).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                throw new RepositoryException("RepositoryException: PagamentoRepositorio.LocalizarMaxId() - " + e.Message);
+            }
         }
     }
 }

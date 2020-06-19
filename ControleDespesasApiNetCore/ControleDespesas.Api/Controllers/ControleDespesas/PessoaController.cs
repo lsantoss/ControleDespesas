@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ControleDespesas.Api.Controllers.ControleDespesas
 {
-    //[RequireHttps]
     [Route("Pessoa")]
     [ApiController]
     public class PessoaController : ApiController
@@ -53,7 +52,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [Route("v1/Pessoas")]
         public IEnumerable<PessoaQueryResult> Pessoas()
         {
-            return _repositorio.ListarPessoas();
+            return _repositorio.Listar();
         }
 
         /// <summary>
@@ -70,7 +69,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [Route("v1/Pessoa/{Id:int}")]
         public PessoaQueryResult Pessoa(int Id)
         {
-            return _repositorio.ObterPessoa(Id);
+            return _repositorio.Obter(Id);
         }
 
         /// <summary>

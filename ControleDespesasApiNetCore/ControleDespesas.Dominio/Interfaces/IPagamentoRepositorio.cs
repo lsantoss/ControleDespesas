@@ -10,8 +10,8 @@ namespace ControleDespesas.Dominio.Interfaces
         string Atualizar(Pagamento pagamento);
         string Deletar(int id);
 
-        PagamentoQueryResult ObterPagamento(int id);
-        List<PagamentoQueryResult> ListarPagamentos();
+        PagamentoQueryResult Obter(int id);
+        List<PagamentoQueryResult> Listar();
 
         bool CheckId(int id);
         int LocalizarMaxId();

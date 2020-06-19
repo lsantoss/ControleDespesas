@@ -6,12 +6,12 @@ using ControleDespesas.Dominio.Commands.Empresa.Output;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Interfaces;
 using ControleDespesas.Dominio.Query.Empresa;
+using LSCode.Facilitador.Api.Exceptions;
 using LSCode.Facilitador.Api.InterfacesCommand;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControleDespesas.Api.Controllers.ControleDespesas
 {
-    //[RequireHttps]
     [Route("Empresa")]
     [ApiController]
     public class EmpresaController : ApiController
@@ -35,7 +35,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [Route("v1/HealthCheck")]
-        public String EmpresaHealthCheck()
+        public string EmpresaHealthCheck()
         {
             return "DISPONÍVEL!";
         }
@@ -53,7 +53,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [Route("v1/Empresas")]
         public IEnumerable<EmpresaQueryResult> Empresas()
         {
-            return _repositorio.ListarEmpresas();
+            return _repositorio.Listar();
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [Route("v1/Empresa/{Id:int}")]
         public EmpresaQueryResult Empresa(int Id)
         {
-            return _repositorio.ObterEmpresa(Id);
+            return _repositorio.Obter(Id);
         }
 
         /// <summary>
@@ -86,7 +86,22 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [Route("v1/EmpresaNovo")]
         public ICommandResult EmpresaNovo([FromBody] AdicionarEmpresaCommand command)
         {
-            return (AdicionarEmpresaCommandResult)_handler.Handle(command);
+            try
+            {
+                return (AdicionarEmpresaCommandResult)_handler.Handle(command);
+            }
+            catch (RepositoryException e)
+            {
+                return new AdicionarEmpresaCommandResult(false, e.Message, null);
+            }
+            catch (HandlerException e)
+            {
+                return new AdicionarEmpresaCommandResult(false, e.Message, null);
+            }
+            catch (Exception e)
+            {
+                return new AdicionarEmpresaCommandResult(false, "ControllerException: " + e.Message, null);
+            }
         }
 
         /// <summary>
@@ -102,7 +117,22 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [Route("v1/EmpresaAlterar")]
         public ICommandResult EmpresaAlterar([FromBody] AtualizarEmpresaCommand command)
         {
-            return (AtualizarEmpresaCommandResult)_handler.Handle(command);
+            try 
+            { 
+                return (AtualizarEmpresaCommandResult)_handler.Handle(command);
+            }
+            catch (RepositoryException e)
+            {
+                return new AtualizarEmpresaCommandResult(false, e.Message, null);
+            }
+            catch (HandlerException e)
+            {
+                return new AtualizarEmpresaCommandResult(false, e.Message, null);
+            }
+            catch (Exception e)
+            {
+                return new AtualizarEmpresaCommandResult(false, "ControllerException: " + e.Message, null);
+            }
         }
 
         /// <summary>
@@ -118,7 +148,22 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [Route("v1/EmpresaExcluir")]
         public ICommandResult EmpresaExcluir([FromBody] ApagarEmpresaCommand command)
         {
-            return (ApagarEmpresaCommandResult)_handler.Handle(command);
+            try 
+            { 
+                return (ApagarEmpresaCommandResult)_handler.Handle(command);
+            }
+            catch (RepositoryException e)
+            {
+                return new ApagarEmpresaCommandResult(false, e.Message, null);
+            }
+            catch (HandlerException e)
+            {
+                return new ApagarEmpresaCommandResult(false, e.Message, null);
+            }
+            catch (Exception e)
+            {
+                return new ApagarEmpresaCommandResult(false, "ControllerException: " + e.Message, null);
+            }
         }
     }
 }

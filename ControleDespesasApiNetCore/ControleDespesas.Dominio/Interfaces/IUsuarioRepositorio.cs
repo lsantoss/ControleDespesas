@@ -10,9 +10,9 @@ namespace ControleDespesas.Dominio.Interfaces
         string Atualizar(Usuario usuario);
         string Deletar(int id);
 
-        UsuarioQueryResult ObterUsuario(int id);
-        List<UsuarioQueryResult> ListarUsuarios();
-        UsuarioQueryResult LogarUsuario(string login, string senha);
+        UsuarioQueryResult Obter(int id);
+        List<UsuarioQueryResult> Listar();
+        UsuarioQueryResult Logar(string login, string senha);
 
         bool CheckLogin(string login);
         bool CheckId(int id);

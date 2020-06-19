@@ -53,8 +53,8 @@ namespace ControleDespesas.Testes.Intefaces
             };
 
             Mock<IEmpresaRepositorio> mock = new Mock<IEmpresaRepositorio>();
-            mock.Setup(m => m.ObterEmpresa(empresa.Id)).Returns(empresaQueryResult);
-            EmpresaQueryResult resultado = mock.Object.ObterEmpresa(empresa.Id);
+            mock.Setup(m => m.Obter(empresa.Id)).Returns(empresaQueryResult);
+            EmpresaQueryResult resultado = mock.Object.Obter(empresa.Id);
             Assert.Equal(empresaQueryResult, resultado);
         }
 
@@ -78,8 +78,8 @@ namespace ControleDespesas.Testes.Intefaces
             });
 
             Mock<IEmpresaRepositorio> mock = new Mock<IEmpresaRepositorio>();
-            mock.Setup(m => m.ListarEmpresas()).Returns(listaEmpresasQueryResult);
-            List<EmpresaQueryResult> resultado = mock.Object.ListarEmpresas();
+            mock.Setup(m => m.Listar()).Returns(listaEmpresasQueryResult);
+            List<EmpresaQueryResult> resultado = mock.Object.Listar();
             Assert.Equal(listaEmpresasQueryResult, resultado);
         }
 

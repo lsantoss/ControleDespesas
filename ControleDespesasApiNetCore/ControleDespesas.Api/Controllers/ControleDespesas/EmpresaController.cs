@@ -6,6 +6,7 @@ using ControleDespesas.Dominio.Commands.Empresa.Output;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Interfaces;
 using ControleDespesas.Dominio.Query.Empresa;
+using LSCode.Facilitador.Api.Command;
 using LSCode.Facilitador.Api.Exceptions;
 using LSCode.Facilitador.Api.InterfacesCommand;
 using Microsoft.AspNetCore.Mvc;
@@ -35,9 +36,16 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [Route("v1/HealthCheck")]
-        public string EmpresaHealthCheck()
+        public ICommandResult EmpresaHealthCheck()
         {
-            return "DISPONÍVEL!";
+            try
+            {
+                return new CommandResult(true, "Disponível", null);
+            }
+            catch (Exception e)
+            {
+                return new CommandResult(false, "ControllerException: " + e.Message, null);
+            }
         }
 
         /// <summary>
@@ -51,7 +59,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [Route("v1/Empresas")]
-        public IEnumerable<EmpresaQueryResult> Empresas()
+        public List<EmpresaQueryResult> Empresas()
         {
             return _repositorio.Listar();
         }
@@ -92,15 +100,15 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
             }
             catch (RepositoryException e)
             {
-                return new AdicionarEmpresaCommandResult(false, e.Message, null);
+                return new CommandResult(false, e.Message, null);
             }
             catch (HandlerException e)
             {
-                return new AdicionarEmpresaCommandResult(false, e.Message, null);
+                return new CommandResult(false, e.Message, null);
             }
             catch (Exception e)
             {
-                return new AdicionarEmpresaCommandResult(false, "ControllerException: " + e.Message, null);
+                return new CommandResult(false, "ControllerException: " + e.Message, null);
             }
         }
 
@@ -123,15 +131,15 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
             }
             catch (RepositoryException e)
             {
-                return new AtualizarEmpresaCommandResult(false, e.Message, null);
+                return new CommandResult(false, e.Message, null);
             }
             catch (HandlerException e)
             {
-                return new AtualizarEmpresaCommandResult(false, e.Message, null);
+                return new CommandResult(false, e.Message, null);
             }
             catch (Exception e)
             {
-                return new AtualizarEmpresaCommandResult(false, "ControllerException: " + e.Message, null);
+                return new CommandResult(false, "ControllerException: " + e.Message, null);
             }
         }
 
@@ -154,15 +162,15 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
             }
             catch (RepositoryException e)
             {
-                return new ApagarEmpresaCommandResult(false, e.Message, null);
+                return new CommandResult(false, e.Message, null);
             }
             catch (HandlerException e)
             {
-                return new ApagarEmpresaCommandResult(false, e.Message, null);
+                return new CommandResult(false, e.Message, null);
             }
             catch (Exception e)
             {
-                return new ApagarEmpresaCommandResult(false, "ControllerException: " + e.Message, null);
+                return new CommandResult(false, "ControllerException: " + e.Message, null);
             }
         }
     }

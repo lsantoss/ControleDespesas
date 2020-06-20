@@ -6,6 +6,7 @@ using ControleDespesas.Dominio.Commands.TipoPagamento.Output;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Interfaces;
 using ControleDespesas.Dominio.Query.TipoPagamento;
+using LSCode.Facilitador.Api.Command;
 using LSCode.Facilitador.Api.InterfacesCommand;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,9 +35,16 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [Route("v1/HealthCheck")]
-        public String TipoPagamentoHealthCheck()
+        public ICommandResult TipoPagamentoHealthCheck()
         {
-            return "DISPONÍVEL!";
+            try
+            {
+                return new CommandResult(true, "Disponível", null);
+            }
+            catch (Exception e)
+            {
+                return new CommandResult(false, "ControllerException: " + e.Message, null);
+            }
         }
 
         /// <summary>

@@ -5,7 +5,6 @@ using ControleDespesas.Infra.Data.Queries;
 using Dapper;
 using LSCode.ConexoesBD.DbContext;
 using LSCode.ConexoesBD.Enums;
-using LSCode.Facilitador.Api.Exceptions;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -24,23 +23,21 @@ namespace ControleDespesas.Infra.Data.Repositorio
             _ctx = new DbContext(EBancoDadosRelacional.SQLServer, options.Value.ConnectionString);
         }
 
-        public string Salvar(TipoPagamento tipoPagamento)
+        public void Salvar(TipoPagamento tipoPagamento)
         {
             try
             {
                 parametros.Add("Descricao", tipoPagamento.Descricao.ToString(), DbType.String);
 
                 _ctx.SQLServerConexao.Execute(TipoPagamentoQueries.Salvar, parametros);
-
-                return "Sucesso";
             }
             catch (Exception e)
             {
-                throw new RepositoryException("RepositoryException: TipoPagamentoRepositorio.Salvar() - " + e.Message);
+                throw new Exception(e.Message);
             }
         }
 
-        public string Atualizar(TipoPagamento tipoPagamento)
+        public void Atualizar(TipoPagamento tipoPagamento)
         {
             try
             {
@@ -48,28 +45,24 @@ namespace ControleDespesas.Infra.Data.Repositorio
                 parametros.Add("Descricao", tipoPagamento.Descricao.ToString(), DbType.String);
 
                 _ctx.SQLServerConexao.Execute(TipoPagamentoQueries.Atualizar, parametros);
-
-                return "Sucesso";
             }
             catch (Exception e)
             {
-                throw new RepositoryException("RepositoryException: TipoPagamentoRepositorio.Atualizar() - " + e.Message);
+                throw new Exception(e.Message);
             }
         }
 
-        public string Deletar(int id)
+        public void Deletar(int id)
         {
             try
             {
                 parametros.Add("Id", id, DbType.Int32);
 
                 _ctx.SQLServerConexao.Execute(TipoPagamentoQueries.Deletar, parametros);
-
-                return "Sucesso";
             }
             catch (Exception e)
             {
-                throw new RepositoryException("RepositoryException: TipoPagamentoRepositorio.Deletar() - " + e.Message);
+                throw new Exception(e.Message);
             }
         }
 
@@ -83,7 +76,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
             catch (Exception e)
             {
-                throw new RepositoryException("RepositoryException: TipoPagamentoRepositorio.Obter() - " + e.Message);
+                throw new Exception(e.Message);
             }
         }
 
@@ -95,7 +88,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
             catch (Exception e)
             {
-                throw new RepositoryException("RepositoryException: TipoPagamentoRepositorio.Listar() - " + e.Message);
+                throw new Exception(e.Message);
             }
         }
 
@@ -109,7 +102,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
             catch (Exception e)
             {
-                throw new RepositoryException("RepositoryException: TipoPagamentoRepositorio.CheckId() - " + e.Message);
+                throw new Exception(e.Message);
             }
         }
 
@@ -121,7 +114,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
             catch (Exception e)
             {
-                throw new RepositoryException("RepositoryException: TipoPagamentoRepositorio.LocalizarMaxId() - " + e.Message);
+                throw new Exception(e.Message);
             }
         }
     }

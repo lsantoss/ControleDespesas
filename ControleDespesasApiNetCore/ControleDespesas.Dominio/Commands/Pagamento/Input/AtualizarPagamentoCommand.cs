@@ -17,20 +17,27 @@ namespace ControleDespesas.Dominio.Commands.Pagamento.Input
 
         public bool ValidarCommand()
         {
-            AddNotificacao(new ContratoValidacao().EhMaior(Id, 0, "Id", "Id não é valido"));
+            try
+            {
+                AddNotificacao(new ContratoValidacao().EhMaior(Id, 0, "Id", "Id não é valido"));
 
-            AddNotificacao(new ContratoValidacao().EhMaior(IdTipoPagamento, 0, "Id Tipo Pagamento", "Id Tipo Pagamento não é valido"));
+                AddNotificacao(new ContratoValidacao().EhMaior(IdTipoPagamento, 0, "Id Tipo Pagamento", "Id Tipo Pagamento não é valido"));
 
-            AddNotificacao(new ContratoValidacao().EhMaior(IdEmpresa, 0, "Id Empresa", "Id Empresa não é valido"));
+                AddNotificacao(new ContratoValidacao().EhMaior(IdEmpresa, 0, "Id Empresa", "Id Empresa não é valido"));
 
-            AddNotificacao(new ContratoValidacao().EhMaior(IdPessoa, 0, "Id Pessoa", "Id Pessoa não é valido"));
+                AddNotificacao(new ContratoValidacao().EhMaior(IdPessoa, 0, "Id Pessoa", "Id Pessoa não é valido"));
 
-            AddNotificacao(new ContratoValidacao().TamanhoMinimo(Descricao, 1, "Descrição", "Descrição é um campo obrigatório"));
-            AddNotificacao(new ContratoValidacao().TamanhoMaximo(Descricao, 250, "Descrição", "Descrição maior que o esperado"));
+                AddNotificacao(new ContratoValidacao().TamanhoMinimo(Descricao, 1, "Descrição", "Descrição é um campo obrigatório"));
+                AddNotificacao(new ContratoValidacao().TamanhoMaximo(Descricao, 250, "Descrição", "Descrição maior que o esperado"));
 
-            AddNotificacao(new ContratoValidacao().EhMaior(Valor, 0, "Valor", "Valor não é valido"));
+                AddNotificacao(new ContratoValidacao().EhMaior(Valor, 0, "Valor", "Valor não é valido"));
 
-            return Valido;
+                return Valido;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
     }
 }

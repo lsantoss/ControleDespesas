@@ -1,11 +1,10 @@
 ﻿using ControleDespesas.Dominio.Commands.Empresa.Input;
-using ControleDespesas.Dominio.Commands.Empresa.Output;
 using ControleDespesas.Dominio.Entidades;
+using ControleDespesas.Dominio.Helpers;
 using ControleDespesas.Dominio.Interfaces;
-using LSCode.Facilitador.Api.Exceptions;
+using LSCode.Facilitador.Api.Command;
 using LSCode.Facilitador.Api.InterfacesCommand;
 using LSCode.Validador.ValidacoesNotificacoes;
-using LSCode.Validador.ValueObjects;
 using System;
 
 namespace ControleDespesas.Dominio.Handlers
@@ -25,44 +24,24 @@ namespace ControleDespesas.Dominio.Handlers
         {
             try
             {
-                if (!command.ValidarCommand())
-                    return new AdicionarEmpresaCommandResult(false, "Por favor, corrija as inconsistências abaixo", command.Notificacoes);
+                Empresa empresa = EmpresaHelper.GerarEntidade(command);
 
-                Descricao100Caracteres nome = new Descricao100Caracteres(command.Nome, "Nome");
-                string logo = command.Logo;
-
-                Empresa empresa = new Empresa(0, nome, logo);
-
-                AddNotificacao(nome.Notificacoes);
+                AddNotificacao(empresa.Nome.Notificacoes);
 
                 if (Invalido)
-                    return new AdicionarEmpresaCommandResult(false, "Por favor, corrija as inconsistências abaixo", Notificacoes);
+                    return new CommandResult(false, "Inconsistência(s) no(s) dado(s)", Notificacoes);
 
-                string retorno = _repository.Salvar(empresa);
+                _repository.Salvar(empresa);
+                
+                empresa.Id = _repository.LocalizarMaxId();
 
-                if (retorno == "Sucesso")
-                {
-                    int id = _repository.LocalizarMaxId();
+                object dadosRetorno = EmpresaHelper.GerarDadosRetornoCommandResult(empresa);
 
-                    return new AdicionarEmpresaCommandResult(true, "Empresa gravada com sucesso!", new
-                    {
-                        Id = id,
-                        Nome = empresa.Nome.ToString(),
-                        Logo = empresa.Logo
-                    });
-                }
-                else
-                {
-                    return new AdicionarEmpresaCommandResult(false, "Por favor, corrija as inconsistências abaixo", retorno);
-                }
-            }
-            catch (RepositoryException e)
-            {
-                throw new RepositoryException(e.Message);
+                return new CommandResult(true, "Empresa gravada com sucesso!", dadosRetorno);
             }
             catch (Exception e)
             {
-                throw new HandlerException("HandlerException: " + e.Message);
+                throw new Exception(e.Message);
             }
         }
 
@@ -70,49 +49,28 @@ namespace ControleDespesas.Dominio.Handlers
         {
             try
             {
-                if (!command.ValidarCommand())
-                    return new AtualizarEmpresaCommandResult(false, "Por favor, corrija as inconsistências abaixo", command.Notificacoes);
+                Empresa empresa = EmpresaHelper.GerarEntidade(command);
 
-                int id = command.Id;
-                Descricao100Caracteres nome = new Descricao100Caracteres(command.Nome, "Nome");
-                string logo = command.Logo;
-
-                Empresa empresa = new Empresa(id, nome, logo);
-
-                AddNotificacao(nome.Notificacoes);
+                AddNotificacao(empresa.Nome.Notificacoes);
 
                 if (empresa.Id == 0)
                     AddNotificacao("Id", "Id não está vinculado à operação solicitada");
 
                 if (!_repository.CheckId(empresa.Id))
-                    AddNotificacao("Id", "Este id não está cadastrado! Impossível prosseguir com este id.");
+                    AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");
 
                 if (Invalido)
-                    return new AtualizarEmpresaCommandResult(false, "Por favor, corrija as inconsistências abaixo", Notificacoes);
+                    return new CommandResult(false, "Inconsistência(s) no(s) dado(s)", Notificacoes);
 
-                string retorno = _repository.Atualizar(empresa);
+                _repository.Atualizar(empresa);
 
-                if (retorno == "Sucesso")
-                {
-                    return new AtualizarEmpresaCommandResult(true, "Empresa atualizada com sucesso!", new
-                    {
-                        Id = empresa.Id,
-                        Nome = empresa.Nome.ToString(),
-                        Logo = empresa.Logo
-                    });
-                }
-                else
-                {
-                    return new AtualizarEmpresaCommandResult(false, "Por favor, corrija as inconsistências abaixo", retorno);
-                }
-            }
-            catch (RepositoryException e)
-            {
-                throw new RepositoryException(e.Message);
+                object dadosRetorno = EmpresaHelper.GerarDadosRetornoCommandResult(empresa);
+
+                return new CommandResult(true, "Empresa gravada com sucesso!", dadosRetorno);
             }
             catch (Exception e)
             {
-                throw new HandlerException("HandlerException: " + e.Message);
+                throw new Exception(e.Message);
             }
         }
 
@@ -120,28 +78,22 @@ namespace ControleDespesas.Dominio.Handlers
         {
             try
             {
-                if (!command.ValidarCommand())
-                    return new ApagarEmpresaCommandResult(false, "Por favor, corrija as inconsistências abaixo", command.Notificacoes);
+                if (command.Id == 0)
+                    AddNotificacao("Id", "Id não está vinculado à operação solicitada");
 
                 if (!_repository.CheckId(command.Id))
-                    AddNotificacao("Id", "Este id não está cadastrado! Impossível prosseguir sem um id válido.");
+                    AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");
 
                 if (Invalido)
-                    return new ApagarEmpresaCommandResult(false, "Por favor, corrija as inconsistências abaixo", Notificacoes);
+                    return new CommandResult(false, "Inconsistência(s) no(s) dado(s)", Notificacoes);
 
-                string retorno = _repository.Deletar(command.Id);
+                _repository.Deletar(command.Id);
 
-                return retorno == "Sucesso"
-                    ? new ApagarEmpresaCommandResult(true, "Empresa excluída com sucesso!", new { Id = command.Id })
-                    : new ApagarEmpresaCommandResult(false, "Por favor, corrija as inconsistências abaixo", retorno);
-            }
-            catch (RepositoryException e)
-            {
-                throw new RepositoryException(e.Message);
+                return new CommandResult(true, "Empresa excluída com sucesso!", new { Id = command.Id });
             }
             catch (Exception e)
             {
-                throw new HandlerException("HandlerException: " + e.Message);
+                throw new Exception(e.Message);
             }
         }
     }

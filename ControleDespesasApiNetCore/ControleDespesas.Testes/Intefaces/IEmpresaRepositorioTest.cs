@@ -10,35 +10,35 @@ namespace ControleDespesas.Testes.Intefaces
 {
     public class IEmpresaRepositorioTest
     {
-        [Fact]
-        public void AdicionarEmpresa_DeveRetornarSucesso()
-        {
-            Empresa empresa = new Empresa(0, new Descricao100Caracteres("Oi", "Nome"), "base64String");
-            Mock<IEmpresaRepositorio> mock = new Mock<IEmpresaRepositorio>();
-            mock.Setup(m => m.Salvar(empresa)).Returns("Sucesso");
-            string resultado = mock.Object.Salvar(empresa);
-            Assert.Equal("Sucesso", resultado);
-        }
+        //[Fact]
+        //public void AdicionarEmpresa_DeveRetornarSucesso()
+        //{
+        //    Empresa empresa = new Empresa(0, new Descricao100Caracteres("Oi", "Nome"), "base64String");
+        //    Mock<IEmpresaRepositorio> mock = new Mock<IEmpresaRepositorio>();
+        //    mock.Setup(m => m.Salvar(empresa)).Returns("Sucesso");
+        //    string resultado = mock.Object.Salvar(empresa);
+        //    Assert.Equal("Sucesso", resultado);
+        //}
 
-        [Fact]
-        public void AtualizarEmpresa_DeveRetornarSucesso()
-        {
-            Empresa empresa = new Empresa(1, new Descricao100Caracteres("Oi", "Nome"), "base64String");
-            Mock<IEmpresaRepositorio> mock = new Mock<IEmpresaRepositorio>();
-            mock.Setup(m => m.Atualizar(empresa)).Returns("Sucesso");
-            string resultado = mock.Object.Atualizar(empresa);
-            Assert.Equal("Sucesso", resultado);
-        }
+        //[Fact]
+        //public void AtualizarEmpresa_DeveRetornarSucesso()
+        //{
+        //    Empresa empresa = new Empresa(1, new Descricao100Caracteres("Oi", "Nome"), "base64String");
+        //    Mock<IEmpresaRepositorio> mock = new Mock<IEmpresaRepositorio>();
+        //    mock.Setup(m => m.Atualizar(empresa)).Returns("Sucesso");
+        //    string resultado = mock.Object.Atualizar(empresa);
+        //    Assert.Equal("Sucesso", resultado);
+        //}
 
-        [Fact]
-        public void ApagarEmpresa_DeveRetornarSucesso()
-        {
-            Empresa empresa = new Empresa(1, new Descricao100Caracteres("Oi", "Nome"), "base64String");
-            Mock<IEmpresaRepositorio> mock = new Mock<IEmpresaRepositorio>();
-            mock.Setup(m => m.Deletar(empresa.Id)).Returns("Sucesso");
-            string resultado = mock.Object.Deletar(empresa.Id);
-            Assert.Equal("Sucesso", resultado);
-        }
+        //[Fact]
+        //public void ApagarEmpresa_DeveRetornarSucesso()
+        //{
+        //    Empresa empresa = new Empresa(1, new Descricao100Caracteres("Oi", "Nome"), "base64String");
+        //    Mock<IEmpresaRepositorio> mock = new Mock<IEmpresaRepositorio>();
+        //    mock.Setup(m => m.Deletar(empresa.Id)).Returns("Sucesso");
+        //    string resultado = mock.Object.Deletar(empresa.Id);
+        //    Assert.Equal("Sucesso", resultado);
+        //}
 
         [Fact]
         public void ObterEmpresa_DeveRetornarSucesso()

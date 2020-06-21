@@ -42,7 +42,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
             }
             catch (Exception e)
             {
-                return new CommandResult(false, "ControllerException: " + e.Message, null);
+                return new CommandResult(false, "Erro!", e.Message);
             }
         }
 
@@ -92,7 +92,20 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [Route("v1/PagamentoNovo")]
         public ICommandResult PagamentoNovo([FromBody] AdicionarPagamentoCommand command)
         {
-            return (AdicionarPagamentoCommandResult)_handler.Handle(command);
+            try
+            {
+                if (command == null)
+                    return new CommandResult(false, "Erro!", "Dados de entrada nulos");
+
+                if (!command.ValidarCommand())
+                    return new CommandResult(false, "Erro! Dados de entrada incorretos", command.Notificacoes);
+
+                return (CommandResult)_handler.Handle(command);
+            }
+            catch (Exception e)
+            {
+                return new CommandResult(false, "Erro!", e.Message);
+            }
         }
 
         /// <summary>
@@ -108,7 +121,20 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [Route("v1/PagamentoAlterar")]
         public ICommandResult PagamentoAlterar([FromBody] AtualizarPagamentoCommand command)
         {
-            return (AtualizarPagamentoCommandResult)_handler.Handle(command);
+            try
+            {
+                if (command == null)
+                    return new CommandResult(false, "Erro!", "Dados de entrada nulos");
+
+                if (!command.ValidarCommand())
+                    return new CommandResult(false, "Erro! Dados de entrada incorretos", command.Notificacoes);
+
+                return (CommandResult)_handler.Handle(command);
+            }
+            catch (Exception e)
+            {
+                return new CommandResult(false, "Erro!", e.Message);
+            }
         }
 
         /// <summary>
@@ -124,7 +150,20 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [Route("v1/PagamentoExcluir")]
         public ICommandResult PagamentoExcluir([FromBody] ApagarPagamentoCommand command)
         {
-            return (ApagarPagamentoCommandResult)_handler.Handle(command);
+            try
+            {
+                if (command == null)
+                    return new CommandResult(false, "Erro!", "Dados de entrada nulos");
+
+                if (!command.ValidarCommand())
+                    return new CommandResult(false, "Erro! Dados de entrada incorretos", command.Notificacoes);
+
+                return (CommandResult)_handler.Handle(command);
+            }
+            catch (Exception e)
+            {
+                return new CommandResult(false, "Erro!", e.Message);
+            }
         }
     }
 }

@@ -10,35 +10,35 @@ namespace ControleDespesas.Testes.Intefaces
 {
     public class ITipoPagamentoRepositorioTest
     {
-        [Fact]
-        public void AdicionarTipoPagamento_DeveRetornarSucesso()
-        {
-            TipoPagamento tipoPagamento = new TipoPagamento(1, new Descricao250Caracteres("Luz Elétrica", "Descrição"));
-            Mock<ITipoPagamentoRepositorio> mock = new Mock<ITipoPagamentoRepositorio>();
-            mock.Setup(m => m.Salvar(tipoPagamento)).Returns("Sucesso");
-            string resultado = mock.Object.Salvar(tipoPagamento);
-            Assert.Equal("Sucesso", resultado);
-        }
+        //[Fact]
+        //public void AdicionarTipoPagamento_DeveRetornarSucesso()
+        //{
+        //    TipoPagamento tipoPagamento = new TipoPagamento(1, new Descricao250Caracteres("Luz Elétrica", "Descrição"));
+        //    Mock<ITipoPagamentoRepositorio> mock = new Mock<ITipoPagamentoRepositorio>();
+        //    mock.Setup(m => m.Salvar(tipoPagamento)).Returns("Sucesso");
+        //    string resultado = mock.Object.Salvar(tipoPagamento);
+        //    Assert.Equal("Sucesso", resultado);
+        //}
 
-        [Fact]
-        public void AtualizarTipoPagamento_DeveRetornarSucesso()
-        {
-            TipoPagamento tipoPagamento = new TipoPagamento(1, new Descricao250Caracteres("Luz Elétrica", "Descrição"));
-            Mock<ITipoPagamentoRepositorio> mock = new Mock<ITipoPagamentoRepositorio>();
-            mock.Setup(m => m.Atualizar(tipoPagamento)).Returns("Sucesso");
-            string resultado = mock.Object.Atualizar(tipoPagamento);
-            Assert.Equal("Sucesso", resultado);
-        }
+        //[Fact]
+        //public void AtualizarTipoPagamento_DeveRetornarSucesso()
+        //{
+        //    TipoPagamento tipoPagamento = new TipoPagamento(1, new Descricao250Caracteres("Luz Elétrica", "Descrição"));
+        //    Mock<ITipoPagamentoRepositorio> mock = new Mock<ITipoPagamentoRepositorio>();
+        //    mock.Setup(m => m.Atualizar(tipoPagamento)).Returns("Sucesso");
+        //    string resultado = mock.Object.Atualizar(tipoPagamento);
+        //    Assert.Equal("Sucesso", resultado);
+        //}
 
-        [Fact]
-        public void ApagarTipoPagamento_DeveRetornarSucesso()
-        {
-            TipoPagamento tipoPagamento = new TipoPagamento(1, new Descricao250Caracteres("Luz Elétrica", "Descrição"));
-            Mock<ITipoPagamentoRepositorio> mock = new Mock<ITipoPagamentoRepositorio>();
-            mock.Setup(m => m.Deletar(tipoPagamento.Id)).Returns("Sucesso");
-            string resultado = mock.Object.Deletar(tipoPagamento.Id);
-            Assert.Equal("Sucesso", resultado);
-        }
+        //[Fact]
+        //public void ApagarTipoPagamento_DeveRetornarSucesso()
+        //{
+        //    TipoPagamento tipoPagamento = new TipoPagamento(1, new Descricao250Caracteres("Luz Elétrica", "Descrição"));
+        //    Mock<ITipoPagamentoRepositorio> mock = new Mock<ITipoPagamentoRepositorio>();
+        //    mock.Setup(m => m.Deletar(tipoPagamento.Id)).Returns("Sucesso");
+        //    string resultado = mock.Object.Deletar(tipoPagamento.Id);
+        //    Assert.Equal("Sucesso", resultado);
+        //}
 
         [Fact]
         public void ObterTipoPagamento_DeveRetornarSucesso()

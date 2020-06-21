@@ -10,35 +10,35 @@ namespace ControleDespesas.Testes.Intefaces
 {
     public class IPessoaRepositorioTest
     {
-        [Fact]
-        public void AdicionarPessoa_DeveRetornarSucesso()
-        {
-            Pessoa pessoa = new Pessoa(0, new Descricao100Caracteres("Lucas", "Nome"), "base64String");
-            Mock<IPessoaRepositorio> mock = new Mock<IPessoaRepositorio>();
-            mock.Setup(m => m.Salvar(pessoa)).Returns("Sucesso");
-            string resultado = mock.Object.Salvar(pessoa);
-            Assert.Equal("Sucesso", resultado);
-        }
+        //[Fact]
+        //public void AdicionarPessoa_DeveRetornarSucesso()
+        //{
+        //    Pessoa pessoa = new Pessoa(0, new Descricao100Caracteres("Lucas", "Nome"), "base64String");
+        //    Mock<IPessoaRepositorio> mock = new Mock<IPessoaRepositorio>();
+        //    mock.Setup(m => m.Salvar(pessoa)).Returns("Sucesso");
+        //    string resultado = mock.Object.Salvar(pessoa);
+        //    Assert.Equal("Sucesso", resultado);
+        //}
 
-        [Fact]
-        public void AtualizarPessoa_DeveRetornarSucesso()
-        {
-            Pessoa pessoa = new Pessoa(1, new Descricao100Caracteres("Lucas", "Nome"), "base64String");
-            Mock<IPessoaRepositorio> mock = new Mock<IPessoaRepositorio>();
-            mock.Setup(m => m.Atualizar(pessoa)).Returns("Sucesso");
-            string resultado = mock.Object.Atualizar(pessoa);
-            Assert.Equal("Sucesso", resultado);
-        }
+        //[Fact]
+        //public void AtualizarPessoa_DeveRetornarSucesso()
+        //{
+        //    Pessoa pessoa = new Pessoa(1, new Descricao100Caracteres("Lucas", "Nome"), "base64String");
+        //    Mock<IPessoaRepositorio> mock = new Mock<IPessoaRepositorio>();
+        //    mock.Setup(m => m.Atualizar(pessoa)).Returns("Sucesso");
+        //    string resultado = mock.Object.Atualizar(pessoa);
+        //    Assert.Equal("Sucesso", resultado);
+        //}
 
-        [Fact]
-        public void ApagarPessoa_DeveRetornarSucesso()
-        {
-            Pessoa pessoa = new Pessoa(1, new Descricao100Caracteres("Lucas", "Nome"), "base64String");
-            Mock<IPessoaRepositorio> mock = new Mock<IPessoaRepositorio>();
-            mock.Setup(m => m.Deletar(pessoa.Id)).Returns("Sucesso");
-            string resultado = mock.Object.Deletar(pessoa.Id);
-            Assert.Equal("Sucesso", resultado);
-        }
+        //[Fact]
+        //public void ApagarPessoa_DeveRetornarSucesso()
+        //{
+        //    Pessoa pessoa = new Pessoa(1, new Descricao100Caracteres("Lucas", "Nome"), "base64String");
+        //    Mock<IPessoaRepositorio> mock = new Mock<IPessoaRepositorio>();
+        //    mock.Setup(m => m.Deletar(pessoa.Id)).Returns("Sucesso");
+        //    string resultado = mock.Object.Deletar(pessoa.Id);
+        //    Assert.Equal("Sucesso", resultado);
+        //}
 
         [Fact]
         public void ObterPessoa_DeveRetornarSucesso()

@@ -5,7 +5,6 @@ using ControleDespesas.Infra.Data.Queries;
 using Dapper;
 using LSCode.ConexoesBD.DbContext;
 using LSCode.ConexoesBD.Enums;
-using LSCode.Facilitador.Api.Exceptions;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -24,7 +23,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             _ctx = new DbContext(EBancoDadosRelacional.SQLServer, options.Value.ConnectionString);
         }
 
-        public string Salvar(Empresa empresa)
+        public void Salvar(Empresa empresa)
         {
             try
             {
@@ -32,16 +31,14 @@ namespace ControleDespesas.Infra.Data.Repositorio
                 parametros.Add("Logo", empresa.Logo, DbType.String);
 
                 _ctx.SQLServerConexao.Execute(EmpresaQueries.Salvar, parametros);
-
-                return "Sucesso";
             }
             catch (Exception e)
             {
-                throw new RepositoryException("RepositoryException: EmpresaRepositorio.Salvar() - " + e.Message);
+                throw new Exception(e.Message);
             }
         }
 
-        public string Atualizar(Empresa empresa)
+        public void Atualizar(Empresa empresa)
         {
             try
             {
@@ -50,28 +47,24 @@ namespace ControleDespesas.Infra.Data.Repositorio
                 parametros.Add("Logo", empresa.Logo, DbType.String);
 
                 _ctx.SQLServerConexao.Execute(EmpresaQueries.Atualizar, parametros);
-
-                return "Sucesso";
             }
             catch (Exception e)
             {
-                throw new RepositoryException("RepositoryException: EmpresaRepositorio.Atualizar() - " + e.Message);
+                throw new Exception(e.Message);
             }
         }
 
-        public string Deletar(int id)
+        public void Deletar(int id)
         {
             try
             {
                 parametros.Add("Id", id, DbType.Int32);                
 
                 _ctx.SQLServerConexao.Execute(EmpresaQueries.Deletar, parametros);
-
-                return "Sucesso";
             }
             catch (Exception e)
             {
-                throw new RepositoryException("RepositoryException: EmpresaRepositorio.Deletar() - " + e.Message);
+                throw new Exception(e.Message);
             }
         }
 
@@ -85,7 +78,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
             catch (Exception e)
             {
-                throw new RepositoryException("RepositoryException: EmpresaRepositorio.Obter() - " + e.Message);
+                throw new Exception(e.Message);
             }
         }
 
@@ -97,7 +90,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
             catch (Exception e)
             {
-                throw new RepositoryException("RepositoryException: EmpresaRepositorio.Listar() - " + e.Message);
+                throw new Exception(e.Message);
             }
         }
 
@@ -111,7 +104,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
             catch (Exception e)
             {
-                throw new RepositoryException("RepositoryException: EmpresaRepositorio.CheckId() - " + e.Message);
+                throw new Exception(e.Message);
             }
         }
 
@@ -123,7 +116,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
             catch (Exception e)
             {
-                throw new RepositoryException("RepositoryException: EmpresaRepositorio.LocalizarMaxId() - " + e.Message);
+                throw new Exception(e.Message);
             }
         }
     }

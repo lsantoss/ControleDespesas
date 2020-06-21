@@ -1,7 +1,9 @@
 ﻿using ControleDespesas.Dominio.Commands.TipoPagamento.Input;
 using ControleDespesas.Dominio.Commands.TipoPagamento.Output;
 using ControleDespesas.Dominio.Entidades;
+using ControleDespesas.Dominio.Helpers;
 using ControleDespesas.Dominio.Interfaces;
+using LSCode.Facilitador.Api.Command;
 using LSCode.Facilitador.Api.Exceptions;
 using LSCode.Facilitador.Api.InterfacesCommand;
 using LSCode.Validador.ValidacoesNotificacoes;
@@ -25,42 +27,24 @@ namespace ControleDespesas.Dominio.Handlers
         {
             try
             {
-                if (!command.ValidarCommand())
-                    return new AdicionarTipoPagamentoCommandResult(false, "Por favor, corrija as inconsistências abaixo", command.Notificacoes);
+                TipoPagamento tipoPagamento = TipoPagamentoHelper.GerarEntidade(command);
 
-                Descricao250Caracteres descricao = new Descricao250Caracteres(command.Descricao, "Descrição");
-
-                TipoPagamento tipoPagamento = new TipoPagamento(0, descricao);
-
-                AddNotificacao(descricao.Notificacoes);
+                AddNotificacao(tipoPagamento.Descricao.Notificacoes);
 
                 if (Invalido)
-                    return new AdicionarTipoPagamentoCommandResult(false, "Por favor, corrija as inconsistências abaixo", Notificacoes);
+                    return new CommandResult(false, "Inconsistência(s) no(s) dado(s)", Notificacoes);
 
-                string retorno = _repository.Salvar(tipoPagamento);
+                _repository.Salvar(tipoPagamento);
 
-                if (retorno == "Sucesso")
-                {
-                    int id = _repository.LocalizarMaxId();
+                tipoPagamento.Id = _repository.LocalizarMaxId();
 
-                    return new AdicionarTipoPagamentoCommandResult(true, "Tipo Pagamento gravado com sucesso!", new
-                    {
-                        Id = id,
-                        Descricao = tipoPagamento.Descricao.ToString()
-                    });
-                }
-                else
-                {
-                    return new AdicionarTipoPagamentoCommandResult(false, "Por favor, corrija as inconsistências abaixo", retorno);
-                }
-            }
-            catch (RepositoryException e)
-            {
-                throw new RepositoryException(e.Message);
+                object dadosRetorno = TipoPagamentoHelper.GerarDadosRetornoCommandResult(tipoPagamento);
+
+                return new CommandResult(true, "Tipo Pagamento gravado com sucesso!", dadosRetorno);
             }
             catch (Exception e)
             {
-                throw new HandlerException("HandlerException: " + e.Message);
+                throw new Exception(e.Message);
             }
         }
 
@@ -68,47 +52,28 @@ namespace ControleDespesas.Dominio.Handlers
         {
             try
             {
-                if (!command.ValidarCommand())
-                    return new AtualizarTipoPagamentoCommandResult(false, "Por favor, corrija as inconsistências abaixo", command.Notificacoes);
+                TipoPagamento tipoPagamento = TipoPagamentoHelper.GerarEntidade(command);
 
-                int id = command.Id;
-                Descricao250Caracteres descricao = new Descricao250Caracteres(command.Descricao, "Descrição");
-
-                TipoPagamento tipoPagamento = new TipoPagamento(id, descricao);
-
-                AddNotificacao(descricao.Notificacoes);
+                AddNotificacao(tipoPagamento.Descricao.Notificacoes);
 
                 if (tipoPagamento.Id == 0)
                     AddNotificacao("Id", "Id não está vinculado à operação solicitada");
 
                 if (!_repository.CheckId(tipoPagamento.Id))
-                    AddNotificacao("Id", "Este Id não está cadastrado! Impossível prosseguir com este Id.");
+                    AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");
 
                 if (Invalido)
-                    return new AtualizarTipoPagamentoCommandResult(false, "Por favor, corrija as inconsistências abaixo", Notificacoes);
+                    return new CommandResult(false, "Inconsistência(s) no(s) dado(s)", Notificacoes);
 
-                string retorno = _repository.Atualizar(tipoPagamento);
+                _repository.Atualizar(tipoPagamento);
 
-                if (retorno == "Sucesso")
-                {
-                    return new AtualizarTipoPagamentoCommandResult(true, "Tipo Pagamento atualizado com sucesso!", new
-                    {
-                        Id = tipoPagamento.Id,
-                        Descricao = tipoPagamento.Descricao.ToString()
-                    });
-                }
-                else
-                {
-                    return new AtualizarTipoPagamentoCommandResult(false, "Por favor, corrija as inconsistências abaixo", retorno);
-                }
-            }
-            catch (RepositoryException e)
-            {
-                throw new RepositoryException(e.Message);
+                object dadosRetorno = TipoPagamentoHelper.GerarDadosRetornoCommandResult(tipoPagamento);
+
+                return new CommandResult(true, "Tipo Pagamento gravado com sucesso!", dadosRetorno);
             }
             catch (Exception e)
             {
-                throw new HandlerException("HandlerException: " + e.Message);
+                throw new Exception(e.Message);
             }
         }
 
@@ -116,28 +81,22 @@ namespace ControleDespesas.Dominio.Handlers
         {
             try
             {
-                if (!command.ValidarCommand())
-                    return new ApagarTipoPagamentoCommandResult(false, "Por favor, corrija as inconsistências abaixo", command.Notificacoes);
+                if (command.Id == 0)
+                    AddNotificacao("Id", "Id não está vinculado à operação solicitada");
 
                 if (!_repository.CheckId(command.Id))
-                    AddNotificacao("Id", "Este id não está cadastrado! Impossível prosseguir sem um id válido.");
+                    AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");
 
                 if (Invalido)
-                    return new ApagarTipoPagamentoCommandResult(false, "Por favor, corrija as inconsistências abaixo", Notificacoes);
+                    return new CommandResult(false, "Inconsistência(s) no(s) dado(s)", Notificacoes);
 
-                string retorno = _repository.Deletar(command.Id);
+                _repository.Deletar(command.Id);
 
-                return retorno == "Sucesso"
-                    ? new ApagarTipoPagamentoCommandResult(true, "Tipo Pagamento excluído com sucesso!", new { Id = command.Id })
-                    : new ApagarTipoPagamentoCommandResult(false, "Por favor, corrija as inconsistências abaixo", retorno);
-            }
-            catch (RepositoryException e)
-            {
-                throw new RepositoryException(e.Message);
+                return new CommandResult(true, "Tipo Pagamento excluído com sucesso!", new { Id = command.Id });
             }
             catch (Exception e)
             {
-                throw new HandlerException("HandlerException: " + e.Message);
+                throw new Exception(e.Message);
             }
         }
     }

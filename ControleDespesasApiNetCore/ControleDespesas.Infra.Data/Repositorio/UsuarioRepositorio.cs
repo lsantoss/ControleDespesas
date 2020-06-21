@@ -5,7 +5,6 @@ using ControleDespesas.Infra.Data.Queries;
 using Dapper;
 using LSCode.ConexoesBD.DbContext;
 using LSCode.ConexoesBD.Enums;
-using LSCode.Facilitador.Api.Exceptions;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -38,7 +37,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
             catch (Exception e)
             {
-                throw new RepositoryException("RepositoryException: UsuarioRepositorio.Salvar() - " + e.Message);
+                throw new Exception(e.Message);
             }
         }
 
@@ -57,7 +56,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
             catch (Exception e)
             {
-                throw new RepositoryException("RepositoryException: UsuarioRepositorio.Atualizar() - " + e.Message);
+                throw new Exception(e.Message);
             }
         }
 
@@ -73,7 +72,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
             catch (Exception e)
             {
-                throw new RepositoryException("RepositoryException: UsuarioRepositorio.Deletar() - " + e.Message);
+                throw new Exception(e.Message);
             }
         }
 
@@ -87,7 +86,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
             catch (Exception e)
             {
-                throw new RepositoryException("RepositoryException: UsuarioRepositorio.Obter() - " + e.Message);
+                throw new Exception(e.Message);
             }
         }
 
@@ -99,7 +98,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
             catch (Exception e)
             {
-                throw new RepositoryException("RepositoryException: UsuarioRepositorio.Listar() - " + e.Message);
+                throw new Exception(e.Message);
             }
         }
 
@@ -114,7 +113,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
             catch (Exception e)
             {
-                throw new RepositoryException("RepositoryException: UsuarioRepositorio.Logar() - " + e.Message);
+                throw new Exception(e.Message);
             }
         }
 
@@ -130,7 +129,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
             catch (Exception e)
             {
-                throw new RepositoryException("RepositoryException: UsuarioRepositorio.CheckLogin() - " + e.Message);
+                throw new Exception(e.Message);
             }
         }
 
@@ -144,7 +143,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
             catch (Exception e)
             {
-                throw new RepositoryException("RepositoryException: UsuarioRepositorio.CheckId() - " + e.Message);
+                throw new Exception(e.Message);
             }
         }
 
@@ -156,7 +155,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
             catch (Exception e)
             {
-                throw new RepositoryException("RepositoryException: UsuarioRepositorio.LocalizarMaxId() - " + e.Message);
+                throw new Exception(e.Message);
             }
         }
     }

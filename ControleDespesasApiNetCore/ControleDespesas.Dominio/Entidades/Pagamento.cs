@@ -6,14 +6,14 @@ namespace ControleDespesas.Dominio.Entidades
 {
     public class Pagamento : Notificadora
     {
-        public int Id { get; }
-        public TipoPagamento TipoPagamento { get; }
-        public Empresa Empresa { get; }
-        public Pessoa Pessoa { get; }
-        public Descricao250Caracteres Descricao { get; }
-        public double Valor { get; }
-        public DateTime DataPagamento { get; }
-        public DateTime DataVencimento { get; }
+        public int Id { get; set; }
+        public TipoPagamento TipoPagamento { get; set; }
+        public Empresa Empresa { get; set; }
+        public Pessoa Pessoa { get; set; }
+        public Descricao250Caracteres Descricao { get; set; }
+        public double Valor { get; set; }
+        public DateTime DataPagamento { get; set; }
+        public DateTime DataVencimento { get; set; }
 
         public Pagamento(int id, 
                          TipoPagamento tipoPagamento, 

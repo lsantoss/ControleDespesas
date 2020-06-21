@@ -6,10 +6,10 @@ namespace ControleDespesas.Dominio.Entidades
 {
     public class Usuario : Notificadora
     {
-        public int Id { get; }
-        public Descricao50Caracteres Login { get; }
-        public Descricao50Caracteres Senha { get; }
-        public EPrivilegioUsuario Privilegio { get; }
+        public int Id { get; set; }
+        public Descricao50Caracteres Login { get; set; }
+        public Descricao50Caracteres Senha { get; set; }
+        public EPrivilegioUsuario Privilegio { get; set; }
 
         public Usuario(int id, Descricao50Caracteres login, Descricao50Caracteres senha, EPrivilegioUsuario privilegio)
         {

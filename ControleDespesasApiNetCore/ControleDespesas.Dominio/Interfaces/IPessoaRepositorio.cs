@@ -6,9 +6,9 @@ namespace ControleDespesas.Dominio.Interfaces
 {
     public interface IPessoaRepositorio
     {
-        string Salvar(Pessoa pessoa);
-        string Atualizar(Pessoa pessoa);
-        string Deletar(int id);
+        void Salvar(Pessoa pessoa);
+        void Atualizar(Pessoa pessoa);
+        void Deletar(int id);
 
         PessoaQueryResult Obter(int id);
         List<PessoaQueryResult> Listar();

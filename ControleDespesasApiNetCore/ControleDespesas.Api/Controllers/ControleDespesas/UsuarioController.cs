@@ -43,7 +43,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
             }
             catch (Exception e)
             {
-                return new CommandResult(false, "ControllerException: " + e.Message, null);
+                return new CommandResult(false, "Erro!", e.Message);
             }
         }
 
@@ -93,7 +93,20 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [Route("v1/UsuarioNovo")]
         public ICommandResult UsuarioNovo([FromBody] AdicionarUsuarioCommand command)
         {
-            return (AdicionarUsuarioCommandResult)_handler.Handle(command);
+            try
+            {
+                if (command == null)
+                    return new CommandResult(false, "Erro!", "Dados de entrada nulos");
+
+                if (!command.ValidarCommand())
+                    return new CommandResult(false, "Erro! Dados de entrada incorretos", command.Notificacoes);
+
+                return (CommandResult)_handler.Handle(command);
+            }
+            catch (Exception e)
+            {
+                return new CommandResult(false, "Erro!", e.Message);
+            }
         }
 
         /// <summary>
@@ -109,7 +122,20 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [Route("v1/UsuarioAlterar")]
         public ICommandResult UsuarioAlterar([FromBody] AtualizarUsuarioCommand command)
         {
-            return (AtualizarUsuarioCommandResult)_handler.Handle(command);
+            try
+            {
+                if (command == null)
+                    return new CommandResult(false, "Erro!", "Dados de entrada nulos");
+
+                if (!command.ValidarCommand())
+                    return new CommandResult(false, "Erro! Dados de entrada incorretos", command.Notificacoes);
+
+                return (CommandResult)_handler.Handle(command);
+            }
+            catch (Exception e)
+            {
+                return new CommandResult(false, "Erro!", e.Message);
+            }
         }
 
         /// <summary>
@@ -125,7 +151,20 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [Route("v1/UsuarioExcluir")]
         public ICommandResult UsuarioExcluir([FromBody] ApagarUsuarioCommand command)
         {
-            return (ApagarUsuarioCommandResult)_handler.Handle(command);
+            try
+            {
+                if (command == null)
+                    return new CommandResult(false, "Erro!", "Dados de entrada nulos");
+
+                if (!command.ValidarCommand())
+                    return new CommandResult(false, "Erro! Dados de entrada incorretos", command.Notificacoes);
+
+                return (CommandResult)_handler.Handle(command);
+            }
+            catch (Exception e)
+            {
+                return new CommandResult(false, "Erro!", e.Message);
+            }
         }
 
         /// <summary>

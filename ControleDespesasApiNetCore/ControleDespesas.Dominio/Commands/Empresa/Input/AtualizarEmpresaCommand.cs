@@ -1,5 +1,6 @@
 ﻿using LSCode.Facilitador.Api.InterfacesCommand;
 using LSCode.Validador.ValidacoesNotificacoes;
+using System;
 
 namespace ControleDespesas.Dominio.Commands.Empresa.Input
 {
@@ -11,14 +12,21 @@ namespace ControleDespesas.Dominio.Commands.Empresa.Input
 
         public bool ValidarCommand()
         {
-            AddNotificacao(new ContratoValidacao().EhMaior(Id, 0, "Id", "Id não é valido"));
+            try
+            {
+                AddNotificacao(new ContratoValidacao().EhMaior(Id, 0, "Id", "Id não é valido"));
 
-            AddNotificacao(new ContratoValidacao().TamanhoMinimo(Nome, 1, "Nome", "Nome é um campo obrigatório"));
-            AddNotificacao(new ContratoValidacao().TamanhoMaximo(Nome, 100, "Nome", "Nome maior que o esperado"));
+                AddNotificacao(new ContratoValidacao().TamanhoMinimo(Nome, 1, "Nome", "Nome é um campo obrigatório"));
+                AddNotificacao(new ContratoValidacao().TamanhoMaximo(Nome, 100, "Nome", "Nome maior que o esperado"));
 
-            AddNotificacao(new ContratoValidacao().TamanhoMinimo(Logo, 1, "Logo", "Logo é um campo obrigatório"));
+                AddNotificacao(new ContratoValidacao().TamanhoMinimo(Logo, 1, "Logo", "Logo é um campo obrigatório"));
 
-            return Valido;
+                return Valido;
+            }
+            catch(Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
     }
 }

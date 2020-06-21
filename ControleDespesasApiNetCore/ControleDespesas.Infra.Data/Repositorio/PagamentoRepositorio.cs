@@ -8,7 +8,6 @@ using ControleDespesas.Infra.Data.Queries;
 using Dapper;
 using LSCode.ConexoesBD.DbContext;
 using LSCode.ConexoesBD.Enums;
-using LSCode.Facilitador.Api.Exceptions;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -45,7 +44,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
             catch (Exception e)
             {
-                throw new RepositoryException("RepositoryException: PagamentoRepositorio.Salvar() - " + e.Message);
+                throw new Exception(e.Message);
             }
         }
 
@@ -68,7 +67,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
             catch (Exception e)
             {
-                throw new RepositoryException("RepositoryException: PagamentoRepositorio.Atualizar() - " + e.Message);
+                throw new Exception(e.Message);
             }
         }
 
@@ -84,7 +83,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
             catch (Exception e)
             {
-                throw new RepositoryException("RepositoryException: PagamentoRepositorio.Deletar() - " + e.Message);
+                throw new Exception(e.Message);
             }
         }
 
@@ -112,7 +111,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
             catch (Exception e)
             {
-                throw new RepositoryException("RepositoryException: PagamentoRepositorio.Obter() - " + e.Message);
+                throw new Exception(e.Message);
             }
         }
 
@@ -137,7 +136,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
             catch (Exception e)
             {
-                throw new RepositoryException("RepositoryException: PagamentoRepositorio.Listar() - " + e.Message);
+                throw new Exception(e.Message);
             }
         }
 
@@ -151,7 +150,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
             catch (Exception e)
             {
-                throw new RepositoryException("RepositoryException: PagamentoRepositorio.CheckId() - " + e.Message);
+                throw new Exception(e.Message);
             }
         }
 
@@ -163,7 +162,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
             catch (Exception e)
             {
-                throw new RepositoryException("RepositoryException: PagamentoRepositorio.LocalizarMaxId() - " + e.Message);
+                throw new Exception(e.Message);
             }
         }
     }

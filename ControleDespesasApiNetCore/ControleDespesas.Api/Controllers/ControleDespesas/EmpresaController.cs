@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using ControleDespesas.Api.Controllers.Comum;
 using ControleDespesas.Dominio.Commands.Empresa.Input;
-using ControleDespesas.Dominio.Commands.Empresa.Output;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Interfaces;
 using ControleDespesas.Dominio.Query.Empresa;
 using LSCode.Facilitador.Api.Command;
-using LSCode.Facilitador.Api.Exceptions;
 using LSCode.Facilitador.Api.InterfacesCommand;
 using Microsoft.AspNetCore.Mvc;
 
@@ -44,7 +42,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
             }
             catch (Exception e)
             {
-                return new CommandResult(false, "ControllerException: " + e.Message, null);
+                return new CommandResult(false, "Erro!", e.Message);
             }
         }
 
@@ -96,19 +94,17 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
-                return (AdicionarEmpresaCommandResult)_handler.Handle(command);
-            }
-            catch (RepositoryException e)
-            {
-                return new CommandResult(false, e.Message, null);
-            }
-            catch (HandlerException e)
-            {
-                return new CommandResult(false, e.Message, null);
+                if(command == null)
+                    return new CommandResult(false, "Erro!", "Dados de entrada nulos");
+
+                if (!command.ValidarCommand())
+                    return new CommandResult(false, "Erro! Dados de entrada incorretos", command.Notificacoes);
+
+                return (CommandResult)_handler.Handle(command);
             }
             catch (Exception e)
             {
-                return new CommandResult(false, "ControllerException: " + e.Message, null);
+                return new CommandResult(false, "Erro!" , e.Message);
             }
         }
 
@@ -125,21 +121,19 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [Route("v1/EmpresaAlterar")]
         public ICommandResult EmpresaAlterar([FromBody] AtualizarEmpresaCommand command)
         {
-            try 
-            { 
-                return (AtualizarEmpresaCommandResult)_handler.Handle(command);
-            }
-            catch (RepositoryException e)
+            try
             {
-                return new CommandResult(false, e.Message, null);
-            }
-            catch (HandlerException e)
-            {
-                return new CommandResult(false, e.Message, null);
+                if (command == null)
+                    return new CommandResult(false, "Erro!", "Dados de entrada nulos");
+
+                if (!command.ValidarCommand())
+                    return new CommandResult(false, "Erro! Dados de entrada incorretos", command.Notificacoes);
+
+                return (CommandResult)_handler.Handle(command);
             }
             catch (Exception e)
             {
-                return new CommandResult(false, "ControllerException: " + e.Message, null);
+                return new CommandResult(false, "Erro!", e.Message);
             }
         }
 
@@ -156,21 +150,19 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [Route("v1/EmpresaExcluir")]
         public ICommandResult EmpresaExcluir([FromBody] ApagarEmpresaCommand command)
         {
-            try 
-            { 
-                return (ApagarEmpresaCommandResult)_handler.Handle(command);
-            }
-            catch (RepositoryException e)
+            try
             {
-                return new CommandResult(false, e.Message, null);
-            }
-            catch (HandlerException e)
-            {
-                return new CommandResult(false, e.Message, null);
+                if (command == null)
+                    return new CommandResult(false, "Erro!", "Dados de entrada nulos");
+
+                if (!command.ValidarCommand())
+                    return new CommandResult(false, "Erro! Dados de entrada incorretos", command.Notificacoes);
+
+                return (CommandResult)_handler.Handle(command);
             }
             catch (Exception e)
             {
-                return new CommandResult(false, "ControllerException: " + e.Message, null);
+                return new CommandResult(false, "Erro!", e.Message);
             }
         }
     }

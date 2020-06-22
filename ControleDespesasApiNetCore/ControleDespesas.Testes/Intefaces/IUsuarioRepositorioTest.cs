@@ -11,53 +11,53 @@ namespace ControleDespesas.Testes.Intefaces
 {
     public class IUsuarioRepositorioTest
     {
-        [Fact]
-        public void AdicionarUsuario_DeveRetornarSucesso()
-        {
-            Usuario usuario = new Usuario(
-                0, 
-                new Descricao50Caracteres("lucas123", "Login"),
-                new Descricao50Caracteres("123", "Senha"),
-                EPrivilegioUsuario.Admin
-            );
+        //[Fact]
+        //public void AdicionarUsuario_DeveRetornarSucesso()
+        //{
+        //    Usuario usuario = new Usuario(
+        //        0, 
+        //        new Descricao50Caracteres("lucas123", "Login"),
+        //        new Descricao50Caracteres("123", "Senha"),
+        //        EPrivilegioUsuario.Admin
+        //    );
 
-            Mock<IUsuarioRepositorio> mock = new Mock<IUsuarioRepositorio>();
-            mock.Setup(m => m.Salvar(usuario)).Returns("Sucesso");
-            string resultado = mock.Object.Salvar(usuario);
-            Assert.Equal("Sucesso", resultado);
-        }
+        //    Mock<IUsuarioRepositorio> mock = new Mock<IUsuarioRepositorio>();
+        //    mock.Setup(m => m.Salvar(usuario)).Returns("Sucesso");
+        //    string resultado = mock.Object.Salvar(usuario);
+        //    Assert.Equal("Sucesso", resultado);
+        //}
 
-        [Fact]
-        public void AtualizarUsuario_DeveRetornarSucesso()
-        {
-            Usuario usuario = new Usuario(
-                1,
-                new Descricao50Caracteres("lucas123", "Login"),
-                new Descricao50Caracteres("123", "Senha"),
-                EPrivilegioUsuario.Admin
-            );
+        //[Fact]
+        //public void AtualizarUsuario_DeveRetornarSucesso()
+        //{
+        //    Usuario usuario = new Usuario(
+        //        1,
+        //        new Descricao50Caracteres("lucas123", "Login"),
+        //        new Descricao50Caracteres("123", "Senha"),
+        //        EPrivilegioUsuario.Admin
+        //    );
 
-            Mock<IUsuarioRepositorio> mock = new Mock<IUsuarioRepositorio>();
-            mock.Setup(m => m.Atualizar(usuario)).Returns("Sucesso");
-            string resultado = mock.Object.Atualizar(usuario);
-            Assert.Equal("Sucesso", resultado);
-        }
+        //    Mock<IUsuarioRepositorio> mock = new Mock<IUsuarioRepositorio>();
+        //    mock.Setup(m => m.Atualizar(usuario)).Returns("Sucesso");
+        //    string resultado = mock.Object.Atualizar(usuario);
+        //    Assert.Equal("Sucesso", resultado);
+        //}
 
-        [Fact]
-        public void ApagarUsuario_DeveRetornarSucesso()
-        {
-            Usuario usuario = new Usuario(
-                1,
-                new Descricao50Caracteres("lucas123", "Login"),
-                new Descricao50Caracteres("123", "Senha"),
-                EPrivilegioUsuario.Admin
-            );
+        //[Fact]
+        //public void ApagarUsuario_DeveRetornarSucesso()
+        //{
+        //    Usuario usuario = new Usuario(
+        //        1,
+        //        new Descricao50Caracteres("lucas123", "Login"),
+        //        new Descricao50Caracteres("123", "Senha"),
+        //        EPrivilegioUsuario.Admin
+        //    );
 
-            Mock<IUsuarioRepositorio> mock = new Mock<IUsuarioRepositorio>();
-            mock.Setup(m => m.Deletar(usuario.Id)).Returns("Sucesso");
-            string resultado = mock.Object.Deletar(usuario.Id);
-            Assert.Equal("Sucesso", resultado);
-        }
+        //    Mock<IUsuarioRepositorio> mock = new Mock<IUsuarioRepositorio>();
+        //    mock.Setup(m => m.Deletar(usuario.Id)).Returns("Sucesso");
+        //    string resultado = mock.Object.Deletar(usuario.Id);
+        //    Assert.Equal("Sucesso", resultado);
+        //}
 
         [Fact]
         public void ObterUsuario_DeveRetornarSucesso()

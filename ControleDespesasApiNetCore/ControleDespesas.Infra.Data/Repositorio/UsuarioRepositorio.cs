@@ -23,7 +23,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             _ctx = new DbContext(EBancoDadosRelacional.SQLServer, options.Value.ConnectionString);
         }
 
-        public string Salvar(Usuario usuario)
+        public void Salvar(Usuario usuario)
         {
             try
             {
@@ -32,8 +32,6 @@ namespace ControleDespesas.Infra.Data.Repositorio
                 parametros.Add("Privilegio", usuario.Privilegio, DbType.Int16);
 
                 _ctx.SQLServerConexao.Execute(UsuarioQueries.Salvar, parametros);
-
-                return "Sucesso";
             }
             catch (Exception e)
             {
@@ -41,7 +39,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
         }
 
-        public string Atualizar(Usuario usuario)
+        public void Atualizar(Usuario usuario)
         {
             try
             {
@@ -51,8 +49,6 @@ namespace ControleDespesas.Infra.Data.Repositorio
                 parametros.Add("Privilegio", usuario.Privilegio, DbType.Int16);
 
                 _ctx.SQLServerConexao.Execute(UsuarioQueries.Atualizar, parametros);
-
-                return "Sucesso";
             }
             catch (Exception e)
             {
@@ -60,15 +56,13 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
         }
 
-        public string Deletar(int id)
+        public void Deletar(int id)
         {
             try
             {
                 parametros.Add("Id", id, DbType.Int32);
 
                 _ctx.SQLServerConexao.Execute(UsuarioQueries.Deletar, parametros);
-
-                return "Sucesso";
             }
             catch (Exception e)
             {

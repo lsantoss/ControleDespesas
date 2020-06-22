@@ -9,18 +9,18 @@
         public static string Deletar { get; } = @"DELETE FROM Pessoa WHERE Id = @Id";
 
         public static string Obter { get; } = @"SELECT
-                                                        Id AS Id,
-                                                        Nome AS Nome,
-                                                        ImagemPerfil AS ImagemPerfil 
-                                                    FROM Pessoa 
-                                                    WHERE Id = @Id";
+                                                    Id AS Id,
+                                                    Nome AS Nome,
+                                                    ImagemPerfil AS ImagemPerfil 
+                                                FROM Pessoa 
+                                                WHERE Id = @Id";
 
         public static string Listar { get; } = @"SELECT
-                                                            Id AS Id,
-                                                            Nome AS Nome,
-                                                            ImagemPerfil AS ImagemPerfil 
-                                                        FROM Pessoa 
-                                                        ORDER BY Id ASC";
+                                                    Id AS Id,
+                                                    Nome AS Nome,
+                                                    ImagemPerfil AS ImagemPerfil 
+                                                FROM Pessoa 
+                                                ORDER BY Id ASC";
 
         public static string CheckId { get; } = @"SELECT Id FROM Pessoa WHERE Id = @Id";
 

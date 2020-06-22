@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using ControleDespesas.Api.Controllers.Comum;
 using ControleDespesas.Dominio.Commands.Usuario.Input;
-using ControleDespesas.Dominio.Commands.Usuario.Output;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Interfaces;
 using ControleDespesas.Dominio.Query.Usuario;
@@ -180,7 +179,20 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [Route("v1/UsuarioLogin")]
         public ICommandResult UsuarioLogin([FromBody] LoginUsuarioCommand command)
         {
-            return (LoginUsuarioCommandResult)_handler.Handle(command);
+            try
+            {
+                if (command == null)
+                    return new CommandResult(false, "Erro!", "Dados de entrada nulos");
+
+                if (!command.ValidarCommand())
+                    return new CommandResult(false, "Erro! Dados de entrada incorretos", command.Notificacoes);
+
+                return (CommandResult)_handler.Handle(command);
+            }
+            catch (Exception e)
+            {
+                return new CommandResult(false, "Erro!", e.Message);
+            }
         }
     }
 }

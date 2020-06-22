@@ -6,9 +6,9 @@ namespace ControleDespesas.Dominio.Interfaces
 {
     public interface IUsuarioRepositorio
     {
-        string Salvar(Usuario usuario);
-        string Atualizar(Usuario usuario);
-        string Deletar(int id);
+        void Salvar(Usuario usuario);
+        void Atualizar(Usuario usuario);
+        void Deletar(int id);
 
         UsuarioQueryResult Obter(int id);
         List<UsuarioQueryResult> Listar();

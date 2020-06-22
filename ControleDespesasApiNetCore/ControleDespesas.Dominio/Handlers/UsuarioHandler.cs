@@ -1,12 +1,12 @@
 ﻿using ControleDespesas.Dominio.Commands.Usuario.Input;
-using ControleDespesas.Dominio.Commands.Usuario.Output;
 using ControleDespesas.Dominio.Entidades;
-using ControleDespesas.Dominio.Enums;
+using ControleDespesas.Dominio.Helpers;
 using ControleDespesas.Dominio.Interfaces;
 using ControleDespesas.Dominio.Query.Usuario;
+using LSCode.Facilitador.Api.Command;
 using LSCode.Facilitador.Api.InterfacesCommand;
 using LSCode.Validador.ValidacoesNotificacoes;
-using LSCode.Validador.ValueObjects;
+using System;
 
 namespace ControleDespesas.Dominio.Handlers
 {
@@ -24,137 +24,115 @@ namespace ControleDespesas.Dominio.Handlers
 
         public ICommandResult Handle(AdicionarUsuarioCommand command)
         {
-            if (!command.ValidarCommand())
-                return new AdicionarUsuarioCommandResult(false, "Por favor, corrija as inconsistências abaixo", command.Notificacoes);
-
-            Descricao50Caracteres login = new Descricao50Caracteres(command.Login, "Login");
-            Descricao50Caracteres senha = new Descricao50Caracteres(command.Senha, "Senha");
-            EPrivilegioUsuario privilegio = command.Privilegio;
-
-            Usuario usuario = new Usuario(0, login, senha, privilegio);
-
-            AddNotificacao(usuario.Login.Notificacoes);
-            AddNotificacao(usuario.Senha.Notificacoes);
-
-            if (_repository.CheckLogin(usuario.Login.ToString()))
-                AddNotificacao("Login", "Esse login não está disponível pois já está sendo usado por outro usuário");
-
-            if (Invalido)
-                return new AdicionarUsuarioCommandResult(false, "Por favor, corrija as inconsistências abaixo", Notificacoes);
-
-            string retorno = _repository.Salvar(usuario);
-
-            if (retorno == "Sucesso")
+            try
             {
-                int id = _repository.LocalizarMaxId();
+                Usuario usuario = UsuarioHelper.GerarEntidade(command);
 
-                return new AdicionarUsuarioCommandResult(true, "Usuário gravado com sucesso!", new
-                {
-                    Id = id,
-                    Login = usuario.Login.ToString(),
-                    Senha = usuario.Senha.ToString(),
-                    Privilegio = usuario.Privilegio
-                });
+                AddNotificacao(usuario.Login.Notificacoes);
+                AddNotificacao(usuario.Senha.Notificacoes);
+
+                if (_repository.CheckLogin(usuario.Login.ToString()))
+                    AddNotificacao("Login", "Esse login não está disponível pois já está sendo usado por outro usuário");
+
+                if (Invalido)
+                    return new CommandResult(false, "Inconsistência(s) no(s) dado(s)", Notificacoes);
+
+                _repository.Salvar(usuario);
+
+                usuario.Id = _repository.LocalizarMaxId();
+
+                object dadosRetorno = UsuarioHelper.GerarDadosRetornoCommandResult(usuario);
+
+                return new CommandResult(true, "Usuário gravado com sucesso!", dadosRetorno);
             }
-            else
+            catch (Exception e)
             {
-                return new AdicionarUsuarioCommandResult(false, "Por favor, corrija as inconsistências abaixo", retorno);
+                throw new Exception(e.Message);
             }
         }
 
         public ICommandResult Handle(AtualizarUsuarioCommand command)
         {
-            if (!command.ValidarCommand())
-                return new AtualizarUsuarioCommandResult(false, "Por favor, corrija as inconsistências abaixo", command.Notificacoes);
-
-            int id = command.Id;
-            Descricao50Caracteres login = new Descricao50Caracteres(command.Login, "Login");
-            Descricao50Caracteres senha = new Descricao50Caracteres(command.Senha, "Senha");
-            EPrivilegioUsuario privilegio = command.Privilegio;
-
-            Usuario usuario = new Usuario(id, login, senha, privilegio);
-
-            AddNotificacao(usuario.Login.Notificacoes);
-            AddNotificacao(usuario.Senha.Notificacoes);
-
-            if (usuario.Id == 0)
-                AddNotificacao("Id", "Id não está vinculado à operação solicitada");            
-
-            if (!_repository.CheckId(usuario.Id))
-                AddNotificacao("Id", "Este id não está cadastrado! Impossível prosseguir com este id.");
-
-            if (_repository.CheckLogin(usuario.Login.ToString()))
-                AddNotificacao("Login", "Esse login não está disponível pois já está sendo usado por outro usuário");
-
-            if (Invalido)
-                return new AtualizarUsuarioCommandResult(false, "Por favor, corrija as inconsistências abaixo", Notificacoes);
-
-            string retorno = _repository.Atualizar(usuario);
-
-            if (retorno == "Sucesso")
+            try
             {
-                return new AtualizarUsuarioCommandResult(true, "Usuário atualizado com sucesso!", new
-                {
-                    Id = usuario.Id,
-                    Nome = usuario.Login.ToString(),
-                    Senha = usuario.Senha.ToString(),
-                    Privilegio = usuario.Privilegio
-                });
+                Usuario usuario = UsuarioHelper.GerarEntidade(command);
+
+                AddNotificacao(usuario.Login.Notificacoes);
+                AddNotificacao(usuario.Senha.Notificacoes);
+
+                if (usuario.Id == 0)
+                    AddNotificacao("Id", "Id não está vinculado à operação solicitada");
+
+                if (!_repository.CheckId(usuario.Id))
+                    AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");
+
+                if (_repository.CheckLogin(usuario.Login.ToString()))
+                    AddNotificacao("Login", "Esse login não está disponível pois já está sendo usado por outro usuário");
+
+                if (Invalido)
+                    return new CommandResult(false, "Inconsistência(s) no(s) dado(s)", Notificacoes);
+
+                _repository.Atualizar(usuario);
+
+                object dadosRetorno = UsuarioHelper.GerarDadosRetornoCommandResult(usuario);
+
+                return new CommandResult(true, "Usuário atualizado com sucesso!", dadosRetorno);
             }
-            else
+            catch (Exception e)
             {
-                return new AtualizarUsuarioCommandResult(false, "Por favor, corrija as inconsistências abaixo", retorno);
+                throw new Exception(e.Message);
             }
         }
 
         public ICommandResult Handle(ApagarUsuarioCommand command)
         {
-            if (!command.ValidarCommand())
-                return new ApagarUsuarioCommandResult(false, "Por favor, corrija as inconsistências abaixo", command.Notificacoes);
+            try
+            {
+                if (!_repository.CheckId(command.Id))
+                    AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");
 
-            if (!_repository.CheckId(command.Id))
-                AddNotificacao("Id", "Este Id não está cadastrado! Impossível prosseguir sem um Id válido.");
+                if (Invalido)
+                    return new CommandResult(false, "Inconsistência(s) no(s) dado(s)", Notificacoes);
 
-            if (Invalido)
-                return new ApagarUsuarioCommandResult(false, "Por favor, corrija as inconsistências abaixo", Notificacoes);
+                _repository.Deletar(command.Id);
 
-            string retorno = _repository.Deletar(command.Id);
-
-            return retorno == "Sucesso"
-                ? new ApagarUsuarioCommandResult(true, "Usuário excluído com sucesso!", new { Id = command.Id })
-                : new ApagarUsuarioCommandResult(false, "Por favor, corrija as inconsistências abaixo", retorno);
+                return new CommandResult(true, "Usuário excluído com sucesso!", new { Id = command.Id });
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
         public ICommandResult Handle(LoginUsuarioCommand command)
         {
-            if (!command.ValidarCommand())
-                return new LoginUsuarioCommandResult(false, "Por favor, corrija as inconsistências abaixo", command.Notificacoes);
-
-            string login = command.Login;
-            string senha = command.Senha;
-
-            if (!_repository.CheckLogin(login))
-                AddNotificacao("Login", "Login incorreto! Esse login de usuário não existe");
-
-            if (Invalido)
-                return new LoginUsuarioCommandResult(false, "Por favor, corrija as inconsistências abaixo", Notificacoes);
-
-            UsuarioQueryResult retorno = _repository.Logar(login, senha);
-
-            if (retorno == null)
+            try
             {
-                AddNotificacao("Senha", "Senha incorreta!");
-                return new LoginUsuarioCommandResult(false, "Por favor, corrija as inconsistências abaixo", Notificacoes);
-            }
-            else
-            {
-                return new LoginUsuarioCommandResult(true, "Usuário logado com sucesso!", new
+                string login = command.Login;
+                string senha = command.Senha;
+
+                if (!_repository.CheckLogin(login))
+                    AddNotificacao("Login", "Login incorreto! Esse login de usuário não existe");
+
+                if (Invalido)
+                    return new CommandResult(false, "nconsistência(s) no(s) dado(s)", Notificacoes);
+
+                UsuarioQueryResult usuario = _repository.Logar(login, senha);
+
+                if (usuario != null)
                 {
-                    Id = retorno.Id,
-                    Login = retorno.Login,
-                    Senha = retorno.Senha,
-                    Privilegio = retorno.Privilegio
-                });
+                    object dadosRetorno = UsuarioHelper.GerarDadosRetornoCommandResult(usuario);
+                    return new CommandResult(true, "Usuário logado com sucesso!", dadosRetorno);
+                }
+                else
+                {
+                    AddNotificacao("Senha", "Senha incorreta!");
+                    return new CommandResult(false, "Inconsistência(s) no(s) dado(s)", Notificacoes);
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
             }
         }
     }

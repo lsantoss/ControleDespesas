@@ -1,6 +1,7 @@
 ﻿using ControleDespesas.Dominio.Commands.Usuario.Input;
 using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Enums;
+using ControleDespesas.Dominio.Query.Usuario;
 using LSCode.Validador.ValueObjects;
 using System;
 
@@ -44,6 +45,24 @@ namespace ControleDespesas.Dominio.Helpers
         }
 
         public static object GerarDadosRetornoCommandResult(Usuario usuario)
+        {
+            try
+            {
+                return new
+                {
+                    Id = usuario.Id,
+                    Login = usuario.Login.ToString(),
+                    Senha = usuario.Senha.ToString(),
+                    Privilegio = usuario.Privilegio
+                };
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public static object GerarDadosRetornoCommandResult(UsuarioQueryResult usuario)
         {
             try
             {

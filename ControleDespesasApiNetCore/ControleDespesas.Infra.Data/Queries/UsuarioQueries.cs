@@ -20,20 +20,20 @@
         public static string Deletar { get; } = @"DELETE FROM Usuario WHERE Id = @Id";
 
         public static string Obter { get; } =    @"SELECT 
-                                                            Id AS Id,  
-                                                            Login AS Login,  
-                                                            Senha AS Senha,  
-                                                            Privilegio AS Privilegio  
-                                                            FROM Usuario  
-                                                        WHERE Id = @Id";
+                                                        Id AS Id,  
+                                                        Login AS Login,  
+                                                        Senha AS Senha,  
+                                                        Privilegio AS Privilegio  
+                                                        FROM Usuario  
+                                                    WHERE Id = @Id";
 
         public static string Listar { get; } = @"SELECT 
-                                                            Id AS Id,  
-                                                            Login AS Login,  
-                                                            Senha AS Senha,  
-                                                            Privilegio AS Privilegio  
-                                                        FROM Usuario 
-                                                        ORDER BY Id ASC";
+                                                    Id AS Id,  
+                                                    Login AS Login,  
+                                                    Senha AS Senha,  
+                                                    Privilegio AS Privilegio  
+                                                FROM Usuario 
+                                                ORDER BY Id ASC";
 
 
         public static string Logar { get; } = @"SELECT 

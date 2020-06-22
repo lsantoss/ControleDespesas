@@ -9,16 +9,16 @@
         public static string Deletar { get; } = @"DELETE FROM TipoPagamento WHERE Id = @Id";
 
         public static string Obter { get; } = @"SELECT 
-                                                                Id AS Id,  
-                                                                Descricao AS Descricao  
-                                                            FROM TipoPagamento  
-                                                            WHERE Id = @Id";
+                                                    Id AS Id,  
+                                                    Descricao AS Descricao  
+                                                FROM TipoPagamento  
+                                                WHERE Id = @Id";
 
         public static string Listar { get; } = @"SELECT  
-                                                                Id AS Id,  
-                                                                Descricao AS Descricao  
-                                                            FROM TipoPagamento  
-                                                            ORDER BY Id ASC";
+                                                    Id AS Id,  
+                                                    Descricao AS Descricao  
+                                                FROM TipoPagamento  
+                                                ORDER BY Id ASC";
 
         public static string CheckId { get; } = @"SELECT Id FROM TipoPagamento WHERE Id = @Id";
 

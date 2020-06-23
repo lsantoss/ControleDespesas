@@ -53,9 +53,6 @@ namespace ControleDespesas.Dominio.Handlers
 
                 AddNotificacao(tipoPagamento.Descricao.Notificacoes);
 
-                if (tipoPagamento.Id == 0)
-                    AddNotificacao("Id", "Id não está vinculado à operação solicitada");
-
                 if (!_repository.CheckId(tipoPagamento.Id))
                     AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");
 
@@ -78,9 +75,6 @@ namespace ControleDespesas.Dominio.Handlers
         {
             try
             {
-                if (command.Id == 0)
-                    AddNotificacao("Id", "Id não está vinculado à operação solicitada");
-
                 if (!_repository.CheckId(command.Id))
                     AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");
 

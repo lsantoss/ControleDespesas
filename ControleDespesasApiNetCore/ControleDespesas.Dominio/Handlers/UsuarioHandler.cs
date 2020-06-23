@@ -60,9 +60,6 @@ namespace ControleDespesas.Dominio.Handlers
                 AddNotificacao(usuario.Login.Notificacoes);
                 AddNotificacao(usuario.Senha.Notificacoes);
 
-                if (usuario.Id == 0)
-                    AddNotificacao("Id", "Id não está vinculado à operação solicitada");
-
                 if (!_repository.CheckId(usuario.Id))
                     AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");
 
@@ -115,7 +112,7 @@ namespace ControleDespesas.Dominio.Handlers
                     AddNotificacao("Login", "Login incorreto! Esse login de usuário não existe");
 
                 if (Invalido)
-                    return new CommandResult(false, "nconsistência(s) no(s) dado(s)", Notificacoes);
+                    return new CommandResult(false, "Inconsistência(s) no(s) dado(s)", Notificacoes);
 
                 UsuarioQueryResult usuario = _repository.Logar(login, senha);
 

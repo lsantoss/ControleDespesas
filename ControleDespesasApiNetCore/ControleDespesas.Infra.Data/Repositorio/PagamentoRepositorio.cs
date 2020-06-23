@@ -26,7 +26,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             _ctx = new DbContext(EBancoDadosRelacional.SQLServer, options.Value.ConnectionString);
         }
 
-        public string Salvar(Pagamento pagamento)
+        public void Salvar(Pagamento pagamento)
         {
             try
             {
@@ -39,8 +39,6 @@ namespace ControleDespesas.Infra.Data.Repositorio
                 parametros.Add("DataVencimento", pagamento.DataVencimento, DbType.Date);                
 
                 _ctx.SQLServerConexao.Execute(PagamentoQueries.Salvar, parametros);
-
-                return "Sucesso";
             }
             catch (Exception e)
             {
@@ -48,7 +46,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
         }
 
-        public string Atualizar(Pagamento pagamento)
+        public void Atualizar(Pagamento pagamento)
         {
             try
             {
@@ -62,8 +60,6 @@ namespace ControleDespesas.Infra.Data.Repositorio
                 parametros.Add("DataVencimento", pagamento.DataVencimento, DbType.Date);
 
                 _ctx.SQLServerConexao.Execute(PagamentoQueries.Atualizar, parametros);
-
-                return "Sucesso";
             }
             catch (Exception e)
             {
@@ -71,15 +67,13 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
         }
 
-        public string Deletar(int id)
+        public void Deletar(int id)
         {
             try
             {
                 parametros.Add("Id", id, DbType.Int32);
 
                 _ctx.SQLServerConexao.Execute(PagamentoQueries.Deletar, parametros);
-
-                return "Sucesso";
             }
             catch (Exception e)
             {

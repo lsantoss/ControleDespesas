@@ -6,9 +6,9 @@ namespace ControleDespesas.Dominio.Interfaces
 {
     public interface IPagamentoRepositorio
     {
-        string Salvar(Pagamento pagamento);
-        string Atualizar(Pagamento pagamento);
-        string Deletar(int id);
+        void Salvar(Pagamento pagamento);
+        void Atualizar(Pagamento pagamento);
+        void Deletar(int id);
 
         PagamentoQueryResult Obter(int id);
         List<PagamentoQueryResult> Listar();

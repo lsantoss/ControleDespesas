@@ -14,62 +14,62 @@ namespace ControleDespesas.Testes.Intefaces
 {
     public class IPagamentoRepositorioTest
     {
-        [Fact]
-        public void AdicionarPagamento_DeveRetornarSucesso()
-        {
-            int id = 0;
-            TipoPagamento tipoPagamento = new TipoPagamento(33);
-            Empresa empresa = new Empresa(125);
-            Pessoa pessoa = new Pessoa(45);
-            Descricao250Caracteres descricao = new Descricao250Caracteres("Pagamento do mês de Maio de Luz Elétrica", "Descrição");
-            double valor = 89.75;
-            DateTime dataPagamento = DateTime.Now;
-            DateTime dataVencimento = DateTime.Now.AddDays(1);
-            Pagamento pagamento = new Pagamento(id, tipoPagamento, empresa, pessoa, descricao, valor, dataPagamento, dataVencimento);
+        //[Fact]
+        //public void AdicionarPagamento_DeveRetornarSucesso()
+        //{
+        //    int id = 0;
+        //    TipoPagamento tipoPagamento = new TipoPagamento(33);
+        //    Empresa empresa = new Empresa(125);
+        //    Pessoa pessoa = new Pessoa(45);
+        //    Descricao250Caracteres descricao = new Descricao250Caracteres("Pagamento do mês de Maio de Luz Elétrica", "Descrição");
+        //    double valor = 89.75;
+        //    DateTime dataPagamento = DateTime.Now;
+        //    DateTime dataVencimento = DateTime.Now.AddDays(1);
+        //    Pagamento pagamento = new Pagamento(id, tipoPagamento, empresa, pessoa, descricao, valor, dataPagamento, dataVencimento);
 
-            Mock<IPagamentoRepositorio> mock = new Mock<IPagamentoRepositorio>();
-            mock.Setup(m => m.Salvar(pagamento)).Returns("Sucesso");
-            string resultado = mock.Object.Salvar(pagamento);
-            Assert.Equal("Sucesso", resultado);
-        }
+        //    Mock<IPagamentoRepositorio> mock = new Mock<IPagamentoRepositorio>();
+        //    mock.Setup(m => m.Salvar(pagamento)).Returns("Sucesso");
+        //    string resultado = mock.Object.Salvar(pagamento);
+        //    Assert.Equal("Sucesso", resultado);
+        //}
 
-        [Fact]
-        public void AtualizarPagamento_DeveRetornarSucesso()
-        {
-            int id = 1;
-            TipoPagamento tipoPagamento = new TipoPagamento(33);
-            Empresa empresa = new Empresa(125);
-            Pessoa pessoa = new Pessoa(45);
-            Descricao250Caracteres descricao = new Descricao250Caracteres("Pagamento do mês de Maio de Luz Elétrica", "Descrição");
-            double valor = 89.75;
-            DateTime dataPagamento = DateTime.Now;
-            DateTime dataVencimento = DateTime.Now.AddDays(1);
-            Pagamento pagamento = new Pagamento(id, tipoPagamento, empresa, pessoa, descricao, valor, dataPagamento, dataVencimento);
+        //[Fact]
+        //public void AtualizarPagamento_DeveRetornarSucesso()
+        //{
+        //    int id = 1;
+        //    TipoPagamento tipoPagamento = new TipoPagamento(33);
+        //    Empresa empresa = new Empresa(125);
+        //    Pessoa pessoa = new Pessoa(45);
+        //    Descricao250Caracteres descricao = new Descricao250Caracteres("Pagamento do mês de Maio de Luz Elétrica", "Descrição");
+        //    double valor = 89.75;
+        //    DateTime dataPagamento = DateTime.Now;
+        //    DateTime dataVencimento = DateTime.Now.AddDays(1);
+        //    Pagamento pagamento = new Pagamento(id, tipoPagamento, empresa, pessoa, descricao, valor, dataPagamento, dataVencimento);
 
-            Mock<IPagamentoRepositorio> mock = new Mock<IPagamentoRepositorio>();
-            mock.Setup(m => m.Atualizar(pagamento)).Returns("Sucesso");
-            string resultado = mock.Object.Atualizar(pagamento);
-            Assert.Equal("Sucesso", resultado);
-        }
+        //    Mock<IPagamentoRepositorio> mock = new Mock<IPagamentoRepositorio>();
+        //    mock.Setup(m => m.Atualizar(pagamento)).Returns("Sucesso");
+        //    string resultado = mock.Object.Atualizar(pagamento);
+        //    Assert.Equal("Sucesso", resultado);
+        //}
 
-        [Fact]
-        public void ApagarPagamento_DeveRetornarSucesso()
-        {
-            int id = 1;
-            TipoPagamento tipoPagamento = new TipoPagamento(33);
-            Empresa empresa = new Empresa(125);
-            Pessoa pessoa = new Pessoa(45);
-            Descricao250Caracteres descricao = new Descricao250Caracteres("Pagamento do mês de Maio de Luz Elétrica", "Descrição");
-            double valor = 89.75;
-            DateTime dataPagamento = DateTime.Now;
-            DateTime dataVencimento = DateTime.Now.AddDays(1);
-            Pagamento pagamento = new Pagamento(id, tipoPagamento, empresa, pessoa, descricao, valor, dataPagamento, dataVencimento);
+        //[Fact]
+        //public void ApagarPagamento_DeveRetornarSucesso()
+        //{
+        //    int id = 1;
+        //    TipoPagamento tipoPagamento = new TipoPagamento(33);
+        //    Empresa empresa = new Empresa(125);
+        //    Pessoa pessoa = new Pessoa(45);
+        //    Descricao250Caracteres descricao = new Descricao250Caracteres("Pagamento do mês de Maio de Luz Elétrica", "Descrição");
+        //    double valor = 89.75;
+        //    DateTime dataPagamento = DateTime.Now;
+        //    DateTime dataVencimento = DateTime.Now.AddDays(1);
+        //    Pagamento pagamento = new Pagamento(id, tipoPagamento, empresa, pessoa, descricao, valor, dataPagamento, dataVencimento);
 
-            Mock<IPagamentoRepositorio> mock = new Mock<IPagamentoRepositorio>();
-            mock.Setup(m => m.Deletar(pagamento.Id)).Returns("Sucesso");
-            string resultado = mock.Object.Deletar(pagamento.Id);
-            Assert.Equal("Sucesso", resultado);
-        }
+        //    Mock<IPagamentoRepositorio> mock = new Mock<IPagamentoRepositorio>();
+        //    mock.Setup(m => m.Deletar(pagamento.Id)).Returns("Sucesso");
+        //    string resultado = mock.Object.Deletar(pagamento.Id);
+        //    Assert.Equal("Sucesso", resultado);
+        //}
 
         [Fact]
         public void ObterPagamento_DeveRetornarSucesso()

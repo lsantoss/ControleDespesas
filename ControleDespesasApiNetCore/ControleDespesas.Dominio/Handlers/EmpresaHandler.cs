@@ -53,9 +53,6 @@ namespace ControleDespesas.Dominio.Handlers
 
                 AddNotificacao(empresa.Nome.Notificacoes);
 
-                if (empresa.Id == 0)
-                    AddNotificacao("Id", "Id não está vinculado à operação solicitada");
-
                 if (!_repository.CheckId(empresa.Id))
                     AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");
 
@@ -66,7 +63,7 @@ namespace ControleDespesas.Dominio.Handlers
 
                 object dadosRetorno = EmpresaHelper.GerarDadosRetornoCommandResult(empresa);
 
-                return new CommandResult(true, "Empresa gravada com sucesso!", dadosRetorno);
+                return new CommandResult(true, "Empresa atualizada com sucesso!", dadosRetorno);
             }
             catch (Exception e)
             {
@@ -78,9 +75,6 @@ namespace ControleDespesas.Dominio.Handlers
         {
             try
             {
-                if (command.Id == 0)
-                    AddNotificacao("Id", "Id não está vinculado à operação solicitada");
-
                 if (!_repository.CheckId(command.Id))
                     AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");
 

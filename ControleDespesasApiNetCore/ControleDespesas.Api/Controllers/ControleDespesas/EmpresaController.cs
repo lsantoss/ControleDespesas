@@ -57,16 +57,16 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [Route("v1/Empresas")]
-        public ICommandResult2<List<EmpresaQueryResult>> Empresas()
+        public CommandResult2<List<EmpresaQueryResult>> Empresas()
         {
             try
             {
-                List<EmpresaQueryResult> empresas = _repositorio.Listar();
-                return new CommandResult2(true, "Empesas obtidas com sucesso!", empresas);
+                return new CommandResult2<List<EmpresaQueryResult>>
+                    (true, "Empesas obtidas com sucesso!", _repositorio.Listar());
             }
             catch (Exception e)
             {
-                return new CommandResult2(false, "Erro! " + e.Message, null);
+                return new CommandResult2<List<EmpresaQueryResult>>(false, "Erro! " + e.Message, null);
             }
         }
 

@@ -1,15 +1,12 @@
-﻿using ControleDespesas.Dominio.Query.Empresa;
-using System.Collections.Generic;
-
-namespace ControleDespesas.Dominio.Query
+﻿namespace ControleDespesas.Dominio.Query
 {
-    public class CommandResult2 : ICommandResult2<List<EmpresaQueryResult>>
+    public class CommandResult2<TEntity> where TEntity : class
     {
         public bool Sucesso { get; set; }
         public string Mensagem { get; set; }
-        public List<EmpresaQueryResult> Dados { get; set; }
+        public TEntity Dados { get; set; }
 
-        public CommandResult2(bool sucesso, string mensagem, List<EmpresaQueryResult> dados)
+        public CommandResult2(bool sucesso, string mensagem, TEntity dados)
         {
             Sucesso = sucesso;
             Mensagem = mensagem;

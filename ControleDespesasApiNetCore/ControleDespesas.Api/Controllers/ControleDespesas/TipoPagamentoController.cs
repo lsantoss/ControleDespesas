@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using ControleDespesas.Api.Controllers.Comum;
 using ControleDespesas.Dominio.Commands.TipoPagamento.Input;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Interfaces;
@@ -13,7 +12,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
 {
     [Route("TipoPagamento")]
     [ApiController]
-    public class TipoPagamentoController : ApiController
+    public class TipoPagamentoController
     {
         private readonly ITipoPagamentoRepositorio _repositorio;
         private readonly TipoPagamentoHandler _handler;
@@ -38,7 +37,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
-                return new CommandResult(true, "Disponível", null);
+                return new CommandResult(true, "Sucesso!", "Disponível");
             }
             catch (Exception e)
             {

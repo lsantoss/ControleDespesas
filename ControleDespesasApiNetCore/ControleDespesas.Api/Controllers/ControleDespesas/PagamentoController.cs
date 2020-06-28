@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using ControleDespesas.Api.Controllers.Comum;
 using ControleDespesas.Dominio.Commands.Pagamento.Input;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Interfaces;
@@ -12,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ControleDespesas.Api.Controllers.ControleDespesas
 {
     [Route("Pagamento")]
-    public class PagamentoController : ApiController
+    public class PagamentoController
     {
         private readonly IPagamentoRepositorio _repositorio;
         private readonly PagamentoHandler _handler;
@@ -37,7 +36,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
-                return new CommandResult(true, "Disponível", null);
+                return new CommandResult(true, "Sucesso!", "Disponível");
             }
             catch (Exception e)
             {

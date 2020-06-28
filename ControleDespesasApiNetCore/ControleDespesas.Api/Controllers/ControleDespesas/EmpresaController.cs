@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using ControleDespesas.Api.Controllers.Comum;
 using ControleDespesas.Dominio.Commands.Empresa.Input;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Interfaces;
+using ControleDespesas.Dominio.Query;
 using ControleDespesas.Dominio.Query.Empresa;
 using LSCode.Facilitador.Api.Command;
 using LSCode.Facilitador.Api.InterfacesCommand;
@@ -13,7 +13,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
 {
     [Route("Empresa")]
     [ApiController]
-    public class EmpresaController : ApiController
+    public class EmpresaController
     {
         private readonly IEmpresaRepositorio _repositorio;
         private readonly EmpresaHandler _handler;
@@ -38,7 +38,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
-                return new CommandResult(true, "Disponível", null);
+                return new CommandResult(true, "Sucesso!", "Disponível");
             }
             catch (Exception e)
             {
@@ -57,9 +57,17 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [Route("v1/Empresas")]
-        public List<EmpresaQueryResult> Empresas()
+        public ICommandResult2<List<EmpresaQueryResult>> Empresas()
         {
-            return _repositorio.Listar();
+            try
+            {
+                List<EmpresaQueryResult> empresas = _repositorio.Listar();
+                return new CommandResult2(true, "Empesas obtidas com sucesso!", empresas);
+            }
+            catch (Exception e)
+            {
+                return new CommandResult2(false, "Erro! " + e.Message, null);
+            }
         }
 
         /// <summary>

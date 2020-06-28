@@ -15,7 +15,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
 {
     public class EmpresaRepositorio : IEmpresaRepositorio
     {
-        DynamicParameters parametros = new DynamicParameters();
+        private readonly DynamicParameters _parametros = new DynamicParameters();
         private readonly DbContext _ctx;
 
         public EmpresaRepositorio(IOptions<SettingsInfraData> options)
@@ -27,10 +27,10 @@ namespace ControleDespesas.Infra.Data.Repositorio
         {
             try
             {
-                parametros.Add("Nome", empresa.Nome.ToString(), DbType.String);
-                parametros.Add("Logo", empresa.Logo, DbType.String);
+                _parametros.Add("Nome", empresa.Nome.ToString(), DbType.String);
+                _parametros.Add("Logo", empresa.Logo, DbType.String);
 
-                _ctx.SQLServerConexao.Execute(EmpresaQueries.Salvar, parametros);
+                _ctx.SQLServerConexao.Execute(EmpresaQueries.Salvar, _parametros);
             }
             catch (Exception e)
             {
@@ -42,11 +42,11 @@ namespace ControleDespesas.Infra.Data.Repositorio
         {
             try
             {
-                parametros.Add("Id", empresa.Id, DbType.Int32);
-                parametros.Add("Nome", empresa.Nome.ToString(), DbType.String);
-                parametros.Add("Logo", empresa.Logo, DbType.String);
+                _parametros.Add("Id", empresa.Id, DbType.Int32);
+                _parametros.Add("Nome", empresa.Nome.ToString(), DbType.String);
+                _parametros.Add("Logo", empresa.Logo, DbType.String);
 
-                _ctx.SQLServerConexao.Execute(EmpresaQueries.Atualizar, parametros);
+                _ctx.SQLServerConexao.Execute(EmpresaQueries.Atualizar, _parametros);
             }
             catch (Exception e)
             {
@@ -58,9 +58,9 @@ namespace ControleDespesas.Infra.Data.Repositorio
         {
             try
             {
-                parametros.Add("Id", id, DbType.Int32);                
+                _parametros.Add("Id", id, DbType.Int32);                
 
-                _ctx.SQLServerConexao.Execute(EmpresaQueries.Deletar, parametros);
+                _ctx.SQLServerConexao.Execute(EmpresaQueries.Deletar, _parametros);
             }
             catch (Exception e)
             {
@@ -72,9 +72,9 @@ namespace ControleDespesas.Infra.Data.Repositorio
         {
             try
             {
-                parametros.Add("Id", id, DbType.Int32);
+                _parametros.Add("Id", id, DbType.Int32);
 
-                return _ctx.SQLServerConexao.Query<EmpresaQueryResult>(EmpresaQueries.Obter, parametros).FirstOrDefault();
+                return _ctx.SQLServerConexao.Query<EmpresaQueryResult>(EmpresaQueries.Obter, _parametros).FirstOrDefault();
             }
             catch (Exception e)
             {
@@ -98,9 +98,9 @@ namespace ControleDespesas.Infra.Data.Repositorio
         {
             try
             {
-                parametros.Add("Id", id, DbType.Int32);
+                _parametros.Add("Id", id, DbType.Int32);
 
-                return _ctx.SQLServerConexao.Query<bool>(EmpresaQueries.CheckId, parametros).FirstOrDefault();
+                return _ctx.SQLServerConexao.Query<bool>(EmpresaQueries.CheckId, _parametros).FirstOrDefault();
             }
             catch (Exception e)
             {

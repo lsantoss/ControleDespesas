@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using ControleDespesas.Api.Controllers.Comum;
 using ControleDespesas.Dominio.Commands.Pessoa.Input;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Interfaces;
@@ -13,7 +12,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
 {
     [Route("Pessoa")]
     [ApiController]
-    public class PessoaController : ApiController
+    public class PessoaController
     {
         private readonly IPessoaRepositorio _repositorio;
         private readonly PessoaHandler _handler;
@@ -38,7 +37,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
-                return new CommandResult(true, "Disponível", null);
+                return new CommandResult(true, "Sucesso!", "Disponível");
             }
             catch (Exception e)
             {

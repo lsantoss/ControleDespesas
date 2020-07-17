@@ -13,8 +13,8 @@ namespace ControleDespesas.Dominio.Helpers
         {
             try
             {
-                Descricao50Caracteres login = new Descricao50Caracteres(command.Login, "Login");
-                Descricao50Caracteres senha = new Descricao50Caracteres(command.Senha, "Senha");
+                Texto login = new Texto(command.Login, "Login", 50);
+                Texto senha = new Texto(command.Senha, "Senha", 50);
                 EPrivilegioUsuario privilegio = command.Privilegio;
 
                 Usuario usuario = new Usuario(0, login, senha, privilegio);
@@ -31,8 +31,8 @@ namespace ControleDespesas.Dominio.Helpers
             try
             {
                 int id = command.Id;
-                Descricao50Caracteres login = new Descricao50Caracteres(command.Login, "Login");
-                Descricao50Caracteres senha = new Descricao50Caracteres(command.Senha, "Senha");
+                Texto login = new Texto(command.Login, "Login", 50);
+                Texto senha = new Texto(command.Senha, "Senha", 50);
                 EPrivilegioUsuario privilegio = command.Privilegio;
 
                 Usuario usuario = new Usuario(id, login, senha, privilegio);

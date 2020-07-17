@@ -10,7 +10,7 @@ namespace ControleDespesas.Dominio.Entidades
         public TipoPagamento TipoPagamento { get; set; }
         public Empresa Empresa { get; set; }
         public Pessoa Pessoa { get; set; }
-        public Descricao250Caracteres Descricao { get; set; }
+        public Texto Descricao { get; set; }
         public double Valor { get; set; }
         public DateTime DataPagamento { get; set; }
         public DateTime DataVencimento { get; set; }
@@ -18,8 +18,8 @@ namespace ControleDespesas.Dominio.Entidades
         public Pagamento(int id, 
                          TipoPagamento tipoPagamento, 
                          Empresa empresa, 
-                         Pessoa pessoa, 
-                         Descricao250Caracteres descricao, 
+                         Pessoa pessoa,
+                         Texto descricao, 
                          double valor, 
                          DateTime dataPagamento, 
                          DateTime dataVencimento)

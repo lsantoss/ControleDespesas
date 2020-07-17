@@ -11,7 +11,7 @@ namespace ControleDespesas.Dominio.Helpers
         {
             try
             {
-                Descricao100Caracteres nome = new Descricao100Caracteres(command.Nome, "Nome");
+                Texto nome = new Texto(command.Nome, "Nome", 100);
                 string imagemPerfil = command.ImagemPerfil;
 
                 Pessoa pessoa = new Pessoa(0, nome, imagemPerfil);
@@ -28,7 +28,7 @@ namespace ControleDespesas.Dominio.Helpers
             try
             {
                 int id = command.Id;
-                Descricao100Caracteres nome = new Descricao100Caracteres(command.Nome, "Nome");
+                Texto nome = new Texto(command.Nome, "Nome", 100);
                 string imagemPerfil = command.ImagemPerfil;
 
                 Pessoa pessoa = new Pessoa(id, nome, imagemPerfil);

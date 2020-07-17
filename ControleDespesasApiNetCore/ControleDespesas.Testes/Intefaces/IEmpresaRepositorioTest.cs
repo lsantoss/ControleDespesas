@@ -43,7 +43,7 @@ namespace ControleDespesas.Testes.Intefaces
         [Fact]
         public void ObterEmpresa_DeveRetornarSucesso()
         {
-            Empresa empresa = new Empresa(1, new Descricao100Caracteres("Oi", "Nome"), "base64String");
+            Empresa empresa = new Empresa(1, new Texto("Oi", "Nome", 100), "base64String");
 
             EmpresaQueryResult empresaQueryResult = new EmpresaQueryResult
             {
@@ -61,7 +61,7 @@ namespace ControleDespesas.Testes.Intefaces
         [Fact]
         public void ListarEmpresas_DeveRetornarSucesso()
         {
-            Empresa empresa = new Empresa(1, new Descricao100Caracteres("Oi", "Nome"), "base64String");
+            Empresa empresa = new Empresa(1, new Texto("Oi", "Nome", 100), "base64String");
 
             List<EmpresaQueryResult> listaEmpresasQueryResult = new List<EmpresaQueryResult>();
             listaEmpresasQueryResult.Add(new EmpresaQueryResult
@@ -86,7 +86,7 @@ namespace ControleDespesas.Testes.Intefaces
         [Fact]
         public void CheckId_DeveRetornarSucesso()
         {
-            Empresa empresa = new Empresa(1, new Descricao100Caracteres("Oi", "Nome"), "base64String");
+            Empresa empresa = new Empresa(1, new Texto("Oi", "Nome", 100), "base64String");
             Mock<IEmpresaRepositorio> mock = new Mock<IEmpresaRepositorio>();
             mock.Setup(m => m.CheckId(empresa.Id)).Returns(true);
             bool resultado = mock.Object.CheckId(empresa.Id);

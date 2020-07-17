@@ -14,7 +14,7 @@ namespace ControleDespesas.Dominio.Helpers
                 TipoPagamento tipoPagamento = new TipoPagamento(command.IdTipoPagamento);
                 Empresa empresa = new Empresa(command.IdEmpresa);
                 Pessoa pessoa = new Pessoa(command.IdPessoa);
-                Descricao250Caracteres descricao = new Descricao250Caracteres(command.Descricao, "Descrição");
+                Texto descricao = new Texto(command.Descricao, "Descrição", 250);
                 double valor = command.Valor;
                 DateTime dataPagamento = command.DataPagamento;
                 DateTime dataVencimento = command.DataVencimento;
@@ -36,7 +36,7 @@ namespace ControleDespesas.Dominio.Helpers
                 TipoPagamento tipoPagamento = new TipoPagamento(command.IdTipoPagamento);
                 Empresa empresa = new Empresa(command.IdEmpresa);
                 Pessoa pessoa = new Pessoa(command.IdPessoa);
-                Descricao250Caracteres descricao = new Descricao250Caracteres(command.Descricao, "Descrição");
+                Texto descricao = new Texto(command.Descricao, "Descrição", 250);
                 double valor = command.Valor;
                 DateTime dataPagamento = command.DataPagamento;
                 DateTime dataVencimento = command.DataVencimento;

@@ -43,7 +43,7 @@ namespace ControleDespesas.Testes.Intefaces
         [Fact]
         public void ObterTipoPagamento_DeveRetornarSucesso()
         {
-            TipoPagamento tipoPagamento = new TipoPagamento(1, new Descricao250Caracteres("Luz Elétrica", "Descrição"));
+            TipoPagamento tipoPagamento = new TipoPagamento(1, new Texto("Luz Elétrica", "Descrição", 250));
 
             TipoPagamentoQueryResult tipoPagamentoQueryResult = new TipoPagamentoQueryResult
             {
@@ -60,7 +60,7 @@ namespace ControleDespesas.Testes.Intefaces
         [Fact]
         public void ListarTipoPagamento_DeveRetornarSucesso()
         {
-            TipoPagamento tipoPagamento = new TipoPagamento(1, new Descricao250Caracteres("Luz Eletríca", "Descrição"));
+            TipoPagamento tipoPagamento = new TipoPagamento(1, new Texto("Luz Eletríca", "Descrição", 250));
 
             List<TipoPagamentoQueryResult> listaTipoPagamentoQueryResult = new List<TipoPagamentoQueryResult>();
             listaTipoPagamentoQueryResult.Add(new TipoPagamentoQueryResult
@@ -83,7 +83,7 @@ namespace ControleDespesas.Testes.Intefaces
         [Fact]
         public void CheckId_DeveRetornarSucesso()
         {
-            TipoPagamento tipoPagamento = new TipoPagamento(1, new Descricao250Caracteres("Luz Eletríca", "Descrição"));
+            TipoPagamento tipoPagamento = new TipoPagamento(1, new Texto("Luz Eletríca", "Descrição", 250));
             Mock<ITipoPagamentoRepositorio> mock = new Mock<ITipoPagamentoRepositorio>();
             mock.Setup(m => m.CheckId(tipoPagamento.Id)).Returns(true);
             bool resultado = mock.Object.CheckId(tipoPagamento.Id);

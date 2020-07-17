@@ -6,9 +6,9 @@ namespace ControleDespesas.Dominio.Entidades
     public class TipoPagamento : Notificadora
     {
         public int Id { get; set; }
-        public Descricao250Caracteres Descricao { get; set; }
+        public Texto Descricao { get; set; }
 
-        public TipoPagamento(int id, Descricao250Caracteres descricao)
+        public TipoPagamento(int id, Texto descricao)
         {
             Id = id;
             Descricao = descricao;

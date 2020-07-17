@@ -43,7 +43,7 @@ namespace ControleDespesas.Testes.Intefaces
         [Fact]
         public void ObterPessoa_DeveRetornarSucesso()
         {
-            Pessoa pessoa = new Pessoa(1, new Descricao100Caracteres("Lucas", "Nome"), "base64String");
+            Pessoa pessoa = new Pessoa(1, new Texto("Lucas", "Nome", 100), "base64String");
 
             PessoaQueryResult pessoaQueryResult = new PessoaQueryResult
             {
@@ -61,7 +61,7 @@ namespace ControleDespesas.Testes.Intefaces
         [Fact]
         public void ListarPessoas_DeveRetornarSucesso()
         {
-            Pessoa pessoa = new Pessoa(1, new Descricao100Caracteres("Lucas", "Nome"), "base64String");
+            Pessoa pessoa = new Pessoa(1, new Texto("Lucas", "Nome", 100), "base64String");
 
             List<PessoaQueryResult> listaPessoasQueryResult = new List<PessoaQueryResult>();
             listaPessoasQueryResult.Add(new PessoaQueryResult
@@ -86,7 +86,7 @@ namespace ControleDespesas.Testes.Intefaces
         [Fact]
         public void CheckId_DeveRetornarSucesso()
         {
-            Pessoa pessoa = new Pessoa(1, new Descricao100Caracteres("Lucas", "Nome"), "base64String");
+            Pessoa pessoa = new Pessoa(1, new Texto("Lucas", "Nome", 100), "base64String");
             Mock<IPessoaRepositorio> mock = new Mock<IPessoaRepositorio>();
             mock.Setup(m => m.CheckId(pessoa.Id)).Returns(true);
             bool resultado = mock.Object.CheckId(pessoa.Id);

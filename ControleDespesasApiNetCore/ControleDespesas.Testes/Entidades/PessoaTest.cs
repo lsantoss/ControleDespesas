@@ -11,7 +11,7 @@ namespace ControleDespesas.Testes.Entidades
         public PessoaTest()
         {
             int id = 1;
-            Descricao100Caracteres nome = new Descricao100Caracteres("Lucas", "Nome");
+            Texto nome = new Texto("Lucas", "Nome", 100);
             string imagemPerfil = "base64String";
             _pessoaTeste = new Pessoa(id, nome, imagemPerfil);
         }
@@ -31,7 +31,7 @@ namespace ControleDespesas.Testes.Entidades
 
             Pessoa pessoa = new Pessoa(
                 _pessoaTeste.Id,
-                new Descricao100Caracteres(nomeLongo, "Nome"),
+                new Texto(nomeLongo, "Nome", 100),
                 _pessoaTeste.ImagemPerfil
             );
 

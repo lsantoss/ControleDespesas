@@ -11,7 +11,7 @@ namespace ControleDespesas.Testes.Entidades
         public TipoPagamentoTest()
         {
             int id = 1;
-            Descricao250Caracteres descricao = new Descricao250Caracteres("Luz Elétrica", "Descrição");
+            Texto descricao = new Texto("Luz Elétrica", "Descrição", 250);
             _tipoPagamentoTeste = new TipoPagamento(id, descricao);
         }
 
@@ -32,7 +32,7 @@ namespace ControleDespesas.Testes.Entidades
 
             TipoPagamento tipoPagamento = new TipoPagamento(
                 _tipoPagamentoTeste.Id,
-                new Descricao250Caracteres(descricaoLonga, "Descrição")
+                new Texto(descricaoLonga, "Descrição", 250)
             );
 
             bool resultado = tipoPagamento.Descricao.Valido;

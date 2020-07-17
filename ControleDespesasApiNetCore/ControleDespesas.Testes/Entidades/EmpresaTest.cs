@@ -11,7 +11,7 @@ namespace ControleDespesas.Testes.Entidades
         public EmpresaTest()
         {
             int id = 1;
-            Descricao100Caracteres nome = new Descricao100Caracteres("Oi", "Nome");
+            Texto nome = new Texto("Oi", "Nome", 100);
             string logo = "base64String";
             _empresaTeste = new Empresa(id, nome, logo);
         }
@@ -31,7 +31,7 @@ namespace ControleDespesas.Testes.Entidades
 
             Empresa empresa = new Empresa(
                 _empresaTeste.Id,
-                new Descricao100Caracteres(nomeLongo, "Nome"),
+                new Texto(nomeLongo, "Nome", 100),
                 _empresaTeste.Logo
             );
 

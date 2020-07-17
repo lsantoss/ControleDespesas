@@ -11,7 +11,7 @@ namespace ControleDespesas.Dominio.Helpers
         {
             try
             {
-                Descricao250Caracteres descricao = new Descricao250Caracteres(command.Descricao, "Descrição");
+                Texto descricao = new Texto(command.Descricao, "Descrição", 250);
 
                 TipoPagamento tipoPagamento = new TipoPagamento(0, descricao);
                 return tipoPagamento;
@@ -27,7 +27,7 @@ namespace ControleDespesas.Dominio.Helpers
             try
             {
                 int id = command.Id;
-                Descricao250Caracteres descricao = new Descricao250Caracteres(command.Descricao, "Descrição");
+                Texto descricao = new Texto(command.Descricao, "Descrição", 250);
 
                 TipoPagamento tipoPagamento = new TipoPagamento(id, descricao);
                 return tipoPagamento;

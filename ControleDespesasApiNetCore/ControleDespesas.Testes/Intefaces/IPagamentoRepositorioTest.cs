@@ -78,7 +78,7 @@ namespace ControleDespesas.Testes.Intefaces
             TipoPagamento tipoPagamento = new TipoPagamento(33);
             Empresa empresa = new Empresa(125);
             Pessoa pessoa = new Pessoa(45);
-            Descricao250Caracteres descricao = new Descricao250Caracteres("Pagamento do mês de Maio de Luz Elétrica", "Descrição");
+            Texto descricao = new Texto("Pagamento do mês de Maio de Luz Elétrica", "Descrição", 250);
             double valor = 89.75;
             DateTime dataPagamento = DateTime.Now;
             DateTime dataVencimento = DateTime.Now.AddDays(1);
@@ -123,7 +123,7 @@ namespace ControleDespesas.Testes.Intefaces
             TipoPagamento tipoPagamento = new TipoPagamento(33);
             Empresa empresa = new Empresa(125);
             Pessoa pessoa = new Pessoa(45);
-            Descricao250Caracteres descricao = new Descricao250Caracteres("Pagamento do mês de Maio de Luz Elétrica", "Descrição");
+            Texto descricao = new Texto("Pagamento do mês de Maio de Luz Elétrica", "Descrição", 250);
             double valor = 89.75;
             DateTime dataPagamento = DateTime.Now;
             DateTime dataVencimento = DateTime.Now.AddDays(1);
@@ -194,7 +194,7 @@ namespace ControleDespesas.Testes.Intefaces
             TipoPagamento tipoPagamento = new TipoPagamento(33);
             Empresa empresa = new Empresa(125);
             Pessoa pessoa = new Pessoa(45);
-            Descricao250Caracteres descricao = new Descricao250Caracteres("Pagamento do mês de Maio de Luz Elétrica", "Descrição");
+            Texto descricao = new Texto("Pagamento do mês de Maio de Luz Elétrica", "Descrição", 250);
             double valor = 89.75;
             DateTime dataPagamento = DateTime.Now;
             DateTime dataVencimento = DateTime.Now.AddDays(1);

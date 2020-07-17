@@ -15,7 +15,7 @@ namespace ControleDespesas.Testes.Entidades
             TipoPagamento tipoPagamento = new TipoPagamento(33);
             Empresa empresa = new Empresa(125);
             Pessoa pessoa = new Pessoa(45);
-            Descricao250Caracteres descricao = new Descricao250Caracteres("Pagamento do mês de Maio de Luz Elétrica", "Descrição");
+            Texto descricao = new Texto("Pagamento do mês de Maio de Luz Elétrica", "Descrição", 250);
             double valor = 89.75;
             DateTime dataPagamento = DateTime.Now;
             DateTime dataVencimento = DateTime.Now.AddDays(1);
@@ -42,7 +42,7 @@ namespace ControleDespesas.Testes.Entidades
                 _pagamentoTeste.TipoPagamento,
                 _pagamentoTeste.Empresa,
                 _pagamentoTeste.Pessoa,
-                new Descricao250Caracteres(descricaoLonga, "Descrição"),
+                new Texto(descricaoLonga, "Descrição", 250),
                 _pagamentoTeste.Valor, 
                 _pagamentoTeste.DataPagamento,
                 _pagamentoTeste.DataVencimento

@@ -108,7 +108,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
                 if (!command.ValidarCommand())
                     return new CommandResult(false, "Erro! Dados de entrada incorretos", command.Notificacoes);
 
-                return (CommandResult)_handler.Handle(command);
+                return _handler.Handle(command);
             }
             catch (Exception e)
             {
@@ -137,7 +137,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
                 if (!command.ValidarCommand())
                     return new CommandResult(false, "Erro! Dados de entrada incorretos", command.Notificacoes);
 
-                return (CommandResult)_handler.Handle(command);
+                return _handler.Handle(command);
             }
             catch (Exception e)
             {
@@ -166,7 +166,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
                 if (!command.ValidarCommand())
                     return new CommandResult(false, "Erro! Dados de entrada incorretos", command.Notificacoes);
 
-                return (CommandResult)_handler.Handle(command);
+                return _handler.Handle(command);
             }
             catch (Exception e)
             {

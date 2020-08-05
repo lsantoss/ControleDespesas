@@ -5,8 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LSCode.Facilitador.Api" Version="2.0.0" />
     <PackageReference Include="LSCode.Validador" Version="1.7.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\LSCode.Facilitador.Api\LSCode.Facilitador.Api\LSCode.Facilitador.Api.csproj" />
   </ItemGroup>
 
 </Project>

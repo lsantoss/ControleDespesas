@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using ControleDespesas.Dominio.Commands.Empresa.Input;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Interfaces;
-using ControleDespesas.Dominio.Query;
 using ControleDespesas.Dominio.Query.Empresa;
 using LSCode.Facilitador.Api.InterfacesCommand;
 using LSCode.Facilitador.Api.Results;
@@ -35,15 +34,15 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [Route("v1/HealthCheck")]
-        public ActionResult<ApiResponse<string>> EmpresaHealthCheck()
+        public ActionResult<ApiResponse<string, Notificacao>> EmpresaHealthCheck()
         {
             try
             {
-                return StatusCode(StatusCodes.Status200OK, new ApiResponse<string>("Sucesso", "API Controle de Despesas - Empresa OK"));
+                return StatusCode(StatusCodes.Status200OK, new ApiResponse<string, Notificacao>("Sucesso", "API Controle de Despesas - Empresa OK"));
             }
             catch (Exception e)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object>("Erro", new List<Erro>() { new Erro { Propriedade = "Erro", Mensagem = e.Message } }));
+                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
             }
         }
 
@@ -56,47 +55,47 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [Route("v1/Empresas")]
-        public ActionResult<ApiResponse<List<EmpresaQueryResult>>> Empresas()
+        public ActionResult<ApiResponse<List<EmpresaQueryResult>, Notificacao>> Empresas()
         {
             try
             {
                 var result = _repositorio.Listar();
 
                 if (result != null)
-                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<EmpresaQueryResult>>("Lista de empresas obtida com sucesso", result));
+                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<EmpresaQueryResult>, Notificacao>("Lista de empresas obtida com sucesso", result));
                 else
-                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<EmpresaQueryResult>>("Nenhuma empresa cadastrada atualmente", new List<EmpresaQueryResult>()));
+                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<EmpresaQueryResult>, Notificacao>("Nenhuma empresa cadastrada atualmente", new List<EmpresaQueryResult>()));
             }
             catch (Exception e)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object>("Erro", new List<Erro>() { new Erro { Propriedade = "Erro", Mensagem = e.Message } }));
+                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
             }
         }
 
         /// <summary>
         /// Empresa
         /// </summary>                
-        /// <remarks><h2><b>Consulta a Empresa.</b></h2></remarks>
+        /// <remarks><h2><b>Consulta a Empresa pelo Id.</b></h2></remarks>
         /// <param name="Id">Parâmetro requerido Id da Empresa</param>
         /// <response code="200">OK Request</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [Route("v1/Empresa/{Id:int}")]
-        public ActionResult<ApiResponse<EmpresaQueryResult>> Empresa(int Id)
+        public ActionResult<ApiResponse<EmpresaQueryResult, Notificacao>> Empresa(int Id)
         {
             try
             {
                 var result = _repositorio.Obter(Id);
 
                 if (result != null)
-                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<EmpresaQueryResult>("Empresa obtida com sucesso", result));
+                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<EmpresaQueryResult, Notificacao>("Empresa obtida com sucesso", result));
                 else
-                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<EmpresaQueryResult>("Empresa não cadastrada.", result));
+                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<EmpresaQueryResult, Notificacao>("Empresa não cadastrada.", result));
             }
             catch (Exception e)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object>("Erro", new List<Erro>() { new Erro { Propriedade = "Erro", Mensagem = e.Message } }));
+                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
             }
         }
 
@@ -110,86 +109,96 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="401">Unauthorized</response>
         /// <response code="500">Internal Server Error</response>
         [HttpPost]
-        [Route("v1/EmpresaNovo")]
-        public ActionResult<ApiResponse<ICommandResult>> EmpresaNovo([FromBody] AdicionarEmpresaCommand command)
+        [Route("v1/EmpresaInserir")]
+        public ActionResult<ApiResponse<ICommandResult<Notificacao>, Notificacao>> EmpresaInserir([FromBody] AdicionarEmpresaCommand command)
         {
             try
             {
                 if (command == null)
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object>("Parâmentros inválidos", new List<Erro>() { new Erro { Propriedade = "Parâmetros de entrada", Mensagem = "Parâmetros de entrada estão nulos" } }));
+                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
 
                 if (!command.ValidarCommand())
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object>("Parâmentros inválidos", (IReadOnlyCollection<Erro>) command.Notificacoes));
+                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
 
                 var result = _handler.Handler(command);
 
                 if (result.Sucesso)
-                    return StatusCode(StatusCodes.Status200OK, result);
+                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
                 else
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object>(result.Mensagem, (IReadOnlyCollection<Erro>) result.Dados));
+                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
             }
             catch (Exception e)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object>("Erro", new List<Erro>() { new Erro { Propriedade = "Erro", Mensagem = e.Message } }));
+                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
             }
         }
 
-        ///// <summary>
-        ///// Alterar Empresa
-        ///// </summary>        
-        ///// <remarks><h2><b>Altera Empresa na base de dados.</b></h2></remarks>        
-        ///// <param name="command">Parâmetro requerido command de Update</param>
-        ///// <response code="200">OK Request</response>
-        ///// <response code="400">Bad Request</response>
-        ///// <response code="401">Unauthorized</response>
-        ///// <response code="500">Internal Server Error</response>
-        //[HttpPut]
-        //[Route("v1/EmpresaAlterar")]
-        //public ICommandResult EmpresaAlterar([FromBody] AtualizarEmpresaCommand command)
-        //{
-        //    try
-        //    {
-        //        if (command == null)
-        //            return new CommandResult(false, "Erro!", "Dados de entrada nulos");
+        /// <summary>
+        /// Alterar Empresa
+        /// </summary>        
+        /// <remarks><h2><b>Altera Empresa na base de dados.</b></h2></remarks>        
+        /// <param name="command">Parâmetro requerido command de Update</param>
+        /// <response code="200">OK Request</response>
+        /// <response code="400">Bad Request</response>
+        /// <response code="401">Unauthorized</response>
+        /// <response code="500">Internal Server Error</response>
+        [HttpPut]
+        [Route("v1/EmpresaAlterar")]
+        public ActionResult<ApiResponse<ICommandResult<Notificacao>, Notificacao>> EmpresaAlterar([FromBody] AtualizarEmpresaCommand command)
+        {
+            try
+            {
+                if (command == null)
+                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
 
-        //        if (!command.ValidarCommand())
-        //            return new CommandResult(false, "Erro! Dados de entrada incorretos", command.Notificacoes);
+                if (!command.ValidarCommand())
+                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
 
-        //        return _handler.Handler(command);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return new CommandResult(false, "Erro!", e.Message);
-        //    }
-        //}
+                var result = _handler.Handler(command);
 
-        ///// <summary>
-        ///// Excluir Empresa
-        ///// </summary>                
-        ///// <remarks><h2><b>Exclui Empresa na base de dados.</b></h2></remarks>
-        ///// <param name="command">Parâmetro requerido command de Delete</param>
-        ///// <response code="200">OK Request</response>
-        ///// <response code="400">Bad Request</response>
-        ///// <response code="401">Unauthorized</response>
-        ///// <response code="500">Internal Server Error</response>
-        //[HttpDelete]
-        //[Route("v1/EmpresaExcluir")]
-        //public ICommandResult EmpresaExcluir([FromBody] ApagarEmpresaCommand command)
-        //{
-        //    try
-        //    {
-        //        if (command == null)
-        //            return new CommandResult(false, "Erro!", "Dados de entrada nulos");
+                if (result.Sucesso)
+                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
+                else
+                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
+            }
+        }
 
-        //        if (!command.ValidarCommand())
-        //            return new CommandResult(false, "Erro! Dados de entrada incorretos", command.Notificacoes);
+        /// <summary>
+        /// Excluir Empresa
+        /// </summary>                
+        /// <remarks><h2><b>Exclui Empresa na base de dados.</b></h2></remarks>
+        /// <param name="command">Parâmetro requerido command de Delete</param>
+        /// <response code="200">OK Request</response>
+        /// <response code="400">Bad Request</response>
+        /// <response code="401">Unauthorized</response>
+        /// <response code="500">Internal Server Error</response>
+        [HttpDelete]
+        [Route("v1/EmpresaExcluir")]
+        public ActionResult<ApiResponse<ICommandResult<Notificacao>, Notificacao>> EmpresaExcluir([FromBody] ApagarEmpresaCommand command)
+        {
+            try
+            {
+                if (command == null)
+                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
 
-        //        return _handler.Handler(command);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return new CommandResult(false, "Erro!", e.Message);
-        //    }
-        //}
+                if (!command.ValidarCommand())
+                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
+
+                var result = _handler.Handler(command);
+
+                if (result.Sucesso)
+                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
+                else
+                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
+            }
+        }
     }
 }

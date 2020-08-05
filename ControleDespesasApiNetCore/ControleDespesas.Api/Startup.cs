@@ -42,11 +42,11 @@ namespace ControleDespesas.Api
             #endregion
 
             #region Handler
-            services.AddTransient<PessoaHandler, PessoaHandler>();
+            //services.AddTransient<PessoaHandler, PessoaHandler>();
             services.AddTransient<EmpresaHandler, EmpresaHandler>();
-            services.AddTransient<TipoPagamentoHandler, TipoPagamentoHandler>();
-            services.AddTransient<PagamentoHandler, PagamentoHandler>();
-            services.AddTransient<UsuarioHandler, UsuarioHandler>();
+            //services.AddTransient<TipoPagamentoHandler, TipoPagamentoHandler>();
+            //services.AddTransient<PagamentoHandler, PagamentoHandler>();
+            //services.AddTransient<UsuarioHandler, UsuarioHandler>();
             #endregion
 
             #region Swagger

@@ -9,6 +9,6 @@ CREATE TABLE Pagamento (
                                     NOT NULL,
     Descricao       NVARCHAR (250)  NOT NULL,
     Valor           DECIMAL (10, 2) NOT NULL,
-    DataPagamento   DATETIME        NOT NULL,
-    DataVencimento  DATETIME        NOT NULL
+    DataVencimento  DATETIME        NOT NULL,
+    DataPagamento   DATETIME        NULL
 );

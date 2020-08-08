@@ -117,7 +117,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpPost]
         [Route("v1/PessoaInserir")]
-        public ActionResult<ApiResponse<AdicionarPessoaCommandOutput, Notificacao>> PessoaNovo([FromBody] AdicionarPessoaCommand command)
+        public ActionResult<ApiResponse<AdicionarPessoaCommandOutput, Notificacao>> PessoaInserir([FromBody] AdicionarPessoaCommand command)
         {
             try
             {

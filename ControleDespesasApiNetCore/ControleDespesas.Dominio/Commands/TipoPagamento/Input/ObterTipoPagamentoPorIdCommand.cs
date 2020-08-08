@@ -4,16 +4,15 @@ using System;
 
 namespace ControleDespesas.Dominio.Commands.TipoPagamento.Input
 {
-    public class AdicionarTipoPagamentoCommand : Notificadora, CommandPadrao
-    {   
-        public string Descricao { get; set; }
+    public class ObterTipoPagamentoPorIdCommand : Notificadora, CommandPadrao
+    {
+        public int Id { get; set; }
 
         public bool ValidarCommand()
         {
             try
             {
-                AddNotificacao(new ContratoValidacao().NaoEhNuloOuVazio(Descricao, "Descrição", "Descrição é um campo obrigatório"));
-                AddNotificacao(new ContratoValidacao().TamanhoMaximo(Descricao, 250, "Descrição", "Descrição maior que o esperado"));
+                AddNotificacao(new ContratoValidacao().EhMaior(Id, 0, "Id", "Id não é valido"));
 
                 return Valido;
             }

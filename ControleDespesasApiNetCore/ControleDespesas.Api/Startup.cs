@@ -44,7 +44,7 @@ namespace ControleDespesas.Api
             #region Handler
             services.AddTransient<PessoaHandler, PessoaHandler>();
             services.AddTransient<EmpresaHandler, EmpresaHandler>();
-            //services.AddTransient<TipoPagamentoHandler, TipoPagamentoHandler>();
+            services.AddTransient<TipoPagamentoHandler, TipoPagamentoHandler>();
             //services.AddTransient<PagamentoHandler, PagamentoHandler>();
             //services.AddTransient<UsuarioHandler, UsuarioHandler>();
             #endregion

@@ -15,7 +15,7 @@ namespace ControleDespesas.Dominio.Commands.TipoPagamento.Input
             {
                 AddNotificacao(new ContratoValidacao().EhMaior(Id, 0, "Id", "Id não é valido"));
 
-                AddNotificacao(new ContratoValidacao().TamanhoMinimo(Descricao, 1, "Descrição", "Descrição é um campo obrigatório"));
+                AddNotificacao(new ContratoValidacao().NaoEhNuloOuVazio(Descricao, "Descrição", "Descrição é um campo obrigatório"));
                 AddNotificacao(new ContratoValidacao().TamanhoMaximo(Descricao, 250, "Descrição", "Descrição maior que o esperado"));
 
                 return Valido;

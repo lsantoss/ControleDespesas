@@ -1,4 +1,5 @@
 ﻿using ControleDespesas.Dominio.Commands.Pessoa.Input;
+using ControleDespesas.Dominio.Commands.Pessoa.Output;
 using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Helpers;
 using ControleDespesas.Dominio.Interfaces;
@@ -35,7 +36,7 @@ namespace ControleDespesas.Dominio.Handlers
 
                 pessoa.Id = _repository.LocalizarMaxId();
 
-                object dadosRetorno = PessoaHelper.GerarDadosRetornoInsert(pessoa);
+                AdicionarPessoaCommandOutput dadosRetorno = PessoaHelper.GerarDadosRetornoInsert(pessoa);
 
                 return new CommandResult<Notificacao>("Pessoa gravada com sucesso!", dadosRetorno);
             }
@@ -64,7 +65,7 @@ namespace ControleDespesas.Dominio.Handlers
 
                 _repository.Atualizar(pessoa);
 
-                object dadosRetorno = PessoaHelper.GerarDadosRetornoUpdate(pessoa);
+                AtualizarPessoaCommandOutput dadosRetorno = PessoaHelper.GerarDadosRetornoUpdate(pessoa);
 
                 return new CommandResult<Notificacao>("Pessoa atualizada com sucesso!", dadosRetorno);
 
@@ -87,7 +88,7 @@ namespace ControleDespesas.Dominio.Handlers
 
                 _repository.Deletar(command.Id);
 
-                object dadosRetorno = PessoaHelper.GerarDadosRetornoDelete(command.Id);
+                ApagarPessoaCommandOutput dadosRetorno = PessoaHelper.GerarDadosRetornoDelete(command.Id);
 
                 return new CommandResult<Notificacao>("Pessoa excluída com sucesso!", dadosRetorno);
             }

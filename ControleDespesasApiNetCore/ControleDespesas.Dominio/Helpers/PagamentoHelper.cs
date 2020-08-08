@@ -1,4 +1,5 @@
 ﻿using ControleDespesas.Dominio.Commands.Pagamento.Input;
+using ControleDespesas.Dominio.Commands.Pagamento.Output;
 using ControleDespesas.Dominio.Entidades;
 using LSCode.Validador.ValueObjects;
 using System;
@@ -16,10 +17,10 @@ namespace ControleDespesas.Dominio.Helpers
                 Pessoa pessoa = new Pessoa(command.IdPessoa);
                 Texto descricao = new Texto(command.Descricao, "Descrição", 250);
                 double valor = command.Valor;
-                DateTime dataPagamento = command.DataPagamento;
                 DateTime dataVencimento = command.DataVencimento;
+                DateTime? dataPagamento = command.DataPagamento;
 
-                Pagamento pagamento = new Pagamento(0, tipoPagamento, empresa, pessoa, descricao, valor, dataPagamento, dataVencimento);
+                Pagamento pagamento = new Pagamento(0, tipoPagamento, empresa, pessoa, descricao, valor, dataVencimento, dataPagamento);
                 return pagamento;
             }
             catch (Exception e)
@@ -38,10 +39,10 @@ namespace ControleDespesas.Dominio.Helpers
                 Pessoa pessoa = new Pessoa(command.IdPessoa);
                 Texto descricao = new Texto(command.Descricao, "Descrição", 250);
                 double valor = command.Valor;
-                DateTime dataPagamento = command.DataPagamento;
                 DateTime dataVencimento = command.DataVencimento;
+                DateTime? dataPagamento = command.DataPagamento;
 
-                Pagamento pagamento = new Pagamento(id, tipoPagamento, empresa, pessoa, descricao, valor, dataPagamento, dataVencimento);
+                Pagamento pagamento = new Pagamento(id, tipoPagamento, empresa, pessoa, descricao, valor, dataVencimento, dataPagamento);
                 return pagamento;
             }
             catch (Exception e)
@@ -50,11 +51,11 @@ namespace ControleDespesas.Dominio.Helpers
             }
         }
 
-        public static object GerarDadosRetornoCommandResult(Pagamento pagamento)
+        public static AdicionarPagamentoCommandOutput GerarDadosRetornoInsert(Pagamento pagamento)
         {
             try
             {
-                return new
+                return new AdicionarPagamentoCommandOutput
                 {
                     Id = pagamento.Id,
                     IdTipoPagamento = pagamento.TipoPagamento.Id,
@@ -62,9 +63,43 @@ namespace ControleDespesas.Dominio.Helpers
                     IdPessoa = pagamento.Pessoa.Id,
                     Descricao = pagamento.Descricao.ToString(),
                     Valor = pagamento.Valor,
-                    DataPagamento = pagamento.DataPagamento,
-                    DataVencimento = pagamento.DataVencimento
+                    DataVencimento = pagamento.DataVencimento,
+                    DataPagamento = pagamento.DataPagamento
                 };
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public static AtualizarPagamentoCommandOutput GerarDadosRetornoUpdate(Pagamento pagamento)
+        {
+            try
+            {
+                return new AtualizarPagamentoCommandOutput
+                {
+                    Id = pagamento.Id,
+                    IdTipoPagamento = pagamento.TipoPagamento.Id,
+                    IdEmpresa = pagamento.Empresa.Id,
+                    IdPessoa = pagamento.Pessoa.Id,
+                    Descricao = pagamento.Descricao.ToString(),
+                    Valor = pagamento.Valor,
+                    DataVencimento = pagamento.DataVencimento,
+                    DataPagamento = pagamento.DataPagamento
+                };
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public static ApagarPagamentoCommandoutput GerarDadosRetornoDelete(int id)
+        {
+            try
+            {
+                return new ApagarPagamentoCommandoutput { Id = id };
             }
             catch (Exception e)
             {

@@ -12,8 +12,8 @@ namespace ControleDespesas.Dominio.Commands.Pagamento.Input
         public int IdPessoa { get; set; }
         public string Descricao { get; set; }
         public double Valor { get; set; }
-        public DateTime DataPagamento { get; set; }
         public DateTime DataVencimento { get; set; }
+        public DateTime? DataPagamento { get; set; }
 
         public bool ValidarCommand()
         {
@@ -27,7 +27,7 @@ namespace ControleDespesas.Dominio.Commands.Pagamento.Input
 
                 AddNotificacao(new ContratoValidacao().EhMaior(IdPessoa, 0, "Id Pessoa", "Id Pessoa não é valido"));
 
-                AddNotificacao(new ContratoValidacao().TamanhoMinimo(Descricao, 1, "Descrição", "Descrição é um campo obrigatório"));
+                AddNotificacao(new ContratoValidacao().NaoEhNuloOuVazio(Descricao, "Descrição", "Descrição é um campo obrigatório"));
                 AddNotificacao(new ContratoValidacao().TamanhoMaximo(Descricao, 250, "Descrição", "Descrição maior que o esperado"));
 
                 AddNotificacao(new ContratoValidacao().EhMaior(Valor, 0, "Valor", "Valor não é valido"));

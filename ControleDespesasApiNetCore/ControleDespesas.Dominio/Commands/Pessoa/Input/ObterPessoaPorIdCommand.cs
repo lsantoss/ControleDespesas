@@ -4,7 +4,7 @@ using System;
 
 namespace ControleDespesas.Dominio.Commands.Pessoa.Input
 {
-    public class ObterPessoaPeloIdCommand : Notificadora, CommandPadrao
+    public class ObterPessoaPorIdCommand : Notificadora, CommandPadrao
     {
         public int Id { get; set; }
 

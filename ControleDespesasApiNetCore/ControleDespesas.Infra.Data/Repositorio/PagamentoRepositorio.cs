@@ -35,8 +35,8 @@ namespace ControleDespesas.Infra.Data.Repositorio
                 _parametros.Add("IdPessoa", pagamento.Pessoa.Id, DbType.Int32);
                 _parametros.Add("Descricao", pagamento.Descricao.ToString(), DbType.String);
                 _parametros.Add("Valor", pagamento.Valor, DbType.Double);
+                _parametros.Add("DataVencimento", pagamento.DataVencimento, DbType.Date);
                 _parametros.Add("DataPagamento", pagamento.DataPagamento, DbType.Date);
-                _parametros.Add("DataVencimento", pagamento.DataVencimento, DbType.Date);                
 
                 _ctx.SQLServerConexao.Execute(PagamentoQueries.Salvar, _parametros);
             }
@@ -56,8 +56,8 @@ namespace ControleDespesas.Infra.Data.Repositorio
                 _parametros.Add("IdPessoa", pagamento.Pessoa.Id, DbType.Int32);
                 _parametros.Add("Descricao", pagamento.Descricao.ToString(), DbType.String);
                 _parametros.Add("Valor", pagamento.Valor, DbType.Double);
-                _parametros.Add("DataPagamento", pagamento.DataPagamento, DbType.Date);
                 _parametros.Add("DataVencimento", pagamento.DataVencimento, DbType.Date);
+                _parametros.Add("DataPagamento", pagamento.DataPagamento, DbType.Date);
 
                 _ctx.SQLServerConexao.Execute(PagamentoQueries.Atualizar, _parametros);
             }

@@ -98,7 +98,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
                 if (result != null)
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<TipoPagamentoQueryResult, Notificacao>("Tipo de pagameto obtido com sucesso", result));
                 else
-                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<TipoPagamentoQueryResult, Notificacao>("Tipo de pagamento não cadastrado.", result));
+                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<TipoPagamentoQueryResult, Notificacao>("Tipo de pagamento não cadastrado", result));
             }
             catch (Exception e)
             {

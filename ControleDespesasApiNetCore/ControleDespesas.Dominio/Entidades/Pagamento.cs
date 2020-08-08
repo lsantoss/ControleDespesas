@@ -12,8 +12,8 @@ namespace ControleDespesas.Dominio.Entidades
         public Pessoa Pessoa { get; set; }
         public Texto Descricao { get; set; }
         public double Valor { get; set; }
-        public DateTime DataPagamento { get; set; }
         public DateTime DataVencimento { get; set; }
+        public DateTime? DataPagamento { get; set; }
 
         public Pagamento(int id, 
                          TipoPagamento tipoPagamento, 
@@ -21,8 +21,8 @@ namespace ControleDespesas.Dominio.Entidades
                          Pessoa pessoa,
                          Texto descricao, 
                          double valor, 
-                         DateTime dataPagamento, 
-                         DateTime dataVencimento)
+                         DateTime dataVencimento, 
+                         DateTime? dataPagamento)
         {
             Id = id;
             TipoPagamento = tipoPagamento;
@@ -30,13 +30,10 @@ namespace ControleDespesas.Dominio.Entidades
             Pessoa = pessoa;
             Descricao = descricao;
             Valor = valor;
-            DataPagamento = dataPagamento;
             DataVencimento = dataVencimento;
+            DataPagamento = dataPagamento;
         }
 
-        public Pagamento(int id)
-        {
-            Id = id;
-        }
+        public Pagamento(int id) => Id = id;
     }
 }

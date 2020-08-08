@@ -16,9 +16,6 @@ namespace ControleDespesas.Dominio.Entidades
             Logo = logo;
         }
 
-        public Empresa(int id)
-        {
-            Id = id;
-        }
+        public Empresa(int id) => Id = id;
     }
 }

@@ -83,7 +83,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [Route("v1/Pessoa")]
-        public ActionResult<ApiResponse<PessoaQueryResult, Notificacao>> Pessoa([FromBody] ObterPessoaPeloIdCommand command)
+        public ActionResult<ApiResponse<PessoaQueryResult, Notificacao>> Pessoa([FromBody] ObterPessoaPorIdCommand command)
         {
             try
             {
@@ -98,7 +98,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
                 if (result != null)
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<PessoaQueryResult, Notificacao>("Pessoa obtida com sucesso", result));
                 else
-                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<PessoaQueryResult, Notificacao>("Pessoa não cadastrada.", result));
+                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<PessoaQueryResult, Notificacao>("Pessoa não cadastrada", result));
             }
             catch (Exception e)
             {

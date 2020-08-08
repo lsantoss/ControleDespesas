@@ -16,9 +16,6 @@ namespace ControleDespesas.Dominio.Entidades
             ImagemPerfil = imagemPerfil;
         }
 
-        public Pessoa(int id)
-        {
-            Id = id;
-        }
+        public Pessoa(int id) => Id = id;
     }
 }

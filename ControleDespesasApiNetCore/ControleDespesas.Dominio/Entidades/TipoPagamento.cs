@@ -14,9 +14,6 @@ namespace ControleDespesas.Dominio.Entidades
             Descricao = descricao;
         }
 
-        public TipoPagamento(int id)
-        {
-            Id = id;
-        }
+        public TipoPagamento(int id) => Id = id;
     }
 }

@@ -19,9 +19,6 @@ namespace ControleDespesas.Dominio.Entidades
             Privilegio = privilegio;
         }
 
-        public Usuario(int id)
-        {
-            Id = id;
-        }
+        public Usuario(int id) => Id = id;
     }
 }

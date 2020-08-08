@@ -98,7 +98,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
                 if (result != null)
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<EmpresaQueryResult, Notificacao>("Empresa obtida com sucesso", result));
                 else
-                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<EmpresaQueryResult, Notificacao>("Empresa não cadastrada.", result));
+                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<EmpresaQueryResult, Notificacao>("Empresa não cadastrada", result));
             }
             catch (Exception e)
             {

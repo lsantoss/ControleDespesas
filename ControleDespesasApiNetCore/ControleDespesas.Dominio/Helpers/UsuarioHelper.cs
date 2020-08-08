@@ -1,7 +1,7 @@
 ﻿using ControleDespesas.Dominio.Commands.Usuario.Input;
+using ControleDespesas.Dominio.Commands.Usuario.Output;
 using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Enums;
-using ControleDespesas.Dominio.Query.Usuario;
 using LSCode.Validador.ValueObjects;
 using System;
 
@@ -14,7 +14,7 @@ namespace ControleDespesas.Dominio.Helpers
             try
             {
                 Texto login = new Texto(command.Login, "Login", 50);
-                Texto senha = new Texto(command.Senha, "Senha", 50);
+                SenhaMedia senha = new SenhaMedia(command.Senha);
                 EPrivilegioUsuario privilegio = command.Privilegio;
 
                 Usuario usuario = new Usuario(0, login, senha, privilegio);
@@ -32,7 +32,7 @@ namespace ControleDespesas.Dominio.Helpers
             {
                 int id = command.Id;
                 Texto login = new Texto(command.Login, "Login", 50);
-                Texto senha = new Texto(command.Senha, "Senha", 50);
+                SenhaMedia senha = new SenhaMedia(command.Senha);
                 EPrivilegioUsuario privilegio = command.Privilegio;
 
                 Usuario usuario = new Usuario(id, login, senha, privilegio);
@@ -44,11 +44,11 @@ namespace ControleDespesas.Dominio.Helpers
             }
         }
 
-        public static object GerarDadosRetornoCommandResult(Usuario usuario)
+        public static AdicionarUsuarioCommandOutput GerarDadosRetornoInsert(Usuario usuario)
         {
-            try
+            try 
             {
-                return new
+                return new AdicionarUsuarioCommandOutput
                 {
                     Id = usuario.Id,
                     Login = usuario.Login.ToString(),
@@ -62,17 +62,29 @@ namespace ControleDespesas.Dominio.Helpers
             }
         }
 
-        public static object GerarDadosRetornoCommandResult(UsuarioQueryResult usuario)
+        public static AtualizarUsuarioCommandOutput GerarDadosRetornoUpdate(Usuario usuario)
         {
             try
             {
-                return new
+                return new AtualizarUsuarioCommandOutput
                 {
                     Id = usuario.Id,
                     Login = usuario.Login.ToString(),
                     Senha = usuario.Senha.ToString(),
                     Privilegio = usuario.Privilegio
                 };
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public static ApagarUsuarioCommandOutput GerarDadosRetornoDelete(int id)
+        {
+            try
+            {
+                return new ApagarUsuarioCommandOutput { Id = id };
             }
             catch (Exception e)
             {

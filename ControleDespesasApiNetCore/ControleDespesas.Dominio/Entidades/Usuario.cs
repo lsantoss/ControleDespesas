@@ -8,10 +8,10 @@ namespace ControleDespesas.Dominio.Entidades
     {
         public int Id { get; set; }
         public Texto Login { get; set; }
-        public Texto Senha { get; set; }
+        public SenhaMedia Senha { get; set; }
         public EPrivilegioUsuario Privilegio { get; set; }
 
-        public Usuario(int id, Texto login, Texto senha, EPrivilegioUsuario privilegio)
+        public Usuario(int id, Texto login, SenhaMedia senha, EPrivilegioUsuario privilegio)
         {
             Id = id;
             Login = login;

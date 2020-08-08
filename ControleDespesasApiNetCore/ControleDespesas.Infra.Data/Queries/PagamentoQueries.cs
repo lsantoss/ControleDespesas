@@ -32,7 +32,8 @@
         public static string Deletar { get; } = @"DELETE FROM Pagamento WHERE Id = @Id";
 
         public static string Obter { get; } = @"SELECT 
-                                                    Pagamento.IdTipoPagamento AS IdTipoPagamento,,
+                                                    Pagamento.Id AS Id,
+                                                    Pagamento.IdTipoPagamento AS IdTipoPagamento,
                                                     Pagamento.IdEmpresa AS IdEmpresa,
                                                     Pagamento.IdPessoa AS IdPessoa,
                                                     Pagamento.Descricao AS Descricao,
@@ -59,7 +60,8 @@
                                                 WHERE Pagamento.Id = @Id";
 
         public static string Listar { get; } = @"SELECT 
-                                                    Pagamento.IdTipoPagamento AS IdTipoPagamento,,
+                                                    Pagamento.Id AS Id,
+                                                    Pagamento.IdTipoPagamento AS IdTipoPagamento,
                                                     Pagamento.IdEmpresa AS IdEmpresa,
                                                     Pagamento.IdPessoa AS IdPessoa,
                                                     Pagamento.Descricao AS Descricao,

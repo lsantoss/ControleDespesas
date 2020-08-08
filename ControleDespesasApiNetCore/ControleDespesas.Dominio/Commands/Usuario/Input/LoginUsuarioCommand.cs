@@ -16,8 +16,7 @@ namespace ControleDespesas.Dominio.Commands.Usuario.Input
                 AddNotificacao(new ContratoValidacao().TamanhoMinimo(Login, 1, "Login", "Login é um campo obrigatório"));
                 AddNotificacao(new ContratoValidacao().TamanhoMaximo(Login, 50, "Login", "Login maior que o esperado"));
 
-                AddNotificacao(new ContratoValidacao().TamanhoMinimo(Senha, 1, "Senha", "Senha é um campo obrigatório"));
-                AddNotificacao(new ContratoValidacao().TamanhoMaximo(Senha, 50, "Senha", "Senha maior que o esperado"));
+                AddNotificacao(new ContratoValidacao().NaoEhNuloOuVazio(Senha, "Senha", "Senha é um campo obrigatório"));
 
                 return Valido;
             }

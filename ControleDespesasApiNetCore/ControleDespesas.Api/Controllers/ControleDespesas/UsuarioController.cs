@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using ControleDespesas.Dominio.Commands.Usuario.Input;
+using ControleDespesas.Dominio.Commands.Usuario.Output;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Interfaces;
 using ControleDespesas.Dominio.Query.Usuario;
 using LSCode.Facilitador.Api.InterfacesCommand;
 using LSCode.Facilitador.Api.Results;
+using LSCode.Validador.ValidacoesNotificacoes;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControleDespesas.Api.Controllers.ControleDespesas
@@ -14,184 +17,230 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
     [ApiController]
     public class UsuarioController : ControllerBase
     {
-        //        private readonly IUsuarioRepositorio _repositorio;
-        //        private readonly UsuarioHandler _handler;
+        private readonly IUsuarioRepositorio _repositorio;
+        private readonly UsuarioHandler _handler;
 
-        //        public UsuarioController(IUsuarioRepositorio repositorio, UsuarioHandler handler)
-        //        {
-        //            _repositorio = repositorio;
-        //            _handler = handler;
-        //        }
+        public UsuarioController(IUsuarioRepositorio repositorio, UsuarioHandler handler)
+        {
+            _repositorio = repositorio;
+            _handler = handler;
+        }
 
-        //        /// <summary>
-        //        /// Health Check
-        //        /// </summary>        
-        //        /// <remarks><h2><b>Afere a resposta deste contexto do serviço.</b></h2></remarks>
-        //        /// <response code="200">OK Request</response>
-        //        /// <response code="400">Bad Request</response>
-        //        /// <response code="401">Unauthorized</response>
-        //        /// <response code="500">Internal Server Error</response>
-        //        [HttpGet]
-        //        [Route("v1/HealthCheck")]
-        //        public ICommandResult UsuarioHealthCheck()
-        //        {
-        //            try
-        //            {
-        //                return new CommandResult(true, "Sucesso!", "Disponível");
-        //            }
-        //            catch (Exception e)
-        //            {
-        //                return new CommandResult(false, "Erro!", e.Message);
-        //            }
-        //        }
+        /// <summary>
+        /// Health Check
+        /// </summary>        
+        /// <remarks><h2><b>Afere a resposta deste contexto do serviço.</b></h2></remarks>
+        /// <response code="200">OK Request</response>
+        /// <response code="401">Unauthorized</response>
+        /// <response code="500">Internal Server Error</response>
+        [HttpGet]
+        [Route("v1/HealthCheck")]
+        public ActionResult<ApiResponse<string, Notificacao>> UsuarioHealthCheck()
+        {
+            try
+            {
+                return StatusCode(StatusCodes.Status200OK, new ApiResponse<string, Notificacao>("Sucesso", "API Controle de Despesas - Usuário OK"));
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
+            }
+        }
 
-        //        /// <summary>
-        //        /// Usuarios
-        //        /// </summary>                
-        //        /// <remarks><h2><b>Lista todos os Usuários.</b></h2></remarks>
-        //        /// <response code="200">OK Request</response>
-        //        /// <response code="204">Not Content</response>
-        //        /// <response code="400">Bad Request</response>
-        //        /// <response code="401">Unauthorized</response>
-        //        /// <response code="500">Internal Server Error</response>
-        //        [HttpGet]
-        //        [Route("v1/Usuarios")]
-        //        public IEnumerable<UsuarioQueryResult> Usuarios()
-        //        {
-        //            return _repositorio.Listar();
-        //        }
+        /// <summary>
+        /// Usuarios
+        /// </summary>                
+        /// <remarks><h2><b>Lista todos os Usuários.</b></h2></remarks>
+        /// <response code="200">OK Request</response>
+        /// <response code="401">Unauthorized</response>
+        /// <response code="500">Internal Server Error</response>
+        [HttpGet]
+        [Route("v1/Usuarios")]
+        public ActionResult<ApiResponse<List<UsuarioQueryResult>, Notificacao>> Usuarios()
+        {
+            try
+            {
+                var result = _repositorio.Listar();
 
-        //        /// <summary>
-        //        /// Usuario
-        //        /// </summary>                
-        //        /// <remarks><h2><b>Consulta o Usuário.</b></h2></remarks>
-        //        /// <param name="Id">Parâmetro requerido Id do Usuário</param>
-        //        /// <response code="200">OK Request</response>
-        //        /// <response code="204">Not Content</response>
-        //        /// <response code="400">Bad Request</response>
-        //        /// <response code="401">Unauthorized</response>
-        //        /// <response code="500">Internal Server Error</response>
-        //        [HttpGet]
-        //        [Route("v1/Usuario/{Id:int}")]
-        //        public UsuarioQueryResult Usuario(int Id)
-        //        {
-        //            return _repositorio.Obter(Id);
-        //        }
+                if (result != null)
+                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<UsuarioQueryResult>, Notificacao>("Lista de usuários obtida com sucesso", result));
+                else
+                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<UsuarioQueryResult>, Notificacao>("Nenhum usuário cadastrado atualmente", new List<UsuarioQueryResult>()));
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
+            }
+        }
 
-        //        /// <summary>
-        //        /// Incluir Usuario 
-        //        /// </summary>                
-        //        /// <remarks><h2><b>Inclui novo Usuário na base de dados.</b></h2></remarks>
-        //        /// <param name="command">Parâmetro requerido command de Insert</param>
-        //        /// <response code="200">OK Request</response>
-        //        /// <response code="400">Bad Request</response>
-        //        /// <response code="401">Unauthorized</response>
-        //        /// <response code="500">Internal Server Error</response>
-        //        [HttpPost]
-        //        [Route("v1/UsuarioNovo")]
-        //        public ICommandResult UsuarioNovo([FromBody] AdicionarUsuarioCommand command)
-        //        {
-        //            try
-        //            {
-        //                if (command == null)
-        //                    return new CommandResult(false, "Erro!", "Dados de entrada nulos");
+        /// <summary>
+        /// Usuario
+        /// </summary>                
+        /// <remarks><h2><b>Consulta o Usuário.</b></h2></remarks>
+        /// <param name="command">Parâmetro requerido command de Obter pelo Id</param>
+        /// <response code="200">OK Request</response>
+        /// <response code="400">Bad Request</response>
+        /// <response code="401">Unauthorized</response>
+        /// <response code="500">Internal Server Error</response>
+        [HttpGet]
+        [Route("v1/Usuario")]
+        public ActionResult<ApiResponse<UsuarioQueryResult, Notificacao>> Usuario([FromBody] ObterUsuarioPorIdCommand command)
+        {
+            try
+            {
+                if (command == null)
+                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
 
-        //                if (!command.ValidarCommand())
-        //                    return new CommandResult(false, "Erro! Dados de entrada incorretos", command.Notificacoes);
+                if (!command.ValidarCommand())
+                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
 
-        //                return _handler.Handler(command);
-        //            }
-        //            catch (Exception e)
-        //            {
-        //                return new CommandResult(false, "Erro!", e.Message);
-        //            }
-        //        }
+                var result = _repositorio.Obter(command.Id);
 
-        //        /// <summary>
-        //        /// Alterar Usuario
-        //        /// </summary>        
-        //        /// <remarks><h2><b>Altera Usuário na base de dados.</b></h2></remarks>        
-        //        /// <param name="command">Parâmetro requerido command de Update</param>
-        //        /// <response code="200">OK Request</response>
-        //        /// <response code="400">Bad Request</response>
-        //        /// <response code="401">Unauthorized</response>
-        //        /// <response code="500">Internal Server Error</response>
-        //        [HttpPut]
-        //        [Route("v1/UsuarioAlterar")]
-        //        public ICommandResult UsuarioAlterar([FromBody] AtualizarUsuarioCommand command)
-        //        {
-        //            try
-        //            {
-        //                if (command == null)
-        //                    return new CommandResult(false, "Erro!", "Dados de entrada nulos");
+                if (result != null)
+                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<UsuarioQueryResult, Notificacao>("Usuário obtido com sucesso", result));
+                else
+                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<UsuarioQueryResult, Notificacao>("Usuário não cadastrado", result));
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
+            }
+        }
 
-        //                if (!command.ValidarCommand())
-        //                    return new CommandResult(false, "Erro! Dados de entrada incorretos", command.Notificacoes);
+        /// <summary>
+        /// Incluir Usuario 
+        /// </summary>                
+        /// <remarks><h2><b>Inclui novo Usuário na base de dados.</b></h2></remarks>
+        /// <param name="command">Parâmetro requerido command de Insert</param>
+        /// <response code="200">OK Request</response>
+        /// <response code="400">Bad Request</response>
+        /// <response code="401">Unauthorized</response>
+        /// <response code="500">Internal Server Error</response>
+        [HttpPost]
+        [Route("v1/UsuarioInserir")]
+        public ActionResult<ApiResponse<AdicionarUsuarioCommandOutput, Notificacao>> UsuarioInserir([FromBody] AdicionarUsuarioCommand command)
+        {
+            try
+            {
+                if (command == null)
+                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
 
-        //                return _handler.Handler(command);
-        //            }
-        //            catch (Exception e)
-        //            {
-        //                return new CommandResult(false, "Erro!", e.Message);
-        //            }
-        //        }
+                if (!command.ValidarCommand())
+                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
 
-        //        /// <summary>
-        //        /// Excluir Usuario
-        //        /// </summary>                
-        //        /// <remarks><h2><b>Exclui Usuário na base de dados.</b></h2></remarks>
-        //        /// <param name="command">Parâmetro requerido command de Delete</param>
-        //        /// <response code="200">OK Request</response>
-        //        /// <response code="400">Bad Request</response>
-        //        /// <response code="401">Unauthorized</response>
-        //        /// <response code="500">Internal Server Error</response>
-        //        [HttpDelete]
-        //        [Route("v1/UsuarioExcluir")]
-        //        public ICommandResult UsuarioExcluir([FromBody] ApagarUsuarioCommand command)
-        //        {
-        //            try
-        //            {
-        //                if (command == null)
-        //                    return new CommandResult(false, "Erro!", "Dados de entrada nulos");
+                var result = _handler.Handler(command);
 
-        //                if (!command.ValidarCommand())
-        //                    return new CommandResult(false, "Erro! Dados de entrada incorretos", command.Notificacoes);
+                if (result.Sucesso)
+                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
+                else
+                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
+            }
+        }
 
-        //                return _handler.Handler(command);
-        //            }
-        //            catch (Exception e)
-        //            {
-        //                return new CommandResult(false, "Erro!", e.Message);
-        //            }
-        //        }
+        /// <summary>
+        /// Alterar Usuario
+        /// </summary>        
+        /// <remarks><h2><b>Altera Usuário na base de dados.</b></h2></remarks>        
+        /// <param name="command">Parâmetro requerido command de Update</param>
+        /// <response code="200">OK Request</response>
+        /// <response code="400">Bad Request</response>
+        /// <response code="401">Unauthorized</response>
+        /// <response code="500">Internal Server Error</response>
+        [HttpPut]
+        [Route("v1/UsuarioAlterar")]
+        public ActionResult<ApiResponse<AtualizarUsuarioCommandOutput, Notificacao>> UsuarioAlterar([FromBody] AtualizarUsuarioCommand command)
+        {
+            try
+            {
+                if (command == null)
+                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
 
-        //        /// <summary>
-        //        /// Login Usuario
-        //        /// </summary>                
-        //        /// <remarks><h2><b>Loga Usuário com credências corretas.</b></h2></remarks>
-        //        /// <param name="command">Parâmetro requerido command de Login</param>
-        //        /// <response code="200">OK Request</response>
-        //        /// <response code="400">Bad Request</response>
-        //        /// <response code="401">Unauthorized</response>
-        //        /// <response code="500">Internal Server Error</response>
-        //        [HttpPost]
-        //        [Route("v1/UsuarioLogin")]
-        //        public ICommandResult UsuarioLogin([FromBody] LoginUsuarioCommand command)
-        //        {
-        //            try
-        //            {
-        //                if (command == null)
-        //                    return new CommandResult(false, "Erro!", "Dados de entrada nulos");
+                if (!command.ValidarCommand())
+                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
 
-        //                if (!command.ValidarCommand())
-        //                    return new CommandResult(false, "Erro! Dados de entrada incorretos", command.Notificacoes);
+                var result = _handler.Handler(command);
 
-        //                return _handler.Handler(command);
-        //            }
-        //            catch (Exception e)
-        //            {
-        //                return new CommandResult(false, "Erro!", e.Message);
-        //            }
-        //        }
+                if (result.Sucesso)
+                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
+                else
+                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
+            }
+        }
+
+        /// <summary>
+        /// Excluir Usuario
+        /// </summary>                
+        /// <remarks><h2><b>Exclui Usuário na base de dados.</b></h2></remarks>
+        /// <param name="command">Parâmetro requerido command de Delete</param>
+        /// <response code="200">OK Request</response>
+        /// <response code="400">Bad Request</response>
+        /// <response code="401">Unauthorized</response>
+        /// <response code="500">Internal Server Error</response>
+        [HttpDelete]
+        [Route("v1/UsuarioExcluir")]
+        public ActionResult<ApiResponse<ApagarUsuarioCommandOutput, Notificacao>> UsuarioExcluir([FromBody] ApagarUsuarioCommand command)
+        {
+            try
+            {
+                if (command == null)
+                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
+
+                if (!command.ValidarCommand())
+                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
+
+                var result = _handler.Handler(command);
+
+                if (result.Sucesso)
+                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
+                else
+                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
+            }
+        }
+
+        /// <summary>
+        /// Login Usuario
+        /// </summary>                
+        /// <remarks><h2><b>Loga Usuário com credências corretas.</b></h2></remarks>
+        /// <param name="command">Parâmetro requerido command de Login</param>
+        /// <response code="200">OK Request</response>
+        /// <response code="400">Bad Request</response>
+        /// <response code="401">Unauthorized</response>
+        /// <response code="500">Internal Server Error</response>
+        [HttpPost]
+        [Route("v1/UsuarioLogin")]
+        public ActionResult<ApiResponse<UsuarioQueryResult, Notificacao>> UsuarioLogin([FromBody] LoginUsuarioCommand command)
+        {
+            try
+            {
+                if (command == null)
+                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
+
+                if (!command.ValidarCommand())
+                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
+
+                var result = _handler.Handler(command);
+
+                if (result.Sucesso)
+                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
+                else
+                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
+            }
+        }
     }
 }

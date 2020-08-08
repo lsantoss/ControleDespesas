@@ -9,8 +9,4 @@
     <PackageReference Include="LSCode.Validador" Version="1.7.5" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Commands\Usuario\Output\" />
-  </ItemGroup>
-
 </Project>

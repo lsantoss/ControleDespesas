@@ -1,4 +1,5 @@
 ﻿using ControleDespesas.Dominio.Commands.Empresa.Input;
+using ControleDespesas.Dominio.Commands.Empresa.Output;
 using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Helpers;
 using ControleDespesas.Dominio.Interfaces;
@@ -35,7 +36,7 @@ namespace ControleDespesas.Dominio.Handlers
                 
                 empresa.Id = _repository.LocalizarMaxId();
 
-                object dadosRetorno = EmpresaHelper.GerarDadosRetornoCommandResult(empresa);
+                AdicionarEmpresaCommandOutput dadosRetorno = EmpresaHelper.GerarDadosRetornoInsert(empresa);
 
                 return new CommandResult<Notificacao>("Empresa gravada com sucesso!", dadosRetorno);
             }
@@ -61,7 +62,7 @@ namespace ControleDespesas.Dominio.Handlers
 
                 _repository.Atualizar(empresa);
 
-                object dadosRetorno = EmpresaHelper.GerarDadosRetornoCommandResult(empresa);
+                AtualizarEmpresaCommandOutput dadosRetorno = EmpresaHelper.GerarDadosRetornoUpdate(empresa);
 
                 return new CommandResult<Notificacao>("Empresa atualizada com sucesso!", dadosRetorno);
             }
@@ -83,7 +84,9 @@ namespace ControleDespesas.Dominio.Handlers
 
                 _repository.Deletar(command.Id);
 
-                return new CommandResult<Notificacao>("Empresa excluída com sucesso!", new { Id = command.Id });
+                ApagarEmpresaCommandOutput dadosRetorno = EmpresaHelper.GerarDadosRetornoDelete(command.Id);
+
+                return new CommandResult<Notificacao>("Empresa excluída com sucesso!", dadosRetorno);
             }
             catch (Exception e)
             {

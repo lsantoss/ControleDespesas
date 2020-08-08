@@ -4,10 +4,10 @@ namespace ControleDespesas.Dominio.Enums
 {
     public enum EPrivilegioUsuario
     {
-        [Description("Admin")]
+        [Description("Administrador")]
         Admin = 1,
 
-        [Description("ReadOnly")]
+        [Description("Somente Leitura")]
         ReadOnly = 2
     }
 }

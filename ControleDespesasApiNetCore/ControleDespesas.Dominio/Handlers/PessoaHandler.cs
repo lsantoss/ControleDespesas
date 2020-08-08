@@ -1,98 +1,100 @@
-﻿//using ControleDespesas.Dominio.Commands.Pessoa.Input;
-//using ControleDespesas.Dominio.Entidades;
-//using ControleDespesas.Dominio.Helpers;
-//using ControleDespesas.Dominio.Interfaces;
-//using LSCode.Facilitador.Api.InterfacesCommand;
-//using LSCode.Facilitador.Api.Results;
-//using LSCode.Validador.ValidacoesNotificacoes;
-//using System;
+﻿using ControleDespesas.Dominio.Commands.Pessoa.Input;
+using ControleDespesas.Dominio.Entidades;
+using ControleDespesas.Dominio.Helpers;
+using ControleDespesas.Dominio.Interfaces;
+using LSCode.Facilitador.Api.InterfacesCommand;
+using LSCode.Facilitador.Api.Results;
+using LSCode.Validador.ValidacoesNotificacoes;
+using System;
 
-//namespace ControleDespesas.Dominio.Handlers
-//{
-//    public class PessoaHandler : Notificadora, ICommandHandler<AdicionarPessoaCommand>,
-//                                               ICommandHandler<AtualizarPessoaCommand>,
-//                                               ICommandHandler<ApagarPessoaCommand>
-//    {
-//        private readonly IPessoaRepositorio _repository;
+namespace ControleDespesas.Dominio.Handlers
+{
+    public class PessoaHandler : Notificadora, ICommandHandler<AdicionarPessoaCommand, Notificacao>,
+                                               ICommandHandler<AtualizarPessoaCommand, Notificacao>,
+                                               ICommandHandler<ApagarPessoaCommand, Notificacao>
+    {
+        private readonly IPessoaRepositorio _repository;
 
-//        public PessoaHandler(IPessoaRepositorio repository)
-//        {
-//            _repository = repository;
-//        }
+        public PessoaHandler(IPessoaRepositorio repository)
+        {
+            _repository = repository;
+        }
 
-//        public ICommandResult Handler(AdicionarPessoaCommand command)
-//        {
-//            try
-//            {
-//                Pessoa pessoa = PessoaHelper.GerarEntidade(command);
+        public ICommandResult<Notificacao> Handler(AdicionarPessoaCommand command)
+        {
+            try
+            {
+                Pessoa pessoa = PessoaHelper.GerarEntidade(command);
 
-//                AddNotificacao(pessoa.Nome.Notificacoes);
+                AddNotificacao(pessoa.Nome.Notificacoes);
 
-//                if (Invalido)
-//                    return new CommandResult(false, "Inconsistência(s) no(s) dado(s)", Notificacoes);
+                if (Invalido)
+                    return new CommandResult<Notificacao>("Inconsistência(s) no(s) dado(s)", Notificacoes);
 
-//                _repository.Salvar(pessoa);
+                _repository.Salvar(pessoa);
 
-//                pessoa.Id = _repository.LocalizarMaxId();
+                pessoa.Id = _repository.LocalizarMaxId();
 
-//                object dadosRetorno = PessoaHelper.GerarDadosRetornoCommandResult(pessoa);
+                object dadosRetorno = PessoaHelper.GerarDadosRetornoInsert(pessoa);
 
-//                return new CommandResult(true, "Pessoa gravada com sucesso!", dadosRetorno);
-//            }
-//            catch (Exception e)
-//            {
-//                throw new Exception(e.Message);
-//            }
-//        }
+                return new CommandResult<Notificacao>("Pessoa gravada com sucesso!", dadosRetorno);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
 
-//        public ICommandResult Handler(AtualizarPessoaCommand command)
-//        {
-//            try
-//            {
-//                Pessoa pessoa = PessoaHelper.GerarEntidade(command);
+        public ICommandResult<Notificacao> Handler(AtualizarPessoaCommand command)
+        {
+            try
+            {
+                Pessoa pessoa = PessoaHelper.GerarEntidade(command);
 
-//                AddNotificacao(pessoa.Nome.Notificacoes);
+                AddNotificacao(pessoa.Nome.Notificacoes);
 
-//                if (pessoa.Id == 0)
-//                    AddNotificacao("Id", "Id não está vinculado à operação solicitada");
+                if (pessoa.Id == 0)
+                    AddNotificacao("Id", "Id não está vinculado à operação solicitada");
 
-//                if (!_repository.CheckId(pessoa.Id))
-//                    AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");
+                if (!_repository.CheckId(pessoa.Id))
+                    AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");
 
-//                if (Invalido)
-//                    return new CommandResult(false, "Inconsistência(s) no(s) dado(s)", Notificacoes);
+                if (Invalido)
+                    return new CommandResult<Notificacao>("Inconsistência(s) no(s) dado(s)", Notificacoes);
 
-//                _repository.Atualizar(pessoa);
+                _repository.Atualizar(pessoa);
 
-//                object dadosRetorno = PessoaHelper.GerarDadosRetornoCommandResult(pessoa);
+                object dadosRetorno = PessoaHelper.GerarDadosRetornoUpdate(pessoa);
 
-//                return new CommandResult(true, "Pessoa atualizada com sucesso!", dadosRetorno);
+                return new CommandResult<Notificacao>("Pessoa atualizada com sucesso!", dadosRetorno);
 
-//            }
-//            catch (Exception e)
-//            {
-//                throw new Exception(e.Message);
-//            }
-//        }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
 
-//        public ICommandResult Handler(ApagarPessoaCommand command)
-//        {
-//            try
-//            {
-//                if (!_repository.CheckId(command.Id))
-//                    AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");
+        public ICommandResult<Notificacao> Handler(ApagarPessoaCommand command)
+        {
+            try
+            {
+                if (!_repository.CheckId(command.Id))
+                    AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");
 
-//                if (Invalido)
-//                    return new CommandResult(false, "Inconsistência(s) no(s) dado(s)", Notificacoes);
+                if (Invalido)
+                    return new CommandResult<Notificacao>("Inconsistência(s) no(s) dado(s)", Notificacoes);
 
-//                _repository.Deletar(command.Id);
+                _repository.Deletar(command.Id);
 
-//                return new CommandResult(true, "Pessoa excluída com sucesso!", new { Id = command.Id });
-//            }
-//            catch (Exception e)
-//            {
-//                throw new Exception(e.Message);
-//            }
-//        }
-//    }
-//}
+                object dadosRetorno = PessoaHelper.GerarDadosRetornoDelete(command.Id);
+
+                return new CommandResult<Notificacao>("Pessoa excluída com sucesso!", dadosRetorno);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+    }
+}

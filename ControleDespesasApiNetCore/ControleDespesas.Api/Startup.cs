@@ -30,7 +30,7 @@ namespace ControleDespesas.Api
             #endregion
 
             #region DataContext
-            services.AddTransient<DbContext, DbContext>();
+            services.AddScoped<DbContext>();
             #endregion
 
             #region Repositorios
@@ -42,7 +42,7 @@ namespace ControleDespesas.Api
             #endregion
 
             #region Handler
-            //services.AddTransient<PessoaHandler, PessoaHandler>();
+            services.AddTransient<PessoaHandler, PessoaHandler>();
             services.AddTransient<EmpresaHandler, EmpresaHandler>();
             //services.AddTransient<TipoPagamentoHandler, TipoPagamentoHandler>();
             //services.AddTransient<PagamentoHandler, PagamentoHandler>();

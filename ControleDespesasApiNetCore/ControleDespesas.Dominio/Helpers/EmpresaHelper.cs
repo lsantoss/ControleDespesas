@@ -1,4 +1,5 @@
 ﻿using ControleDespesas.Dominio.Commands.Empresa.Input;
+using ControleDespesas.Dominio.Commands.Empresa.Output;
 using ControleDespesas.Dominio.Entidades;
 using LSCode.Validador.ValueObjects;
 using System;
@@ -40,16 +41,45 @@ namespace ControleDespesas.Dominio.Helpers
             }
         }
 
-        public static object GerarDadosRetornoCommandResult(Empresa empresa)
+        public static AdicionarEmpresaCommandOutput GerarDadosRetornoInsert(Empresa empresa)
         {
             try
             {
-                return new
+                return new AdicionarEmpresaCommandOutput
                 {
                     Id = empresa.Id,
                     Nome = empresa.Nome.ToString(),
                     Logo = empresa.Logo
                 };
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public static AtualizarEmpresaCommandOutput GerarDadosRetornoUpdate(Empresa empresa)
+        {
+            try
+            {
+                return new AtualizarEmpresaCommandOutput
+                {
+                    Id = empresa.Id,
+                    Nome = empresa.Nome.ToString(),
+                    Logo = empresa.Logo
+                };
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public static ApagarEmpresaCommandOutput GerarDadosRetornoDelete(int id)
+        {
+            try
+            {
+                return new ApagarEmpresaCommandOutput { Id = id };
             }
             catch (Exception e)
             {

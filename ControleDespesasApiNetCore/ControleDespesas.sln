@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControleDespesas.Infra.Data
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControleDespesas.Testes", "ControleDespesas.Testes\ControleDespesas.Testes.csproj", "{CDBFAEA8-C915-42FF-94A1-ADFB962650B8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LSCode.Facilitador.Api", "..\..\LSCode.Facilitador.Api\LSCode.Facilitador.Api\LSCode.Facilitador.Api.csproj", "{3A49F249-BBEB-499A-A054-D5B471F82712}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,10 +33,6 @@ Global
 		{CDBFAEA8-C915-42FF-94A1-ADFB962650B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDBFAEA8-C915-42FF-94A1-ADFB962650B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CDBFAEA8-C915-42FF-94A1-ADFB962650B8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3A49F249-BBEB-499A-A054-D5B471F82712}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3A49F249-BBEB-499A-A054-D5B471F82712}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3A49F249-BBEB-499A-A054-D5B471F82712}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3A49F249-BBEB-499A-A054-D5B471F82712}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

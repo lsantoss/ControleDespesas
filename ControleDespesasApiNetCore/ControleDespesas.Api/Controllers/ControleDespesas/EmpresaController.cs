@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using ControleDespesas.Dominio.Commands.Empresa.Input;
+﻿using ControleDespesas.Dominio.Commands.Empresa.Input;
+using ControleDespesas.Dominio.Commands.Empresa.Output;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Interfaces;
 using ControleDespesas.Dominio.Query.Empresa;
-using LSCode.Facilitador.Api.InterfacesCommand;
 using LSCode.Facilitador.Api.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 
 namespace ControleDespesas.Api.Controllers.ControleDespesas
 {
@@ -76,17 +76,24 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// Empresa
         /// </summary>                
         /// <remarks><h2><b>Consulta a Empresa pelo Id.</b></h2></remarks>
-        /// <param name="Id">Parâmetro requerido Id da Empresa</param>
+        /// <param name="command">Parâmetro requerido command de Obter pelo Id</param>
         /// <response code="200">OK Request</response>
+        /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
-        [Route("v1/Empresa/{Id:int}")]
-        public ActionResult<ApiResponse<EmpresaQueryResult, Notificacao>> Empresa(int Id)
+        [Route("v1/Empresa")]
+        public ActionResult<ApiResponse<EmpresaQueryResult, Notificacao>> Empresa([FromBody] ObterEmpresaPorIdCommand command)
         {
             try
             {
-                var result = _repositorio.Obter(Id);
+                if (command == null)
+                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
+
+                if (!command.ValidarCommand())
+                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
+
+                var result = _repositorio.Obter(command.Id);
 
                 if (result != null)
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<EmpresaQueryResult, Notificacao>("Empresa obtida com sucesso", result));
@@ -110,7 +117,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpPost]
         [Route("v1/EmpresaInserir")]
-        public ActionResult<ApiResponse<ICommandResult<Notificacao>, Notificacao>> EmpresaInserir([FromBody] AdicionarEmpresaCommand command)
+        public ActionResult<ApiResponse<AdicionarEmpresaCommandOutput, Notificacao>> EmpresaInserir([FromBody] AdicionarEmpresaCommand command)
         {
             try
             {
@@ -144,7 +151,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpPut]
         [Route("v1/EmpresaAlterar")]
-        public ActionResult<ApiResponse<ICommandResult<Notificacao>, Notificacao>> EmpresaAlterar([FromBody] AtualizarEmpresaCommand command)
+        public ActionResult<ApiResponse<AtualizarEmpresaCommandOutput, Notificacao>> EmpresaAlterar([FromBody] AtualizarEmpresaCommand command)
         {
             try
             {
@@ -178,7 +185,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpDelete]
         [Route("v1/EmpresaExcluir")]
-        public ActionResult<ApiResponse<ICommandResult<Notificacao>, Notificacao>> EmpresaExcluir([FromBody] ApagarEmpresaCommand command)
+        public ActionResult<ApiResponse<ApagarEmpresaCommandOutput, Notificacao>> EmpresaExcluir([FromBody] ApagarEmpresaCommand command)
         {
             try
             {

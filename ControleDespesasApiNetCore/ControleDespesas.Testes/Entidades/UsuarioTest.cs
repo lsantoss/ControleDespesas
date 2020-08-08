@@ -13,7 +13,7 @@ namespace ControleDespesas.Testes.Entidades
         {
             int id = 1;
             Texto login = new Texto("lucas123", "Login", 50);
-            Texto senha = new Texto("123", "Senha", 50);
+            SenhaMedia senha = new SenhaMedia("123");
             EPrivilegioUsuario privilegio = EPrivilegioUsuario.Admin;
             _usuarioTeste = new Usuario(id, login, senha, privilegio);
         }
@@ -50,7 +50,7 @@ namespace ControleDespesas.Testes.Entidades
             Usuario usuario = new Usuario(
                 _usuarioTeste.Id,
                 _usuarioTeste.Login,
-                new Texto(senhaLoga, "Senha", 50),
+                new SenhaMedia(senhaLoga),
                 _usuarioTeste.Privilegio
             );
 
@@ -67,7 +67,7 @@ namespace ControleDespesas.Testes.Entidades
             Usuario usuario = new Usuario(
                 _usuarioTeste.Id,
                 new Texto(loginLongo, "Login", 50),
-                new Texto(senhaLoga, "Login", 50),
+                new SenhaMedia(senhaLoga),
                 _usuarioTeste.Privilegio
             );
 

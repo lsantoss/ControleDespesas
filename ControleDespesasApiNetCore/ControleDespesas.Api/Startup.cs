@@ -1,5 +1,4 @@
-﻿using System;
-using ControleDespesas.Dominio.Handlers;
+﻿using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Interfaces;
 using ControleDespesas.Infra.Data;
 using ControleDespesas.Infra.Data.Repositorio;
@@ -9,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
+using System;
 
 namespace ControleDespesas.Api
 {
@@ -16,14 +16,13 @@ namespace ControleDespesas.Api
     {
         public IConfiguration Configuration { get; }
 
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        public Startup(IConfiguration configuration) => Configuration = configuration;
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().AddControllersAsServices();
+
+            //services.AddMvc().AddJsonOptions(options => options.SerializerSettings.Converters.Add(new StringEnumConverter()));
 
             #region AppSettings
             services.Configure<SettingsInfraData>(options => Configuration.GetSection("SettingsInfraData").Bind(options));
@@ -67,30 +66,19 @@ namespace ControleDespesas.Api
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
             else
-            {
                 app.UseHsts();
-            }
 
             app.UseHttpsRedirection();
-
             app.UseStaticFiles();
 
             app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "ControleDespesas");
-            });
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "ControleDespesas"); });
 
             app.UseMvc();
         }
 
-        protected static string GetXmlCommentsPath()
-        {
-            return String.Format(@"{0}\Swagger.xml", AppDomain.CurrentDomain.BaseDirectory);
-        }
+        protected static string GetXmlCommentsPath() => String.Format(@"{0}\Swagger.xml", AppDomain.CurrentDomain.BaseDirectory);
     }
 }

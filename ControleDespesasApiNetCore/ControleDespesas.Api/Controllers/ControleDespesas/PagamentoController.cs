@@ -12,6 +12,8 @@ using System.Collections.Generic;
 
 namespace ControleDespesas.Api.Controllers.ControleDespesas
 {
+    [Consumes("application/json")]
+    [Produces("application/json")]
     [Route("Pagamento")]
     public class PagamentoController : ControllerBase
     {
@@ -33,6 +35,9 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [Route("v1/HealthCheck")]
+        [ProducesResponseType(typeof(ApiResponse<string, Notificacao>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<string, Notificacao>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<string, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<string, Notificacao>> PagamentoHealthCheck()
         {
             try
@@ -54,6 +59,9 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [Route("v1/Pagamentos")]
+        [ProducesResponseType(typeof(ApiResponse<List<PagamentoQueryResult>, Notificacao>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<List<PagamentoQueryResult>, Notificacao>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<List<PagamentoQueryResult>, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<List<PagamentoQueryResult>, Notificacao>> Pagamentos()
         {
             try
@@ -82,6 +90,10 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [Route("v1/Pagamento")]
+        [ProducesResponseType(typeof(ApiResponse<PagamentoQueryResult, Notificacao>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<PagamentoQueryResult, Notificacao>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<PagamentoQueryResult, Notificacao>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<PagamentoQueryResult, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<PagamentoQueryResult, Notificacao>> Pagamento([FromBody] ObterPagamentoPorIdCommand command)
         {
             try
@@ -116,6 +128,10 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpPost]
         [Route("v1/PagamentoInserir")]
+        [ProducesResponseType(typeof(ApiResponse<AdicionarPagamentoCommandOutput, Notificacao>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<AdicionarPagamentoCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<AdicionarPagamentoCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<AdicionarPagamentoCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<AdicionarPagamentoCommandOutput, Notificacao>> PagamentoInserir([FromBody] AdicionarPagamentoCommand command)
         {
             try
@@ -150,6 +166,10 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpPut]
         [Route("v1/PagamentoAlterar")]
+        [ProducesResponseType(typeof(ApiResponse<AtualizarPagamentoCommandOutput, Notificacao>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<AtualizarPagamentoCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<AtualizarPagamentoCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<AtualizarPagamentoCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<AtualizarPagamentoCommandOutput, Notificacao>> PagamentoAlterar([FromBody] AtualizarPagamentoCommand command)
         {
             try
@@ -184,6 +204,10 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpDelete]
         [Route("v1/PagamentoExcluir")]
+        [ProducesResponseType(typeof(ApiResponse<ApagarPagamentoCommandoutput, Notificacao>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<ApagarPagamentoCommandoutput, Notificacao>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<ApagarPagamentoCommandoutput, Notificacao>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<ApagarPagamentoCommandoutput, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<ApagarPagamentoCommandoutput, Notificacao>> PagamentoExcluir([FromBody] ApagarPagamentoCommand command)
         {
             try

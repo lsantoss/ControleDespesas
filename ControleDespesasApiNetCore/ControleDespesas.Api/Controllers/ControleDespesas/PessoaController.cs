@@ -12,6 +12,8 @@ using System.Collections.Generic;
 
 namespace ControleDespesas.Api.Controllers.ControleDespesas
 {
+    [Consumes("application/json")]
+    [Produces("application/json")]
     [Route("Pessoa")]
     [ApiController]
     public class PessoaController : ControllerBase
@@ -34,6 +36,9 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [Route("v1/HealthCheck")]
+        [ProducesResponseType(typeof(ApiResponse<string, Notificacao>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<string, Notificacao>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<string, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<string, Notificacao>> PessoaHealthCheck()
         {
             try
@@ -55,6 +60,9 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [Route("v1/Pessoas")]
+        [ProducesResponseType(typeof(ApiResponse<List<PessoaQueryResult>, Notificacao>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<List<PessoaQueryResult>, Notificacao>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<List<PessoaQueryResult>, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<List<PessoaQueryResult>, Notificacao>> Pessoas()
         {
             try
@@ -83,6 +91,10 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [Route("v1/Pessoa")]
+        [ProducesResponseType(typeof(ApiResponse<PessoaQueryResult, Notificacao>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<PessoaQueryResult, Notificacao>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<PessoaQueryResult, Notificacao>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<PessoaQueryResult, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<PessoaQueryResult, Notificacao>> Pessoa([FromBody] ObterPessoaPorIdCommand command)
         {
             try
@@ -117,6 +129,10 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpPost]
         [Route("v1/PessoaInserir")]
+        [ProducesResponseType(typeof(ApiResponse<AdicionarPessoaCommandOutput, Notificacao>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<AdicionarPessoaCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<AdicionarPessoaCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<AdicionarPessoaCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<AdicionarPessoaCommandOutput, Notificacao>> PessoaInserir([FromBody] AdicionarPessoaCommand command)
         {
             try
@@ -151,6 +167,10 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpPut]
         [Route("v1/PessoaAlterar")]
+        [ProducesResponseType(typeof(ApiResponse<AtualizarPessoaCommandOutput, Notificacao>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<AtualizarPessoaCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<AtualizarPessoaCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<AtualizarPessoaCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<AtualizarPessoaCommandOutput, Notificacao>> PessoaAlterar([FromBody] AtualizarPessoaCommand command)
         {
             try
@@ -185,6 +205,10 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpDelete]
         [Route("v1/PessoaExcluir")]
+        [ProducesResponseType(typeof(ApiResponse<ApagarPessoaCommandOutput, Notificacao>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<ApagarPessoaCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<ApagarPessoaCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<ApagarPessoaCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<ApagarPessoaCommandOutput, Notificacao>> PessoaExcluir([FromBody] ApagarPessoaCommand command)
         {
             try

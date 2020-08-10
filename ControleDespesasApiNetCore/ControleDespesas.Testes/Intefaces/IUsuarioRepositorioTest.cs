@@ -65,7 +65,7 @@ namespace ControleDespesas.Testes.Intefaces
             Usuario usuario = new Usuario(
                 1,
                 new Texto("lucas123", "Login", 50),
-                new Texto("123", "Senha", 50),
+                new SenhaMedia("123"),
                 EPrivilegioUsuario.Admin
             );
 
@@ -114,7 +114,7 @@ namespace ControleDespesas.Testes.Intefaces
             Usuario usuario = new Usuario(
                 1,
                 new Texto("lucas123", "Login", 50),
-                new Texto("123", "Senha", 50),
+                new SenhaMedia("123"),
                 EPrivilegioUsuario.Admin
             );
 
@@ -138,7 +138,7 @@ namespace ControleDespesas.Testes.Intefaces
             Usuario usuario = new Usuario(
                 1,
                 new Texto("lucas123", "Login", 50),
-                new Texto("123", "Senha", 50),
+                new SenhaMedia("123"),
                 EPrivilegioUsuario.Admin
             );
 
@@ -154,7 +154,7 @@ namespace ControleDespesas.Testes.Intefaces
             Usuario usuario = new Usuario(
                 1,
                 new Texto("lucas123", "Login", 50),
-                new Texto("123", "Senha", 50),
+                new SenhaMedia("123"),
                 EPrivilegioUsuario.Admin
             );
 

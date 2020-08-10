@@ -44,8 +44,8 @@ namespace ControleDespesas.Testes.Entidades
                 _pagamentoTeste.Pessoa,
                 new Texto(descricaoLonga, "Descrição", 250),
                 _pagamentoTeste.Valor, 
-                _pagamentoTeste.DataPagamento,
-                _pagamentoTeste.DataVencimento
+                _pagamentoTeste.DataVencimento,
+                _pagamentoTeste.DataPagamento
             );
 
             bool resultado = pagamento.Descricao.Valido;

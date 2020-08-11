@@ -1,6 +1,6 @@
 ﻿namespace ControleDespesas.Dominio.Commands.Pagamento.Output
 {
-    public class ApagarPagamentoCommandoutput
+    public class ApagarPagamentoCommandOutput
     {
         public int Id { get; set; }
     }

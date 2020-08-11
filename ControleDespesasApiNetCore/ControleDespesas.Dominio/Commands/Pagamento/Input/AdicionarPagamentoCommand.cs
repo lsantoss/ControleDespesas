@@ -1,17 +1,30 @@
 ﻿using LSCode.Facilitador.Api.InterfacesCommand;
 using LSCode.Validador.ValidacoesNotificacoes;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace ControleDespesas.Dominio.Commands.Pagamento.Input
 {
     public class AdicionarPagamentoCommand : Notificadora, CommandPadrao
     {
+        [Required]
         public int IdTipoPagamento { get; set; }
+
+        [Required]
         public int IdEmpresa { get; set; }
+
+        [Required]
         public int IdPessoa { get; set; }
+
+        [Required]
         public string Descricao { get; set; }
+
+        [Required]
         public double Valor { get; set; }
+
+        [Required]
         public DateTime DataVencimento { get; set; }
+
         public DateTime? DataPagamento { get; set; }
 
         public bool ValidarCommand()

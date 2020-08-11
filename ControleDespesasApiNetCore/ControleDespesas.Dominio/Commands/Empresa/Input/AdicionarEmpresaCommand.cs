@@ -1,12 +1,16 @@
 ﻿using LSCode.Facilitador.Api.InterfacesCommand;
 using LSCode.Validador.ValidacoesNotificacoes;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace ControleDespesas.Dominio.Commands.Empresa.Input
 {
     public class AdicionarEmpresaCommand : Notificadora, CommandPadrao
     {
+        [Required]
         public string Nome { get; set; }
+
+        [Required]
         public string Logo { get; set; }
 
         public bool ValidarCommand()

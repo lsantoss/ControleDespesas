@@ -1,11 +1,13 @@
 ﻿using LSCode.Facilitador.Api.InterfacesCommand;
 using LSCode.Validador.ValidacoesNotificacoes;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace ControleDespesas.Dominio.Commands.Usuario.Input
 {
     public class ApagarUsuarioCommand : Notificadora, CommandPadrao
     {
+        [Required]
         public int Id { get; set; }
 
         public bool ValidarCommand()

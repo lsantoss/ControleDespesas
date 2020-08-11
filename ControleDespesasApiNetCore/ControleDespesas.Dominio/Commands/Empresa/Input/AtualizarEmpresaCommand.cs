@@ -1,13 +1,19 @@
 ﻿using LSCode.Facilitador.Api.InterfacesCommand;
 using LSCode.Validador.ValidacoesNotificacoes;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace ControleDespesas.Dominio.Commands.Empresa.Input
 {
     public class AtualizarEmpresaCommand : Notificadora, CommandPadrao
     {
+        [Required]
         public int Id { get; set; }
+
+        [Required]
         public string Nome { get; set; }
+
+        [Required]
         public string Logo { get; set; }
 
         public bool ValidarCommand()

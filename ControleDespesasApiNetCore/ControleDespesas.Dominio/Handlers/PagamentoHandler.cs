@@ -15,10 +15,19 @@ namespace ControleDespesas.Dominio.Handlers
                                                   ICommandHandler<ApagarPagamentoCommand, Notificacao>
     {
         private readonly IPagamentoRepositorio _repository;
+        private readonly IEmpresaRepositorio _repositoryEmpresa;
+        private readonly IPessoaRepositorio _repositoryPessoa;
+        private readonly ITipoPagamentoRepositorio _repositoryTipoPagamento;
 
-        public PagamentoHandler(IPagamentoRepositorio repository)
+        public PagamentoHandler(IPagamentoRepositorio repository, 
+                                IEmpresaRepositorio repositoryEmpresa,
+                                IPessoaRepositorio repositoryPessoa,
+                                ITipoPagamentoRepositorio repositoryTipoPagamento)
         {
             _repository = repository;
+            _repositoryEmpresa = repositoryEmpresa;
+            _repositoryPessoa = repositoryPessoa;
+            _repositoryTipoPagamento = repositoryTipoPagamento;
         }
 
         public ICommandResult<Notificacao> Handler(AdicionarPagamentoCommand command)
@@ -28,6 +37,15 @@ namespace ControleDespesas.Dominio.Handlers
                 Pagamento pagamento = PagamentoHelper.GerarEntidade(command);
 
                 AddNotificacao(pagamento.Descricao.Notificacoes);
+
+                if(!_repositoryEmpresa.CheckId(pagamento.Empresa.Id))
+                    AddNotificacao("Id Empresa", "Id inválido. Este id não está cadastrado!");
+
+                if (!_repositoryPessoa.CheckId(pagamento.Pessoa.Id))
+                    AddNotificacao("Id Pessoa", "Id inválido. Este id não está cadastrado!");
+
+                if (!_repositoryTipoPagamento.CheckId(pagamento.TipoPagamento.Id))
+                    AddNotificacao("Id Tipo Pagamento", "Id inválido. Este id não está cadastrado!");
 
                 if (Invalido)
                     return new CommandResult<Notificacao>("Inconsistência(s) no(s) dado(s)", Notificacoes);
@@ -57,6 +75,15 @@ namespace ControleDespesas.Dominio.Handlers
                 if (!_repository.CheckId(pagamento.Id))
                     AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");
 
+                if (!_repositoryEmpresa.CheckId(pagamento.Empresa.Id))
+                    AddNotificacao("Id Empresa", "Id inválido. Este id não está cadastrado!");
+
+                if (!_repositoryPessoa.CheckId(pagamento.Pessoa.Id))
+                    AddNotificacao("Id Pessoa", "Id inválido. Este id não está cadastrado!");
+
+                if (!_repositoryTipoPagamento.CheckId(pagamento.TipoPagamento.Id))
+                    AddNotificacao("Id Tipo Pagamento", "Id inválido. Este id não está cadastrado!");
+
                 if (Invalido)
                     return new CommandResult<Notificacao>("Inconsistência(s) no(s) dado(s)", Notificacoes);
 
@@ -84,7 +111,7 @@ namespace ControleDespesas.Dominio.Handlers
 
                 _repository.Deletar(command.Id);
 
-                ApagarPagamentoCommandoutput dadosRetorno = PagamentoHelper.GerarDadosRetornoDelete(command.Id);
+                ApagarPagamentoCommandOutput dadosRetorno = PagamentoHelper.GerarDadosRetornoDelete(command.Id);
 
                 return new CommandResult<Notificacao>("Pagamento excluído com sucesso!", dadosRetorno);
             }

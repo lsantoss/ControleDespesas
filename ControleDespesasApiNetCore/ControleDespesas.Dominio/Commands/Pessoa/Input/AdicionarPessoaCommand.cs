@@ -1,12 +1,16 @@
 ﻿using LSCode.Facilitador.Api.InterfacesCommand;
 using LSCode.Validador.ValidacoesNotificacoes;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace ControleDespesas.Dominio.Commands.Pessoa.Input
 {
     public class AdicionarPessoaCommand : Notificadora, CommandPadrao
     {
+        [Required]
         public string Nome { get; set; }
+
+        [Required]
         public string ImagemPerfil { get; set; }
 
         public bool ValidarCommand()

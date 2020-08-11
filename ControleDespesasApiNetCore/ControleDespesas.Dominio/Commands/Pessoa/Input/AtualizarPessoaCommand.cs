@@ -1,13 +1,19 @@
 ﻿using LSCode.Facilitador.Api.InterfacesCommand;
 using LSCode.Validador.ValidacoesNotificacoes;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace ControleDespesas.Dominio.Commands.Pessoa.Input
 {
-    public class AtualizarPessoaCommand : Notificadora, CommandPadrao 
+    public class AtualizarPessoaCommand : Notificadora, CommandPadrao
     {
+        [Required]
         public int Id { get; set; }
+
+        [Required]
         public string Nome { get; set; }
+
+        [Required]
         public string ImagemPerfil { get; set; }
 
         public bool ValidarCommand()

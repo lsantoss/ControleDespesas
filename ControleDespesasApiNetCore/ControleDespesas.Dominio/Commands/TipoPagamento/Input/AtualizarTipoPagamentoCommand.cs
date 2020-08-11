@@ -1,12 +1,16 @@
 ﻿using LSCode.Facilitador.Api.InterfacesCommand;
 using LSCode.Validador.ValidacoesNotificacoes;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace ControleDespesas.Dominio.Commands.TipoPagamento.Input
 {
     public class AtualizarTipoPagamentoCommand : Notificadora, CommandPadrao
     {
+        [Required]
         public int Id { get; set; }
+
+        [Required]
         public string Descricao { get; set; }
 
         public bool ValidarCommand()

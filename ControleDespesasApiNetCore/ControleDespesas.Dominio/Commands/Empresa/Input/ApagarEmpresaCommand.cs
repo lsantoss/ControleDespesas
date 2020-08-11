@@ -1,11 +1,13 @@
 ﻿using LSCode.Facilitador.Api.InterfacesCommand;
 using LSCode.Validador.ValidacoesNotificacoes;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace ControleDespesas.Dominio.Commands.Empresa.Input
 {
     public class ApagarEmpresaCommand : Notificadora, CommandPadrao
     {
+        [Required]
         public int Id { get; set; }
 
         public bool ValidarCommand()

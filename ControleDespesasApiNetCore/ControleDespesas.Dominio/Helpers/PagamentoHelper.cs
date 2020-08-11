@@ -95,11 +95,11 @@ namespace ControleDespesas.Dominio.Helpers
             }
         }
 
-        public static ApagarPagamentoCommandoutput GerarDadosRetornoDelete(int id)
+        public static ApagarPagamentoCommandOutput GerarDadosRetornoDelete(int id)
         {
             try
             {
-                return new ApagarPagamentoCommandoutput { Id = id };
+                return new ApagarPagamentoCommandOutput { Id = id };
             }
             catch (Exception e)
             {

@@ -7,6 +7,7 @@ using LSCode.Facilitador.Api.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 
@@ -20,11 +21,13 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
     {
         private readonly IPessoaRepositorio _repositorio;
         private readonly PessoaHandler _handler;
+        private readonly string _ChaveAutenticacao;
 
-        public PessoaController(IPessoaRepositorio repositorio, PessoaHandler handler)
+        public PessoaController(IPessoaRepositorio repositorio, PessoaHandler handler, IOptions<SettingsAPI> options)
         {
             _repositorio = repositorio;
             _handler = handler;
+            _ChaveAutenticacao = options.Value.ChaveAutorizacao;
         }
 
         /// <summary>
@@ -43,6 +46,9 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
+                if (Request.Headers["ChaveAutenticacao"].ToString() != _ChaveAutenticacao)
+                    return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave de Validação", "Esta a chave não corresponde com a chave esperada") }));
+
                 return StatusCode(StatusCodes.Status200OK, new ApiResponse<string, Notificacao>("Sucesso", "API Controle de Despesas - Pessoa OK"));
             }
             catch (Exception e)
@@ -67,6 +73,9 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
+                if (Request.Headers["ChaveAutenticacao"].ToString() != _ChaveAutenticacao)
+                    return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave de Validação", "Esta a chave não corresponde com a chave esperada") }));
+
                 var result = _repositorio.Listar();
 
                 if (result != null)
@@ -99,6 +108,9 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
+                if (Request.Headers["ChaveAutenticacao"].ToString() != _ChaveAutenticacao)
+                    return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave de Validação", "Esta a chave não corresponde com a chave esperada") }));
+
                 if (command == null)
                     return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
 
@@ -137,6 +149,9 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
+                if (Request.Headers["ChaveAutenticacao"].ToString() != _ChaveAutenticacao)
+                    return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave de Validação", "Esta a chave não corresponde com a chave esperada") }));
+
                 if (command == null)
                     return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
 
@@ -175,6 +190,9 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
+                if (Request.Headers["ChaveAutenticacao"].ToString() != _ChaveAutenticacao)
+                    return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave de Validação", "Esta a chave não corresponde com a chave esperada") }));
+
                 if (command == null)
                     return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
 
@@ -213,6 +231,9 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
+                if (Request.Headers["ChaveAutenticacao"].ToString() != _ChaveAutenticacao)
+                    return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave de Validação", "Esta a chave não corresponde com a chave esperada") }));
+
                 if (command == null)
                     return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
 

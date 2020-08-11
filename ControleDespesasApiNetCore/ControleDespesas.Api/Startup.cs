@@ -1,4 +1,5 @@
-﻿using ControleDespesas.Dominio.Handlers;
+﻿using ControleDespesas.Api.Swagger;
+using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Interfaces;
 using ControleDespesas.Infra.Data;
 using ControleDespesas.Infra.Data.Repositorio;
@@ -22,10 +23,9 @@ namespace ControleDespesas.Api
         {
             services.AddMvc().AddControllersAsServices();
 
-            //services.AddMvc().AddJsonOptions(options => options.SerializerSettings.Converters.Add(new StringEnumConverter()));
-
             #region AppSettings
             services.Configure<SettingsInfraData>(options => Configuration.GetSection("SettingsInfraData").Bind(options));
+            services.Configure<SettingsAPI>(options => Configuration.GetSection("SettingsAPI").Bind(options));
             #endregion
 
             #region DataContext
@@ -51,14 +51,11 @@ namespace ControleDespesas.Api
             #region Swagger
             services.AddSwaggerGen(c =>
             {
+                //c.DescribeAllEnumsAsStrings();
+                c.DescribeAllParametersInCamelCase();
                 c.IncludeXmlComments(GetXmlCommentsPath());
-                c.SwaggerDoc("v1",
-                    new Info
-                    {
-                        Title = "Controle de Despesas",
-                        Version = "v1",
-                        Description = "WebApi do Projeto Controle de Despesas",
-                    });
+                c.SwaggerDoc("v1", new Info { Title = "Controle de Despesas", Version = "v1", Description = "WebApi do Projeto Controle de Despesas", });
+                c.OperationFilter<SwaggerOperationFilters>();
             });
             #endregion
         }

@@ -1,4 +1,5 @@
-﻿using ControleDespesas.Dominio.Commands.Pagamento.Input;
+﻿using ControleDespesas.Api.Settings;
+using ControleDespesas.Dominio.Commands.Pagamento.Input;
 using ControleDespesas.Dominio.Commands.Pagamento.Output;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Interfaces;

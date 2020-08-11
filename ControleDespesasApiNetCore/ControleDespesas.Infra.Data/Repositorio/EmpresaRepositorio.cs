@@ -2,6 +2,7 @@
 using ControleDespesas.Dominio.Interfaces;
 using ControleDespesas.Dominio.Query.Empresa;
 using ControleDespesas.Infra.Data.Queries;
+using ControleDespesas.Infra.Data.Settings;
 using Dapper;
 using LSCode.ConexoesBD.DbContext;
 using LSCode.ConexoesBD.Enums;

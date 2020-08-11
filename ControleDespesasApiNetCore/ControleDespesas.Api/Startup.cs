@@ -1,8 +1,10 @@
-﻿using ControleDespesas.Api.Swagger;
+﻿using ControleDespesas.Api.Settings;
+using ControleDespesas.Api.Swagger;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Interfaces;
 using ControleDespesas.Infra.Data;
 using ControleDespesas.Infra.Data.Repositorio;
+using ControleDespesas.Infra.Data.Settings;
 using LSCode.ConexoesBD.DbContext;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

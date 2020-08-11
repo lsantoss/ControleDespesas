@@ -5,6 +5,7 @@ using ControleDespesas.Dominio.Query.Pagamento;
 using ControleDespesas.Dominio.Query.Pessoa;
 using ControleDespesas.Dominio.Query.TipoPagamento;
 using ControleDespesas.Infra.Data.Queries;
+using ControleDespesas.Infra.Data.Settings;
 using Dapper;
 using LSCode.ConexoesBD.DbContext;
 using LSCode.ConexoesBD.Enums;

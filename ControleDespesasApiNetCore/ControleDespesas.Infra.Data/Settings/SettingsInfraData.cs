@@ -1,4 +1,4 @@
-﻿namespace ControleDespesas.Infra.Data
+﻿namespace ControleDespesas.Infra.Data.Settings
 {
     public class SettingsInfraData
     {

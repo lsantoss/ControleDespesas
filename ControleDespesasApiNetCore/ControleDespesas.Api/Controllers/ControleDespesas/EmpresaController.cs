@@ -1,4 +1,5 @@
-﻿using ControleDespesas.Dominio.Commands.Empresa.Input;
+﻿using ControleDespesas.Api.Settings;
+using ControleDespesas.Dominio.Commands.Empresa.Input;
 using ControleDespesas.Dominio.Commands.Empresa.Output;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Interfaces;

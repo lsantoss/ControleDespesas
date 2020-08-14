@@ -63,8 +63,24 @@ namespace ControleDespesas.Api
                 //c.DescribeAllEnumsAsStrings();
                 c.DescribeAllParametersInCamelCase();
                 c.IncludeXmlComments(GetXmlCommentsPath());
-                c.SwaggerDoc("v1", new Info { Title = "Controle de Despesas", Version = "v1", Description = "WebApi do Projeto Controle de Despesas", });
                 c.OperationFilter<SwaggerOperationFilters>();
+                c.SwaggerDoc("v1", new Info 
+                { 
+                    Title = "Controle de Despesas", 
+                    Version = "v1", 
+                    Description = "WebApi do Projeto Controle de Despesas", 
+                    Contact = new Contact
+                    {
+                        Name = "Lucas Santos",
+                        Email = "l_santos@hotmail.com.br",
+                        Url = "https://github.com/lsantoss"
+                    },
+                    License = new License
+                    {
+                        Name = "MIT License",
+                        Url = "https://github.com/lsantoss/ControleDespesas/blob/master/LICENSE"
+                    }
+                });
             });
             #endregion
 

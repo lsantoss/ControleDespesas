@@ -1,5 +1,6 @@
-﻿using ControleDespesas.Dominio.Query.Usuario;
-using Microsoft.Extensions.Configuration;
+﻿using ControleDespesas.Api.Settings;
+using ControleDespesas.Dominio.Query.Usuario;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -10,17 +11,17 @@ namespace ControleDespesas.Api.Services
 {
     public class TokenJWTService
     {
-        private readonly IConfiguration _configuration;
+        private readonly string _ChaveJWT;
 
-        public TokenJWTService(IConfiguration configuration)
+        public TokenJWTService(IOptions<SettingsAPI> options)
         {
-            _configuration = configuration;
+            _ChaveJWT = options.Value.ChaveJWT;
         }
 
         public string GenerateToken(UsuarioQueryResult usuarioQR)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_configuration.GetSection("SettingsAPI:ChaveJWT").Get<string>());
+            var key = Encoding.ASCII.GetBytes(_ChaveJWT);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {

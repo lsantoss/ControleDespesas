@@ -2,7 +2,7 @@
 using ControleDespesas.Dominio.Commands.Pessoa.Output;
 using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Helpers;
-using ControleDespesas.Dominio.Interfaces;
+using ControleDespesas.Dominio.Repositorio;
 using LSCode.Facilitador.Api.InterfacesCommand;
 using LSCode.Facilitador.Api.Results;
 using LSCode.Validador.ValidacoesNotificacoes;

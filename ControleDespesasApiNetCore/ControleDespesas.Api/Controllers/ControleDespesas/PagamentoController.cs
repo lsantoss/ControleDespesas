@@ -2,10 +2,11 @@
 using ControleDespesas.Dominio.Commands.Pagamento.Input;
 using ControleDespesas.Dominio.Commands.Pagamento.Output;
 using ControleDespesas.Dominio.Handlers;
-using ControleDespesas.Dominio.Interfaces;
 using ControleDespesas.Dominio.Query.Pagamento;
+using ControleDespesas.Dominio.Repositorio;
 using LSCode.Facilitador.Api.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -17,6 +18,8 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
     [Consumes("application/json")]
     [Produces("application/json")]
     [Route("Pagamento")]
+    [ApiController]
+    [Authorize]
     public class PagamentoController : ControllerBase
     {
         private readonly IPagamentoRepositorio _repositorio;

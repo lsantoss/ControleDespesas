@@ -2,10 +2,11 @@
 using ControleDespesas.Dominio.Commands.Pessoa.Input;
 using ControleDespesas.Dominio.Commands.Pessoa.Output;
 using ControleDespesas.Dominio.Handlers;
-using ControleDespesas.Dominio.Interfaces;
 using ControleDespesas.Dominio.Query.Pessoa;
+using ControleDespesas.Dominio.Repositorio;
 using LSCode.Facilitador.Api.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -18,6 +19,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
     [Produces("application/json")]
     [Route("Pessoa")]
     [ApiController]
+    [Authorize]
     public class PessoaController : ControllerBase
     {
         private readonly IPessoaRepositorio _repositorio;

@@ -1,11 +1,13 @@
-﻿using ControleDespesas.Api.Settings;
+﻿using ControleDespesas.Api.Services;
+using ControleDespesas.Api.Settings;
 using ControleDespesas.Dominio.Commands.Usuario.Input;
 using ControleDespesas.Dominio.Commands.Usuario.Output;
 using ControleDespesas.Dominio.Handlers;
-using ControleDespesas.Dominio.Interfaces;
 using ControleDespesas.Dominio.Query.Usuario;
+using ControleDespesas.Dominio.Repositorio;
 using LSCode.Facilitador.Api.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -18,17 +20,20 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
     [Produces("application/json")]
     [Route("Usuario")]
     [ApiController]
+    [Authorize]
     public class UsuarioController : ControllerBase
     {
         private readonly IUsuarioRepositorio _repositorio;
         private readonly UsuarioHandler _handler;
+        private readonly TokenService _tokenService;
         private readonly string _ChaveAutenticacao;
 
-        public UsuarioController(IUsuarioRepositorio repositorio, UsuarioHandler handler, IOptions<SettingsAPI> options)
+        public UsuarioController(IUsuarioRepositorio repositorio, UsuarioHandler handler, IOptions<SettingsAPI> options, TokenService tokenService)
         {
             _repositorio = repositorio;
             _handler = handler;
             _ChaveAutenticacao = options.Value.ChaveAutorizacao;
+            _tokenService = tokenService;
         }
 
         /// <summary>
@@ -263,6 +268,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="500">Internal Server Error</response>
+        [AllowAnonymous]
         [HttpPost]
         [Route("v1/UsuarioLogin")]
         [ProducesResponseType(typeof(ApiResponse<UsuarioQueryResult, Notificacao>), StatusCodes.Status200OK)]
@@ -285,7 +291,12 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
                 var result = _handler.Handler(command);
 
                 if (result.Sucesso)
-                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
+                {
+                    UsuarioQueryResult usuarioQR = (UsuarioQueryResult)result.Dados;
+                    usuarioQR.Token = _tokenService.GenerateToken(usuarioQR);
+
+                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<object, Notificacao>(result.Mensagem, usuarioQR));
+                }
                 else
                     return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
             }

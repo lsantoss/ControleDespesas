@@ -2,10 +2,11 @@
 using ControleDespesas.Dominio.Commands.Empresa.Input;
 using ControleDespesas.Dominio.Commands.Empresa.Output;
 using ControleDespesas.Dominio.Handlers;
-using ControleDespesas.Dominio.Interfaces;
 using ControleDespesas.Dominio.Query.Empresa;
+using ControleDespesas.Dominio.Repositorio;
 using LSCode.Facilitador.Api.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -18,6 +19,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
     [Produces("application/json")]
     [Route("Empresa")]
     [ApiController]
+    [Authorize]
     public class EmpresaController : ControllerBase
     {
         private readonly IEmpresaRepositorio _repositorio;

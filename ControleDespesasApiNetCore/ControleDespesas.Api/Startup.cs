@@ -1,17 +1,20 @@
-﻿using ControleDespesas.Api.Settings;
+﻿using ControleDespesas.Api.Services;
+using ControleDespesas.Api.Settings;
 using ControleDespesas.Api.Swagger;
 using ControleDespesas.Dominio.Handlers;
-using ControleDespesas.Dominio.Interfaces;
-using ControleDespesas.Infra.Data;
+using ControleDespesas.Dominio.Repositorio;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Infra.Data.Settings;
 using LSCode.ConexoesBD.DbContext;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
+using System.Text;
 
 namespace ControleDespesas.Api
 {
@@ -50,6 +53,10 @@ namespace ControleDespesas.Api
             services.AddTransient<UsuarioHandler, UsuarioHandler>();
             #endregion
 
+            #region Services
+            services.AddTransient<TokenService, TokenService>();
+            #endregion
+
             #region Swagger
             services.AddSwaggerGen(c =>
             {
@@ -58,6 +65,28 @@ namespace ControleDespesas.Api
                 c.IncludeXmlComments(GetXmlCommentsPath());
                 c.SwaggerDoc("v1", new Info { Title = "Controle de Despesas", Version = "v1", Description = "WebApi do Projeto Controle de Despesas", });
                 c.OperationFilter<SwaggerOperationFilters>();
+            });
+            #endregion
+
+            #region JWT
+            var keyString = Configuration.GetSection("SettingsAPI:KeyJWT").Get<string>();
+            var key = Encoding.ASCII.GetBytes(keyString);
+
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = true;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
             });
             #endregion
         }
@@ -69,11 +98,13 @@ namespace ControleDespesas.Api
             else
                 app.UseHsts();
 
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-
             app.UseSwagger();
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "ControleDespesas"); });
+
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseAuthentication();
+            //app.UseAuthorization();
 
             app.UseMvc();
         }

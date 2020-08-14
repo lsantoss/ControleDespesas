@@ -24,13 +24,13 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
     {
         private readonly IEmpresaRepositorio _repositorio;
         private readonly EmpresaHandler _handler;
-        private readonly string _ChaveAutenticacao;
+        private readonly string _ChaveAPI;
 
         public EmpresaController(IEmpresaRepositorio repositorio, EmpresaHandler handler, IOptions<SettingsAPI> options)
         {
             _repositorio = repositorio;
             _handler = handler;
-            _ChaveAutenticacao = options.Value.ChaveAutorizacao;
+            _ChaveAPI = options.Value.ChaveAPI;
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
-                if(Request.Headers["ChaveAutenticacao"].ToString() != _ChaveAutenticacao)
+                if(Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
                     return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave de Validação", "Esta a chave não corresponde com a chave esperada") }));
 
                 return StatusCode(StatusCodes.Status200OK, new ApiResponse<string, Notificacao>("Sucesso", "API Controle de Despesas - Empresa OK"));
@@ -76,7 +76,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
-                if (Request.Headers["ChaveAutenticacao"].ToString() != _ChaveAutenticacao)
+                if (Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
                     return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave de Validação", "Esta a chave não corresponde com a chave esperada") }));
 
                 var result = _repositorio.Listar();
@@ -111,7 +111,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
-                if (Request.Headers["ChaveAutenticacao"].ToString() != _ChaveAutenticacao)
+                if (Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
                     return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave de Validação", "Esta a chave não corresponde com a chave esperada") }));
 
                 if (command == null)
@@ -152,7 +152,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
-                if (Request.Headers["ChaveAutenticacao"].ToString() != _ChaveAutenticacao)
+                if (Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
                     return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave de Validação", "Esta a chave não corresponde com a chave esperada") }));
 
                 if (command == null)
@@ -193,7 +193,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
-                if (Request.Headers["ChaveAutenticacao"].ToString() != _ChaveAutenticacao)
+                if (Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
                     return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave de Validação", "Esta a chave não corresponde com a chave esperada") }));
 
                 if (command == null)
@@ -234,7 +234,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
-                if (Request.Headers["ChaveAutenticacao"].ToString() != _ChaveAutenticacao)
+                if (Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
                     return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave de Validação", "Esta a chave não corresponde com a chave esperada") }));
 
                 if (command == null)

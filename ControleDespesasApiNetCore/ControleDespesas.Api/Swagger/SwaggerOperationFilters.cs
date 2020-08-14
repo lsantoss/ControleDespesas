@@ -13,8 +13,8 @@ namespace ControleDespesas.Api.Swagger
 
             operation.Parameters.Add(new NonBodyParameter
             {
-                Name = "ChaveAutenticacao",
-                Description = "Chave de Autenticação de acesso",
+                Name = "ChaveAPI",
+                Description = "Chave de Acesso da API",
                 In = "header",
                 Type = "string",
                 Required = true

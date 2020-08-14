@@ -8,11 +8,11 @@ using System.Text;
 
 namespace ControleDespesas.Api.Services
 {
-    public class TokenService
+    public class TokenJWTService
     {
         private readonly IConfiguration _configuration;
 
-        public TokenService(IConfiguration configuration)
+        public TokenJWTService(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -20,7 +20,7 @@ namespace ControleDespesas.Api.Services
         public string GenerateToken(UsuarioQueryResult usuarioQR)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_configuration.GetSection("SettingsAPI:KeyJWT").Get<string>());
+            var key = Encoding.ASCII.GetBytes(_configuration.GetSection("SettingsAPI:ChaveJWT").Get<string>());
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {

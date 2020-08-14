@@ -54,7 +54,7 @@ namespace ControleDespesas.Api
             #endregion
 
             #region Services
-            services.AddTransient<TokenService, TokenService>();
+            services.AddTransient<TokenJWTService, TokenJWTService>();
             #endregion
 
             #region Swagger
@@ -69,7 +69,7 @@ namespace ControleDespesas.Api
             #endregion
 
             #region JWT
-            var keyString = Configuration.GetSection("SettingsAPI:KeyJWT").Get<string>();
+            var keyString = Configuration.GetSection("SettingsAPI:ChaveJWT").Get<string>();
             var key = Encoding.ASCII.GetBytes(keyString);
 
             services.AddAuthentication(x =>
@@ -104,8 +104,6 @@ namespace ControleDespesas.Api
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();
-            //app.UseAuthorization();
-
             app.UseMvc();
         }
 

@@ -1,6 +1,6 @@
 ﻿using ControleDespesas.Dominio.Entidades;
-using ControleDespesas.Dominio.Interfaces;
 using ControleDespesas.Dominio.Query.Empresa;
+using ControleDespesas.Dominio.Repositorio;
 using LSCode.Validador.ValueObjects;
 using Moq;
 using System.Collections.Generic;

@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace ControleDespesas.Api
@@ -56,13 +57,13 @@ namespace ControleDespesas.Api
             #region Services
             services.AddTransient<TokenJWTService, TokenJWTService>();
             #endregion
-
+            
             #region Swagger
             services.AddSwaggerGen(c =>
             {
                 //c.DescribeAllEnumsAsStrings();
                 c.DescribeAllParametersInCamelCase();
-                c.IncludeXmlComments(GetXmlCommentsPath());
+                c.IncludeXmlComments($@"{AppDomain.CurrentDomain.BaseDirectory}\Swagger.xml");
                 c.OperationFilter<SwaggerOperationFilters>();
                 c.SwaggerDoc("v1", new Info 
                 { 
@@ -81,6 +82,21 @@ namespace ControleDespesas.Api
                         Url = "https://github.com/lsantoss/ControleDespesas/blob/master/LICENSE"
                     }
                 });
+
+                c.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                {
+                    In = "header",
+                    Description = "Para autenticar use a palavra 'Bearer' + (um espaço entre a palavra Bearer e o Token) + 'Token'",
+                    Name = "Authorization",
+                    Type = "apiKey"
+                });
+
+                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
+                {
+                    {"Bearer", new string[] { }},
+                });
+
+                // c.OperationFilter<SecurityRequirementsOperationFilter>();
             });
             #endregion
 
@@ -122,7 +138,5 @@ namespace ControleDespesas.Api
             app.UseAuthentication();
             app.UseMvc();
         }
-
-        protected static string GetXmlCommentsPath() => String.Format(@"{0}\Swagger.xml", AppDomain.CurrentDomain.BaseDirectory);
     }
 }

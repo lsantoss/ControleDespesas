@@ -95,12 +95,10 @@ namespace ControleDespesas.Api
                 {
                     {"Bearer", new string[] { }},
                 });
-
-                // c.OperationFilter<SecurityRequirementsOperationFilter>();
             });
             #endregion
 
-            #region JWT
+            #region Autenticação JWT
             var keyString = Configuration.GetSection("SettingsAPI:ChaveJWT").Get<string>();
             var key = Encoding.ASCII.GetBytes(keyString);
 

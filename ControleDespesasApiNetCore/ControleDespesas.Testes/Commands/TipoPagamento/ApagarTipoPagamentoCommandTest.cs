@@ -5,40 +5,31 @@ namespace ControleDespesas.Testes.Commands.TipoPagamento
 {
     public class ApagarTipoPagamentoCommandTest
     {
-        private readonly ApagarTipoPagamentoCommand _commandReadOnly;
+        private ApagarTipoPagamentoCommand _command;
 
-        public ApagarTipoPagamentoCommandTest()
-        {
-            _commandReadOnly = new ApagarTipoPagamentoCommand()
-            {
-                Id = 1
-            };
-        }
+        public ApagarTipoPagamentoCommandTest() => _command = new ApagarTipoPagamentoCommand() { Id = 1 };
 
         [Fact]
         public void ValidarCommand_Valido()
         {
-            ApagarTipoPagamentoCommand command = _commandReadOnly;
-            bool resultado = command.ValidarCommand();
-            Assert.True(resultado);
+            Assert.True(_command.ValidarCommand());
+            Assert.Equal(0, _command.Notificacoes.Count);
         }
 
         [Fact]
         public void ValidarCommand_IdZerado()
         {
-            ApagarTipoPagamentoCommand command = _commandReadOnly;
-            command.Id = 0;
-            bool resultado = command.ValidarCommand();
-            Assert.False(resultado);
+            _command.Id = 0;
+            Assert.False(_command.ValidarCommand());
+            Assert.NotEqual(0, _command.Notificacoes.Count);
         }
 
         [Fact]
         public void ValidarCommand_IdNegativo()
         {
-            ApagarTipoPagamentoCommand command = _commandReadOnly;
-            command.Id = -1;
-            bool resultado = command.ValidarCommand();
-            Assert.False(resultado);
+            _command.Id = -1;
+            Assert.False(_command.ValidarCommand());
+            Assert.NotEqual(0, _command.Notificacoes.Count);
         }
     }
 }

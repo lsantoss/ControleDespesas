@@ -3,11 +3,11 @@ using Xunit;
 
 namespace ControleDespesas.Testes.Commands.Pessoa
 {
-    public class ApagarPessoaCommandTest
+    public class ObterPessoaPorIdCommandTest
     {
-        private ApagarPessoaCommand _command;
+        private ObterPessoaPorIdCommand _command;
 
-        public ApagarPessoaCommandTest() => _command = new ApagarPessoaCommand() { Id = 1 };
+        public ObterPessoaPorIdCommandTest() => _command = new ObterPessoaPorIdCommand() { Id = 1 };
 
         [Fact]
         public void ValidarCommand_Valido()

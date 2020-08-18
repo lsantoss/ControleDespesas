@@ -6,37 +6,33 @@ namespace ControleDespesas.Testes.Entidades
 {
     public class TipoPagamentoTest
     {
-        private readonly TipoPagamento _tipoPagamentoTeste;
+        private TipoPagamento _tipoPagamento;
 
         public TipoPagamentoTest()
         {
             int id = 1;
             Texto descricao = new Texto("Luz Elétrica", "Descrição", 250);
-            _tipoPagamentoTeste = new TipoPagamento(id, descricao);
+            _tipoPagamento = new TipoPagamento(id, descricao);
         }
 
         [Fact]
         public void ValidarEntidade_Valida()
         {
-            TipoPagamento tipoPagamento = _tipoPagamentoTeste;
-            int resultado = tipoPagamento.Notificacoes.Count;
-            Assert.Equal(0, resultado);
+            Assert.True(_tipoPagamento.Valido);
+            Assert.True(_tipoPagamento.Descricao.Valido);
+            Assert.Equal(0, _tipoPagamento.Notificacoes.Count);
+            Assert.Equal(0, _tipoPagamento.Descricao.Notificacoes.Count);
         }
 
         [Fact]
         public void ValidarEntidade_DescricaoInvalida()
         {
-            string descricaoLonga = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
-                                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
-                                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            _tipoPagamento.Descricao = new Texto(@"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                                                   aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                                                   aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "Descrição", 250);
 
-            TipoPagamento tipoPagamento = new TipoPagamento(
-                _tipoPagamentoTeste.Id,
-                new Texto(descricaoLonga, "Descrição", 250)
-            );
-
-            bool resultado = tipoPagamento.Descricao.Valido;
-            Assert.False(resultado);
+            Assert.False(_tipoPagamento.Descricao.Valido);
+            Assert.NotEqual(0, _tipoPagamento.Descricao.Notificacoes.Count);
         }
     }
 }

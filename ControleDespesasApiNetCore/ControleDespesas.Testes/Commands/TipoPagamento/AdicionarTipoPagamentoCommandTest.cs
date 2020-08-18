@@ -5,54 +5,42 @@ namespace ControleDespesas.Testes.Commands.TipoPagamento
 {
     public class AdicionarTipoPagamentoCommandTest
     {
-        private readonly AdicionarTipoPagamentoCommand _commandReadOnly;
+        private AdicionarTipoPagamentoCommand _command;
 
-        public AdicionarTipoPagamentoCommandTest()
+        public AdicionarTipoPagamentoCommandTest() => _command = new AdicionarTipoPagamentoCommand() { Descricao = "Saneamento" };
+
+        [Fact]
+        public void ValidarCommand_Valido()
         {
-            _commandReadOnly = new AdicionarTipoPagamentoCommand()
-            {
-                Descricao = "Saneamento"
-            };
+            Assert.True(_command.ValidarCommand());
+            Assert.Equal(0, _command.Notificacoes.Count);
         }
 
         [Fact]
-        public void ValidarCommand_DescricaoMinimoDeCaractetes_True()
+        public void ValidarCommand_DescricaoMinimoDeCaractetesNull()
         {
-            AdicionarTipoPagamentoCommand command = _commandReadOnly;
-            command.Descricao = "a";
-            bool resultado = command.ValidarCommand();
-            Assert.True(resultado);
+            _command.Descricao = null;
+            Assert.False(_command.ValidarCommand());
+            Assert.NotEqual(0, _command.Notificacoes.Count);
         }
 
         [Fact]
-        public void ValidarCommand_DescricaoMinimoDeCaractetes_False()
+        public void ValidarCommand_DescricaoMinimoDeCaractetesEmpty()
         {
-            AdicionarTipoPagamentoCommand command = _commandReadOnly;
-            command.Descricao = "";
-            bool resultado = command.ValidarCommand();
-            Assert.False(resultado);
-        }
-
-        [Fact]
-        public void ValidarCommand_DescricaoMaximoDeCaractetes_True()
-        {
-            AdicionarTipoPagamentoCommand commandTest = _commandReadOnly;
-            commandTest.Descricao = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
-                                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
-                                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            bool resultado = commandTest.ValidarCommand();
-            Assert.True(resultado);
+            _command.Descricao = string.Empty;
+            Assert.False(_command.ValidarCommand());
+            Assert.NotEqual(0, _command.Notificacoes.Count);
         }
 
         [Fact]
         public void ValidarCommand_DescricaoMaximoDeCaractetes_False()
         {
-            AdicionarTipoPagamentoCommand commandTest = _commandReadOnly;
-            commandTest.Descricao = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
-                                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
-                                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            bool resultado = commandTest.ValidarCommand();
-            Assert.False(resultado);
+            _command.Descricao = @"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                                   aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                                   aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+
+            Assert.False(_command.ValidarCommand());
+            Assert.NotEqual(0, _command.Notificacoes.Count);
         }
     }
 }

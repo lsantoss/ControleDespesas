@@ -5,40 +5,31 @@ namespace ControleDespesas.Testes.Commands.Empresa
 {
     public class ApagarEmpresaCommandTest
     {
-        private readonly ApagarEmpresaCommand _commandReadOnly;
+        private ApagarEmpresaCommand _command;
 
-        public ApagarEmpresaCommandTest()
-        {
-            _commandReadOnly = new ApagarEmpresaCommand()
-            {
-                Id = 1
-            };
-        }
+        public ApagarEmpresaCommandTest() => _command = new ApagarEmpresaCommand() { Id = 1 };
 
         [Fact]
         public void ValidarCommand_Valido()
         {
-            ApagarEmpresaCommand command = _commandReadOnly;
-            bool resultado = command.ValidarCommand();
-            Assert.True(resultado);
+            Assert.True(_command.ValidarCommand());
+            Assert.Equal(0, _command.Notificacoes.Count);
         }
 
         [Fact]
         public void ValidarCommand_IdZerado()
         {
-            ApagarEmpresaCommand command = _commandReadOnly;
-            command.Id = 0;
-            bool resultado = command.ValidarCommand();
-            Assert.False(resultado);
+            _command.Id = 0;
+            Assert.False(_command.ValidarCommand());
+            Assert.NotEqual(0, _command.Notificacoes.Count);
         }
 
         [Fact]
         public void ValidarCommand_IdNegativo()
         {
-            ApagarEmpresaCommand command = _commandReadOnly;
-            command.Id = -1;
-            bool resultado = command.ValidarCommand();
-            Assert.False(resultado);
+            _command.Id = -1;
+            Assert.False(_command.ValidarCommand());
+            Assert.NotEqual(0, _command.Notificacoes.Count);
         }
     }
 }

@@ -1,13 +1,13 @@
-﻿using ControleDespesas.Dominio.Commands.Pessoa.Input;
+﻿using ControleDespesas.Dominio.Commands.Usuario.Input;
 using Xunit;
 
-namespace ControleDespesas.Testes.Commands.Pessoa
+namespace ControleDespesas.Testes.Commands.Usuario
 {
-    public class ApagarPessoaCommandTest
+    public class ObterUsuarioPorIdCommandTest
     {
-        private ApagarPessoaCommand _command;
+        private readonly ObterUsuarioPorIdCommand _command;
 
-        public ApagarPessoaCommandTest() => _command = new ApagarPessoaCommand() { Id = 1 };
+        public ObterUsuarioPorIdCommandTest() => _command = new ObterUsuarioPorIdCommand() { Id = 1 };
 
         [Fact]
         public void ValidarCommand_Valido()

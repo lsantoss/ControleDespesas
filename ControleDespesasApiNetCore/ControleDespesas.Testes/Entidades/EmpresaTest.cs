@@ -6,37 +6,32 @@ namespace ControleDespesas.Testes.Entidades
 {
     public class EmpresaTest
     {
-        private readonly Empresa _empresaTeste;
+        private Empresa _empresa;
 
         public EmpresaTest()
         {
             int id = 1;
             Texto nome = new Texto("Oi", "Nome", 100);
             string logo = "base64String";
-            _empresaTeste = new Empresa(id, nome, logo);
+            _empresa = new Empresa(id, nome, logo);
         }
 
         [Fact]
         public void ValidarEntidade_Valida()
         {
-            Empresa empresa = _empresaTeste;
-            int resultado = empresa.Notificacoes.Count;
-            Assert.Equal(0, resultado);
+            Assert.True(_empresa.Valido);
+            Assert.True(_empresa.Nome.Valido);
+            Assert.Equal(0, _empresa.Notificacoes.Count);
+            Assert.Equal(0, _empresa.Nome.Notificacoes.Count);
         }
 
         [Fact]
         public void ValidarEntidade_NomeInvalido()
         {
-            string nomeLongo = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            _empresa.Nome = new Texto("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "Nome", 100);
 
-            Empresa empresa = new Empresa(
-                _empresaTeste.Id,
-                new Texto(nomeLongo, "Nome", 100),
-                _empresaTeste.Logo
-            );
-
-            bool resultado = empresa.Nome.Valido;
-            Assert.False(resultado);
+            Assert.False(_empresa.Nome.Valido);
+            Assert.NotEqual(0, _empresa.Nome.Notificacoes.Count);
         }
     }
 }

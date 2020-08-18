@@ -7,7 +7,7 @@ namespace ControleDespesas.Testes.Entidades
 {
     public class PagamentoTest
     {
-        private readonly Pagamento _pagamentoTeste;
+        private Pagamento _pagamento;
 
         public PagamentoTest()
         {
@@ -19,37 +19,27 @@ namespace ControleDespesas.Testes.Entidades
             double valor = 89.75;
             DateTime dataPagamento = DateTime.Now;
             DateTime dataVencimento = DateTime.Now.AddDays(1);
-            _pagamentoTeste = new Pagamento(id, tipoPagamento, empresa, pessoa, descricao, valor, dataPagamento, dataVencimento);
+            _pagamento = new Pagamento(id, tipoPagamento, empresa, pessoa, descricao, valor, dataPagamento, dataVencimento);
         }
 
         [Fact]
         public void ValidarEntidade_Valida()
         {
-            Pagamento pagamento = _pagamentoTeste;
-            int resultado = pagamento.Notificacoes.Count;
-            Assert.Equal(0, resultado);
+            Assert.True(_pagamento.Valido);
+            Assert.True(_pagamento.Descricao.Valido);
+            Assert.Equal(0, _pagamento.Notificacoes.Count);
+            Assert.Equal(0, _pagamento.Descricao.Notificacoes.Count);
         }
 
         [Fact]
         public void ValidarEntidade_DescricaoInvalida()
         {
-            string descricaoLonga = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"+
-                                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"+
-                                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            _pagamento.Descricao = new Texto(@"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                                               aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                                               aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "Descrição", 250);
 
-            Pagamento pagamento = new Pagamento(
-                _pagamentoTeste.Id,
-                _pagamentoTeste.TipoPagamento,
-                _pagamentoTeste.Empresa,
-                _pagamentoTeste.Pessoa,
-                new Texto(descricaoLonga, "Descrição", 250),
-                _pagamentoTeste.Valor, 
-                _pagamentoTeste.DataVencimento,
-                _pagamentoTeste.DataPagamento
-            );
-
-            bool resultado = pagamento.Descricao.Valido;
-            Assert.False(resultado);
+            Assert.False(_pagamento.Descricao.Valido);
+            Assert.NotEqual(0, _pagamento.Descricao.Notificacoes.Count);
         }
     }
 }

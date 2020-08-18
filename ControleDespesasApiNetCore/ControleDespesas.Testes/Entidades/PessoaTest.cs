@@ -6,37 +6,32 @@ namespace ControleDespesas.Testes.Entidades
 {
     public class PessoaTest
     {
-        private readonly Pessoa _pessoaTeste;
+        private Pessoa _pessoa;
 
         public PessoaTest()
         {
             int id = 1;
             Texto nome = new Texto("Lucas", "Nome", 100);
             string imagemPerfil = "base64String";
-            _pessoaTeste = new Pessoa(id, nome, imagemPerfil);
+            _pessoa = new Pessoa(id, nome, imagemPerfil);
         }
 
         [Fact]
         public void ValidarEntidade_Valida()
         {
-            Pessoa pessoa = _pessoaTeste;
-            int resultado = pessoa.Notificacoes.Count;
-            Assert.Equal(0, resultado);
+            Assert.True(_pessoa.Valido);
+            Assert.True(_pessoa.Nome.Valido);
+            Assert.Equal(0, _pessoa.Notificacoes.Count);
+            Assert.Equal(0, _pessoa.Nome.Notificacoes.Count);
         }
 
         [Fact]
         public void ValidarEntidade_NomeInvalido()
         {
-            string nomeLongo = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            _pessoa.Nome = new Texto("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "Nome", 100);
 
-            Pessoa pessoa = new Pessoa(
-                _pessoaTeste.Id,
-                new Texto(nomeLongo, "Nome", 100),
-                _pessoaTeste.ImagemPerfil
-            );
-
-            bool resultado = pessoa.Nome.Valido;
-            Assert.False(resultado);
+            Assert.False(_pessoa.Nome.Valido);
+            Assert.NotEqual(0, _pessoa.Nome.Notificacoes.Count);
         }
     }
 }

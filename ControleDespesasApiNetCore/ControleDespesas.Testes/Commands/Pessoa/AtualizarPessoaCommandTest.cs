@@ -5,11 +5,11 @@ namespace ControleDespesas.Testes.Commands.Pessoa
 {
     public class AtualizarPessoaCommandTest
     {
-        private readonly AtualizarPessoaCommand _commandReadOnly;
+        private AtualizarPessoaCommand _command;
 
         public AtualizarPessoaCommandTest()
         {
-            _commandReadOnly = new AtualizarPessoaCommand()
+            _command = new AtualizarPessoaCommand()
             {
                 Id = 1,
                 Nome = "Lucas",
@@ -20,81 +20,64 @@ namespace ControleDespesas.Testes.Commands.Pessoa
         [Fact]
         public void ValidarCommand_Valido()
         {
-            AtualizarPessoaCommand command = _commandReadOnly;
-            bool resultado = command.ValidarCommand();
-            Assert.True(resultado);
+            Assert.True(_command.ValidarCommand());
+            Assert.Equal(0, _command.Notificacoes.Count);
         }
 
         [Fact]
         public void ValidarCommand_IdZerado()
         {
-            AtualizarPessoaCommand command = _commandReadOnly;
-            command.Id = 0;
-            bool resultado = command.ValidarCommand();
-            Assert.False(resultado);
+            _command.Id = 0;
+            Assert.False(_command.ValidarCommand());
+            Assert.NotEqual(0, _command.Notificacoes.Count);
         }
 
         [Fact]
         public void ValidarCommand_IdNegativo()
         {
-            AtualizarPessoaCommand command = _commandReadOnly;
-            command.Id = -1;
-            bool resultado = command.ValidarCommand();
-            Assert.False(resultado);
+            _command.Id = -1;
+            Assert.False(_command.ValidarCommand());
+            Assert.NotEqual(0, _command.Notificacoes.Count);
         }
 
         [Fact]
-        public void ValidarCommand_NomeMinimoDeCaractetes_True()
+        public void ValidarCommand_NomeMinimoDeCaractetesNull()
         {
-            AtualizarPessoaCommand command = _commandReadOnly;
-            command.Nome = "a";
-            bool resultado = command.ValidarCommand();
-            Assert.True(resultado);
+            _command.Nome = null;
+            Assert.False(_command.ValidarCommand());
+            Assert.NotEqual(0, _command.Notificacoes.Count);
         }
 
         [Fact]
-        public void ValidarCommand_NomeMinimoDeCaractetes_False()
+        public void ValidarCommand_NomeMinimoDeCaractetesEmpty()
         {
-            AtualizarPessoaCommand command = _commandReadOnly;
-            command.Nome = "";
-            bool resultado = command.ValidarCommand();
-            Assert.False(resultado);
+            _command.Nome = string.Empty;
+            Assert.False(_command.ValidarCommand());
+            Assert.NotEqual(0, _command.Notificacoes.Count);
         }
 
         [Fact]
-        public void ValidarCommand_NomeMaximoDeCaractetes_True()
+        public void ValidarCommand_NomeMaximoDeCaractetes()
         {
-            AtualizarPessoaCommand commandTest = _commandReadOnly;
-            commandTest.Nome = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            bool resultado = commandTest.ValidarCommand();
-            Assert.True(resultado);
+            _command.Nome = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            Assert.False(_command.ValidarCommand());
+            Assert.NotEqual(0, _command.Notificacoes.Count);
         }
 
         [Fact]
-        public void ValidarCommand_NomeMaximoDeCaractetes_False()
+        public void ValidarCommand_ImagemPerfilMinimoDeCaractetesNull()
         {
-            AtualizarPessoaCommand commandTest = _commandReadOnly;
-            commandTest.Nome = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            bool resultado = commandTest.ValidarCommand();
-            Assert.False(resultado);
+            _command.ImagemPerfil = null;
+            Assert.False(_command.ValidarCommand());
+            Assert.NotEqual(0, _command.Notificacoes.Count);
         }
 
         [Fact]
-        public void ValidarCommand_ImagemPerfilMinimoDeCaractetes_True()
+        public void ValidarCommand_ImagemPerfilMinimoDeCaractetesEmpty()
         {
-            AtualizarPessoaCommand command = _commandReadOnly;
-            command.ImagemPerfil = "a";
-            bool resultado = command.ValidarCommand();
-            Assert.True(resultado);
-        }
-
-        [Fact]
-        public void ValidarCommand_ImagemPerfilMinimoDeCaractetes_False()
-        {
-            AtualizarPessoaCommand command = _commandReadOnly;
-            command.ImagemPerfil = "";
-            bool resultado = command.ValidarCommand();
-            Assert.False(resultado);
+            _command.ImagemPerfil = string.Empty;
+            Assert.False(_command.ValidarCommand());
+            Assert.NotEqual(0, _command.Notificacoes.Count);
         }
     }
 }

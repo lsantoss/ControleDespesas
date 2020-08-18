@@ -1,13 +1,13 @@
-﻿using ControleDespesas.Dominio.Commands.Pessoa.Input;
+﻿using ControleDespesas.Dominio.Commands.TipoPagamento.Input;
 using Xunit;
 
-namespace ControleDespesas.Testes.Commands.Pessoa
+namespace ControleDespesas.Testes.Commands.TipoPagamento
 {
-    public class ApagarPessoaCommandTest
+    public class ObterTipoPagamentoPorIdCommandTest
     {
-        private ApagarPessoaCommand _command;
+        private ObterTipoPagamentoPorIdCommand _command;
 
-        public ApagarPessoaCommandTest() => _command = new ApagarPessoaCommand() { Id = 1 };
+        public ObterTipoPagamentoPorIdCommandTest() => _command = new ObterTipoPagamentoPorIdCommand() { Id = 1 };
 
         [Fact]
         public void ValidarCommand_Valido()

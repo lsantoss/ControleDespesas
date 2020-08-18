@@ -33,6 +33,7 @@ namespace ControleDespesas.Dominio.Commands.Usuario.Input
                 if (!Regex.IsMatch(Senha, @"[0-9]+")) AddNotificacao("SenhaMedia", "Senha deve conter no mínimo 1 número");
 
                 AddNotificacao(new ContratoValidacao().EhMaior((int)Privilegio, 0, "Privilegio", "Privilégio é um campo obrigatório"));
+                AddNotificacao(new ContratoValidacao().EhMaiorOuIgual((int)Privilegio, 3, "Privilegio", "Privilégio informado é inválido"));
 
                 return Valido;
             }

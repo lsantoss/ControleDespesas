@@ -6,11 +6,11 @@ namespace ControleDespesas.Testes.Commands.Pagamento
 {
     public class AtualizarPagamentoCommandTest
     {
-        private readonly AtualizarPagamentoCommand _commandReadOnly;
+        private AtualizarPagamentoCommand _command;
 
         public AtualizarPagamentoCommandTest()
         {
-            _commandReadOnly = new AtualizarPagamentoCommand()
+            _command = new AtualizarPagamentoCommand()
             {
                 Id = 1,
                 IdTipoPagamento = 15,
@@ -26,139 +26,114 @@ namespace ControleDespesas.Testes.Commands.Pagamento
         [Fact]
         public void ValidarCommand_Valido()
         {
-            AtualizarPagamentoCommand command = _commandReadOnly;
-            bool resultado = command.ValidarCommand();
-            Assert.True(resultado);
+            Assert.True(_command.ValidarCommand());
+            Assert.Equal(0, _command.Notificacoes.Count);
         }
 
         [Fact]
         public void ValidarCommand_IdZerado()
         {
-            AtualizarPagamentoCommand command = _commandReadOnly;
-            command.Id = 0;
-            bool resultado = command.ValidarCommand();
-            Assert.False(resultado);
+            _command.Id = 0;
+            Assert.False(_command.ValidarCommand());
+            Assert.NotEqual(0, _command.Notificacoes.Count);
         }
 
         [Fact]
         public void ValidarCommand_IdNegativo()
         {
-            AtualizarPagamentoCommand command = _commandReadOnly;
-            command.Id = -1;
-            bool resultado = command.ValidarCommand();
-            Assert.False(resultado);
+            _command.Id = -1;
+            Assert.False(_command.ValidarCommand());
+            Assert.NotEqual(0, _command.Notificacoes.Count);
         }
 
         [Fact]
         public void ValidarCommand_IdTipoPagamentoZerado()
         {
-            AtualizarPagamentoCommand command = _commandReadOnly;
-            command.IdTipoPagamento = 0;
-            bool resultado = command.ValidarCommand();
-            Assert.False(resultado);
+            _command.IdTipoPagamento = 0;
+            Assert.False(_command.ValidarCommand());
+            Assert.NotEqual(0, _command.Notificacoes.Count);
         }
 
         [Fact]
         public void ValidarCommand_IdTipoPagamentoNegativo()
         {
-            AtualizarPagamentoCommand command = _commandReadOnly;
-            command.IdTipoPagamento = -1;
-            bool resultado = command.ValidarCommand();
-            Assert.False(resultado);
+            _command.IdTipoPagamento = -1;
+            Assert.False(_command.ValidarCommand());
+            Assert.NotEqual(0, _command.Notificacoes.Count);
         }
 
         [Fact]
         public void ValidarCommand_IdEmpresaZerado()
         {
-            AtualizarPagamentoCommand command = _commandReadOnly;
-            command.IdEmpresa = 0;
-            bool resultado = command.ValidarCommand();
-            Assert.False(resultado);
+            _command.IdEmpresa = 0;
+            Assert.False(_command.ValidarCommand());
+            Assert.NotEqual(0, _command.Notificacoes.Count);
         }
 
         [Fact]
         public void ValidarCommand_IdEmpresaNegativo()
         {
-            AtualizarPagamentoCommand command = _commandReadOnly;
-            command.IdEmpresa = -1;
-            bool resultado = command.ValidarCommand();
-            Assert.False(resultado);
+            _command.IdEmpresa = -1;
+            Assert.False(_command.ValidarCommand());
+            Assert.NotEqual(0, _command.Notificacoes.Count);
         }
 
         [Fact]
         public void ValidarCommand_IdPessoaZerado()
         {
-            AtualizarPagamentoCommand command = _commandReadOnly;
-            command.IdPessoa = 0;
-            bool resultado = command.ValidarCommand();
-            Assert.False(resultado);
+            _command.IdPessoa = 0;
+            Assert.False(_command.ValidarCommand());
+            Assert.NotEqual(0, _command.Notificacoes.Count);
         }
 
         [Fact]
         public void ValidarCommand_IdPessoaNegativo()
         {
-            AtualizarPagamentoCommand command = _commandReadOnly;
-            command.IdPessoa = -1;
-            bool resultado = command.ValidarCommand();
-            Assert.False(resultado);
+            _command.IdPessoa = -1;
+            Assert.False(_command.ValidarCommand());
+            Assert.NotEqual(0, _command.Notificacoes.Count);
         }
 
         [Fact]
-        public void ValidarCommand_DescricaoMinimoDeCaractetes_True()
+        public void ValidarCommand_DescricaoMinimoDeCaractetesNull()
         {
-            AtualizarPagamentoCommand command = _commandReadOnly;
-            command.Descricao = "a";
-            bool resultado = command.ValidarCommand();
-            Assert.True(resultado);
+            _command.Descricao = null;
+            Assert.False(_command.ValidarCommand());
+            Assert.NotEqual(0, _command.Notificacoes.Count);
         }
 
         [Fact]
-        public void ValidarCommand_DescricaoMinimoDeCaractetes_False()
+        public void ValidarCommand_DescricaoMinimoDeCaractetesEmpty()
         {
-            AtualizarPagamentoCommand command = _commandReadOnly;
-            command.Descricao = "";
-            bool resultado = command.ValidarCommand();
-            Assert.False(resultado);
+            _command.Descricao = string.Empty;
+            Assert.False(_command.ValidarCommand());
+            Assert.NotEqual(0, _command.Notificacoes.Count);
         }
 
         [Fact]
-        public void ValidarCommand_DescricaoMaximoDeCaractetes_True()
+        public void ValidarCommand_DescricaoMaximoDeCaractetes()
         {
-            AtualizarPagamentoCommand commandTest = _commandReadOnly;
-            commandTest.Descricao = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
-                                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
-                                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            bool resultado = commandTest.ValidarCommand();
-            Assert.True(resultado);
-        }
-
-        [Fact]
-        public void ValidarCommand_DescricaoMaximoDeCaractetes_False()
-        {
-            AtualizarPagamentoCommand commandTest = _commandReadOnly;
-            commandTest.Descricao = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
-                                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
-                                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            bool resultado = commandTest.ValidarCommand();
-            Assert.False(resultado);
+            _command.Descricao = @"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                                   aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                                   aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            Assert.False(_command.ValidarCommand());
+            Assert.NotEqual(0, _command.Notificacoes.Count);
         }
 
         [Fact]
         public void ValidarCommand_ValorZerado()
         {
-            AtualizarPagamentoCommand command = _commandReadOnly;
-            command.Valor = 0;
-            bool resultado = command.ValidarCommand();
-            Assert.False(resultado);
+            _command.Valor = 0;
+            Assert.False(_command.ValidarCommand());
+            Assert.NotEqual(0, _command.Notificacoes.Count);
         }
 
         [Fact]
         public void ValidarCommand_ValorNegativo()
         {
-            AtualizarPagamentoCommand command = _commandReadOnly;
-            command.Valor = -1;
-            bool resultado = command.ValidarCommand();
-            Assert.False(resultado);
+            _command.Valor = -1;
+            Assert.False(_command.ValidarCommand());
+            Assert.NotEqual(0, _command.Notificacoes.Count);
         }
     }
 }

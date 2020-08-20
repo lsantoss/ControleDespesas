@@ -5,95 +5,63 @@ namespace ControleDespesas.Testes.Commands.Usuario
 {
     public class LoginUsuarioCommandTest
     {
-        private readonly LoginUsuarioCommand _commandReadOnly;
+        private readonly LoginUsuarioCommand _command;
 
         public LoginUsuarioCommandTest()
         {
-            _commandReadOnly = new LoginUsuarioCommand()
+            _command = new LoginUsuarioCommand()
             {
                 Login = "lucas123",
-                Senha = "123"
+                Senha = "Senha123"
             };
         }
 
         [Fact]
         public void ValidarCommand_Valido()
         {
-            LoginUsuarioCommand command = _commandReadOnly;
+            LoginUsuarioCommand command = _command;
             bool resultado = command.ValidarCommand();
             Assert.True(resultado);
         }
 
         [Fact]
-        public void ValidarCommand_LoginMinimoDeCaractetes_True()
+        public void ValidarCommand_LoginMinimoDeCaractetesNull()
         {
-            LoginUsuarioCommand command = _commandReadOnly;
-            command.Login = "a";
-            bool resultado = command.ValidarCommand();
-            Assert.True(resultado);
+            _command.Login = null;
+            Assert.False(_command.ValidarCommand());
+            Assert.NotEqual(0, _command.Notificacoes.Count);
         }
 
         [Fact]
-        public void ValidarCommand_LoginMinimoDeCaractetes_False()
+        public void ValidarCommand_LoginMinimoDeCaractetesEmpty()
         {
-            LoginUsuarioCommand command = _commandReadOnly;
-            command.Login = "";
-            bool resultado = command.ValidarCommand();
-            Assert.False(resultado);
+            _command.Login = string.Empty;
+            Assert.False(_command.ValidarCommand());
+            Assert.NotEqual(0, _command.Notificacoes.Count);
         }
 
         [Fact]
-        public void ValidarCommand_LoginMaximoDeCaractetes_True()
+        public void ValidarCommand_LoginMaximoDeCaractetes()
         {
-            LoginUsuarioCommand commandTest = _commandReadOnly;
-            commandTest.Login = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            bool resultado = commandTest.ValidarCommand();
-            Assert.True(resultado);
+            _command.Login = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            Assert.False(_command.ValidarCommand());
+            Assert.NotEqual(0, _command.Notificacoes.Count);
         }
 
         [Fact]
-        public void ValidarCommand_LoginMaximoDeCaractetes_False()
+        public void ValidarCommand_SenhaMinimoDeCaractetesNull()
         {
-            LoginUsuarioCommand commandTest = _commandReadOnly;
-            commandTest.Login = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            bool resultado = commandTest.ValidarCommand();
-            Assert.False(resultado);
+            _command.Senha = null;
+            Assert.False(_command.ValidarCommand());
+            Assert.NotEqual(0, _command.Notificacoes.Count);
         }
 
         [Fact]
-        public void ValidarCommand_SenhaMinimoDeCaractetes_True()
+        public void ValidarCommand_SenhaMinimoDeCaractetesEmpty()
         {
-            LoginUsuarioCommand command = _commandReadOnly;
-            command.Senha = "a";
-            bool resultado = command.ValidarCommand();
-            Assert.True(resultado);
-        }
-
-        [Fact]
-        public void ValidarCommand_SenhaMinimoDeCaractetes_False()
-        {
-            LoginUsuarioCommand command = _commandReadOnly;
-            command.Senha = "";
-            bool resultado = command.ValidarCommand();
-            Assert.False(resultado);
-        }
-
-        [Fact]
-        public void ValidarCommand_SenhaMaximoDeCaractetes_True()
-        {
-            LoginUsuarioCommand commandTest = _commandReadOnly;
-            commandTest.Senha = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            bool resultado = commandTest.ValidarCommand();
-            Assert.True(resultado);
-        }
-
-        [Fact]
-        public void ValidarCommand_SenhaMaximoDeCaractetes_False()
-        {
-            LoginUsuarioCommand commandTest = _commandReadOnly;
-            commandTest.Senha = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            bool resultado = commandTest.ValidarCommand();
-            Assert.False(resultado);
+            _command.Senha = string.Empty;
+            Assert.False(_command.ValidarCommand());
+            Assert.NotEqual(0, _command.Notificacoes.Count);
         }
     }
 }

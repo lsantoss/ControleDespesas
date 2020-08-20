@@ -3,11 +3,11 @@ using Xunit;
 
 namespace ControleDespesas.Testes.Commands.Pagamento
 {
-    public class ApagarPagamentoCommandTest
+    public class ObterPagamentoPorIdCommandTest
     {
-        private ApagarPagamentoCommand _command;
+        private ObterPagamentoPorIdCommand _command;
 
-        public ApagarPagamentoCommandTest() => _command = new ApagarPagamentoCommand() { Id = 1 };
+        public ObterPagamentoPorIdCommandTest() => _command = new ObterPagamentoPorIdCommand() { Id = 1 };
 
         [Fact]
         public void ValidarCommand_Valido()

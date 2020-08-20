@@ -14,7 +14,7 @@ namespace ControleDespesas.Testes.Commands.Usuario
             {
                 Id = 1,
                 Login = "lucas123",
-                Senha = "123",
+                Senha = "Senha123",
                 Privilegio = EPrivilegioUsuario.Admin
             };
         }
@@ -126,14 +126,6 @@ namespace ControleDespesas.Testes.Commands.Usuario
         public void ValidarCommand_PrivilegioNegativo()
         {
             _command.Privilegio = (EPrivilegioUsuario)(-1);
-            Assert.False(_command.ValidarCommand());
-            Assert.NotEqual(0, _command.Notificacoes.Count);
-        }
-
-        [Fact]
-        public void ValidarCommand_PrivilegioMaiorOuIgualATres()
-        {
-            _command.Privilegio = (EPrivilegioUsuario)3;
             Assert.False(_command.ValidarCommand());
             Assert.NotEqual(0, _command.Notificacoes.Count);
         }

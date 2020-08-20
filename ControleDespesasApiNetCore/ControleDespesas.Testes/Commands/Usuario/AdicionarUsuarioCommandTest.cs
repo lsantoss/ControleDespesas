@@ -112,13 +112,5 @@ namespace ControleDespesas.Testes.Commands.Usuario
             Assert.False(_command.ValidarCommand());
             Assert.NotEqual(0, _command.Notificacoes.Count);
         }
-
-        [Fact]
-        public void ValidarCommand_PrivilegioMaiorOuIgualATres()
-        {
-            _command.Privilegio = (EPrivilegioUsuario)3;
-            Assert.False(_command.ValidarCommand());
-            Assert.NotEqual(0, _command.Notificacoes.Count);
-        }
     }
 }

@@ -8,6 +8,11 @@ namespace ControleDespesas.Dominio.Helpers
 {
     public static class EmpresaHelper
     {
+        /// <summary>
+        /// Helper para auxiliar na geração de entidade Empresa a partir de um command AdicionarEmpresaCommand
+        /// </summary>
+        /// <param name="command">Parâmetro de entrada: AdicionarEmpresaCommand</param>
+        /// <returns>Retorna: Empresa gerada a partir do command</returns>
         public static Empresa GerarEntidade(AdicionarEmpresaCommand command)
         {
             try

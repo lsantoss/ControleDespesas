@@ -10,9 +10,9 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 
-namespace ControleDespesas.Testes.Intefaces
+namespace ControleDespesas.Testes.Repositorio
 {
-    public class IPagamentoRepositorioTest
+    public class PagamentoRepositorioTest
     {
         //[Fact]
         //public void AdicionarPagamento_DeveRetornarSucesso()

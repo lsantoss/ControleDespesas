@@ -6,9 +6,9 @@ using Moq;
 using System.Collections.Generic;
 using Xunit;
 
-namespace ControleDespesas.Testes.Intefaces
+namespace ControleDespesas.Testes.Repositorio
 {
-    public class IPessoaRepositorioTest
+    public class PessoaRepositorioTest
     {
         //[Fact]
         //public void AdicionarPessoa_DeveRetornarSucesso()

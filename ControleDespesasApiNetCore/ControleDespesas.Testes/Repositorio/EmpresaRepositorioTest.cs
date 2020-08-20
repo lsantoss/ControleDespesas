@@ -6,10 +6,15 @@ using Moq;
 using System.Collections.Generic;
 using Xunit;
 
-namespace ControleDespesas.Testes.Intefaces
+namespace ControleDespesas.Testes.Repositorio
 {
-    public class IEmpresaRepositorioTest
+    public class EmpresaRepositorioTest
     {
+        public EmpresaRepositorioTest() 
+        { 
+        
+        }
+
         //[Fact]
         //public void AdicionarEmpresa_DeveRetornarSucesso()
         //{

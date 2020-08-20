@@ -6,9 +6,9 @@ using Moq;
 using System.Collections.Generic;
 using Xunit;
 
-namespace ControleDespesas.Testes.Intefaces
+namespace ControleDespesas.Testes.Repositorio
 {
-    public class ITipoPagamentoRepositorioTest
+    public class TipoPagamentoRepositorioTest
     {
         //[Fact]
         //public void AdicionarTipoPagamento_DeveRetornarSucesso()

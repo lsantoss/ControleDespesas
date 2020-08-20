@@ -39,7 +39,7 @@ namespace ControleDespesas.Dominio.Helpers
             }
         }
 
-        public static AdicionarTipoPagamentoCommandOutput GerarDadosRetornoInserir(TipoPagamento tipoPagamento)
+        public static AdicionarTipoPagamentoCommandOutput GerarDadosRetornoInsert(TipoPagamento tipoPagamento)
         {
             try
             {

@@ -36,7 +36,7 @@ namespace ControleDespesas.Dominio.Handlers
 
                 tipoPagamento.Id = _repository.LocalizarMaxId();
 
-                AdicionarTipoPagamentoCommandOutput dadosRetorno = TipoPagamentoHelper.GerarDadosRetornoInserir(tipoPagamento);
+                AdicionarTipoPagamentoCommandOutput dadosRetorno = TipoPagamentoHelper.GerarDadosRetornoInsert(tipoPagamento);
 
                 return new CommandResult<Notificacao>("Tipo Pagamento gravado com sucesso!", dadosRetorno);
             }

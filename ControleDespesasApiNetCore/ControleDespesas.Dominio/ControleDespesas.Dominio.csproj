@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="LSCode.Facilitador.Api" Version="2.1.0" />
-    <PackageReference Include="LSCode.Validador" Version="1.7.5" />
+    <PackageReference Include="LSCode.Validador" Version="1.7.6" />
   </ItemGroup>
 
 </Project>

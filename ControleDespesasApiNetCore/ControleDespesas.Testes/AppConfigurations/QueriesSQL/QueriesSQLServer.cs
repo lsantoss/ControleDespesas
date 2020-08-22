@@ -4,7 +4,11 @@ namespace ControleDespesas.Testes.AppConfigurations.QueriesSQL
 {
     public static class QueriesSQLServer
     {
-        private static string CreateDataBase { get; } = @"CREATE DATABASE ControleDespesasTest;";
+        private static string CreateDataBase { get; } = @"USE [master] 
+                                                          IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = 'ControleDespesasTest')
+                                                          BEGIN
+                                                          CREATE DATABASE ControleDespesasTest
+                                                          END";
 
         private static string CreateTableEmpresa { get; } = @"USE [ControleDespesasTest] 
                                                               CREATE TABLE [dbo].[Empresa](
@@ -84,14 +88,28 @@ namespace ControleDespesas.Testes.AppConfigurations.QueriesSQL
         private static string InsertTableUsuario { get; } = @"INSERT INTO [dbo].[Usuario] ([Login],[Senha],[Privilegio])
                                                               VALUES ('admin', 'admin',1), ('readonly', 'readonly',2)";
 
+        private static string DropTableUsuario { get; } = @"USE [ControleDespesasTest]
+                                                            DROP TABLE IF EXISTS Usuario";
+
+        private static string DropTablePagamento { get; } = @"USE [ControleDespesasTest]
+                                                              DROP TABLE IF EXISTS Pagamento";
+
+        private static string DropTableTipoPagamento { get; } = @"USE [ControleDespesasTest]
+                                                                  DROP TABLE IF EXISTS TipoPagamento";
+
+        private static string DropTablePessoa { get; } = @"USE [ControleDespesasTest]
+                                                           DROP TABLE IF EXISTS Pessoa";
+
+        private static string DropTableEmpresa { get; } = @"USE [ControleDespesasTest]
+                                                           DROP TABLE IF EXISTS Empresa";
+
+        private static string DropDataBase { get; } = @"USE [master] DROP DATABASE IF EXISTS [ControleDespesasTest]";
+
         private static string MatarSessoes { get; } = @"DECLARE @kill varchar(8000) = ''
                                                         SELECT @kill = sys.dm_exec_sessions.session_id
                                                         FROM sys.dm_exec_sessions
                                                         WHERE database_id = db_id('ControleDespesasTest')
                                                         EXEC('kill ' + @kill)";
-
-        private static string DropDataBase { get; } = @"USE [master] DROP DATABASE IF EXISTS [ControleDespesasTest]";
-
 
         public static List<string> QueriesCreate { get; } = new List<string>()
         {
@@ -106,8 +124,11 @@ namespace ControleDespesas.Testes.AppConfigurations.QueriesSQL
 
         public static List<string> QueriesDrop { get; } = new List<string>()
         {
-            //MatarSessoes,
-            DropDataBase
+            DropTableUsuario,
+            DropTablePagamento,
+            DropTableTipoPagamento,
+            DropTablePessoa,
+            DropTableEmpresa
         };
     }
 }

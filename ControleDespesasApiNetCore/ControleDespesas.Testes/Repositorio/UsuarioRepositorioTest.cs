@@ -59,118 +59,118 @@ namespace ControleDespesas.Testes.Repositorio
         //    Assert.Equal("Sucesso", resultado);
         //}
 
-        [Fact]
-        public void ObterUsuario_DeveRetornarSucesso()
-        {
-            Usuario usuario = new Usuario(
-                1,
-                new Texto("lucas123", "Login", 50),
-                new SenhaMedia("123"),
-                EPrivilegioUsuario.Admin
-            );
+        //[Fact]
+        //public void ObterUsuario_DeveRetornarSucesso()
+        //{
+        //    Usuario usuario = new Usuario(
+        //        1,
+        //        new Texto("lucas123", "Login", 50),
+        //        new SenhaMedia("123"),
+        //        EPrivilegioUsuario.Admin
+        //    );
 
-            UsuarioQueryResult usuarioQueryResult = new UsuarioQueryResult
-            {
-                Id = 1,
-                Login = "lucas123",
-                Senha = "123",
-                Privilegio= EPrivilegioUsuario.Admin
-            };
+        //    UsuarioQueryResult usuarioQueryResult = new UsuarioQueryResult
+        //    {
+        //        Id = 1,
+        //        Login = "lucas123",
+        //        Senha = "123",
+        //        Privilegio= EPrivilegioUsuario.Admin
+        //    };
 
-            Mock<IUsuarioRepositorio> mock = new Mock<IUsuarioRepositorio>();
-            mock.Setup(m => m.Obter(usuario.Id)).Returns(usuarioQueryResult);
-            UsuarioQueryResult resultado = mock.Object.Obter(usuario.Id);
-            Assert.Equal(usuarioQueryResult, resultado);
-        }
+        //    Mock<IUsuarioRepositorio> mock = new Mock<IUsuarioRepositorio>();
+        //    mock.Setup(m => m.Obter(usuario.Id)).Returns(usuarioQueryResult);
+        //    UsuarioQueryResult resultado = mock.Object.Obter(usuario.Id);
+        //    Assert.Equal(usuarioQueryResult, resultado);
+        //}
 
-        [Fact]
-        public void ListarUsuarios_DeveRetornarSucesso()
-        {
-            List<UsuarioQueryResult> listaUsuariosQueryResult = new List<UsuarioQueryResult>();
-            listaUsuariosQueryResult.Add(new UsuarioQueryResult
-            {
-                Id = 1,
-                Login = "lucas123",
-                Senha = "123",
-                Privilegio = EPrivilegioUsuario.Admin
-            });
-            listaUsuariosQueryResult.Add(new UsuarioQueryResult
-            {
-                Id = 2,
-                Login = "renan123",
-                Senha = "123",
-                Privilegio = EPrivilegioUsuario.ReadOnly
-            });
+        //[Fact]
+        //public void ListarUsuarios_DeveRetornarSucesso()
+        //{
+        //    List<UsuarioQueryResult> listaUsuariosQueryResult = new List<UsuarioQueryResult>();
+        //    listaUsuariosQueryResult.Add(new UsuarioQueryResult
+        //    {
+        //        Id = 1,
+        //        Login = "lucas123",
+        //        Senha = "123",
+        //        Privilegio = EPrivilegioUsuario.Admin
+        //    });
+        //    listaUsuariosQueryResult.Add(new UsuarioQueryResult
+        //    {
+        //        Id = 2,
+        //        Login = "renan123",
+        //        Senha = "123",
+        //        Privilegio = EPrivilegioUsuario.ReadOnly
+        //    });
 
-            Mock<IUsuarioRepositorio> mock = new Mock<IUsuarioRepositorio>();
-            mock.Setup(m => m.Listar()).Returns(listaUsuariosQueryResult);
-            List<UsuarioQueryResult> resultado = mock.Object.Listar();
-            Assert.Equal(listaUsuariosQueryResult, resultado);
-        }
+        //    Mock<IUsuarioRepositorio> mock = new Mock<IUsuarioRepositorio>();
+        //    mock.Setup(m => m.Listar()).Returns(listaUsuariosQueryResult);
+        //    List<UsuarioQueryResult> resultado = mock.Object.Listar();
+        //    Assert.Equal(listaUsuariosQueryResult, resultado);
+        //}
 
-        [Fact]
-        public void LogarUsuario_DeveRetornarSucesso()
-        {
-            Usuario usuario = new Usuario(
-                1,
-                new Texto("lucas123", "Login", 50),
-                new SenhaMedia("123"),
-                EPrivilegioUsuario.Admin
-            );
+        //[Fact]
+        //public void LogarUsuario_DeveRetornarSucesso()
+        //{
+        //    Usuario usuario = new Usuario(
+        //        1,
+        //        new Texto("lucas123", "Login", 50),
+        //        new SenhaMedia("123"),
+        //        EPrivilegioUsuario.Admin
+        //    );
 
-            UsuarioQueryResult usuarioQueryResult = new UsuarioQueryResult
-            {
-                Id = 1,
-                Login = "lucas123",
-                Senha = "123",
-                Privilegio = EPrivilegioUsuario.Admin
-            };
+        //    UsuarioQueryResult usuarioQueryResult = new UsuarioQueryResult
+        //    {
+        //        Id = 1,
+        //        Login = "lucas123",
+        //        Senha = "123",
+        //        Privilegio = EPrivilegioUsuario.Admin
+        //    };
 
-            Mock<IUsuarioRepositorio> mock = new Mock<IUsuarioRepositorio>();
-            mock.Setup(m => m.Logar(usuario.Login.ToString(), usuario.Senha.ToString())).Returns(usuarioQueryResult);
-            UsuarioQueryResult resultado = mock.Object.Logar(usuario.Login.ToString(), usuario.Senha.ToString());
-            Assert.Equal(usuarioQueryResult, resultado);
-        }
+        //    Mock<IUsuarioRepositorio> mock = new Mock<IUsuarioRepositorio>();
+        //    mock.Setup(m => m.Logar(usuario.Login.ToString(), usuario.Senha.ToString())).Returns(usuarioQueryResult);
+        //    UsuarioQueryResult resultado = mock.Object.Logar(usuario.Login.ToString(), usuario.Senha.ToString());
+        //    Assert.Equal(usuarioQueryResult, resultado);
+        //}
 
-        [Fact]
-        public void CheckLogin_DeveRetornarSucesso()
-        {
-            Usuario usuario = new Usuario(
-                1,
-                new Texto("lucas123", "Login", 50),
-                new SenhaMedia("123"),
-                EPrivilegioUsuario.Admin
-            );
+        //[Fact]
+        //public void CheckLogin_DeveRetornarSucesso()
+        //{
+        //    Usuario usuario = new Usuario(
+        //        1,
+        //        new Texto("lucas123", "Login", 50),
+        //        new SenhaMedia("123"),
+        //        EPrivilegioUsuario.Admin
+        //    );
 
-            Mock<IUsuarioRepositorio> mock = new Mock<IUsuarioRepositorio>();
-            mock.Setup(m => m.CheckLogin(usuario.Login.ToString())).Returns(true);
-            bool resultado = mock.Object.CheckLogin(usuario.Login.ToString());
-            Assert.True(resultado);
-        }
+        //    Mock<IUsuarioRepositorio> mock = new Mock<IUsuarioRepositorio>();
+        //    mock.Setup(m => m.CheckLogin(usuario.Login.ToString())).Returns(true);
+        //    bool resultado = mock.Object.CheckLogin(usuario.Login.ToString());
+        //    Assert.True(resultado);
+        //}
 
-        [Fact]
-        public void CheckId_DeveRetornarSucesso()
-        {
-            Usuario usuario = new Usuario(
-                1,
-                new Texto("lucas123", "Login", 50),
-                new SenhaMedia("123"),
-                EPrivilegioUsuario.Admin
-            );
+        //[Fact]
+        //public void CheckId_DeveRetornarSucesso()
+        //{
+        //    Usuario usuario = new Usuario(
+        //        1,
+        //        new Texto("lucas123", "Login", 50),
+        //        new SenhaMedia("123"),
+        //        EPrivilegioUsuario.Admin
+        //    );
 
-            Mock<IUsuarioRepositorio> mock = new Mock<IUsuarioRepositorio>();
-            mock.Setup(m => m.CheckId(usuario.Id)).Returns(true);
-            bool resultado = mock.Object.CheckId(usuario.Id);
-            Assert.True(resultado);
-        }
+        //    Mock<IUsuarioRepositorio> mock = new Mock<IUsuarioRepositorio>();
+        //    mock.Setup(m => m.CheckId(usuario.Id)).Returns(true);
+        //    bool resultado = mock.Object.CheckId(usuario.Id);
+        //    Assert.True(resultado);
+        //}
 
-        [Fact]
-        public void LocalizarMaxId_DeveRetornarSucesso()
-        {
-            Mock<IUsuarioRepositorio> mock = new Mock<IUsuarioRepositorio>();
-            mock.Setup(m => m.LocalizarMaxId()).Returns(10);
-            int resultado = mock.Object.LocalizarMaxId();
-            Assert.Equal(10, resultado);
-        }
+        //[Fact]
+        //public void LocalizarMaxId_DeveRetornarSucesso()
+        //{
+        //    Mock<IUsuarioRepositorio> mock = new Mock<IUsuarioRepositorio>();
+        //    mock.Setup(m => m.LocalizarMaxId()).Returns(10);
+        //    int resultado = mock.Object.LocalizarMaxId();
+        //    Assert.Equal(10, resultado);
+        //}
     }
 }

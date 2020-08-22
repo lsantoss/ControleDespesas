@@ -40,63 +40,63 @@ namespace ControleDespesas.Testes.Repositorio
         //    Assert.Equal("Sucesso", resultado);
         //}
 
-        [Fact]
-        public void ObterTipoPagamento_DeveRetornarSucesso()
-        {
-            TipoPagamento tipoPagamento = new TipoPagamento(1, new Texto("Luz Elétrica", "Descrição", 250));
+        //[Fact]
+        //public void ObterTipoPagamento_DeveRetornarSucesso()
+        //{
+        //    TipoPagamento tipoPagamento = new TipoPagamento(1, new Texto("Luz Elétrica", "Descrição", 250));
 
-            TipoPagamentoQueryResult tipoPagamentoQueryResult = new TipoPagamentoQueryResult
-            {
-                Id = 1,
-                Descricao = "Luz Elétrica"
-            };
+        //    TipoPagamentoQueryResult tipoPagamentoQueryResult = new TipoPagamentoQueryResult
+        //    {
+        //        Id = 1,
+        //        Descricao = "Luz Elétrica"
+        //    };
 
-            Mock<ITipoPagamentoRepositorio> mock = new Mock<ITipoPagamentoRepositorio>();
-            mock.Setup(m => m.Obter(tipoPagamento.Id)).Returns(tipoPagamentoQueryResult);
-            TipoPagamentoQueryResult resultado = mock.Object.Obter(tipoPagamento.Id);
-            Assert.Equal(tipoPagamentoQueryResult, resultado);
-        }
+        //    Mock<ITipoPagamentoRepositorio> mock = new Mock<ITipoPagamentoRepositorio>();
+        //    mock.Setup(m => m.Obter(tipoPagamento.Id)).Returns(tipoPagamentoQueryResult);
+        //    TipoPagamentoQueryResult resultado = mock.Object.Obter(tipoPagamento.Id);
+        //    Assert.Equal(tipoPagamentoQueryResult, resultado);
+        //}
 
-        [Fact]
-        public void ListarTipoPagamento_DeveRetornarSucesso()
-        {
-            TipoPagamento tipoPagamento = new TipoPagamento(1, new Texto("Luz Eletríca", "Descrição", 250));
+        //[Fact]
+        //public void ListarTipoPagamento_DeveRetornarSucesso()
+        //{
+        //    TipoPagamento tipoPagamento = new TipoPagamento(1, new Texto("Luz Eletríca", "Descrição", 250));
 
-            List<TipoPagamentoQueryResult> listaTipoPagamentoQueryResult = new List<TipoPagamentoQueryResult>();
-            listaTipoPagamentoQueryResult.Add(new TipoPagamentoQueryResult
-            {
-                Id = 1,
-                Descricao = "Luz Eletríca"
-            });
-            listaTipoPagamentoQueryResult.Add(new TipoPagamentoQueryResult
-            {
-                Id = 2,
-                Descricao = "Saneamento"
-            });
+        //    List<TipoPagamentoQueryResult> listaTipoPagamentoQueryResult = new List<TipoPagamentoQueryResult>();
+        //    listaTipoPagamentoQueryResult.Add(new TipoPagamentoQueryResult
+        //    {
+        //        Id = 1,
+        //        Descricao = "Luz Eletríca"
+        //    });
+        //    listaTipoPagamentoQueryResult.Add(new TipoPagamentoQueryResult
+        //    {
+        //        Id = 2,
+        //        Descricao = "Saneamento"
+        //    });
 
-            Mock<ITipoPagamentoRepositorio> mock = new Mock<ITipoPagamentoRepositorio>();
-            mock.Setup(m => m.Listar()).Returns(listaTipoPagamentoQueryResult);
-            List<TipoPagamentoQueryResult> resultado = mock.Object.Listar();
-            Assert.Equal(listaTipoPagamentoQueryResult, resultado);
-        }
+        //    Mock<ITipoPagamentoRepositorio> mock = new Mock<ITipoPagamentoRepositorio>();
+        //    mock.Setup(m => m.Listar()).Returns(listaTipoPagamentoQueryResult);
+        //    List<TipoPagamentoQueryResult> resultado = mock.Object.Listar();
+        //    Assert.Equal(listaTipoPagamentoQueryResult, resultado);
+        //}
 
-        [Fact]
-        public void CheckId_DeveRetornarSucesso()
-        {
-            TipoPagamento tipoPagamento = new TipoPagamento(1, new Texto("Luz Eletríca", "Descrição", 250));
-            Mock<ITipoPagamentoRepositorio> mock = new Mock<ITipoPagamentoRepositorio>();
-            mock.Setup(m => m.CheckId(tipoPagamento.Id)).Returns(true);
-            bool resultado = mock.Object.CheckId(tipoPagamento.Id);
-            Assert.True(resultado);
-        }
+        //[Fact]
+        //public void CheckId_DeveRetornarSucesso()
+        //{
+        //    TipoPagamento tipoPagamento = new TipoPagamento(1, new Texto("Luz Eletríca", "Descrição", 250));
+        //    Mock<ITipoPagamentoRepositorio> mock = new Mock<ITipoPagamentoRepositorio>();
+        //    mock.Setup(m => m.CheckId(tipoPagamento.Id)).Returns(true);
+        //    bool resultado = mock.Object.CheckId(tipoPagamento.Id);
+        //    Assert.True(resultado);
+        //}
 
-        [Fact]
-        public void LocalizarMaxId_DeveRetornarSucesso()
-        {
-            Mock<ITipoPagamentoRepositorio> mock = new Mock<ITipoPagamentoRepositorio>();
-            mock.Setup(m => m.LocalizarMaxId()).Returns(10);
-            int resultado = mock.Object.LocalizarMaxId();
-            Assert.Equal(10, resultado);
-        }
+        //[Fact]
+        //public void LocalizarMaxId_DeveRetornarSucesso()
+        //{
+        //    Mock<ITipoPagamentoRepositorio> mock = new Mock<ITipoPagamentoRepositorio>();
+        //    mock.Setup(m => m.LocalizarMaxId()).Returns(10);
+        //    int resultado = mock.Object.LocalizarMaxId();
+        //    Assert.Equal(10, resultado);
+        //}
     }
 }

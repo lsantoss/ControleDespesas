@@ -13,7 +13,7 @@ namespace ControleDespesas.Testes.Repositorio
 {
     public class EmpresaRepositorioTest : DatabaseFactory
     {
-        public EmpresaRepositorioTest() 
+        public EmpresaRepositorioTest()
         {
             DroparBaseDeDados();
             CriarBaseDeDadosETabelas();
@@ -22,9 +22,9 @@ namespace ControleDespesas.Testes.Repositorio
         [Fact]
         public void Salvar()
         {
-            Empresa empresa0 = new Empresa(0, new Texto("NomeEmpresa1", "Nome", 100), "Logo1");
-            Empresa empresa1 = new Empresa(0, new Texto("NomeEmpresa2", "Nome", 100), "Logo2");
-            Empresa empresa2 = new Empresa(0, new Texto("NomeEmpresa3", "Nome", 100), "Logo3");
+            Empresa empresa0 = new Empresa(0, new Texto("NomeEmpresa0", "Nome", 100), "Logo0");
+            Empresa empresa1 = new Empresa(0, new Texto("NomeEmpresa1", "Nome", 100), "Logo1");
+            Empresa empresa2 = new Empresa(0, new Texto("NomeEmpresa2", "Nome", 100), "Logo2");
 
             Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
@@ -36,6 +36,9 @@ namespace ControleDespesas.Testes.Repositorio
 
             List<EmpresaQueryResult> retorno = repository.Listar();
 
+            Assert.Equal(1, retorno[0].Id);
+            Assert.Equal(2, retorno[1].Id);
+            Assert.Equal(3, retorno[2].Id);
             Assert.Equal(empresa0.Nome.ToString(), retorno[0].Nome);
             Assert.Equal(empresa1.Nome.ToString(), retorno[1].Nome);
             Assert.Equal(empresa2.Nome.ToString(), retorno[2].Nome);
@@ -44,86 +47,154 @@ namespace ControleDespesas.Testes.Repositorio
             Assert.Equal(empresa2.Logo, retorno[2].Logo);
         }
 
-        //[Fact]
-        //public void AtualizarEmpresa_DeveRetornarSucesso()
-        //{
-        //    Empresa empresa = new Empresa(1, new Descricao100Caracteres("Oi", "Nome"), "base64String");
-        //    Mock<IEmpresaRepositorio> mock = new Mock<IEmpresaRepositorio>();
-        //    mock.Setup(m => m.Atualizar(empresa)).Returns("Sucesso");
-        //    string resultado = mock.Object.Atualizar(empresa);
-        //    Assert.Equal("Sucesso", resultado);
-        //}
+        [Fact]
+        public void Atualizar()
+        {
+            Empresa empresa0 = new Empresa(0, new Texto("NomeEmpresa0", "Nome", 100), "Logo0");
+            Empresa empresa1 = new Empresa(0, new Texto("NomeEmpresa1", "Nome", 100), "Logo1");
+            Empresa empresa2 = new Empresa(0, new Texto("NomeEmpresa2", "Nome", 100), "Logo2");
 
-        //[Fact]
-        //public void ApagarEmpresa_DeveRetornarSucesso()
-        //{
-        //    Empresa empresa = new Empresa(1, new Descricao100Caracteres("Oi", "Nome"), "base64String");
-        //    Mock<IEmpresaRepositorio> mock = new Mock<IEmpresaRepositorio>();
-        //    mock.Setup(m => m.Deletar(empresa.Id)).Returns("Sucesso");
-        //    string resultado = mock.Object.Deletar(empresa.Id);
-        //    Assert.Equal("Sucesso", resultado);
-        //}
+            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-        //[Fact]
-        //public void ObterEmpresa_DeveRetornarSucesso()
-        //{
-        //    Empresa empresa = new Empresa(1, new Texto("Oi", "Nome", 100), "base64String");
+            EmpresaRepositorio repository = new EmpresaRepositorio(mockOptions.Object);
+            repository.Salvar(empresa0);
+            repository.Salvar(empresa1);
+            repository.Salvar(empresa2);
 
-        //    EmpresaQueryResult empresaQueryResult = new EmpresaQueryResult
-        //    {
-        //        Id = 1,
-        //        Nome = "Oi",
-        //        Logo = "base64String"
-        //    };
+            empresa1 = new Empresa(2, new Texto("NomeEmpresa1 - Editada", "Nome", 100), "Logo2 - Editado");
+            repository.Atualizar(empresa1);
 
-        //    Mock<IEmpresaRepositorio> mock = new Mock<IEmpresaRepositorio>();
-        //    mock.Setup(m => m.Obter(empresa.Id)).Returns(empresaQueryResult);
-        //    EmpresaQueryResult resultado = mock.Object.Obter(empresa.Id);
-        //    Assert.Equal(empresaQueryResult, resultado);
-        //}
+            List<EmpresaQueryResult> retorno = repository.Listar();
 
-        //[Fact]
-        //public void ListarEmpresas_DeveRetornarSucesso()
-        //{
-        //    Empresa empresa = new Empresa(1, new Texto("Oi", "Nome", 100), "base64String");
+            Assert.Equal(1, retorno[0].Id);
+            Assert.Equal(2, retorno[1].Id);
+            Assert.Equal(3, retorno[2].Id);
+            Assert.Equal(empresa0.Nome.ToString(), retorno[0].Nome);
+            Assert.Equal(empresa1.Nome.ToString(), retorno[1].Nome);
+            Assert.Equal(empresa2.Nome.ToString(), retorno[2].Nome);
+            Assert.Equal(empresa0.Logo, retorno[0].Logo);
+            Assert.Equal(empresa1.Logo, retorno[1].Logo);
+            Assert.Equal(empresa2.Logo, retorno[2].Logo);
+        }
 
-        //    List<EmpresaQueryResult> listaEmpresasQueryResult = new List<EmpresaQueryResult>();
-        //    listaEmpresasQueryResult.Add(new EmpresaQueryResult
-        //    {
-        //        Id = 1,
-        //        Nome = "Oi",
-        //        Logo = "base64String"
-        //    });
-        //    listaEmpresasQueryResult.Add(new EmpresaQueryResult
-        //    {
-        //        Id = 2,
-        //        Nome = "Vivo",
-        //        Logo = "base64String"
-        //    });
+        [Fact]
+        public void Deletar()
+        {
+            Empresa empresa0 = new Empresa(0, new Texto("NomeEmpresa0", "Nome", 100), "Logo0");
+            Empresa empresa1 = new Empresa(0, new Texto("NomeEmpresa1", "Nome", 100), "Logo1");
+            Empresa empresa2 = new Empresa(0, new Texto("NomeEmpresa2", "Nome", 100), "Logo2");
 
-        //    Mock<IEmpresaRepositorio> mock = new Mock<IEmpresaRepositorio>();
-        //    mock.Setup(m => m.Listar()).Returns(listaEmpresasQueryResult);
-        //    List<EmpresaQueryResult> resultado = mock.Object.Listar();
-        //    Assert.Equal(listaEmpresasQueryResult, resultado);
-        //}
+            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-        //[Fact]
-        //public void CheckId_DeveRetornarSucesso()
-        //{
-        //    Empresa empresa = new Empresa(1, new Texto("Oi", "Nome", 100), "base64String");
-        //    Mock<IEmpresaRepositorio> mock = new Mock<IEmpresaRepositorio>();
-        //    mock.Setup(m => m.CheckId(empresa.Id)).Returns(true);
-        //    bool resultado = mock.Object.CheckId(empresa.Id);
-        //    Assert.True(resultado);
-        //}
+            EmpresaRepositorio repository = new EmpresaRepositorio(mockOptions.Object);
+            repository.Salvar(empresa0);
+            repository.Salvar(empresa1);
+            repository.Salvar(empresa2);
 
-        //[Fact]
-        //public void LocalizarMaxId_DeveRetornarSucesso()
-        //{
-        //    Mock<IEmpresaRepositorio> mock = new Mock<IEmpresaRepositorio>();
-        //    mock.Setup(m => m.LocalizarMaxId()).Returns(10);
-        //    int resultado = mock.Object.LocalizarMaxId();
-        //    Assert.Equal(10, resultado);
-        //}
+            repository.Deletar(2);
+
+            List<EmpresaQueryResult> retorno = repository.Listar();
+
+            Assert.Equal(1, retorno[0].Id);
+            Assert.Equal(3, retorno[1].Id);
+            Assert.Equal(empresa0.Nome.ToString(), retorno[0].Nome);
+            Assert.Equal(empresa2.Nome.ToString(), retorno[1].Nome);
+            Assert.Equal(empresa0.Logo, retorno[0].Logo);
+            Assert.Equal(empresa2.Logo, retorno[1].Logo);
+        }
+
+        [Fact]
+        public void Obter()
+        {
+            Empresa empresa0 = new Empresa(0, new Texto("NomeEmpresa0", "Nome", 100), "Logo0");
+            Empresa empresa1 = new Empresa(0, new Texto("NomeEmpresa1", "Nome", 100), "Logo1");
+            Empresa empresa2 = new Empresa(0, new Texto("NomeEmpresa2", "Nome", 100), "Logo2");
+
+            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+
+            EmpresaRepositorio repository = new EmpresaRepositorio(mockOptions.Object);
+            repository.Salvar(empresa0);
+            repository.Salvar(empresa1);
+            repository.Salvar(empresa2);
+
+            EmpresaQueryResult retorno = repository.Obter(2);
+
+            Assert.Equal(2, retorno.Id);
+            Assert.Equal(empresa1.Nome.ToString(), retorno.Nome);
+            Assert.Equal(empresa1.Logo, retorno.Logo);
+        }
+
+        [Fact]
+        public void Listar()
+        {
+            Empresa empresa0 = new Empresa(0, new Texto("NomeEmpresa0", "Nome", 100), "Logo0");
+            Empresa empresa1 = new Empresa(0, new Texto("NomeEmpresa1", "Nome", 100), "Logo1");
+            Empresa empresa2 = new Empresa(0, new Texto("NomeEmpresa2", "Nome", 100), "Logo2");
+
+            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+
+            EmpresaRepositorio repository = new EmpresaRepositorio(mockOptions.Object);
+            repository.Salvar(empresa0);
+            repository.Salvar(empresa1);
+            repository.Salvar(empresa2);
+
+            List<EmpresaQueryResult> retorno = repository.Listar();
+
+            Assert.Equal(1, retorno[0].Id);
+            Assert.Equal(2, retorno[1].Id);
+            Assert.Equal(3, retorno[2].Id);
+            Assert.Equal(empresa0.Nome.ToString(), retorno[0].Nome);
+            Assert.Equal(empresa1.Nome.ToString(), retorno[1].Nome);
+            Assert.Equal(empresa2.Nome.ToString(), retorno[2].Nome);
+            Assert.Equal(empresa0.Logo, retorno[0].Logo);
+            Assert.Equal(empresa1.Logo, retorno[1].Logo);
+            Assert.Equal(empresa2.Logo, retorno[2].Logo);
+        }
+
+        [Fact]
+        public void CheckId()
+        {
+            Empresa empresa0 = new Empresa(0, new Texto("NomeEmpresa0", "Nome", 100), "Logo0");
+            Empresa empresa1 = new Empresa(0, new Texto("NomeEmpresa1", "Nome", 100), "Logo1");
+            Empresa empresa2 = new Empresa(0, new Texto("NomeEmpresa2", "Nome", 100), "Logo2");
+
+            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+
+            EmpresaRepositorio repository = new EmpresaRepositorio(mockOptions.Object);
+            repository.Salvar(empresa0);
+            repository.Salvar(empresa1);
+            repository.Salvar(empresa2);
+
+            bool idExistente = repository.CheckId(2);
+            bool idNaoExiste = repository.CheckId(25);
+
+            Assert.True(idExistente);
+            Assert.False(idNaoExiste);
+        }
+
+        [Fact]
+        public void LocalizarMaxId()
+        {
+            Empresa empresa0 = new Empresa(0, new Texto("NomeEmpresa0", "Nome", 100), "Logo0");
+            Empresa empresa1 = new Empresa(0, new Texto("NomeEmpresa1", "Nome", 100), "Logo1");
+            Empresa empresa2 = new Empresa(0, new Texto("NomeEmpresa2", "Nome", 100), "Logo2");
+
+            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+
+            EmpresaRepositorio repository = new EmpresaRepositorio(mockOptions.Object);
+            repository.Salvar(empresa0);
+            repository.Salvar(empresa1);
+            repository.Salvar(empresa2);
+
+            int maxId = repository.LocalizarMaxId();
+
+            Assert.Equal(3, maxId);
+        }
     }
 }

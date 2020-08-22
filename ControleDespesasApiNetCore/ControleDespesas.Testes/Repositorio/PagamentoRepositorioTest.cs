@@ -71,148 +71,148 @@ namespace ControleDespesas.Testes.Repositorio
         //    Assert.Equal("Sucesso", resultado);
         //}
 
-        [Fact]
-        public void ObterPagamento_DeveRetornarSucesso()
-        {
-            int id = 1;
-            TipoPagamento tipoPagamento = new TipoPagamento(33);
-            Empresa empresa = new Empresa(125);
-            Pessoa pessoa = new Pessoa(45);
-            Texto descricao = new Texto("Pagamento do mês de Maio de Luz Elétrica", "Descrição", 250);
-            double valor = 89.75;
-            DateTime dataPagamento = DateTime.Now;
-            DateTime dataVencimento = DateTime.Now.AddDays(1);
-            Pagamento pagamento = new Pagamento(id, tipoPagamento, empresa, pessoa, descricao, valor, dataPagamento, dataVencimento);
+        //[Fact]
+        //public void ObterPagamento_DeveRetornarSucesso()
+        //{
+        //    int id = 1;
+        //    TipoPagamento tipoPagamento = new TipoPagamento(33);
+        //    Empresa empresa = new Empresa(125);
+        //    Pessoa pessoa = new Pessoa(45);
+        //    Texto descricao = new Texto("Pagamento do mês de Maio de Luz Elétrica", "Descrição", 250);
+        //    double valor = 89.75;
+        //    DateTime dataPagamento = DateTime.Now;
+        //    DateTime dataVencimento = DateTime.Now.AddDays(1);
+        //    Pagamento pagamento = new Pagamento(id, tipoPagamento, empresa, pessoa, descricao, valor, dataPagamento, dataVencimento);
 
-            PagamentoQueryResult pagamentoQueryResult = new PagamentoQueryResult
-            {
-                Id = 1,
-                Descricao = "Pagamento do mês de Maio de Luz Elétrica",
-                Valor = 89.75,
-                DataPagamento = DateTime.Now,
-                DataVencimento = DateTime.Now.AddDays(1),
-                TipoPagamento = new TipoPagamentoQueryResult
-                {
-                    Id = 1,
-                    Descricao = "Luz Elétrica"
-                },
-                Empresa = new EmpresaQueryResult
-                {
-                    Id = 15,
-                    Nome = "Cemig",
-                    Logo = "base64String"
-                },
-                Pessoa = new PessoaQueryResult
-                {
-                    Id = 1,
-                    Nome = "Lucas",
-                    ImagemPerfil = "base64String"
-                }
-            };
+        //    PagamentoQueryResult pagamentoQueryResult = new PagamentoQueryResult
+        //    {
+        //        Id = 1,
+        //        Descricao = "Pagamento do mês de Maio de Luz Elétrica",
+        //        Valor = 89.75,
+        //        DataPagamento = DateTime.Now,
+        //        DataVencimento = DateTime.Now.AddDays(1),
+        //        TipoPagamento = new TipoPagamentoQueryResult
+        //        {
+        //            Id = 1,
+        //            Descricao = "Luz Elétrica"
+        //        },
+        //        Empresa = new EmpresaQueryResult
+        //        {
+        //            Id = 15,
+        //            Nome = "Cemig",
+        //            Logo = "base64String"
+        //        },
+        //        Pessoa = new PessoaQueryResult
+        //        {
+        //            Id = 1,
+        //            Nome = "Lucas",
+        //            ImagemPerfil = "base64String"
+        //        }
+        //    };
 
-            Mock<IPagamentoRepositorio> mock = new Mock<IPagamentoRepositorio>();
-            mock.Setup(m => m.Obter(pagamento.Id)).Returns(pagamentoQueryResult);
-            PagamentoQueryResult resultado = mock.Object.Obter(pagamento.Id);
-            Assert.Equal(pagamentoQueryResult, resultado);
-        }
+        //    Mock<IPagamentoRepositorio> mock = new Mock<IPagamentoRepositorio>();
+        //    mock.Setup(m => m.Obter(pagamento.Id)).Returns(pagamentoQueryResult);
+        //    PagamentoQueryResult resultado = mock.Object.Obter(pagamento.Id);
+        //    Assert.Equal(pagamentoQueryResult, resultado);
+        //}
 
-        [Fact]
-        public void ListarPagamentos_DeveRetornarSucesso()
-        {
-            int id = 1;
-            TipoPagamento tipoPagamento = new TipoPagamento(33);
-            Empresa empresa = new Empresa(125);
-            Pessoa pessoa = new Pessoa(45);
-            Texto descricao = new Texto("Pagamento do mês de Maio de Luz Elétrica", "Descrição", 250);
-            double valor = 89.75;
-            DateTime dataPagamento = DateTime.Now;
-            DateTime dataVencimento = DateTime.Now.AddDays(1);
-            Pagamento pagamento = new Pagamento(id, tipoPagamento, empresa, pessoa, descricao, valor, dataPagamento, dataVencimento);
+        //[Fact]
+        //public void ListarPagamentos_DeveRetornarSucesso()
+        //{
+        //    int id = 1;
+        //    TipoPagamento tipoPagamento = new TipoPagamento(33);
+        //    Empresa empresa = new Empresa(125);
+        //    Pessoa pessoa = new Pessoa(45);
+        //    Texto descricao = new Texto("Pagamento do mês de Maio de Luz Elétrica", "Descrição", 250);
+        //    double valor = 89.75;
+        //    DateTime dataPagamento = DateTime.Now;
+        //    DateTime dataVencimento = DateTime.Now.AddDays(1);
+        //    Pagamento pagamento = new Pagamento(id, tipoPagamento, empresa, pessoa, descricao, valor, dataPagamento, dataVencimento);
 
-            List<PagamentoQueryResult> listaPagamentoQueryResult = new List<PagamentoQueryResult>();
-            listaPagamentoQueryResult.Add(new PagamentoQueryResult
-            {
-                Id = 1,
-                Descricao = "Pagamento do mês de Maio de Luz Elétrica",
-                Valor = 89.75,
-                DataPagamento = DateTime.Now,
-                DataVencimento = DateTime.Now.AddDays(1),
-                TipoPagamento = new TipoPagamentoQueryResult
-                {
-                    Id = 1,
-                    Descricao = "Luz Elétrica"
-                },
-                Empresa = new EmpresaQueryResult
-                {
-                    Id = 15,
-                    Nome = "Cemig",
-                    Logo = "base64String"
-                },
-                Pessoa = new PessoaQueryResult
-                {
-                    Id = 1,
-                    Nome = "Lucas",
-                    ImagemPerfil = "base64String"
-                }
-            });
-            listaPagamentoQueryResult.Add(new PagamentoQueryResult
-            {
-                Id = 2,
-                Descricao = "Pagamento do mês de Maio de Saneamento",
-                Valor = 89.75,
-                DataPagamento = DateTime.Now,
-                DataVencimento = DateTime.Now.AddDays(1),
-                TipoPagamento = new TipoPagamentoQueryResult
-                {
-                    Id = 2,
-                    Descricao = "Saneamento"
-                },
-                Empresa = new EmpresaQueryResult
-                {
-                    Id = 4,
-                    Nome = "Cesama",
-                    Logo = "base64String"
-                },
-                Pessoa = new PessoaQueryResult
-                {
-                    Id = 1,
-                    Nome = "Lucas",
-                    ImagemPerfil = "base64String"
-                }
-            });
+        //    List<PagamentoQueryResult> listaPagamentoQueryResult = new List<PagamentoQueryResult>();
+        //    listaPagamentoQueryResult.Add(new PagamentoQueryResult
+        //    {
+        //        Id = 1,
+        //        Descricao = "Pagamento do mês de Maio de Luz Elétrica",
+        //        Valor = 89.75,
+        //        DataPagamento = DateTime.Now,
+        //        DataVencimento = DateTime.Now.AddDays(1),
+        //        TipoPagamento = new TipoPagamentoQueryResult
+        //        {
+        //            Id = 1,
+        //            Descricao = "Luz Elétrica"
+        //        },
+        //        Empresa = new EmpresaQueryResult
+        //        {
+        //            Id = 15,
+        //            Nome = "Cemig",
+        //            Logo = "base64String"
+        //        },
+        //        Pessoa = new PessoaQueryResult
+        //        {
+        //            Id = 1,
+        //            Nome = "Lucas",
+        //            ImagemPerfil = "base64String"
+        //        }
+        //    });
+        //    listaPagamentoQueryResult.Add(new PagamentoQueryResult
+        //    {
+        //        Id = 2,
+        //        Descricao = "Pagamento do mês de Maio de Saneamento",
+        //        Valor = 89.75,
+        //        DataPagamento = DateTime.Now,
+        //        DataVencimento = DateTime.Now.AddDays(1),
+        //        TipoPagamento = new TipoPagamentoQueryResult
+        //        {
+        //            Id = 2,
+        //            Descricao = "Saneamento"
+        //        },
+        //        Empresa = new EmpresaQueryResult
+        //        {
+        //            Id = 4,
+        //            Nome = "Cesama",
+        //            Logo = "base64String"
+        //        },
+        //        Pessoa = new PessoaQueryResult
+        //        {
+        //            Id = 1,
+        //            Nome = "Lucas",
+        //            ImagemPerfil = "base64String"
+        //        }
+        //    });
 
-            Mock<IPagamentoRepositorio> mock = new Mock<IPagamentoRepositorio>();
-            mock.Setup(m => m.Listar()).Returns(listaPagamentoQueryResult);
-            List<PagamentoQueryResult> resultado = mock.Object.Listar();
-            Assert.Equal(listaPagamentoQueryResult, resultado);
-        }
+        //    Mock<IPagamentoRepositorio> mock = new Mock<IPagamentoRepositorio>();
+        //    mock.Setup(m => m.Listar()).Returns(listaPagamentoQueryResult);
+        //    List<PagamentoQueryResult> resultado = mock.Object.Listar();
+        //    Assert.Equal(listaPagamentoQueryResult, resultado);
+        //}
 
-        [Fact]
-        public void CheckId_DeveRetornarSucesso()
-        {
-            int id = 1;
-            TipoPagamento tipoPagamento = new TipoPagamento(33);
-            Empresa empresa = new Empresa(125);
-            Pessoa pessoa = new Pessoa(45);
-            Texto descricao = new Texto("Pagamento do mês de Maio de Luz Elétrica", "Descrição", 250);
-            double valor = 89.75;
-            DateTime dataPagamento = DateTime.Now;
-            DateTime dataVencimento = DateTime.Now.AddDays(1);
-            Pagamento pagamento = new Pagamento(id, tipoPagamento, empresa, pessoa, descricao, valor, dataPagamento, dataVencimento);
+        //[Fact]
+        //public void CheckId_DeveRetornarSucesso()
+        //{
+        //    int id = 1;
+        //    TipoPagamento tipoPagamento = new TipoPagamento(33);
+        //    Empresa empresa = new Empresa(125);
+        //    Pessoa pessoa = new Pessoa(45);
+        //    Texto descricao = new Texto("Pagamento do mês de Maio de Luz Elétrica", "Descrição", 250);
+        //    double valor = 89.75;
+        //    DateTime dataPagamento = DateTime.Now;
+        //    DateTime dataVencimento = DateTime.Now.AddDays(1);
+        //    Pagamento pagamento = new Pagamento(id, tipoPagamento, empresa, pessoa, descricao, valor, dataPagamento, dataVencimento);
 
-            Mock<IPagamentoRepositorio> mock = new Mock<IPagamentoRepositorio>();
-            mock.Setup(m => m.CheckId(pagamento.Id)).Returns(true);
-            bool resultado = mock.Object.CheckId(pagamento.Id);
-            Assert.True(resultado);
-        }
+        //    Mock<IPagamentoRepositorio> mock = new Mock<IPagamentoRepositorio>();
+        //    mock.Setup(m => m.CheckId(pagamento.Id)).Returns(true);
+        //    bool resultado = mock.Object.CheckId(pagamento.Id);
+        //    Assert.True(resultado);
+        //}
 
-        [Fact]
-        public void LocalizarMaxId_DeveRetornarSucesso()
-        {
-            Mock<IPagamentoRepositorio> mock = new Mock<IPagamentoRepositorio>();
-            mock.Setup(m => m.LocalizarMaxId()).Returns(10);
-            int resultado = mock.Object.LocalizarMaxId();
-            Assert.Equal(10, resultado);
-        }
+        //[Fact]
+        //public void LocalizarMaxId_DeveRetornarSucesso()
+        //{
+        //    Mock<IPagamentoRepositorio> mock = new Mock<IPagamentoRepositorio>();
+        //    mock.Setup(m => m.LocalizarMaxId()).Returns(10);
+        //    int resultado = mock.Object.LocalizarMaxId();
+        //    Assert.Equal(10, resultado);
+        //}
     }
 }

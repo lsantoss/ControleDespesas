@@ -22,60 +22,40 @@ namespace ControleDespesas.Testes.Repositorio
         [Fact]
         public void Salvar()
         {
-            Empresa empresa0 = new Empresa(0, new Texto("NomeEmpresa0", "Nome", 100), "Logo0");
-            Empresa empresa1 = new Empresa(0, new Texto("NomeEmpresa1", "Nome", 100), "Logo1");
-            Empresa empresa2 = new Empresa(0, new Texto("NomeEmpresa2", "Nome", 100), "Logo2");
+            Empresa empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "Logo");
 
             Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
             EmpresaRepositorio repository = new EmpresaRepositorio(mockOptions.Object);
-            repository.Salvar(empresa0);
-            repository.Salvar(empresa1);
-            repository.Salvar(empresa2);
+            repository.Salvar(empresa);
 
-            List<EmpresaQueryResult> retorno = repository.Listar();
+            EmpresaQueryResult retorno = repository.Obter(1);
 
-            Assert.Equal(1, retorno[0].Id);
-            Assert.Equal(2, retorno[1].Id);
-            Assert.Equal(3, retorno[2].Id);
-            Assert.Equal(empresa0.Nome.ToString(), retorno[0].Nome);
-            Assert.Equal(empresa1.Nome.ToString(), retorno[1].Nome);
-            Assert.Equal(empresa2.Nome.ToString(), retorno[2].Nome);
-            Assert.Equal(empresa0.Logo, retorno[0].Logo);
-            Assert.Equal(empresa1.Logo, retorno[1].Logo);
-            Assert.Equal(empresa2.Logo, retorno[2].Logo);
+            Assert.Equal(1, retorno.Id);
+            Assert.Equal(empresa.Nome.ToString(), retorno.Nome);
+            Assert.Equal(empresa.Logo, retorno.Logo);
         }
 
         [Fact]
         public void Atualizar()
         {
-            Empresa empresa0 = new Empresa(0, new Texto("NomeEmpresa0", "Nome", 100), "Logo0");
-            Empresa empresa1 = new Empresa(0, new Texto("NomeEmpresa1", "Nome", 100), "Logo1");
-            Empresa empresa2 = new Empresa(0, new Texto("NomeEmpresa2", "Nome", 100), "Logo2");
+            Empresa empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "Logo");
 
             Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
             EmpresaRepositorio repository = new EmpresaRepositorio(mockOptions.Object);
-            repository.Salvar(empresa0);
-            repository.Salvar(empresa1);
-            repository.Salvar(empresa2);
+            repository.Salvar(empresa);
 
-            empresa1 = new Empresa(2, new Texto("NomeEmpresa1 - Editada", "Nome", 100), "Logo2 - Editado");
-            repository.Atualizar(empresa1);
+            empresa = new Empresa(1, new Texto("NomeEmpresa - Editada", "Nome", 100), "Logo - Editado");
+            repository.Atualizar(empresa);
 
-            List<EmpresaQueryResult> retorno = repository.Listar();
+            EmpresaQueryResult retorno = repository.Obter(1);
 
-            Assert.Equal(1, retorno[0].Id);
-            Assert.Equal(2, retorno[1].Id);
-            Assert.Equal(3, retorno[2].Id);
-            Assert.Equal(empresa0.Nome.ToString(), retorno[0].Nome);
-            Assert.Equal(empresa1.Nome.ToString(), retorno[1].Nome);
-            Assert.Equal(empresa2.Nome.ToString(), retorno[2].Nome);
-            Assert.Equal(empresa0.Logo, retorno[0].Logo);
-            Assert.Equal(empresa1.Logo, retorno[1].Logo);
-            Assert.Equal(empresa2.Logo, retorno[2].Logo);
+            Assert.Equal(empresa.Id, retorno.Id);
+            Assert.Equal(empresa.Nome.ToString(), retorno.Nome);
+            Assert.Equal(empresa.Logo, retorno.Logo);
         }
 
         [Fact]
@@ -108,23 +88,19 @@ namespace ControleDespesas.Testes.Repositorio
         [Fact]
         public void Obter()
         {
-            Empresa empresa0 = new Empresa(0, new Texto("NomeEmpresa0", "Nome", 100), "Logo0");
-            Empresa empresa1 = new Empresa(0, new Texto("NomeEmpresa1", "Nome", 100), "Logo1");
-            Empresa empresa2 = new Empresa(0, new Texto("NomeEmpresa2", "Nome", 100), "Logo2");
+            Empresa empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "Logo");
 
             Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
             EmpresaRepositorio repository = new EmpresaRepositorio(mockOptions.Object);
-            repository.Salvar(empresa0);
-            repository.Salvar(empresa1);
-            repository.Salvar(empresa2);
+            repository.Salvar(empresa);
 
-            EmpresaQueryResult retorno = repository.Obter(2);
+            EmpresaQueryResult retorno = repository.Obter(1);
 
-            Assert.Equal(2, retorno.Id);
-            Assert.Equal(empresa1.Nome.ToString(), retorno.Nome);
-            Assert.Equal(empresa1.Logo, retorno.Logo);
+            Assert.Equal(1, retorno.Id);
+            Assert.Equal(empresa.Nome.ToString(), retorno.Nome);
+            Assert.Equal(empresa.Logo, retorno.Logo);
         }
 
         [Fact]
@@ -158,19 +134,15 @@ namespace ControleDespesas.Testes.Repositorio
         [Fact]
         public void CheckId()
         {
-            Empresa empresa0 = new Empresa(0, new Texto("NomeEmpresa0", "Nome", 100), "Logo0");
-            Empresa empresa1 = new Empresa(0, new Texto("NomeEmpresa1", "Nome", 100), "Logo1");
-            Empresa empresa2 = new Empresa(0, new Texto("NomeEmpresa2", "Nome", 100), "Logo2");
+            Empresa empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "Logo");
 
             Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
             EmpresaRepositorio repository = new EmpresaRepositorio(mockOptions.Object);
-            repository.Salvar(empresa0);
-            repository.Salvar(empresa1);
-            repository.Salvar(empresa2);
+            repository.Salvar(empresa);
 
-            bool idExistente = repository.CheckId(2);
+            bool idExistente = repository.CheckId(1);
             bool idNaoExiste = repository.CheckId(25);
 
             Assert.True(idExistente);

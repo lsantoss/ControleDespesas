@@ -1,35 +1,41 @@
-﻿using ControleDespesas.Testes.AppConfigurations.QueriesSQL;
+﻿using ControleDespesas.Infra.Data.Settings;
+using ControleDespesas.Testes.AppConfigurations.QueriesSQL;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data.SqlClient;
 
 namespace ControleDespesas.Testes.AppConfigurations.Factory
 {
     public class DatabaseFactory
     {
-        private string _connectionTest;
+        private readonly string _connectionReal;
+        private readonly string _connectionTest;
+        protected readonly SettingsInfraData _settingsInfraData;
 
         public DatabaseFactory()
         {
-            _connectionTest = ConfigurationManager.ConnectionStrings["connectionSetUpTest"].ConnectionString;
+            _connectionReal = @"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ControleDespesas;Data Source=SANTOS-PC\SQLEXPRESS;";
+            _connectionTest = @"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ControleDespesasTest;Data Source=SANTOS-PC\SQLEXPRESS;";
+
+            _settingsInfraData = new SettingsInfraData()
+            {
+                ConnectionString = _connectionTest
+            };
         }
 
-        //[OneTimeSetUp]
-        public void OneTimeSetUp()
+        public void CriarBaseDeDadosETabelas()
         {
             RodarScripts(QueriesSQLServer.QueriesCreate);
         }
 
-        //[OneTimeTearDown]
-        public void OneTimeTearDown()
+        public void DroparBaseDeDados()
         {
             RodarScripts(QueriesSQLServer.QueriesDrop);
         }
 
         public void RodarScripts(List<string> queries)
         {
-            using (SqlConnection con = new SqlConnection(_connectionTest))
+            using (SqlConnection con = new SqlConnection(_connectionReal))
             {
                 con.Open();
 

@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ControleDespesas.Dominio\ControleDespesas.Dominio.csproj" />
+    <ProjectReference Include="..\ControleDespesas.Infra.Data\ControleDespesas.Infra.Data.csproj" />
   </ItemGroup>
 
 </Project>

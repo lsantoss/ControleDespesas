@@ -7,15 +7,15 @@ namespace ControleDespesas.Testes.AppConfigurations.QueriesSQL
         private static string CreateDataBase { get; } = @"CREATE DATABASE ControleDespesasTest;";
 
         private static string CreateTableEmpresa { get; } = @"USE [ControleDespesasTest] 
-                                                             CREATE TABLE [dbo].[Empresa](
+                                                              CREATE TABLE [dbo].[Empresa](
 	                                                            [Id] [int] IDENTITY(1,1) NOT NULL,
 	                                                            [Nome] [nvarchar](100) NOT NULL,
 	                                                            [Logo] [text] NOT NULL,
                                                                 CONSTRAINT [PK_Empresa] PRIMARY KEY CLUSTERED 
-                                                             (
+                                                              (
 	                                                             [Id] ASC
-                                                             )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-                                                             ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]";
+                                                              )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+                                                              ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]";
 
         private static string CreateTablePessoa { get; } = @"USE [ControleDespesasTest] 
                                                              CREATE TABLE [dbo].[Pessoa](
@@ -29,52 +29,45 @@ namespace ControleDespesas.Testes.AppConfigurations.QueriesSQL
                                                              ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]";
 
         private static string CreateTableTipoPagamento { get; } = @"USE [ControleDespesasTest] 
-                                                                 CREATE TABLE [dbo].[TipoPagamento](
-	                                                                 [Id] [int] IDENTITY(1,1) NOT NULL,
-	                                                                 [Descricao] [nvarchar](250) NOT NULL,
-                                                                  CONSTRAINT [PK_TipoPagamento] PRIMARY KEY CLUSTERED 
-                                                                 (
-	                                                                 [Id] ASC
-                                                                 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-                                                                 ) ON [PRIMARY]";
-
-        private static string CreateTablePagamento { get; } = @"USE [ControleDespesasTest] 
-                                                                     CREATE TABLE [dbo].[Pagamento](
+                                                                    CREATE TABLE [dbo].[TipoPagamento](
 	                                                                    [Id] [int] IDENTITY(1,1) NOT NULL,
-	                                                                    [IdTipoPagamento] [int] NOT NULL,
-	                                                                    [IdEmpresa] [int] NOT NULL,
-	                                                                    [IdPessoa] [int] NOT NULL,
 	                                                                    [Descricao] [nvarchar](250) NOT NULL,
-	                                                                    [Valor] [money] NOT NULL,
-	                                                                    [DataVencimento] [smalldatetime] NOT NULL,
-	                                                                    [DataPagamento] [smalldatetime] NULL,
-                                                                        CONSTRAINT [PK_Pagamento] PRIMARY KEY CLUSTERED 
+                                                                    CONSTRAINT [PK_TipoPagamento] PRIMARY KEY CLUSTERED 
                                                                     (
 	                                                                    [Id] ASC
                                                                     )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-                                                                    ) ON [PRIMARY]
-                                                                    GO
+                                                                    ) ON [PRIMARY]";
 
-                                                                    ALTER TABLE [dbo].[Pagamento]  WITH CHECK ADD  CONSTRAINT [FK_Pagamento_Empresa] FOREIGN KEY([IdEmpresa])
-                                                                    REFERENCES [dbo].[Empresa] ([Id])
-                                                                    GO
+        private static string CreateTablePagamento { get; } = @"USE [ControleDespesasTest] 
+                                                                CREATE TABLE [dbo].[Pagamento](
+	                                                                [Id] [int] IDENTITY(1,1) NOT NULL,
+	                                                                [IdTipoPagamento] [int] NOT NULL,
+	                                                                [IdEmpresa] [int] NOT NULL,
+	                                                                [IdPessoa] [int] NOT NULL,
+	                                                                [Descricao] [nvarchar](250) NOT NULL,
+	                                                                [Valor] [money] NOT NULL,
+	                                                                [DataVencimento] [smalldatetime] NOT NULL,
+	                                                                [DataPagamento] [smalldatetime] NULL,
+                                                                    CONSTRAINT [PK_Pagamento] PRIMARY KEY CLUSTERED 
+                                                                (
+	                                                                [Id] ASC
+                                                                )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+                                                                ) ON [PRIMARY]
 
-                                                                    ALTER TABLE [dbo].[Pagamento] CHECK CONSTRAINT [FK_Pagamento_Empresa]
-                                                                    GO
+                                                                ALTER TABLE [dbo].[Pagamento]  WITH CHECK ADD  CONSTRAINT [FK_Pagamento_Empresa] FOREIGN KEY([IdEmpresa])
+                                                                REFERENCES [dbo].[Empresa] ([Id])
 
-                                                                    ALTER TABLE [dbo].[Pagamento]  WITH CHECK ADD  CONSTRAINT [FK_Pagamento_Pessoa] FOREIGN KEY([IdPessoa])
-                                                                    REFERENCES [dbo].[Pessoa] ([Id])
-                                                                    GO
+                                                                ALTER TABLE [dbo].[Pagamento] CHECK CONSTRAINT [FK_Pagamento_Empresa]
 
-                                                                    ALTER TABLE [dbo].[Pagamento] CHECK CONSTRAINT [FK_Pagamento_Pessoa]
-                                                                    GO
+                                                                ALTER TABLE [dbo].[Pagamento]  WITH CHECK ADD  CONSTRAINT [FK_Pagamento_Pessoa] FOREIGN KEY([IdPessoa])
+                                                                REFERENCES [dbo].[Pessoa] ([Id])
 
-                                                                    ALTER TABLE [dbo].[Pagamento]  WITH CHECK ADD  CONSTRAINT [FK_Pagamento_TipoPagamento] FOREIGN KEY([IdTipoPagamento])
-                                                                    REFERENCES [dbo].[TipoPagamento] ([Id])
-                                                                    GO
+                                                                ALTER TABLE [dbo].[Pagamento] CHECK CONSTRAINT [FK_Pagamento_Pessoa]
 
-                                                                    ALTER TABLE [dbo].[Pagamento] CHECK CONSTRAINT [FK_Pagamento_TipoPagamento]
-                                                                    GO";
+                                                                ALTER TABLE [dbo].[Pagamento]  WITH CHECK ADD  CONSTRAINT [FK_Pagamento_TipoPagamento] FOREIGN KEY([IdTipoPagamento])
+                                                                REFERENCES [dbo].[TipoPagamento] ([Id])
+
+                                                                ALTER TABLE [dbo].[Pagamento] CHECK CONSTRAINT [FK_Pagamento_TipoPagamento]";
 
         private static string CreateTableUsuario { get; } = @"USE [ControleDespesasTest] 
                                                                 CREATE TABLE [dbo].[Usuario](
@@ -97,7 +90,7 @@ namespace ControleDespesas.Testes.AppConfigurations.QueriesSQL
                                                         WHERE database_id = db_id('ControleDespesasTest')
                                                         EXEC('kill ' + @kill)";
 
-        private static string DropDataBase { get; } = @"USE [master] DROP DATABASE [ControleDespesasTest]";
+        private static string DropDataBase { get; } = @"USE [master] DROP DATABASE IF EXISTS [ControleDespesasTest]";
 
 
         public static List<string> QueriesCreate { get; } = new List<string>()
@@ -113,7 +106,7 @@ namespace ControleDespesas.Testes.AppConfigurations.QueriesSQL
 
         public static List<string> QueriesDrop { get; } = new List<string>()
         {
-            MatarSessoes,
+            //MatarSessoes,
             DropDataBase
         };
     }

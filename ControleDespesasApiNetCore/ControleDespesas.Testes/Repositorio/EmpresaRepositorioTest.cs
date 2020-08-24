@@ -78,10 +78,11 @@ namespace ControleDespesas.Testes.Repositorio
             List<EmpresaQueryResult> retorno = repository.Listar();
 
             Assert.Equal(1, retorno[0].Id);
-            Assert.Equal(3, retorno[1].Id);
             Assert.Equal(empresa0.Nome.ToString(), retorno[0].Nome);
-            Assert.Equal(empresa2.Nome.ToString(), retorno[1].Nome);
             Assert.Equal(empresa0.Logo, retorno[0].Logo);
+
+            Assert.Equal(3, retorno[1].Id);
+            Assert.Equal(empresa2.Nome.ToString(), retorno[1].Nome);
             Assert.Equal(empresa2.Logo, retorno[1].Logo);
         }
 
@@ -121,13 +122,15 @@ namespace ControleDespesas.Testes.Repositorio
             List<EmpresaQueryResult> retorno = repository.Listar();
 
             Assert.Equal(1, retorno[0].Id);
-            Assert.Equal(2, retorno[1].Id);
-            Assert.Equal(3, retorno[2].Id);
             Assert.Equal(empresa0.Nome.ToString(), retorno[0].Nome);
-            Assert.Equal(empresa1.Nome.ToString(), retorno[1].Nome);
-            Assert.Equal(empresa2.Nome.ToString(), retorno[2].Nome);
             Assert.Equal(empresa0.Logo, retorno[0].Logo);
+
+            Assert.Equal(2, retorno[1].Id);
+            Assert.Equal(empresa1.Nome.ToString(), retorno[1].Nome);
             Assert.Equal(empresa1.Logo, retorno[1].Logo);
+
+            Assert.Equal(3, retorno[2].Id);
+            Assert.Equal(empresa2.Nome.ToString(), retorno[2].Nome);
             Assert.Equal(empresa2.Logo, retorno[2].Logo);
         }
 

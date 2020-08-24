@@ -1,105 +1,175 @@
 ﻿using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Query.Pessoa;
-using ControleDespesas.Dominio.Repositorio;
+using ControleDespesas.Infra.Data.Repositorio;
+using ControleDespesas.Infra.Data.Settings;
+using ControleDespesas.Testes.AppConfigurations.Factory;
 using LSCode.Validador.ValueObjects;
+using Microsoft.Extensions.Options;
 using Moq;
 using System.Collections.Generic;
 using Xunit;
 
 namespace ControleDespesas.Testes.Repositorio
 {
-    public class PessoaRepositorioTest
+    public class PessoaRepositorioTest : DatabaseFactory
     {
-        //[Fact]
-        //public void AdicionarPessoa_DeveRetornarSucesso()
-        //{
-        //    Pessoa pessoa = new Pessoa(0, new Descricao100Caracteres("Lucas", "Nome"), "base64String");
-        //    Mock<IPessoaRepositorio> mock = new Mock<IPessoaRepositorio>();
-        //    mock.Setup(m => m.Salvar(pessoa)).Returns("Sucesso");
-        //    string resultado = mock.Object.Salvar(pessoa);
-        //    Assert.Equal("Sucesso", resultado);
-        //}
+        public PessoaRepositorioTest()
+        {
+            DroparBaseDeDados();
+            CriarBaseDeDadosETabelas();
+        }
 
-        //[Fact]
-        //public void AtualizarPessoa_DeveRetornarSucesso()
-        //{
-        //    Pessoa pessoa = new Pessoa(1, new Descricao100Caracteres("Lucas", "Nome"), "base64String");
-        //    Mock<IPessoaRepositorio> mock = new Mock<IPessoaRepositorio>();
-        //    mock.Setup(m => m.Atualizar(pessoa)).Returns("Sucesso");
-        //    string resultado = mock.Object.Atualizar(pessoa);
-        //    Assert.Equal("Sucesso", resultado);
-        //}
+        [Fact]
+        public void Salvar()
+        {
+            Pessoa pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPerfil");
 
-        //[Fact]
-        //public void ApagarPessoa_DeveRetornarSucesso()
-        //{
-        //    Pessoa pessoa = new Pessoa(1, new Descricao100Caracteres("Lucas", "Nome"), "base64String");
-        //    Mock<IPessoaRepositorio> mock = new Mock<IPessoaRepositorio>();
-        //    mock.Setup(m => m.Deletar(pessoa.Id)).Returns("Sucesso");
-        //    string resultado = mock.Object.Deletar(pessoa.Id);
-        //    Assert.Equal("Sucesso", resultado);
-        //}
+            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-        //[Fact]
-        //public void ObterPessoa_DeveRetornarSucesso()
-        //{
-        //    Pessoa pessoa = new Pessoa(1, new Texto("Lucas", "Nome", 100), "base64String");
+            PessoaRepositorio repository = new PessoaRepositorio(mockOptions.Object);
+            repository.Salvar(pessoa);
 
-        //    PessoaQueryResult pessoaQueryResult = new PessoaQueryResult
-        //    {
-        //        Id = 1,
-        //        Nome = "Lucas",
-        //        ImagemPerfil = "base64String"
-        //    };
+            PessoaQueryResult retorno = repository.Obter(1);
 
-        //    Mock<IPessoaRepositorio> mock = new Mock<IPessoaRepositorio>();
-        //    mock.Setup(m => m.Obter(pessoa.Id)).Returns(pessoaQueryResult);
-        //    PessoaQueryResult resultado = mock.Object.Obter(pessoa.Id);
-        //    Assert.Equal(pessoaQueryResult, resultado);
-        //}
+            Assert.Equal(1, retorno.Id);
+            Assert.Equal(pessoa.Nome.ToString(), retorno.Nome);
+            Assert.Equal(pessoa.ImagemPerfil, retorno.ImagemPerfil);
+        }
 
-        //[Fact]
-        //public void ListarPessoas_DeveRetornarSucesso()
-        //{
-        //    Pessoa pessoa = new Pessoa(1, new Texto("Lucas", "Nome", 100), "base64String");
+        [Fact]
+        public void Atualizar()
+        {
+            Pessoa pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPerfil");
 
-        //    List<PessoaQueryResult> listaPessoasQueryResult = new List<PessoaQueryResult>();
-        //    listaPessoasQueryResult.Add(new PessoaQueryResult
-        //    {
-        //        Id = 1,
-        //        Nome = "Lucas",
-        //        ImagemPerfil = "base64String"
-        //    });
-        //    listaPessoasQueryResult.Add(new PessoaQueryResult
-        //    {
-        //        Id = 2,
-        //        Nome = "Mattheus",
-        //        ImagemPerfil = "base64String"
-        //    });
+            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-        //    Mock<IPessoaRepositorio> mock = new Mock<IPessoaRepositorio>();
-        //    mock.Setup(m => m.Listar()).Returns(listaPessoasQueryResult);
-        //    List<PessoaQueryResult> resultado = mock.Object.Listar();
-        //    Assert.Equal(listaPessoasQueryResult, resultado);
-        //}
+            PessoaRepositorio repository = new PessoaRepositorio(mockOptions.Object);
+            repository.Salvar(pessoa);
 
-        //[Fact]
-        //public void CheckId_DeveRetornarSucesso()
-        //{
-        //    Pessoa pessoa = new Pessoa(1, new Texto("Lucas", "Nome", 100), "base64String");
-        //    Mock<IPessoaRepositorio> mock = new Mock<IPessoaRepositorio>();
-        //    mock.Setup(m => m.CheckId(pessoa.Id)).Returns(true);
-        //    bool resultado = mock.Object.CheckId(pessoa.Id);
-        //    Assert.True(resultado);
-        //}
+            pessoa = new Pessoa(1, new Texto("NomePessoa - Editada", "Nome", 100), "ImagemPerfil - Editado");
+            repository.Atualizar(pessoa);
 
-        //[Fact]
-        //public void LocalizarMaxId_DeveRetornarSucesso()
-        //{
-        //    Mock<IPessoaRepositorio> mock = new Mock<IPessoaRepositorio>();
-        //    mock.Setup(m => m.LocalizarMaxId()).Returns(10);
-        //    int resultado = mock.Object.LocalizarMaxId();
-        //    Assert.Equal(10, resultado);
-        //}
+            PessoaQueryResult retorno = repository.Obter(1);
+
+            Assert.Equal(pessoa.Id, retorno.Id);
+            Assert.Equal(pessoa.Nome.ToString(), retorno.Nome);
+            Assert.Equal(pessoa.ImagemPerfil, retorno.ImagemPerfil);
+        }
+
+        [Fact]
+        public void Deletar()
+        {
+            Pessoa pessoa0 = new Pessoa(0, new Texto("NomePessoa0", "Nome", 100), "ImagemPerfil0");
+            Pessoa pessoa1 = new Pessoa(0, new Texto("NomePessoa1", "Nome", 100), "ImagemPerfil1");
+            Pessoa pessoa2 = new Pessoa(0, new Texto("NomePessoa2", "Nome", 100), "ImagemPerfil2");
+
+            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+
+            PessoaRepositorio repository = new PessoaRepositorio(mockOptions.Object);
+            repository.Salvar(pessoa0);
+            repository.Salvar(pessoa1);
+            repository.Salvar(pessoa2);
+
+            repository.Deletar(2);
+
+            List<PessoaQueryResult> retorno = repository.Listar();
+
+            Assert.Equal(1, retorno[0].Id);
+            Assert.Equal(pessoa0.Nome.ToString(), retorno[0].Nome);
+            Assert.Equal(pessoa0.ImagemPerfil, retorno[0].ImagemPerfil);
+
+            Assert.Equal(3, retorno[1].Id);
+            Assert.Equal(pessoa2.Nome.ToString(), retorno[1].Nome);
+            Assert.Equal(pessoa2.ImagemPerfil, retorno[1].ImagemPerfil);
+        }
+
+        [Fact]
+        public void Obter()
+        {
+            Pessoa pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPerfil");
+
+            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+
+            PessoaRepositorio repository = new PessoaRepositorio(mockOptions.Object);
+            repository.Salvar(pessoa);
+
+            PessoaQueryResult retorno = repository.Obter(1);
+
+            Assert.Equal(1, retorno.Id);
+            Assert.Equal(pessoa.Nome.ToString(), retorno.Nome);
+            Assert.Equal(pessoa.ImagemPerfil, retorno.ImagemPerfil);
+        }
+
+        [Fact]
+        public void Listar()
+        {
+            Pessoa pessoa0 = new Pessoa(0, new Texto("NomePessoa0", "Nome", 100), "ImagemPerfil0");
+            Pessoa pessoa1 = new Pessoa(0, new Texto("NomePessoa1", "Nome", 100), "ImagemPerfil1");
+            Pessoa pessoa2 = new Pessoa(0, new Texto("NomePessoa2", "Nome", 100), "ImagemPerfil2");
+
+            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+
+            PessoaRepositorio repository = new PessoaRepositorio(mockOptions.Object);
+            repository.Salvar(pessoa0);
+            repository.Salvar(pessoa1);
+            repository.Salvar(pessoa2);
+
+            List<PessoaQueryResult> retorno = repository.Listar();
+
+            Assert.Equal(1, retorno[0].Id);
+            Assert.Equal(pessoa0.Nome.ToString(), retorno[0].Nome);
+            Assert.Equal(pessoa0.ImagemPerfil, retorno[0].ImagemPerfil);
+
+            Assert.Equal(2, retorno[1].Id);
+            Assert.Equal(pessoa1.Nome.ToString(), retorno[1].Nome);
+            Assert.Equal(pessoa1.ImagemPerfil, retorno[1].ImagemPerfil);
+
+            Assert.Equal(3, retorno[2].Id);
+            Assert.Equal(pessoa2.Nome.ToString(), retorno[2].Nome);
+            Assert.Equal(pessoa2.ImagemPerfil, retorno[2].ImagemPerfil);
+        }
+
+        [Fact]
+        public void CheckId()
+        {
+            Pessoa pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPerfil");
+
+            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+
+            PessoaRepositorio repository = new PessoaRepositorio(mockOptions.Object);
+            repository.Salvar(pessoa);
+
+            bool idExistente = repository.CheckId(1);
+            bool idNaoExiste = repository.CheckId(25);
+
+            Assert.True(idExistente);
+            Assert.False(idNaoExiste);
+        }
+
+        [Fact]
+        public void LocalizarMaxId()
+        {
+            Pessoa pessoa0 = new Pessoa(0, new Texto("NomePessoa0", "Nome", 100), "ImagemPerfil0");
+            Pessoa pessoa1 = new Pessoa(0, new Texto("NomePessoa1", "Nome", 100), "ImagemPerfil1");
+            Pessoa pessoa2 = new Pessoa(0, new Texto("NomePessoa2", "Nome", 100), "ImagemPerfil2");
+
+            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+
+            PessoaRepositorio repository = new PessoaRepositorio(mockOptions.Object);
+            repository.Salvar(pessoa0);
+            repository.Salvar(pessoa1);
+            repository.Salvar(pessoa2);
+
+            int maxId = repository.LocalizarMaxId();
+
+            Assert.Equal(3, maxId);
+        }
     }
 }

@@ -85,9 +85,6 @@ namespace ControleDespesas.Testes.AppConfigurations.QueriesSQL
                                                                 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
                                                                 ) ON [PRIMARY]";
 
-        private static string InsertTableUsuario { get; } = @"INSERT INTO [dbo].[Usuario] ([Login],[Senha],[Privilegio])
-                                                              VALUES ('admin', 'admin',1), ('readonly', 'readonly',2)";
-
         private static string DropTableUsuario { get; } = @"USE [ControleDespesasTest]
                                                             DROP TABLE IF EXISTS Usuario";
 
@@ -118,8 +115,7 @@ namespace ControleDespesas.Testes.AppConfigurations.QueriesSQL
             CreateTablePessoa,
             CreateTableTipoPagamento,
             CreateTablePagamento,
-            CreateTableUsuario,
-            InsertTableUsuario
+            CreateTableUsuario
         };
 
         public static List<string> QueriesDrop { get; } = new List<string>()

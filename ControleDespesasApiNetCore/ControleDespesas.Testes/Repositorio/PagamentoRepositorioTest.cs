@@ -1,10 +1,10 @@
 ﻿using ControleDespesas.Dominio.Entidades;
-using ControleDespesas.Dominio.Query.Empresa;
 using ControleDespesas.Dominio.Query.Pagamento;
-using ControleDespesas.Dominio.Query.Pessoa;
-using ControleDespesas.Dominio.Query.TipoPagamento;
-using ControleDespesas.Dominio.Repositorio;
+using ControleDespesas.Infra.Data.Repositorio;
+using ControleDespesas.Infra.Data.Settings;
+using ControleDespesas.Testes.AppConfigurations.Factory;
 using LSCode.Validador.ValueObjects;
+using Microsoft.Extensions.Options;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -12,207 +12,368 @@ using Xunit;
 
 namespace ControleDespesas.Testes.Repositorio
 {
-    public class PagamentoRepositorioTest
+    public class PagamentoRepositorioTest : DatabaseFactory
     {
-        //[Fact]
-        //public void AdicionarPagamento_DeveRetornarSucesso()
-        //{
-        //    int id = 0;
-        //    TipoPagamento tipoPagamento = new TipoPagamento(33);
-        //    Empresa empresa = new Empresa(125);
-        //    Pessoa pessoa = new Pessoa(45);
-        //    Descricao250Caracteres descricao = new Descricao250Caracteres("Pagamento do mês de Maio de Luz Elétrica", "Descrição");
-        //    double valor = 89.75;
-        //    DateTime dataPagamento = DateTime.Now;
-        //    DateTime dataVencimento = DateTime.Now.AddDays(1);
-        //    Pagamento pagamento = new Pagamento(id, tipoPagamento, empresa, pessoa, descricao, valor, dataPagamento, dataVencimento);
+        public PagamentoRepositorioTest()
+        {
+            DroparBaseDeDados();
+            CriarBaseDeDadosETabelas();
+        }
 
-        //    Mock<IPagamentoRepositorio> mock = new Mock<IPagamentoRepositorio>();
-        //    mock.Setup(m => m.Salvar(pagamento)).Returns("Sucesso");
-        //    string resultado = mock.Object.Salvar(pagamento);
-        //    Assert.Equal("Sucesso", resultado);
-        //}
+        [Fact]
+        public void Salvar()
+        {
+            TipoPagamento tipoPagamento = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento", "Descrição", 250));
+            Empresa empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "Logo");
+            Pessoa pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPerfil");
+            Pagamento pagamento = new Pagamento(
+                0,
+                new TipoPagamento(1),
+                new Empresa(1),
+                new Pessoa(1),
+                new Texto("DescriçãoPagamento", "Descrição", 250),
+                100,
+                DateTime.Now.AddDays(1),
+                DateTime.Now
+            );
 
-        //[Fact]
-        //public void AtualizarPagamento_DeveRetornarSucesso()
-        //{
-        //    int id = 1;
-        //    TipoPagamento tipoPagamento = new TipoPagamento(33);
-        //    Empresa empresa = new Empresa(125);
-        //    Pessoa pessoa = new Pessoa(45);
-        //    Descricao250Caracteres descricao = new Descricao250Caracteres("Pagamento do mês de Maio de Luz Elétrica", "Descrição");
-        //    double valor = 89.75;
-        //    DateTime dataPagamento = DateTime.Now;
-        //    DateTime dataVencimento = DateTime.Now.AddDays(1);
-        //    Pagamento pagamento = new Pagamento(id, tipoPagamento, empresa, pessoa, descricao, valor, dataPagamento, dataVencimento);
+            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-        //    Mock<IPagamentoRepositorio> mock = new Mock<IPagamentoRepositorio>();
-        //    mock.Setup(m => m.Atualizar(pagamento)).Returns("Sucesso");
-        //    string resultado = mock.Object.Atualizar(pagamento);
-        //    Assert.Equal("Sucesso", resultado);
-        //}
+            TipoPagamentoRepositorio repositoryTipoPagamento = new TipoPagamentoRepositorio(mockOptions.Object);
+            repositoryTipoPagamento.Salvar(tipoPagamento);
 
-        //[Fact]
-        //public void ApagarPagamento_DeveRetornarSucesso()
-        //{
-        //    int id = 1;
-        //    TipoPagamento tipoPagamento = new TipoPagamento(33);
-        //    Empresa empresa = new Empresa(125);
-        //    Pessoa pessoa = new Pessoa(45);
-        //    Descricao250Caracteres descricao = new Descricao250Caracteres("Pagamento do mês de Maio de Luz Elétrica", "Descrição");
-        //    double valor = 89.75;
-        //    DateTime dataPagamento = DateTime.Now;
-        //    DateTime dataVencimento = DateTime.Now.AddDays(1);
-        //    Pagamento pagamento = new Pagamento(id, tipoPagamento, empresa, pessoa, descricao, valor, dataPagamento, dataVencimento);
+            EmpresaRepositorio repositoryEmpresa = new EmpresaRepositorio(mockOptions.Object);
+            repositoryEmpresa.Salvar(empresa);
 
-        //    Mock<IPagamentoRepositorio> mock = new Mock<IPagamentoRepositorio>();
-        //    mock.Setup(m => m.Deletar(pagamento.Id)).Returns("Sucesso");
-        //    string resultado = mock.Object.Deletar(pagamento.Id);
-        //    Assert.Equal("Sucesso", resultado);
-        //}
+            PessoaRepositorio repositoryPessoa = new PessoaRepositorio(mockOptions.Object);
+            repositoryPessoa.Salvar(pessoa);
 
-        //[Fact]
-        //public void ObterPagamento_DeveRetornarSucesso()
-        //{
-        //    int id = 1;
-        //    TipoPagamento tipoPagamento = new TipoPagamento(33);
-        //    Empresa empresa = new Empresa(125);
-        //    Pessoa pessoa = new Pessoa(45);
-        //    Texto descricao = new Texto("Pagamento do mês de Maio de Luz Elétrica", "Descrição", 250);
-        //    double valor = 89.75;
-        //    DateTime dataPagamento = DateTime.Now;
-        //    DateTime dataVencimento = DateTime.Now.AddDays(1);
-        //    Pagamento pagamento = new Pagamento(id, tipoPagamento, empresa, pessoa, descricao, valor, dataPagamento, dataVencimento);
+            PagamentoRepositorio repositoryPagamento = new PagamentoRepositorio(mockOptions.Object);
+            repositoryPagamento.Salvar(pagamento);
 
-        //    PagamentoQueryResult pagamentoQueryResult = new PagamentoQueryResult
-        //    {
-        //        Id = 1,
-        //        Descricao = "Pagamento do mês de Maio de Luz Elétrica",
-        //        Valor = 89.75,
-        //        DataPagamento = DateTime.Now,
-        //        DataVencimento = DateTime.Now.AddDays(1),
-        //        TipoPagamento = new TipoPagamentoQueryResult
-        //        {
-        //            Id = 1,
-        //            Descricao = "Luz Elétrica"
-        //        },
-        //        Empresa = new EmpresaQueryResult
-        //        {
-        //            Id = 15,
-        //            Nome = "Cemig",
-        //            Logo = "base64String"
-        //        },
-        //        Pessoa = new PessoaQueryResult
-        //        {
-        //            Id = 1,
-        //            Nome = "Lucas",
-        //            ImagemPerfil = "base64String"
-        //        }
-        //    };
+            PagamentoQueryResult retorno = repositoryPagamento.Obter(1);
 
-        //    Mock<IPagamentoRepositorio> mock = new Mock<IPagamentoRepositorio>();
-        //    mock.Setup(m => m.Obter(pagamento.Id)).Returns(pagamentoQueryResult);
-        //    PagamentoQueryResult resultado = mock.Object.Obter(pagamento.Id);
-        //    Assert.Equal(pagamentoQueryResult, resultado);
-        //}
+            Assert.Equal(1, retorno.Id);
+            Assert.Equal(pagamento.TipoPagamento.Id, retorno.TipoPagamento.Id);
+            Assert.Equal(pagamento.Empresa.Id, retorno.Empresa.Id);
+            Assert.Equal(pagamento.Pessoa.Id, retorno.Pessoa.Id);
+            Assert.Equal(pagamento.Descricao.ToString(), retorno.Descricao);
+            Assert.Equal(pagamento.Valor, retorno.Valor);
+            Assert.Equal(pagamento.DataVencimento.Date, retorno.DataVencimento.Date);
+            Assert.Equal(Convert.ToDateTime(pagamento.DataPagamento).Date, Convert.ToDateTime(retorno.DataPagamento).Date);
+        }
 
-        //[Fact]
-        //public void ListarPagamentos_DeveRetornarSucesso()
-        //{
-        //    int id = 1;
-        //    TipoPagamento tipoPagamento = new TipoPagamento(33);
-        //    Empresa empresa = new Empresa(125);
-        //    Pessoa pessoa = new Pessoa(45);
-        //    Texto descricao = new Texto("Pagamento do mês de Maio de Luz Elétrica", "Descrição", 250);
-        //    double valor = 89.75;
-        //    DateTime dataPagamento = DateTime.Now;
-        //    DateTime dataVencimento = DateTime.Now.AddDays(1);
-        //    Pagamento pagamento = new Pagamento(id, tipoPagamento, empresa, pessoa, descricao, valor, dataPagamento, dataVencimento);
+        [Fact]
+        public void Atualizar()
+        {
+            TipoPagamento tipoPagamento = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento", "Descrição", 250));
+            Empresa empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "Logo");
+            Pessoa pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPerfil");
+            Pagamento pagamento = new Pagamento(
+                0,
+                new TipoPagamento(1),
+                new Empresa(1),
+                new Pessoa(1),
+                new Texto("DescriçãoPagamento", "Descrição", 250),
+                100,
+                DateTime.Now.AddDays(1),
+                DateTime.Now
+            );
 
-        //    List<PagamentoQueryResult> listaPagamentoQueryResult = new List<PagamentoQueryResult>();
-        //    listaPagamentoQueryResult.Add(new PagamentoQueryResult
-        //    {
-        //        Id = 1,
-        //        Descricao = "Pagamento do mês de Maio de Luz Elétrica",
-        //        Valor = 89.75,
-        //        DataPagamento = DateTime.Now,
-        //        DataVencimento = DateTime.Now.AddDays(1),
-        //        TipoPagamento = new TipoPagamentoQueryResult
-        //        {
-        //            Id = 1,
-        //            Descricao = "Luz Elétrica"
-        //        },
-        //        Empresa = new EmpresaQueryResult
-        //        {
-        //            Id = 15,
-        //            Nome = "Cemig",
-        //            Logo = "base64String"
-        //        },
-        //        Pessoa = new PessoaQueryResult
-        //        {
-        //            Id = 1,
-        //            Nome = "Lucas",
-        //            ImagemPerfil = "base64String"
-        //        }
-        //    });
-        //    listaPagamentoQueryResult.Add(new PagamentoQueryResult
-        //    {
-        //        Id = 2,
-        //        Descricao = "Pagamento do mês de Maio de Saneamento",
-        //        Valor = 89.75,
-        //        DataPagamento = DateTime.Now,
-        //        DataVencimento = DateTime.Now.AddDays(1),
-        //        TipoPagamento = new TipoPagamentoQueryResult
-        //        {
-        //            Id = 2,
-        //            Descricao = "Saneamento"
-        //        },
-        //        Empresa = new EmpresaQueryResult
-        //        {
-        //            Id = 4,
-        //            Nome = "Cesama",
-        //            Logo = "base64String"
-        //        },
-        //        Pessoa = new PessoaQueryResult
-        //        {
-        //            Id = 1,
-        //            Nome = "Lucas",
-        //            ImagemPerfil = "base64String"
-        //        }
-        //    });
+            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-        //    Mock<IPagamentoRepositorio> mock = new Mock<IPagamentoRepositorio>();
-        //    mock.Setup(m => m.Listar()).Returns(listaPagamentoQueryResult);
-        //    List<PagamentoQueryResult> resultado = mock.Object.Listar();
-        //    Assert.Equal(listaPagamentoQueryResult, resultado);
-        //}
+            TipoPagamentoRepositorio repositoryTipoPagamento = new TipoPagamentoRepositorio(mockOptions.Object);
+            repositoryTipoPagamento.Salvar(tipoPagamento);
 
-        //[Fact]
-        //public void CheckId_DeveRetornarSucesso()
-        //{
-        //    int id = 1;
-        //    TipoPagamento tipoPagamento = new TipoPagamento(33);
-        //    Empresa empresa = new Empresa(125);
-        //    Pessoa pessoa = new Pessoa(45);
-        //    Texto descricao = new Texto("Pagamento do mês de Maio de Luz Elétrica", "Descrição", 250);
-        //    double valor = 89.75;
-        //    DateTime dataPagamento = DateTime.Now;
-        //    DateTime dataVencimento = DateTime.Now.AddDays(1);
-        //    Pagamento pagamento = new Pagamento(id, tipoPagamento, empresa, pessoa, descricao, valor, dataPagamento, dataVencimento);
+            EmpresaRepositorio repositoryEmpresa = new EmpresaRepositorio(mockOptions.Object);
+            repositoryEmpresa.Salvar(empresa);
 
-        //    Mock<IPagamentoRepositorio> mock = new Mock<IPagamentoRepositorio>();
-        //    mock.Setup(m => m.CheckId(pagamento.Id)).Returns(true);
-        //    bool resultado = mock.Object.CheckId(pagamento.Id);
-        //    Assert.True(resultado);
-        //}
+            PessoaRepositorio repositoryPessoa = new PessoaRepositorio(mockOptions.Object);
+            repositoryPessoa.Salvar(pessoa);
 
-        //[Fact]
-        //public void LocalizarMaxId_DeveRetornarSucesso()
-        //{
-        //    Mock<IPagamentoRepositorio> mock = new Mock<IPagamentoRepositorio>();
-        //    mock.Setup(m => m.LocalizarMaxId()).Returns(10);
-        //    int resultado = mock.Object.LocalizarMaxId();
-        //    Assert.Equal(10, resultado);
-        //}
+            PagamentoRepositorio repositoryPagamento = new PagamentoRepositorio(mockOptions.Object);
+            repositoryPagamento.Salvar(pagamento);
+
+            pagamento = new Pagamento(
+                1,
+                new TipoPagamento(1),
+                new Empresa(1),
+                new Pessoa(1),
+                new Texto("DescriçãoPagamento - Editado", "Descrição", 250),
+                500,
+                DateTime.Now.AddDays(5),
+                DateTime.Now.AddDays(2)
+            );
+
+            repositoryPagamento.Atualizar(pagamento);
+
+            PagamentoQueryResult retorno = repositoryPagamento.Obter(1);
+
+            Assert.Equal(1, retorno.Id);
+            Assert.Equal(pagamento.TipoPagamento.Id, retorno.TipoPagamento.Id);
+            Assert.Equal(pagamento.Empresa.Id, retorno.Empresa.Id);
+            Assert.Equal(pagamento.Pessoa.Id, retorno.Pessoa.Id);
+            Assert.Equal(pagamento.Descricao.ToString(), retorno.Descricao);
+            Assert.Equal(pagamento.Valor, retorno.Valor);
+            Assert.Equal(pagamento.DataVencimento.Date, retorno.DataVencimento.Date);
+            Assert.Equal(Convert.ToDateTime(pagamento.DataPagamento).Date, Convert.ToDateTime(retorno.DataPagamento).Date);
+        }
+
+        [Fact]
+        public void Deletar()
+        {
+            TipoPagamento tipoPagamento = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento", "Descrição", 250));
+            Empresa empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "Logo");
+            Pessoa pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPerfil");
+            Pagamento pagamento0 = new Pagamento(
+                0,
+                new TipoPagamento(1),
+                new Empresa(1),
+                new Pessoa(1),
+                new Texto("DescriçãoPagamento 0", "Descrição", 250),
+                100,
+                DateTime.Now.AddDays(1),
+                DateTime.Now
+            );
+
+            Pagamento pagamento1 = new Pagamento(
+                0,
+                new TipoPagamento(1),
+                new Empresa(1),
+                new Pessoa(1),
+                new Texto("DescriçãoPagamento 1", "Descrição", 250),
+                500,
+                DateTime.Now.AddDays(5),
+                DateTime.Now.AddDays(2)
+            );
+
+            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+
+            TipoPagamentoRepositorio repositoryTipoPagamento = new TipoPagamentoRepositorio(mockOptions.Object);
+            repositoryTipoPagamento.Salvar(tipoPagamento);
+
+            EmpresaRepositorio repositoryEmpresa = new EmpresaRepositorio(mockOptions.Object);
+            repositoryEmpresa.Salvar(empresa);
+
+            PessoaRepositorio repositoryPessoa = new PessoaRepositorio(mockOptions.Object);
+            repositoryPessoa.Salvar(pessoa);
+
+            PagamentoRepositorio repositoryPagamento = new PagamentoRepositorio(mockOptions.Object);
+            repositoryPagamento.Salvar(pagamento0); 
+            repositoryPagamento.Salvar(pagamento1);
+
+            repositoryPagamento.Deletar(1);
+
+            List<PagamentoQueryResult> retorno = repositoryPagamento.Listar();
+
+            Assert.Equal(2, retorno[0].Id);
+            Assert.Equal(pagamento1.TipoPagamento.Id, retorno[0].TipoPagamento.Id);
+            Assert.Equal(pagamento1.Empresa.Id, retorno[0].Empresa.Id);
+            Assert.Equal(pagamento1.Pessoa.Id, retorno[0].Pessoa.Id);
+            Assert.Equal(pagamento1.Descricao.ToString(), retorno[0].Descricao);
+            Assert.Equal(pagamento1.Valor, retorno[0].Valor);
+            Assert.Equal(pagamento1.DataVencimento.Date, retorno[0].DataVencimento.Date);
+            Assert.Equal(Convert.ToDateTime(pagamento1.DataPagamento).Date, Convert.ToDateTime(retorno[0].DataPagamento).Date);
+        }
+
+        [Fact]
+        public void Obter()
+        {
+            TipoPagamento tipoPagamento = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento", "Descrição", 250));
+            Empresa empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "Logo");
+            Pessoa pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPerfil");
+            Pagamento pagamento = new Pagamento(
+                0,
+                new TipoPagamento(1),
+                new Empresa(1),
+                new Pessoa(1),
+                new Texto("DescriçãoPagamento", "Descrição", 250),
+                100,
+                DateTime.Now.AddDays(1),
+                DateTime.Now
+            );
+
+            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+
+            TipoPagamentoRepositorio repositoryTipoPagamento = new TipoPagamentoRepositorio(mockOptions.Object);
+            repositoryTipoPagamento.Salvar(tipoPagamento);
+
+            EmpresaRepositorio repositoryEmpresa = new EmpresaRepositorio(mockOptions.Object);
+            repositoryEmpresa.Salvar(empresa);
+
+            PessoaRepositorio repositoryPessoa = new PessoaRepositorio(mockOptions.Object);
+            repositoryPessoa.Salvar(pessoa);
+
+            PagamentoRepositorio repositoryPagamento = new PagamentoRepositorio(mockOptions.Object);
+            repositoryPagamento.Salvar(pagamento);
+
+            PagamentoQueryResult retorno = repositoryPagamento.Obter(1);
+
+            Assert.Equal(1, retorno.Id);
+            Assert.Equal(pagamento.TipoPagamento.Id, retorno.TipoPagamento.Id);
+            Assert.Equal(pagamento.Empresa.Id, retorno.Empresa.Id);
+            Assert.Equal(pagamento.Pessoa.Id, retorno.Pessoa.Id);
+            Assert.Equal(pagamento.Descricao.ToString(), retorno.Descricao);
+            Assert.Equal(pagamento.Valor, retorno.Valor);
+            Assert.Equal(pagamento.DataVencimento.Date, retorno.DataVencimento.Date);
+            Assert.Equal(Convert.ToDateTime(pagamento.DataPagamento).Date, Convert.ToDateTime(retorno.DataPagamento).Date);
+        }
+
+        [Fact]
+        public void Listar()
+        {
+            TipoPagamento tipoPagamento = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento", "Descrição", 250));
+            Empresa empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "Logo");
+            Pessoa pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPerfil");
+            Pagamento pagamento0 = new Pagamento(
+                0,
+                new TipoPagamento(1),
+                new Empresa(1),
+                new Pessoa(1),
+                new Texto("DescriçãoPagamento 0", "Descrição", 250),
+                100,
+                DateTime.Now.AddDays(1),
+                DateTime.Now
+            );
+
+            Pagamento pagamento1 = new Pagamento(
+                0,
+                new TipoPagamento(1),
+                new Empresa(1),
+                new Pessoa(1),
+                new Texto("DescriçãoPagamento 1", "Descrição", 250),
+                500,
+                DateTime.Now.AddDays(5),
+                DateTime.Now.AddDays(2)
+            );
+
+            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+
+            TipoPagamentoRepositorio repositoryTipoPagamento = new TipoPagamentoRepositorio(mockOptions.Object);
+            repositoryTipoPagamento.Salvar(tipoPagamento);
+
+            EmpresaRepositorio repositoryEmpresa = new EmpresaRepositorio(mockOptions.Object);
+            repositoryEmpresa.Salvar(empresa);
+
+            PessoaRepositorio repositoryPessoa = new PessoaRepositorio(mockOptions.Object);
+            repositoryPessoa.Salvar(pessoa);
+
+            PagamentoRepositorio repositoryPagamento = new PagamentoRepositorio(mockOptions.Object);
+            repositoryPagamento.Salvar(pagamento0);
+            repositoryPagamento.Salvar(pagamento1);
+
+            List<PagamentoQueryResult> retorno = repositoryPagamento.Listar();
+
+            Assert.Equal(1, retorno[0].Id);
+            Assert.Equal(pagamento1.TipoPagamento.Id, retorno[1].TipoPagamento.Id);
+            Assert.Equal(pagamento0.Empresa.Id, retorno[0].Empresa.Id);
+            Assert.Equal(pagamento0.Pessoa.Id, retorno[0].Pessoa.Id);
+            Assert.Equal(pagamento0.Descricao.ToString(), retorno[0].Descricao);
+            Assert.Equal(pagamento0.Valor, retorno[0].Valor);
+            Assert.Equal(pagamento0.DataVencimento.Date, retorno[0].DataVencimento.Date);
+            Assert.Equal(Convert.ToDateTime(pagamento0.DataPagamento).Date, Convert.ToDateTime(retorno[0].DataPagamento).Date);
+
+            Assert.Equal(2, retorno[1].Id);
+            Assert.Equal(pagamento0.TipoPagamento.Id, retorno[0].TipoPagamento.Id);
+            Assert.Equal(pagamento1.Empresa.Id, retorno[1].Empresa.Id);
+            Assert.Equal(pagamento1.Pessoa.Id, retorno[1].Pessoa.Id);
+            Assert.Equal(pagamento1.Descricao.ToString(), retorno[1].Descricao);
+            Assert.Equal(pagamento1.Valor, retorno[1].Valor);
+            Assert.Equal(pagamento1.DataVencimento.Date, retorno[1].DataVencimento.Date);
+            Assert.Equal(Convert.ToDateTime(pagamento1.DataPagamento).Date, Convert.ToDateTime(retorno[1].DataPagamento).Date);
+        }
+
+        [Fact]
+        public void CheckId()
+        {
+            TipoPagamento tipoPagamento = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento", "Descrição", 250));
+            Empresa empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "Logo");
+            Pessoa pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPerfil");
+            Pagamento pagamento = new Pagamento(
+                0,
+                new TipoPagamento(1),
+                new Empresa(1),
+                new Pessoa(1),
+                new Texto("DescriçãoPagamento", "Descrição", 250),
+                100,
+                DateTime.Now.AddDays(1),
+                DateTime.Now
+            );
+
+            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+
+            TipoPagamentoRepositorio repositoryTipoPagamento = new TipoPagamentoRepositorio(mockOptions.Object);
+            repositoryTipoPagamento.Salvar(tipoPagamento);
+
+            EmpresaRepositorio repositoryEmpresa = new EmpresaRepositorio(mockOptions.Object);
+            repositoryEmpresa.Salvar(empresa);
+
+            PessoaRepositorio repositoryPessoa = new PessoaRepositorio(mockOptions.Object);
+            repositoryPessoa.Salvar(pessoa);
+
+            PagamentoRepositorio repositoryPagamento = new PagamentoRepositorio(mockOptions.Object);
+            repositoryPagamento.Salvar(pagamento);
+
+            bool idExistente = repositoryPagamento.CheckId(1);
+            bool idNaoExiste = repositoryPagamento.CheckId(25);
+
+            Assert.True(idExistente);
+            Assert.False(idNaoExiste);
+        }
+
+        [Fact]
+        public void LocalizarMaxId()
+        {
+            TipoPagamento tipoPagamento = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento", "Descrição", 250));
+            Empresa empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "Logo");
+            Pessoa pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPerfil");
+            Pagamento pagamento0 = new Pagamento(
+                0,
+                new TipoPagamento(1),
+                new Empresa(1),
+                new Pessoa(1),
+                new Texto("DescriçãoPagamento 0", "Descrição", 250),
+                100,
+                DateTime.Now.AddDays(1),
+                DateTime.Now
+            );
+
+            Pagamento pagamento1 = new Pagamento(
+                0,
+                new TipoPagamento(1),
+                new Empresa(1),
+                new Pessoa(1),
+                new Texto("DescriçãoPagamento 1", "Descrição", 250),
+                500,
+                DateTime.Now.AddDays(5),
+                DateTime.Now.AddDays(2)
+            );
+
+            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+
+            TipoPagamentoRepositorio repositoryTipoPagamento = new TipoPagamentoRepositorio(mockOptions.Object);
+            repositoryTipoPagamento.Salvar(tipoPagamento);
+
+            EmpresaRepositorio repositoryEmpresa = new EmpresaRepositorio(mockOptions.Object);
+            repositoryEmpresa.Salvar(empresa);
+
+            PessoaRepositorio repositoryPessoa = new PessoaRepositorio(mockOptions.Object);
+            repositoryPessoa.Salvar(pessoa);
+
+            PagamentoRepositorio repositoryPagamento = new PagamentoRepositorio(mockOptions.Object);
+            repositoryPagamento.Salvar(pagamento0);
+            repositoryPagamento.Salvar(pagamento1);
+
+            int maxId = repositoryPagamento.LocalizarMaxId();
+
+            Assert.Equal(2, maxId);
+        }
     }
 }

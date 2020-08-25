@@ -2,7 +2,7 @@
 using LSCode.Validador.ValueObjects;
 using NUnit.Framework;
 
-namespace ControleDespesas.Testes.Entidades
+namespace ControleDespesas.Test.Entidades
 {
     public class TipoPagamentoTest
     {

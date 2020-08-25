@@ -1,35 +1,39 @@
 ﻿using ControleDespesas.Dominio.Commands.Empresa.Input;
-using Xunit;
+using NUnit.Framework;
 
-namespace ControleDespesas.Testes.Commands.Empresa
+namespace ControleDespesas.Test.Commands.Empresa
 {
     public class ApagarEmpresaCommandTest
     {
         private ApagarEmpresaCommand _command;
 
-        public ApagarEmpresaCommandTest() => _command = new ApagarEmpresaCommand() { Id = 1 };
+        [SetUp]
+        public void Setup() => _command = new ApagarEmpresaCommand() { Id = 1 };
 
-        [Fact]
+        [Test]
         public void ValidarCommand_Valido()
         {
             Assert.True(_command.ValidarCommand());
-            Assert.Equal(0, _command.Notificacoes.Count);
+            Assert.AreEqual(0, _command.Notificacoes.Count);
         }
 
-        [Fact]
+        [Test]
         public void ValidarCommand_IdZerado()
         {
             _command.Id = 0;
             Assert.False(_command.ValidarCommand());
-            Assert.NotEqual(0, _command.Notificacoes.Count);
+            Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }
 
-        [Fact]
+        [Test]
         public void ValidarCommand_IdNegativo()
         {
             _command.Id = -1;
             Assert.False(_command.ValidarCommand());
-            Assert.NotEqual(0, _command.Notificacoes.Count);
+            Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }
+
+        [TearDown]
+        public void TearDown() => _command = null;
     }
 }

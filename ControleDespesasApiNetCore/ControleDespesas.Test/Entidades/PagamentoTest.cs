@@ -3,7 +3,7 @@ using LSCode.Validador.ValueObjects;
 using NUnit.Framework;
 using System;
 
-namespace ControleDespesas.Testes.Entidades
+namespace ControleDespesas.Test.Entidades
 {
     public class PagamentoTest
     {

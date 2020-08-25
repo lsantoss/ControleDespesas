@@ -8,7 +8,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 
-namespace ControleDespesasApiNetCore.TestNUnit.AppConfigurations.Factory
+namespace ControleDespesas.Test.AppConfigurations.Factory
 {
     [TestFixture]
     public class DatabaseFactory

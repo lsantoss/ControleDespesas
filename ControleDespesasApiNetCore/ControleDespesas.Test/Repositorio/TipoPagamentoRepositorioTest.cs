@@ -2,24 +2,21 @@
 using ControleDespesas.Dominio.Query.TipoPagamento;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Infra.Data.Settings;
-using ControleDespesas.Testes.AppConfigurations.Factory;
+using ControleDespesas.Test.AppConfigurations.Factory;
 using LSCode.Validador.ValueObjects;
 using Microsoft.Extensions.Options;
 using Moq;
+using NUnit.Framework;
 using System.Collections.Generic;
-using Xunit;
 
-namespace ControleDespesas.Testes.Repositorio
+namespace ControleDespesas.Test.Repositorio
 {
     public class TipoPagamentoRepositorioTest : DatabaseFactory
     {
-        public TipoPagamentoRepositorioTest()
-        {
-            DroparBaseDeDados();
-            CriarBaseDeDadosETabelas();
-        }
+        [SetUp]
+        public void Setup() => CriarBaseDeDadosETabelas();
 
-        [Fact]
+        [Test]
         public void Salvar()
         {
             TipoPagamento tipoPagamento = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento", "Descrição", 250));
@@ -32,11 +29,11 @@ namespace ControleDespesas.Testes.Repositorio
 
             TipoPagamentoQueryResult retorno = repository.Obter(1);
 
-            Assert.Equal(1, retorno.Id);
-            Assert.Equal(tipoPagamento.Descricao.ToString(), retorno.Descricao);
+            Assert.AreEqual(1, retorno.Id);
+            Assert.AreEqual(tipoPagamento.Descricao.ToString(), retorno.Descricao);
         }
 
-        [Fact]
+        [Test]
         public void Atualizar()
         {
             TipoPagamento tipoPagamento = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento", "Descrição", 250));
@@ -52,11 +49,11 @@ namespace ControleDespesas.Testes.Repositorio
 
             TipoPagamentoQueryResult retorno = repository.Obter(1);
 
-            Assert.Equal(tipoPagamento.Id, retorno.Id);
-            Assert.Equal(tipoPagamento.Descricao.ToString(), retorno.Descricao);
+            Assert.AreEqual(tipoPagamento.Id, retorno.Id);
+            Assert.AreEqual(tipoPagamento.Descricao.ToString(), retorno.Descricao);
         }
 
-        [Fact]
+        [Test]
         public void Deletar()
         {
             TipoPagamento tipoPagamento0 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento0", "Descrição", 250));
@@ -75,14 +72,14 @@ namespace ControleDespesas.Testes.Repositorio
 
             List<TipoPagamentoQueryResult> retorno = repository.Listar();
 
-            Assert.Equal(1, retorno[0].Id);
-            Assert.Equal(tipoPagamento0.Descricao.ToString(), retorno[0].Descricao);
+            Assert.AreEqual(1, retorno[0].Id);
+            Assert.AreEqual(tipoPagamento0.Descricao.ToString(), retorno[0].Descricao);
 
-            Assert.Equal(3, retorno[1].Id);
-            Assert.Equal(tipoPagamento2.Descricao.ToString(), retorno[1].Descricao);
+            Assert.AreEqual(3, retorno[1].Id);
+            Assert.AreEqual(tipoPagamento2.Descricao.ToString(), retorno[1].Descricao);
         }
 
-        [Fact]
+        [Test]
         public void Obter()
         {
             TipoPagamento tipoPagamento = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento", "Descrição", 250));
@@ -95,11 +92,11 @@ namespace ControleDespesas.Testes.Repositorio
 
             TipoPagamentoQueryResult retorno = repository.Obter(1);
 
-            Assert.Equal(1, retorno.Id);
-            Assert.Equal(tipoPagamento.Descricao.ToString(), retorno.Descricao);
+            Assert.AreEqual(1, retorno.Id);
+            Assert.AreEqual(tipoPagamento.Descricao.ToString(), retorno.Descricao);
         }
 
-        [Fact]
+        [Test]
         public void Listar()
         {
             TipoPagamento tipoPagamento0 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento0", "Descrição", 250));
@@ -116,17 +113,17 @@ namespace ControleDespesas.Testes.Repositorio
 
             List<TipoPagamentoQueryResult> retorno = repository.Listar();
 
-            Assert.Equal(1, retorno[0].Id);
-            Assert.Equal(tipoPagamento0.Descricao.ToString(), retorno[0].Descricao);
+            Assert.AreEqual(1, retorno[0].Id);
+            Assert.AreEqual(tipoPagamento0.Descricao.ToString(), retorno[0].Descricao);
 
-            Assert.Equal(2, retorno[1].Id);
-            Assert.Equal(tipoPagamento1.Descricao.ToString(), retorno[1].Descricao);
+            Assert.AreEqual(2, retorno[1].Id);
+            Assert.AreEqual(tipoPagamento1.Descricao.ToString(), retorno[1].Descricao);
 
-            Assert.Equal(3, retorno[2].Id);
-            Assert.Equal(tipoPagamento2.Descricao.ToString(), retorno[2].Descricao);
+            Assert.AreEqual(3, retorno[2].Id);
+            Assert.AreEqual(tipoPagamento2.Descricao.ToString(), retorno[2].Descricao);
         }
 
-        [Fact]
+        [Test]
         public void CheckId()
         {
             TipoPagamento tipoPagamento = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento", "Descrição", 250));
@@ -144,7 +141,7 @@ namespace ControleDespesas.Testes.Repositorio
             Assert.False(idNaoExiste);
         }
 
-        [Fact]
+        [Test]
         public void LocalizarMaxId()
         {
             TipoPagamento tipoPagamento0 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento0", "Descrição", 250));
@@ -161,7 +158,10 @@ namespace ControleDespesas.Testes.Repositorio
 
             int maxId = repository.LocalizarMaxId();
 
-            Assert.Equal(3, maxId);
+            Assert.AreEqual(3, maxId);
         }
+
+        [TearDown]
+        public void TearDown() => DroparBaseDeDados();
     }
 }

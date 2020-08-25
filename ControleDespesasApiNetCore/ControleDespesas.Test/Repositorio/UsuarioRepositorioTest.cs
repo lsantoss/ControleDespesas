@@ -3,24 +3,21 @@ using ControleDespesas.Dominio.Enums;
 using ControleDespesas.Dominio.Query.Usuario;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Infra.Data.Settings;
-using ControleDespesas.Testes.AppConfigurations.Factory;
+using ControleDespesas.Test.AppConfigurations.Factory;
 using LSCode.Validador.ValueObjects;
 using Microsoft.Extensions.Options;
 using Moq;
+using NUnit.Framework;
 using System.Collections.Generic;
-using Xunit;
 
-namespace ControleDespesas.Testes.Repositorio
+namespace ControleDespesas.Test.Repositorio
 {
     public class UsuarioRepositorioTest : DatabaseFactory
     {
-        public UsuarioRepositorioTest()
-        {
-            DroparBaseDeDados();
-            CriarBaseDeDadosETabelas();
-        }
+        [SetUp]
+        public void Setup() => CriarBaseDeDadosETabelas();
 
-        [Fact]
+        [Test]
         public void Salvar()
         {
             Usuario usuario = new Usuario(0, new Texto("NomeUsuario", "Nome", 50), new SenhaMedia("Senha123"), EPrivilegioUsuario.Admin);
@@ -33,13 +30,13 @@ namespace ControleDespesas.Testes.Repositorio
 
             UsuarioQueryResult retorno = repository.Obter(1);
 
-            Assert.Equal(1, retorno.Id);
-            Assert.Equal(usuario.Login.ToString(), retorno.Login);
-            Assert.Equal(usuario.Senha.ToString(), retorno.Senha);
-            Assert.Equal(usuario.Privilegio, retorno.Privilegio);
+            Assert.AreEqual(1, retorno.Id);
+            Assert.AreEqual(usuario.Login.ToString(), retorno.Login);
+            Assert.AreEqual(usuario.Senha.ToString(), retorno.Senha);
+            Assert.AreEqual(usuario.Privilegio, retorno.Privilegio);
         }
 
-        [Fact]
+        [Test]
         public void Atualizar()
         {
             Usuario usuario = new Usuario(0, new Texto("NomeUsuario", "Nome", 50), new SenhaMedia("Senha123"), EPrivilegioUsuario.Admin);
@@ -55,13 +52,13 @@ namespace ControleDespesas.Testes.Repositorio
 
             UsuarioQueryResult retorno = repository.Obter(1);
 
-            Assert.Equal(usuario.Id, retorno.Id);
-            Assert.Equal(usuario.Login.ToString(), retorno.Login);
-            Assert.Equal(usuario.Senha.ToString(), retorno.Senha);
-            Assert.Equal(usuario.Privilegio, retorno.Privilegio);
+            Assert.AreEqual(usuario.Id, retorno.Id);
+            Assert.AreEqual(usuario.Login.ToString(), retorno.Login);
+            Assert.AreEqual(usuario.Senha.ToString(), retorno.Senha);
+            Assert.AreEqual(usuario.Privilegio, retorno.Privilegio);
         }
 
-        [Fact]
+        [Test]
         public void Deletar()
         {
             Usuario usuario0 = new Usuario(0, new Texto("NomeUsuario0", "Nome", 50), new SenhaMedia("Senha1230"), EPrivilegioUsuario.Admin);
@@ -80,18 +77,18 @@ namespace ControleDespesas.Testes.Repositorio
 
             List<UsuarioQueryResult> retorno = repository.Listar();
 
-            Assert.Equal(1, retorno[0].Id);
-            Assert.Equal(usuario0.Login.ToString(), retorno[0].Login);
-            Assert.Equal(usuario0.Senha.ToString(), retorno[0].Senha);
-            Assert.Equal(usuario0.Privilegio, retorno[0].Privilegio);
+            Assert.AreEqual(1, retorno[0].Id);
+            Assert.AreEqual(usuario0.Login.ToString(), retorno[0].Login);
+            Assert.AreEqual(usuario0.Senha.ToString(), retorno[0].Senha);
+            Assert.AreEqual(usuario0.Privilegio, retorno[0].Privilegio);
 
-            Assert.Equal(3, retorno[1].Id);
-            Assert.Equal(usuario2.Login.ToString(), retorno[1].Login);
-            Assert.Equal(usuario2.Senha.ToString(), retorno[1].Senha);
-            Assert.Equal(usuario2.Privilegio, retorno[1].Privilegio);
+            Assert.AreEqual(3, retorno[1].Id);
+            Assert.AreEqual(usuario2.Login.ToString(), retorno[1].Login);
+            Assert.AreEqual(usuario2.Senha.ToString(), retorno[1].Senha);
+            Assert.AreEqual(usuario2.Privilegio, retorno[1].Privilegio);
         }
 
-        [Fact]
+        [Test]
         public void Obter()
         {
             Usuario usuario = new Usuario(0, new Texto("NomeUsuario", "Nome", 50), new SenhaMedia("Senha123"), EPrivilegioUsuario.Admin);
@@ -104,13 +101,13 @@ namespace ControleDespesas.Testes.Repositorio
 
             UsuarioQueryResult retorno = repository.Obter(1);
 
-            Assert.Equal(1, retorno.Id);
-            Assert.Equal(usuario.Login.ToString(), retorno.Login);
-            Assert.Equal(usuario.Senha.ToString(), retorno.Senha);
-            Assert.Equal(usuario.Privilegio, retorno.Privilegio);
+            Assert.AreEqual(1, retorno.Id);
+            Assert.AreEqual(usuario.Login.ToString(), retorno.Login);
+            Assert.AreEqual(usuario.Senha.ToString(), retorno.Senha);
+            Assert.AreEqual(usuario.Privilegio, retorno.Privilegio);
         }
 
-        [Fact]
+        [Test]
         public void Listar()
         {
             Usuario usuario0 = new Usuario(0, new Texto("NomeUsuario0", "Nome", 50), new SenhaMedia("Senha1230"), EPrivilegioUsuario.Admin);
@@ -127,23 +124,23 @@ namespace ControleDespesas.Testes.Repositorio
 
             List<UsuarioQueryResult> retorno = repository.Listar();
 
-            Assert.Equal(1, retorno[0].Id);
-            Assert.Equal(usuario0.Login.ToString(), retorno[0].Login);
-            Assert.Equal(usuario0.Senha.ToString(), retorno[0].Senha);
-            Assert.Equal(usuario0.Privilegio, retorno[0].Privilegio);
+            Assert.AreEqual(1, retorno[0].Id);
+            Assert.AreEqual(usuario0.Login.ToString(), retorno[0].Login);
+            Assert.AreEqual(usuario0.Senha.ToString(), retorno[0].Senha);
+            Assert.AreEqual(usuario0.Privilegio, retorno[0].Privilegio);
 
-            Assert.Equal(2, retorno[1].Id);
-            Assert.Equal(usuario1.Login.ToString(), retorno[1].Login);
-            Assert.Equal(usuario1.Senha.ToString(), retorno[1].Senha);
-            Assert.Equal(usuario1.Privilegio, retorno[1].Privilegio);
+            Assert.AreEqual(2, retorno[1].Id);
+            Assert.AreEqual(usuario1.Login.ToString(), retorno[1].Login);
+            Assert.AreEqual(usuario1.Senha.ToString(), retorno[1].Senha);
+            Assert.AreEqual(usuario1.Privilegio, retorno[1].Privilegio);
 
-            Assert.Equal(3, retorno[2].Id);
-            Assert.Equal(usuario2.Login.ToString(), retorno[2].Login);
-            Assert.Equal(usuario2.Senha.ToString(), retorno[2].Senha);
-            Assert.Equal(usuario2.Privilegio, retorno[2].Privilegio);
+            Assert.AreEqual(3, retorno[2].Id);
+            Assert.AreEqual(usuario2.Login.ToString(), retorno[2].Login);
+            Assert.AreEqual(usuario2.Senha.ToString(), retorno[2].Senha);
+            Assert.AreEqual(usuario2.Privilegio, retorno[2].Privilegio);
         }
 
-        [Fact]
+        [Test]
         public void Logar()
         {
             Usuario usuario = new Usuario(0, new Texto("NomeUsuario", "Nome", 50), new SenhaMedia("Senha123"), EPrivilegioUsuario.Admin);
@@ -156,13 +153,13 @@ namespace ControleDespesas.Testes.Repositorio
 
             UsuarioQueryResult retorno = repository.Logar(usuario.Login.ToString(), usuario.Senha.ToString());
 
-            Assert.Equal(1, retorno.Id);
-            Assert.Equal(usuario.Login.ToString(), retorno.Login);
-            Assert.Equal(usuario.Senha.ToString(), retorno.Senha);
-            Assert.Equal(usuario.Privilegio, retorno.Privilegio);
+            Assert.AreEqual(1, retorno.Id);
+            Assert.AreEqual(usuario.Login.ToString(), retorno.Login);
+            Assert.AreEqual(usuario.Senha.ToString(), retorno.Senha);
+            Assert.AreEqual(usuario.Privilegio, retorno.Privilegio);
         }
 
-        [Fact]
+        [Test]
         public void CheckLogin()
         {
             Usuario usuario = new Usuario(0, new Texto("NomeUsuario", "Nome", 50), new SenhaMedia("Senha123"), EPrivilegioUsuario.Admin);
@@ -180,7 +177,7 @@ namespace ControleDespesas.Testes.Repositorio
             Assert.False(loginNaoExiste);
         }
 
-        [Fact]
+        [Test]
         public void CheckId()
         {
             Usuario usuario = new Usuario(0, new Texto("NomeUsuario", "Nome", 50), new SenhaMedia("Senha123"), EPrivilegioUsuario.Admin);
@@ -198,7 +195,7 @@ namespace ControleDespesas.Testes.Repositorio
             Assert.False(idNaoExiste);
         }
 
-        [Fact]
+        [Test]
         public void LocalizarMaxId()
         {
             Usuario usuario0 = new Usuario(0, new Texto("NomeUsuario0", "Nome", 50), new SenhaMedia("Senha1230"), EPrivilegioUsuario.Admin);
@@ -215,7 +212,10 @@ namespace ControleDespesas.Testes.Repositorio
 
             int maxId = repository.LocalizarMaxId();
 
-            Assert.Equal(3, maxId);
+            Assert.AreEqual(3, maxId);
         }
+
+        [TearDown]
+        public void TearDown() => DroparBaseDeDados();
     }
 }

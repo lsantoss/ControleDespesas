@@ -1,13 +1,14 @@
 ﻿using ControleDespesas.Dominio.Commands.Usuario.Input;
-using Xunit;
+using NUnit.Framework;
 
-namespace ControleDespesas.Testes.Commands.Usuario
+namespace ControleDespesas.Test.Commands.Usuario
 {
     public class LoginUsuarioCommandTest
     {
-        private readonly LoginUsuarioCommand _command;
+        private LoginUsuarioCommand _command;
 
-        public LoginUsuarioCommandTest()
+        [SetUp]
+        public void Setup()
         {
             _command = new LoginUsuarioCommand()
             {
@@ -16,7 +17,7 @@ namespace ControleDespesas.Testes.Commands.Usuario
             };
         }
 
-        [Fact]
+        [Test]
         public void ValidarCommand_Valido()
         {
             LoginUsuarioCommand command = _command;
@@ -24,44 +25,47 @@ namespace ControleDespesas.Testes.Commands.Usuario
             Assert.True(resultado);
         }
 
-        [Fact]
+        [Test]
         public void ValidarCommand_LoginMinimoDeCaractetesNull()
         {
             _command.Login = null;
             Assert.False(_command.ValidarCommand());
-            Assert.NotEqual(0, _command.Notificacoes.Count);
+            Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }
 
-        [Fact]
+        [Test]
         public void ValidarCommand_LoginMinimoDeCaractetesEmpty()
         {
             _command.Login = string.Empty;
             Assert.False(_command.ValidarCommand());
-            Assert.NotEqual(0, _command.Notificacoes.Count);
+            Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }
 
-        [Fact]
+        [Test]
         public void ValidarCommand_LoginMaximoDeCaractetes()
         {
             _command.Login = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
             Assert.False(_command.ValidarCommand());
-            Assert.NotEqual(0, _command.Notificacoes.Count);
+            Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }
 
-        [Fact]
+        [Test]
         public void ValidarCommand_SenhaMinimoDeCaractetesNull()
         {
             _command.Senha = null;
             Assert.False(_command.ValidarCommand());
-            Assert.NotEqual(0, _command.Notificacoes.Count);
+            Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }
 
-        [Fact]
+        [Test]
         public void ValidarCommand_SenhaMinimoDeCaractetesEmpty()
         {
             _command.Senha = string.Empty;
             Assert.False(_command.ValidarCommand());
-            Assert.NotEqual(0, _command.Notificacoes.Count);
+            Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }
+
+        [TearDown]
+        public void TearDown() => _command = null;
     }
 }

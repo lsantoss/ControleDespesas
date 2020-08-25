@@ -1,35 +1,39 @@
 ﻿using ControleDespesas.Dominio.Commands.Usuario.Input;
-using Xunit;
+using NUnit.Framework;
 
-namespace ControleDespesas.Testes.Commands.Usuario
+namespace ControleDespesas.Test.Commands.Usuario
 {
     public class ObterUsuarioPorIdCommandTest
     {
-        private readonly ObterUsuarioPorIdCommand _command;
+        private ObterUsuarioPorIdCommand _command;
 
-        public ObterUsuarioPorIdCommandTest() => _command = new ObterUsuarioPorIdCommand() { Id = 1 };
+        [SetUp]
+        public void Setup() => _command = new ObterUsuarioPorIdCommand() { Id = 1 };
 
-        [Fact]
+        [Test]
         public void ValidarCommand_Valido()
         {
             Assert.True(_command.ValidarCommand());
-            Assert.Equal(0, _command.Notificacoes.Count);
+            Assert.AreEqual(0, _command.Notificacoes.Count);
         }
 
-        [Fact]
+        [Test]
         public void ValidarCommand_IdZerado()
         {
             _command.Id = 0;
             Assert.False(_command.ValidarCommand());
-            Assert.NotEqual(0, _command.Notificacoes.Count);
+            Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }
 
-        [Fact]
+        [Test]
         public void ValidarCommand_IdNegativo()
         {
             _command.Id = -1;
             Assert.False(_command.ValidarCommand());
-            Assert.NotEqual(0, _command.Notificacoes.Count);
+            Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }
+
+        [TearDown]
+        public void TearDown() => _command = null;
     }
 }

@@ -1,65 +1,70 @@
 ﻿using ControleDespesas.Dominio.Commands.Pessoa.Input;
-using Xunit;
+using NUnit.Framework;
 
-namespace ControleDespesas.Testes.Commands.Pessoa
+namespace ControleDespesas.Test.Commands.Pessoa
 {
     public class AdicionarPessoaCommandTest
     {
         private AdicionarPessoaCommand _command;
 
-        public AdicionarPessoaCommandTest()
+        [SetUp]
+        public void Setup()
         {
-            _command = new AdicionarPessoaCommand() {
+            _command = new AdicionarPessoaCommand()
+            {
                 Nome = "Lucas",
                 ImagemPerfil = "base64String"
             };
         }
 
-        [Fact]
+        [Test]
         public void ValidarCommand_Valido()
         {
             Assert.True(_command.ValidarCommand());
-            Assert.Equal(0, _command.Notificacoes.Count);
+            Assert.AreEqual(0, _command.Notificacoes.Count);
         }
 
-        [Fact]
+        [Test]
         public void ValidarCommand_NomeMinimoDeCaractetesNull()
         {
             _command.Nome = null;
             Assert.False(_command.ValidarCommand());
-            Assert.NotEqual(0, _command.Notificacoes.Count);
+            Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }
 
-        [Fact]
+        [Test]
         public void ValidarCommand_NomeMinimoDeCaractetesEmpty()
         {
             _command.Nome = string.Empty;
             Assert.False(_command.ValidarCommand());
-            Assert.NotEqual(0, _command.Notificacoes.Count);
+            Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }
 
-        [Fact]
+        [Test]
         public void ValidarCommand_NomeMaximoDeCaractetes()
         {
             _command.Nome = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
             Assert.False(_command.ValidarCommand());
-            Assert.NotEqual(0, _command.Notificacoes.Count);
+            Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }
 
-        [Fact]
+        [Test]
         public void ValidarCommand_ImagemPerfilMinimoDeCaractetesNull()
         {
             _command.ImagemPerfil = null;
             Assert.False(_command.ValidarCommand());
-            Assert.NotEqual(0, _command.Notificacoes.Count);
+            Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }
 
-        [Fact]
+        [Test]
         public void ValidarCommand_ImagemPerfilMinimoDeCaractetesEmpty()
         {
             _command.ImagemPerfil = string.Empty;
             Assert.False(_command.ValidarCommand());
-            Assert.NotEqual(0, _command.Notificacoes.Count);
+            Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }
+
+        [TearDown]
+        public void TearDown() => _command = null;
     }
 }

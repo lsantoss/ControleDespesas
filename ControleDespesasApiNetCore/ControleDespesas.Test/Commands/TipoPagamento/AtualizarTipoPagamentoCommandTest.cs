@@ -1,13 +1,14 @@
 ﻿using ControleDespesas.Dominio.Commands.TipoPagamento.Input;
-using Xunit;
+using NUnit.Framework;
 
-namespace ControleDespesas.Testes.Commands.TipoPagamento
+namespace ControleDespesas.Test.Commands.TipoPagamento
 {
     public class AtualizarTipoPagamentoCommandTest
     {
         private AtualizarTipoPagamentoCommand _command;
 
-        public AtualizarTipoPagamentoCommandTest()
+        [SetUp]
+        public void Setup()
         {
             _command = new AtualizarTipoPagamentoCommand()
             {
@@ -16,46 +17,46 @@ namespace ControleDespesas.Testes.Commands.TipoPagamento
             };
         }
 
-        [Fact]
+        [Test]
         public void ValidarCommand_Valido()
         {
             Assert.True(_command.ValidarCommand());
-            Assert.Equal(0, _command.Notificacoes.Count);
+            Assert.AreEqual(0, _command.Notificacoes.Count);
         }
 
-        [Fact]
+        [Test]
         public void ValidarCommand_IdZerado()
         {
             _command.Id = 0;
             Assert.False(_command.ValidarCommand());
-            Assert.NotEqual(0, _command.Notificacoes.Count);
+            Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }
 
-        [Fact]
+        [Test]
         public void ValidarCommand_IdNegativo()
         {
             _command.Id = -1;
             Assert.False(_command.ValidarCommand());
-            Assert.NotEqual(0, _command.Notificacoes.Count);
+            Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }
 
-        [Fact]
+        [Test]
         public void ValidarCommand_DescricaoMinimoDeCaractetesNull()
         {
             _command.Descricao = null;
             Assert.False(_command.ValidarCommand());
-            Assert.NotEqual(0, _command.Notificacoes.Count);
+            Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }
 
-        [Fact]
+        [Test]
         public void ValidarCommand_DescricaoMinimoDeCaractetesEmpty()
         {
             _command.Descricao = string.Empty;
             Assert.False(_command.ValidarCommand());
-            Assert.NotEqual(0, _command.Notificacoes.Count);
+            Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }
 
-        [Fact]
+        [Test]
         public void ValidarCommand_DescricaoMaximoDeCaractetes_False()
         {
             _command.Descricao = @"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -63,7 +64,10 @@ namespace ControleDespesas.Testes.Commands.TipoPagamento
                                    aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 
             Assert.False(_command.ValidarCommand());
-            Assert.NotEqual(0, _command.Notificacoes.Count);
+            Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }
+
+        [TearDown]
+        public void TearDown() => _command = null;
     }
 }

@@ -2,15 +2,16 @@
 using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Helpers;
 using LSCode.Validador.ValueObjects;
-using Xunit;
+using NUnit.Framework;
 
-namespace ControleDespesas.Testes.Helpers
+namespace ControleDespesas.Test.Helpers
 {
     public class EmpresaHelperTest
     {
-        public EmpresaHelperTest() { }
+        [SetUp]
+        public void Setup() { }
 
-        [Fact]
+        [Test]
         public void GerarEntidade_AdcionarEmpresaCommand()
         {
             var command = new AdicionarEmpresaCommand() { 
@@ -20,16 +21,16 @@ namespace ControleDespesas.Testes.Helpers
 
             var entidade = EmpresaHelper.GerarEntidade(command);
 
-            Assert.Equal(0, entidade.Id);
-            Assert.Equal("Empresa", entidade.Nome.ToString());
-            Assert.Equal("Logo.png", entidade.Logo); 
+            Assert.AreEqual(0, entidade.Id);
+            Assert.AreEqual("Empresa", entidade.Nome.ToString());
+            Assert.AreEqual("Logo.png", entidade.Logo); 
             Assert.True(entidade.Valido);
             Assert.True(entidade.Nome.Valido);
-            Assert.Equal(0, entidade.Notificacoes.Count);
-            Assert.Equal(0, entidade.Nome.Notificacoes.Count);
+            Assert.AreEqual(0, entidade.Notificacoes.Count);
+            Assert.AreEqual(0, entidade.Nome.Notificacoes.Count);
         }
 
-        [Fact]
+        [Test]
         public void GerarEntidade_AtualizarEmpresaCommand()
         {
             var command = new AtualizarEmpresaCommand()
@@ -41,16 +42,16 @@ namespace ControleDespesas.Testes.Helpers
 
             var entidade = EmpresaHelper.GerarEntidade(command);
 
-            Assert.Equal(1, entidade.Id);
-            Assert.Equal("Empresa", entidade.Nome.ToString());
-            Assert.Equal("Logo.png", entidade.Logo);
+            Assert.AreEqual(1, entidade.Id);
+            Assert.AreEqual("Empresa", entidade.Nome.ToString());
+            Assert.AreEqual("Logo.png", entidade.Logo);
             Assert.True(entidade.Valido);
             Assert.True(entidade.Nome.Valido);
-            Assert.Equal(0, entidade.Notificacoes.Count);
-            Assert.Equal(0, entidade.Nome.Notificacoes.Count);
+            Assert.AreEqual(0, entidade.Notificacoes.Count);
+            Assert.AreEqual(0, entidade.Nome.Notificacoes.Count);
         }
 
-        [Fact]
+        [Test]
         public void GerarDadosRetornoInsert()
         {
             var entidade = new Empresa(
@@ -61,12 +62,12 @@ namespace ControleDespesas.Testes.Helpers
 
             var command = EmpresaHelper.GerarDadosRetornoInsert(entidade);
 
-            Assert.Equal(1, command.Id);
-            Assert.Equal("Empresa", command.Nome);
-            Assert.Equal("Logo.png", command.Logo);
+            Assert.AreEqual(1, command.Id);
+            Assert.AreEqual("Empresa", command.Nome);
+            Assert.AreEqual("Logo.png", command.Logo);
         }
 
-        [Fact]
+        [Test]
         public void GerarDadosRetornoUpdate()
         {
             var entidade = new Empresa(
@@ -77,16 +78,19 @@ namespace ControleDespesas.Testes.Helpers
 
             var command = EmpresaHelper.GerarDadosRetornoUpdate(entidade);
 
-            Assert.Equal(1, command.Id);
-            Assert.Equal("Empresa", command.Nome);
-            Assert.Equal("Logo.png", command.Logo);
+            Assert.AreEqual(1, command.Id);
+            Assert.AreEqual("Empresa", command.Nome);
+            Assert.AreEqual("Logo.png", command.Logo);
         }
 
-        [Fact]
+        [Test]
         public void GerarDadosRetornoDelte()
         {
             var command = EmpresaHelper.GerarDadosRetornoDelete(1);
-            Assert.Equal(1, command.Id);
+            Assert.AreEqual(1, command.Id);
         }
+
+        [TearDown]
+        public void TearDown() { }
     }
 }

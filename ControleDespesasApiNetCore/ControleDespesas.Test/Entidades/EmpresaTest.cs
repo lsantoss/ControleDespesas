@@ -1,6 +1,6 @@
 ﻿using ControleDespesas.Dominio.Entidades;
 using LSCode.Validador.ValueObjects;
-using Xunit;
+using NUnit.Framework;
 
 namespace ControleDespesas.Testes.Entidades
 {
@@ -8,7 +8,8 @@ namespace ControleDespesas.Testes.Entidades
     {
         private Empresa _empresa;
 
-        public EmpresaTest()
+        [SetUp]
+        public void Setup()
         {
             int id = 1;
             Texto nome = new Texto("Oi", "Nome", 100);
@@ -16,22 +17,28 @@ namespace ControleDespesas.Testes.Entidades
             _empresa = new Empresa(id, nome, logo);
         }
 
-        [Fact]
+        [Test]
         public void ValidarEntidade_Valida()
         {
             Assert.True(_empresa.Valido);
             Assert.True(_empresa.Nome.Valido);
-            Assert.Equal(0, _empresa.Notificacoes.Count);
-            Assert.Equal(0, _empresa.Nome.Notificacoes.Count);
+            Assert.AreEqual(0, _empresa.Notificacoes.Count);
+            Assert.AreEqual(0, _empresa.Nome.Notificacoes.Count);
         }
 
-        [Fact]
+        [Test]
         public void ValidarEntidade_NomeInvalido()
         {
             _empresa.Nome = new Texto("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "Nome", 100);
 
             Assert.False(_empresa.Nome.Valido);
-            Assert.NotEqual(0, _empresa.Nome.Notificacoes.Count);
+            Assert.AreNotEqual(0, _empresa.Nome.Notificacoes.Count);
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            _empresa = null;
         }
     }
 }

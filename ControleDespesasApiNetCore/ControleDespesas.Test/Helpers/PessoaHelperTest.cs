@@ -2,15 +2,16 @@
 using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Helpers;
 using LSCode.Validador.ValueObjects;
-using Xunit;
+using NUnit.Framework;
 
-namespace ControleDespesas.Testes.Helpers
+namespace ControleDespesas.Test.Helpers
 {
     public class PessoaHelperTest
     {
-        public PessoaHelperTest() { }
+        [SetUp]
+        public void Setup() { }
 
-        [Fact]
+        [Test]
         public void GerarEntidade_AdcionarPessoaCommand()
         {
             var command = new AdicionarPessoaCommand()
@@ -21,16 +22,16 @@ namespace ControleDespesas.Testes.Helpers
 
             var entidade = PessoaHelper.GerarEntidade(command);
 
-            Assert.Equal(0, entidade.Id);
-            Assert.Equal("Lucas", entidade.Nome.ToString());
-            Assert.Equal("Imagem.png", entidade.ImagemPerfil);
+            Assert.AreEqual(0, entidade.Id);
+            Assert.AreEqual("Lucas", entidade.Nome.ToString());
+            Assert.AreEqual("Imagem.png", entidade.ImagemPerfil);
             Assert.True(entidade.Valido);
             Assert.True(entidade.Nome.Valido);
-            Assert.Equal(0, entidade.Notificacoes.Count);
-            Assert.Equal(0, entidade.Nome.Notificacoes.Count);
+            Assert.AreEqual(0, entidade.Notificacoes.Count);
+            Assert.AreEqual(0, entidade.Nome.Notificacoes.Count);
         }
 
-        [Fact]
+        [Test]
         public void GerarEntidade_AtualizarPessoaCommand()
         {
             var command = new AtualizarPessoaCommand()
@@ -42,16 +43,16 @@ namespace ControleDespesas.Testes.Helpers
 
             var entidade = PessoaHelper.GerarEntidade(command);
 
-            Assert.Equal(1, entidade.Id);
-            Assert.Equal("Lucas", entidade.Nome.ToString());
-            Assert.Equal("Imagem.png", entidade.ImagemPerfil);
+            Assert.AreEqual(1, entidade.Id);
+            Assert.AreEqual("Lucas", entidade.Nome.ToString());
+            Assert.AreEqual("Imagem.png", entidade.ImagemPerfil);
             Assert.True(entidade.Valido);
             Assert.True(entidade.Nome.Valido);
-            Assert.Equal(0, entidade.Notificacoes.Count);
-            Assert.Equal(0, entidade.Nome.Notificacoes.Count);
+            Assert.AreEqual(0, entidade.Notificacoes.Count);
+            Assert.AreEqual(0, entidade.Nome.Notificacoes.Count);
         }
 
-        [Fact]
+        [Test]
         public void GerarDadosRetornoInsert()
         {
             var entidade = new Pessoa(
@@ -61,12 +62,12 @@ namespace ControleDespesas.Testes.Helpers
 
             var command = PessoaHelper.GerarDadosRetornoInsert(entidade);
 
-            Assert.Equal(1, command.Id);
-            Assert.Equal("Lucas", command.Nome);
-            Assert.Equal("Imagem.png", command.ImagemPerfil);
+            Assert.AreEqual(1, command.Id);
+            Assert.AreEqual("Lucas", command.Nome);
+            Assert.AreEqual("Imagem.png", command.ImagemPerfil);
         }
 
-        [Fact]
+        [Test]
         public void GerarDadosRetornoUpdate()
         {
             var entidade = new Pessoa(
@@ -76,16 +77,19 @@ namespace ControleDespesas.Testes.Helpers
 
             var command = PessoaHelper.GerarDadosRetornoUpdate(entidade);
 
-            Assert.Equal(1, command.Id);
-            Assert.Equal("Lucas", command.Nome);
-            Assert.Equal("Imagem.png", command.ImagemPerfil);
+            Assert.AreEqual(1, command.Id);
+            Assert.AreEqual("Lucas", command.Nome);
+            Assert.AreEqual("Imagem.png", command.ImagemPerfil);
         }
 
-        [Fact]
+        [Test]
         public void GerarDadosRetornoDelte()
         {
             var command = PessoaHelper.GerarDadosRetornoDelete(1);
-            Assert.Equal(1, command.Id);
+            Assert.AreEqual(1, command.Id);
         }
+
+        [TearDown]
+        public void TearDown() { }
     }
 }

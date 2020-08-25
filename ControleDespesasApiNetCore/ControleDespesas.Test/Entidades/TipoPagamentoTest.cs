@@ -1,6 +1,6 @@
 ﻿using ControleDespesas.Dominio.Entidades;
 using LSCode.Validador.ValueObjects;
-using Xunit;
+using NUnit.Framework;
 
 namespace ControleDespesas.Testes.Entidades
 {
@@ -8,23 +8,24 @@ namespace ControleDespesas.Testes.Entidades
     {
         private TipoPagamento _tipoPagamento;
 
-        public TipoPagamentoTest()
+        [SetUp]
+        public void Setup()
         {
             int id = 1;
             Texto descricao = new Texto("Luz Elétrica", "Descrição", 250);
             _tipoPagamento = new TipoPagamento(id, descricao);
         }
 
-        [Fact]
+        [Test]
         public void ValidarEntidade_Valida()
         {
             Assert.True(_tipoPagamento.Valido);
             Assert.True(_tipoPagamento.Descricao.Valido);
-            Assert.Equal(0, _tipoPagamento.Notificacoes.Count);
-            Assert.Equal(0, _tipoPagamento.Descricao.Notificacoes.Count);
+            Assert.AreEqual(0, _tipoPagamento.Notificacoes.Count);
+            Assert.AreEqual(0, _tipoPagamento.Descricao.Notificacoes.Count);
         }
 
-        [Fact]
+        [Test]
         public void ValidarEntidade_DescricaoInvalida()
         {
             _tipoPagamento.Descricao = new Texto(@"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -32,7 +33,13 @@ namespace ControleDespesas.Testes.Entidades
                                                    aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "Descrição", 250);
 
             Assert.False(_tipoPagamento.Descricao.Valido);
-            Assert.NotEqual(0, _tipoPagamento.Descricao.Notificacoes.Count);
+            Assert.AreNotEqual(0, _tipoPagamento.Descricao.Notificacoes.Count);
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            _tipoPagamento = null;
         }
     }
 }

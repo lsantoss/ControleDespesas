@@ -1,7 +1,7 @@
 ﻿using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Enums;
 using LSCode.Validador.ValueObjects;
-using Xunit;
+using NUnit.Framework;
 
 namespace ControleDespesas.Testes.Entidades
 {
@@ -9,7 +9,8 @@ namespace ControleDespesas.Testes.Entidades
     {
         private Usuario _usuario;
 
-        public UsuarioTest()
+        [SetUp]
+        public void Setup()
         {
             int id = 1;
             Texto login = new Texto("lucas@123", "Login", 50);
@@ -18,36 +19,36 @@ namespace ControleDespesas.Testes.Entidades
             _usuario = new Usuario(id, login, senha, privilegio);
         }
 
-        [Fact]
+        [Test]
         public void ValidarEntidade_Valida()
         {
             Assert.True(_usuario.Valido);
             Assert.True(_usuario.Login.Valido);
             Assert.True(_usuario.Senha.Valido);
-            Assert.Equal(0, _usuario.Notificacoes.Count);
-            Assert.Equal(0, _usuario.Login.Notificacoes.Count);
-            Assert.Equal(0, _usuario.Senha.Notificacoes.Count);
+            Assert.AreEqual(0, _usuario.Notificacoes.Count);
+            Assert.AreEqual(0, _usuario.Login.Notificacoes.Count);
+            Assert.AreEqual(0, _usuario.Senha.Notificacoes.Count);
         }
 
-        [Fact]
+        [Test]
         public void ValidarEntidade_LoginInvalido()
         {
             _usuario.Login = new Texto("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "Login", 50);
 
             Assert.False(_usuario.Login.Valido);
-            Assert.NotEqual(0, _usuario.Login.Notificacoes.Count);
+            Assert.AreNotEqual(0, _usuario.Login.Notificacoes.Count);
         }
 
-        [Fact]
+        [Test]
         public void ValidarEntidade_SenhaInvalida()
         {
             _usuario.Senha = new SenhaMedia("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
             Assert.False(_usuario.Senha.Valido);
-            Assert.NotEqual(0, _usuario.Senha.Notificacoes.Count);
+            Assert.AreNotEqual(0, _usuario.Senha.Notificacoes.Count);
         }
 
-        [Fact]
+        [Test]
         public void ValidarEntidade_LoginESenhaInvalida()
         {
             _usuario.Login = new Texto("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "Login", 50);
@@ -55,8 +56,14 @@ namespace ControleDespesas.Testes.Entidades
 
             Assert.False(_usuario.Login.Valido);
             Assert.False(_usuario.Senha.Valido);
-            Assert.NotEqual(0, _usuario.Login.Notificacoes.Count);
-            Assert.NotEqual(0, _usuario.Senha.Notificacoes.Count);
+            Assert.AreNotEqual(0, _usuario.Login.Notificacoes.Count);
+            Assert.AreNotEqual(0, _usuario.Senha.Notificacoes.Count);
+        }
+
+        [TearDown]
+        public void TearDown() 
+        {
+            _usuario = null;
         }
     }
 }

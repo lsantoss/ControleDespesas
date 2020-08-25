@@ -2,15 +2,16 @@
 using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Helpers;
 using LSCode.Validador.ValueObjects;
-using Xunit;
+using NUnit.Framework;
 
-namespace ControleDespesas.Testes.Helpers
+namespace ControleDespesas.Test.Helpers
 {
     public class TipoPagamentoHelperTest
     {
-        public TipoPagamentoHelperTest() { }
+        [SetUp]
+        public void Setup() { }
 
-        [Fact]
+        [Test]
         public void GerarEntidade_AdcionarTipoPagamentoCommand()
         {
             var command = new AdicionarTipoPagamentoCommand()
@@ -20,13 +21,13 @@ namespace ControleDespesas.Testes.Helpers
 
             var entidade = TipoPagamentoHelper.GerarEntidade(command);
 
-            Assert.Equal(0, entidade.Id);
-            Assert.Equal("TipoDePagamento", entidade.Descricao.ToString());
+            Assert.AreEqual(0, entidade.Id);
+            Assert.AreEqual("TipoDePagamento", entidade.Descricao.ToString());
             Assert.True(entidade.Valido);
-            Assert.Equal(0, entidade.Notificacoes.Count);
+            Assert.AreEqual(0, entidade.Notificacoes.Count);
         }
 
-        [Fact]
+        [Test]
         public void GerarEntidade_AtualizarTipoPagamentoCommand()
         {
             var command = new AtualizarTipoPagamentoCommand()
@@ -37,39 +38,42 @@ namespace ControleDespesas.Testes.Helpers
 
             var entidade = TipoPagamentoHelper.GerarEntidade(command);
 
-            Assert.Equal(1, entidade.Id);
-            Assert.Equal("TipoDePagamento", entidade.Descricao.ToString());
+            Assert.AreEqual(1, entidade.Id);
+            Assert.AreEqual("TipoDePagamento", entidade.Descricao.ToString());
             Assert.True(entidade.Valido);
-            Assert.Equal(0, entidade.Notificacoes.Count);
+            Assert.AreEqual(0, entidade.Notificacoes.Count);
         }
 
-        [Fact]
+        [Test]
         public void GerarDadosRetornoInsert()
         {
             var entidade = new TipoPagamento(1, new Texto("TipoDePagamento", "Descricao", 250));
 
             var command = TipoPagamentoHelper.GerarDadosRetornoInsert(entidade);
 
-            Assert.Equal(1, command.Id);
-            Assert.Equal("TipoDePagamento", command.Descricao);
+            Assert.AreEqual(1, command.Id);
+            Assert.AreEqual("TipoDePagamento", command.Descricao);
         }
 
-        [Fact]
+        [Test]
         public void GerarDadosRetornoUpdate()
         {
             var entidade = new TipoPagamento(1, new Texto("TipoDePagamento", "Descricao", 250));
 
             var command = TipoPagamentoHelper.GerarDadosRetornoUpdate(entidade);
 
-            Assert.Equal(1, command.Id);
-            Assert.Equal("TipoDePagamento", command.Descricao);
+            Assert.AreEqual(1, command.Id);
+            Assert.AreEqual("TipoDePagamento", command.Descricao);
         }
 
-        [Fact]
+        [Test]
         public void GerarDadosRetornoDelte()
         {
             var command = TipoPagamentoHelper.GerarDadosRetornoDelete(1);
-            Assert.Equal(1, command.Id);
+            Assert.AreEqual(1, command.Id);
         }
+
+        [TearDown]
+        public void TearDown() { }
     }
 }

@@ -44,9 +44,6 @@ namespace ControleDespesas.Testes.Entidades
         }
 
         [TearDown]
-        public void TearDown()
-        {
-            _pagamento = null;
-        }
+        public void TearDown() => _pagamento = null;
     }
 }

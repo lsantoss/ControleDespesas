@@ -61,9 +61,6 @@ namespace ControleDespesas.Testes.Entidades
         }
 
         [TearDown]
-        public void TearDown() 
-        {
-            _usuario = null;
-        }
+        public void TearDown() => _usuario = null;
     }
 }

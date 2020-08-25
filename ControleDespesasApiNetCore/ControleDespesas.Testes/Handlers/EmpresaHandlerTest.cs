@@ -27,10 +27,12 @@ namespace ControleDespesas.Testes.Handlers
         [Fact]
         public void Handler_AdicionarEmpresa()
         {
-            Mock<IEmpresaRepositorio> mockIEmpresaRepositorio = new Mock<IEmpresaRepositorio>();
-            mockIEmpresaRepositorio.Setup(m => m.LocalizarMaxId()).Returns(1);
+            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            EmpresaHandler handler = new EmpresaHandler(mockIEmpresaRepositorio.Object);
+            IEmpresaRepositorio IEmpresaRepos = new EmpresaRepositorio(mockOptions.Object);
+
+            EmpresaHandler handler = new EmpresaHandler(IEmpresaRepos);
 
             AdicionarEmpresaCommand empresaCommand = new AdicionarEmpresaCommand()
             {
@@ -45,6 +47,55 @@ namespace ControleDespesas.Testes.Handlers
             Assert.Equal(1, ((AdicionarEmpresaCommandOutput)retorno.Dados).Id);
             Assert.Equal(empresaCommand.Nome, ((AdicionarEmpresaCommandOutput)retorno.Dados).Nome);
             Assert.Equal(empresaCommand.Logo, ((AdicionarEmpresaCommandOutput)retorno.Dados).Logo);
+        }
+
+        [Fact]
+        public void Handler_AtualizarEmpresa()
+        {
+            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+
+            Empresa empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "Logo");
+            new EmpresaRepositorio(mockOptions.Object).Salvar(empresa);
+
+            IEmpresaRepositorio IEmpresaRepos = new EmpresaRepositorio(mockOptions.Object);
+            EmpresaHandler handler = new EmpresaHandler(IEmpresaRepos);
+
+            AtualizarEmpresaCommand empresaCommand = new AtualizarEmpresaCommand()
+            {
+                Id = 1,
+                Nome = "NomeEmpresa - Editada",
+                Logo = "LogoEmpresa - Editado"
+            };
+
+            ICommandResult<Notificacao> retorno = handler.Handler(empresaCommand);
+
+            Assert.True(retorno.Sucesso);
+            Assert.Equal("Empresa atualizada com sucesso!", retorno.Mensagem);
+            Assert.Equal(empresaCommand.Id, ((AtualizarEmpresaCommandOutput)retorno.Dados).Id);
+            Assert.Equal(empresaCommand.Nome, ((AtualizarEmpresaCommandOutput)retorno.Dados).Nome);
+            Assert.Equal(empresaCommand.Logo, ((AtualizarEmpresaCommandOutput)retorno.Dados).Logo);
+        }
+
+        [Fact]
+        public void Handler_ApagarEmpresa()
+        {
+            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+
+            Empresa empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "Logo");
+            new EmpresaRepositorio(mockOptions.Object).Salvar(empresa);
+
+            IEmpresaRepositorio IEmpresaRepos = new EmpresaRepositorio(mockOptions.Object);
+            EmpresaHandler handler = new EmpresaHandler(IEmpresaRepos);
+
+            ApagarEmpresaCommand empresaCommand = new ApagarEmpresaCommand() { Id = 1 };
+
+            ICommandResult<Notificacao> retorno = handler.Handler(empresaCommand);
+
+            Assert.True(retorno.Sucesso);
+            Assert.Equal("Empresa excluída com sucesso!", retorno.Mensagem);
+            Assert.Equal(empresaCommand.Id, ((ApagarEmpresaCommandOutput)retorno.Dados).Id);
         }
     }
 }

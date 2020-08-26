@@ -19,7 +19,6 @@ namespace ControleDespesas.Test.Handlers
 {
     class UsuarioHandlerTest : DatabaseFactory
     {
-
         [SetUp]
         public void Setup() => CriarBaseDeDadosETabelas();
 

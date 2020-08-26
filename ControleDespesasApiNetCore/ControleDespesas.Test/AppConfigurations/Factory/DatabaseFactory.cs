@@ -1,4 +1,5 @@
-﻿using ControleDespesas.Infra.Data.Settings;
+﻿using ControleDespesas.Api.Settings;
+using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.QueriesSQL;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using Dapper;
@@ -16,12 +17,20 @@ namespace ControleDespesas.Test.AppConfigurations.Factory
         private string _connectionReal;
         private string _connectionTest;
         protected readonly SettingsInfraData _settingsInfraData;
+        protected readonly SettingsAPI _settingsAPI;
 
         public DatabaseFactory()
         {
             ConfigurarParamentrosConexaoBaseDeDados();
 
             _settingsInfraData = new SettingsInfraData() { ConnectionString = _connectionTest };
+
+            _settingsAPI = new SettingsAPI()
+            {
+                ControleDespesasAPINetCore = SettingsTest.ControleDespesasAPINetCore,
+                ChaveAPI = SettingsTest.ChaveAPI,
+                ChaveJWT = SettingsTest.ChaveJWT
+            };
         }
 
         [OneTimeSetUp]

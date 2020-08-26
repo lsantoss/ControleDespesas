@@ -18,7 +18,6 @@ namespace ControleDespesas.Test.Handlers
 {
     public class PagamentoHandlerTest : DatabaseFactory
     {
-
         [SetUp]
         public void Setup() => CriarBaseDeDadosETabelas();
 

@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ControleDespesas.Api\ControleDespesas.Api.csproj" />
     <ProjectReference Include="..\ControleDespesas.Infra.Data\ControleDespesas.Infra.Data.csproj" />
   </ItemGroup>
 

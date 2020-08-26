@@ -64,7 +64,7 @@ namespace ControleDespesas.Dominio.Handlers
 
                 AtualizarTipoPagamentoCommandOutput dadosRetorno = TipoPagamentoHelper.GerarDadosRetornoUpdate(tipoPagamento);
 
-                return new CommandResult<Notificacao>("Tipo Pagamento gravado com sucesso!", dadosRetorno);
+                return new CommandResult<Notificacao>("Tipo Pagamento atualizado com sucesso!", dadosRetorno);
             }
             catch (Exception e)
             {

@@ -38,13 +38,13 @@ namespace ControleDespesas.Test.Handlers
             };
 
             ICommandResult<Notificacao> retorno = handler.Handler(empresaCommand);
-            AdicionarEmpresaCommandOutput dadosRetorno = (AdicionarEmpresaCommandOutput)retorno.Dados;
+            AdicionarEmpresaCommandOutput retornoDados = (AdicionarEmpresaCommandOutput)retorno.Dados;
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Empresa gravada com sucesso!", retorno.Mensagem);
-            Assert.AreEqual(1, dadosRetorno.Id);
-            Assert.AreEqual(empresaCommand.Nome, dadosRetorno.Nome);
-            Assert.AreEqual(empresaCommand.Logo, dadosRetorno.Logo);
+            Assert.AreEqual(1, retornoDados.Id);
+            Assert.AreEqual(empresaCommand.Nome, retornoDados.Nome);
+            Assert.AreEqual(empresaCommand.Logo, retornoDados.Logo);
         }
 
         [Test]
@@ -67,13 +67,13 @@ namespace ControleDespesas.Test.Handlers
             };
 
             ICommandResult<Notificacao> retorno = handler.Handler(empresaCommand);
-            AtualizarEmpresaCommandOutput dadosRetorno = (AtualizarEmpresaCommandOutput)retorno.Dados;
+            AtualizarEmpresaCommandOutput retornoDados = (AtualizarEmpresaCommandOutput)retorno.Dados;
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Empresa atualizada com sucesso!", retorno.Mensagem);
-            Assert.AreEqual(empresaCommand.Id, dadosRetorno.Id);
-            Assert.AreEqual(empresaCommand.Nome, dadosRetorno.Nome);
-            Assert.AreEqual(empresaCommand.Logo, dadosRetorno.Logo);
+            Assert.AreEqual(empresaCommand.Id, retornoDados.Id);
+            Assert.AreEqual(empresaCommand.Nome, retornoDados.Nome);
+            Assert.AreEqual(empresaCommand.Logo, retornoDados.Logo);
         }
 
         [Test]
@@ -91,11 +91,11 @@ namespace ControleDespesas.Test.Handlers
             ApagarEmpresaCommand empresaCommand = new ApagarEmpresaCommand() { Id = 1 };
 
             ICommandResult<Notificacao> retorno = handler.Handler(empresaCommand);
-            ApagarEmpresaCommandOutput dadosRetorno = (ApagarEmpresaCommandOutput)retorno.Dados;
+            ApagarEmpresaCommandOutput retornoDados = (ApagarEmpresaCommandOutput)retorno.Dados;
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Empresa excluída com sucesso!", retorno.Mensagem);
-            Assert.AreEqual(empresaCommand.Id, dadosRetorno.Id);
+            Assert.AreEqual(empresaCommand.Id, retornoDados.Id);
         }
 
         [TearDown]

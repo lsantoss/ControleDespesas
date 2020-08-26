@@ -38,13 +38,13 @@ namespace ControleDespesas.Test.Handlers
             };
 
             ICommandResult<Notificacao> retorno = handler.Handler(pessoaCommand);
-            AdicionarPessoaCommandOutput dadosRetorno = (AdicionarPessoaCommandOutput)retorno.Dados;
+            AdicionarPessoaCommandOutput retornoDados = (AdicionarPessoaCommandOutput)retorno.Dados;
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Pessoa gravada com sucesso!", retorno.Mensagem);
-            Assert.AreEqual(1, dadosRetorno.Id);
-            Assert.AreEqual(pessoaCommand.Nome, dadosRetorno.Nome);
-            Assert.AreEqual(pessoaCommand.ImagemPerfil, dadosRetorno.ImagemPerfil);
+            Assert.AreEqual(1, retornoDados.Id);
+            Assert.AreEqual(pessoaCommand.Nome, retornoDados.Nome);
+            Assert.AreEqual(pessoaCommand.ImagemPerfil, retornoDados.ImagemPerfil);
         }
 
         [Test]
@@ -67,13 +67,13 @@ namespace ControleDespesas.Test.Handlers
             };
 
             ICommandResult<Notificacao> retorno = handler.Handler(pessoaCommand);
-            AtualizarPessoaCommandOutput dadosRetorno = (AtualizarPessoaCommandOutput)retorno.Dados;
+            AtualizarPessoaCommandOutput retornoDados = (AtualizarPessoaCommandOutput)retorno.Dados;
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Pessoa atualizada com sucesso!", retorno.Mensagem);
-            Assert.AreEqual(pessoaCommand.Id, dadosRetorno.Id);
-            Assert.AreEqual(pessoaCommand.Nome, dadosRetorno.Nome);
-            Assert.AreEqual(pessoaCommand.ImagemPerfil, dadosRetorno.ImagemPerfil);
+            Assert.AreEqual(pessoaCommand.Id, retornoDados.Id);
+            Assert.AreEqual(pessoaCommand.Nome, retornoDados.Nome);
+            Assert.AreEqual(pessoaCommand.ImagemPerfil, retornoDados.ImagemPerfil);
         }
 
         [Test]
@@ -91,11 +91,11 @@ namespace ControleDespesas.Test.Handlers
             ApagarPessoaCommand pessoaCommand = new ApagarPessoaCommand() { Id = 1 };
 
             ICommandResult<Notificacao> retorno = handler.Handler(pessoaCommand);
-            ApagarPessoaCommandOutput dadosRetorno = (ApagarPessoaCommandOutput)retorno.Dados;
+            ApagarPessoaCommandOutput retornoDados = (ApagarPessoaCommandOutput)retorno.Dados;
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Pessoa excluída com sucesso!", retorno.Mensagem);
-            Assert.AreEqual(pessoaCommand.Id, dadosRetorno.Id);
+            Assert.AreEqual(pessoaCommand.Id, retornoDados.Id);
         }
 
         [TearDown]

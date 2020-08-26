@@ -22,7 +22,7 @@ namespace ControleDespesas.Test.Handlers
         public void Setup() => CriarBaseDeDadosETabelas();
 
         [Test]
-        public void Handler_AdicionarEmpresa()
+        public void Handler_AdicionarTipoPagamento()
         {
             Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
@@ -46,7 +46,7 @@ namespace ControleDespesas.Test.Handlers
         }
 
         [Test]
-        public void Handler_AtualizarEmpresa()
+        public void Handler_AtualizarTipoPagamento()
         {
             Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
@@ -73,7 +73,7 @@ namespace ControleDespesas.Test.Handlers
         }
 
         [Test]
-        public void Handler_ApagarEmpresa()
+        public void Handler_ApagarTipoPagamento()
         {
             Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);

@@ -34,10 +34,10 @@ namespace ControleDespesas.Test.AppConfigurations.Factory
         }
 
         [OneTimeSetUp]
-        public void OneTimeSetUp() { }
+        private void OneTimeSetUp() { }
 
         [OneTimeTearDown]
-        public void OneTimeTearDown() { }
+        private void OneTimeTearDown() { }
 
         private void ConfigurarParamentrosConexaoBaseDeDados()
         {

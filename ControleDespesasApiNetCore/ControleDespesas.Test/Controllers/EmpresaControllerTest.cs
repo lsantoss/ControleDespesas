@@ -1,5 +1,7 @@
 ﻿using ControleDespesas.Api.Controllers.ControleDespesas;
 using ControleDespesas.Api.Settings;
+using ControleDespesas.Dominio.Commands.Empresa.Input;
+using ControleDespesas.Dominio.Commands.Empresa.Output;
 using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Query.Empresa;
@@ -102,6 +104,159 @@ namespace ControleDespesas.Test.Controllers
             Assert.AreEqual(3, responseObj.Value.Dados[2].Id);
             Assert.AreEqual(empresa2.Nome.ToString(), responseObj.Value.Dados[2].Nome);
             Assert.AreEqual(empresa2.Logo, responseObj.Value.Dados[2].Logo);
+        }
+
+        [Test]
+        public void Empresa()
+        {
+            Mock<IOptions<SettingsAPI>> mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
+            mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
+
+            Mock<IOptions<SettingsInfraData>> mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
+            mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
+
+            IEmpresaRepositorio repository = new EmpresaRepositorio(mockOptionsInfra.Object);
+            EmpresaHandler handler = new EmpresaHandler(repository);
+
+            EmpresaController controller = new EmpresaController(repository, handler, mockOptionsAPI.Object);
+            controller.ControllerContext.HttpContext = new DefaultHttpContext();
+            controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
+
+            Empresa empresa0 = new Empresa(0, new Texto("NomeEmpresa0", "Nome", 100), "Logo0");
+            Empresa empresa1 = new Empresa(0, new Texto("NomeEmpresa1", "Nome", 100), "Logo1");
+            Empresa empresa2 = new Empresa(0, new Texto("NomeEmpresa2", "Nome", 100), "Logo2");
+
+            repository.Salvar(empresa0);
+            repository.Salvar(empresa1);
+            repository.Salvar(empresa2);
+
+            var command = new ObterEmpresaPorIdCommand() { Id = 2 };
+
+            var responseJson = controller.Empresa(command).Result.ToJson().Replace("_id", "id");
+
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<EmpresaQueryResult, Notificacao>>>(responseJson);
+
+            Assert.AreEqual(200, responseObj.StatusCode);
+
+            Assert.True(responseObj.Value.Sucesso);
+            Assert.AreEqual("Empresa obtida com sucesso", responseObj.Value.Mensagem);
+            Assert.Null(responseObj.Value.Erros);
+
+            Assert.AreEqual(2, responseObj.Value.Dados.Id);
+            Assert.AreEqual(empresa1.Nome.ToString(), responseObj.Value.Dados.Nome);
+            Assert.AreEqual(empresa1.Logo, responseObj.Value.Dados.Logo);
+        }
+
+        [Test]
+        public void EmpresaInserir()
+        {
+            Mock<IOptions<SettingsAPI>> mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
+            mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
+
+            Mock<IOptions<SettingsInfraData>> mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
+            mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
+
+            IEmpresaRepositorio repository = new EmpresaRepositorio(mockOptionsInfra.Object);
+            EmpresaHandler handler = new EmpresaHandler(repository);
+
+            EmpresaController controller = new EmpresaController(repository, handler, mockOptionsAPI.Object);
+            controller.ControllerContext.HttpContext = new DefaultHttpContext();
+            controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
+
+            var command = new AdicionarEmpresaCommand() 
+            { 
+                Nome = "NomeEmpresa",
+                Logo = "LogoEmpresa"
+            };
+
+            var responseJson = controller.EmpresaInserir(command).Result.ToJson().Replace("_id", "id");
+
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<AdicionarEmpresaCommandOutput, Notificacao>>>(responseJson);
+
+            Assert.AreEqual(200, responseObj.StatusCode);
+
+            Assert.True(responseObj.Value.Sucesso);
+            Assert.AreEqual("Empresa gravada com sucesso!", responseObj.Value.Mensagem);
+            Assert.Null(responseObj.Value.Erros);
+
+            Assert.AreEqual(1, responseObj.Value.Dados.Id);
+            Assert.AreEqual(command.Nome, responseObj.Value.Dados.Nome);
+            Assert.AreEqual(command.Logo, responseObj.Value.Dados.Logo);
+        }
+
+        [Test]
+        public void EmpresaAlterar()
+        {
+            Mock<IOptions<SettingsAPI>> mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
+            mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
+
+            Mock<IOptions<SettingsInfraData>> mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
+            mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
+
+            IEmpresaRepositorio repository = new EmpresaRepositorio(mockOptionsInfra.Object);
+            EmpresaHandler handler = new EmpresaHandler(repository);
+
+            EmpresaController controller = new EmpresaController(repository, handler, mockOptionsAPI.Object);
+            controller.ControllerContext.HttpContext = new DefaultHttpContext();
+            controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
+
+            Empresa empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "LogoEmpresa");
+            repository.Salvar(empresa);
+
+            var command = new AtualizarEmpresaCommand()
+            {
+                Id = 1,
+                Nome = "NomeEmpresa",
+                Logo = "LogoEmpresa"
+            };
+
+            var responseJson = controller.EmpresaAlterar(command).Result.ToJson().Replace("_id", "id");
+
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<AtualizarEmpresaCommandOutput, Notificacao>>>(responseJson);
+
+            Assert.AreEqual(200, responseObj.StatusCode);
+
+            Assert.True(responseObj.Value.Sucesso);
+            Assert.AreEqual("Empresa atualizada com sucesso!", responseObj.Value.Mensagem);
+            Assert.Null(responseObj.Value.Erros);
+
+            Assert.AreEqual(command.Id, responseObj.Value.Dados.Id);
+            Assert.AreEqual(command.Nome, responseObj.Value.Dados.Nome);
+            Assert.AreEqual(command.Logo, responseObj.Value.Dados.Logo);
+        }
+
+        [Test]
+        public void EmpresaExcluir()
+        {
+            Mock<IOptions<SettingsAPI>> mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
+            mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
+
+            Mock<IOptions<SettingsInfraData>> mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
+            mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
+
+            IEmpresaRepositorio repository = new EmpresaRepositorio(mockOptionsInfra.Object);
+            EmpresaHandler handler = new EmpresaHandler(repository);
+
+            EmpresaController controller = new EmpresaController(repository, handler, mockOptionsAPI.Object);
+            controller.ControllerContext.HttpContext = new DefaultHttpContext();
+            controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
+
+            Empresa empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "LogoEmpresa");
+            repository.Salvar(empresa);
+
+            var command = new ApagarEmpresaCommand() { Id = 1 };
+
+            var responseJson = controller.EmpresaExcluir(command).Result.ToJson().Replace("_id", "id");
+
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<ApagarEmpresaCommandOutput, Notificacao>>>(responseJson);
+
+            Assert.AreEqual(200, responseObj.StatusCode);
+
+            Assert.True(responseObj.Value.Sucesso);
+            Assert.AreEqual("Empresa excluída com sucesso!", responseObj.Value.Mensagem);
+            Assert.Null(responseObj.Value.Erros);
+
+            Assert.AreEqual(command.Id, responseObj.Value.Dados.Id);
         }
 
         [TearDown]

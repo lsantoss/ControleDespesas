@@ -22,13 +22,6 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AdicionarUsuario()
         {
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new UsuarioRepositorio(mockOptions.Object);
-
-            var handler = new UsuarioHandler(repository);
-
             var usuarioCommand = new AdicionarUsuarioCommand()
             {
                 Login = "LoginUsuario",
@@ -36,7 +29,14 @@ namespace ControleDespesas.Test.Handlers
                 Privilegio = EPrivilegioUsuario.Admin
             };
 
+            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+
+            var repository = new UsuarioRepositorio(mockOptions.Object);
+            var handler = new UsuarioHandler(repository);
+
             var retorno = handler.Handler(usuarioCommand);
+
             var retornoDados = (AdicionarUsuarioCommandOutput)retorno.Dados;
 
             Assert.True(retorno.Sucesso);
@@ -50,15 +50,7 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AtualizarUsuario()
         {
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new UsuarioRepositorio(mockOptions.Object);
-
-            var handler = new UsuarioHandler(repository);
-
             var usuario = new Usuario(0, new Texto("LoginUsuario", "Login", 50), new SenhaMedia("Senha123Usuario"), EPrivilegioUsuario.Admin);
-            repository.Salvar(usuario);
 
             var usuarioCommand = new AtualizarUsuarioCommand()
             {
@@ -68,7 +60,16 @@ namespace ControleDespesas.Test.Handlers
                 Privilegio = EPrivilegioUsuario.ReadOnly
             };
 
+            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+
+            var repository = new UsuarioRepositorio(mockOptions.Object);
+            var handler = new UsuarioHandler(repository);
+
+            repository.Salvar(usuario);
+
             var retorno = handler.Handler(usuarioCommand);
+
             var retornoDados = (AtualizarUsuarioCommandOutput)retorno.Dados;
 
             Assert.True(retorno.Sucesso);
@@ -105,15 +106,7 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_LoginUsuario()
         {
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new UsuarioRepositorio(mockOptions.Object);
-
-            var handler = new UsuarioHandler(repository);
-
             var usuario = new Usuario(0, new Texto("LoginUsuario", "Login", 50), new SenhaMedia("Senha123Usuario"), EPrivilegioUsuario.Admin);
-            repository.Salvar(usuario);
 
             var usuarioCommand = new LoginUsuarioCommand()
             {
@@ -121,7 +114,16 @@ namespace ControleDespesas.Test.Handlers
                 Senha = "Senha123Usuario"
             };
 
+            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+
+            var repository = new UsuarioRepositorio(mockOptions.Object);
+            var handler = new UsuarioHandler(repository);
+
+            repository.Salvar(usuario);
+
             var retorno = handler.Handler(usuarioCommand);
+
             var retornoDados = (UsuarioQueryResult)retorno.Dados;
 
             Assert.True(retorno.Sucesso);

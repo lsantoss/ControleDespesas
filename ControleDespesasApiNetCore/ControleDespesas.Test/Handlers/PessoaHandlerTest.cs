@@ -20,6 +20,12 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AdicionarPessoa()
         {
+            var pessoaCommand = new AdicionarPessoaCommand()
+            {
+                Nome = "NomePessoa",
+                ImagemPerfil = "ImagemPessoa"
+            };
+
             var mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
@@ -27,13 +33,8 @@ namespace ControleDespesas.Test.Handlers
 
             var handler = new PessoaHandler(repository);
 
-            var pessoaCommand = new AdicionarPessoaCommand()
-            {
-                Nome = "NomePessoa",
-                ImagemPerfil = "ImagemPessoa"
-            };
-
             var retorno = handler.Handler(pessoaCommand);
+
             var retornoDados = (AdicionarPessoaCommandOutput)retorno.Dados;
 
             Assert.True(retorno.Sucesso);
@@ -46,15 +47,7 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AtualizarPessoa()
         {
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new PessoaRepositorio(mockOptions.Object);
-
-            var handler = new PessoaHandler(repository);
-
             var pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPessoa");
-            repository.Salvar(pessoa);
 
             var pessoaCommand = new AtualizarPessoaCommand()
             {
@@ -63,7 +56,17 @@ namespace ControleDespesas.Test.Handlers
                 ImagemPerfil = "ImagemPessoa - Editada"
             };
 
+            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+
+            var repository = new PessoaRepositorio(mockOptions.Object);
+
+            var handler = new PessoaHandler(repository);
+
+            repository.Salvar(pessoa);
+
             var retorno = handler.Handler(pessoaCommand);
+
             var retornoDados = (AtualizarPessoaCommandOutput)retorno.Dados;
 
             Assert.True(retorno.Sucesso);
@@ -76,18 +79,20 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_ApagarPessoa()
         {
+            var pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPessoa");
+
+            var pessoaCommand = new ApagarPessoaCommand() { Id = 1 };
+
             var mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
             var repository = new PessoaRepositorio(mockOptions.Object);
             var handler = new PessoaHandler(repository);
 
-            var pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPessoa");
             repository.Salvar(pessoa);
 
-            var pessoaCommand = new ApagarPessoaCommand() { Id = 1 };
-
             var retorno = handler.Handler(pessoaCommand);
+
             var retornoDados = (ApagarPessoaCommandOutput)retorno.Dados;
 
             Assert.True(retorno.Sucesso);

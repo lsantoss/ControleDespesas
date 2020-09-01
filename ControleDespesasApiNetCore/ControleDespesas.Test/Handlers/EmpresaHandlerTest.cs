@@ -2,12 +2,9 @@
 using ControleDespesas.Dominio.Commands.Empresa.Output;
 using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Handlers;
-using ControleDespesas.Dominio.Repositorio;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.Factory;
-using LSCode.Facilitador.Api.InterfacesCommand;
-using LSCode.Validador.ValidacoesNotificacoes;
 using LSCode.Validador.ValueObjects;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -23,6 +20,12 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AdicionarEmpresa()
         {
+            var empresaCommand = new AdicionarEmpresaCommand()
+            {
+                Nome = "NomeEmpresa",
+                Logo = "LogoEmpresa"
+            };
+
             var mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
@@ -30,13 +33,8 @@ namespace ControleDespesas.Test.Handlers
 
             var handler = new EmpresaHandler(repository);
 
-            var empresaCommand = new AdicionarEmpresaCommand()
-            {
-                Nome = "NomeEmpresa",
-                Logo = "LogoEmpresa"
-            };
-
             var retorno = handler.Handler(empresaCommand);
+
             var retornoDados = (AdicionarEmpresaCommandOutput)retorno.Dados;
 
             Assert.True(retorno.Sucesso);
@@ -49,6 +47,13 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AtualizarEmpresa()
         {
+            var empresaCommand = new AtualizarEmpresaCommand()
+            {
+                Id = 1,
+                Nome = "NomeEmpresa - Editada",
+                Logo = "LogoEmpresa - Editado"
+            };
+
             var mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
@@ -59,14 +64,8 @@ namespace ControleDespesas.Test.Handlers
             var empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "Logo");
             repository.Salvar(empresa);
 
-            var empresaCommand = new AtualizarEmpresaCommand()
-            {
-                Id = 1,
-                Nome = "NomeEmpresa - Editada",
-                Logo = "LogoEmpresa - Editado"
-            };
-
             var retorno = handler.Handler(empresaCommand);
+
             var retornoDados = (AtualizarEmpresaCommandOutput)retorno.Dados;
 
             Assert.True(retorno.Sucesso);
@@ -79,6 +78,8 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_ApagarEmpresa()
         {
+            var empresaCommand = new ApagarEmpresaCommand() { Id = 1 };
+
             var mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
@@ -89,9 +90,8 @@ namespace ControleDespesas.Test.Handlers
             var empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "Logo");
             repository.Salvar(empresa);
 
-            var empresaCommand = new ApagarEmpresaCommand() { Id = 1 };
-
             var retorno = handler.Handler(empresaCommand);
+
             var retornoDados = (ApagarEmpresaCommandOutput)retorno.Dados;
 
             Assert.True(retorno.Sucesso);

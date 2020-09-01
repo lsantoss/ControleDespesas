@@ -5,7 +5,6 @@ using ControleDespesas.Dominio.Commands.Pessoa.Output;
 using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Query.Pessoa;
-using ControleDespesas.Dominio.Repositorio;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.Factory;
@@ -31,16 +30,16 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void PessoaHealthCheck()
         {
-            Mock<IOptions<SettingsAPI>> mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
+            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
-            Mock<IOptions<SettingsInfraData>> mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
             mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            IPessoaRepositorio repository = new PessoaRepositorio(mockOptionsInfra.Object);
-            PessoaHandler handler = new PessoaHandler(repository);
+            var repository = new PessoaRepositorio(mockOptionsInfra.Object);
+            var handler = new PessoaHandler(repository);
 
-            PessoaController controller = new PessoaController(repository, handler, mockOptionsAPI.Object);
+            var controller = new PessoaController(repository, handler, mockOptionsAPI.Object);
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
@@ -59,22 +58,22 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void Pessoas()
         {
-            Mock<IOptions<SettingsAPI>> mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
+            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
-            Mock<IOptions<SettingsInfraData>> mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
             mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            IPessoaRepositorio repository = new PessoaRepositorio(mockOptionsInfra.Object);
-            PessoaHandler handler = new PessoaHandler(repository);
+            var repository = new PessoaRepositorio(mockOptionsInfra.Object);
+            var handler = new PessoaHandler(repository);
 
-            PessoaController controller = new PessoaController(repository, handler, mockOptionsAPI.Object);
+            var controller = new PessoaController(repository, handler, mockOptionsAPI.Object);
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            Pessoa pessoa0 = new Pessoa(0, new Texto("NomePessoa0", "Nome", 100), "ImagemPessoa0");
-            Pessoa pessoa1 = new Pessoa(0, new Texto("NomePessoa1", "Nome", 100), "ImagemPessoa1");
-            Pessoa pessoa2 = new Pessoa(0, new Texto("NomePessoa2", "Nome", 100), "ImagemPessoa2");
+            var pessoa0 = new Pessoa(0, new Texto("NomePessoa0", "Nome", 100), "ImagemPessoa0");
+            var pessoa1 = new Pessoa(0, new Texto("NomePessoa1", "Nome", 100), "ImagemPessoa1");
+            var pessoa2 = new Pessoa(0, new Texto("NomePessoa2", "Nome", 100), "ImagemPessoa2");
 
             repository.Salvar(pessoa0);
             repository.Salvar(pessoa1);
@@ -106,22 +105,22 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void Empresa()
         {
-            Mock<IOptions<SettingsAPI>> mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
+            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
-            Mock<IOptions<SettingsInfraData>> mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
             mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            IPessoaRepositorio repository = new PessoaRepositorio(mockOptionsInfra.Object);
-            PessoaHandler handler = new PessoaHandler(repository);
+            var repository = new PessoaRepositorio(mockOptionsInfra.Object);
+            var handler = new PessoaHandler(repository);
 
-            PessoaController controller = new PessoaController(repository, handler, mockOptionsAPI.Object);
+            var controller = new PessoaController(repository, handler, mockOptionsAPI.Object);
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            Pessoa pessoa0 = new Pessoa(0, new Texto("NomePessoa0", "Nome", 100), "ImagemPerfil0");
-            Pessoa pessoa1 = new Pessoa(0, new Texto("NomePessoa1", "Nome", 100), "ImagemPerfil1");
-            Pessoa pessoa2 = new Pessoa(0, new Texto("NomePessoa2", "Nome", 100), "ImagemPerfil2");
+            var pessoa0 = new Pessoa(0, new Texto("NomePessoa0", "Nome", 100), "ImagemPerfil0");
+            var pessoa1 = new Pessoa(0, new Texto("NomePessoa1", "Nome", 100), "ImagemPerfil1");
+            var pessoa2 = new Pessoa(0, new Texto("NomePessoa2", "Nome", 100), "ImagemPerfil2");
 
             repository.Salvar(pessoa0);
             repository.Salvar(pessoa1);
@@ -147,16 +146,16 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void EmpresaInserir()
         {
-            Mock<IOptions<SettingsAPI>> mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
+            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
-            Mock<IOptions<SettingsInfraData>> mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
             mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            IPessoaRepositorio repository = new PessoaRepositorio(mockOptionsInfra.Object);
-            PessoaHandler handler = new PessoaHandler(repository);
+            var repository = new PessoaRepositorio(mockOptionsInfra.Object);
+            var handler = new PessoaHandler(repository);
 
-            PessoaController controller = new PessoaController(repository, handler, mockOptionsAPI.Object);
+            var controller = new PessoaController(repository, handler, mockOptionsAPI.Object);
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
@@ -184,20 +183,20 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void EmpresaAlterar()
         {
-            Mock<IOptions<SettingsAPI>> mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
+            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
-            Mock<IOptions<SettingsInfraData>> mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
             mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            IPessoaRepositorio repository = new PessoaRepositorio(mockOptionsInfra.Object);
-            PessoaHandler handler = new PessoaHandler(repository);
+            var repository = new PessoaRepositorio(mockOptionsInfra.Object);
+            var handler = new PessoaHandler(repository);
 
-            PessoaController controller = new PessoaController(repository, handler, mockOptionsAPI.Object);
+            var controller = new PessoaController(repository, handler, mockOptionsAPI.Object);
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            Pessoa pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPessoa");
+            var pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPessoa");
             repository.Salvar(pessoa);
 
             var command = new AtualizarPessoaCommand()
@@ -225,20 +224,20 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void EmpresaExcluir()
         {
-            Mock<IOptions<SettingsAPI>> mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
+            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
-            Mock<IOptions<SettingsInfraData>> mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
             mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            IPessoaRepositorio repository = new PessoaRepositorio(mockOptionsInfra.Object);
-            PessoaHandler handler = new PessoaHandler(repository);
+            var repository = new PessoaRepositorio(mockOptionsInfra.Object);
+            var handler = new PessoaHandler(repository);
 
-            PessoaController controller = new PessoaController(repository, handler, mockOptionsAPI.Object);
+            var controller = new PessoaController(repository, handler, mockOptionsAPI.Object);
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            Pessoa pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPessoa");
+            var pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPessoa");
             repository.Salvar(pessoa);
 
             var command = new ApagarPessoaCommand() { Id = 1 };

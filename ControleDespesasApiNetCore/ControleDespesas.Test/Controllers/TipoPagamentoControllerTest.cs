@@ -5,7 +5,6 @@ using ControleDespesas.Dominio.Commands.TipoPagamento.Output;
 using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Query.TipoPagamento;
-using ControleDespesas.Dominio.Repositorio;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.Factory;
@@ -31,16 +30,16 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void TipoPagamentoHealthCheck()
         {
-            Mock<IOptions<SettingsAPI>> mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
+            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
-            Mock<IOptions<SettingsInfraData>> mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
             mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            ITipoPagamentoRepositorio repository = new TipoPagamentoRepositorio(mockOptionsInfra.Object);
-            TipoPagamentoHandler handler = new TipoPagamentoHandler(repository);
+            var repository = new TipoPagamentoRepositorio(mockOptionsInfra.Object);
+            var handler = new TipoPagamentoHandler(repository);
 
-            TipoPagamentoController controller = new TipoPagamentoController(repository, handler, mockOptionsAPI.Object);
+            var controller = new TipoPagamentoController(repository, handler, mockOptionsAPI.Object);
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
@@ -59,22 +58,22 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void TipoPagamentos()
         {
-            Mock<IOptions<SettingsAPI>> mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
+            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
-            Mock<IOptions<SettingsInfraData>> mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
             mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            ITipoPagamentoRepositorio repository = new TipoPagamentoRepositorio(mockOptionsInfra.Object);
-            TipoPagamentoHandler handler = new TipoPagamentoHandler(repository);
+            var repository = new TipoPagamentoRepositorio(mockOptionsInfra.Object);
+            var handler = new TipoPagamentoHandler(repository);
 
-            TipoPagamentoController controller = new TipoPagamentoController(repository, handler, mockOptionsAPI.Object);
+            var controller = new TipoPagamentoController(repository, handler, mockOptionsAPI.Object);
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            TipoPagamento tipoPagamento0 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento0", "Descrição", 250));
-            TipoPagamento tipoPagamento1 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento1", "Descrição", 250));
-            TipoPagamento tipoPagamento2 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento2", "Descrição", 250));
+            var tipoPagamento0 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento0", "Descrição", 250));
+            var tipoPagamento1 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento1", "Descrição", 250));
+            var tipoPagamento2 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento2", "Descrição", 250));
 
             repository.Salvar(tipoPagamento0);
             repository.Salvar(tipoPagamento1);
@@ -103,22 +102,22 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void TipoPagamento()
         {
-            Mock<IOptions<SettingsAPI>> mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
+            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
-            Mock<IOptions<SettingsInfraData>> mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
             mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            ITipoPagamentoRepositorio repository = new TipoPagamentoRepositorio(mockOptionsInfra.Object);
-            TipoPagamentoHandler handler = new TipoPagamentoHandler(repository);
+            var repository = new TipoPagamentoRepositorio(mockOptionsInfra.Object);
+            var handler = new TipoPagamentoHandler(repository);
 
-            TipoPagamentoController controller = new TipoPagamentoController(repository, handler, mockOptionsAPI.Object);
+            var controller = new TipoPagamentoController(repository, handler, mockOptionsAPI.Object);
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            TipoPagamento tipoPagamento0 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento0", "Descrição", 250));
-            TipoPagamento tipoPagamento1 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento1", "Descrição", 250));
-            TipoPagamento tipoPagamento2 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento2", "Descrição", 250));
+            var tipoPagamento0 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento0", "Descrição", 250));
+            var tipoPagamento1 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento1", "Descrição", 250));
+            var tipoPagamento2 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento2", "Descrição", 250));
 
             repository.Salvar(tipoPagamento0);
             repository.Salvar(tipoPagamento1);
@@ -143,16 +142,16 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void TipoPagamentoInserir()
         {
-            Mock<IOptions<SettingsAPI>> mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
+            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
-            Mock<IOptions<SettingsInfraData>> mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
             mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            ITipoPagamentoRepositorio repository = new TipoPagamentoRepositorio(mockOptionsInfra.Object);
-            TipoPagamentoHandler handler = new TipoPagamentoHandler(repository);
+            var repository = new TipoPagamentoRepositorio(mockOptionsInfra.Object);
+            var handler = new TipoPagamentoHandler(repository);
 
-            TipoPagamentoController controller = new TipoPagamentoController(repository, handler, mockOptionsAPI.Object);
+            var controller = new TipoPagamentoController(repository, handler, mockOptionsAPI.Object);
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
@@ -178,20 +177,20 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void TipoPagamentoAlterar()
         {
-            Mock<IOptions<SettingsAPI>> mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
+            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
-            Mock<IOptions<SettingsInfraData>> mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
             mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            ITipoPagamentoRepositorio repository = new TipoPagamentoRepositorio(mockOptionsInfra.Object);
-            TipoPagamentoHandler handler = new TipoPagamentoHandler(repository);
+            var repository = new TipoPagamentoRepositorio(mockOptionsInfra.Object);
+            var handler = new TipoPagamentoHandler(repository);
 
-            TipoPagamentoController controller = new TipoPagamentoController(repository, handler, mockOptionsAPI.Object);
+            var controller = new TipoPagamentoController(repository, handler, mockOptionsAPI.Object);
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            TipoPagamento tipoPagamento = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento", "Descrição", 250));
+            var tipoPagamento = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento", "Descrição", 250));
             repository.Salvar(tipoPagamento);
 
             var command = new AtualizarTipoPagamentoCommand()
@@ -217,20 +216,20 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void TipoPagamentoExcluir()
         {
-            Mock<IOptions<SettingsAPI>> mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
+            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
-            Mock<IOptions<SettingsInfraData>> mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
             mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            ITipoPagamentoRepositorio repository = new TipoPagamentoRepositorio(mockOptionsInfra.Object);
-            TipoPagamentoHandler handler = new TipoPagamentoHandler(repository);
+            var repository = new TipoPagamentoRepositorio(mockOptionsInfra.Object);
+            var handler = new TipoPagamentoHandler(repository);
 
-            TipoPagamentoController controller = new TipoPagamentoController(repository, handler, mockOptionsAPI.Object);
+            var controller = new TipoPagamentoController(repository, handler, mockOptionsAPI.Object);
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            TipoPagamento tipoPagamento = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento", "Descrição", 250));
+            var tipoPagamento = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento", "Descrição", 250));
             repository.Salvar(tipoPagamento);
 
             var command = new ApagarTipoPagamentoCommand() { Id = 1 };

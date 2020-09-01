@@ -7,7 +7,6 @@ using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Enums;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Query.Usuario;
-using ControleDespesas.Dominio.Repositorio;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.Factory;
@@ -33,18 +32,18 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void UsuarioHealthCheck()
         {
-            Mock<IOptions<SettingsAPI>> mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
+            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
-            Mock<IOptions<SettingsInfraData>> mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
             mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            IUsuarioRepositorio repository = new UsuarioRepositorio(mockOptionsInfra.Object);
-            UsuarioHandler handler = new UsuarioHandler(repository);
+            var repository = new UsuarioRepositorio(mockOptionsInfra.Object);
+            var handler = new UsuarioHandler(repository);
 
-            TokenJWTService tokenJWTService = new TokenJWTService(mockOptionsAPI.Object);
+            var tokenJWTService = new TokenJWTService(mockOptionsAPI.Object);
 
-            UsuarioController controller = new UsuarioController(repository, handler, mockOptionsAPI.Object, tokenJWTService);
+            var controller = new UsuarioController(repository, handler, mockOptionsAPI.Object, tokenJWTService);
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
@@ -63,24 +62,24 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void Usuarios()
         {
-            Mock<IOptions<SettingsAPI>> mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
+            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
-            Mock<IOptions<SettingsInfraData>> mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
             mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            IUsuarioRepositorio repository = new UsuarioRepositorio(mockOptionsInfra.Object);
-            UsuarioHandler handler = new UsuarioHandler(repository);
+            var repository = new UsuarioRepositorio(mockOptionsInfra.Object);
+            var handler = new UsuarioHandler(repository);
 
-            TokenJWTService tokenJWTService = new TokenJWTService(mockOptionsAPI.Object);
+            var tokenJWTService = new TokenJWTService(mockOptionsAPI.Object);
 
-            UsuarioController controller = new UsuarioController(repository, handler, mockOptionsAPI.Object, tokenJWTService);
+            var controller = new UsuarioController(repository, handler, mockOptionsAPI.Object, tokenJWTService);
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            Usuario usuario0 = new Usuario(0, new Texto("Login0", "Login", 100), new SenhaMedia("Senha1230"), EPrivilegioUsuario.Admin);
-            Usuario usuario1 = new Usuario(0, new Texto("Login1", "Login", 100), new SenhaMedia("Senha1231"), EPrivilegioUsuario.Admin);
-            Usuario usuario2 = new Usuario(0, new Texto("Login2", "Login", 100), new SenhaMedia("Senha1232"), EPrivilegioUsuario.ReadOnly);
+            var usuario0 = new Usuario(0, new Texto("Login0", "Login", 100), new SenhaMedia("Senha1230"), EPrivilegioUsuario.Admin);
+            var usuario1 = new Usuario(0, new Texto("Login1", "Login", 100), new SenhaMedia("Senha1231"), EPrivilegioUsuario.Admin);
+            var usuario2 = new Usuario(0, new Texto("Login2", "Login", 100), new SenhaMedia("Senha1232"), EPrivilegioUsuario.ReadOnly);
 
             repository.Salvar(usuario0);
             repository.Salvar(usuario1);
@@ -115,24 +114,24 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void Usuario()
         {
-            Mock<IOptions<SettingsAPI>> mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
+            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
-            Mock<IOptions<SettingsInfraData>> mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
             mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            IUsuarioRepositorio repository = new UsuarioRepositorio(mockOptionsInfra.Object);
-            UsuarioHandler handler = new UsuarioHandler(repository);
+            var repository = new UsuarioRepositorio(mockOptionsInfra.Object);
+            var handler = new UsuarioHandler(repository);
 
-            TokenJWTService tokenJWTService = new TokenJWTService(mockOptionsAPI.Object);
+            var tokenJWTService = new TokenJWTService(mockOptionsAPI.Object);
 
-            UsuarioController controller = new UsuarioController(repository, handler, mockOptionsAPI.Object, tokenJWTService);
+            var controller = new UsuarioController(repository, handler, mockOptionsAPI.Object, tokenJWTService);
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            Usuario usuario0 = new Usuario(0, new Texto("Login0", "Login", 100), new SenhaMedia("Senha1230"), EPrivilegioUsuario.Admin);
-            Usuario usuario1 = new Usuario(0, new Texto("Login1", "Login", 100), new SenhaMedia("Senha1231"), EPrivilegioUsuario.Admin);
-            Usuario usuario2 = new Usuario(0, new Texto("Login2", "Login", 100), new SenhaMedia("Senha1232"), EPrivilegioUsuario.ReadOnly);
+            var usuario0 = new Usuario(0, new Texto("Login0", "Login", 100), new SenhaMedia("Senha1230"), EPrivilegioUsuario.Admin);
+            var usuario1 = new Usuario(0, new Texto("Login1", "Login", 100), new SenhaMedia("Senha1231"), EPrivilegioUsuario.Admin);
+            var usuario2 = new Usuario(0, new Texto("Login2", "Login", 100), new SenhaMedia("Senha1232"), EPrivilegioUsuario.ReadOnly);
 
             repository.Salvar(usuario0);
             repository.Salvar(usuario1);
@@ -159,18 +158,18 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void UsuarioInserir()
         {
-            Mock<IOptions<SettingsAPI>> mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
+            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
-            Mock<IOptions<SettingsInfraData>> mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
             mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            IUsuarioRepositorio repository = new UsuarioRepositorio(mockOptionsInfra.Object);
-            UsuarioHandler handler = new UsuarioHandler(repository);
+            var repository = new UsuarioRepositorio(mockOptionsInfra.Object);
+            var handler = new UsuarioHandler(repository);
 
-            TokenJWTService tokenJWTService = new TokenJWTService(mockOptionsAPI.Object);
+            var tokenJWTService = new TokenJWTService(mockOptionsAPI.Object);
 
-            UsuarioController controller = new UsuarioController(repository, handler, mockOptionsAPI.Object, tokenJWTService);
+            var controller = new UsuarioController(repository, handler, mockOptionsAPI.Object, tokenJWTService);
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
@@ -200,22 +199,22 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void UsuarioAlterar()
         {
-            Mock<IOptions<SettingsAPI>> mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
+            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
-            Mock<IOptions<SettingsInfraData>> mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
             mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            IUsuarioRepositorio repository = new UsuarioRepositorio(mockOptionsInfra.Object);
-            UsuarioHandler handler = new UsuarioHandler(repository);
+            var repository = new UsuarioRepositorio(mockOptionsInfra.Object);
+            var handler = new UsuarioHandler(repository);
 
-            TokenJWTService tokenJWTService = new TokenJWTService(mockOptionsAPI.Object);
+            var tokenJWTService = new TokenJWTService(mockOptionsAPI.Object);
 
-            UsuarioController controller = new UsuarioController(repository, handler, mockOptionsAPI.Object, tokenJWTService);
+            var controller = new UsuarioController(repository, handler, mockOptionsAPI.Object, tokenJWTService);
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            Usuario usuario = new Usuario(0, new Texto("Login", "Login", 100), new SenhaMedia("Senha123"), EPrivilegioUsuario.Admin);
+            var usuario = new Usuario(0, new Texto("Login", "Login", 100), new SenhaMedia("Senha123"), EPrivilegioUsuario.Admin);
             repository.Salvar(usuario);
 
             var command = new AtualizarUsuarioCommand()
@@ -245,22 +244,22 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void UsuarioExcluir()
         {
-            Mock<IOptions<SettingsAPI>> mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
+            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
-            Mock<IOptions<SettingsInfraData>> mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
             mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            IUsuarioRepositorio repository = new UsuarioRepositorio(mockOptionsInfra.Object);
-            UsuarioHandler handler = new UsuarioHandler(repository);
+            var repository = new UsuarioRepositorio(mockOptionsInfra.Object);
+            var handler = new UsuarioHandler(repository);
 
-            TokenJWTService tokenJWTService = new TokenJWTService(mockOptionsAPI.Object);
+            var tokenJWTService = new TokenJWTService(mockOptionsAPI.Object);
 
-            UsuarioController controller = new UsuarioController(repository, handler, mockOptionsAPI.Object, tokenJWTService);
+            var controller = new UsuarioController(repository, handler, mockOptionsAPI.Object, tokenJWTService);
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            Usuario usuario = new Usuario(0, new Texto("Login", "Login", 100), new SenhaMedia("Senha123"), EPrivilegioUsuario.Admin);
+            var usuario = new Usuario(0, new Texto("Login", "Login", 100), new SenhaMedia("Senha123"), EPrivilegioUsuario.Admin);
             repository.Salvar(usuario);
 
             var command = new ApagarUsuarioCommand() { Id = 1 };
@@ -281,22 +280,22 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void UsuarioLogin()
         {
-            Mock<IOptions<SettingsAPI>> mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
+            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
-            Mock<IOptions<SettingsInfraData>> mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
             mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            IUsuarioRepositorio repository = new UsuarioRepositorio(mockOptionsInfra.Object);
-            UsuarioHandler handler = new UsuarioHandler(repository);
+            var repository = new UsuarioRepositorio(mockOptionsInfra.Object);
+            var handler = new UsuarioHandler(repository);
 
-            TokenJWTService tokenJWTService = new TokenJWTService(mockOptionsAPI.Object);
+            var tokenJWTService = new TokenJWTService(mockOptionsAPI.Object);
 
-            UsuarioController controller = new UsuarioController(repository, handler, mockOptionsAPI.Object, tokenJWTService);
+            var controller = new UsuarioController(repository, handler, mockOptionsAPI.Object, tokenJWTService);
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            Usuario usuario = new Usuario(0, new Texto("Login", "Login", 100), new SenhaMedia("Senha123"), EPrivilegioUsuario.Admin);
+            var usuario = new Usuario(0, new Texto("Login", "Login", 100), new SenhaMedia("Senha123"), EPrivilegioUsuario.Admin);
             repository.Salvar(usuario);
 
             var command = new LoginUsuarioCommand()

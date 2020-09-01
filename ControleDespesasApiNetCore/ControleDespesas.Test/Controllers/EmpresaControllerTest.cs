@@ -5,7 +5,6 @@ using ControleDespesas.Dominio.Commands.Empresa.Output;
 using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Query.Empresa;
-using ControleDespesas.Dominio.Repositorio;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.Factory;
@@ -31,16 +30,16 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void EmpresaHealthCheck()
         {
-            Mock<IOptions<SettingsAPI>> mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
+            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
-            Mock<IOptions<SettingsInfraData>> mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
             mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            IEmpresaRepositorio repository = new EmpresaRepositorio(mockOptionsInfra.Object);
-            EmpresaHandler handler = new EmpresaHandler(repository);
+            var repository = new EmpresaRepositorio(mockOptionsInfra.Object);
+            var handler = new EmpresaHandler(repository);
 
-            EmpresaController controller = new EmpresaController(repository, handler, mockOptionsAPI.Object);
+            var controller = new EmpresaController(repository, handler, mockOptionsAPI.Object);
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
@@ -59,22 +58,22 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void Empresas()
         {
-            Mock<IOptions<SettingsAPI>> mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
+            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
-            Mock<IOptions<SettingsInfraData>> mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
             mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            IEmpresaRepositorio repository = new EmpresaRepositorio(mockOptionsInfra.Object);
-            EmpresaHandler handler = new EmpresaHandler(repository);
+            var repository = new EmpresaRepositorio(mockOptionsInfra.Object);
+            var handler = new EmpresaHandler(repository);
 
-            EmpresaController controller = new EmpresaController(repository, handler, mockOptionsAPI.Object);
+            var controller = new EmpresaController(repository, handler, mockOptionsAPI.Object);
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
-            
-            Empresa empresa0 = new Empresa(0, new Texto("NomeEmpresa0", "Nome", 100), "Logo0");
-            Empresa empresa1 = new Empresa(0, new Texto("NomeEmpresa1", "Nome", 100), "Logo1");
-            Empresa empresa2 = new Empresa(0, new Texto("NomeEmpresa2", "Nome", 100), "Logo2");
+
+            var empresa0 = new Empresa(0, new Texto("NomeEmpresa0", "Nome", 100), "Logo0");
+            var empresa1 = new Empresa(0, new Texto("NomeEmpresa1", "Nome", 100), "Logo1");
+            var empresa2 = new Empresa(0, new Texto("NomeEmpresa2", "Nome", 100), "Logo2");
 
             repository.Salvar(empresa0);
             repository.Salvar(empresa1);
@@ -106,22 +105,22 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void Empresa()
         {
-            Mock<IOptions<SettingsAPI>> mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
+            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
-            Mock<IOptions<SettingsInfraData>> mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
             mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            IEmpresaRepositorio repository = new EmpresaRepositorio(mockOptionsInfra.Object);
-            EmpresaHandler handler = new EmpresaHandler(repository);
+            var repository = new EmpresaRepositorio(mockOptionsInfra.Object);
+            var handler = new EmpresaHandler(repository);
 
-            EmpresaController controller = new EmpresaController(repository, handler, mockOptionsAPI.Object);
+            var controller = new EmpresaController(repository, handler, mockOptionsAPI.Object);
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            Empresa empresa0 = new Empresa(0, new Texto("NomeEmpresa0", "Nome", 100), "Logo0");
-            Empresa empresa1 = new Empresa(0, new Texto("NomeEmpresa1", "Nome", 100), "Logo1");
-            Empresa empresa2 = new Empresa(0, new Texto("NomeEmpresa2", "Nome", 100), "Logo2");
+            var empresa0 = new Empresa(0, new Texto("NomeEmpresa0", "Nome", 100), "Logo0");
+            var empresa1 = new Empresa(0, new Texto("NomeEmpresa1", "Nome", 100), "Logo1");
+            var empresa2 = new Empresa(0, new Texto("NomeEmpresa2", "Nome", 100), "Logo2");
 
             repository.Salvar(empresa0);
             repository.Salvar(empresa1);
@@ -147,16 +146,16 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void EmpresaInserir()
         {
-            Mock<IOptions<SettingsAPI>> mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
+            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
-            Mock<IOptions<SettingsInfraData>> mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
             mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            IEmpresaRepositorio repository = new EmpresaRepositorio(mockOptionsInfra.Object);
-            EmpresaHandler handler = new EmpresaHandler(repository);
+            var repository = new EmpresaRepositorio(mockOptionsInfra.Object);
+            var handler = new EmpresaHandler(repository);
 
-            EmpresaController controller = new EmpresaController(repository, handler, mockOptionsAPI.Object);
+            var controller = new EmpresaController(repository, handler, mockOptionsAPI.Object);
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
@@ -184,20 +183,20 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void EmpresaAlterar()
         {
-            Mock<IOptions<SettingsAPI>> mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
+            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
-            Mock<IOptions<SettingsInfraData>> mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
             mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            IEmpresaRepositorio repository = new EmpresaRepositorio(mockOptionsInfra.Object);
-            EmpresaHandler handler = new EmpresaHandler(repository);
+            var repository = new EmpresaRepositorio(mockOptionsInfra.Object);
+            var handler = new EmpresaHandler(repository);
 
-            EmpresaController controller = new EmpresaController(repository, handler, mockOptionsAPI.Object);
+            var controller = new EmpresaController(repository, handler, mockOptionsAPI.Object);
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            Empresa empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "LogoEmpresa");
+            var empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "LogoEmpresa");
             repository.Salvar(empresa);
 
             var command = new AtualizarEmpresaCommand()
@@ -225,20 +224,20 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void EmpresaExcluir()
         {
-            Mock<IOptions<SettingsAPI>> mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
+            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
-            Mock<IOptions<SettingsInfraData>> mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
             mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            IEmpresaRepositorio repository = new EmpresaRepositorio(mockOptionsInfra.Object);
-            EmpresaHandler handler = new EmpresaHandler(repository);
+            var repository = new EmpresaRepositorio(mockOptionsInfra.Object);
+            var handler = new EmpresaHandler(repository);
 
-            EmpresaController controller = new EmpresaController(repository, handler, mockOptionsAPI.Object);
+            var controller = new EmpresaController(repository, handler, mockOptionsAPI.Object);
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            Empresa empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "LogoEmpresa");
+            var empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "LogoEmpresa");
             repository.Salvar(empresa);
 
             var command = new ApagarEmpresaCommand() { Id = 1 };

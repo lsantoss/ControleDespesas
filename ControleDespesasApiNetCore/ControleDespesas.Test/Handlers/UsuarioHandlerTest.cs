@@ -4,12 +4,9 @@ using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Enums;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Query.Usuario;
-using ControleDespesas.Dominio.Repositorio;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.Factory;
-using LSCode.Facilitador.Api.InterfacesCommand;
-using LSCode.Validador.ValidacoesNotificacoes;
 using LSCode.Validador.ValueObjects;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -25,22 +22,22 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AdicionarUsuario()
         {
-            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            IUsuarioRepositorio IUsuarioRepos = new UsuarioRepositorio(mockOptions.Object);
+            var repository = new UsuarioRepositorio(mockOptions.Object);
 
-            UsuarioHandler handler = new UsuarioHandler(IUsuarioRepos);
+            var handler = new UsuarioHandler(repository);
 
-            AdicionarUsuarioCommand usuarioCommand = new AdicionarUsuarioCommand()
+            var usuarioCommand = new AdicionarUsuarioCommand()
             {
                 Login = "LoginUsuario",
                 Senha = "Senha123Usuario",
                 Privilegio = EPrivilegioUsuario.Admin
             };
 
-            ICommandResult<Notificacao> retorno = handler.Handler(usuarioCommand);
-            AdicionarUsuarioCommandOutput retornoDados = (AdicionarUsuarioCommandOutput)retorno.Dados;
+            var retorno = handler.Handler(usuarioCommand);
+            var retornoDados = (AdicionarUsuarioCommandOutput)retorno.Dados;
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Usuário gravado com sucesso!", retorno.Mensagem);
@@ -53,16 +50,17 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AtualizarUsuario()
         {
-            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            Usuario usuario = new Usuario(0, new Texto("LoginUsuario", "Login", 50), new SenhaMedia("Senha123Usuario"), EPrivilegioUsuario.Admin);
-            new UsuarioRepositorio(mockOptions.Object).Salvar(usuario);
+            var repository = new UsuarioRepositorio(mockOptions.Object);
 
-            IUsuarioRepositorio IUsuarioRepos = new UsuarioRepositorio(mockOptions.Object);
-            UsuarioHandler handler = new UsuarioHandler(IUsuarioRepos);
+            var handler = new UsuarioHandler(repository);
 
-            AtualizarUsuarioCommand usuarioCommand = new AtualizarUsuarioCommand()
+            var usuario = new Usuario(0, new Texto("LoginUsuario", "Login", 50), new SenhaMedia("Senha123Usuario"), EPrivilegioUsuario.Admin);
+            repository.Salvar(usuario);
+
+            var usuarioCommand = new AtualizarUsuarioCommand()
             {
                 Id = 1,
                 Login = "LoginUsuario - Editado",
@@ -70,8 +68,8 @@ namespace ControleDespesas.Test.Handlers
                 Privilegio = EPrivilegioUsuario.ReadOnly
             };
 
-            ICommandResult<Notificacao> retorno = handler.Handler(usuarioCommand);
-            AtualizarUsuarioCommandOutput retornoDados = (AtualizarUsuarioCommandOutput)retorno.Dados;
+            var retorno = handler.Handler(usuarioCommand);
+            var retornoDados = (AtualizarUsuarioCommandOutput)retorno.Dados;
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Usuário atualizado com sucesso!", retorno.Mensagem);
@@ -84,19 +82,20 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_ApagarUsuario()
         {
-            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            Usuario usuario = new Usuario(0, new Texto("LoginUsuario", "Login", 50), new SenhaMedia("Senha123Usuario"), EPrivilegioUsuario.Admin);
-            new UsuarioRepositorio(mockOptions.Object).Salvar(usuario);
+            var repository = new UsuarioRepositorio(mockOptions.Object);
 
-            IUsuarioRepositorio IUsuarioRepos = new UsuarioRepositorio(mockOptions.Object);
-            UsuarioHandler handler = new UsuarioHandler(IUsuarioRepos);
+            var handler = new UsuarioHandler(repository);
 
-            ApagarUsuarioCommand usuarioCommand = new ApagarUsuarioCommand() { Id = 1 };
+            var usuario = new Usuario(0, new Texto("LoginUsuario", "Login", 50), new SenhaMedia("Senha123Usuario"), EPrivilegioUsuario.Admin);
+            repository.Salvar(usuario);
 
-            ICommandResult<Notificacao> retorno = handler.Handler(usuarioCommand);
-            ApagarUsuarioCommandOutput retornoDados = (ApagarUsuarioCommandOutput)retorno.Dados;
+            var usuarioCommand = new ApagarUsuarioCommand() { Id = 1 };
+
+            var retorno = handler.Handler(usuarioCommand);
+            var retornoDados = (ApagarUsuarioCommandOutput)retorno.Dados;
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Usuário excluído com sucesso!", retorno.Mensagem);
@@ -106,23 +105,24 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_LoginUsuario()
         {
-            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            Usuario usuario = new Usuario(0, new Texto("LoginUsuario", "Login", 50), new SenhaMedia("Senha123Usuario"), EPrivilegioUsuario.Admin);
-            new UsuarioRepositorio(mockOptions.Object).Salvar(usuario);
+            var repository = new UsuarioRepositorio(mockOptions.Object);
 
-            IUsuarioRepositorio IUsuarioRepos = new UsuarioRepositorio(mockOptions.Object);
-            UsuarioHandler handler = new UsuarioHandler(IUsuarioRepos);
+            var handler = new UsuarioHandler(repository);
 
-            LoginUsuarioCommand usuarioCommand = new LoginUsuarioCommand()
+            var usuario = new Usuario(0, new Texto("LoginUsuario", "Login", 50), new SenhaMedia("Senha123Usuario"), EPrivilegioUsuario.Admin);
+            repository.Salvar(usuario);
+
+            var usuarioCommand = new LoginUsuarioCommand()
             {
                 Login = "LoginUsuario",
                 Senha = "Senha123Usuario"
             };
 
-            ICommandResult<Notificacao> retorno = handler.Handler(usuarioCommand);
-            UsuarioQueryResult retornoDados = (UsuarioQueryResult)retorno.Dados;
+            var retorno = handler.Handler(usuarioCommand);
+            var retornoDados = (UsuarioQueryResult)retorno.Dados;
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Usuário logado com sucesso!", retorno.Mensagem);

@@ -2,12 +2,9 @@
 using ControleDespesas.Dominio.Commands.Pessoa.Output;
 using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Handlers;
-using ControleDespesas.Dominio.Repositorio;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.Factory;
-using LSCode.Facilitador.Api.InterfacesCommand;
-using LSCode.Validador.ValidacoesNotificacoes;
 using LSCode.Validador.ValueObjects;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -23,21 +20,21 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AdicionarPessoa()
         {
-            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            IPessoaRepositorio IPessoaRepos = new PessoaRepositorio(mockOptions.Object);
+            var repository = new PessoaRepositorio(mockOptions.Object);
 
-            PessoaHandler handler = new PessoaHandler(IPessoaRepos);
+            var handler = new PessoaHandler(repository);
 
-            AdicionarPessoaCommand pessoaCommand = new AdicionarPessoaCommand()
+            var pessoaCommand = new AdicionarPessoaCommand()
             {
                 Nome = "NomePessoa",
                 ImagemPerfil = "ImagemPessoa"
             };
 
-            ICommandResult<Notificacao> retorno = handler.Handler(pessoaCommand);
-            AdicionarPessoaCommandOutput retornoDados = (AdicionarPessoaCommandOutput)retorno.Dados;
+            var retorno = handler.Handler(pessoaCommand);
+            var retornoDados = (AdicionarPessoaCommandOutput)retorno.Dados;
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Pessoa gravada com sucesso!", retorno.Mensagem);
@@ -49,24 +46,25 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AtualizarPessoa()
         {
-            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            Pessoa pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPessoa");
-            new PessoaRepositorio(mockOptions.Object).Salvar(pessoa);
+            var repository = new PessoaRepositorio(mockOptions.Object);
 
-            IPessoaRepositorio IPessoaRepos = new PessoaRepositorio(mockOptions.Object);
-            PessoaHandler handler = new PessoaHandler(IPessoaRepos);
+            var handler = new PessoaHandler(repository);
 
-            AtualizarPessoaCommand pessoaCommand = new AtualizarPessoaCommand()
+            var pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPessoa");
+            repository.Salvar(pessoa);
+
+            var pessoaCommand = new AtualizarPessoaCommand()
             {
                 Id = 1,
                 Nome = "NomePessoa - Editada",
                 ImagemPerfil = "ImagemPessoa - Editada"
             };
 
-            ICommandResult<Notificacao> retorno = handler.Handler(pessoaCommand);
-            AtualizarPessoaCommandOutput retornoDados = (AtualizarPessoaCommandOutput)retorno.Dados;
+            var retorno = handler.Handler(pessoaCommand);
+            var retornoDados = (AtualizarPessoaCommandOutput)retorno.Dados;
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Pessoa atualizada com sucesso!", retorno.Mensagem);
@@ -78,19 +76,19 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_ApagarPessoa()
         {
-            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            Pessoa pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPessoa");
-            new PessoaRepositorio(mockOptions.Object).Salvar(pessoa);
+            var repository = new PessoaRepositorio(mockOptions.Object);
+            var handler = new PessoaHandler(repository);
 
-            IPessoaRepositorio IPessoaRepos = new PessoaRepositorio(mockOptions.Object);
-            PessoaHandler handler = new PessoaHandler(IPessoaRepos);
+            var pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPessoa");
+            repository.Salvar(pessoa);
 
-            ApagarPessoaCommand pessoaCommand = new ApagarPessoaCommand() { Id = 1 };
+            var pessoaCommand = new ApagarPessoaCommand() { Id = 1 };
 
-            ICommandResult<Notificacao> retorno = handler.Handler(pessoaCommand);
-            ApagarPessoaCommandOutput retornoDados = (ApagarPessoaCommandOutput)retorno.Dados;
+            var retorno = handler.Handler(pessoaCommand);
+            var retornoDados = (ApagarPessoaCommandOutput)retorno.Dados;
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Pessoa excluída com sucesso!", retorno.Mensagem);

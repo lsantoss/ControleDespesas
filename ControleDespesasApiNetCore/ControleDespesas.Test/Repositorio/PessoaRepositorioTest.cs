@@ -1,5 +1,4 @@
 ﻿using ControleDespesas.Dominio.Entidades;
-using ControleDespesas.Dominio.Query.Pessoa;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.Factory;
@@ -7,7 +6,6 @@ using LSCode.Validador.ValueObjects;
 using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
-using System.Collections.Generic;
 
 namespace ControleDespesas.Test.Repositorio
 {
@@ -19,15 +17,15 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Salvar()
         {
-            Pessoa pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPerfil");
+            var pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPerfil");
 
-            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            PessoaRepositorio repository = new PessoaRepositorio(mockOptions.Object);
+            var repository = new PessoaRepositorio(mockOptions.Object);
             repository.Salvar(pessoa);
 
-            PessoaQueryResult retorno = repository.Obter(1);
+            var retorno = repository.Obter(1);
 
             Assert.AreEqual(1, retorno.Id);
             Assert.AreEqual(pessoa.Nome.ToString(), retorno.Nome);
@@ -37,18 +35,18 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Atualizar()
         {
-            Pessoa pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPerfil");
+            var pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPerfil");
 
-            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            PessoaRepositorio repository = new PessoaRepositorio(mockOptions.Object);
+            var repository = new PessoaRepositorio(mockOptions.Object);
             repository.Salvar(pessoa);
 
             pessoa = new Pessoa(1, new Texto("NomePessoa - Editada", "Nome", 100), "ImagemPerfil - Editado");
             repository.Atualizar(pessoa);
 
-            PessoaQueryResult retorno = repository.Obter(1);
+            var retorno = repository.Obter(1);
 
             Assert.AreEqual(pessoa.Id, retorno.Id);
             Assert.AreEqual(pessoa.Nome.ToString(), retorno.Nome);
@@ -58,21 +56,21 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Deletar()
         {
-            Pessoa pessoa0 = new Pessoa(0, new Texto("NomePessoa0", "Nome", 100), "ImagemPerfil0");
-            Pessoa pessoa1 = new Pessoa(0, new Texto("NomePessoa1", "Nome", 100), "ImagemPerfil1");
-            Pessoa pessoa2 = new Pessoa(0, new Texto("NomePessoa2", "Nome", 100), "ImagemPerfil2");
+            var pessoa0 = new Pessoa(0, new Texto("NomePessoa0", "Nome", 100), "ImagemPerfil0");
+            var pessoa1 = new Pessoa(0, new Texto("NomePessoa1", "Nome", 100), "ImagemPerfil1");
+            var pessoa2 = new Pessoa(0, new Texto("NomePessoa2", "Nome", 100), "ImagemPerfil2");
 
-            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            PessoaRepositorio repository = new PessoaRepositorio(mockOptions.Object);
+            var repository = new PessoaRepositorio(mockOptions.Object);
             repository.Salvar(pessoa0);
             repository.Salvar(pessoa1);
             repository.Salvar(pessoa2);
 
             repository.Deletar(2);
 
-            List<PessoaQueryResult> retorno = repository.Listar();
+            var retorno = repository.Listar();
 
             Assert.AreEqual(1, retorno[0].Id);
             Assert.AreEqual(pessoa0.Nome.ToString(), retorno[0].Nome);
@@ -86,15 +84,15 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Obter()
         {
-            Pessoa pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPerfil");
+            var pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPerfil");
 
-            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            PessoaRepositorio repository = new PessoaRepositorio(mockOptions.Object);
+            var repository = new PessoaRepositorio(mockOptions.Object);
             repository.Salvar(pessoa);
 
-            PessoaQueryResult retorno = repository.Obter(1);
+            var retorno = repository.Obter(1);
 
             Assert.AreEqual(1, retorno.Id);
             Assert.AreEqual(pessoa.Nome.ToString(), retorno.Nome);
@@ -104,19 +102,19 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Listar()
         {
-            Pessoa pessoa0 = new Pessoa(0, new Texto("NomePessoa0", "Nome", 100), "ImagemPerfil0");
-            Pessoa pessoa1 = new Pessoa(0, new Texto("NomePessoa1", "Nome", 100), "ImagemPerfil1");
-            Pessoa pessoa2 = new Pessoa(0, new Texto("NomePessoa2", "Nome", 100), "ImagemPerfil2");
+            var pessoa0 = new Pessoa(0, new Texto("NomePessoa0", "Nome", 100), "ImagemPerfil0");
+            var pessoa1 = new Pessoa(0, new Texto("NomePessoa1", "Nome", 100), "ImagemPerfil1");
+            var pessoa2 = new Pessoa(0, new Texto("NomePessoa2", "Nome", 100), "ImagemPerfil2");
 
-            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            PessoaRepositorio repository = new PessoaRepositorio(mockOptions.Object);
+            var repository = new PessoaRepositorio(mockOptions.Object);
             repository.Salvar(pessoa0);
             repository.Salvar(pessoa1);
             repository.Salvar(pessoa2);
 
-            List<PessoaQueryResult> retorno = repository.Listar();
+            var retorno = repository.Listar();
 
             Assert.AreEqual(1, retorno[0].Id);
             Assert.AreEqual(pessoa0.Nome.ToString(), retorno[0].Nome);
@@ -134,16 +132,16 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void CheckId()
         {
-            Pessoa pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPerfil");
+            var pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPerfil");
 
-            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            PessoaRepositorio repository = new PessoaRepositorio(mockOptions.Object);
+            var repository = new PessoaRepositorio(mockOptions.Object);
             repository.Salvar(pessoa);
 
-            bool idExistente = repository.CheckId(1);
-            bool idNaoExiste = repository.CheckId(25);
+            var idExistente = repository.CheckId(1);
+            var idNaoExiste = repository.CheckId(25);
 
             Assert.True(idExistente);
             Assert.False(idNaoExiste);
@@ -152,19 +150,19 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void LocalizarMaxId()
         {
-            Pessoa pessoa0 = new Pessoa(0, new Texto("NomePessoa0", "Nome", 100), "ImagemPerfil0");
-            Pessoa pessoa1 = new Pessoa(0, new Texto("NomePessoa1", "Nome", 100), "ImagemPerfil1");
-            Pessoa pessoa2 = new Pessoa(0, new Texto("NomePessoa2", "Nome", 100), "ImagemPerfil2");
+            var pessoa0 = new Pessoa(0, new Texto("NomePessoa0", "Nome", 100), "ImagemPerfil0");
+            var pessoa1 = new Pessoa(0, new Texto("NomePessoa1", "Nome", 100), "ImagemPerfil1");
+            var pessoa2 = new Pessoa(0, new Texto("NomePessoa2", "Nome", 100), "ImagemPerfil2");
 
-            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            PessoaRepositorio repository = new PessoaRepositorio(mockOptions.Object);
+            var repository = new PessoaRepositorio(mockOptions.Object);
             repository.Salvar(pessoa0);
             repository.Salvar(pessoa1);
             repository.Salvar(pessoa2);
 
-            int maxId = repository.LocalizarMaxId();
+            var maxId = repository.LocalizarMaxId();
 
             Assert.AreEqual(3, maxId);
         }

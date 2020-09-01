@@ -1,5 +1,4 @@
 ﻿using ControleDespesas.Dominio.Entidades;
-using ControleDespesas.Dominio.Query.TipoPagamento;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.Factory;
@@ -7,7 +6,6 @@ using LSCode.Validador.ValueObjects;
 using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
-using System.Collections.Generic;
 
 namespace ControleDespesas.Test.Repositorio
 {
@@ -19,15 +17,15 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Salvar()
         {
-            TipoPagamento tipoPagamento = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento", "Descrição", 250));
+            var tipoPagamento = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento", "Descrição", 250));
 
-            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            TipoPagamentoRepositorio repository = new TipoPagamentoRepositorio(mockOptions.Object);
+            var repository = new TipoPagamentoRepositorio(mockOptions.Object);
             repository.Salvar(tipoPagamento);
 
-            TipoPagamentoQueryResult retorno = repository.Obter(1);
+            var retorno = repository.Obter(1);
 
             Assert.AreEqual(1, retorno.Id);
             Assert.AreEqual(tipoPagamento.Descricao.ToString(), retorno.Descricao);
@@ -36,18 +34,18 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Atualizar()
         {
-            TipoPagamento tipoPagamento = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento", "Descrição", 250));
+            var tipoPagamento = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento", "Descrição", 250));
 
-            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            TipoPagamentoRepositorio repository = new TipoPagamentoRepositorio(mockOptions.Object);
+            var repository = new TipoPagamentoRepositorio(mockOptions.Object);
             repository.Salvar(tipoPagamento);
 
             tipoPagamento = new TipoPagamento(1, new Texto("DescriçãoTipoPagamento - Editada", "Descrição", 250));
             repository.Atualizar(tipoPagamento);
 
-            TipoPagamentoQueryResult retorno = repository.Obter(1);
+            var retorno = repository.Obter(1);
 
             Assert.AreEqual(tipoPagamento.Id, retorno.Id);
             Assert.AreEqual(tipoPagamento.Descricao.ToString(), retorno.Descricao);
@@ -56,21 +54,21 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Deletar()
         {
-            TipoPagamento tipoPagamento0 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento0", "Descrição", 250));
-            TipoPagamento tipoPagamento1 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento1", "Descrição", 250));
-            TipoPagamento tipoPagamento2 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento2", "Descrição", 250));
+            var tipoPagamento0 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento0", "Descrição", 250));
+            var tipoPagamento1 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento1", "Descrição", 250));
+            var tipoPagamento2 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento2", "Descrição", 250));
 
-            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            TipoPagamentoRepositorio repository = new TipoPagamentoRepositorio(mockOptions.Object);
+            var repository = new TipoPagamentoRepositorio(mockOptions.Object);
             repository.Salvar(tipoPagamento0);
             repository.Salvar(tipoPagamento1);
             repository.Salvar(tipoPagamento2);
 
             repository.Deletar(2);
 
-            List<TipoPagamentoQueryResult> retorno = repository.Listar();
+            var retorno = repository.Listar();
 
             Assert.AreEqual(1, retorno[0].Id);
             Assert.AreEqual(tipoPagamento0.Descricao.ToString(), retorno[0].Descricao);
@@ -82,15 +80,15 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Obter()
         {
-            TipoPagamento tipoPagamento = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento", "Descrição", 250));
+            var tipoPagamento = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento", "Descrição", 250));
 
-            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            TipoPagamentoRepositorio repository = new TipoPagamentoRepositorio(mockOptions.Object);
+            var repository = new TipoPagamentoRepositorio(mockOptions.Object);
             repository.Salvar(tipoPagamento);
 
-            TipoPagamentoQueryResult retorno = repository.Obter(1);
+            var retorno = repository.Obter(1);
 
             Assert.AreEqual(1, retorno.Id);
             Assert.AreEqual(tipoPagamento.Descricao.ToString(), retorno.Descricao);
@@ -99,19 +97,19 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Listar()
         {
-            TipoPagamento tipoPagamento0 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento0", "Descrição", 250));
-            TipoPagamento tipoPagamento1 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento1", "Descrição", 250));
-            TipoPagamento tipoPagamento2 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento2", "Descrição", 250));
+            var tipoPagamento0 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento0", "Descrição", 250));
+            var tipoPagamento1 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento1", "Descrição", 250));
+            var tipoPagamento2 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento2", "Descrição", 250));
 
-            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            TipoPagamentoRepositorio repository = new TipoPagamentoRepositorio(mockOptions.Object);
+            var repository = new TipoPagamentoRepositorio(mockOptions.Object);
             repository.Salvar(tipoPagamento0);
             repository.Salvar(tipoPagamento1);
             repository.Salvar(tipoPagamento2);
 
-            List<TipoPagamentoQueryResult> retorno = repository.Listar();
+            var retorno = repository.Listar();
 
             Assert.AreEqual(1, retorno[0].Id);
             Assert.AreEqual(tipoPagamento0.Descricao.ToString(), retorno[0].Descricao);
@@ -126,16 +124,16 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void CheckId()
         {
-            TipoPagamento tipoPagamento = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento", "Descrição", 250));
+            var tipoPagamento = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento", "Descrição", 250));
 
-            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            TipoPagamentoRepositorio repository = new TipoPagamentoRepositorio(mockOptions.Object);
+            var repository = new TipoPagamentoRepositorio(mockOptions.Object);
             repository.Salvar(tipoPagamento);
 
-            bool idExistente = repository.CheckId(1);
-            bool idNaoExiste = repository.CheckId(25);
+            var idExistente = repository.CheckId(1);
+            var idNaoExiste = repository.CheckId(25);
 
             Assert.True(idExistente);
             Assert.False(idNaoExiste);
@@ -144,19 +142,19 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void LocalizarMaxId()
         {
-            TipoPagamento tipoPagamento0 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento0", "Descrição", 250));
-            TipoPagamento tipoPagamento1 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento1", "Descrição", 250));
-            TipoPagamento tipoPagamento2 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento2", "Descrição", 250));
+            var tipoPagamento0 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento0", "Descrição", 250));
+            var tipoPagamento1 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento1", "Descrição", 250));
+            var tipoPagamento2 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento2", "Descrição", 250));
 
-            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            TipoPagamentoRepositorio repository = new TipoPagamentoRepositorio(mockOptions.Object);
+            var repository = new TipoPagamentoRepositorio(mockOptions.Object);
             repository.Salvar(tipoPagamento0);
             repository.Salvar(tipoPagamento1);
             repository.Salvar(tipoPagamento2);
 
-            int maxId = repository.LocalizarMaxId();
+            var maxId = repository.LocalizarMaxId();
 
             Assert.AreEqual(3, maxId);
         }

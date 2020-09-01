@@ -23,21 +23,21 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AdicionarEmpresa()
         {
-            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            IEmpresaRepositorio IEmpresaRepos = new EmpresaRepositorio(mockOptions.Object);
+            var repository = new EmpresaRepositorio(mockOptions.Object);
 
-            EmpresaHandler handler = new EmpresaHandler(IEmpresaRepos);
+            var handler = new EmpresaHandler(repository);
 
-            AdicionarEmpresaCommand empresaCommand = new AdicionarEmpresaCommand()
+            var empresaCommand = new AdicionarEmpresaCommand()
             {
                 Nome = "NomeEmpresa",
                 Logo = "LogoEmpresa"
             };
 
-            ICommandResult<Notificacao> retorno = handler.Handler(empresaCommand);
-            AdicionarEmpresaCommandOutput retornoDados = (AdicionarEmpresaCommandOutput)retorno.Dados;
+            var retorno = handler.Handler(empresaCommand);
+            var retornoDados = (AdicionarEmpresaCommandOutput)retorno.Dados;
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Empresa gravada com sucesso!", retorno.Mensagem);
@@ -49,24 +49,25 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AtualizarEmpresa()
         {
-            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            Empresa empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "Logo");
-            new EmpresaRepositorio(mockOptions.Object).Salvar(empresa);
+            var repository = new EmpresaRepositorio(mockOptions.Object);
 
-            IEmpresaRepositorio IEmpresaRepos = new EmpresaRepositorio(mockOptions.Object);
-            EmpresaHandler handler = new EmpresaHandler(IEmpresaRepos);
+            var handler = new EmpresaHandler(repository);
 
-            AtualizarEmpresaCommand empresaCommand = new AtualizarEmpresaCommand()
+            var empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "Logo");
+            repository.Salvar(empresa);
+
+            var empresaCommand = new AtualizarEmpresaCommand()
             {
                 Id = 1,
                 Nome = "NomeEmpresa - Editada",
                 Logo = "LogoEmpresa - Editado"
             };
 
-            ICommandResult<Notificacao> retorno = handler.Handler(empresaCommand);
-            AtualizarEmpresaCommandOutput retornoDados = (AtualizarEmpresaCommandOutput)retorno.Dados;
+            var retorno = handler.Handler(empresaCommand);
+            var retornoDados = (AtualizarEmpresaCommandOutput)retorno.Dados;
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Empresa atualizada com sucesso!", retorno.Mensagem);
@@ -78,19 +79,20 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_ApagarEmpresa()
         {
-            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            Empresa empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "Logo");
-            new EmpresaRepositorio(mockOptions.Object).Salvar(empresa);
+            var repository = new EmpresaRepositorio(mockOptions.Object);
 
-            IEmpresaRepositorio IEmpresaRepos = new EmpresaRepositorio(mockOptions.Object);
-            EmpresaHandler handler = new EmpresaHandler(IEmpresaRepos);
+            var handler = new EmpresaHandler(repository);
 
-            ApagarEmpresaCommand empresaCommand = new ApagarEmpresaCommand() { Id = 1 };
+            var empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "Logo");
+            repository.Salvar(empresa);
 
-            ICommandResult<Notificacao> retorno = handler.Handler(empresaCommand);
-            ApagarEmpresaCommandOutput retornoDados = (ApagarEmpresaCommandOutput)retorno.Dados;
+            var empresaCommand = new ApagarEmpresaCommand() { Id = 1 };
+
+            var retorno = handler.Handler(empresaCommand);
+            var retornoDados = (ApagarEmpresaCommandOutput)retorno.Dados;
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Empresa excluída com sucesso!", retorno.Mensagem);

@@ -2,12 +2,9 @@
 using ControleDespesas.Dominio.Commands.Pagamento.Output;
 using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Handlers;
-using ControleDespesas.Dominio.Repositorio;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.Factory;
-using LSCode.Facilitador.Api.InterfacesCommand;
-using LSCode.Validador.ValidacoesNotificacoes;
 using LSCode.Validador.ValueObjects;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -24,25 +21,25 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AdicionarPagamento()
         {
-            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            TipoPagamento tipoPagamento = new TipoPagamento(0, new Texto("DesciçãooTipoPagamento", "Desciçãoo", 250));
-            new TipoPagamentoRepositorio(mockOptions.Object).Salvar(tipoPagamento);
+            var repositoryTipoPagamento = new TipoPagamentoRepositorio(mockOptions.Object);
+            var repositoryEmpresa = new EmpresaRepositorio(mockOptions.Object);
+            var repositoryPessoa = new PessoaRepositorio(mockOptions.Object);
+            var repositoryPagamento = new PagamentoRepositorio(mockOptions.Object);
+            var handler = new PagamentoHandler(repositoryPagamento, repositoryEmpresa, repositoryPessoa, repositoryTipoPagamento);
 
-            Empresa empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "Logo");
-            new EmpresaRepositorio(mockOptions.Object).Salvar(empresa);
+            var tipoPagamento = new TipoPagamento(0, new Texto("DesciçãooTipoPagamento", "Desciçãoo", 250));
+            repositoryTipoPagamento.Salvar(tipoPagamento);
 
-            Pessoa pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPessoa");
-            new PessoaRepositorio(mockOptions.Object).Salvar(pessoa);
+            var empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "Logo");
+            repositoryEmpresa.Salvar(empresa);
 
-            IPagamentoRepositorio IPagamentoRepos = new PagamentoRepositorio(mockOptions.Object);
-            IEmpresaRepositorio IEmpresaRepos = new EmpresaRepositorio(mockOptions.Object);
-            IPessoaRepositorio IPessoaRepos = new PessoaRepositorio(mockOptions.Object);
-            ITipoPagamentoRepositorio ITipoPagamentoRepos = new TipoPagamentoRepositorio(mockOptions.Object);
-            PagamentoHandler handler = new PagamentoHandler(IPagamentoRepos, IEmpresaRepos, IPessoaRepos, ITipoPagamentoRepos);
+            var pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPessoa");
+            repositoryPessoa.Salvar(pessoa);
 
-            AdicionarPagamentoCommand pagamentoCommand = new AdicionarPagamentoCommand()
+            var pagamentoCommand = new AdicionarPagamentoCommand()
             {
                 IdTipoPagamento = 1,
                 IdEmpresa = 1,
@@ -53,8 +50,8 @@ namespace ControleDespesas.Test.Handlers
                 DataPagamento = DateTime.Now
             };
 
-            ICommandResult<Notificacao> retorno = handler.Handler(pagamentoCommand);
-            AdicionarPagamentoCommandOutput retornoDados = (AdicionarPagamentoCommandOutput)retorno.Dados;
+            var retorno = handler.Handler(pagamentoCommand);
+            var retornoDados = (AdicionarPagamentoCommandOutput)retorno.Dados;
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Pagamento gravado com sucesso!", retorno.Mensagem);
@@ -71,36 +68,28 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AtualizarPagamento()
         {
-            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            TipoPagamento tipoPagamento = new TipoPagamento(0, new Texto("DesciçãooTipoPagamento", "Desciçãoo", 250));
-            new TipoPagamentoRepositorio(mockOptions.Object).Salvar(tipoPagamento);
+            var repositoryTipoPagamento = new TipoPagamentoRepositorio(mockOptions.Object);
+            var repositoryEmpresa = new EmpresaRepositorio(mockOptions.Object);
+            var repositoryPessoa = new PessoaRepositorio(mockOptions.Object);
+            var repositoryPagamento = new PagamentoRepositorio(mockOptions.Object);
+            var handler = new PagamentoHandler(repositoryPagamento, repositoryEmpresa, repositoryPessoa, repositoryTipoPagamento);
 
-            Empresa empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "Logo");
-            new EmpresaRepositorio(mockOptions.Object).Salvar(empresa);
+            var tipoPagamento = new TipoPagamento(0, new Texto("DesciçãooTipoPagamento", "Desciçãoo", 250));
+            repositoryTipoPagamento.Salvar(tipoPagamento);
 
-            Pessoa pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPessoa");
-            new PessoaRepositorio(mockOptions.Object).Salvar(pessoa);
+            var empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "Logo");
+            repositoryEmpresa.Salvar(empresa);
 
-            Pagamento pagamento = new Pagamento(
-                0,
-                new TipoPagamento(1),
-                new Empresa(1),
-                new Pessoa(1),
-                new Texto("DescriçãoPagamento", "Descrição", 250),
-                100,
-                DateTime.Now.AddDays(1),
-                DateTime.Now);
-            new PagamentoRepositorio(mockOptions.Object).Salvar(pagamento);
+            var pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPessoa");
+            repositoryPessoa.Salvar(pessoa);
 
-            IPagamentoRepositorio IPagamentoRepos = new PagamentoRepositorio(mockOptions.Object);
-            IEmpresaRepositorio IEmpresaRepos = new EmpresaRepositorio(mockOptions.Object);
-            IPessoaRepositorio IPessoaRepos = new PessoaRepositorio(mockOptions.Object);
-            ITipoPagamentoRepositorio ITipoPagamentoRepos = new TipoPagamentoRepositorio(mockOptions.Object);
-            PagamentoHandler handler = new PagamentoHandler(IPagamentoRepos, IEmpresaRepos, IPessoaRepos, ITipoPagamentoRepos);
+            var pagamento = new Pagamento(0, new TipoPagamento(1), new Empresa(1), new Pessoa(1), new Texto("DescriçãoPagamento", "Descrição", 250), 100, DateTime.Now.AddDays(1), DateTime.Now);
+            repositoryPagamento.Salvar(pagamento);
 
-            AtualizarPagamentoCommand pagamentoCommand = new AtualizarPagamentoCommand()
+            var pagamentoCommand = new AtualizarPagamentoCommand()
             {
                 Id = 1,
                 IdTipoPagamento = 1,
@@ -112,8 +101,8 @@ namespace ControleDespesas.Test.Handlers
                 DataPagamento = DateTime.Now.AddDays(2)
             };
 
-            ICommandResult<Notificacao> retorno = handler.Handler(pagamentoCommand);
-            AtualizarPagamentoCommandOutput retornoDados = (AtualizarPagamentoCommandOutput)retorno.Dados;
+            var retorno = handler.Handler(pagamentoCommand);
+            var retornoDados = (AtualizarPagamentoCommandOutput)retorno.Dados;
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Pagamento atualizado com sucesso!", retorno.Mensagem);
@@ -130,39 +119,31 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_ApagarPagamento()
         {
-            Mock<IOptions<SettingsInfraData>> mockOptions = new Mock<IOptions<SettingsInfraData>>();
+            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
             mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
 
-            TipoPagamento tipoPagamento = new TipoPagamento(0, new Texto("DesciçãooTipoPagamento", "Desciçãoo", 250));
-            new TipoPagamentoRepositorio(mockOptions.Object).Salvar(tipoPagamento);
+            var repositoryTipoPagamento = new TipoPagamentoRepositorio(mockOptions.Object);
+            var repositoryEmpresa = new EmpresaRepositorio(mockOptions.Object);
+            var repositoryPessoa = new PessoaRepositorio(mockOptions.Object);
+            var repositoryPagamento = new PagamentoRepositorio(mockOptions.Object);
+            var handler = new PagamentoHandler(repositoryPagamento, repositoryEmpresa, repositoryPessoa, repositoryTipoPagamento);
 
-            Empresa empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "Logo");
-            new EmpresaRepositorio(mockOptions.Object).Salvar(empresa);
+            var tipoPagamento = new TipoPagamento(0, new Texto("DesciçãooTipoPagamento", "Desciçãoo", 250));
+            repositoryTipoPagamento.Salvar(tipoPagamento);
 
-            Pessoa pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPessoa");
-            new PessoaRepositorio(mockOptions.Object).Salvar(pessoa);
+            var empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "Logo");
+            repositoryEmpresa.Salvar(empresa);
 
-            Pagamento pagamento = new Pagamento(
-                0,
-                new TipoPagamento(1),
-                new Empresa(1),
-                new Pessoa(1),
-                new Texto("DescriçãoPagamento", "Descrição", 250),
-                100,
-                DateTime.Now.AddDays(1),
-                DateTime.Now);
-            new PagamentoRepositorio(mockOptions.Object).Salvar(pagamento);
+            var pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPessoa");
+            repositoryPessoa.Salvar(pessoa);
 
-            IPagamentoRepositorio IPagamentoRepos = new PagamentoRepositorio(mockOptions.Object);
-            IEmpresaRepositorio IEmpresaRepos = new EmpresaRepositorio(mockOptions.Object);
-            IPessoaRepositorio IPessoaRepos = new PessoaRepositorio(mockOptions.Object);
-            ITipoPagamentoRepositorio ITipoPagamentoRepos = new TipoPagamentoRepositorio(mockOptions.Object);
-            PagamentoHandler handler = new PagamentoHandler(IPagamentoRepos, IEmpresaRepos, IPessoaRepos, ITipoPagamentoRepos);
+            var pagamento = new Pagamento(0, new TipoPagamento(1), new Empresa(1), new Pessoa(1), new Texto("DescriçãoPagamento", "Descrição", 250), 100, DateTime.Now.AddDays(1), DateTime.Now);
+            repositoryPagamento.Salvar(pagamento);
 
-            ApagarPagamentoCommand pagamentoCommand = new ApagarPagamentoCommand() { Id = 1 };
+            var pagamentoCommand = new ApagarPagamentoCommand() { Id = 1 };
 
-            ICommandResult<Notificacao> retorno = handler.Handler(pagamentoCommand);
-            ApagarPagamentoCommandOutput retornoDados = (ApagarPagamentoCommandOutput)retorno.Dados;
+            var retorno = handler.Handler(pagamentoCommand);
+            var retornoDados = (ApagarPagamentoCommandOutput)retorno.Dados;
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Pagamento excluído com sucesso!", retorno.Mensagem);

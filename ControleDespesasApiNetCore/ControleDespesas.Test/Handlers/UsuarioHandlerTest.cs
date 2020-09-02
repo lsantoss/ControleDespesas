@@ -16,6 +16,17 @@ namespace ControleDespesas.Test.Handlers
 {
     class UsuarioHandlerTest : DatabaseFactory
     {
+        private readonly Mock<IOptions<SettingsInfraData>> _mockOptions = new Mock<IOptions<SettingsInfraData>>();
+        private readonly UsuarioRepositorio _repository;
+        private readonly UsuarioHandler _handler;
+
+        public UsuarioHandlerTest()
+        {
+            _mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+            _repository = new UsuarioRepositorio(_mockOptions.Object);
+            _handler = new UsuarioHandler(_repository);
+        }
+
         [SetUp]
         public void Setup() => CriarBaseDeDadosETabelas();
 
@@ -29,13 +40,7 @@ namespace ControleDespesas.Test.Handlers
                 Privilegio = EPrivilegioUsuario.Admin
             };
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new UsuarioRepositorio(mockOptions.Object);
-            var handler = new UsuarioHandler(repository);
-
-            var retorno = handler.Handler(usuarioCommand);
+            var retorno = _handler.Handler(usuarioCommand);
 
             var retornoDados = (AdicionarUsuarioCommandOutput)retorno.Dados;
 
@@ -60,15 +65,9 @@ namespace ControleDespesas.Test.Handlers
                 Privilegio = EPrivilegioUsuario.ReadOnly
             };
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+            _repository.Salvar(usuario);
 
-            var repository = new UsuarioRepositorio(mockOptions.Object);
-            var handler = new UsuarioHandler(repository);
-
-            repository.Salvar(usuario);
-
-            var retorno = handler.Handler(usuarioCommand);
+            var retorno = _handler.Handler(usuarioCommand);
 
             var retornoDados = (AtualizarUsuarioCommandOutput)retorno.Dados;
 
@@ -83,19 +82,12 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_ApagarUsuario()
         {
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new UsuarioRepositorio(mockOptions.Object);
-
-            var handler = new UsuarioHandler(repository);
-
             var usuario = new Usuario(0, new Texto("LoginUsuario", "Login", 50), new SenhaMedia("Senha123Usuario"), EPrivilegioUsuario.Admin);
-            repository.Salvar(usuario);
+            _repository.Salvar(usuario);
 
             var usuarioCommand = new ApagarUsuarioCommand() { Id = 1 };
 
-            var retorno = handler.Handler(usuarioCommand);
+            var retorno = _handler.Handler(usuarioCommand);
             var retornoDados = (ApagarUsuarioCommandOutput)retorno.Dados;
 
             Assert.True(retorno.Sucesso);
@@ -114,15 +106,9 @@ namespace ControleDespesas.Test.Handlers
                 Senha = "Senha123Usuario"
             };
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+            _repository.Salvar(usuario);
 
-            var repository = new UsuarioRepositorio(mockOptions.Object);
-            var handler = new UsuarioHandler(repository);
-
-            repository.Salvar(usuario);
-
-            var retorno = handler.Handler(usuarioCommand);
+            var retorno = _handler.Handler(usuarioCommand);
 
             var retornoDados = (UsuarioQueryResult)retorno.Dados;
 

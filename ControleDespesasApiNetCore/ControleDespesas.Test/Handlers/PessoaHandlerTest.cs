@@ -14,6 +14,17 @@ namespace ControleDespesas.Test.Handlers
 {
     public class PessoaHandlerTest : DatabaseFactory
     {
+        private readonly Mock<IOptions<SettingsInfraData>> _mockOptions = new Mock<IOptions<SettingsInfraData>>();
+        private readonly PessoaRepositorio _repository;
+        private readonly PessoaHandler _handler;
+
+        public PessoaHandlerTest()
+        {
+            _mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+            _repository = new PessoaRepositorio(_mockOptions.Object);
+            _handler = new PessoaHandler(_repository);
+        }
+
         [SetUp]
         public void Setup() => CriarBaseDeDadosETabelas();
 
@@ -26,14 +37,7 @@ namespace ControleDespesas.Test.Handlers
                 ImagemPerfil = "ImagemPessoa"
             };
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new PessoaRepositorio(mockOptions.Object);
-
-            var handler = new PessoaHandler(repository);
-
-            var retorno = handler.Handler(pessoaCommand);
+            var retorno = _handler.Handler(pessoaCommand);
 
             var retornoDados = (AdicionarPessoaCommandOutput)retorno.Dados;
 
@@ -56,16 +60,9 @@ namespace ControleDespesas.Test.Handlers
                 ImagemPerfil = "ImagemPessoa - Editada"
             };
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+            _repository.Salvar(pessoa);
 
-            var repository = new PessoaRepositorio(mockOptions.Object);
-
-            var handler = new PessoaHandler(repository);
-
-            repository.Salvar(pessoa);
-
-            var retorno = handler.Handler(pessoaCommand);
+            var retorno = _handler.Handler(pessoaCommand);
 
             var retornoDados = (AtualizarPessoaCommandOutput)retorno.Dados;
 
@@ -83,15 +80,9 @@ namespace ControleDespesas.Test.Handlers
 
             var pessoaCommand = new ApagarPessoaCommand() { Id = 1 };
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+            _repository.Salvar(pessoa);
 
-            var repository = new PessoaRepositorio(mockOptions.Object);
-            var handler = new PessoaHandler(repository);
-
-            repository.Salvar(pessoa);
-
-            var retorno = handler.Handler(pessoaCommand);
+            var retorno = _handler.Handler(pessoaCommand);
 
             var retornoDados = (ApagarPessoaCommandOutput)retorno.Dados;
 

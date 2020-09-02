@@ -15,6 +15,23 @@ namespace ControleDespesas.Test.Handlers
 {
     public class PagamentoHandlerTest : DatabaseFactory
     {
+        private readonly Mock<IOptions<SettingsInfraData>> _mockOptions = new Mock<IOptions<SettingsInfraData>>();
+        private readonly TipoPagamentoRepositorio _repositoryTipoPagamento;
+        private readonly EmpresaRepositorio _repositoryEmpresa;
+        private readonly PessoaRepositorio _repositoryPessoa;
+        private readonly PagamentoRepositorio _repositoryPagamento;
+        private readonly PagamentoHandler _handler;
+
+        public PagamentoHandlerTest()
+        {
+            _mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+            _repositoryTipoPagamento = new TipoPagamentoRepositorio(_mockOptions.Object);
+            _repositoryEmpresa = new EmpresaRepositorio(_mockOptions.Object);
+            _repositoryPessoa = new PessoaRepositorio(_mockOptions.Object);
+            _repositoryPagamento = new PagamentoRepositorio(_mockOptions.Object);
+            _handler = new PagamentoHandler(_repositoryPagamento, _repositoryEmpresa, _repositoryPessoa, _repositoryTipoPagamento);
+        }
+
         [SetUp]
         public void Setup() => CriarBaseDeDadosETabelas();
 
@@ -36,20 +53,11 @@ namespace ControleDespesas.Test.Handlers
                 DataPagamento = DateTime.Now
             };
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+            _repositoryTipoPagamento.Salvar(tipoPagamento);
+            _repositoryEmpresa.Salvar(empresa);
+            _repositoryPessoa.Salvar(pessoa);
 
-            var repositoryTipoPagamento = new TipoPagamentoRepositorio(mockOptions.Object);
-            var repositoryEmpresa = new EmpresaRepositorio(mockOptions.Object);
-            var repositoryPessoa = new PessoaRepositorio(mockOptions.Object);
-            var repositoryPagamento = new PagamentoRepositorio(mockOptions.Object);
-            var handler = new PagamentoHandler(repositoryPagamento, repositoryEmpresa, repositoryPessoa, repositoryTipoPagamento);
-
-            repositoryTipoPagamento.Salvar(tipoPagamento);
-            repositoryEmpresa.Salvar(empresa);
-            repositoryPessoa.Salvar(pessoa);
-
-            var retorno = handler.Handler(pagamentoCommand);
+            var retorno = _handler.Handler(pagamentoCommand);
 
             var retornoDados = (AdicionarPagamentoCommandOutput)retorno.Dados;
 
@@ -85,21 +93,12 @@ namespace ControleDespesas.Test.Handlers
                 DataPagamento = DateTime.Now.AddDays(2)
             };
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+            _repositoryTipoPagamento.Salvar(tipoPagamento);
+            _repositoryEmpresa.Salvar(empresa);
+            _repositoryPessoa.Salvar(pessoa);
+            _repositoryPagamento.Salvar(pagamento);
 
-            var repositoryTipoPagamento = new TipoPagamentoRepositorio(mockOptions.Object);
-            var repositoryEmpresa = new EmpresaRepositorio(mockOptions.Object);
-            var repositoryPessoa = new PessoaRepositorio(mockOptions.Object);
-            var repositoryPagamento = new PagamentoRepositorio(mockOptions.Object);
-            var handler = new PagamentoHandler(repositoryPagamento, repositoryEmpresa, repositoryPessoa, repositoryTipoPagamento);
-
-            repositoryTipoPagamento.Salvar(tipoPagamento);
-            repositoryEmpresa.Salvar(empresa);
-            repositoryPessoa.Salvar(pessoa);
-            repositoryPagamento.Salvar(pagamento);
-
-            var retorno = handler.Handler(pagamentoCommand);
+            var retorno = _handler.Handler(pagamentoCommand);
 
             var retornoDados = (AtualizarPagamentoCommandOutput)retorno.Dados;
 
@@ -125,21 +124,12 @@ namespace ControleDespesas.Test.Handlers
 
             var pagamentoCommand = new ApagarPagamentoCommand() { Id = 1 };
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+            _repositoryTipoPagamento.Salvar(tipoPagamento);
+            _repositoryEmpresa.Salvar(empresa);
+            _repositoryPessoa.Salvar(pessoa);
+            _repositoryPagamento.Salvar(pagamento);
 
-            var repositoryTipoPagamento = new TipoPagamentoRepositorio(mockOptions.Object);
-            var repositoryEmpresa = new EmpresaRepositorio(mockOptions.Object);
-            var repositoryPessoa = new PessoaRepositorio(mockOptions.Object);
-            var repositoryPagamento = new PagamentoRepositorio(mockOptions.Object);
-            var handler = new PagamentoHandler(repositoryPagamento, repositoryEmpresa, repositoryPessoa, repositoryTipoPagamento);
-
-            repositoryTipoPagamento.Salvar(tipoPagamento);
-            repositoryEmpresa.Salvar(empresa);
-            repositoryPessoa.Salvar(pessoa);
-            repositoryPagamento.Salvar(pagamento);
-
-            var retorno = handler.Handler(pagamentoCommand);
+            var retorno = _handler.Handler(pagamentoCommand);
 
             var retornoDados = (ApagarPagamentoCommandOutput)retorno.Dados;
 

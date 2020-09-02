@@ -14,6 +14,17 @@ namespace ControleDespesas.Test.Handlers
 {
     public class TipoPagamentoHandlerTest : DatabaseFactory
     {
+        private readonly Mock<IOptions<SettingsInfraData>> _mockOptions = new Mock<IOptions<SettingsInfraData>>();
+        private readonly TipoPagamentoRepositorio _repository;
+        private readonly TipoPagamentoHandler _handler;
+
+        public TipoPagamentoHandlerTest()
+        {
+            _mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+            _repository = new TipoPagamentoRepositorio(_mockOptions.Object);
+            _handler = new TipoPagamentoHandler(_repository);
+        }
+
         [SetUp]
         public void Setup() => CriarBaseDeDadosETabelas();
 
@@ -25,14 +36,7 @@ namespace ControleDespesas.Test.Handlers
                 Descricao = "DesciçãooTipoPagamento"
             };
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new TipoPagamentoRepositorio(mockOptions.Object);
-
-            var handler = new TipoPagamentoHandler(repository);
-
-            var retorno = handler.Handler(tipoPagamentoCommand);
+            var retorno = _handler.Handler(tipoPagamentoCommand);
 
             var retornoDados = (AdicionarTipoPagamentoCommandOutput)retorno.Dados;
 
@@ -53,16 +57,9 @@ namespace ControleDespesas.Test.Handlers
                 Descricao = "DesciçãooTipoPagamento - Editada"
             };
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+            _repository.Salvar(tipoPagamento);
 
-            var repository = new TipoPagamentoRepositorio(mockOptions.Object);
-
-            var handler = new TipoPagamentoHandler(repository);
-
-            repository.Salvar(tipoPagamento);
-
-            var retorno = handler.Handler(empresaCommand);
+            var retorno = _handler.Handler(empresaCommand);
 
             var retornoDados = (AtualizarTipoPagamentoCommandOutput)retorno.Dados;
 
@@ -79,16 +76,9 @@ namespace ControleDespesas.Test.Handlers
 
             var empresaCommand = new ApagarTipoPagamentoCommand() { Id = 1 };
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+            _repository.Salvar(tipoPagamento);
 
-            var repository = new TipoPagamentoRepositorio(mockOptions.Object);
-
-            var handler = new TipoPagamentoHandler(repository);
-
-            repository.Salvar(tipoPagamento);
-
-            var retorno = handler.Handler(empresaCommand);
+            var retorno = _handler.Handler(empresaCommand);
 
             var retornoDados = (ApagarTipoPagamentoCommandOutput)retorno.Dados;
 

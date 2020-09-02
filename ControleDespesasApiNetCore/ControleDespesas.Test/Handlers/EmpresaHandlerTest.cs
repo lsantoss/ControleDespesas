@@ -14,6 +14,17 @@ namespace ControleDespesas.Test.Handlers
 {
     public class EmpresaHandlerTest : DatabaseFactory
     {
+        private readonly Mock<IOptions<SettingsInfraData>> _mockOptions = new Mock<IOptions<SettingsInfraData>>();
+        private readonly EmpresaRepositorio _repository;
+        private readonly EmpresaHandler _handler;
+
+        public EmpresaHandlerTest()
+        {
+            _mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+            _repository = new EmpresaRepositorio(_mockOptions.Object);
+            _handler = new EmpresaHandler(_repository);
+        }
+
         [SetUp]
         public void Setup() => CriarBaseDeDadosETabelas();
 
@@ -26,14 +37,7 @@ namespace ControleDespesas.Test.Handlers
                 Logo = "LogoEmpresa"
             };
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new EmpresaRepositorio(mockOptions.Object);
-
-            var handler = new EmpresaHandler(repository);
-
-            var retorno = handler.Handler(empresaCommand);
+            var retorno = _handler.Handler(empresaCommand);
 
             var retornoDados = (AdicionarEmpresaCommandOutput)retorno.Dados;
 
@@ -54,17 +58,10 @@ namespace ControleDespesas.Test.Handlers
                 Logo = "LogoEmpresa - Editado"
             };
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new EmpresaRepositorio(mockOptions.Object);
-
-            var handler = new EmpresaHandler(repository);
-
             var empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "Logo");
-            repository.Salvar(empresa);
+            _repository.Salvar(empresa);
 
-            var retorno = handler.Handler(empresaCommand);
+            var retorno = _handler.Handler(empresaCommand);
 
             var retornoDados = (AtualizarEmpresaCommandOutput)retorno.Dados;
 
@@ -80,17 +77,10 @@ namespace ControleDespesas.Test.Handlers
         {
             var empresaCommand = new ApagarEmpresaCommand() { Id = 1 };
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new EmpresaRepositorio(mockOptions.Object);
-
-            var handler = new EmpresaHandler(repository);
-
             var empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "Logo");
-            repository.Salvar(empresa);
+            _repository.Salvar(empresa);
 
-            var retorno = handler.Handler(empresaCommand);
+            var retorno = _handler.Handler(empresaCommand);
 
             var retornoDados = (ApagarEmpresaCommandOutput)retorno.Dados;
 

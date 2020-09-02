@@ -12,6 +12,15 @@ namespace ControleDespesas.Test.Repositorio
 {
     public class UsuarioRepositorioTest : DatabaseFactory
     {
+        private readonly Mock<IOptions<SettingsInfraData>> _mockOptions = new Mock<IOptions<SettingsInfraData>>();
+        private readonly UsuarioRepositorio _repository;
+
+        public UsuarioRepositorioTest()
+        {
+            _mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+            _repository = new UsuarioRepositorio(_mockOptions.Object);
+        }
+
         [SetUp]
         public void Setup() => CriarBaseDeDadosETabelas();
 
@@ -19,14 +28,9 @@ namespace ControleDespesas.Test.Repositorio
         public void Salvar()
         {
             var usuario = new Usuario(0, new Texto("NomeUsuario", "Nome", 50), new SenhaMedia("Senha123"), EPrivilegioUsuario.Admin);
+            _repository.Salvar(usuario);
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new UsuarioRepositorio(mockOptions.Object);
-            repository.Salvar(usuario);
-
-            var retorno = repository.Obter(1);
+            var retorno = _repository.Obter(1);
 
             Assert.AreEqual(1, retorno.Id);
             Assert.AreEqual(usuario.Login.ToString(), retorno.Login);
@@ -38,17 +42,12 @@ namespace ControleDespesas.Test.Repositorio
         public void Atualizar()
         {
             var usuario = new Usuario(0, new Texto("NomeUsuario", "Nome", 50), new SenhaMedia("Senha123"), EPrivilegioUsuario.Admin);
-
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new UsuarioRepositorio(mockOptions.Object);
-            repository.Salvar(usuario);
+            _repository.Salvar(usuario);
 
             usuario = new Usuario(1, new Texto("NomeUsuario - Editado", "Nome", 50), new SenhaMedia("Senha123Editada"), EPrivilegioUsuario.ReadOnly);
-            repository.Atualizar(usuario);
+            _repository.Atualizar(usuario);
 
-            var retorno = repository.Obter(1);
+            var retorno = _repository.Obter(1);
 
             Assert.AreEqual(usuario.Id, retorno.Id);
             Assert.AreEqual(usuario.Login.ToString(), retorno.Login);
@@ -63,17 +62,13 @@ namespace ControleDespesas.Test.Repositorio
             var usuario1 = new Usuario(0, new Texto("NomeUsuario1", "Nome", 50), new SenhaMedia("Senha1231"), EPrivilegioUsuario.ReadOnly);
             var usuario2 = new Usuario(0, new Texto("NomeUsuario2", "Nome", 50), new SenhaMedia("Senha1232"), EPrivilegioUsuario.Admin);
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+            _repository.Salvar(usuario0);
+            _repository.Salvar(usuario1);
+            _repository.Salvar(usuario2);
 
-            var repository = new UsuarioRepositorio(mockOptions.Object);
-            repository.Salvar(usuario0);
-            repository.Salvar(usuario1);
-            repository.Salvar(usuario2);
+            _repository.Deletar(2);
 
-            repository.Deletar(2);
-
-            var retorno = repository.Listar();
+            var retorno = _repository.Listar();
 
             Assert.AreEqual(1, retorno[0].Id);
             Assert.AreEqual(usuario0.Login.ToString(), retorno[0].Login);
@@ -90,14 +85,9 @@ namespace ControleDespesas.Test.Repositorio
         public void Obter()
         {
             var usuario = new Usuario(0, new Texto("NomeUsuario", "Nome", 50), new SenhaMedia("Senha123"), EPrivilegioUsuario.Admin);
+            _repository.Salvar(usuario);
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new UsuarioRepositorio(mockOptions.Object);
-            repository.Salvar(usuario);
-
-            var retorno = repository.Obter(1);
+            var retorno = _repository.Obter(1);
 
             Assert.AreEqual(1, retorno.Id);
             Assert.AreEqual(usuario.Login.ToString(), retorno.Login);
@@ -112,15 +102,11 @@ namespace ControleDespesas.Test.Repositorio
             var usuario1 = new Usuario(0, new Texto("NomeUsuario1", "Nome", 50), new SenhaMedia("Senha1231"), EPrivilegioUsuario.ReadOnly);
             var usuario2 = new Usuario(0, new Texto("NomeUsuario2", "Nome", 50), new SenhaMedia("Senha1232"), EPrivilegioUsuario.Admin);
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+            _repository.Salvar(usuario0);
+            _repository.Salvar(usuario1);
+            _repository.Salvar(usuario2);
 
-            var repository = new UsuarioRepositorio(mockOptions.Object);
-            repository.Salvar(usuario0);
-            repository.Salvar(usuario1);
-            repository.Salvar(usuario2);
-
-            var retorno = repository.Listar();
+            var retorno = _repository.Listar();
 
             Assert.AreEqual(1, retorno[0].Id);
             Assert.AreEqual(usuario0.Login.ToString(), retorno[0].Login);
@@ -142,14 +128,9 @@ namespace ControleDespesas.Test.Repositorio
         public void Logar()
         {
             var usuario = new Usuario(0, new Texto("NomeUsuario", "Nome", 50), new SenhaMedia("Senha123"), EPrivilegioUsuario.Admin);
+            _repository.Salvar(usuario);
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new UsuarioRepositorio(mockOptions.Object);
-            repository.Salvar(usuario);
-
-            var retorno = repository.Logar(usuario.Login.ToString(), usuario.Senha.ToString());
+            var retorno = _repository.Logar(usuario.Login.ToString(), usuario.Senha.ToString());
 
             Assert.AreEqual(1, retorno.Id);
             Assert.AreEqual(usuario.Login.ToString(), retorno.Login);
@@ -161,15 +142,10 @@ namespace ControleDespesas.Test.Repositorio
         public void CheckLogin()
         {
             var usuario = new Usuario(0, new Texto("NomeUsuario", "Nome", 50), new SenhaMedia("Senha123"), EPrivilegioUsuario.Admin);
+            _repository.Salvar(usuario);
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new UsuarioRepositorio(mockOptions.Object);
-            repository.Salvar(usuario);
-
-            var loginExistente = repository.CheckLogin(usuario.Login.ToString());
-            var loginNaoExiste = repository.CheckLogin("LoginErrado");
+            var loginExistente = _repository.CheckLogin(usuario.Login.ToString());
+            var loginNaoExiste = _repository.CheckLogin("LoginErrado");
 
             Assert.True(loginExistente);
             Assert.False(loginNaoExiste);
@@ -179,15 +155,10 @@ namespace ControleDespesas.Test.Repositorio
         public void CheckId()
         {
             var usuario = new Usuario(0, new Texto("NomeUsuario", "Nome", 50), new SenhaMedia("Senha123"), EPrivilegioUsuario.Admin);
+            _repository.Salvar(usuario);
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new UsuarioRepositorio(mockOptions.Object);
-            repository.Salvar(usuario);
-
-            var idExistente = repository.CheckId(1);
-            var idNaoExiste = repository.CheckId(25);
+            var idExistente = _repository.CheckId(1);
+            var idNaoExiste = _repository.CheckId(25);
 
             Assert.True(idExistente);
             Assert.False(idNaoExiste);
@@ -200,15 +171,11 @@ namespace ControleDespesas.Test.Repositorio
             var usuario1 = new Usuario(0, new Texto("NomeUsuario1", "Nome", 50), new SenhaMedia("Senha1231"), EPrivilegioUsuario.ReadOnly);
             var usuario2 = new Usuario(0, new Texto("NomeUsuario2", "Nome", 50), new SenhaMedia("Senha1232"), EPrivilegioUsuario.Admin);
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+            _repository.Salvar(usuario0);
+            _repository.Salvar(usuario1);
+            _repository.Salvar(usuario2);
 
-            var repository = new UsuarioRepositorio(mockOptions.Object);
-            repository.Salvar(usuario0);
-            repository.Salvar(usuario1);
-            repository.Salvar(usuario2);
-
-            var maxId = repository.LocalizarMaxId();
+            var maxId = _repository.LocalizarMaxId();
 
             Assert.AreEqual(3, maxId);
         }

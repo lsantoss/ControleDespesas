@@ -11,6 +11,15 @@ namespace ControleDespesas.Test.Repositorio
 {
     public class EmpresaRepositorioTest : DatabaseFactory
     {
+        private readonly Mock<IOptions<SettingsInfraData>> _mockOptions = new Mock<IOptions<SettingsInfraData>>();
+        private readonly EmpresaRepositorio _repository;
+
+        public EmpresaRepositorioTest()
+        {
+            _mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+            _repository = new EmpresaRepositorio(_mockOptions.Object);
+        }
+
         [SetUp]
         public void Setup() => CriarBaseDeDadosETabelas();
 
@@ -18,14 +27,9 @@ namespace ControleDespesas.Test.Repositorio
         public void Salvar()
         {
             var empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "Logo");
+            _repository.Salvar(empresa);
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new EmpresaRepositorio(mockOptions.Object);
-            repository.Salvar(empresa);
-
-            var retorno = repository.Obter(1);
+            var retorno = _repository.Obter(1);
 
             Assert.AreEqual(1, retorno.Id);
             Assert.AreEqual(empresa.Nome.ToString(), retorno.Nome);
@@ -35,18 +39,13 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Atualizar()
         {
-            var empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "Logo");
-
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new EmpresaRepositorio(mockOptions.Object);
-            repository.Salvar(empresa);
+            var empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "Logo");            
+            _repository.Salvar(empresa);
 
             empresa = new Empresa(1, new Texto("NomeEmpresa - Editada", "Nome", 100), "Logo - Editado");
-            repository.Atualizar(empresa);
+            _repository.Atualizar(empresa);
 
-            var retorno = repository.Obter(1);
+            var retorno = _repository.Obter(1);
 
             Assert.AreEqual(empresa.Id, retorno.Id);
             Assert.AreEqual(empresa.Nome.ToString(), retorno.Nome);
@@ -60,17 +59,13 @@ namespace ControleDespesas.Test.Repositorio
             var empresa1 = new Empresa(0, new Texto("NomeEmpresa1", "Nome", 100), "Logo1");
             var empresa2 = new Empresa(0, new Texto("NomeEmpresa2", "Nome", 100), "Logo2");
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+            _repository.Salvar(empresa0);
+            _repository.Salvar(empresa1);
+            _repository.Salvar(empresa2);
 
-            var repository = new EmpresaRepositorio(mockOptions.Object);
-            repository.Salvar(empresa0);
-            repository.Salvar(empresa1);
-            repository.Salvar(empresa2);
+            _repository.Deletar(2);
 
-            repository.Deletar(2);
-
-            var retorno = repository.Listar();
+            var retorno = _repository.Listar();
 
             Assert.AreEqual(1, retorno[0].Id);
             Assert.AreEqual(empresa0.Nome.ToString(), retorno[0].Nome);
@@ -85,14 +80,9 @@ namespace ControleDespesas.Test.Repositorio
         public void Obter()
         {
             var empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "Logo");
+            _repository.Salvar(empresa);
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new EmpresaRepositorio(mockOptions.Object);
-            repository.Salvar(empresa);
-
-            var retorno = repository.Obter(1);
+            var retorno = _repository.Obter(1);
 
             Assert.AreEqual(1, retorno.Id);
             Assert.AreEqual(empresa.Nome.ToString(), retorno.Nome);
@@ -106,15 +96,11 @@ namespace ControleDespesas.Test.Repositorio
             var empresa1 = new Empresa(0, new Texto("NomeEmpresa1", "Nome", 100), "Logo1");
             var empresa2 = new Empresa(0, new Texto("NomeEmpresa2", "Nome", 100), "Logo2");
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+            _repository.Salvar(empresa0);
+            _repository.Salvar(empresa1);
+            _repository.Salvar(empresa2);
 
-            var repository = new EmpresaRepositorio(mockOptions.Object);
-            repository.Salvar(empresa0);
-            repository.Salvar(empresa1);
-            repository.Salvar(empresa2);
-
-            var retorno = repository.Listar();
+            var retorno = _repository.Listar();
 
             Assert.AreEqual(1, retorno[0].Id);
             Assert.AreEqual(empresa0.Nome.ToString(), retorno[0].Nome);
@@ -133,15 +119,10 @@ namespace ControleDespesas.Test.Repositorio
         public void CheckId()
         {
             var empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "Logo");
+            _repository.Salvar(empresa);
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new EmpresaRepositorio(mockOptions.Object);
-            repository.Salvar(empresa);
-
-            var idExistente = repository.CheckId(1);
-            var idNaoExiste = repository.CheckId(25);
+            var idExistente = _repository.CheckId(1);
+            var idNaoExiste = _repository.CheckId(25);
 
             Assert.True(idExistente);
             Assert.False(idNaoExiste);
@@ -154,15 +135,11 @@ namespace ControleDespesas.Test.Repositorio
             var empresa1 = new Empresa(0, new Texto("NomeEmpresa1", "Nome", 100), "Logo1");
             var empresa2 = new Empresa(0, new Texto("NomeEmpresa2", "Nome", 100), "Logo2");
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+            _repository.Salvar(empresa0);
+            _repository.Salvar(empresa1);
+            _repository.Salvar(empresa2);
 
-            var repository = new EmpresaRepositorio(mockOptions.Object);
-            repository.Salvar(empresa0);
-            repository.Salvar(empresa1);
-            repository.Salvar(empresa2);
-
-            var maxId = repository.LocalizarMaxId();
+            var maxId = _repository.LocalizarMaxId();
 
             Assert.AreEqual(3, maxId);
         }

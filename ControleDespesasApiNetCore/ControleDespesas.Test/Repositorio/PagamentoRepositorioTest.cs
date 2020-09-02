@@ -12,6 +12,21 @@ namespace ControleDespesas.Test.Repositorio
 {
     public class PagamentoRepositorioTest : DatabaseFactory
     {
+        private readonly Mock<IOptions<SettingsInfraData>> _mockOptions = new Mock<IOptions<SettingsInfraData>>();
+        private readonly TipoPagamentoRepositorio _repositoryTipoPagamento;
+        private readonly EmpresaRepositorio _repositoryEmpresa;
+        private readonly PessoaRepositorio _repositoryPessoa;
+        private readonly PagamentoRepositorio _repositoryPagamento;
+
+        public PagamentoRepositorioTest()
+        {
+            _mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+            _repositoryTipoPagamento = new TipoPagamentoRepositorio(_mockOptions.Object);
+            _repositoryEmpresa = new EmpresaRepositorio(_mockOptions.Object);
+            _repositoryPessoa = new PessoaRepositorio(_mockOptions.Object);
+            _repositoryPagamento = new PagamentoRepositorio(_mockOptions.Object);
+        }
+
         [SetUp]
         public void Setup() => CriarBaseDeDadosETabelas();
 
@@ -32,22 +47,12 @@ namespace ControleDespesas.Test.Repositorio
                 DateTime.Now
             );
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+            _repositoryTipoPagamento.Salvar(tipoPagamento);
+            _repositoryEmpresa.Salvar(empresa);
+            _repositoryPessoa.Salvar(pessoa);
+            _repositoryPagamento.Salvar(pagamento);
 
-            var repositoryTipoPagamento = new TipoPagamentoRepositorio(mockOptions.Object);
-            repositoryTipoPagamento.Salvar(tipoPagamento);
-
-            var repositoryEmpresa = new EmpresaRepositorio(mockOptions.Object);
-            repositoryEmpresa.Salvar(empresa);
-
-            var repositoryPessoa = new PessoaRepositorio(mockOptions.Object);
-            repositoryPessoa.Salvar(pessoa);
-
-            var repositoryPagamento = new PagamentoRepositorio(mockOptions.Object);
-            repositoryPagamento.Salvar(pagamento);
-
-            var retorno = repositoryPagamento.Obter(1);
+            var retorno = _repositoryPagamento.Obter(1);
 
             Assert.AreEqual(1, retorno.Id);
             Assert.AreEqual(pagamento.TipoPagamento.Id, retorno.TipoPagamento.Id);
@@ -76,20 +81,10 @@ namespace ControleDespesas.Test.Repositorio
                 DateTime.Now
             );
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repositoryTipoPagamento = new TipoPagamentoRepositorio(mockOptions.Object);
-            repositoryTipoPagamento.Salvar(tipoPagamento);
-
-            var repositoryEmpresa = new EmpresaRepositorio(mockOptions.Object);
-            repositoryEmpresa.Salvar(empresa);
-
-            var repositoryPessoa = new PessoaRepositorio(mockOptions.Object);
-            repositoryPessoa.Salvar(pessoa);
-
-            var repositoryPagamento = new PagamentoRepositorio(mockOptions.Object);
-            repositoryPagamento.Salvar(pagamento);
+            _repositoryTipoPagamento.Salvar(tipoPagamento);
+            _repositoryEmpresa.Salvar(empresa);
+            _repositoryPessoa.Salvar(pessoa);
+            _repositoryPagamento.Salvar(pagamento);
 
             pagamento = new Pagamento(
                 1,
@@ -102,9 +97,9 @@ namespace ControleDespesas.Test.Repositorio
                 DateTime.Now.AddDays(2)
             );
 
-            repositoryPagamento.Atualizar(pagamento);
+            _repositoryPagamento.Atualizar(pagamento);
 
-            var retorno = repositoryPagamento.Obter(1);
+            var retorno = _repositoryPagamento.Obter(1);
 
             Assert.AreEqual(1, retorno.Id);
             Assert.AreEqual(pagamento.TipoPagamento.Id, retorno.TipoPagamento.Id);
@@ -144,25 +139,15 @@ namespace ControleDespesas.Test.Repositorio
                 DateTime.Now.AddDays(2)
             );
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+            _repositoryTipoPagamento.Salvar(tipoPagamento);
+            _repositoryEmpresa.Salvar(empresa);
+            _repositoryPessoa.Salvar(pessoa);
+            _repositoryPagamento.Salvar(pagamento0);
+            _repositoryPagamento.Salvar(pagamento1);
 
-            var repositoryTipoPagamento = new TipoPagamentoRepositorio(mockOptions.Object);
-            repositoryTipoPagamento.Salvar(tipoPagamento);
+            _repositoryPagamento.Deletar(1);
 
-            var repositoryEmpresa = new EmpresaRepositorio(mockOptions.Object);
-            repositoryEmpresa.Salvar(empresa);
-
-            var repositoryPessoa = new PessoaRepositorio(mockOptions.Object);
-            repositoryPessoa.Salvar(pessoa);
-
-            var repositoryPagamento = new PagamentoRepositorio(mockOptions.Object);
-            repositoryPagamento.Salvar(pagamento0);
-            repositoryPagamento.Salvar(pagamento1);
-
-            repositoryPagamento.Deletar(1);
-
-            var retorno = repositoryPagamento.Listar();
+            var retorno = _repositoryPagamento.Listar();
 
             Assert.AreEqual(2, retorno[0].Id);
             Assert.AreEqual(pagamento1.TipoPagamento.Id, retorno[0].TipoPagamento.Id);
@@ -190,23 +175,13 @@ namespace ControleDespesas.Test.Repositorio
                 DateTime.Now.AddDays(1),
                 DateTime.Now
             );
+            
+            _repositoryTipoPagamento.Salvar(tipoPagamento);
+            _repositoryEmpresa.Salvar(empresa);
+            _repositoryPessoa.Salvar(pessoa);
+            _repositoryPagamento.Salvar(pagamento);
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repositoryTipoPagamento = new TipoPagamentoRepositorio(mockOptions.Object);
-            repositoryTipoPagamento.Salvar(tipoPagamento);
-
-            var repositoryEmpresa = new EmpresaRepositorio(mockOptions.Object);
-            repositoryEmpresa.Salvar(empresa);
-
-            var repositoryPessoa = new PessoaRepositorio(mockOptions.Object);
-            repositoryPessoa.Salvar(pessoa);
-
-            var repositoryPagamento = new PagamentoRepositorio(mockOptions.Object);
-            repositoryPagamento.Salvar(pagamento);
-
-            var retorno = repositoryPagamento.Obter(1);
+            var retorno = _repositoryPagamento.Obter(1);
 
             Assert.AreEqual(1, retorno.Id);
             Assert.AreEqual(pagamento.TipoPagamento.Id, retorno.TipoPagamento.Id);
@@ -246,23 +221,13 @@ namespace ControleDespesas.Test.Repositorio
                 DateTime.Now.AddDays(2)
             );
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+            _repositoryTipoPagamento.Salvar(tipoPagamento);
+            _repositoryEmpresa.Salvar(empresa);
+            _repositoryPessoa.Salvar(pessoa);
+            _repositoryPagamento.Salvar(pagamento0);
+            _repositoryPagamento.Salvar(pagamento1);
 
-            var repositoryTipoPagamento = new TipoPagamentoRepositorio(mockOptions.Object);
-            repositoryTipoPagamento.Salvar(tipoPagamento);
-
-            var repositoryEmpresa = new EmpresaRepositorio(mockOptions.Object);
-            repositoryEmpresa.Salvar(empresa);
-
-            var repositoryPessoa = new PessoaRepositorio(mockOptions.Object);
-            repositoryPessoa.Salvar(pessoa);
-
-            var repositoryPagamento = new PagamentoRepositorio(mockOptions.Object);
-            repositoryPagamento.Salvar(pagamento0);
-            repositoryPagamento.Salvar(pagamento1);
-
-            var retorno = repositoryPagamento.Listar();
+            var retorno = _repositoryPagamento.Listar();
 
             Assert.AreEqual(1, retorno[0].Id);
             Assert.AreEqual(pagamento1.TipoPagamento.Id, retorno[1].TipoPagamento.Id);
@@ -300,23 +265,13 @@ namespace ControleDespesas.Test.Repositorio
                 DateTime.Now
             );
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+            _repositoryTipoPagamento.Salvar(tipoPagamento);
+            _repositoryEmpresa.Salvar(empresa);
+            _repositoryPessoa.Salvar(pessoa);
+            _repositoryPagamento.Salvar(pagamento);
 
-            var repositoryTipoPagamento = new TipoPagamentoRepositorio(mockOptions.Object);
-            repositoryTipoPagamento.Salvar(tipoPagamento);
-
-            var repositoryEmpresa = new EmpresaRepositorio(mockOptions.Object);
-            repositoryEmpresa.Salvar(empresa);
-
-            var repositoryPessoa = new PessoaRepositorio(mockOptions.Object);
-            repositoryPessoa.Salvar(pessoa);
-
-            var repositoryPagamento = new PagamentoRepositorio(mockOptions.Object);
-            repositoryPagamento.Salvar(pagamento);
-
-            var idExistente = repositoryPagamento.CheckId(1);
-            var idNaoExiste = repositoryPagamento.CheckId(25);
+            var idExistente = _repositoryPagamento.CheckId(1);
+            var idNaoExiste = _repositoryPagamento.CheckId(25);
 
             Assert.True(idExistente);
             Assert.False(idNaoExiste);
@@ -350,23 +305,13 @@ namespace ControleDespesas.Test.Repositorio
                 DateTime.Now.AddDays(2)
             );
 
-            var mockOptions = new Mock<IOptions<SettingsInfraData>>();
-            mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
+            _repositoryTipoPagamento.Salvar(tipoPagamento);
+            _repositoryEmpresa.Salvar(empresa);
+            _repositoryPessoa.Salvar(pessoa);
+            _repositoryPagamento.Salvar(pagamento0);
+            _repositoryPagamento.Salvar(pagamento1);
 
-            var repositoryTipoPagamento = new TipoPagamentoRepositorio(mockOptions.Object);
-            repositoryTipoPagamento.Salvar(tipoPagamento);
-
-            var repositoryEmpresa = new EmpresaRepositorio(mockOptions.Object);
-            repositoryEmpresa.Salvar(empresa);
-
-            var repositoryPessoa = new PessoaRepositorio(mockOptions.Object);
-            repositoryPessoa.Salvar(pessoa);
-
-            var repositoryPagamento = new PagamentoRepositorio(mockOptions.Object);
-            repositoryPagamento.Salvar(pagamento0);
-            repositoryPagamento.Salvar(pagamento1);
-
-            var maxId = repositoryPagamento.LocalizarMaxId();
+            var maxId = _repositoryPagamento.LocalizarMaxId();
 
             Assert.AreEqual(2, maxId);
         }

@@ -16,7 +16,6 @@ using LSCode.Validador.ValidacoesNotificacoes;
 using LSCode.Validador.ValueObjects;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
-using MongoDB.Bson;
 using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -47,7 +46,9 @@ namespace ControleDespesas.Test.Controllers
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            var responseJson = controller.UsuarioHealthCheck().Result.ToJson();
+            var response = controller.UsuarioHealthCheck().Result;
+
+            var responseJson = JsonConvert.SerializeObject(response);
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<string, Notificacao>>>(responseJson);
 
@@ -62,6 +63,10 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void Usuarios()
         {
+            var usuario0 = new Usuario(0, new Texto("Login0", "Login", 100), new SenhaMedia("Senha1230"), EPrivilegioUsuario.Admin);
+            var usuario1 = new Usuario(0, new Texto("Login1", "Login", 100), new SenhaMedia("Senha1231"), EPrivilegioUsuario.Admin);
+            var usuario2 = new Usuario(0, new Texto("Login2", "Login", 100), new SenhaMedia("Senha1232"), EPrivilegioUsuario.ReadOnly);
+
             var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
@@ -77,15 +82,13 @@ namespace ControleDespesas.Test.Controllers
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            var usuario0 = new Usuario(0, new Texto("Login0", "Login", 100), new SenhaMedia("Senha1230"), EPrivilegioUsuario.Admin);
-            var usuario1 = new Usuario(0, new Texto("Login1", "Login", 100), new SenhaMedia("Senha1231"), EPrivilegioUsuario.Admin);
-            var usuario2 = new Usuario(0, new Texto("Login2", "Login", 100), new SenhaMedia("Senha1232"), EPrivilegioUsuario.ReadOnly);
-
             repository.Salvar(usuario0);
             repository.Salvar(usuario1);
             repository.Salvar(usuario2);
 
-            var responseJson = controller.Usuarios().Result.ToJson().Replace("_id", "id");
+            var response = controller.Usuarios().Result;
+
+            var responseJson = JsonConvert.SerializeObject(response);
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<List<UsuarioQueryResult>, Notificacao>>>(responseJson);
 
@@ -114,6 +117,12 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void Usuario()
         {
+            var usuario0 = new Usuario(0, new Texto("Login0", "Login", 100), new SenhaMedia("Senha1230"), EPrivilegioUsuario.Admin);
+            var usuario1 = new Usuario(0, new Texto("Login1", "Login", 100), new SenhaMedia("Senha1231"), EPrivilegioUsuario.Admin);
+            var usuario2 = new Usuario(0, new Texto("Login2", "Login", 100), new SenhaMedia("Senha1232"), EPrivilegioUsuario.ReadOnly);
+
+            var command = new ObterUsuarioPorIdCommand() { Id = 2 };
+
             var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
@@ -129,17 +138,13 @@ namespace ControleDespesas.Test.Controllers
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            var usuario0 = new Usuario(0, new Texto("Login0", "Login", 100), new SenhaMedia("Senha1230"), EPrivilegioUsuario.Admin);
-            var usuario1 = new Usuario(0, new Texto("Login1", "Login", 100), new SenhaMedia("Senha1231"), EPrivilegioUsuario.Admin);
-            var usuario2 = new Usuario(0, new Texto("Login2", "Login", 100), new SenhaMedia("Senha1232"), EPrivilegioUsuario.ReadOnly);
-
             repository.Salvar(usuario0);
             repository.Salvar(usuario1);
             repository.Salvar(usuario2);
 
-            var command = new ObterUsuarioPorIdCommand() { Id = 2 };
+            var response = controller.Usuario(command).Result;
 
-            var responseJson = controller.Usuario(command).Result.ToJson().Replace("_id", "id");
+            var responseJson = JsonConvert.SerializeObject(response);
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<UsuarioQueryResult, Notificacao>>>(responseJson);
 
@@ -158,6 +163,13 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void UsuarioInserir()
         {
+            var command = new AdicionarUsuarioCommand()
+            {
+                Login = "Login",
+                Senha = "Senha123",
+                Privilegio = EPrivilegioUsuario.Admin
+            };
+
             var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
@@ -173,14 +185,9 @@ namespace ControleDespesas.Test.Controllers
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            var command = new AdicionarUsuarioCommand()
-            {
-                Login = "Login",
-                Senha = "Senha123",
-                Privilegio = EPrivilegioUsuario.Admin
-            };
+            var response = controller.UsuarioInserir(command).Result;
 
-            var responseJson = controller.UsuarioInserir(command).Result.ToJson().Replace("_id", "id");
+            var responseJson = JsonConvert.SerializeObject(response);
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<AdicionarUsuarioCommandOutput, Notificacao>>>(responseJson);
 
@@ -199,6 +206,16 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void UsuarioAlterar()
         {
+            var usuario = new Usuario(0, new Texto("Login", "Login", 100), new SenhaMedia("Senha123"), EPrivilegioUsuario.Admin);
+
+            var command = new AtualizarUsuarioCommand()
+            {
+                Id = 1,
+                Login = "Login - Editado",
+                Senha = "Senha123Edit",
+                Privilegio = EPrivilegioUsuario.ReadOnly
+            };
+
             var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
@@ -214,18 +231,11 @@ namespace ControleDespesas.Test.Controllers
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            var usuario = new Usuario(0, new Texto("Login", "Login", 100), new SenhaMedia("Senha123"), EPrivilegioUsuario.Admin);
             repository.Salvar(usuario);
 
-            var command = new AtualizarUsuarioCommand()
-            {
-                Id = 1,
-                Login = "Login - Editado",
-                Senha = "Senha123Edit",
-                Privilegio = EPrivilegioUsuario.ReadOnly
-            };
+            var response = controller.UsuarioAlterar(command).Result;
 
-            var responseJson = controller.UsuarioAlterar(command).Result.ToJson().Replace("_id", "id");
+            var responseJson = JsonConvert.SerializeObject(response);
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<AtualizarUsuarioCommandOutput, Notificacao>>>(responseJson);
 
@@ -244,6 +254,10 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void UsuarioExcluir()
         {
+            var usuario = new Usuario(0, new Texto("Login", "Login", 100), new SenhaMedia("Senha123"), EPrivilegioUsuario.Admin);
+
+            var command = new ApagarUsuarioCommand() { Id = 1 };
+
             var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
@@ -259,12 +273,11 @@ namespace ControleDespesas.Test.Controllers
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            var usuario = new Usuario(0, new Texto("Login", "Login", 100), new SenhaMedia("Senha123"), EPrivilegioUsuario.Admin);
             repository.Salvar(usuario);
 
-            var command = new ApagarUsuarioCommand() { Id = 1 };
+            var response = controller.UsuarioExcluir(command).Result;
 
-            var responseJson = controller.UsuarioExcluir(command).Result.ToJson().Replace("_id", "id");
+            var responseJson = JsonConvert.SerializeObject(response);
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<ApagarUsuarioCommandOutput, Notificacao>>>(responseJson);
 
@@ -280,6 +293,14 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void UsuarioLogin()
         {
+            var usuario = new Usuario(0, new Texto("Login", "Login", 100), new SenhaMedia("Senha123"), EPrivilegioUsuario.Admin);
+
+            var command = new LoginUsuarioCommand()
+            {
+                Login = "Login",
+                Senha = "Senha123"
+            };
+
             var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
@@ -295,16 +316,11 @@ namespace ControleDespesas.Test.Controllers
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            var usuario = new Usuario(0, new Texto("Login", "Login", 100), new SenhaMedia("Senha123"), EPrivilegioUsuario.Admin);
             repository.Salvar(usuario);
 
-            var command = new LoginUsuarioCommand()
-            {
-                Login = "Login",
-                Senha = "Senha123"
-            };
+            var response = controller.UsuarioLogin(command).Result;
 
-            var responseJson = controller.UsuarioLogin(command).Result.ToJson().Replace("_id", "id");
+            var responseJson = JsonConvert.SerializeObject(response);
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<UsuarioQueryResult, Notificacao>>>(responseJson);
 

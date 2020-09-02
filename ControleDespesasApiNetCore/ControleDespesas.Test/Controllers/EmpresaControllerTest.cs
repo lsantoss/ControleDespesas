@@ -14,7 +14,6 @@ using LSCode.Validador.ValidacoesNotificacoes;
 using LSCode.Validador.ValueObjects;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
-using MongoDB.Bson;
 using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -43,7 +42,9 @@ namespace ControleDespesas.Test.Controllers
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            var responseJson = controller.EmpresaHealthCheck().Result.ToJson();
+            var response = controller.EmpresaHealthCheck().Result;
+
+            var responseJson = JsonConvert.SerializeObject(response);
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<string, Notificacao>>>(responseJson);
 
@@ -58,6 +59,10 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void Empresas()
         {
+            var empresa0 = new Empresa(0, new Texto("NomeEmpresa0", "Nome", 100), "Logo0");
+            var empresa1 = new Empresa(0, new Texto("NomeEmpresa1", "Nome", 100), "Logo1");
+            var empresa2 = new Empresa(0, new Texto("NomeEmpresa2", "Nome", 100), "Logo2");
+
             var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
@@ -71,15 +76,13 @@ namespace ControleDespesas.Test.Controllers
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            var empresa0 = new Empresa(0, new Texto("NomeEmpresa0", "Nome", 100), "Logo0");
-            var empresa1 = new Empresa(0, new Texto("NomeEmpresa1", "Nome", 100), "Logo1");
-            var empresa2 = new Empresa(0, new Texto("NomeEmpresa2", "Nome", 100), "Logo2");
-
             repository.Salvar(empresa0);
             repository.Salvar(empresa1);
             repository.Salvar(empresa2);
 
-            var responseJson = controller.Empresas().Result.ToJson().Replace("_id","id");
+            var response = controller.Empresas().Result;
+
+            var responseJson = JsonConvert.SerializeObject(response);
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<List<EmpresaQueryResult>, Notificacao>>>(responseJson);
 
@@ -105,6 +108,12 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void Empresa()
         {
+            var empresa0 = new Empresa(0, new Texto("NomeEmpresa0", "Nome", 100), "Logo0");
+            var empresa1 = new Empresa(0, new Texto("NomeEmpresa1", "Nome", 100), "Logo1");
+            var empresa2 = new Empresa(0, new Texto("NomeEmpresa2", "Nome", 100), "Logo2");
+
+            var command = new ObterEmpresaPorIdCommand() { Id = 2 };
+
             var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
@@ -118,17 +127,13 @@ namespace ControleDespesas.Test.Controllers
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            var empresa0 = new Empresa(0, new Texto("NomeEmpresa0", "Nome", 100), "Logo0");
-            var empresa1 = new Empresa(0, new Texto("NomeEmpresa1", "Nome", 100), "Logo1");
-            var empresa2 = new Empresa(0, new Texto("NomeEmpresa2", "Nome", 100), "Logo2");
-
             repository.Salvar(empresa0);
             repository.Salvar(empresa1);
             repository.Salvar(empresa2);
 
-            var command = new ObterEmpresaPorIdCommand() { Id = 2 };
+            var response = controller.Empresa(command).Result;
 
-            var responseJson = controller.Empresa(command).Result.ToJson().Replace("_id", "id");
+            var responseJson = JsonConvert.SerializeObject(response);
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<EmpresaQueryResult, Notificacao>>>(responseJson);
 
@@ -146,6 +151,12 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void EmpresaInserir()
         {
+            var command = new AdicionarEmpresaCommand()
+            {
+                Nome = "NomeEmpresa",
+                Logo = "LogoEmpresa"
+            };
+
             var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
@@ -159,13 +170,9 @@ namespace ControleDespesas.Test.Controllers
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            var command = new AdicionarEmpresaCommand() 
-            { 
-                Nome = "NomeEmpresa",
-                Logo = "LogoEmpresa"
-            };
+            var response = controller.EmpresaInserir(command).Result;
 
-            var responseJson = controller.EmpresaInserir(command).Result.ToJson().Replace("_id", "id");
+            var responseJson = JsonConvert.SerializeObject(response);
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<AdicionarEmpresaCommandOutput, Notificacao>>>(responseJson);
 
@@ -183,6 +190,15 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void EmpresaAlterar()
         {
+            var empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "LogoEmpresa");
+
+            var command = new AtualizarEmpresaCommand()
+            {
+                Id = 1,
+                Nome = "NomeEmpresa - Editada",
+                Logo = "LogoEmpresa - Editada"
+            };
+
             var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
@@ -196,17 +212,11 @@ namespace ControleDespesas.Test.Controllers
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            var empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "LogoEmpresa");
             repository.Salvar(empresa);
 
-            var command = new AtualizarEmpresaCommand()
-            {
-                Id = 1,
-                Nome = "NomeEmpresa - Editada",
-                Logo = "LogoEmpresa - Editada"
-            };
+            var response = controller.EmpresaAlterar(command).Result;
 
-            var responseJson = controller.EmpresaAlterar(command).Result.ToJson().Replace("_id", "id");
+            var responseJson = JsonConvert.SerializeObject(response);
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<AtualizarEmpresaCommandOutput, Notificacao>>>(responseJson);
 
@@ -224,6 +234,10 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void EmpresaExcluir()
         {
+            var empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "LogoEmpresa");
+
+            var command = new ApagarEmpresaCommand() { Id = 1 };
+
             var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
@@ -237,12 +251,11 @@ namespace ControleDespesas.Test.Controllers
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            var empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "LogoEmpresa");
             repository.Salvar(empresa);
 
-            var command = new ApagarEmpresaCommand() { Id = 1 };
+            var response = controller.EmpresaExcluir(command).Result;
 
-            var responseJson = controller.EmpresaExcluir(command).Result.ToJson().Replace("_id", "id");
+            var responseJson = JsonConvert.SerializeObject(response);
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<ApagarEmpresaCommandOutput, Notificacao>>>(responseJson);
 

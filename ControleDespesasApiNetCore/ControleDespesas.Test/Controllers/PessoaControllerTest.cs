@@ -14,7 +14,6 @@ using LSCode.Validador.ValidacoesNotificacoes;
 using LSCode.Validador.ValueObjects;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
-using MongoDB.Bson;
 using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -43,7 +42,9 @@ namespace ControleDespesas.Test.Controllers
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            var responseJson = controller.PessoaHealthCheck().Result.ToJson();
+            var response = controller.PessoaHealthCheck().Result;
+
+            var responseJson = JsonConvert.SerializeObject(response);
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<string, Notificacao>>>(responseJson);
 
@@ -58,6 +59,10 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void Pessoas()
         {
+            var pessoa0 = new Pessoa(0, new Texto("NomePessoa0", "Nome", 100), "ImagemPessoa0");
+            var pessoa1 = new Pessoa(0, new Texto("NomePessoa1", "Nome", 100), "ImagemPessoa1");
+            var pessoa2 = new Pessoa(0, new Texto("NomePessoa2", "Nome", 100), "ImagemPessoa2");
+
             var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
@@ -71,15 +76,13 @@ namespace ControleDespesas.Test.Controllers
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            var pessoa0 = new Pessoa(0, new Texto("NomePessoa0", "Nome", 100), "ImagemPessoa0");
-            var pessoa1 = new Pessoa(0, new Texto("NomePessoa1", "Nome", 100), "ImagemPessoa1");
-            var pessoa2 = new Pessoa(0, new Texto("NomePessoa2", "Nome", 100), "ImagemPessoa2");
-
             repository.Salvar(pessoa0);
             repository.Salvar(pessoa1);
             repository.Salvar(pessoa2);
 
-            var responseJson = controller.Pessoas().Result.ToJson().Replace("_id", "id");
+            var response = controller.Pessoas().Result;
+
+            var responseJson = JsonConvert.SerializeObject(response);
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<List<PessoaQueryResult>, Notificacao>>>(responseJson);
 
@@ -105,6 +108,12 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void Empresa()
         {
+            var pessoa0 = new Pessoa(0, new Texto("NomePessoa0", "Nome", 100), "ImagemPerfil0");
+            var pessoa1 = new Pessoa(0, new Texto("NomePessoa1", "Nome", 100), "ImagemPerfil1");
+            var pessoa2 = new Pessoa(0, new Texto("NomePessoa2", "Nome", 100), "ImagemPerfil2");
+
+            var command = new ObterPessoaPorIdCommand() { Id = 2 };
+
             var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
@@ -118,17 +127,13 @@ namespace ControleDespesas.Test.Controllers
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            var pessoa0 = new Pessoa(0, new Texto("NomePessoa0", "Nome", 100), "ImagemPerfil0");
-            var pessoa1 = new Pessoa(0, new Texto("NomePessoa1", "Nome", 100), "ImagemPerfil1");
-            var pessoa2 = new Pessoa(0, new Texto("NomePessoa2", "Nome", 100), "ImagemPerfil2");
-
             repository.Salvar(pessoa0);
             repository.Salvar(pessoa1);
             repository.Salvar(pessoa2);
 
-            var command = new ObterPessoaPorIdCommand() { Id = 2 };
+            var response = controller.Pessoa(command).Result;
 
-            var responseJson = controller.Pessoa(command).Result.ToJson().Replace("_id", "id");
+            var responseJson = JsonConvert.SerializeObject(response);
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<PessoaQueryResult, Notificacao>>>(responseJson);
 
@@ -146,6 +151,12 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void EmpresaInserir()
         {
+            var command = new AdicionarPessoaCommand()
+            {
+                Nome = "NomePessoa",
+                ImagemPerfil = "ImagemPessoa"
+            };
+            
             var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
@@ -159,13 +170,9 @@ namespace ControleDespesas.Test.Controllers
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            var command = new AdicionarPessoaCommand()
-            {
-                Nome = "NomePessoa",
-                ImagemPerfil = "ImagemPessoa"
-            };
+            var response = controller.PessoaInserir(command).Result;
 
-            var responseJson = controller.PessoaInserir(command).Result.ToJson().Replace("_id", "id");
+            var responseJson = JsonConvert.SerializeObject(response);
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<AdicionarPessoaCommandOutput, Notificacao>>>(responseJson);
 
@@ -183,6 +190,15 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void EmpresaAlterar()
         {
+            var pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPessoa");
+
+            var command = new AtualizarPessoaCommand()
+            {
+                Id = 1,
+                Nome = "NomePessoa - Editada",
+                ImagemPerfil = "ImagemPessoa - Editada"
+            };
+
             var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
@@ -196,17 +212,11 @@ namespace ControleDespesas.Test.Controllers
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            var pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPessoa");
             repository.Salvar(pessoa);
 
-            var command = new AtualizarPessoaCommand()
-            {
-                Id = 1,
-                Nome = "NomePessoa - Editada",
-                ImagemPerfil = "ImagemPessoa - Editada"
-            };
+            var response = controller.PessoaAlterar(command).Result;
 
-            var responseJson = controller.PessoaAlterar(command).Result.ToJson().Replace("_id", "id");
+            var responseJson = JsonConvert.SerializeObject(response);
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<AtualizarPessoaCommandOutput, Notificacao>>>(responseJson);
 
@@ -224,6 +234,10 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void EmpresaExcluir()
         {
+            var pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPessoa");
+
+            var command = new ApagarPessoaCommand() { Id = 1 };
+
             var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
@@ -237,12 +251,11 @@ namespace ControleDespesas.Test.Controllers
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            var pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPessoa");
             repository.Salvar(pessoa);
 
-            var command = new ApagarPessoaCommand() { Id = 1 };
+            var response = controller.PessoaExcluir(command).Result;
 
-            var responseJson = controller.PessoaExcluir(command).Result.ToJson().Replace("_id", "id");
+            var responseJson = JsonConvert.SerializeObject(response);
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<ApagarPessoaCommandOutput, Notificacao>>>(responseJson);
 

@@ -14,7 +14,6 @@ using LSCode.Validador.ValidacoesNotificacoes;
 using LSCode.Validador.ValueObjects;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
-using MongoDB.Bson;
 using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -43,7 +42,9 @@ namespace ControleDespesas.Test.Controllers
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            var responseJson = controller.TipoPagamentoHealthCheck().Result.ToJson();
+            var response = controller.TipoPagamentoHealthCheck().Result;
+
+            var responseJson = JsonConvert.SerializeObject(response);
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<string, Notificacao>>>(responseJson);
 
@@ -58,6 +59,10 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void TipoPagamentos()
         {
+            var tipoPagamento0 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento0", "Descrição", 250));
+            var tipoPagamento1 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento1", "Descrição", 250));
+            var tipoPagamento2 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento2", "Descrição", 250));
+
             var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
@@ -71,15 +76,13 @@ namespace ControleDespesas.Test.Controllers
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            var tipoPagamento0 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento0", "Descrição", 250));
-            var tipoPagamento1 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento1", "Descrição", 250));
-            var tipoPagamento2 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento2", "Descrição", 250));
-
             repository.Salvar(tipoPagamento0);
             repository.Salvar(tipoPagamento1);
             repository.Salvar(tipoPagamento2);
 
-            var responseJson = controller.TipoPagamentos().Result.ToJson().Replace("_id", "id");
+            var response = controller.TipoPagamentos().Result;
+
+            var responseJson = JsonConvert.SerializeObject(response);
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<List<TipoPagamentoQueryResult>, Notificacao>>>(responseJson);
 
@@ -102,6 +105,12 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void TipoPagamento()
         {
+            var tipoPagamento0 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento0", "Descrição", 250));
+            var tipoPagamento1 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento1", "Descrição", 250));
+            var tipoPagamento2 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento2", "Descrição", 250));
+
+            var command = new ObterTipoPagamentoPorIdCommand() { Id = 2 };
+
             var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
@@ -115,17 +124,13 @@ namespace ControleDespesas.Test.Controllers
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            var tipoPagamento0 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento0", "Descrição", 250));
-            var tipoPagamento1 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento1", "Descrição", 250));
-            var tipoPagamento2 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento2", "Descrição", 250));
-
             repository.Salvar(tipoPagamento0);
             repository.Salvar(tipoPagamento1);
             repository.Salvar(tipoPagamento2);
 
-            var command = new ObterTipoPagamentoPorIdCommand() { Id = 2 };
+            var response = controller.TipoPagamento(command).Result;
 
-            var responseJson = controller.TipoPagamento(command).Result.ToJson().Replace("_id", "id");
+            var responseJson = JsonConvert.SerializeObject(response);
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<TipoPagamentoQueryResult, Notificacao>>>(responseJson);
 
@@ -142,6 +147,11 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void TipoPagamentoInserir()
         {
+            var command = new AdicionarTipoPagamentoCommand()
+            {
+                Descricao = "DesciçãoTipoPagamento",
+            };
+
             var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
@@ -155,12 +165,9 @@ namespace ControleDespesas.Test.Controllers
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            var command = new AdicionarTipoPagamentoCommand()
-            {
-                Descricao = "DesciçãoTipoPagamento",
-            };
+            var response = controller.TipoPagamentoInserir(command).Result;
 
-            var responseJson = controller.TipoPagamentoInserir(command).Result.ToJson().Replace("_id", "id");
+            var responseJson = JsonConvert.SerializeObject(response);
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<AdicionarTipoPagamentoCommandOutput, Notificacao>>>(responseJson);
 
@@ -177,6 +184,14 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void TipoPagamentoAlterar()
         {
+            var tipoPagamento = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento", "Descrição", 250));
+
+            var command = new AtualizarTipoPagamentoCommand()
+            {
+                Id = 1,
+                Descricao = "DescriçãoTipoPagamento - Editada"
+            };
+
             var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
@@ -190,16 +205,11 @@ namespace ControleDespesas.Test.Controllers
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            var tipoPagamento = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento", "Descrição", 250));
             repository.Salvar(tipoPagamento);
 
-            var command = new AtualizarTipoPagamentoCommand()
-            {
-                Id = 1,
-                Descricao = "DescriçãoTipoPagamento - Editada"
-            };
+            var response = controller.TipoPagamentoAlterar(command).Result;
 
-            var responseJson = controller.TipoPagamentoAlterar(command).Result.ToJson().Replace("_id", "id");
+            var responseJson = JsonConvert.SerializeObject(response);
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<AtualizarTipoPagamentoCommandOutput, Notificacao>>>(responseJson);
 
@@ -216,6 +226,10 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void TipoPagamentoExcluir()
         {
+            var tipoPagamento = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento", "Descrição", 250));
+
+            var command = new ApagarTipoPagamentoCommand() { Id = 1 };
+
             var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
             mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
@@ -229,12 +243,11 @@ namespace ControleDespesas.Test.Controllers
             controller.ControllerContext.HttpContext = new DefaultHttpContext();
             controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
 
-            var tipoPagamento = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento", "Descrição", 250));
             repository.Salvar(tipoPagamento);
 
-            var command = new ApagarTipoPagamentoCommand() { Id = 1 };
+            var response = controller.TipoPagamentoExcluir(command).Result;
 
-            var responseJson = controller.TipoPagamentoExcluir(command).Result.ToJson().Replace("_id", "id");
+            var responseJson = JsonConvert.SerializeObject(response);
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<ApagarTipoPagamentoCommandOutput, Notificacao>>>(responseJson);
 

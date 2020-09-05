@@ -23,26 +23,30 @@ namespace ControleDespesas.Test.Controllers
 {
     public class PessoaControllerTest : DatabaseFactory
     {
+        private readonly Mock<IOptions<SettingsAPI>> _mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
+        private readonly Mock<IOptions<SettingsInfraData>> _mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
+        private readonly PessoaRepositorio _repository;
+        private readonly PessoaHandler _handler;
+        private readonly PessoaController _controller;
+
+        public PessoaControllerTest()
+        {
+            _mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
+            _mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
+            _repository = new PessoaRepositorio(_mockOptionsInfra.Object);
+            _handler = new PessoaHandler(_repository);
+            _controller = new PessoaController(_repository, _handler, _mockOptionsAPI.Object);
+            _controller.ControllerContext.HttpContext = new DefaultHttpContext();
+            _controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
+        }
+
         [SetUp]
         public void Setup() => CriarBaseDeDadosETabelas();
 
         [Test]
         public void PessoaHealthCheck()
         {
-            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
-            mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
-
-            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
-            mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new PessoaRepositorio(mockOptionsInfra.Object);
-            var handler = new PessoaHandler(repository);
-
-            var controller = new PessoaController(repository, handler, mockOptionsAPI.Object);
-            controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
-
-            var response = controller.PessoaHealthCheck().Result;
+            var response = _controller.PessoaHealthCheck().Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -63,24 +67,11 @@ namespace ControleDespesas.Test.Controllers
             var pessoa1 = new Pessoa(0, new Texto("NomePessoa1", "Nome", 100), "ImagemPessoa1");
             var pessoa2 = new Pessoa(0, new Texto("NomePessoa2", "Nome", 100), "ImagemPessoa2");
 
-            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
-            mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
+            _repository.Salvar(pessoa0);
+            _repository.Salvar(pessoa1);
+            _repository.Salvar(pessoa2);
 
-            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
-            mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new PessoaRepositorio(mockOptionsInfra.Object);
-            var handler = new PessoaHandler(repository);
-
-            var controller = new PessoaController(repository, handler, mockOptionsAPI.Object);
-            controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
-
-            repository.Salvar(pessoa0);
-            repository.Salvar(pessoa1);
-            repository.Salvar(pessoa2);
-
-            var response = controller.Pessoas().Result;
+            var response = _controller.Pessoas().Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -114,24 +105,11 @@ namespace ControleDespesas.Test.Controllers
 
             var command = new ObterPessoaPorIdCommand() { Id = 2 };
 
-            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
-            mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
+            _repository.Salvar(pessoa0);
+            _repository.Salvar(pessoa1);
+            _repository.Salvar(pessoa2);
 
-            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
-            mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new PessoaRepositorio(mockOptionsInfra.Object);
-            var handler = new PessoaHandler(repository);
-
-            var controller = new PessoaController(repository, handler, mockOptionsAPI.Object);
-            controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
-
-            repository.Salvar(pessoa0);
-            repository.Salvar(pessoa1);
-            repository.Salvar(pessoa2);
-
-            var response = controller.Pessoa(command).Result;
+            var response = _controller.Pessoa(command).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -156,21 +134,8 @@ namespace ControleDespesas.Test.Controllers
                 Nome = "NomePessoa",
                 ImagemPerfil = "ImagemPessoa"
             };
-            
-            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
-            mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
 
-            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
-            mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new PessoaRepositorio(mockOptionsInfra.Object);
-            var handler = new PessoaHandler(repository);
-
-            var controller = new PessoaController(repository, handler, mockOptionsAPI.Object);
-            controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
-
-            var response = controller.PessoaInserir(command).Result;
+            var response = _controller.PessoaInserir(command).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -199,22 +164,9 @@ namespace ControleDespesas.Test.Controllers
                 ImagemPerfil = "ImagemPessoa - Editada"
             };
 
-            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
-            mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
+            _repository.Salvar(pessoa);
 
-            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
-            mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new PessoaRepositorio(mockOptionsInfra.Object);
-            var handler = new PessoaHandler(repository);
-
-            var controller = new PessoaController(repository, handler, mockOptionsAPI.Object);
-            controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
-
-            repository.Salvar(pessoa);
-
-            var response = controller.PessoaAlterar(command).Result;
+            var response = _controller.PessoaAlterar(command).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -238,22 +190,9 @@ namespace ControleDespesas.Test.Controllers
 
             var command = new ApagarPessoaCommand() { Id = 1 };
 
-            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
-            mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
+            _repository.Salvar(pessoa);
 
-            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
-            mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new PessoaRepositorio(mockOptionsInfra.Object);
-            var handler = new PessoaHandler(repository);
-
-            var controller = new PessoaController(repository, handler, mockOptionsAPI.Object);
-            controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
-
-            repository.Salvar(pessoa);
-
-            var response = controller.PessoaExcluir(command).Result;
+            var response = _controller.PessoaExcluir(command).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 

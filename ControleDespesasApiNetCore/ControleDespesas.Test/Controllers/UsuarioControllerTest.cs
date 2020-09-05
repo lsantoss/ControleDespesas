@@ -25,28 +25,32 @@ namespace ControleDespesas.Test.Controllers
 {
     public class UsuarioControllerTest : DatabaseFactory
     {
+        private readonly Mock<IOptions<SettingsAPI>> _mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
+        private readonly Mock<IOptions<SettingsInfraData>> _mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
+        private readonly UsuarioRepositorio _repository;
+        private readonly UsuarioHandler _handler;
+        private readonly TokenJWTService _tokenJWTService;
+        private readonly UsuarioController _controller;
+
+        public UsuarioControllerTest()
+        {
+            _mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
+            _mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
+            _repository = new UsuarioRepositorio(_mockOptionsInfra.Object);
+            _handler = new UsuarioHandler(_repository);
+            _tokenJWTService = new TokenJWTService(_mockOptionsAPI.Object);
+            _controller = new UsuarioController(_repository, _handler, _mockOptionsAPI.Object, _tokenJWTService);
+            _controller.ControllerContext.HttpContext = new DefaultHttpContext();
+            _controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
+        }
+
         [SetUp]
         public void Setup() => CriarBaseDeDadosETabelas();
 
         [Test]
         public void UsuarioHealthCheck()
         {
-            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
-            mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
-
-            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
-            mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new UsuarioRepositorio(mockOptionsInfra.Object);
-            var handler = new UsuarioHandler(repository);
-
-            var tokenJWTService = new TokenJWTService(mockOptionsAPI.Object);
-
-            var controller = new UsuarioController(repository, handler, mockOptionsAPI.Object, tokenJWTService);
-            controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
-
-            var response = controller.UsuarioHealthCheck().Result;
+            var response = _controller.UsuarioHealthCheck().Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -67,26 +71,11 @@ namespace ControleDespesas.Test.Controllers
             var usuario1 = new Usuario(0, new Texto("Login1", "Login", 100), new SenhaMedia("Senha1231"), EPrivilegioUsuario.Admin);
             var usuario2 = new Usuario(0, new Texto("Login2", "Login", 100), new SenhaMedia("Senha1232"), EPrivilegioUsuario.ReadOnly);
 
-            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
-            mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
+            _repository.Salvar(usuario0);
+            _repository.Salvar(usuario1);
+            _repository.Salvar(usuario2);
 
-            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
-            mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new UsuarioRepositorio(mockOptionsInfra.Object);
-            var handler = new UsuarioHandler(repository);
-
-            var tokenJWTService = new TokenJWTService(mockOptionsAPI.Object);
-
-            var controller = new UsuarioController(repository, handler, mockOptionsAPI.Object, tokenJWTService);
-            controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
-
-            repository.Salvar(usuario0);
-            repository.Salvar(usuario1);
-            repository.Salvar(usuario2);
-
-            var response = controller.Usuarios().Result;
+            var response = _controller.Usuarios().Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -123,26 +112,11 @@ namespace ControleDespesas.Test.Controllers
 
             var command = new ObterUsuarioPorIdCommand() { Id = 2 };
 
-            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
-            mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
+            _repository.Salvar(usuario0);
+            _repository.Salvar(usuario1);
+            _repository.Salvar(usuario2);
 
-            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
-            mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new UsuarioRepositorio(mockOptionsInfra.Object);
-            var handler = new UsuarioHandler(repository);
-
-            var tokenJWTService = new TokenJWTService(mockOptionsAPI.Object);
-
-            var controller = new UsuarioController(repository, handler, mockOptionsAPI.Object, tokenJWTService);
-            controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
-
-            repository.Salvar(usuario0);
-            repository.Salvar(usuario1);
-            repository.Salvar(usuario2);
-
-            var response = controller.Usuario(command).Result;
+            var response = _controller.Usuario(command).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -170,22 +144,7 @@ namespace ControleDespesas.Test.Controllers
                 Privilegio = EPrivilegioUsuario.Admin
             };
 
-            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
-            mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
-
-            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
-            mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new UsuarioRepositorio(mockOptionsInfra.Object);
-            var handler = new UsuarioHandler(repository);
-
-            var tokenJWTService = new TokenJWTService(mockOptionsAPI.Object);
-
-            var controller = new UsuarioController(repository, handler, mockOptionsAPI.Object, tokenJWTService);
-            controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
-
-            var response = controller.UsuarioInserir(command).Result;
+            var response = _controller.UsuarioInserir(command).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -216,24 +175,9 @@ namespace ControleDespesas.Test.Controllers
                 Privilegio = EPrivilegioUsuario.ReadOnly
             };
 
-            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
-            mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
+            _repository.Salvar(usuario);
 
-            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
-            mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new UsuarioRepositorio(mockOptionsInfra.Object);
-            var handler = new UsuarioHandler(repository);
-
-            var tokenJWTService = new TokenJWTService(mockOptionsAPI.Object);
-
-            var controller = new UsuarioController(repository, handler, mockOptionsAPI.Object, tokenJWTService);
-            controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
-
-            repository.Salvar(usuario);
-
-            var response = controller.UsuarioAlterar(command).Result;
+            var response = _controller.UsuarioAlterar(command).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -258,24 +202,9 @@ namespace ControleDespesas.Test.Controllers
 
             var command = new ApagarUsuarioCommand() { Id = 1 };
 
-            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
-            mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
+            _repository.Salvar(usuario);
 
-            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
-            mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new UsuarioRepositorio(mockOptionsInfra.Object);
-            var handler = new UsuarioHandler(repository);
-
-            var tokenJWTService = new TokenJWTService(mockOptionsAPI.Object);
-
-            var controller = new UsuarioController(repository, handler, mockOptionsAPI.Object, tokenJWTService);
-            controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
-
-            repository.Salvar(usuario);
-
-            var response = controller.UsuarioExcluir(command).Result;
+            var response = _controller.UsuarioExcluir(command).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -301,24 +230,9 @@ namespace ControleDespesas.Test.Controllers
                 Senha = "Senha123"
             };
 
-            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
-            mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
+            _repository.Salvar(usuario);
 
-            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
-            mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new UsuarioRepositorio(mockOptionsInfra.Object);
-            var handler = new UsuarioHandler(repository);
-
-            var tokenJWTService = new TokenJWTService(mockOptionsAPI.Object);
-
-            var controller = new UsuarioController(repository, handler, mockOptionsAPI.Object, tokenJWTService);
-            controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
-
-            repository.Salvar(usuario);
-
-            var response = controller.UsuarioLogin(command).Result;
+            var response = _controller.UsuarioLogin(command).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 

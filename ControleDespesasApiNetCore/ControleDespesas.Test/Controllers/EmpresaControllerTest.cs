@@ -23,26 +23,30 @@ namespace ControleDespesas.Test.Controllers
 {
     public class EmpresaControllerTest : DatabaseFactory
     {
+        private readonly Mock<IOptions<SettingsAPI>> _mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
+        private readonly Mock<IOptions<SettingsInfraData>> _mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
+        private readonly EmpresaRepositorio _repository;
+        private readonly EmpresaHandler _handler;
+        private readonly EmpresaController _controller;
+
+        public EmpresaControllerTest()
+        {
+            _mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
+            _mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
+            _repository = new EmpresaRepositorio(_mockOptionsInfra.Object);
+            _handler = new EmpresaHandler(_repository);
+            _controller = new EmpresaController(_repository, _handler, _mockOptionsAPI.Object);
+            _controller.ControllerContext.HttpContext = new DefaultHttpContext();
+            _controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
+        }
+
         [SetUp]
         public void Setup() => CriarBaseDeDadosETabelas();
 
         [Test]
         public void EmpresaHealthCheck()
         {
-            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
-            mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
-
-            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
-            mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new EmpresaRepositorio(mockOptionsInfra.Object);
-            var handler = new EmpresaHandler(repository);
-
-            var controller = new EmpresaController(repository, handler, mockOptionsAPI.Object);
-            controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
-
-            var response = controller.EmpresaHealthCheck().Result;
+            var response = _controller.EmpresaHealthCheck().Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -63,24 +67,11 @@ namespace ControleDespesas.Test.Controllers
             var empresa1 = new Empresa(0, new Texto("NomeEmpresa1", "Nome", 100), "Logo1");
             var empresa2 = new Empresa(0, new Texto("NomeEmpresa2", "Nome", 100), "Logo2");
 
-            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
-            mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
+            _repository.Salvar(empresa0);
+            _repository.Salvar(empresa1);
+            _repository.Salvar(empresa2);
 
-            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
-            mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new EmpresaRepositorio(mockOptionsInfra.Object);
-            var handler = new EmpresaHandler(repository);
-
-            var controller = new EmpresaController(repository, handler, mockOptionsAPI.Object);
-            controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
-
-            repository.Salvar(empresa0);
-            repository.Salvar(empresa1);
-            repository.Salvar(empresa2);
-
-            var response = controller.Empresas().Result;
+            var response = _controller.Empresas().Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -114,24 +105,11 @@ namespace ControleDespesas.Test.Controllers
 
             var command = new ObterEmpresaPorIdCommand() { Id = 2 };
 
-            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
-            mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
+            _repository.Salvar(empresa0);
+            _repository.Salvar(empresa1);
+            _repository.Salvar(empresa2);
 
-            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
-            mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new EmpresaRepositorio(mockOptionsInfra.Object);
-            var handler = new EmpresaHandler(repository);
-
-            var controller = new EmpresaController(repository, handler, mockOptionsAPI.Object);
-            controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
-
-            repository.Salvar(empresa0);
-            repository.Salvar(empresa1);
-            repository.Salvar(empresa2);
-
-            var response = controller.Empresa(command).Result;
+            var response = _controller.Empresa(command).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -157,20 +135,7 @@ namespace ControleDespesas.Test.Controllers
                 Logo = "LogoEmpresa"
             };
 
-            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
-            mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
-
-            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
-            mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new EmpresaRepositorio(mockOptionsInfra.Object);
-            var handler = new EmpresaHandler(repository);
-
-            var controller = new EmpresaController(repository, handler, mockOptionsAPI.Object);
-            controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
-
-            var response = controller.EmpresaInserir(command).Result;
+            var response = _controller.EmpresaInserir(command).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -199,22 +164,9 @@ namespace ControleDespesas.Test.Controllers
                 Logo = "LogoEmpresa - Editada"
             };
 
-            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
-            mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
+            _repository.Salvar(empresa);
 
-            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
-            mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new EmpresaRepositorio(mockOptionsInfra.Object);
-            var handler = new EmpresaHandler(repository);
-
-            var controller = new EmpresaController(repository, handler, mockOptionsAPI.Object);
-            controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
-
-            repository.Salvar(empresa);
-
-            var response = controller.EmpresaAlterar(command).Result;
+            var response = _controller.EmpresaAlterar(command).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -238,22 +190,9 @@ namespace ControleDespesas.Test.Controllers
 
             var command = new ApagarEmpresaCommand() { Id = 1 };
 
-            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
-            mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
+            _repository.Salvar(empresa);
 
-            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
-            mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repository = new EmpresaRepositorio(mockOptionsInfra.Object);
-            var handler = new EmpresaHandler(repository);
-
-            var controller = new EmpresaController(repository, handler, mockOptionsAPI.Object);
-            controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
-
-            repository.Salvar(empresa);
-
-            var response = controller.EmpresaExcluir(command).Result;
+            var response = _controller.EmpresaExcluir(command).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 

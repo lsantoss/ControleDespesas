@@ -24,30 +24,36 @@ namespace ControleDespesas.Test.Controllers
 {
     public class PagamentoControllerTest : DatabaseFactory
     {
+        private readonly Mock<IOptions<SettingsAPI>> _mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
+        private readonly Mock<IOptions<SettingsInfraData>> _mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
+        private readonly EmpresaRepositorio _repositoryEmpresa;
+        private readonly PessoaRepositorio _repositoryPessoa;
+        private readonly TipoPagamentoRepositorio _repositoryTipoPagamento;
+        private readonly PagamentoRepositorio _repositoryPagamento;
+        private readonly PagamentoHandler _handler;
+        private readonly PagamentoController _controller;
+
+        public PagamentoControllerTest()
+        {
+            _mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
+            _mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
+            _repositoryEmpresa = new EmpresaRepositorio(_mockOptionsInfra.Object);
+            _repositoryPessoa = new PessoaRepositorio(_mockOptionsInfra.Object);
+            _repositoryTipoPagamento = new TipoPagamentoRepositorio(_mockOptionsInfra.Object);
+            _repositoryPagamento = new PagamentoRepositorio(_mockOptionsInfra.Object);
+            _handler = new PagamentoHandler(_repositoryPagamento, _repositoryEmpresa, _repositoryPessoa, _repositoryTipoPagamento);
+            _controller = new PagamentoController(_repositoryPagamento, _handler, _mockOptionsAPI.Object);
+            _controller.ControllerContext.HttpContext = new DefaultHttpContext();
+            _controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
+        }
+
         [SetUp]
         public void Setup() => CriarBaseDeDadosETabelas();
 
         [Test]
         public void PagamentoHealthCheck()
-        {
-            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
-            mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
-
-            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
-            mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repositoryEmpresa = new EmpresaRepositorio(mockOptionsInfra.Object);
-            var repositoryPessoa = new PessoaRepositorio(mockOptionsInfra.Object);
-            var repositoryTipoPagamento = new TipoPagamentoRepositorio(mockOptionsInfra.Object);
-            var repositoryPagamento = new PagamentoRepositorio(mockOptionsInfra.Object);
-
-            var handler = new PagamentoHandler(repositoryPagamento, repositoryEmpresa, repositoryPessoa, repositoryTipoPagamento);
-
-            var controller = new PagamentoController(repositoryPagamento, handler, mockOptionsAPI.Object);
-            controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
-            
-            var response = controller.PagamentoHealthCheck().Result;
+        {            
+            var response = _controller.PagamentoHealthCheck().Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -89,30 +95,13 @@ namespace ControleDespesas.Test.Controllers
                 DateTime.Now.AddDays(2)
             );
 
-            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
-            mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
+            _repositoryTipoPagamento.Salvar(tipoPagamento);
+            _repositoryEmpresa.Salvar(empresa);
+            _repositoryPessoa.Salvar(pessoa);
+            _repositoryPagamento.Salvar(pagamento0);
+            _repositoryPagamento.Salvar(pagamento1);
 
-            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
-            mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repositoryEmpresa = new EmpresaRepositorio(mockOptionsInfra.Object);
-            var repositoryPessoa = new PessoaRepositorio(mockOptionsInfra.Object);
-            var repositoryTipoPagamento = new TipoPagamentoRepositorio(mockOptionsInfra.Object);
-            var repositoryPagamento = new PagamentoRepositorio(mockOptionsInfra.Object);
-
-            var handler = new PagamentoHandler(repositoryPagamento, repositoryEmpresa, repositoryPessoa, repositoryTipoPagamento);
-
-            var controller = new PagamentoController(repositoryPagamento, handler, mockOptionsAPI.Object);
-            controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
-
-            repositoryTipoPagamento.Salvar(tipoPagamento);
-            repositoryEmpresa.Salvar(empresa);
-            repositoryPessoa.Salvar(pessoa);
-            repositoryPagamento.Salvar(pagamento0);
-            repositoryPagamento.Salvar(pagamento1);
-
-            var response = controller.Pagamentos().Result;
+            var response = _controller.Pagamentos().Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -173,30 +162,13 @@ namespace ControleDespesas.Test.Controllers
 
             var command = new ObterPagamentoPorIdCommand() { Id = 2 };
 
-            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
-            mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
+            _repositoryTipoPagamento.Salvar(tipoPagamento);
+            _repositoryEmpresa.Salvar(empresa);
+            _repositoryPessoa.Salvar(pessoa);
+            _repositoryPagamento.Salvar(pagamento0);
+            _repositoryPagamento.Salvar(pagamento1);
 
-            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
-            mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repositoryEmpresa = new EmpresaRepositorio(mockOptionsInfra.Object);
-            var repositoryPessoa = new PessoaRepositorio(mockOptionsInfra.Object);
-            var repositoryTipoPagamento = new TipoPagamentoRepositorio(mockOptionsInfra.Object);
-            var repositoryPagamento = new PagamentoRepositorio(mockOptionsInfra.Object);
-
-            var handler = new PagamentoHandler(repositoryPagamento, repositoryEmpresa, repositoryPessoa, repositoryTipoPagamento);
-
-            var controller = new PagamentoController(repositoryPagamento, handler, mockOptionsAPI.Object);
-            controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
-
-            repositoryTipoPagamento.Salvar(tipoPagamento);
-            repositoryEmpresa.Salvar(empresa);
-            repositoryPessoa.Salvar(pessoa);
-            repositoryPagamento.Salvar(pagamento0);
-            repositoryPagamento.Salvar(pagamento1);
-
-            var response = controller.Pagamento(command).Result;
+            var response = _controller.Pagamento(command).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -236,28 +208,11 @@ namespace ControleDespesas.Test.Controllers
                 DataPagamento = DateTime.Now
             };
 
-            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
-            mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
+            _repositoryTipoPagamento.Salvar(tipoPagamento);
+            _repositoryEmpresa.Salvar(empresa);
+            _repositoryPessoa.Salvar(pessoa);
 
-            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
-            mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repositoryEmpresa = new EmpresaRepositorio(mockOptionsInfra.Object);
-            var repositoryPessoa = new PessoaRepositorio(mockOptionsInfra.Object);
-            var repositoryTipoPagamento = new TipoPagamentoRepositorio(mockOptionsInfra.Object);
-            var repositoryPagamento = new PagamentoRepositorio(mockOptionsInfra.Object);
-
-            var handler = new PagamentoHandler(repositoryPagamento, repositoryEmpresa, repositoryPessoa, repositoryTipoPagamento);
-
-            var controller = new PagamentoController(repositoryPagamento, handler, mockOptionsAPI.Object);
-            controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
-
-            repositoryTipoPagamento.Salvar(tipoPagamento);
-            repositoryEmpresa.Salvar(empresa);
-            repositoryPessoa.Salvar(pessoa);
-
-            var response = controller.PagamentoInserir(command).Result;
+            var response = _controller.PagamentoInserir(command).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -308,29 +263,12 @@ namespace ControleDespesas.Test.Controllers
                 DataPagamento = DateTime.Now
             };
 
-            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
-            mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
+            _repositoryTipoPagamento.Salvar(tipoPagamento);
+            _repositoryEmpresa.Salvar(empresa);
+            _repositoryPessoa.Salvar(pessoa);
+            _repositoryPagamento.Salvar(pagamento);
 
-            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
-            mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repositoryEmpresa = new EmpresaRepositorio(mockOptionsInfra.Object);
-            var repositoryPessoa = new PessoaRepositorio(mockOptionsInfra.Object);
-            var repositoryTipoPagamento = new TipoPagamentoRepositorio(mockOptionsInfra.Object);
-            var repositoryPagamento = new PagamentoRepositorio(mockOptionsInfra.Object);
-
-            var handler = new PagamentoHandler(repositoryPagamento, repositoryEmpresa, repositoryPessoa, repositoryTipoPagamento);
-
-            var controller = new PagamentoController(repositoryPagamento, handler, mockOptionsAPI.Object);
-            controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
-
-            repositoryTipoPagamento.Salvar(tipoPagamento);
-            repositoryEmpresa.Salvar(empresa);
-            repositoryPessoa.Salvar(pessoa);
-            repositoryPagamento.Salvar(pagamento);
-
-            var response = controller.PagamentoAlterar(command).Result;
+            var response = _controller.PagamentoAlterar(command).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -371,29 +309,12 @@ namespace ControleDespesas.Test.Controllers
 
             var command = new ApagarPagamentoCommand() { Id = 1 };
 
-            var mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
-            mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
+            _repositoryTipoPagamento.Salvar(tipoPagamento);
+            _repositoryEmpresa.Salvar(empresa);
+            _repositoryPessoa.Salvar(pessoa);
+            _repositoryPagamento.Salvar(pagamento);
 
-            var mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
-            mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
-
-            var repositoryEmpresa = new EmpresaRepositorio(mockOptionsInfra.Object);
-            var repositoryPessoa = new PessoaRepositorio(mockOptionsInfra.Object);
-            var repositoryTipoPagamento = new TipoPagamentoRepositorio(mockOptionsInfra.Object);
-            var repositoryPagamento = new PagamentoRepositorio(mockOptionsInfra.Object);
-
-            var handler = new PagamentoHandler(repositoryPagamento, repositoryEmpresa, repositoryPessoa, repositoryTipoPagamento);
-
-            var controller = new PagamentoController(repositoryPagamento, handler, mockOptionsAPI.Object);
-            controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
-
-            repositoryTipoPagamento.Salvar(tipoPagamento);
-            repositoryEmpresa.Salvar(empresa);
-            repositoryPessoa.Salvar(pessoa);
-            repositoryPagamento.Salvar(pagamento);
-
-            var response = controller.PagamentoExcluir(command).Result;
+            var response = _controller.PagamentoExcluir(command).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 

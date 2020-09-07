@@ -20,6 +20,7 @@ namespace ControleDespesas.Test.Handlers
 
         public EmpresaHandlerTest()
         {
+            CriarBaseDeDadosETabelas();
             _mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
             _repository = new EmpresaRepositorio(_mockOptions.Object);
             _handler = new EmpresaHandler(_repository);
@@ -90,6 +91,6 @@ namespace ControleDespesas.Test.Handlers
         }
 
         [TearDown]
-        public void TearDown() => DroparBaseDeDados();
+        public void TearDown() => DroparTabelas();
     }
 }

@@ -146,7 +146,7 @@ namespace ControleDespesas.Test.AppConfigurations.Factory
             }
         }
 
-        protected void DroparBaseDeDados()
+        protected void DroparTabelas()
         {
             if (SettingsTest.TipoBancoDeDdos.FullName == typeof(EBancoDadosRelacional).FullName)
             {

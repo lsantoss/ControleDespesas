@@ -31,6 +31,7 @@ namespace ControleDespesas.Test.Controllers
 
         public TipoPagamentoControllerTest()
         {
+            CriarBaseDeDadosETabelas();
             _mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
             _mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
             _repository = new TipoPagamentoRepositorio(_mockOptionsInfra.Object);
@@ -200,6 +201,6 @@ namespace ControleDespesas.Test.Controllers
         }
 
         [TearDown]
-        public void TearDown() => DroparBaseDeDados();
+        public void TearDown() => DroparTabelas();
     }
 }

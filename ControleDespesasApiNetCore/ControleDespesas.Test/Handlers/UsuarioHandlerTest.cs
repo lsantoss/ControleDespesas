@@ -22,6 +22,7 @@ namespace ControleDespesas.Test.Handlers
 
         public UsuarioHandlerTest()
         {
+            CriarBaseDeDadosETabelas();
             _mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
             _repository = new UsuarioRepositorio(_mockOptions.Object);
             _handler = new UsuarioHandler(_repository);
@@ -121,6 +122,6 @@ namespace ControleDespesas.Test.Handlers
         }
 
         [TearDown]
-        public void TearDown() => DroparBaseDeDados();
+        public void TearDown() => DroparTabelas();
     }
 }

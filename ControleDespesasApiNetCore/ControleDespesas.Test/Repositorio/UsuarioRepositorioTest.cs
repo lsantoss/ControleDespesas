@@ -17,6 +17,7 @@ namespace ControleDespesas.Test.Repositorio
 
         public UsuarioRepositorioTest()
         {
+            CriarBaseDeDadosETabelas();
             _mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
             _repository = new UsuarioRepositorio(_mockOptions.Object);
         }
@@ -181,6 +182,6 @@ namespace ControleDespesas.Test.Repositorio
         }
 
         [TearDown]
-        public void TearDown() => DroparBaseDeDados();
+        public void TearDown() => DroparTabelas();
     }
 }

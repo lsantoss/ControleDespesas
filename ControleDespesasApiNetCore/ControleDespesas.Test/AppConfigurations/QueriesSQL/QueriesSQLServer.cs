@@ -7,42 +7,53 @@ namespace ControleDespesas.Test.AppConfigurations.QueriesSQL
         private static string CreateDataBase { get; } = @"USE [master] 
                                                           IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = 'ControleDespesasTest')
                                                           BEGIN
-                                                          CREATE DATABASE ControleDespesasTest
+                                                            CREATE DATABASE ControleDespesasTest
                                                           END";
 
         private static string CreateTableEmpresa { get; } = @"USE [ControleDespesasTest] 
-                                                              CREATE TABLE [dbo].[Empresa](
-	                                                            [Id] [int] IDENTITY(1,1) NOT NULL,
-	                                                            [Nome] [nvarchar](100) NOT NULL,
-	                                                            [Logo] [text] NOT NULL,
-                                                                CONSTRAINT [PK_Empresa] PRIMARY KEY CLUSTERED 
-                                                              (
-	                                                             [Id] ASC
-                                                              )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-                                                              ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]";
+                                                              IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE' AND TABLE_NAME='Empresa') 
+                                                              BEGIN
+                                                                  CREATE TABLE [dbo].[Empresa] (
+                                                                      [Id] [int] IDENTITY(1,1) NOT NULL,
+                                                                      [Nome] [nvarchar](100) NOT NULL,
+                                                                      [Logo] [text] NOT NULL,
+                                                                      CONSTRAINT [PK_Empresa] PRIMARY KEY CLUSTERED 
+                                                                  (
+	                                                                  [Id] ASC
+                                                                  )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+                                                                  ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+                                                              END";
 
         private static string CreateTablePessoa { get; } = @"USE [ControleDespesasTest] 
+                                                             IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE' AND TABLE_NAME='Pessoa') 
+                                                             BEGIN
                                                              CREATE TABLE [dbo].[Pessoa](
-	                                                            [Id] [int] IDENTITY(1,1) NOT NULL,
-	                                                            [Nome] [nvarchar](100) NOT NULL,
-	                                                            [ImagemPerfil] [text] NOT NULL,
-                                                              CONSTRAINT [PK_Pessoa] PRIMARY KEY CLUSTERED 
+	                                                             [Id] [int] IDENTITY(1,1) NOT NULL,
+	                                                             [Nome] [nvarchar](100) NOT NULL,
+	                                                             [ImagemPerfil] [text] NOT NULL,
+                                                                 CONSTRAINT [PK_Pessoa] PRIMARY KEY CLUSTERED 
                                                              (
 	                                                             [Id] ASC
                                                              )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-                                                             ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]";
+                                                             ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+                                                             END";
 
         private static string CreateTableTipoPagamento { get; } = @"USE [ControleDespesasTest] 
-                                                                    CREATE TABLE [dbo].[TipoPagamento](
+                                                                    IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE' AND TABLE_NAME='TipoPagamento') 
+                                                                    BEGIN
+                                                                        CREATE TABLE [dbo].[TipoPagamento](
 	                                                                    [Id] [int] IDENTITY(1,1) NOT NULL,
 	                                                                    [Descricao] [nvarchar](250) NOT NULL,
-                                                                    CONSTRAINT [PK_TipoPagamento] PRIMARY KEY CLUSTERED 
+                                                                        CONSTRAINT [PK_TipoPagamento] PRIMARY KEY CLUSTERED 
                                                                     (
 	                                                                    [Id] ASC
                                                                     )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-                                                                    ) ON [PRIMARY]";
+                                                                    ) ON [PRIMARY]
+                                                                    END";
 
         private static string CreateTablePagamento { get; } = @"USE [ControleDespesasTest] 
+                                                                IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE' AND TABLE_NAME='Pagamento') 
+                                                                BEGIN
                                                                 CREATE TABLE [dbo].[Pagamento](
 	                                                                [Id] [int] IDENTITY(1,1) NOT NULL,
 	                                                                [IdTipoPagamento] [int] NOT NULL,
@@ -71,9 +82,12 @@ namespace ControleDespesas.Test.AppConfigurations.QueriesSQL
                                                                 ALTER TABLE [dbo].[Pagamento]  WITH CHECK ADD  CONSTRAINT [FK_Pagamento_TipoPagamento] FOREIGN KEY([IdTipoPagamento])
                                                                 REFERENCES [dbo].[TipoPagamento] ([Id])
 
-                                                                ALTER TABLE [dbo].[Pagamento] CHECK CONSTRAINT [FK_Pagamento_TipoPagamento]";
+                                                                ALTER TABLE [dbo].[Pagamento] CHECK CONSTRAINT [FK_Pagamento_TipoPagamento]
+                                                                END";
 
         private static string CreateTableUsuario { get; } = @"USE [ControleDespesasTest] 
+                                                                IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE' AND TABLE_NAME='Usuario') 
+                                                                BEGIN
                                                                 CREATE TABLE [dbo].[Usuario](
 	                                                                [Id] [int] IDENTITY(1,1) NOT NULL,
 	                                                                [Login] [nvarchar](50) NOT NULL,
@@ -83,22 +97,18 @@ namespace ControleDespesas.Test.AppConfigurations.QueriesSQL
                                                                 (
 	                                                                [Id] ASC
                                                                 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-                                                                ) ON [PRIMARY]";
+                                                                ) ON [PRIMARY]
+                                                                END";
 
-        private static string DropTableUsuario { get; } = @"USE [ControleDespesasTest]
-                                                            DROP TABLE IF EXISTS Usuario";
+        private static string DropTableUsuario { get; } = @"USE [ControleDespesasTest] DROP TABLE IF EXISTS Usuario";
 
-        private static string DropTablePagamento { get; } = @"USE [ControleDespesasTest]
-                                                              DROP TABLE IF EXISTS Pagamento";
+        private static string DropTablePagamento { get; } = @"USE [ControleDespesasTest] DROP TABLE IF EXISTS Pagamento";
 
-        private static string DropTableTipoPagamento { get; } = @"USE [ControleDespesasTest]
-                                                                  DROP TABLE IF EXISTS TipoPagamento";
+        private static string DropTableTipoPagamento { get; } = @"USE [ControleDespesasTest] DROP TABLE IF EXISTS TipoPagamento";
 
-        private static string DropTablePessoa { get; } = @"USE [ControleDespesasTest]
-                                                           DROP TABLE IF EXISTS Pessoa";
+        private static string DropTablePessoa { get; } = @"USE [ControleDespesasTest] DROP TABLE IF EXISTS Pessoa";
 
-        private static string DropTableEmpresa { get; } = @"USE [ControleDespesasTest]
-                                                           DROP TABLE IF EXISTS Empresa";
+        private static string DropTableEmpresa { get; } = @"USE [ControleDespesasTest] DROP TABLE IF EXISTS Empresa";
 
         private static string DropDataBase { get; } = @"USE [master] DROP DATABASE IF EXISTS [ControleDespesasTest]";
 

@@ -24,6 +24,7 @@ namespace ControleDespesas.Test.Handlers
 
         public PagamentoHandlerTest()
         {
+            CriarBaseDeDadosETabelas();
             _mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
             _repositoryTipoPagamento = new TipoPagamentoRepositorio(_mockOptions.Object);
             _repositoryEmpresa = new EmpresaRepositorio(_mockOptions.Object);
@@ -139,6 +140,6 @@ namespace ControleDespesas.Test.Handlers
         }
 
         [TearDown]
-        public void TearDown() => DroparBaseDeDados();
+        public void TearDown() => DroparTabelas();
     }
 }

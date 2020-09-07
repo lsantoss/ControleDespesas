@@ -20,6 +20,7 @@ namespace ControleDespesas.Test.Handlers
 
         public PessoaHandlerTest()
         {
+            CriarBaseDeDadosETabelas();
             _mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
             _repository = new PessoaRepositorio(_mockOptions.Object);
             _handler = new PessoaHandler(_repository);
@@ -92,6 +93,6 @@ namespace ControleDespesas.Test.Handlers
         }
 
         [TearDown]
-        public void TearDown() => DroparBaseDeDados();
+        public void TearDown() => DroparTabelas();
     }
 }

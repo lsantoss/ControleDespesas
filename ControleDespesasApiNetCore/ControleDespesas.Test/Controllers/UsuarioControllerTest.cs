@@ -11,7 +11,7 @@ using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.Factory;
 using ControleDespesas.Test.AppConfigurations.Models;
-using LSCode.Facilitador.Api.Results;
+using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
 using LSCode.Validador.ValueObjects;
 using Microsoft.AspNetCore.Http;

@@ -5,7 +5,7 @@ using ControleDespesas.Dominio.Commands.Usuario.Output;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Query.Usuario;
 using ControleDespesas.Dominio.Repositorio;
-using LSCode.Facilitador.Api.Results;
+using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

@@ -1,4 +1,4 @@
-﻿using LSCode.Facilitador.Api.InterfacesCommand;
+﻿using LSCode.Facilitador.Api.Interfaces.Commands;
 using LSCode.Validador.ValidacoesNotificacoes;
 using System;
 using System.ComponentModel.DataAnnotations;

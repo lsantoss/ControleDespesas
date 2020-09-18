@@ -4,8 +4,8 @@ using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Helpers;
 using ControleDespesas.Dominio.Query.Usuario;
 using ControleDespesas.Dominio.Repositorio;
-using LSCode.Facilitador.Api.InterfacesCommand;
-using LSCode.Facilitador.Api.Results;
+using LSCode.Facilitador.Api.Interfaces.Commands;
+using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
 using System;
 

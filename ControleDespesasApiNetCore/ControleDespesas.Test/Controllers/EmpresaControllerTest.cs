@@ -1,17 +1,15 @@
 ﻿using ControleDespesas.Api.Controllers.ControleDespesas;
 using ControleDespesas.Api.Settings;
-using ControleDespesas.Dominio.Commands.Empresa.Input;
 using ControleDespesas.Dominio.Commands.Empresa.Output;
-using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Query.Empresa;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.Factory;
 using ControleDespesas.Test.AppConfigurations.Models;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
-using LSCode.Validador.ValueObjects;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -23,6 +21,7 @@ namespace ControleDespesas.Test.Controllers
 {
     public class EmpresaControllerTest : DatabaseFactory
     {
+        private readonly SettingsTest _settingsTest;
         private readonly Mock<IOptions<SettingsAPI>> _mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
         private readonly Mock<IOptions<SettingsInfraData>> _mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
         private readonly EmpresaRepositorio _repository;
@@ -32,6 +31,7 @@ namespace ControleDespesas.Test.Controllers
         public EmpresaControllerTest()
         {
             CriarBaseDeDadosETabelas();
+            _settingsTest = new SettingsTest();
             _mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
             _mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
             _repository = new EmpresaRepositorio(_mockOptionsInfra.Object);
@@ -64,13 +64,13 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void Empresas()
         {
-            var empresa0 = new Empresa(0, new Texto("NomeEmpresa0", "Nome", 100), "Logo0");
-            var empresa1 = new Empresa(0, new Texto("NomeEmpresa1", "Nome", 100), "Logo1");
-            var empresa2 = new Empresa(0, new Texto("NomeEmpresa2", "Nome", 100), "Logo2");
+            var empresa1 = _settingsTest.Empresa1;
+            var empresa2 = _settingsTest.Empresa2;
+            var empresa3 = _settingsTest.Empresa3;
 
-            _repository.Salvar(empresa0);
             _repository.Salvar(empresa1);
             _repository.Salvar(empresa2);
+            _repository.Salvar(empresa3);
 
             var response = _controller.Empresas().Result;
 
@@ -84,31 +84,31 @@ namespace ControleDespesas.Test.Controllers
             Assert.AreEqual("Lista de empresas obtida com sucesso", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
 
-            Assert.AreEqual(1, responseObj.Value.Dados[0].Id);
-            Assert.AreEqual(empresa0.Nome.ToString(), responseObj.Value.Dados[0].Nome);
-            Assert.AreEqual(empresa0.Logo, responseObj.Value.Dados[0].Logo);
+            Assert.AreEqual(empresa1.Id, responseObj.Value.Dados[0].Id);
+            Assert.AreEqual(empresa1.Nome.ToString(), responseObj.Value.Dados[0].Nome);
+            Assert.AreEqual(empresa1.Logo, responseObj.Value.Dados[0].Logo);
 
-            Assert.AreEqual(2, responseObj.Value.Dados[1].Id);
-            Assert.AreEqual(empresa1.Nome.ToString(), responseObj.Value.Dados[1].Nome);
-            Assert.AreEqual(empresa1.Logo, responseObj.Value.Dados[1].Logo);
+            Assert.AreEqual(empresa2.Id, responseObj.Value.Dados[1].Id);
+            Assert.AreEqual(empresa2.Nome.ToString(), responseObj.Value.Dados[1].Nome);
+            Assert.AreEqual(empresa2.Logo, responseObj.Value.Dados[1].Logo);
 
-            Assert.AreEqual(3, responseObj.Value.Dados[2].Id);
-            Assert.AreEqual(empresa2.Nome.ToString(), responseObj.Value.Dados[2].Nome);
-            Assert.AreEqual(empresa2.Logo, responseObj.Value.Dados[2].Logo);
+            Assert.AreEqual(empresa3.Id, responseObj.Value.Dados[2].Id);
+            Assert.AreEqual(empresa3.Nome.ToString(), responseObj.Value.Dados[2].Nome);
+            Assert.AreEqual(empresa3.Logo, responseObj.Value.Dados[2].Logo);
         }
 
         [Test]
         public void Empresa()
         {
-            var empresa0 = new Empresa(0, new Texto("NomeEmpresa0", "Nome", 100), "Logo0");
-            var empresa1 = new Empresa(0, new Texto("NomeEmpresa1", "Nome", 100), "Logo1");
-            var empresa2 = new Empresa(0, new Texto("NomeEmpresa2", "Nome", 100), "Logo2");
+            var empresa1 = _settingsTest.Empresa1;
+            var empresa2 = _settingsTest.Empresa2;
+            var empresa3 = _settingsTest.Empresa3;
 
-            var command = new ObterEmpresaPorIdCommand() { Id = 2 };
+            var command = _settingsTest.EmpresaObterPorIdCommand;
 
-            _repository.Salvar(empresa0);
             _repository.Salvar(empresa1);
             _repository.Salvar(empresa2);
+            _repository.Salvar(empresa3);
 
             var response = _controller.Empresa(command).Result;
 
@@ -122,19 +122,15 @@ namespace ControleDespesas.Test.Controllers
             Assert.AreEqual("Empresa obtida com sucesso", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
 
-            Assert.AreEqual(2, responseObj.Value.Dados.Id);
-            Assert.AreEqual(empresa1.Nome.ToString(), responseObj.Value.Dados.Nome);
-            Assert.AreEqual(empresa1.Logo, responseObj.Value.Dados.Logo);
+            Assert.AreEqual(empresa2.Id, responseObj.Value.Dados.Id);
+            Assert.AreEqual(empresa2.Nome.ToString(), responseObj.Value.Dados.Nome);
+            Assert.AreEqual(empresa2.Logo, responseObj.Value.Dados.Logo);
         }
 
         [Test]
         public void EmpresaInserir()
         {
-            var command = new AdicionarEmpresaCommand()
-            {
-                Nome = "NomeEmpresa",
-                Logo = "LogoEmpresa"
-            };
+            var command = _settingsTest.EmpresaAdicionarCommand;
 
             var response = _controller.EmpresaInserir(command).Result;
 
@@ -156,14 +152,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void EmpresaAlterar()
         {
-            var empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "LogoEmpresa");
+            var empresa = _settingsTest.Empresa1;
 
-            var command = new AtualizarEmpresaCommand()
-            {
-                Id = 1,
-                Nome = "NomeEmpresa - Editada",
-                Logo = "LogoEmpresa - Editada"
-            };
+            var command = _settingsTest.EmpresaAtualizarCommand;
 
             _repository.Salvar(empresa);
 
@@ -187,9 +178,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void EmpresaExcluir()
         {
-            var empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "LogoEmpresa");
+            var empresa = _settingsTest.Empresa1;
 
-            var command = new ApagarEmpresaCommand() { Id = 1 };
+            var command = _settingsTest.EmpresaApagarCommand;
 
             _repository.Salvar(empresa);
 

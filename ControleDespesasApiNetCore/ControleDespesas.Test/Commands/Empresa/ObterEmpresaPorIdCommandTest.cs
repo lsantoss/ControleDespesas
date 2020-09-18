@@ -1,4 +1,5 @@
 ﻿using ControleDespesas.Dominio.Commands.Empresa.Input;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Commands.Empresa
@@ -8,7 +9,7 @@ namespace ControleDespesas.Test.Commands.Empresa
         private ObterEmpresaPorIdCommand _command;
 
         [SetUp]
-        public void Setup() => _command = new ObterEmpresaPorIdCommand() { Id = 1 };
+        public void Setup() => _command = new SettingsTest().EmpresaObterPorIdCommand;
 
         [Test]
         public void ValidarCommand_Valido()

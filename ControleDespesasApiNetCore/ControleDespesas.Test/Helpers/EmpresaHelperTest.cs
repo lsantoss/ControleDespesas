@@ -1,29 +1,28 @@
-﻿using ControleDespesas.Dominio.Commands.Empresa.Input;
-using ControleDespesas.Dominio.Entidades;
-using ControleDespesas.Dominio.Helpers;
-using LSCode.Validador.ValueObjects;
+﻿using ControleDespesas.Dominio.Helpers;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Helpers
 {
     public class EmpresaHelperTest
     {
+        private readonly SettingsTest _settingsTest;
+
+        public EmpresaHelperTest() => _settingsTest = new SettingsTest();
+
         [SetUp]
         public void Setup() { }
 
         [Test]
         public void GerarEntidade_AdcionarEmpresaCommand()
         {
-            var command = new AdicionarEmpresaCommand() { 
-                Nome = "Empresa",
-                Logo = "Logo.png"
-            };
+            var command = _settingsTest.EmpresaAdicionarCommand;
 
             var entidade = EmpresaHelper.GerarEntidade(command);
 
             Assert.AreEqual(0, entidade.Id);
-            Assert.AreEqual("Empresa", entidade.Nome.ToString());
-            Assert.AreEqual("Logo.png", entidade.Logo); 
+            Assert.AreEqual(command.Nome, entidade.Nome.ToString());
+            Assert.AreEqual(command.Logo, entidade.Logo); 
             Assert.True(entidade.Valido);
             Assert.True(entidade.Nome.Valido);
             Assert.AreEqual(0, entidade.Notificacoes.Count);
@@ -33,18 +32,13 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarEntidade_AtualizarEmpresaCommand()
         {
-            var command = new AtualizarEmpresaCommand()
-            {
-                Id = 1,
-                Nome = "Empresa",
-                Logo = "Logo.png"
-            };
+            var command = _settingsTest.EmpresaAtualizarCommand;
 
             var entidade = EmpresaHelper.GerarEntidade(command);
 
-            Assert.AreEqual(1, entidade.Id);
-            Assert.AreEqual("Empresa", entidade.Nome.ToString());
-            Assert.AreEqual("Logo.png", entidade.Logo);
+            Assert.AreEqual(command.Id, entidade.Id);
+            Assert.AreEqual(command.Nome, entidade.Nome.ToString());
+            Assert.AreEqual(command.Logo, entidade.Logo);
             Assert.True(entidade.Valido);
             Assert.True(entidade.Nome.Valido);
             Assert.AreEqual(0, entidade.Notificacoes.Count);
@@ -54,40 +48,33 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarDadosRetornoInsert()
         {
-            var entidade = new Empresa(
-                1, 
-                new Texto("Empresa", "Nome", 100), 
-                "Logo.png"
-            );
+            var entidade = _settingsTest.Empresa1;
 
             var command = EmpresaHelper.GerarDadosRetornoInsert(entidade);
 
-            Assert.AreEqual(1, command.Id);
-            Assert.AreEqual("Empresa", command.Nome);
-            Assert.AreEqual("Logo.png", command.Logo);
+            Assert.AreEqual(entidade.Id, command.Id);
+            Assert.AreEqual(entidade.Nome.ToString(), command.Nome);
+            Assert.AreEqual(entidade.Logo, command.Logo);
         }
 
         [Test]
         public void GerarDadosRetornoUpdate()
         {
-            var entidade = new Empresa(
-                1,
-                new Texto("Empresa", "Nome", 100),
-                "Logo.png"
-            );
+            var entidade = _settingsTest.Empresa1;
 
             var command = EmpresaHelper.GerarDadosRetornoUpdate(entidade);
 
-            Assert.AreEqual(1, command.Id);
-            Assert.AreEqual("Empresa", command.Nome);
-            Assert.AreEqual("Logo.png", command.Logo);
+            Assert.AreEqual(entidade.Id, command.Id);
+            Assert.AreEqual(entidade.Nome.ToString(), command.Nome);
+            Assert.AreEqual(entidade.Logo, command.Logo);
         }
 
         [Test]
-        public void GerarDadosRetornoDelte()
+        public void GerarDadosRetornoDelete()
         {
-            var command = EmpresaHelper.GerarDadosRetornoDelete(1);
-            Assert.AreEqual(1, command.Id);
+            var entidade = _settingsTest.Empresa1;
+            var command = EmpresaHelper.GerarDadosRetornoDelete(entidade.Id);
+            Assert.AreEqual(entidade.Id, command.Id);
         }
 
         [TearDown]

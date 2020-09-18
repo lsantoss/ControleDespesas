@@ -1,11 +1,9 @@
-﻿using ControleDespesas.Dominio.Commands.Empresa.Input;
-using ControleDespesas.Dominio.Commands.Empresa.Output;
-using ControleDespesas.Dominio.Entidades;
+﻿using ControleDespesas.Dominio.Commands.Empresa.Output;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.Factory;
-using LSCode.Validador.ValueObjects;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
@@ -14,6 +12,7 @@ namespace ControleDespesas.Test.Handlers
 {
     public class EmpresaHandlerTest : DatabaseFactory
     {
+        private readonly SettingsTest _settingsTest;
         private readonly Mock<IOptions<SettingsInfraData>> _mockOptions = new Mock<IOptions<SettingsInfraData>>();
         private readonly EmpresaRepositorio _repository;
         private readonly EmpresaHandler _handler;
@@ -21,6 +20,7 @@ namespace ControleDespesas.Test.Handlers
         public EmpresaHandlerTest()
         {
             CriarBaseDeDadosETabelas();
+            _settingsTest = new SettingsTest();
             _mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
             _repository = new EmpresaRepositorio(_mockOptions.Object);
             _handler = new EmpresaHandler(_repository);
@@ -32,11 +32,7 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AdicionarEmpresa()
         {
-            var empresaCommand = new AdicionarEmpresaCommand()
-            {
-                Nome = "NomeEmpresa",
-                Logo = "LogoEmpresa"
-            };
+            var empresaCommand = _settingsTest.EmpresaAdicionarCommand;
 
             var retorno = _handler.Handler(empresaCommand);
 
@@ -52,14 +48,9 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AtualizarEmpresa()
         {
-            var empresaCommand = new AtualizarEmpresaCommand()
-            {
-                Id = 1,
-                Nome = "NomeEmpresa - Editada",
-                Logo = "LogoEmpresa - Editado"
-            };
+            var empresaCommand = _settingsTest.EmpresaAtualizarCommand;
 
-            var empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "Logo");
+            var empresa = _settingsTest.Empresa1;
             _repository.Salvar(empresa);
 
             var retorno = _handler.Handler(empresaCommand);
@@ -76,9 +67,9 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_ApagarEmpresa()
         {
-            var empresaCommand = new ApagarEmpresaCommand() { Id = 1 };
+            var empresaCommand = _settingsTest.EmpresaApagarCommand;
 
-            var empresa = new Empresa(0, new Texto("NomeEmpresa", "Nome", 100), "Logo");
+            var empresa = _settingsTest.Empresa1;
             _repository.Salvar(empresa);
 
             var retorno = _handler.Handler(empresaCommand);

@@ -1,4 +1,5 @@
 ﻿using ControleDespesas.Dominio.Commands.Empresa.Input;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Commands.Empresa
@@ -10,11 +11,7 @@ namespace ControleDespesas.Test.Commands.Empresa
         [SetUp]
         public void Setup()
         {
-            _command = new AdicionarEmpresaCommand()
-            {
-                Nome = "Lucas",
-                Logo = "base64String"
-            };
+            _command = new SettingsTest().EmpresaAdicionarCommand;
         }
 
         [Test]

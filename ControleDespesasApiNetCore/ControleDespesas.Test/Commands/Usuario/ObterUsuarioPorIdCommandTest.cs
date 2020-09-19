@@ -1,4 +1,5 @@
 ﻿using ControleDespesas.Dominio.Commands.Usuario.Input;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Commands.Usuario
@@ -8,7 +9,7 @@ namespace ControleDespesas.Test.Commands.Usuario
         private ObterUsuarioPorIdCommand _command;
 
         [SetUp]
-        public void Setup() => _command = new ObterUsuarioPorIdCommand() { Id = 1 };
+        public void Setup() => _command = new SettingsTest().UsuarioObterPorIdCommand;
 
         [Test]
         public void ValidarCommand_Valido()

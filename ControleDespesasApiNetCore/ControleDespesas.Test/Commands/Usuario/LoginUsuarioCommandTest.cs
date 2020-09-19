@@ -1,4 +1,5 @@
 ﻿using ControleDespesas.Dominio.Commands.Usuario.Input;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Commands.Usuario
@@ -10,11 +11,7 @@ namespace ControleDespesas.Test.Commands.Usuario
         [SetUp]
         public void Setup()
         {
-            _command = new LoginUsuarioCommand()
-            {
-                Login = "lucas123",
-                Senha = "Senha123"
-            };
+            _command = new SettingsTest().UsuarioLoginCommand;
         }
 
         [Test]

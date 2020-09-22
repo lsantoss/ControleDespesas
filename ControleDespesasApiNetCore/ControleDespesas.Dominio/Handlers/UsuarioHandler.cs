@@ -65,7 +65,12 @@ namespace ControleDespesas.Dominio.Handlers
                     AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");
 
                 if (_repository.CheckLogin(usuario.Login.ToString()))
-                    AddNotificacao("Login", "Esse login não está disponível pois já está sendo usado por outro usuário");
+                {
+                    UsuarioQueryResult userDoIdEnviadoBaseDados = _repository.Obter(usuario.Id);
+
+                    if (userDoIdEnviadoBaseDados.Login != usuario.Login.ToString())
+                        AddNotificacao("Login", "Esse login não está disponível pois já está sendo usado por outro usuário");
+                }
 
                 if (Invalido)
                     return new CommandResult<Notificacao>("Inconsistência(s) no(s) dado(s)", Notificacoes);

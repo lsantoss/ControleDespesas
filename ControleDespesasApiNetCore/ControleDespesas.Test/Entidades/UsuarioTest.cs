@@ -1,5 +1,5 @@
 ﻿using ControleDespesas.Dominio.Entidades;
-using ControleDespesas.Dominio.Enums;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using LSCode.Validador.ValueObjects;
 using NUnit.Framework;
 
@@ -10,14 +10,7 @@ namespace ControleDespesas.Test.Entidades
         private Usuario _usuario;
 
         [SetUp]
-        public void Setup()
-        {
-            int id = 1;
-            Texto login = new Texto("lucas@123", "Login", 50);
-            SenhaMedia senha = new SenhaMedia("Senha123");
-            EPrivilegioUsuario privilegio = EPrivilegioUsuario.Admin;
-            _usuario = new Usuario(id, login, senha, privilegio);
-        }
+        public void Setup() => _usuario = new SettingsTest().Usuario1;
 
         [Test]
         public void ValidarEntidade_Valida()

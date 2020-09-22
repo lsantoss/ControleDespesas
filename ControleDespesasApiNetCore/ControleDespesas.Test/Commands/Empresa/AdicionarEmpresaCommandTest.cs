@@ -9,10 +9,7 @@ namespace ControleDespesas.Test.Commands.Empresa
         private AdicionarEmpresaCommand _command;
 
         [SetUp]
-        public void Setup()
-        {
-            _command = new SettingsTest().EmpresaAdicionarCommand;
-        }
+        public void Setup() => _command = new SettingsTest().EmpresaAdicionarCommand;
 
         [Test]
         public void ValidarCommand_Valido()

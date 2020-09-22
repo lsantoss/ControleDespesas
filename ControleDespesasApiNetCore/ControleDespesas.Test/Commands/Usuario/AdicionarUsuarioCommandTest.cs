@@ -10,10 +10,7 @@ namespace ControleDespesas.Test.Commands.Usuario
         private AdicionarUsuarioCommand _command;
 
         [SetUp]
-        public void Setup()
-        {
-            _command = new SettingsTest().UsuarioAdicionarCommand;
-        }
+        public void Setup() => _command = new SettingsTest().UsuarioAdicionarCommand;
 
         [Test]
         public void ValidarCommand_Valido()

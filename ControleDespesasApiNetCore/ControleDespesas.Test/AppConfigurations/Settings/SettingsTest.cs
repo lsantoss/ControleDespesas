@@ -37,11 +37,15 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
         #endregion
 
         #region[Dados de teste para Usuario]
-        public AdicionarUsuarioCommand UsuarioAdicionarCommand { get; set; }
-        public AtualizarUsuarioCommand UsuarioAtualizarCommand { get; set; }
-        public ApagarUsuarioCommand UsuarioApagarCommand { get; set; }
-        public ObterUsuarioPorIdCommand UsuarioObterPorIdCommand { get; set; }
-        public LoginUsuarioCommand UsuarioLoginCommand { get; set; }
+        public AdicionarUsuarioCommand UsuarioAdicionarCommand { get; }
+        public AtualizarUsuarioCommand UsuarioAtualizarCommand { get; }
+        public ApagarUsuarioCommand UsuarioApagarCommand { get; }
+        public ObterUsuarioPorIdCommand UsuarioObterPorIdCommand { get; }
+        public LoginUsuarioCommand UsuarioLoginCommand { get; }
+        public Usuario Usuario1 { get; }
+        public Usuario Usuario2 { get; }
+        public Usuario Usuario3 { get; }
+        public Usuario Usuario1Editado { get; }
         #endregion
 
         #region[Dados de teste para utlilizar Banco de Dados]
@@ -167,6 +171,38 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                 Login = _configuration["SettingsTest:UsuarioLoginCommand:Login"],
                 Senha = _configuration["SettingsTest:UsuarioLoginCommand:Senha"]
             };
+
+            Usuario1 = new Usuario(
+                Convert.ToInt32(_configuration["SettingsTest:Usuario1:Id"]),
+                new Texto(_configuration["SettingsTest:Usuario1:Login"], "Login", 50),
+                new SenhaMedia(_configuration["SettingsTest:Usuario1:Senha"]),
+                (EPrivilegioUsuario)Convert.ToInt32(_configuration["SettingsTest:Usuario1:Privilegio"])
+
+            );
+
+            Usuario2 = new Usuario(
+                Convert.ToInt32(_configuration["SettingsTest:Usuario2:Id"]),
+                new Texto(_configuration["SettingsTest:Usuario2:Login"], "Login", 50),
+                new SenhaMedia(_configuration["SettingsTest:Usuario2:Senha"]),
+                (EPrivilegioUsuario)Convert.ToInt32(_configuration["SettingsTest:Usuario2:Privilegio"])
+
+            );
+
+            Usuario3 = new Usuario(
+                Convert.ToInt32(_configuration["SettingsTest:Usuario3:Id"]),
+                new Texto(_configuration["SettingsTest:Usuario3:Login"], "Login", 50),
+                new SenhaMedia(_configuration["SettingsTest:Usuario3:Senha"]),
+                (EPrivilegioUsuario)Convert.ToInt32(_configuration["SettingsTest:Usuario3:Privilegio"])
+
+            );
+
+            Usuario1Editado = new Usuario(
+                Convert.ToInt32(_configuration["SettingsTest:Usuario1Editado:Id"]),
+                new Texto(_configuration["SettingsTest:Usuario1Editado:Login"], "Login", 50),
+                new SenhaMedia(_configuration["SettingsTest:Usuario1Editado:Senha"]),
+                (EPrivilegioUsuario)Convert.ToInt32(_configuration["SettingsTest:Usuario1Editado:Privilegio"])
+
+            );
             #endregion
         }        
     }

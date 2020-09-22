@@ -3,6 +3,7 @@ using ControleDespesas.Dominio.Enums;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.Factory;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using LSCode.Validador.ValueObjects;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -12,12 +13,14 @@ namespace ControleDespesas.Test.Repositorio
 {
     public class UsuarioRepositorioTest : DatabaseFactory
     {
+        private readonly SettingsTest _settingsTest;
         private readonly Mock<IOptions<SettingsInfraData>> _mockOptions = new Mock<IOptions<SettingsInfraData>>();
         private readonly UsuarioRepositorio _repository;
 
         public UsuarioRepositorioTest()
         {
             CriarBaseDeDadosETabelas();
+            _settingsTest = new SettingsTest();
             _mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
             _repository = new UsuarioRepositorio(_mockOptions.Object);
         }
@@ -28,12 +31,12 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Salvar()
         {
-            var usuario = new Usuario(0, new Texto("NomeUsuario", "Nome", 50), new SenhaMedia("Senha123"), EPrivilegioUsuario.Admin);
+            var usuario = _settingsTest.Usuario1;
             _repository.Salvar(usuario);
 
             var retorno = _repository.Obter(1);
 
-            Assert.AreEqual(1, retorno.Id);
+            Assert.AreEqual(usuario.Id, retorno.Id);
             Assert.AreEqual(usuario.Login.ToString(), retorno.Login);
             Assert.AreEqual(usuario.Senha.ToString(), retorno.Senha);
             Assert.AreEqual(usuario.Privilegio, retorno.Privilegio);
@@ -42,10 +45,10 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Atualizar()
         {
-            var usuario = new Usuario(0, new Texto("NomeUsuario", "Nome", 50), new SenhaMedia("Senha123"), EPrivilegioUsuario.Admin);
+            var usuario = _settingsTest.Usuario1;
             _repository.Salvar(usuario);
 
-            usuario = new Usuario(1, new Texto("NomeUsuario - Editado", "Nome", 50), new SenhaMedia("Senha123Editada"), EPrivilegioUsuario.ReadOnly);
+            usuario = _settingsTest.Usuario1Editado;
             _repository.Atualizar(usuario);
 
             var retorno = _repository.Obter(1);
@@ -59,38 +62,38 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Deletar()
         {
-            var usuario0 = new Usuario(0, new Texto("NomeUsuario0", "Nome", 50), new SenhaMedia("Senha1230"), EPrivilegioUsuario.Admin);
-            var usuario1 = new Usuario(0, new Texto("NomeUsuario1", "Nome", 50), new SenhaMedia("Senha1231"), EPrivilegioUsuario.ReadOnly);
-            var usuario2 = new Usuario(0, new Texto("NomeUsuario2", "Nome", 50), new SenhaMedia("Senha1232"), EPrivilegioUsuario.Admin);
+            var usuario1 = _settingsTest.Usuario1;
+            var usuario2 = _settingsTest.Usuario2;
+            var usuario3 = _settingsTest.Usuario3;
 
-            _repository.Salvar(usuario0);
             _repository.Salvar(usuario1);
             _repository.Salvar(usuario2);
+            _repository.Salvar(usuario3);
 
             _repository.Deletar(2);
 
             var retorno = _repository.Listar();
 
-            Assert.AreEqual(1, retorno[0].Id);
-            Assert.AreEqual(usuario0.Login.ToString(), retorno[0].Login);
-            Assert.AreEqual(usuario0.Senha.ToString(), retorno[0].Senha);
-            Assert.AreEqual(usuario0.Privilegio, retorno[0].Privilegio);
+            Assert.AreEqual(usuario1.Id, retorno[0].Id);
+            Assert.AreEqual(usuario1.Login.ToString(), retorno[0].Login);
+            Assert.AreEqual(usuario1.Senha.ToString(), retorno[0].Senha);
+            Assert.AreEqual(usuario1.Privilegio, retorno[0].Privilegio);
 
-            Assert.AreEqual(3, retorno[1].Id);
-            Assert.AreEqual(usuario2.Login.ToString(), retorno[1].Login);
-            Assert.AreEqual(usuario2.Senha.ToString(), retorno[1].Senha);
-            Assert.AreEqual(usuario2.Privilegio, retorno[1].Privilegio);
+            Assert.AreEqual(usuario3.Id, retorno[1].Id);
+            Assert.AreEqual(usuario3.Login.ToString(), retorno[1].Login);
+            Assert.AreEqual(usuario3.Senha.ToString(), retorno[1].Senha);
+            Assert.AreEqual(usuario3.Privilegio, retorno[1].Privilegio);
         }
 
         [Test]
         public void Obter()
         {
-            var usuario = new Usuario(0, new Texto("NomeUsuario", "Nome", 50), new SenhaMedia("Senha123"), EPrivilegioUsuario.Admin);
+            var usuario = _settingsTest.Usuario1;
             _repository.Salvar(usuario);
 
             var retorno = _repository.Obter(1);
 
-            Assert.AreEqual(1, retorno.Id);
+            Assert.AreEqual(usuario.Id, retorno.Id);
             Assert.AreEqual(usuario.Login.ToString(), retorno.Login);
             Assert.AreEqual(usuario.Senha.ToString(), retorno.Senha);
             Assert.AreEqual(usuario.Privilegio, retorno.Privilegio);
@@ -99,41 +102,41 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Listar()
         {
-            var usuario0 = new Usuario(0, new Texto("NomeUsuario0", "Nome", 50), new SenhaMedia("Senha1230"), EPrivilegioUsuario.Admin);
-            var usuario1 = new Usuario(0, new Texto("NomeUsuario1", "Nome", 50), new SenhaMedia("Senha1231"), EPrivilegioUsuario.ReadOnly);
-            var usuario2 = new Usuario(0, new Texto("NomeUsuario2", "Nome", 50), new SenhaMedia("Senha1232"), EPrivilegioUsuario.Admin);
+            var usuario1 = _settingsTest.Usuario1;
+            var usuario2 = _settingsTest.Usuario2;
+            var usuario3 = _settingsTest.Usuario3;
 
-            _repository.Salvar(usuario0);
             _repository.Salvar(usuario1);
             _repository.Salvar(usuario2);
+            _repository.Salvar(usuario3);
 
             var retorno = _repository.Listar();
 
-            Assert.AreEqual(1, retorno[0].Id);
-            Assert.AreEqual(usuario0.Login.ToString(), retorno[0].Login);
-            Assert.AreEqual(usuario0.Senha.ToString(), retorno[0].Senha);
-            Assert.AreEqual(usuario0.Privilegio, retorno[0].Privilegio);
+            Assert.AreEqual(usuario1.Id, retorno[0].Id);
+            Assert.AreEqual(usuario1.Login.ToString(), retorno[0].Login);
+            Assert.AreEqual(usuario1.Senha.ToString(), retorno[0].Senha);
+            Assert.AreEqual(usuario1.Privilegio, retorno[0].Privilegio);
 
-            Assert.AreEqual(2, retorno[1].Id);
-            Assert.AreEqual(usuario1.Login.ToString(), retorno[1].Login);
-            Assert.AreEqual(usuario1.Senha.ToString(), retorno[1].Senha);
-            Assert.AreEqual(usuario1.Privilegio, retorno[1].Privilegio);
+            Assert.AreEqual(usuario2.Id, retorno[1].Id);
+            Assert.AreEqual(usuario2.Login.ToString(), retorno[1].Login);
+            Assert.AreEqual(usuario2.Senha.ToString(), retorno[1].Senha);
+            Assert.AreEqual(usuario2.Privilegio, retorno[1].Privilegio);
 
-            Assert.AreEqual(3, retorno[2].Id);
-            Assert.AreEqual(usuario2.Login.ToString(), retorno[2].Login);
-            Assert.AreEqual(usuario2.Senha.ToString(), retorno[2].Senha);
-            Assert.AreEqual(usuario2.Privilegio, retorno[2].Privilegio);
+            Assert.AreEqual(usuario3.Id, retorno[2].Id);
+            Assert.AreEqual(usuario3.Login.ToString(), retorno[2].Login);
+            Assert.AreEqual(usuario3.Senha.ToString(), retorno[2].Senha);
+            Assert.AreEqual(usuario3.Privilegio, retorno[2].Privilegio);
         }
 
         [Test]
         public void Logar()
         {
-            var usuario = new Usuario(0, new Texto("NomeUsuario", "Nome", 50), new SenhaMedia("Senha123"), EPrivilegioUsuario.Admin);
+            var usuario = _settingsTest.Usuario1;
             _repository.Salvar(usuario);
 
             var retorno = _repository.Logar(usuario.Login.ToString(), usuario.Senha.ToString());
 
-            Assert.AreEqual(1, retorno.Id);
+            Assert.AreEqual(usuario.Id, retorno.Id);
             Assert.AreEqual(usuario.Login.ToString(), retorno.Login);
             Assert.AreEqual(usuario.Senha.ToString(), retorno.Senha);
             Assert.AreEqual(usuario.Privilegio, retorno.Privilegio);
@@ -142,7 +145,7 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void CheckLogin()
         {
-            var usuario = new Usuario(0, new Texto("NomeUsuario", "Nome", 50), new SenhaMedia("Senha123"), EPrivilegioUsuario.Admin);
+            var usuario = _settingsTest.Usuario1;
             _repository.Salvar(usuario);
 
             var loginExistente = _repository.CheckLogin(usuario.Login.ToString());
@@ -155,7 +158,7 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void CheckId()
         {
-            var usuario = new Usuario(0, new Texto("NomeUsuario", "Nome", 50), new SenhaMedia("Senha123"), EPrivilegioUsuario.Admin);
+            var usuario = _settingsTest.Usuario1;
             _repository.Salvar(usuario);
 
             var idExistente = _repository.CheckId(1);
@@ -168,17 +171,17 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void LocalizarMaxId()
         {
-            var usuario0 = new Usuario(0, new Texto("NomeUsuario0", "Nome", 50), new SenhaMedia("Senha1230"), EPrivilegioUsuario.Admin);
-            var usuario1 = new Usuario(0, new Texto("NomeUsuario1", "Nome", 50), new SenhaMedia("Senha1231"), EPrivilegioUsuario.ReadOnly);
-            var usuario2 = new Usuario(0, new Texto("NomeUsuario2", "Nome", 50), new SenhaMedia("Senha1232"), EPrivilegioUsuario.Admin);
+            var usuario1 = _settingsTest.Usuario1;
+            var usuario2 = _settingsTest.Usuario2;
+            var usuario3 = _settingsTest.Usuario3;
 
-            _repository.Salvar(usuario0);
             _repository.Salvar(usuario1);
             _repository.Salvar(usuario2);
+            _repository.Salvar(usuario3);
 
             var maxId = _repository.LocalizarMaxId();
 
-            Assert.AreEqual(3, maxId);
+            Assert.AreEqual(usuario3.Id, maxId);
         }
 
         [TearDown]

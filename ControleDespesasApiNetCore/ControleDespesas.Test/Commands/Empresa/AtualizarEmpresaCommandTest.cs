@@ -9,10 +9,7 @@ namespace ControleDespesas.Test.Commands.Empresa
         private AtualizarEmpresaCommand _command;
 
         [SetUp]
-        public void Setup()
-        {
-            _command = new SettingsTest().EmpresaAtualizarCommand;
-        }
+        public void Setup() => _command = new SettingsTest().EmpresaAtualizarCommand;
 
         [Test]
         public void ValidarCommand_Valido()

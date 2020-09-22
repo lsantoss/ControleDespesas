@@ -1,13 +1,11 @@
-﻿using ControleDespesas.Dominio.Commands.Usuario.Input;
-using ControleDespesas.Dominio.Commands.Usuario.Output;
-using ControleDespesas.Dominio.Entidades;
+﻿using ControleDespesas.Dominio.Commands.Usuario.Output;
 using ControleDespesas.Dominio.Enums;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Query.Usuario;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.Factory;
-using LSCode.Validador.ValueObjects;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
@@ -16,6 +14,7 @@ namespace ControleDespesas.Test.Handlers
 {
     class UsuarioHandlerTest : DatabaseFactory
     {
+        private readonly SettingsTest _settingsTest;
         private readonly Mock<IOptions<SettingsInfraData>> _mockOptions = new Mock<IOptions<SettingsInfraData>>();
         private readonly UsuarioRepositorio _repository;
         private readonly UsuarioHandler _handler;
@@ -23,6 +22,7 @@ namespace ControleDespesas.Test.Handlers
         public UsuarioHandlerTest()
         {
             CriarBaseDeDadosETabelas();
+            _settingsTest = new SettingsTest();
             _mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
             _repository = new UsuarioRepositorio(_mockOptions.Object);
             _handler = new UsuarioHandler(_repository);
@@ -34,12 +34,7 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AdicionarUsuario()
         {
-            var usuarioCommand = new AdicionarUsuarioCommand()
-            {
-                Login = "LoginUsuario",
-                Senha = "Senha123Usuario",
-                Privilegio = EPrivilegioUsuario.Admin
-            };
+            var usuarioCommand = _settingsTest.UsuarioAdicionarCommand;
 
             var retorno = _handler.Handler(usuarioCommand);
 
@@ -56,15 +51,9 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AtualizarUsuario()
         {
-            var usuario = new Usuario(0, new Texto("LoginUsuario", "Login", 50), new SenhaMedia("Senha123Usuario"), EPrivilegioUsuario.Admin);
+            var usuario = _settingsTest.Usuario1;
 
-            var usuarioCommand = new AtualizarUsuarioCommand()
-            {
-                Id = 1,
-                Login = "LoginUsuario - Editado",
-                Senha = "Senha123Editado",
-                Privilegio = EPrivilegioUsuario.ReadOnly
-            };
+            var usuarioCommand = _settingsTest.UsuarioAtualizarCommand;
 
             _repository.Salvar(usuario);
 
@@ -83,10 +72,10 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_ApagarUsuario()
         {
-            var usuario = new Usuario(0, new Texto("LoginUsuario", "Login", 50), new SenhaMedia("Senha123Usuario"), EPrivilegioUsuario.Admin);
+            var usuario = _settingsTest.Usuario1;
             _repository.Salvar(usuario);
 
-            var usuarioCommand = new ApagarUsuarioCommand() { Id = 1 };
+            var usuarioCommand = _settingsTest.UsuarioApagarCommand;
 
             var retorno = _handler.Handler(usuarioCommand);
             var retornoDados = (ApagarUsuarioCommandOutput)retorno.Dados;
@@ -99,13 +88,9 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_LoginUsuario()
         {
-            var usuario = new Usuario(0, new Texto("LoginUsuario", "Login", 50), new SenhaMedia("Senha123Usuario"), EPrivilegioUsuario.Admin);
+            var usuario = _settingsTest.Usuario1;
 
-            var usuarioCommand = new LoginUsuarioCommand()
-            {
-                Login = "LoginUsuario",
-                Senha = "Senha123Usuario"
-            };
+            var usuarioCommand = _settingsTest.UsuarioLoginCommand;
 
             _repository.Salvar(usuario);
 

@@ -10,10 +10,7 @@ namespace ControleDespesas.Test.Commands.Usuario
         private AtualizarUsuarioCommand _command;
 
         [SetUp]
-        public void Setup()
-        {
-            _command = new SettingsTest().UsuarioAtualizarCommand;
-        }
+        public void Setup() => _command = new SettingsTest().UsuarioAtualizarCommand;
 
         [Test]
         public void ValidarCommand_Valido()

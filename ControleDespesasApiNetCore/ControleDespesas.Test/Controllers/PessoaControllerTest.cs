@@ -1,17 +1,15 @@
 ﻿using ControleDespesas.Api.Controllers.ControleDespesas;
 using ControleDespesas.Api.Settings;
-using ControleDespesas.Dominio.Commands.Pessoa.Input;
 using ControleDespesas.Dominio.Commands.Pessoa.Output;
-using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Query.Pessoa;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.Factory;
 using ControleDespesas.Test.AppConfigurations.Models;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
-using LSCode.Validador.ValueObjects;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -23,6 +21,7 @@ namespace ControleDespesas.Test.Controllers
 {
     public class PessoaControllerTest : DatabaseFactory
     {
+        private readonly SettingsTest _settingsTest;
         private readonly Mock<IOptions<SettingsAPI>> _mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
         private readonly Mock<IOptions<SettingsInfraData>> _mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
         private readonly PessoaRepositorio _repository;
@@ -32,6 +31,7 @@ namespace ControleDespesas.Test.Controllers
         public PessoaControllerTest()
         {
             CriarBaseDeDadosETabelas();
+            _settingsTest = new SettingsTest();
             _mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
             _mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
             _repository = new PessoaRepositorio(_mockOptionsInfra.Object);
@@ -64,13 +64,13 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void Pessoas()
         {
-            var pessoa0 = new Pessoa(0, new Texto("NomePessoa0", "Nome", 100), "ImagemPessoa0");
-            var pessoa1 = new Pessoa(0, new Texto("NomePessoa1", "Nome", 100), "ImagemPessoa1");
-            var pessoa2 = new Pessoa(0, new Texto("NomePessoa2", "Nome", 100), "ImagemPessoa2");
+            var pessoa1 = _settingsTest.Pessoa1;
+            var pessoa2 = _settingsTest.Pessoa2;
+            var pessoa3 = _settingsTest.Pessoa3;
 
-            _repository.Salvar(pessoa0);
             _repository.Salvar(pessoa1);
             _repository.Salvar(pessoa2);
+            _repository.Salvar(pessoa3);
 
             var response = _controller.Pessoas().Result;
 
@@ -84,31 +84,31 @@ namespace ControleDespesas.Test.Controllers
             Assert.AreEqual("Lista de pessoas obtida com sucesso", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
 
-            Assert.AreEqual(1, responseObj.Value.Dados[0].Id);
-            Assert.AreEqual(pessoa0.Nome.ToString(), responseObj.Value.Dados[0].Nome);
-            Assert.AreEqual(pessoa0.ImagemPerfil, responseObj.Value.Dados[0].ImagemPerfil);
+            Assert.AreEqual(pessoa1.Id, responseObj.Value.Dados[0].Id);
+            Assert.AreEqual(pessoa1.Nome.ToString(), responseObj.Value.Dados[0].Nome);
+            Assert.AreEqual(pessoa1.ImagemPerfil, responseObj.Value.Dados[0].ImagemPerfil);
 
-            Assert.AreEqual(2, responseObj.Value.Dados[1].Id);
-            Assert.AreEqual(pessoa1.Nome.ToString(), responseObj.Value.Dados[1].Nome);
-            Assert.AreEqual(pessoa1.ImagemPerfil, responseObj.Value.Dados[1].ImagemPerfil);
+            Assert.AreEqual(pessoa2.Id, responseObj.Value.Dados[1].Id);
+            Assert.AreEqual(pessoa2.Nome.ToString(), responseObj.Value.Dados[1].Nome);
+            Assert.AreEqual(pessoa2.ImagemPerfil, responseObj.Value.Dados[1].ImagemPerfil);
 
-            Assert.AreEqual(3, responseObj.Value.Dados[2].Id);
-            Assert.AreEqual(pessoa2.Nome.ToString(), responseObj.Value.Dados[2].Nome);
-            Assert.AreEqual(pessoa2.ImagemPerfil, responseObj.Value.Dados[2].ImagemPerfil);
+            Assert.AreEqual(pessoa3.Id, responseObj.Value.Dados[2].Id);
+            Assert.AreEqual(pessoa3.Nome.ToString(), responseObj.Value.Dados[2].Nome);
+            Assert.AreEqual(pessoa3.ImagemPerfil, responseObj.Value.Dados[2].ImagemPerfil);
         }
 
         [Test]
         public void Empresa()
         {
-            var pessoa0 = new Pessoa(0, new Texto("NomePessoa0", "Nome", 100), "ImagemPerfil0");
-            var pessoa1 = new Pessoa(0, new Texto("NomePessoa1", "Nome", 100), "ImagemPerfil1");
-            var pessoa2 = new Pessoa(0, new Texto("NomePessoa2", "Nome", 100), "ImagemPerfil2");
+            var pessoa1 = _settingsTest.Pessoa1;
+            var pessoa2 = _settingsTest.Pessoa2;
+            var pessoa3 = _settingsTest.Pessoa3;
 
-            var command = new ObterPessoaPorIdCommand() { Id = 2 };
+            var command = _settingsTest.PessoaObterPorIdCommand;
 
-            _repository.Salvar(pessoa0);
             _repository.Salvar(pessoa1);
             _repository.Salvar(pessoa2);
+            _repository.Salvar(pessoa3);
 
             var response = _controller.Pessoa(command).Result;
 
@@ -122,19 +122,15 @@ namespace ControleDespesas.Test.Controllers
             Assert.AreEqual("Pessoa obtida com sucesso", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
 
-            Assert.AreEqual(2, responseObj.Value.Dados.Id);
-            Assert.AreEqual(pessoa1.Nome.ToString(), responseObj.Value.Dados.Nome);
-            Assert.AreEqual(pessoa1.ImagemPerfil, responseObj.Value.Dados.ImagemPerfil);
+            Assert.AreEqual(pessoa2.Id, responseObj.Value.Dados.Id);
+            Assert.AreEqual(pessoa2.Nome.ToString(), responseObj.Value.Dados.Nome);
+            Assert.AreEqual(pessoa2.ImagemPerfil, responseObj.Value.Dados.ImagemPerfil);
         }
 
         [Test]
         public void EmpresaInserir()
         {
-            var command = new AdicionarPessoaCommand()
-            {
-                Nome = "NomePessoa",
-                ImagemPerfil = "ImagemPessoa"
-            };
+            var command = _settingsTest.PessoaAdicionarCommand;
 
             var response = _controller.PessoaInserir(command).Result;
 
@@ -156,14 +152,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void EmpresaAlterar()
         {
-            var pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPessoa");
+            var pessoa = _settingsTest.Pessoa1;
 
-            var command = new AtualizarPessoaCommand()
-            {
-                Id = 1,
-                Nome = "NomePessoa - Editada",
-                ImagemPerfil = "ImagemPessoa - Editada"
-            };
+            var command = _settingsTest.PessoaAtualizarCommand;
 
             _repository.Salvar(pessoa);
 
@@ -187,9 +178,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void EmpresaExcluir()
         {
-            var pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPessoa");
+            var pessoa = _settingsTest.Pessoa1;
 
-            var command = new ApagarPessoaCommand() { Id = 1 };
+            var command = _settingsTest.PessoaApagarCommand;
 
             _repository.Salvar(pessoa);
 

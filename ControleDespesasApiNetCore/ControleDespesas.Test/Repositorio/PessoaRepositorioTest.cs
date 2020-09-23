@@ -1,8 +1,7 @@
-﻿using ControleDespesas.Dominio.Entidades;
-using ControleDespesas.Infra.Data.Repositorio;
+﻿using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.Factory;
-using LSCode.Validador.ValueObjects;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
@@ -11,12 +10,14 @@ namespace ControleDespesas.Test.Repositorio
 {
     public class PessoaRepositorioTest : DatabaseFactory
     {
+        private readonly SettingsTest _settingsTest;
         private readonly Mock<IOptions<SettingsInfraData>> _mockOptions = new Mock<IOptions<SettingsInfraData>>();
         private readonly PessoaRepositorio _repository;
 
         public PessoaRepositorioTest()
         {
             CriarBaseDeDadosETabelas();
+            _settingsTest = new SettingsTest();
             _mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
             _repository = new PessoaRepositorio(_mockOptions.Object);
         }
@@ -27,24 +28,8 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Salvar()
         {
-            var pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPerfil");
+            var pessoa = _settingsTest.Pessoa1;
             _repository.Salvar(pessoa);
-
-            var retorno = _repository.Obter(1);
-
-            Assert.AreEqual(1, retorno.Id);
-            Assert.AreEqual(pessoa.Nome.ToString(), retorno.Nome);
-            Assert.AreEqual(pessoa.ImagemPerfil, retorno.ImagemPerfil);
-        }
-
-        [Test]
-        public void Atualizar()
-        {
-            var pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPerfil");
-            _repository.Salvar(pessoa);
-
-            pessoa = new Pessoa(1, new Texto("NomePessoa - Editada", "Nome", 100), "ImagemPerfil - Editado");
-            _repository.Atualizar(pessoa);
 
             var retorno = _repository.Obter(1);
 
@@ -54,39 +39,55 @@ namespace ControleDespesas.Test.Repositorio
         }
 
         [Test]
+        public void Atualizar()
+        {
+            var pessoa = _settingsTest.Pessoa1;
+            _repository.Salvar(pessoa);
+
+            pessoa = _settingsTest.Pessoa1Editada;
+            _repository.Atualizar(pessoa);
+
+            var retorno = _repository.Obter(pessoa.Id);
+
+            Assert.AreEqual(pessoa.Id, retorno.Id);
+            Assert.AreEqual(pessoa.Nome.ToString(), retorno.Nome);
+            Assert.AreEqual(pessoa.ImagemPerfil, retorno.ImagemPerfil);
+        }
+
+        [Test]
         public void Deletar()
         {
-            var pessoa0 = new Pessoa(0, new Texto("NomePessoa0", "Nome", 100), "ImagemPerfil0");
-            var pessoa1 = new Pessoa(0, new Texto("NomePessoa1", "Nome", 100), "ImagemPerfil1");
-            var pessoa2 = new Pessoa(0, new Texto("NomePessoa2", "Nome", 100), "ImagemPerfil2");
+            var pessoa1 = _settingsTest.Pessoa1;
+            var pessoa2 = _settingsTest.Pessoa2;
+            var pessoa3 = _settingsTest.Pessoa3;
 
-            _repository.Salvar(pessoa0);
             _repository.Salvar(pessoa1);
             _repository.Salvar(pessoa2);
+            _repository.Salvar(pessoa3);
 
-            _repository.Deletar(2);
+            _repository.Deletar(pessoa2.Id);
 
             var retorno = _repository.Listar();
 
-            Assert.AreEqual(1, retorno[0].Id);
-            Assert.AreEqual(pessoa0.Nome.ToString(), retorno[0].Nome);
-            Assert.AreEqual(pessoa0.ImagemPerfil, retorno[0].ImagemPerfil);
+            Assert.AreEqual(pessoa1.Id, retorno[0].Id);
+            Assert.AreEqual(pessoa1.Nome.ToString(), retorno[0].Nome);
+            Assert.AreEqual(pessoa1.ImagemPerfil, retorno[0].ImagemPerfil);
 
-            Assert.AreEqual(3, retorno[1].Id);
-            Assert.AreEqual(pessoa2.Nome.ToString(), retorno[1].Nome);
-            Assert.AreEqual(pessoa2.ImagemPerfil, retorno[1].ImagemPerfil);
+            Assert.AreEqual(pessoa3.Id, retorno[1].Id);
+            Assert.AreEqual(pessoa3.Nome.ToString(), retorno[1].Nome);
+            Assert.AreEqual(pessoa3.ImagemPerfil, retorno[1].ImagemPerfil);
         }
 
         [Test]
         public void Obter()
         {
-            var pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPerfil");
+            var pessoa = _settingsTest.Pessoa1;
 
             _repository.Salvar(pessoa);
 
-            var retorno = _repository.Obter(1);
+            var retorno = _repository.Obter(pessoa.Id);
 
-            Assert.AreEqual(1, retorno.Id);
+            Assert.AreEqual(pessoa.Id, retorno.Id);
             Assert.AreEqual(pessoa.Nome.ToString(), retorno.Nome);
             Assert.AreEqual(pessoa.ImagemPerfil, retorno.ImagemPerfil);
         }
@@ -94,33 +95,33 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Listar()
         {
-            var pessoa0 = new Pessoa(0, new Texto("NomePessoa0", "Nome", 100), "ImagemPerfil0");
-            var pessoa1 = new Pessoa(0, new Texto("NomePessoa1", "Nome", 100), "ImagemPerfil1");
-            var pessoa2 = new Pessoa(0, new Texto("NomePessoa2", "Nome", 100), "ImagemPerfil2");
+            var pessoa1 = _settingsTest.Pessoa1;
+            var pessoa2 = _settingsTest.Pessoa2;
+            var pessoa3 = _settingsTest.Pessoa3;
 
-            _repository.Salvar(pessoa0);
             _repository.Salvar(pessoa1);
             _repository.Salvar(pessoa2);
+            _repository.Salvar(pessoa3);
 
             var retorno = _repository.Listar();
 
-            Assert.AreEqual(1, retorno[0].Id);
-            Assert.AreEqual(pessoa0.Nome.ToString(), retorno[0].Nome);
-            Assert.AreEqual(pessoa0.ImagemPerfil, retorno[0].ImagemPerfil);
+            Assert.AreEqual(pessoa1.Id, retorno[0].Id);
+            Assert.AreEqual(pessoa1.Nome.ToString(), retorno[0].Nome);
+            Assert.AreEqual(pessoa1.ImagemPerfil, retorno[0].ImagemPerfil);
 
-            Assert.AreEqual(2, retorno[1].Id);
-            Assert.AreEqual(pessoa1.Nome.ToString(), retorno[1].Nome);
-            Assert.AreEqual(pessoa1.ImagemPerfil, retorno[1].ImagemPerfil);
+            Assert.AreEqual(pessoa2.Id, retorno[1].Id);
+            Assert.AreEqual(pessoa2.Nome.ToString(), retorno[1].Nome);
+            Assert.AreEqual(pessoa2.ImagemPerfil, retorno[1].ImagemPerfil);
 
-            Assert.AreEqual(3, retorno[2].Id);
-            Assert.AreEqual(pessoa2.Nome.ToString(), retorno[2].Nome);
-            Assert.AreEqual(pessoa2.ImagemPerfil, retorno[2].ImagemPerfil);
+            Assert.AreEqual(pessoa3.Id, retorno[2].Id);
+            Assert.AreEqual(pessoa3.Nome.ToString(), retorno[2].Nome);
+            Assert.AreEqual(pessoa3.ImagemPerfil, retorno[2].ImagemPerfil);
         }
 
         [Test]
         public void CheckId()
         {
-            var pessoa = new Pessoa(0, new Texto("NomePessoa", "Nome", 100), "ImagemPerfil");
+            var pessoa = _settingsTest.Pessoa1;
             _repository.Salvar(pessoa);
 
             var idExistente = _repository.CheckId(1);
@@ -133,17 +134,17 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void LocalizarMaxId()
         {
-            var pessoa0 = new Pessoa(0, new Texto("NomePessoa0", "Nome", 100), "ImagemPerfil0");
-            var pessoa1 = new Pessoa(0, new Texto("NomePessoa1", "Nome", 100), "ImagemPerfil1");
-            var pessoa2 = new Pessoa(0, new Texto("NomePessoa2", "Nome", 100), "ImagemPerfil2");
+            var pessoa1 = _settingsTest.Pessoa1;
+            var pessoa2 = _settingsTest.Pessoa2;
+            var pessoa3 = _settingsTest.Pessoa3;
 
-            _repository.Salvar(pessoa0);
             _repository.Salvar(pessoa1);
             _repository.Salvar(pessoa2);
+            _repository.Salvar(pessoa3);
 
             var maxId = _repository.LocalizarMaxId();
 
-            Assert.AreEqual(3, maxId);
+            Assert.AreEqual(pessoa3.Id, maxId);
         }
 
         [TearDown]

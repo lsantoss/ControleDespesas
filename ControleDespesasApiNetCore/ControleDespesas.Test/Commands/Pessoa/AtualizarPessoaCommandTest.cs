@@ -1,4 +1,5 @@
 ﻿using ControleDespesas.Dominio.Commands.Pessoa.Input;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Commands.Pessoa
@@ -8,15 +9,7 @@ namespace ControleDespesas.Test.Commands.Pessoa
         private AtualizarPessoaCommand _command;
 
         [SetUp]
-        public void Setup()
-        {
-            _command = new AtualizarPessoaCommand()
-            {
-                Id = 1,
-                Nome = "Lucas",
-                ImagemPerfil = "base64String"
-            };
-        }
+        public void Setup() => _command = new SettingsTest().PessoaAtualizarCommand;
 
         [Test]
         public void ValidarCommand_Valido()

@@ -1,4 +1,5 @@
 ﻿using ControleDespesas.Dominio.Entidades;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using LSCode.Validador.ValueObjects;
 using NUnit.Framework;
 
@@ -9,13 +10,7 @@ namespace ControleDespesas.Test.Entidades
         private Pessoa _pessoa;
 
         [SetUp]
-        public void Setup()
-        {
-            int id = 1;
-            Texto nome = new Texto("Lucas", "Nome", 100);
-            string imagemPerfil = "base64String";
-            _pessoa = new Pessoa(id, nome, imagemPerfil);
-        }
+        public void Setup() => _pessoa = new SettingsTest().Pessoa1;
 
         [Test]
         public void ValidarEntidade_Valida()

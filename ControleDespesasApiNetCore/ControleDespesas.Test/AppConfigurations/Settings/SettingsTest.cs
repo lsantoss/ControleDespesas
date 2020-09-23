@@ -1,4 +1,5 @@
 ﻿using ControleDespesas.Dominio.Commands.Empresa.Input;
+using ControleDespesas.Dominio.Commands.Pessoa.Input;
 using ControleDespesas.Dominio.Commands.Usuario.Input;
 using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Enums;
@@ -28,6 +29,14 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
         #endregion
 
         #region[Dados de teste para Pessoa]
+        public AdicionarPessoaCommand PessoaAdicionarCommand { get; }
+        public AtualizarPessoaCommand PessoaAtualizarCommand { get; }
+        public ApagarPessoaCommand PessoaApagarCommand { get; }
+        public ObterPessoaPorIdCommand PessoaObterPorIdCommand { get; }
+        public Pessoa Pessoa1 { get; }
+        public Pessoa Pessoa2 { get; }
+        public Pessoa Pessoa3 { get; }
+        public Pessoa Pessoa1Editada { get; }
         #endregion
 
         #region[Dados de teste para TipoPagamento]
@@ -132,6 +141,52 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
             #endregion
 
             #region[Setando dados de teste para Pessoa]
+            PessoaAdicionarCommand = new AdicionarPessoaCommand()
+            {
+                Nome = _configuration["SettingsTest:PessoaAdicionarCommand:Nome"],
+                ImagemPerfil = _configuration["SettingsTest:PessoaAdicionarCommand:ImagemPerfil"]
+            };
+
+            PessoaAtualizarCommand = new AtualizarPessoaCommand()
+            {
+                Id = Convert.ToInt32(_configuration["SettingsTest:PessoaAtualizarCommand:Id"]),
+                Nome = _configuration["SettingsTest:PessoaAtualizarCommand:Nome"],
+                ImagemPerfil = _configuration["SettingsTest:PessoaAtualizarCommand:ImagemPerfil"]
+            };
+
+            PessoaApagarCommand = new ApagarPessoaCommand()
+            {
+                Id = Convert.ToInt32(_configuration["SettingsTest:PessoaApagarCommand:Id"])
+            };
+
+            PessoaObterPorIdCommand = new ObterPessoaPorIdCommand()
+            {
+                Id = Convert.ToInt32(_configuration["SettingsTest:PessoaObterPorIdCommand:Id"])
+            };
+
+            Pessoa1 = new Pessoa(
+                Convert.ToInt32(_configuration["SettingsTest:Pessoa1:Id"]),
+                new Texto(_configuration["SettingsTest:Pessoa1:Nome"], "Nome", 100),
+                _configuration["SettingsTest:Pessoa1:ImagemPerfil"]
+            );
+
+            Pessoa2 = new Pessoa(
+                Convert.ToInt32(_configuration["SettingsTest:Pessoa2:Id"]),
+                new Texto(_configuration["SettingsTest:Pessoa2:Nome"], "Nome", 100),
+                _configuration["SettingsTest:Pessoa2:ImagemPerfil"]
+            );
+
+            Pessoa3 = new Pessoa(
+                Convert.ToInt32(_configuration["SettingsTest:Pessoa3:Id"]),
+                new Texto(_configuration["SettingsTest:Pessoa3:Nome"], "Nome", 100),
+                _configuration["SettingsTest:Pessoa3:ImagemPerfil"]
+            );
+
+            Pessoa1Editada = new Pessoa(
+                Convert.ToInt32(_configuration["SettingsTest:Pessoa1Editada:Id"]),
+                new Texto(_configuration["SettingsTest:Pessoa1Editada:Nome"], "Nome", 100),
+                _configuration["SettingsTest:Pessoa1Editada:ImagemPerfil"]
+            );
             #endregion
 
             #region[Setando dados de teste para TipoPagamento]

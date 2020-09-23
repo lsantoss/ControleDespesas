@@ -6,13 +6,17 @@ namespace ControleDespesas.Test.Helpers
 {
     public class PessoaHelperTest
     {
+        private readonly SettingsTest _settingsTest;
+
+        public PessoaHelperTest() => _settingsTest = new SettingsTest();
+
         [SetUp]
         public void Setup() { }
 
         [Test]
         public void GerarEntidade_AdcionarPessoaCommand()
         {
-            var command = new SettingsTest().PessoaAdicionarCommand;
+            var command = _settingsTest.PessoaAdicionarCommand;
 
             var entidade = PessoaHelper.GerarEntidade(command);
 
@@ -28,7 +32,7 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarEntidade_AtualizarPessoaCommand()
         {
-            var command = new SettingsTest().PessoaAtualizarCommand;
+            var command = _settingsTest.PessoaAtualizarCommand;
 
             var entidade = PessoaHelper.GerarEntidade(command);
 
@@ -44,7 +48,7 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarDadosRetornoInsert()
         {
-            var entidade = new SettingsTest().Pessoa1;
+            var entidade = _settingsTest.Pessoa1;
 
             var command = PessoaHelper.GerarDadosRetornoInsert(entidade);
 
@@ -56,7 +60,7 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarDadosRetornoUpdate()
         {
-            var entidade = new SettingsTest().Pessoa1;
+            var entidade = _settingsTest.Pessoa1;
 
             var command = PessoaHelper.GerarDadosRetornoUpdate(entidade);
 
@@ -68,7 +72,7 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarDadosRetornoDelte()
         {
-            var entidade = new SettingsTest().Pessoa1;
+            var entidade = _settingsTest.Pessoa1;
             var command = PessoaHelper.GerarDadosRetornoDelete(entidade.Id);
             Assert.AreEqual(entidade.Id, command.Id);
         }

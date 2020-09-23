@@ -2,6 +2,7 @@
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.Factory;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using LSCode.Validador.ValueObjects;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -11,12 +12,14 @@ namespace ControleDespesas.Test.Repositorio
 {
     public class TipoPagamentoRepositorioTest : DatabaseFactory
     {
+        private readonly SettingsTest _settingsTest;
         private readonly Mock<IOptions<SettingsInfraData>> _mockOptions = new Mock<IOptions<SettingsInfraData>>();
         private readonly TipoPagamentoRepositorio _repository;
 
         public TipoPagamentoRepositorioTest()
         {
             CriarBaseDeDadosETabelas();
+            _settingsTest = new SettingsTest();
             _mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
             _repository = new TipoPagamentoRepositorio(_mockOptions.Object);
         }
@@ -27,10 +30,10 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Salvar()
         {
-            var tipoPagamento = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento", "Descrição", 250));
+            var tipoPagamento = _settingsTest.TipoPagamento1;
             _repository.Salvar(tipoPagamento);
 
-            var retorno = _repository.Obter(1);
+            var retorno = _repository.Obter(tipoPagamento.Id);
 
             Assert.AreEqual(1, retorno.Id);
             Assert.AreEqual(tipoPagamento.Descricao.ToString(), retorno.Descricao);
@@ -39,13 +42,13 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Atualizar()
         {
-            var tipoPagamento = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento", "Descrição", 250));
+            var tipoPagamento = _settingsTest.TipoPagamento1;
             _repository.Salvar(tipoPagamento);
 
-            tipoPagamento = new TipoPagamento(1, new Texto("DescriçãoTipoPagamento - Editada", "Descrição", 250));
+            tipoPagamento = _settingsTest.TipoPagamento1Editada;
             _repository.Atualizar(tipoPagamento);
 
-            var retorno = _repository.Obter(1);
+            var retorno = _repository.Obter(tipoPagamento.Id);
 
             Assert.AreEqual(tipoPagamento.Id, retorno.Id);
             Assert.AreEqual(tipoPagamento.Descricao.ToString(), retorno.Descricao);
@@ -54,64 +57,64 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Deletar()
         {
-            var tipoPagamento0 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento0", "Descrição", 250));
-            var tipoPagamento1 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento1", "Descrição", 250));
-            var tipoPagamento2 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento2", "Descrição", 250));
+            var tipoPagamento1 = _settingsTest.TipoPagamento1;
+            var tipoPagamento2 = _settingsTest.TipoPagamento2;
+            var tipoPagamento3 = _settingsTest.TipoPagamento3;
 
-            _repository.Salvar(tipoPagamento0);
             _repository.Salvar(tipoPagamento1);
             _repository.Salvar(tipoPagamento2);
+            _repository.Salvar(tipoPagamento3);
 
-            _repository.Deletar(2);
+            _repository.Deletar(tipoPagamento2.Id);
 
             var retorno = _repository.Listar();
 
-            Assert.AreEqual(1, retorno[0].Id);
-            Assert.AreEqual(tipoPagamento0.Descricao.ToString(), retorno[0].Descricao);
+            Assert.AreEqual(tipoPagamento1.Id, retorno[0].Id);
+            Assert.AreEqual(tipoPagamento1.Descricao.ToString(), retorno[0].Descricao);
 
-            Assert.AreEqual(3, retorno[1].Id);
-            Assert.AreEqual(tipoPagamento2.Descricao.ToString(), retorno[1].Descricao);
+            Assert.AreEqual(tipoPagamento3.Id, retorno[1].Id);
+            Assert.AreEqual(tipoPagamento3.Descricao.ToString(), retorno[1].Descricao);
         }
 
         [Test]
         public void Obter()
         {
-            var tipoPagamento = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento", "Descrição", 250));
+            var tipoPagamento = _settingsTest.TipoPagamento1;
             _repository.Salvar(tipoPagamento);
 
-            var retorno = _repository.Obter(1);
+            var retorno = _repository.Obter(tipoPagamento.Id);
 
-            Assert.AreEqual(1, retorno.Id);
+            Assert.AreEqual(tipoPagamento.Id, retorno.Id);
             Assert.AreEqual(tipoPagamento.Descricao.ToString(), retorno.Descricao);
         }
 
         [Test]
         public void Listar()
         {
-            var tipoPagamento0 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento0", "Descrição", 250));
-            var tipoPagamento1 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento1", "Descrição", 250));
-            var tipoPagamento2 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento2", "Descrição", 250));
+            var tipoPagamento1 = _settingsTest.TipoPagamento1;
+            var tipoPagamento2 = _settingsTest.TipoPagamento2;
+            var tipoPagamento3 = _settingsTest.TipoPagamento3;
 
-            _repository.Salvar(tipoPagamento0);
             _repository.Salvar(tipoPagamento1);
             _repository.Salvar(tipoPagamento2);
+            _repository.Salvar(tipoPagamento3);
 
             var retorno = _repository.Listar();
 
-            Assert.AreEqual(1, retorno[0].Id);
-            Assert.AreEqual(tipoPagamento0.Descricao.ToString(), retorno[0].Descricao);
+            Assert.AreEqual(tipoPagamento1.Id, retorno[0].Id);
+            Assert.AreEqual(tipoPagamento1.Descricao.ToString(), retorno[0].Descricao);
 
-            Assert.AreEqual(2, retorno[1].Id);
-            Assert.AreEqual(tipoPagamento1.Descricao.ToString(), retorno[1].Descricao);
+            Assert.AreEqual(tipoPagamento2.Id, retorno[1].Id);
+            Assert.AreEqual(tipoPagamento2.Descricao.ToString(), retorno[1].Descricao);
 
-            Assert.AreEqual(3, retorno[2].Id);
-            Assert.AreEqual(tipoPagamento2.Descricao.ToString(), retorno[2].Descricao);
+            Assert.AreEqual(tipoPagamento3.Id, retorno[2].Id);
+            Assert.AreEqual(tipoPagamento3.Descricao.ToString(), retorno[2].Descricao);
         }
 
         [Test]
         public void CheckId()
         {
-            var tipoPagamento = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento", "Descrição", 250));
+            var tipoPagamento = _settingsTest.TipoPagamento1;
             _repository.Salvar(tipoPagamento);
 
             var idExistente = _repository.CheckId(1);
@@ -124,17 +127,17 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void LocalizarMaxId()
         {
-            var tipoPagamento0 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento0", "Descrição", 250));
-            var tipoPagamento1 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento1", "Descrição", 250));
-            var tipoPagamento2 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento2", "Descrição", 250));
+            var tipoPagamento1 = _settingsTest.TipoPagamento1;
+            var tipoPagamento2 = _settingsTest.TipoPagamento2;
+            var tipoPagamento3 = _settingsTest.TipoPagamento3;
 
-            _repository.Salvar(tipoPagamento0);
             _repository.Salvar(tipoPagamento1);
             _repository.Salvar(tipoPagamento2);
+            _repository.Salvar(tipoPagamento3);
 
             var maxId = _repository.LocalizarMaxId();
 
-            Assert.AreEqual(3, maxId);
+            Assert.AreEqual(tipoPagamento3.Id, maxId);
         }
 
         [TearDown]

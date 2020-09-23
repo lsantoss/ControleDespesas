@@ -1,4 +1,5 @@
 ﻿using ControleDespesas.Dominio.Commands.TipoPagamento.Input;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Commands.TipoPagamento
@@ -8,7 +9,7 @@ namespace ControleDespesas.Test.Commands.TipoPagamento
         private ObterTipoPagamentoPorIdCommand _command;
 
         [SetUp]
-        public void Setup() => _command = new ObterTipoPagamentoPorIdCommand() { Id = 1 };
+        public void Setup() => _command = new SettingsTest().TipoPagamentoObterPorIdCommand;
 
         [Test]
         public void ValidarCommand_Valido()

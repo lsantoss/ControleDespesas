@@ -9,6 +9,7 @@ using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.Factory;
 using ControleDespesas.Test.AppConfigurations.Models;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
 using LSCode.Validador.ValueObjects;
@@ -23,6 +24,7 @@ namespace ControleDespesas.Test.Controllers
 {
     public class TipoPagamentoControllerTest : DatabaseFactory
     {
+        private readonly SettingsTest _settingsTest;
         private readonly Mock<IOptions<SettingsAPI>> _mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
         private readonly Mock<IOptions<SettingsInfraData>> _mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
         private readonly TipoPagamentoRepositorio _repository;
@@ -32,6 +34,7 @@ namespace ControleDespesas.Test.Controllers
         public TipoPagamentoControllerTest()
         {
             CriarBaseDeDadosETabelas();
+            _settingsTest = new SettingsTest();
             _mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
             _mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
             _repository = new TipoPagamentoRepositorio(_mockOptionsInfra.Object);
@@ -64,13 +67,13 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void TipoPagamentos()
         {
-            var tipoPagamento0 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento0", "Descrição", 250));
-            var tipoPagamento1 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento1", "Descrição", 250));
-            var tipoPagamento2 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento2", "Descrição", 250));
+            var tipoPagamento1 = _settingsTest.TipoPagamento1;
+            var tipoPagamento2 = _settingsTest.TipoPagamento2;
+            var tipoPagamento3 = _settingsTest.TipoPagamento3;
 
-            _repository.Salvar(tipoPagamento0);
             _repository.Salvar(tipoPagamento1);
             _repository.Salvar(tipoPagamento2);
+            _repository.Salvar(tipoPagamento3);
 
             var response = _controller.TipoPagamentos().Result;
 
@@ -84,28 +87,28 @@ namespace ControleDespesas.Test.Controllers
             Assert.AreEqual("Lista de tipos de pagamento obtida com sucesso", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
 
-            Assert.AreEqual(1, responseObj.Value.Dados[0].Id);
-            Assert.AreEqual(tipoPagamento0.Descricao.ToString(), responseObj.Value.Dados[0].Descricao);
+            Assert.AreEqual(tipoPagamento1.Id, responseObj.Value.Dados[0].Id);
+            Assert.AreEqual(tipoPagamento1.Descricao.ToString(), responseObj.Value.Dados[0].Descricao);
 
-            Assert.AreEqual(2, responseObj.Value.Dados[1].Id);
-            Assert.AreEqual(tipoPagamento1.Descricao.ToString(), responseObj.Value.Dados[1].Descricao);
+            Assert.AreEqual(tipoPagamento2.Id, responseObj.Value.Dados[1].Id);
+            Assert.AreEqual(tipoPagamento2.Descricao.ToString(), responseObj.Value.Dados[1].Descricao);
 
-            Assert.AreEqual(3, responseObj.Value.Dados[2].Id);
-            Assert.AreEqual(tipoPagamento2.Descricao.ToString(), responseObj.Value.Dados[2].Descricao);
+            Assert.AreEqual(tipoPagamento3.Id, responseObj.Value.Dados[2].Id);
+            Assert.AreEqual(tipoPagamento3.Descricao.ToString(), responseObj.Value.Dados[2].Descricao);
         }
 
         [Test]
         public void TipoPagamento()
         {
-            var tipoPagamento0 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento0", "Descrição", 250));
-            var tipoPagamento1 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento1", "Descrição", 250));
-            var tipoPagamento2 = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento2", "Descrição", 250));
+            var tipoPagamento1 = _settingsTest.TipoPagamento1;
+            var tipoPagamento2 = _settingsTest.TipoPagamento2;
+            var tipoPagamento3 = _settingsTest.TipoPagamento3;
 
-            var command = new ObterTipoPagamentoPorIdCommand() { Id = 2 };
+            var command = _settingsTest.TipoPagamentoObterPorIdCommand;
 
-            _repository.Salvar(tipoPagamento0);
             _repository.Salvar(tipoPagamento1);
             _repository.Salvar(tipoPagamento2);
+            _repository.Salvar(tipoPagamento3);
 
             var response = _controller.TipoPagamento(command).Result;
 
@@ -119,17 +122,14 @@ namespace ControleDespesas.Test.Controllers
             Assert.AreEqual("Tipo de pagameto obtido com sucesso", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
 
-            Assert.AreEqual(2, responseObj.Value.Dados.Id);
-            Assert.AreEqual(tipoPagamento1.Descricao.ToString(), responseObj.Value.Dados.Descricao);
+            Assert.AreEqual(tipoPagamento2.Id, responseObj.Value.Dados.Id);
+            Assert.AreEqual(tipoPagamento2.Descricao.ToString(), responseObj.Value.Dados.Descricao);
         }
 
         [Test]
         public void TipoPagamentoInserir()
         {
-            var command = new AdicionarTipoPagamentoCommand()
-            {
-                Descricao = "DesciçãoTipoPagamento",
-            };
+            var command = _settingsTest.TipoPagamentoAdicionarCommand;
 
             var response = _controller.TipoPagamentoInserir(command).Result;
 
@@ -150,13 +150,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void TipoPagamentoAlterar()
         {
-            var tipoPagamento = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento", "Descrição", 250));
+            var tipoPagamento = _settingsTest.TipoPagamento1;
 
-            var command = new AtualizarTipoPagamentoCommand()
-            {
-                Id = 1,
-                Descricao = "DescriçãoTipoPagamento - Editada"
-            };
+            var command = _settingsTest.TipoPagamentoAtualizarCommand;
 
             _repository.Salvar(tipoPagamento);
 
@@ -179,9 +175,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void TipoPagamentoExcluir()
         {
-            var tipoPagamento = new TipoPagamento(0, new Texto("DescriçãoTipoPagamento", "Descrição", 250));
+            var tipoPagamento = _settingsTest.TipoPagamento1;
 
-            var command = new ApagarTipoPagamentoCommand() { Id = 1 };
+            var command = _settingsTest.TipoPagamentoApagarCommand;
 
             _repository.Salvar(tipoPagamento);
 

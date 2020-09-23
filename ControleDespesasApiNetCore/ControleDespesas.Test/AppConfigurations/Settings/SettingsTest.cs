@@ -1,5 +1,6 @@
 ﻿using ControleDespesas.Dominio.Commands.Empresa.Input;
 using ControleDespesas.Dominio.Commands.Pessoa.Input;
+using ControleDespesas.Dominio.Commands.TipoPagamento.Input;
 using ControleDespesas.Dominio.Commands.Usuario.Input;
 using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Enums;
@@ -40,6 +41,14 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
         #endregion
 
         #region[Dados de teste para TipoPagamento]
+        public AdicionarTipoPagamentoCommand TipoPagamentoAdicionarCommand { get; }
+        public AtualizarTipoPagamentoCommand TipoPagamentoAtualizarCommand { get; }
+        public ApagarTipoPagamentoCommand TipoPagamentoApagarCommand { get; }
+        public ObterTipoPagamentoPorIdCommand TipoPagamentoObterPorIdCommand { get; }
+        public TipoPagamento TipoPagamento1 { get; }
+        public TipoPagamento TipoPagamento2 { get; }
+        public TipoPagamento TipoPagamento3 { get; }
+        public TipoPagamento TipoPagamento1Editada { get; }
         #endregion
 
         #region[Dados de teste para Pagamento]
@@ -190,6 +199,46 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
             #endregion
 
             #region[Setando dados de teste para TipoPagamento]
+            TipoPagamentoAdicionarCommand = new AdicionarTipoPagamentoCommand()
+            {
+                Descricao = _configuration["SettingsTest:TipoPagamentoAdicionarCommand:Descricao"]
+            };
+
+            TipoPagamentoAtualizarCommand = new AtualizarTipoPagamentoCommand()
+            {
+                Id = Convert.ToInt32(_configuration["SettingsTest:TipoPagamentoAtualizarCommand:Id"]),
+                Descricao = _configuration["SettingsTest:TipoPagamentoAtualizarCommand:Descricao"]
+            };
+
+            TipoPagamentoApagarCommand = new ApagarTipoPagamentoCommand()
+            {
+                Id = Convert.ToInt32(_configuration["SettingsTest:TipoPagamentoApagarCommand:Id"])
+            };
+
+            TipoPagamentoObterPorIdCommand = new ObterTipoPagamentoPorIdCommand()
+            {
+                Id = Convert.ToInt32(_configuration["SettingsTest:TipoPagamentoObterPorIdCommand:Id"])
+            };
+
+            TipoPagamento1 = new TipoPagamento(
+                Convert.ToInt32(_configuration["SettingsTest:TipoPagamento1:Id"]),
+                new Texto(_configuration["SettingsTest:TipoPagamento1:Descricao"], "Descrição", 250)
+            );
+
+            TipoPagamento2 = new TipoPagamento(
+                Convert.ToInt32(_configuration["SettingsTest:TipoPagamento2:Id"]),
+                new Texto(_configuration["SettingsTest:TipoPagamento2:Descricao"], "Descrição", 250)
+            );
+
+            TipoPagamento3 = new TipoPagamento(
+                Convert.ToInt32(_configuration["SettingsTest:TipoPagamento3:Id"]),
+                new Texto(_configuration["SettingsTest:TipoPagamento3:Descricao"], "Descrição", 250)
+            );
+
+            TipoPagamento1Editada = new TipoPagamento(
+                Convert.ToInt32(_configuration["SettingsTest:TipoPagamento1Editada:Id"]),
+                new Texto(_configuration["SettingsTest:TipoPagamento1Editada:Descricao"], "Descrição", 250)
+            );
             #endregion
 
             #region[Setando dados de teste para Pagamento]

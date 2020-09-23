@@ -1,4 +1,5 @@
 ﻿using ControleDespesas.Dominio.Entidades;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using LSCode.Validador.ValueObjects;
 using NUnit.Framework;
 
@@ -9,12 +10,7 @@ namespace ControleDespesas.Test.Entidades
         private TipoPagamento _tipoPagamento;
 
         [SetUp]
-        public void Setup()
-        {
-            int id = 1;
-            Texto descricao = new Texto("Luz Elétrica", "Descrição", 250);
-            _tipoPagamento = new TipoPagamento(id, descricao);
-        }
+        public void Setup() => _tipoPagamento = new SettingsTest().TipoPagamento1;
 
         [Test]
         public void ValidarEntidade_Valida()

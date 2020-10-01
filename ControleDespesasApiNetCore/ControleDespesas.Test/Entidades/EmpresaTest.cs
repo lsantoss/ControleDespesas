@@ -10,10 +10,7 @@ namespace ControleDespesas.Test.Entidades
         private Empresa _empresa;
 
         [SetUp]
-        public void Setup()
-        {
-            _empresa = new SettingsTest().Empresa1;
-        }
+        public void Setup() => _empresa = new SettingsTest().Empresa1;
 
         [Test]
         public void ValidarEntidade_Valida()

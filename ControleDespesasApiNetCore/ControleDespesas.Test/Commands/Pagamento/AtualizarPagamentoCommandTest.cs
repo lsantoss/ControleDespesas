@@ -1,6 +1,6 @@
 ﻿using ControleDespesas.Dominio.Commands.Pagamento.Input;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using NUnit.Framework;
-using System;
 
 namespace ControleDespesas.Test.Commands.Pagamento
 {
@@ -9,20 +9,7 @@ namespace ControleDespesas.Test.Commands.Pagamento
         private AtualizarPagamentoCommand _command;
 
         [SetUp]
-        public void Setup()
-        {
-            _command = new AtualizarPagamentoCommand()
-            {
-                Id = 1,
-                IdTipoPagamento = 15,
-                IdEmpresa = 4,
-                IdPessoa = 2,
-                Descricao = "Pagamento do mês de Maio de Luz Elétrica",
-                Valor = 89.75,
-                DataPagamento = DateTime.Now,
-                DataVencimento = DateTime.Now.AddDays(1),
-            };
-        }
+        public void Setup() => _command = new SettingsTest().PagamentoAtualizarCommand;
 
         [Test]
         public void ValidarCommand_Valido()

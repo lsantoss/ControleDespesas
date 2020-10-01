@@ -1,4 +1,5 @@
 ﻿using ControleDespesas.Dominio.Commands.Empresa.Input;
+using ControleDespesas.Dominio.Commands.Pagamento.Input;
 using ControleDespesas.Dominio.Commands.Pessoa.Input;
 using ControleDespesas.Dominio.Commands.TipoPagamento.Input;
 using ControleDespesas.Dominio.Commands.Usuario.Input;
@@ -16,6 +17,34 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
     {
         #region[IConfiguration - appsettings.json]
         private IConfiguration _configuration { get; }
+        #endregion
+
+        #region[Dados de teste para utlilizar Banco de Dados]
+        public static string ControleDespesasAPINetCore { get; } = @"https://localhost:44323/";
+        public static string ChaveAPI { get; } = @"3150112e-5285-43a8-bc71-b100fe7233d5";
+        public static string ChaveJWT { get; } = @"(B3]U5N{ho+KdXxB%>Q,Fblh9E;O:NE*O8!ke?b@eM,7kk8Ph{DnRp+}u!Hs?LbE+CpP[*}X^&^fR4w0u0E$H{621%Mr[nw#qC}";
+
+        public static Type TipoBancoDeDdos { get; } = typeof(EBancoDadosRelacional);
+        public static EBancoDadosRelacional BancoDeDadosRelacional { get; } = EBancoDadosRelacional.SQLServer;
+        public static EBancoDadosNaoRelacional BancoDeDadosNaoRelacional { get; } = EBancoDadosNaoRelacional.MongoDB;
+
+        public static string ConnectionSQLServerReal { get; } = @"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ControleDespesas;Data Source=SANTOS-PC\SQLEXPRESS;";
+        public static string ConnectionSQLServerTest { get; } = @"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ControleDespesasTest;Data Source=SANTOS-PC\SQLEXPRESS;";
+
+        public static string ConnectionMySqlReal { get; } = @"";
+        public static string ConnectionMySqlTest { get; } = @"";
+
+        public static string ConnectionSQLiteReal { get; } = @"";
+        public static string ConnectionSQLiteTest { get; } = @"";
+
+        public static string ConnectionPostgreSQLReal { get; } = @"";
+        public static string ConnectionPostgreSQLTest { get; } = @"";
+
+        public static string ConnectionOracleReal { get; } = @"";
+        public static string ConnectionOracleTest { get; } = @"";
+
+        public static string ConnectionMongoDBReal { get; } = @"";
+        public static string ConnectionMongoDBTest { get; } = @"";
         #endregion
 
         #region [Dados de teste para Empresa]
@@ -48,10 +77,18 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
         public TipoPagamento TipoPagamento1 { get; }
         public TipoPagamento TipoPagamento2 { get; }
         public TipoPagamento TipoPagamento3 { get; }
-        public TipoPagamento TipoPagamento1Editada { get; }
+        public TipoPagamento TipoPagamento1Editado { get; }
         #endregion
 
         #region[Dados de teste para Pagamento]
+        public AdicionarPagamentoCommand PagamentoAdicionarCommand { get; }
+        public AtualizarPagamentoCommand PagamentoAtualizarCommand { get; }
+        public ApagarPagamentoCommand PagamentoApagarCommand { get; }
+        public ObterPagamentoPorIdCommand PagamentoObterPorIdCommand { get; }
+        public Pagamento Pagamento1 { get; }
+        public Pagamento Pagamento2 { get; }
+        public Pagamento Pagamento3 { get; }
+        public Pagamento Pagamento1Editado { get; }
         #endregion
 
         #region[Dados de teste para Usuario]
@@ -64,34 +101,6 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
         public Usuario Usuario2 { get; }
         public Usuario Usuario3 { get; }
         public Usuario Usuario1Editado { get; }
-        #endregion
-
-        #region[Dados de teste para utlilizar Banco de Dados]
-        public static string ControleDespesasAPINetCore { get; } = @"https://localhost:44323/";
-        public static string ChaveAPI { get; } = @"3150112e-5285-43a8-bc71-b100fe7233d5";
-        public static string ChaveJWT { get; } = @"(B3]U5N{ho+KdXxB%>Q,Fblh9E;O:NE*O8!ke?b@eM,7kk8Ph{DnRp+}u!Hs?LbE+CpP[*}X^&^fR4w0u0E$H{621%Mr[nw#qC}";
-
-        public static Type TipoBancoDeDdos { get; } = typeof(EBancoDadosRelacional);
-        public static EBancoDadosRelacional BancoDeDadosRelacional { get; } = EBancoDadosRelacional.SQLServer;
-        public static EBancoDadosNaoRelacional BancoDeDadosNaoRelacional { get; } = EBancoDadosNaoRelacional.MongoDB;
-
-        public static string ConnectionSQLServerReal { get; } = @"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ControleDespesas;Data Source=SANTOS-PC\SQLEXPRESS;";
-        public static string ConnectionSQLServerTest { get; } = @"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ControleDespesasTest;Data Source=SANTOS-PC\SQLEXPRESS;";
-
-        public static string ConnectionMySqlReal { get; } = @"";
-        public static string ConnectionMySqlTest { get; } = @"";
-
-        public static string ConnectionSQLiteReal { get; } = @"";
-        public static string ConnectionSQLiteTest { get; } = @"";
-
-        public static string ConnectionPostgreSQLReal { get; } = @"";
-        public static string ConnectionPostgreSQLTest { get; } = @"";
-
-        public static string ConnectionOracleReal { get; } = @"";
-        public static string ConnectionOracleTest { get; } = @"";
-
-        public static string ConnectionMongoDBReal { get; } = @"";
-        public static string ConnectionMongoDBTest { get; } = @"";
         #endregion
 
         public SettingsTest()
@@ -235,13 +244,133 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                 new Texto(_configuration["SettingsTest:TipoPagamento3:Descricao"], "Descrição", 250)
             );
 
-            TipoPagamento1Editada = new TipoPagamento(
-                Convert.ToInt32(_configuration["SettingsTest:TipoPagamento1Editada:Id"]),
-                new Texto(_configuration["SettingsTest:TipoPagamento1Editada:Descricao"], "Descrição", 250)
+            TipoPagamento1Editado = new TipoPagamento(
+                Convert.ToInt32(_configuration["SettingsTest:TipoPagamento1Editado:Id"]),
+                new Texto(_configuration["SettingsTest:TipoPagamento1Editado:Descricao"], "Descrição", 250)
             );
             #endregion
 
             #region[Setando dados de teste para Pagamento]
+            PagamentoAdicionarCommand = new AdicionarPagamentoCommand()
+            {
+                IdTipoPagamento = Convert.ToInt32(_configuration["SettingsTest:PagamentoAdicionarCommand:IdTipoPagamento"]),
+                IdEmpresa = Convert.ToInt32(_configuration["SettingsTest:PagamentoAdicionarCommand:IdEmpresa"]),
+                IdPessoa = Convert.ToInt32(_configuration["SettingsTest:PagamentoAdicionarCommand:IdPessoa"]),
+                Descricao = _configuration["SettingsTest:PagamentoAdicionarCommand:Descricao"],
+                Valor = Convert.ToDouble(_configuration["SettingsTest:PagamentoAdicionarCommand:Valor"]),
+                DataVencimento = DateTime.Parse(_configuration["SettingsTest:PagamentoAdicionarCommand:DataVencimento"]),
+                DataPagamento = DateTime.Parse(_configuration["SettingsTest:PagamentoAdicionarCommand:DataPagamento"])
+            };
+
+            PagamentoAtualizarCommand = new AtualizarPagamentoCommand()
+            {
+                Id = Convert.ToInt32(_configuration["SettingsTest:PagamentoAtualizarCommand:Id"]),
+                IdTipoPagamento = Convert.ToInt32(_configuration["SettingsTest:PagamentoAtualizarCommand:IdTipoPagamento"]),
+                IdEmpresa = Convert.ToInt32(_configuration["SettingsTest:PagamentoAtualizarCommand:IdEmpresa"]),
+                IdPessoa = Convert.ToInt32(_configuration["SettingsTest:PagamentoAtualizarCommand:IdPessoa"]),
+                Descricao = _configuration["SettingsTest:PagamentoAtualizarCommand:Descricao"],
+                Valor = Convert.ToDouble(_configuration["SettingsTest:PagamentoAtualizarCommand:Valor"]),
+                DataVencimento = DateTime.Parse(_configuration["SettingsTest:PagamentoAtualizarCommand:DataVencimento"]),
+                DataPagamento = DateTime.Parse(_configuration["SettingsTest:PagamentoAtualizarCommand:DataPagamento"])
+            };
+
+            PagamentoApagarCommand = new ApagarPagamentoCommand()
+            {
+                Id = Convert.ToInt32(_configuration["SettingsTest:PagamentoApagarCommand:Id"])
+            };
+
+            PagamentoObterPorIdCommand = new ObterPagamentoPorIdCommand()
+            {
+                Id = Convert.ToInt32(_configuration["SettingsTest:PagamentoObterPorIdCommand:Id"])
+            };
+
+            Pagamento1 = new Pagamento(
+                Convert.ToInt32(_configuration["SettingsTest:Pagamento1:Id"]),
+                new TipoPagamento(
+                    Convert.ToInt32(_configuration["SettingsTest:Pagamento1:TipoPagamento:Id"]),
+                    new Texto(_configuration["SettingsTest:Pagamento1:TipoPagamento:Descricao"], "Descrição", 250)
+                ),
+                new Empresa(
+                    Convert.ToInt32(_configuration["SettingsTest:Pagamento1:Empresa:Id"]),
+                    new Texto(_configuration["SettingsTest:Pagamento1:Empresa:Nome"], "Nome", 100),
+                    _configuration["SettingsTest:Pagamento1:Empresa:Logo"]
+                ),
+                new Pessoa(
+                    Convert.ToInt32(_configuration["SettingsTest:Pagamento1:Pessoa:Id"]),
+                    new Texto(_configuration["SettingsTest:Pagamento1:Pessoa:Nome"], "Nome", 100),
+                    _configuration["SettingsTest:Pagamento1:Pessoa:ImagemPerfil"]
+                ),
+                new Texto(_configuration["SettingsTest:Pagamento1:Descricao"], "Descrição", 250),
+                Convert.ToDouble(_configuration["SettingsTest:Pagamento1:Valor"]),
+                DateTime.Parse(_configuration["SettingsTest:Pagamento1:DataVencimento"]),
+                DateTime.Parse(_configuration["SettingsTest:Pagamento1:DataPagamento"])
+            );
+
+            Pagamento2 = new Pagamento(
+                Convert.ToInt32(_configuration["SettingsTest:Pagamento2:Id"]),
+                new TipoPagamento(
+                    Convert.ToInt32(_configuration["SettingsTest:Pagamento2:TipoPagamento:Id"]),
+                    new Texto(_configuration["SettingsTest:Pagamento2:TipoPagamento:Descricao"], "Descrição", 250)
+                ),
+                new Empresa(
+                    Convert.ToInt32(_configuration["SettingsTest:Pagamento2:Empresa:Id"]),
+                    new Texto(_configuration["SettingsTest:Pagamento2:Empresa:Nome"], "Nome", 100),
+                    _configuration["SettingsTest:Pagamento2:Empresa:Logo"]
+                ),
+                new Pessoa(
+                    Convert.ToInt32(_configuration["SettingsTest:Pagamento2:Pessoa:Id"]),
+                    new Texto(_configuration["SettingsTest:Pagamento2:Pessoa:Nome"], "Nome", 100),
+                    _configuration["SettingsTest:Pagamento2:Pessoa:ImagemPerfil"]
+                ),
+                new Texto(_configuration["SettingsTest:Pagamento2:Descricao"], "Descrição", 250),
+                Convert.ToDouble(_configuration["SettingsTest:Pagamento2:Valor"]),
+                DateTime.Parse(_configuration["SettingsTest:Pagamento2:DataVencimento"]),
+                DateTime.Parse(_configuration["SettingsTest:Pagamento2:DataPagamento"])
+            );
+
+            Pagamento3 = new Pagamento(
+                Convert.ToInt32(_configuration["SettingsTest:Pagamento3:Id"]),
+                new TipoPagamento(
+                    Convert.ToInt32(_configuration["SettingsTest:Pagamento3:TipoPagamento:Id"]),
+                    new Texto(_configuration["SettingsTest:Pagamento3:TipoPagamento:Descricao"], "Descrição", 250)
+                ),
+                new Empresa(
+                    Convert.ToInt32(_configuration["SettingsTest:Pagamento3:Empresa:Id"]),
+                    new Texto(_configuration["SettingsTest:Pagamento3:Empresa:Nome"], "Nome", 100),
+                    _configuration["SettingsTest:Pagamento3:Empresa:Logo"]
+                ),
+                new Pessoa(
+                    Convert.ToInt32(_configuration["SettingsTest:Pagamento3:Pessoa:Id"]),
+                    new Texto(_configuration["SettingsTest:Pagamento3:Pessoa:Nome"], "Nome", 100),
+                    _configuration["SettingsTest:Pagamento3:Pessoa:ImagemPerfil"]
+                ),
+                new Texto(_configuration["SettingsTest:Pagamento3:Descricao"], "Descrição", 250),
+                Convert.ToDouble(_configuration["SettingsTest:Pagamento3:Valor"]),
+                DateTime.Parse(_configuration["SettingsTest:Pagamento3:DataVencimento"]),
+                DateTime.Parse(_configuration["SettingsTest:Pagamento3:DataPagamento"])
+            );
+
+            Pagamento1Editado = new Pagamento(
+                Convert.ToInt32(_configuration["SettingsTest:Pagamento1Editada:Id"]),
+                new TipoPagamento(
+                    Convert.ToInt32(_configuration["SettingsTest:Pagamento1Editada:TipoPagamento:Id"]),
+                    new Texto(_configuration["SettingsTest:Pagamento1Editada:TipoPagamento:Descricao"], "Descrição", 250)
+                ),
+                new Empresa(
+                    Convert.ToInt32(_configuration["SettingsTest:Pagamento1Editada:Empresa:Id"]),
+                    new Texto(_configuration["SettingsTest:Pagamento1Editada:Empresa:Nome"], "Nome", 100),
+                    _configuration["SettingsTest:Pagamento1Editada:Empresa:Logo"]
+                ),
+                new Pessoa(
+                    Convert.ToInt32(_configuration["SettingsTest:Pagamento1Editada:Pessoa:Id"]),
+                    new Texto(_configuration["SettingsTest:Pagamento1Editada:Pessoa:Nome"], "Nome", 100),
+                    _configuration["SettingsTest:Pagamento1Editada:Pessoa:ImagemPerfil"]
+                ),
+                new Texto(_configuration["SettingsTest:Pagamento1Editada:Descricao"], "Descrição", 250),
+                Convert.ToDouble(_configuration["SettingsTest:Pagamento1Editada:Valor"]),
+                DateTime.Parse(_configuration["SettingsTest:Pagamento1Editada:DataVencimento"]),
+                DateTime.Parse(_configuration["SettingsTest:Pagamento1Editada:DataPagamento"])
+            );
             #endregion
 
             #region[Setando dados de teste para Usuario]

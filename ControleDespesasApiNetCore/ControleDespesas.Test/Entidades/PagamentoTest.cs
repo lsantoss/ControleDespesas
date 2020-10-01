@@ -1,7 +1,7 @@
 ﻿using ControleDespesas.Dominio.Entidades;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using LSCode.Validador.ValueObjects;
 using NUnit.Framework;
-using System;
 
 namespace ControleDespesas.Test.Entidades
 {
@@ -10,18 +10,7 @@ namespace ControleDespesas.Test.Entidades
         private Pagamento _pagamento;
 
         [SetUp]
-        public void Setup()
-        {
-            int id = 1;
-            TipoPagamento tipoPagamento = new TipoPagamento(33);
-            Empresa empresa = new Empresa(125);
-            Pessoa pessoa = new Pessoa(45);
-            Texto descricao = new Texto("Pagamento do mês de Maio de Luz Elétrica", "Descrição", 250);
-            double valor = 89.75;
-            DateTime dataPagamento = DateTime.Now;
-            DateTime dataVencimento = DateTime.Now.AddDays(1);
-            _pagamento = new Pagamento(id, tipoPagamento, empresa, pessoa, descricao, valor, dataPagamento, dataVencimento);
-        }
+        public void Setup() => _pagamento = new SettingsTest().Pagamento1;
 
         [Test]
         public void ValidarEntidade_Valida()

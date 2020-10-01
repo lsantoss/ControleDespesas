@@ -45,7 +45,7 @@ namespace ControleDespesas.Test.Repositorio
             var tipoPagamento = _settingsTest.TipoPagamento1;
             _repository.Salvar(tipoPagamento);
 
-            tipoPagamento = _settingsTest.TipoPagamento1Editada;
+            tipoPagamento = _settingsTest.TipoPagamento1Editado;
             _repository.Atualizar(tipoPagamento);
 
             var retorno = _repository.Obter(tipoPagamento.Id);

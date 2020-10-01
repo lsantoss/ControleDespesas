@@ -1,44 +1,33 @@
-﻿using ControleDespesas.Dominio.Commands.Pagamento.Input;
-using ControleDespesas.Dominio.Entidades;
-using ControleDespesas.Dominio.Helpers;
-using LSCode.Validador.ValueObjects;
+﻿using ControleDespesas.Dominio.Helpers;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using NUnit.Framework;
-using System;
 
 namespace ControleDespesas.Test.Helpers
 {
     public class PagamentoHelperTest
     {
+        private readonly SettingsTest _settingsTest;
+
+        public PagamentoHelperTest() => _settingsTest = new SettingsTest();
+
         [SetUp]
         public void Setup() { }
 
         [Test]
         public void GerarEntidade_AdcionarPagamentoCommand()
         {
-            var dataVencimento = DateTime.Now.AddDays(1);
-            var dataPagamento = DateTime.Now;
-
-            var command = new AdicionarPagamentoCommand()
-            {
-                IdTipoPagamento = 1,
-                IdEmpresa = 2,
-                IdPessoa = 3,
-                Descricao = "Descricao",
-                Valor = 100,
-                DataVencimento = dataVencimento,
-                DataPagamento = dataPagamento
-            };
+            var command = _settingsTest.PagamentoAdicionarCommand;
 
             var entidade = PagamentoHelper.GerarEntidade(command);
 
             Assert.AreEqual(0, entidade.Id);
-            Assert.AreEqual(1, entidade.TipoPagamento.Id);
-            Assert.AreEqual(2, entidade.Empresa.Id);
-            Assert.AreEqual(3, entidade.Pessoa.Id);
-            Assert.AreEqual("Descricao", entidade.Descricao.ToString());
-            Assert.AreEqual(100, entidade.Valor);
-            Assert.AreEqual(dataVencimento, entidade.DataVencimento);
-            Assert.AreEqual(dataPagamento, entidade.DataPagamento);
+            Assert.AreEqual(command.IdTipoPagamento, entidade.TipoPagamento.Id);
+            Assert.AreEqual(command.IdEmpresa, entidade.Empresa.Id);
+            Assert.AreEqual(command.IdPessoa, entidade.Pessoa.Id);
+            Assert.AreEqual(command.Descricao, entidade.Descricao.ToString());
+            Assert.AreEqual(command.Valor, entidade.Valor);
+            Assert.AreEqual(command.DataVencimento, entidade.DataVencimento);
+            Assert.AreEqual(command.DataPagamento, entidade.DataPagamento);
             Assert.True(entidade.Valido);
             Assert.True(entidade.Descricao.Valido);
             Assert.AreEqual(0, entidade.Notificacoes.Count);
@@ -48,31 +37,18 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarEntidade_AtualizarPagamentoCommand()
         {
-            var dataVencimento = DateTime.Now.AddDays(1);
-            var dataPagamento = DateTime.Now;
-
-            var command = new AtualizarPagamentoCommand()
-            {
-                Id = 15,
-                IdTipoPagamento = 1,
-                IdEmpresa = 2,
-                IdPessoa = 3,
-                Descricao = "Descricao",
-                Valor = 100,
-                DataVencimento = dataVencimento,
-                DataPagamento = dataPagamento
-            };
+            var command = _settingsTest.PagamentoAtualizarCommand;
 
             var entidade = PagamentoHelper.GerarEntidade(command);
 
-            Assert.AreEqual(15, entidade.Id);
-            Assert.AreEqual(1, entidade.TipoPagamento.Id);
-            Assert.AreEqual(2, entidade.Empresa.Id);
-            Assert.AreEqual(3, entidade.Pessoa.Id);
-            Assert.AreEqual("Descricao", entidade.Descricao.ToString());
-            Assert.AreEqual(100, entidade.Valor);
-            Assert.AreEqual(dataVencimento, entidade.DataVencimento);
-            Assert.AreEqual(dataPagamento, entidade.DataPagamento);
+            Assert.AreEqual(command.Id, entidade.Id);
+            Assert.AreEqual(command.IdTipoPagamento, entidade.TipoPagamento.Id);
+            Assert.AreEqual(command.IdEmpresa, entidade.Empresa.Id);
+            Assert.AreEqual(command.IdPessoa, entidade.Pessoa.Id);
+            Assert.AreEqual(command.Descricao, entidade.Descricao.ToString());
+            Assert.AreEqual(command.Valor, entidade.Valor);
+            Assert.AreEqual(command.DataVencimento, entidade.DataVencimento);
+            Assert.AreEqual(command.DataPagamento, entidade.DataPagamento);
             Assert.True(entidade.Valido);
             Assert.True(entidade.Descricao.Valido);
             Assert.AreEqual(0, entidade.Notificacoes.Count);
@@ -82,66 +58,43 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarDadosRetornoInsert()
         {
-            var dataVencimento = DateTime.Now.AddDays(1);
-            var dataPagamento = DateTime.Now;
-
-            var entidade = new Pagamento(
-                15,
-                new TipoPagamento(1),
-                new Empresa(2),
-                new Pessoa(3),
-                new Texto("Descricao", "Descricao", 250),
-                100,
-                dataVencimento,
-                dataPagamento
-            );
+            var entidade = _settingsTest.Pagamento1;
 
             var command = PagamentoHelper.GerarDadosRetornoInsert(entidade);
 
-            Assert.AreEqual(15, command.Id);
-            Assert.AreEqual(1, command.IdTipoPagamento);
-            Assert.AreEqual(2, command.IdEmpresa);
-            Assert.AreEqual(3, command.IdPessoa);
-            Assert.AreEqual("Descricao", command.Descricao);
-            Assert.AreEqual(100, command.Valor);
-            Assert.AreEqual(dataVencimento, command.DataVencimento);
-            Assert.AreEqual(dataPagamento, command.DataPagamento);
+            Assert.AreEqual(entidade.Id, command.Id);
+            Assert.AreEqual(entidade.TipoPagamento.Id, command.IdTipoPagamento);
+            Assert.AreEqual(entidade.Empresa.Id, command.IdEmpresa);
+            Assert.AreEqual(entidade.Pessoa.Id, command.IdPessoa);
+            Assert.AreEqual(entidade.Descricao.ToString(), command.Descricao);
+            Assert.AreEqual(entidade.Valor, command.Valor);
+            Assert.AreEqual(entidade.DataVencimento, command.DataVencimento);
+            Assert.AreEqual(entidade.DataPagamento, command.DataPagamento);
         }
 
         [Test]
         public void GerarDadosRetornoUpdate()
         {
-            var dataVencimento = DateTime.Now.AddDays(1);
-            var dataPagamento = DateTime.Now;
-
-            var entidade = new Pagamento(
-                15,
-                new TipoPagamento(1),
-                new Empresa(2),
-                new Pessoa(3),
-                new Texto("Descricao", "Descricao", 250),
-                100,
-                dataVencimento,
-                dataPagamento
-            );
+            var entidade = _settingsTest.Pagamento1;
 
             var command = PagamentoHelper.GerarDadosRetornoUpdate(entidade);
 
-            Assert.AreEqual(15, command.Id);
-            Assert.AreEqual(1, command.IdTipoPagamento);
-            Assert.AreEqual(2, command.IdEmpresa);
-            Assert.AreEqual(3, command.IdPessoa);
-            Assert.AreEqual("Descricao", command.Descricao);
-            Assert.AreEqual(100, command.Valor);
-            Assert.AreEqual(dataVencimento, command.DataVencimento);
-            Assert.AreEqual(dataPagamento, command.DataPagamento);
+            Assert.AreEqual(entidade.Id, command.Id);
+            Assert.AreEqual(entidade.TipoPagamento.Id, command.IdTipoPagamento);
+            Assert.AreEqual(entidade.Empresa.Id, command.IdEmpresa);
+            Assert.AreEqual(entidade.Pessoa.Id, command.IdPessoa);
+            Assert.AreEqual(entidade.Descricao.ToString(), command.Descricao);
+            Assert.AreEqual(entidade.Valor, command.Valor);
+            Assert.AreEqual(entidade.DataVencimento, command.DataVencimento);
+            Assert.AreEqual(entidade.DataPagamento, command.DataPagamento);
         }
 
         [Test]
         public void GerarDadosRetornoDelte()
         {
-            var command = PagamentoHelper.GerarDadosRetornoDelete(1);
-            Assert.AreEqual(1, command.Id);
+            var entidade = _settingsTest.Pagamento1;
+            var command = PagamentoHelper.GerarDadosRetornoDelete(entidade.Id);
+            Assert.AreEqual(entidade.Id, command.Id);
         }
 
         [TearDown]

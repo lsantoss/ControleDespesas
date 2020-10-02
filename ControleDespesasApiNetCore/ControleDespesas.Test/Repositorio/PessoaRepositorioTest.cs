@@ -31,7 +31,7 @@ namespace ControleDespesas.Test.Repositorio
             var pessoa = _settingsTest.Pessoa1;
             _repository.Salvar(pessoa);
 
-            var retorno = _repository.Obter(1);
+            var retorno = _repository.Obter(pessoa.Id);
 
             Assert.AreEqual(pessoa.Id, retorno.Id);
             Assert.AreEqual(pessoa.Nome.ToString(), retorno.Nome);
@@ -124,7 +124,7 @@ namespace ControleDespesas.Test.Repositorio
             var pessoa = _settingsTest.Pessoa1;
             _repository.Salvar(pessoa);
 
-            var idExistente = _repository.CheckId(1);
+            var idExistente = _repository.CheckId(pessoa.Id);
             var idNaoExiste = _repository.CheckId(25);
 
             Assert.True(idExistente);

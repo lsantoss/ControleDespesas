@@ -34,7 +34,7 @@ namespace ControleDespesas.Test.Repositorio
             var usuario = _settingsTest.Usuario1;
             _repository.Salvar(usuario);
 
-            var retorno = _repository.Obter(1);
+            var retorno = _repository.Obter(usuario.Id);
 
             Assert.AreEqual(usuario.Id, retorno.Id);
             Assert.AreEqual(usuario.Login.ToString(), retorno.Login);
@@ -51,7 +51,7 @@ namespace ControleDespesas.Test.Repositorio
             usuario = _settingsTest.Usuario1Editado;
             _repository.Atualizar(usuario);
 
-            var retorno = _repository.Obter(1);
+            var retorno = _repository.Obter(usuario.Id);
 
             Assert.AreEqual(usuario.Id, retorno.Id);
             Assert.AreEqual(usuario.Login.ToString(), retorno.Login);
@@ -70,7 +70,7 @@ namespace ControleDespesas.Test.Repositorio
             _repository.Salvar(usuario2);
             _repository.Salvar(usuario3);
 
-            _repository.Deletar(2);
+            _repository.Deletar(usuario2.Id);
 
             var retorno = _repository.Listar();
 
@@ -91,7 +91,7 @@ namespace ControleDespesas.Test.Repositorio
             var usuario = _settingsTest.Usuario1;
             _repository.Salvar(usuario);
 
-            var retorno = _repository.Obter(1);
+            var retorno = _repository.Obter(usuario.Id);
 
             Assert.AreEqual(usuario.Id, retorno.Id);
             Assert.AreEqual(usuario.Login.ToString(), retorno.Login);
@@ -161,7 +161,7 @@ namespace ControleDespesas.Test.Repositorio
             var usuario = _settingsTest.Usuario1;
             _repository.Salvar(usuario);
 
-            var idExistente = _repository.CheckId(1);
+            var idExistente = _repository.CheckId(usuario.Id);
             var idNaoExiste = _repository.CheckId(25);
 
             Assert.True(idExistente);

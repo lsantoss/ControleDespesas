@@ -204,7 +204,7 @@ namespace ControleDespesas.Test.Repositorio
 
             var maxId = _repositoryPagamento.LocalizarMaxId();
 
-            Assert.AreEqual(2, maxId);
+            Assert.AreEqual(pagamento2.Id, maxId);
         }
 
         [TearDown]

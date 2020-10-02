@@ -31,7 +31,7 @@ namespace ControleDespesas.Test.Repositorio
             var empresa = _settingsTest.Empresa1;
             _repository.Salvar(empresa);
 
-            var retorno = _repository.Obter(1);
+            var retorno = _repository.Obter(empresa.Id);
 
             Assert.AreEqual(empresa.Id, retorno.Id);
             Assert.AreEqual(empresa.Nome.ToString(), retorno.Nome);
@@ -47,7 +47,7 @@ namespace ControleDespesas.Test.Repositorio
             empresa = _settingsTest.Empresa1Editada;
             _repository.Atualizar(empresa);
 
-            var retorno = _repository.Obter(1);
+            var retorno = _repository.Obter(empresa.Id);
 
             Assert.AreEqual(empresa.Id, retorno.Id);
             Assert.AreEqual(empresa.Nome.ToString(), retorno.Nome);
@@ -84,7 +84,7 @@ namespace ControleDespesas.Test.Repositorio
             var empresa = _settingsTest.Empresa1;
             _repository.Salvar(empresa);
 
-            var retorno = _repository.Obter(1);
+            var retorno = _repository.Obter(empresa.Id);
 
             Assert.AreEqual(empresa.Id, retorno.Id);
             Assert.AreEqual(empresa.Nome.ToString(), retorno.Nome);
@@ -123,7 +123,7 @@ namespace ControleDespesas.Test.Repositorio
             var empresa = _settingsTest.Empresa1;
             _repository.Salvar(empresa);
 
-            var idExistente = _repository.CheckId(1);
+            var idExistente = _repository.CheckId(empresa.Id);
             var idNaoExiste = _repository.CheckId(25);
 
             Assert.True(idExistente);

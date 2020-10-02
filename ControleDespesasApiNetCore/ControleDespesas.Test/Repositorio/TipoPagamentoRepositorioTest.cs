@@ -1,9 +1,7 @@
-﻿using ControleDespesas.Dominio.Entidades;
-using ControleDespesas.Infra.Data.Repositorio;
+﻿using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.Factory;
 using ControleDespesas.Test.AppConfigurations.Settings;
-using LSCode.Validador.ValueObjects;
 using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
@@ -35,7 +33,7 @@ namespace ControleDespesas.Test.Repositorio
 
             var retorno = _repository.Obter(tipoPagamento.Id);
 
-            Assert.AreEqual(1, retorno.Id);
+            Assert.AreEqual(tipoPagamento.Id, retorno.Id);
             Assert.AreEqual(tipoPagamento.Descricao.ToString(), retorno.Descricao);
         }
 
@@ -117,7 +115,7 @@ namespace ControleDespesas.Test.Repositorio
             var tipoPagamento = _settingsTest.TipoPagamento1;
             _repository.Salvar(tipoPagamento);
 
-            var idExistente = _repository.CheckId(1);
+            var idExistente = _repository.CheckId(tipoPagamento.Id);
             var idNaoExiste = _repository.CheckId(25);
 
             Assert.True(idExistente);

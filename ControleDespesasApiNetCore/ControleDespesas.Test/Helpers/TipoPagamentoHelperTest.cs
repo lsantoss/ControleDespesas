@@ -66,7 +66,7 @@ namespace ControleDespesas.Test.Helpers
         {
             var entidade = _settingsTest.TipoPagamento1;
             var command = TipoPagamentoHelper.GerarDadosRetornoDelete(entidade.Id);
-            Assert.AreEqual(1, command.Id);
+            Assert.AreEqual(entidade.Id, command.Id);
         }
 
         [TearDown]

@@ -1,8 +1,6 @@
 ﻿using ControleDespesas.Api.Controllers.ControleDespesas;
 using ControleDespesas.Api.Settings;
-using ControleDespesas.Dominio.Commands.TipoPagamento.Input;
 using ControleDespesas.Dominio.Commands.TipoPagamento.Output;
-using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Query.TipoPagamento;
 using ControleDespesas.Infra.Data.Repositorio;
@@ -12,7 +10,6 @@ using ControleDespesas.Test.AppConfigurations.Models;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
-using LSCode.Validador.ValueObjects;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Moq;

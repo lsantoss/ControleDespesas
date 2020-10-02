@@ -1,12 +1,9 @@
-﻿using ControleDespesas.Dominio.Commands.TipoPagamento.Input;
-using ControleDespesas.Dominio.Commands.TipoPagamento.Output;
-using ControleDespesas.Dominio.Entidades;
+﻿using ControleDespesas.Dominio.Commands.TipoPagamento.Output;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.Factory;
 using ControleDespesas.Test.AppConfigurations.Settings;
-using LSCode.Validador.ValueObjects;
 using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;

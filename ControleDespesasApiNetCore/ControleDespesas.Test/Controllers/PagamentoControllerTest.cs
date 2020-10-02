@@ -118,9 +118,6 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void Pagamento()
         {
-            var tipoPagamento = _settingsTest.Pagamento1.TipoPagamento;
-            var empresa = _settingsTest.Pagamento1.Empresa;
-            var pessoa = _settingsTest.Pagamento1.Pessoa;
             var pagamento1 = _settingsTest.Pagamento1;
             var pagamento2 = _settingsTest.Pagamento2;
 
@@ -196,16 +193,13 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void PagamentoAlterar()
         {
-            var tipoPagamento = _settingsTest.Pagamento1.TipoPagamento;
-            var empresa = _settingsTest.Pagamento1.Empresa;
-            var pessoa = _settingsTest.Pagamento1.Pessoa;
             var pagamento = _settingsTest.Pagamento1;
 
             var command = _settingsTest.PagamentoAtualizarCommand;
 
-            _repositoryTipoPagamento.Salvar(tipoPagamento);
-            _repositoryEmpresa.Salvar(empresa);
-            _repositoryPessoa.Salvar(pessoa);
+            _repositoryTipoPagamento.Salvar(pagamento.TipoPagamento);
+            _repositoryEmpresa.Salvar(pagamento.Empresa);
+            _repositoryPessoa.Salvar(pagamento.Pessoa);
             _repositoryPagamento.Salvar(pagamento);
 
             var response = _controller.PagamentoAlterar(command).Result;
@@ -233,16 +227,13 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void PagamentoExcluir()
         {
-            var tipoPagamento = _settingsTest.Pagamento1.TipoPagamento;
-            var empresa = _settingsTest.Pagamento1.Empresa;
-            var pessoa = _settingsTest.Pagamento1.Pessoa;
             var pagamento = _settingsTest.Pagamento1;
 
             var command = _settingsTest.PagamentoApagarCommand;
 
-            _repositoryTipoPagamento.Salvar(tipoPagamento);
-            _repositoryEmpresa.Salvar(empresa);
-            _repositoryPessoa.Salvar(pessoa);
+            _repositoryTipoPagamento.Salvar(pagamento.TipoPagamento);
+            _repositoryEmpresa.Salvar(pagamento.Empresa) ;
+            _repositoryPessoa.Salvar(pagamento.Pessoa);
             _repositoryPagamento.Salvar(pagamento);
 
             var response = _controller.PagamentoExcluir(command).Result;

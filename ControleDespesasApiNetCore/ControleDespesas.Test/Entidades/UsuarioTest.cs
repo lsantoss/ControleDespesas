@@ -33,9 +33,15 @@ namespace ControleDespesas.Test.Entidades
         }
 
         [Test]
-        public void ValidarEntidade_SenhaInvalida()
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase("1Aaaaaaaaaaaaaaa")]
+        [TestCase("aaaaa1")]
+        [TestCase("AAAAA1")]
+        [TestCase("AAAAAa")]
+        public void ValidarEntidade_SenhaInvalida(string senha)
         {
-            _usuario.Senha = new SenhaMedia("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            _usuario.Senha = new SenhaMedia(senha);
 
             Assert.False(_usuario.Senha.Valido);
             Assert.AreNotEqual(0, _usuario.Senha.Notificacoes.Count);

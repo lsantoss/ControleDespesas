@@ -19,41 +19,22 @@ namespace ControleDespesas.Test.Commands.Pessoa
         }
 
         [Test]
-        public void ValidarCommand_NomeMinimoDeCaractetesNull()
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        public void ValidarCommand_NomeInvalido(string nome)
         {
-            _command.Nome = null;
+            _command.Nome = nome;
             Assert.False(_command.ValidarCommand());
             Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }
 
         [Test]
-        public void ValidarCommand_NomeMinimoDeCaractetesEmpty()
+        [TestCase(null)]
+        [TestCase("")]
+        public void ValidarCommand_ImagemPerfilInvalido(string imagemPerfil)
         {
-            _command.Nome = string.Empty;
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
-        }
-
-        [Test]
-        public void ValidarCommand_NomeMaximoDeCaractetes()
-        {
-            _command.Nome = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
-        }
-
-        [Test]
-        public void ValidarCommand_ImagemPerfilMinimoDeCaractetesNull()
-        {
-            _command.ImagemPerfil = null;
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
-        }
-
-        [Test]
-        public void ValidarCommand_ImagemPerfilMinimoDeCaractetesEmpty()
-        {
-            _command.ImagemPerfil = string.Empty;
+            _command.ImagemPerfil = imagemPerfil;
             Assert.False(_command.ValidarCommand());
             Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }

@@ -20,41 +20,22 @@ namespace ControleDespesas.Test.Commands.Usuario
         }
 
         [Test]
-        public void ValidarCommand_LoginMinimoDeCaractetesNull()
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        public void ValidarCommand_LoginInvalido(string login)
         {
-            _command.Login = null;
+            _command.Login = login;
             Assert.False(_command.ValidarCommand());
             Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }
 
         [Test]
-        public void ValidarCommand_LoginMinimoDeCaractetesEmpty()
+        [TestCase(null)]
+        [TestCase("")]
+        public void ValidarCommand_SenhaInvalido(string senha)
         {
-            _command.Login = string.Empty;
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
-        }
-
-        [Test]
-        public void ValidarCommand_LoginMaximoDeCaractetes()
-        {
-            _command.Login = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
-        }
-
-        [Test]
-        public void ValidarCommand_SenhaMinimoDeCaractetesNull()
-        {
-            _command.Senha = null;
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
-        }
-
-        [Test]
-        public void ValidarCommand_SenhaMinimoDeCaractetesEmpty()
-        {
-            _command.Senha = string.Empty;
+            _command.Senha = senha;
             Assert.False(_command.ValidarCommand());
             Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }

@@ -19,28 +19,12 @@ namespace ControleDespesas.Test.Commands.TipoPagamento
         }
 
         [Test]
-        public void ValidarCommand_DescricaoMinimoDeCaractetesNull()
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        public void ValidarCommand_DescricaoInvalido(string descricao)
         {
-            _command.Descricao = null;
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
-        }
-
-        [Test]
-        public void ValidarCommand_DescricaoMinimoDeCaractetesEmpty()
-        {
-            _command.Descricao = string.Empty;
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
-        }
-
-        [Test]
-        public void ValidarCommand_DescricaoMaximoDeCaractetes_False()
-        {
-            _command.Descricao = @"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                                   aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                                   aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-
+            _command.Descricao = descricao;
             Assert.False(_command.ValidarCommand());
             Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }

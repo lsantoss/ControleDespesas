@@ -19,41 +19,22 @@ namespace ControleDespesas.Test.Commands.Empresa
         }
 
         [Test]
-        public void ValidarCommand_NomeMinimoDeCaractetesNull()
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        public void ValidarCommand_NomeInvalido(string nome)
         {
-            _command.Nome = null;
+            _command.Nome = nome;
             Assert.False(_command.ValidarCommand());
             Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }
 
         [Test]
-        public void ValidarCommand_NomeMinimoDeCaractetesEmpty()
+        [TestCase(null)]
+        [TestCase("")]
+        public void ValidarCommand_LogoInvalido(string logo)
         {
-            _command.Nome = string.Empty;
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
-        }
-
-        [Test]
-        public void ValidarCommand_NomeMaximoDeCaractetes()
-        {
-            _command.Nome = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
-        }
-
-        [Test]
-        public void ValidarCommand_LogoMinimoDeCaractetesNull()
-        {
-            _command.Logo = null;
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
-        }
-
-        [Test]
-        public void ValidarCommand_LogoMinimoDeCaractetesEmpty()
-        {
-            _command.Logo = string.Empty;
+            _command.Logo = logo;
             Assert.False(_command.ValidarCommand());
             Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }

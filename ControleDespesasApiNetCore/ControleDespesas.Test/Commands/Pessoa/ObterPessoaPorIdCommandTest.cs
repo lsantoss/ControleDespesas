@@ -19,17 +19,11 @@ namespace ControleDespesas.Test.Commands.Pessoa
         }
 
         [Test]
-        public void ValidarCommand_IdZerado()
+        [TestCase(0)]
+        [TestCase(-1)]
+        public void ValidarCommand_IdInvalido(int id)
         {
-            _command.Id = 0;
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
-        }
-
-        [Test]
-        public void ValidarCommand_IdNegativo()
-        {
-            _command.Id = -1;
+            _command.Id = id;
             Assert.False(_command.ValidarCommand());
             Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }

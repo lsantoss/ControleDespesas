@@ -19,57 +19,32 @@ namespace ControleDespesas.Test.Commands.Pessoa
         }
 
         [Test]
-        public void ValidarCommand_IdZerado()
+        [TestCase(0)]
+        [TestCase(-1)]
+        public void ValidarCommand_IdInvalido(int id)
         {
-            _command.Id = 0;
+            _command.Id = id;
             Assert.False(_command.ValidarCommand());
             Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }
 
         [Test]
-        public void ValidarCommand_IdNegativo()
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        public void ValidarCommand_NomeInvalido(string nome)
         {
-            _command.Id = -1;
+            _command.Nome = nome;
             Assert.False(_command.ValidarCommand());
             Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }
 
         [Test]
-        public void ValidarCommand_NomeMinimoDeCaractetesNull()
+        [TestCase(null)]
+        [TestCase("")]
+        public void ValidarCommand_ImagemPerfilInvalido(string imagemPerfil)
         {
-            _command.Nome = null;
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
-        }
-
-        [Test]
-        public void ValidarCommand_NomeMinimoDeCaractetesEmpty()
-        {
-            _command.Nome = string.Empty;
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
-        }
-
-        [Test]
-        public void ValidarCommand_NomeMaximoDeCaractetes()
-        {
-            _command.Nome = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
-        }
-
-        [Test]
-        public void ValidarCommand_ImagemPerfilMinimoDeCaractetesNull()
-        {
-            _command.ImagemPerfil = null;
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
-        }
-
-        [Test]
-        public void ValidarCommand_ImagemPerfilMinimoDeCaractetesEmpty()
-        {
-            _command.ImagemPerfil = string.Empty;
+            _command.ImagemPerfil = imagemPerfil;
             Assert.False(_command.ValidarCommand());
             Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }

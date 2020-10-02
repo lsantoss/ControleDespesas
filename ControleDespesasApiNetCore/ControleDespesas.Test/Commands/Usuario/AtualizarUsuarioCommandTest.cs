@@ -20,105 +20,46 @@ namespace ControleDespesas.Test.Commands.Usuario
         }
 
         [Test]
-        public void ValidarCommand_IdZerado()
+        [TestCase(0)]
+        [TestCase(-1)]
+        public void ValidarCommand_IdInvalido(int id)
         {
-            _command.Id = 0;
+            _command.Id = id;
             Assert.False(_command.ValidarCommand());
             Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }
 
         [Test]
-        public void ValidarCommand_IdNegativo()
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        public void ValidarCommand_LoginInvalido(string login)
         {
-            _command.Id = -1;
+            _command.Login = login;
             Assert.False(_command.ValidarCommand());
             Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }
 
         [Test]
-        public void ValidarCommand_LoginMinimoDeCaractetesNull()
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase("1Aaaaaaaaaaaaaaa")]
+        [TestCase("aaaaa1")]
+        [TestCase("AAAAA1")]
+        [TestCase("AAAAAa")]
+        public void ValidarCommand_SenhaInvalida(string senha)
         {
-            _command.Login = null;
+            _command.Senha = senha;
             Assert.False(_command.ValidarCommand());
             Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }
 
         [Test]
-        public void ValidarCommand_LoginMinimoDeCaractetesEmpty()
+        [TestCase(0)]
+        [TestCase(-1)]
+        public void ValidarCommand_PrivilegioInvalido(int privilegio)
         {
-            _command.Login = string.Empty;
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
-        }
-
-        [Test]
-        public void ValidarCommand_LoginMaximoDeCaractetes()
-        {
-            _command.Login = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
-        }
-
-        [Test]
-        public void ValidarCommand_SenhaMinimoDeCaractetesNull()
-        {
-            _command.Senha = null;
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
-        }
-
-        [Test]
-        public void ValidarCommand_SenhaMinimoDeCaractetesEmpty()
-        {
-            _command.Senha = string.Empty;
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
-        }
-
-        [Test]
-        public void ValidarCommand_SenhaMaximoDeCaractetes()
-        {
-            _command.Senha = "1Aaaaaaaaaaaaaaa";
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
-        }
-
-        [Test]
-        public void ValidarCommand_SenhaContemLetrasMaiusculas()
-        {
-            _command.Senha = "aaaaa1";
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
-        }
-
-        [Test]
-        public void ValidarCommand_SenhaContemLetrasMinusculas()
-        {
-            _command.Senha = "AAAAA1";
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
-        }
-
-        [Test]
-        public void ValidarCommand_SenhaContemLetrasNumeros()
-        {
-            _command.Senha = "AAAAAa";
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
-        }
-
-        [Test]
-        public void ValidarCommand_PrivilegioZerado()
-        {
-            _command.Privilegio = 0;
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
-        }
-
-        [Test]
-        public void ValidarCommand_PrivilegioNegativo()
-        {
-            _command.Privilegio = (EPrivilegioUsuario)(-1);
+            _command.Privilegio = (EPrivilegioUsuario)privilegio;
             Assert.False(_command.ValidarCommand());
             Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }

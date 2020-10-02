@@ -19,107 +19,62 @@ namespace ControleDespesas.Test.Commands.Pagamento
         }
 
         [Test]
-        public void ValidarCommand_IdZerado()
+        [TestCase(0)]
+        [TestCase(-1)]
+        public void ValidarCommand_IdInvalido(int id)
         {
-            _command.Id = 0;
+            _command.Id = id;
             Assert.False(_command.ValidarCommand());
             Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }
 
         [Test]
-        public void ValidarCommand_IdNegativo()
+        [TestCase(0)]
+        [TestCase(-1)]
+        public void ValidarCommand_IdTipoPagamentoInvalido(int idTipoPagamento)
         {
-            _command.Id = -1;
+            _command.IdTipoPagamento = idTipoPagamento;
             Assert.False(_command.ValidarCommand());
             Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }
 
         [Test]
-        public void ValidarCommand_IdTipoPagamentoZerado()
+        [TestCase(0)]
+        [TestCase(-1)]
+        public void ValidarCommand_IdEmpresaInvalido(int idEmpresa)
         {
-            _command.IdTipoPagamento = 0;
+            _command.IdEmpresa = idEmpresa;
             Assert.False(_command.ValidarCommand());
             Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }
 
         [Test]
-        public void ValidarCommand_IdTipoPagamentoNegativo()
+        [TestCase(0)]
+        [TestCase(-1)]
+        public void ValidarCommand_IdPessoaInvalido(int idPessoa)
         {
-            _command.IdTipoPagamento = -1;
+            _command.IdPessoa = idPessoa;
             Assert.False(_command.ValidarCommand());
             Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }
 
         [Test]
-        public void ValidarCommand_IdEmpresaZerado()
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        public void ValidarCommand_DescricaoInvalido(string descricao)
         {
-            _command.IdEmpresa = 0;
+            _command.Descricao = descricao;
             Assert.False(_command.ValidarCommand());
             Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }
 
         [Test]
-        public void ValidarCommand_IdEmpresaNegativo()
+        [TestCase(0)]
+        [TestCase(-1)]
+        public void ValidarCommand_ValorInvalido(double valor)
         {
-            _command.IdEmpresa = -1;
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
-        }
-
-        [Test]
-        public void ValidarCommand_IdPessoaZerado()
-        {
-            _command.IdPessoa = 0;
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
-        }
-
-        [Test]
-        public void ValidarCommand_IdPessoaNegativo()
-        {
-            _command.IdPessoa = -1;
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
-        }
-
-        [Test]
-        public void ValidarCommand_DescricaoMinimoDeCaractetesNull()
-        {
-            _command.Descricao = null;
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
-        }
-
-        [Test]
-        public void ValidarCommand_DescricaoMinimoDeCaractetesEmpty()
-        {
-            _command.Descricao = string.Empty;
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
-        }
-
-        [Test]
-        public void ValidarCommand_DescricaoMaximoDeCaractetes()
-        {
-            _command.Descricao = @"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                                   aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                                   aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
-        }
-
-        [Test]
-        public void ValidarCommand_ValorZerado()
-        {
-            _command.Valor = 0;
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
-        }
-
-        [Test]
-        public void ValidarCommand_ValorNegativo()
-        {
-            _command.Valor = -1;
+            _command.Valor = valor;
             Assert.False(_command.ValidarCommand());
             Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }

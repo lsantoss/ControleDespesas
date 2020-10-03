@@ -112,354 +112,353 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
             #endregion
 
             #region[Dados de teste para API]
-            ControleDespesasAPINetCore = _configuration.GetValue<string>["SettingsTest:ControleDespesasAPINetCore"];
-            ChaveAPI = _configuration["SettingsTest:ChaveAPI"];
-            ChaveJWT = _configuration["SettingsTest:ChaveJWT"];
+            ControleDespesasAPINetCore = _configuration.GetValue<string>("SettingsTest:ControleDespesasAPINetCore");
+            ChaveAPI = _configuration.GetValue<string>("SettingsTest:ChaveAPI");
+            ChaveJWT = _configuration.GetValue<string>("SettingsTest:ChaveJWT");
             #endregion
 
             #region[Setando dados teste para Banco de Dados]
             TipoBancoDeDdos = typeof(EBancoDadosRelacional);
-            BancoDeDadosRelacional = EBancoDadosRelacional.SQLServer;
-            BancoDeDadosNaoRelacional = EBancoDadosNaoRelacional.MongoDB;
-            ConnectionSQLServerReal = _configuration["SettingsTest:ConnectionSQLServerReal"];
-            ConnectionSQLServerTest = _configuration["SettingsTest:ConnectionSQLServerTest"];
-            ConnectionMySqlReal = _configuration["SettingsTest:ConnectionMySqlReal"];
-            ConnectionMySqlTest = _configuration["SettingsTest:ConnectionMySqlTest"];
-            ConnectionSQLiteReal = _configuration["SettingsTest:ConnectionSQLiteReal"];
-            ConnectionSQLiteTest = _configuration["SettingsTest:ConnectionSQLiteTest"];
-            ConnectionPostgreSQLReal = _configuration["SettingsTest:ConnectionPostgreSQLReal"];
-            ConnectionPostgreSQLTest = _configuration["SettingsTest:ConnectionPostgreSQLTest"];
-            ConnectionOracleReal = _configuration["SettingsTest:ConnectionOracleReal"];
-            ConnectionOracleTest = _configuration["SettingsTest:ConnectionOracleTest"];
-            ConnectionMongoDBReal = _configuration["SettingsTest:ConnectionMongoDBReal"];
-            ConnectionMongoDBTest = _configuration["SettingsTest:ConnectionMongoDBTest"];
+            BancoDeDadosRelacional = _configuration.GetValue<EBancoDadosRelacional>("SettingsTest:BancoDeDadosRelacional");
+            BancoDeDadosNaoRelacional = _configuration.GetValue<EBancoDadosNaoRelacional>("SettingsTest:BancoDeDadosNaoRelacional");
+            ConnectionSQLServerReal = _configuration.GetValue<string>("SettingsTest:ConnectionSQLServerReal");
+            ConnectionSQLServerTest = _configuration.GetValue<string>("SettingsTest:ConnectionSQLServerTest");
+            ConnectionMySqlReal = _configuration.GetValue<string>("SettingsTest:ConnectionMySqlReal");
+            ConnectionMySqlTest = _configuration.GetValue<string>("SettingsTest:ConnectionMySqlTest");
+            ConnectionSQLiteReal = _configuration.GetValue<string>("SettingsTest:ConnectionSQLiteReal");
+            ConnectionSQLiteTest = _configuration.GetValue<string>("SettingsTest:ConnectionSQLiteTest");
+            ConnectionPostgreSQLReal = _configuration.GetValue<string>("SettingsTest:ConnectionPostgreSQLReal");
+            ConnectionPostgreSQLTest = _configuration.GetValue<string>("SettingsTest:ConnectionPostgreSQLTest");
+            ConnectionOracleReal = _configuration.GetValue<string>("SettingsTest:ConnectionOracleReal");
+            ConnectionOracleTest = _configuration.GetValue<string>("SettingsTest:ConnectionOracleTest");
+            ConnectionMongoDBReal = _configuration.GetValue<string>("SettingsTest:ConnectionMongoDBReal");
+            ConnectionMongoDBTest = _configuration.GetValue<string>("SettingsTest:ConnectionMongoDBTest");
             #endregion
 
             #region[Setando dados de teste para Empresa]
             EmpresaAdicionarCommand = new AdicionarEmpresaCommand()
             {
-                Nome = _configuration["SettingsTest:EmpresaAdicionarCommand:Nome"],
-                Logo = _configuration["SettingsTest:EmpresaAdicionarCommand:Logo"]
+                Nome = _configuration.GetValue<string>("SettingsTest:EmpresaAdicionarCommand:Nome"),
+                Logo = _configuration.GetValue<string>("SettingsTest:EmpresaAdicionarCommand:Logo")
             };
 
             EmpresaAtualizarCommand = new AtualizarEmpresaCommand()
             {
-                Id = Convert.ToInt32(_configuration["SettingsTest:EmpresaAtualizarCommand:Id"]),
-                Nome = _configuration["SettingsTest:EmpresaAtualizarCommand:Nome"],
-                Logo = _configuration["SettingsTest:EmpresaAtualizarCommand:Logo"]
+                Id = _configuration.GetValue<int>("SettingsTest:EmpresaAtualizarCommand:Id"),
+                Nome = _configuration.GetValue<string>("SettingsTest:EmpresaAtualizarCommand:Nome"),
+                Logo = _configuration.GetValue<string>("SettingsTest:EmpresaAtualizarCommand:Logo")
             };
 
             EmpresaApagarCommand = new ApagarEmpresaCommand()
             {
-                Id = Convert.ToInt32(_configuration["SettingsTest:EmpresaApagarCommand:Id"])
+                Id = _configuration.GetValue<int>("SettingsTest:EmpresaApagarCommand:Id")
             };
 
             EmpresaObterPorIdCommand = new ObterEmpresaPorIdCommand()
             {
-                Id = Convert.ToInt32(_configuration["SettingsTest:EmpresaObterPorIdCommand:Id"])
+                Id = _configuration.GetValue<int>("SettingsTest:EmpresaObterPorIdCommand:Id")
             };
 
             Empresa1 = new Empresa(
-                Convert.ToInt32(_configuration["SettingsTest:Empresa1:Id"]),
-                new Texto(_configuration["SettingsTest:Empresa1:Nome"], "Nome", 100),
-                _configuration["SettingsTest:Empresa1:Logo"]
+                _configuration.GetValue<int>("SettingsTest:Empresa1:Id"),
+                new Texto(_configuration.GetValue<string>("SettingsTest:Empresa1:Nome"), "Nome", 100),
+                _configuration.GetValue<string>("SettingsTest:Empresa1:Logo")
             );
 
             Empresa2 = new Empresa(
-                Convert.ToInt32(_configuration["SettingsTest:Empresa2:Id"]),
-                new Texto(_configuration["SettingsTest:Empresa2:Nome"], "Nome", 100),
-                _configuration["SettingsTest:Empresa2:Logo"]
+                _configuration.GetValue<int>("SettingsTest:Empresa2:Id"),
+                new Texto(_configuration.GetValue<string>("SettingsTest:Empresa2:Nome"), "Nome", 100),
+                _configuration.GetValue<string>("SettingsTest:Empresa2:Logo")
             );
 
             Empresa3 = new Empresa(
-                Convert.ToInt32(_configuration["SettingsTest:Empresa3:Id"]),
-                new Texto(_configuration["SettingsTest:Empresa3:Nome"], "Nome", 100),
-                _configuration["SettingsTest:Empresa3:Logo"]
+                _configuration.GetValue<int>("SettingsTest:Empresa3:Id"),
+                new Texto(_configuration.GetValue<string>("SettingsTest:Empresa3:Nome"), "Nome", 100),
+                _configuration.GetValue<string>("SettingsTest:Empresa3:Logo")
             );
 
             Empresa1Editada = new Empresa(
-                Convert.ToInt32(_configuration["SettingsTest:Empresa1Editada:Id"]),
-                new Texto(_configuration["SettingsTest:Empresa1Editada:Nome"], "Nome", 100),
-                _configuration["SettingsTest:Empresa1Editada:Logo"]
+                _configuration.GetValue<int>("SettingsTest:Empresa1Editada:Id"),
+                new Texto(_configuration.GetValue<string>("SettingsTest:Empresa1Editada:Nome"), "Nome", 100),
+                _configuration.GetValue<string>("SettingsTest:Empresa1Editada:Logo")
             );
             #endregion
 
             #region[Setando dados de teste para Pessoa]
             PessoaAdicionarCommand = new AdicionarPessoaCommand()
             {
-                Nome = _configuration["SettingsTest:PessoaAdicionarCommand:Nome"],
-                ImagemPerfil = _configuration["SettingsTest:PessoaAdicionarCommand:ImagemPerfil"]
+                Nome = _configuration.GetValue<string>("SettingsTest:PessoaAdicionarCommand:Nome"),
+                ImagemPerfil = _configuration.GetValue<string>("SettingsTest:PessoaAdicionarCommand:ImagemPerfil")
             };
 
             PessoaAtualizarCommand = new AtualizarPessoaCommand()
             {
-                Id = Convert.ToInt32(_configuration["SettingsTest:PessoaAtualizarCommand:Id"]),
-                Nome = _configuration["SettingsTest:PessoaAtualizarCommand:Nome"],
-                ImagemPerfil = _configuration["SettingsTest:PessoaAtualizarCommand:ImagemPerfil"]
+                Id = _configuration.GetValue<int>("SettingsTest:PessoaAtualizarCommand:Id"),
+                Nome = _configuration.GetValue<string>("SettingsTest:PessoaAtualizarCommand:Nome"),
+                ImagemPerfil = _configuration.GetValue<string>("SettingsTest:PessoaAtualizarCommand:ImagemPerfil")
             };
 
             PessoaApagarCommand = new ApagarPessoaCommand()
             {
-                Id = Convert.ToInt32(_configuration["SettingsTest:PessoaApagarCommand:Id"])
+                Id = _configuration.GetValue<int>("SettingsTest:PessoaApagarCommand:Id")
             };
 
             PessoaObterPorIdCommand = new ObterPessoaPorIdCommand()
             {
-                Id = Convert.ToInt32(_configuration["SettingsTest:PessoaObterPorIdCommand:Id"])
+                Id = _configuration.GetValue<int>("SettingsTest:PessoaObterPorIdCommand:Id")
             };
 
             Pessoa1 = new Pessoa(
-                Convert.ToInt32(_configuration["SettingsTest:Pessoa1:Id"]),
-                new Texto(_configuration["SettingsTest:Pessoa1:Nome"], "Nome", 100),
-                _configuration["SettingsTest:Pessoa1:ImagemPerfil"]
+                _configuration.GetValue<int>("SettingsTest:Pessoa1:Id"),
+                new Texto(_configuration.GetValue<string>("SettingsTest:Pessoa1:Nome"), "Nome", 100),
+                _configuration.GetValue<string>("SettingsTest:Pessoa1:ImagemPerfil")
             );
 
             Pessoa2 = new Pessoa(
-                Convert.ToInt32(_configuration["SettingsTest:Pessoa2:Id"]),
-                new Texto(_configuration["SettingsTest:Pessoa2:Nome"], "Nome", 100),
-                _configuration["SettingsTest:Pessoa2:ImagemPerfil"]
+                _configuration.GetValue<int>("SettingsTest:Pessoa2:Id"),
+                new Texto(_configuration.GetValue<string>("SettingsTest:Pessoa2:Nome"), "Nome", 100),
+                _configuration.GetValue<string>("SettingsTest:Pessoa2:ImagemPerfil")
             );
 
             Pessoa3 = new Pessoa(
-                Convert.ToInt32(_configuration["SettingsTest:Pessoa3:Id"]),
-                new Texto(_configuration["SettingsTest:Pessoa3:Nome"], "Nome", 100),
-                _configuration["SettingsTest:Pessoa3:ImagemPerfil"]
+                _configuration.GetValue<int>("SettingsTest:Pessoa3:Id"),
+                new Texto(_configuration.GetValue<string>("SettingsTest:Pessoa3:Nome"), "Nome", 100),
+                _configuration.GetValue<string>("SettingsTest:Pessoa3:ImagemPerfil")
             );
 
             Pessoa1Editada = new Pessoa(
-                Convert.ToInt32(_configuration["SettingsTest:Pessoa1Editada:Id"]),
-                new Texto(_configuration["SettingsTest:Pessoa1Editada:Nome"], "Nome", 100),
-                _configuration["SettingsTest:Pessoa1Editada:ImagemPerfil"]
+                _configuration.GetValue<int>("SettingsTest:Pessoa1Editada:Id"),
+                new Texto(_configuration.GetValue<string>("SettingsTest:Pessoa1Editada:Nome"), "Nome", 100),
+                _configuration.GetValue<string>("SettingsTest:Pessoa1Editada:ImagemPerfil")
             );
             #endregion
 
             #region[Setando dados de teste para TipoPagamento]
             TipoPagamentoAdicionarCommand = new AdicionarTipoPagamentoCommand()
             {
-                Descricao = _configuration["SettingsTest:TipoPagamentoAdicionarCommand:Descricao"]
+                Descricao = _configuration.GetValue<string>("SettingsTest:TipoPagamentoAdicionarCommand:Descricao")
             };
 
             TipoPagamentoAtualizarCommand = new AtualizarTipoPagamentoCommand()
             {
-                Id = Convert.ToInt32(_configuration["SettingsTest:TipoPagamentoAtualizarCommand:Id"]),
-                Descricao = _configuration["SettingsTest:TipoPagamentoAtualizarCommand:Descricao"]
+                Id = _configuration.GetValue<int>("SettingsTest:TipoPagamentoAtualizarCommand:Id"),
+                Descricao = _configuration.GetValue<string>("SettingsTest:TipoPagamentoAtualizarCommand:Descricao")
             };
 
             TipoPagamentoApagarCommand = new ApagarTipoPagamentoCommand()
             {
-                Id = Convert.ToInt32(_configuration["SettingsTest:TipoPagamentoApagarCommand:Id"])
+                Id = _configuration.GetValue<int>("SettingsTest:TipoPagamentoApagarCommand:Id")
             };
 
             TipoPagamentoObterPorIdCommand = new ObterTipoPagamentoPorIdCommand()
             {
-                Id = Convert.ToInt32(_configuration["SettingsTest:TipoPagamentoObterPorIdCommand:Id"])
+                Id = _configuration.GetValue<int>("SettingsTest:TipoPagamentoObterPorIdCommand:Id")
             };
 
             TipoPagamento1 = new TipoPagamento(
-                Convert.ToInt32(_configuration["SettingsTest:TipoPagamento1:Id"]),
-                new Texto(_configuration["SettingsTest:TipoPagamento1:Descricao"], "Descrição", 250)
+                _configuration.GetValue<int>("SettingsTest:TipoPagamento1:Id"),
+                new Texto(_configuration.GetValue<string>("SettingsTest:TipoPagamento1:Descricao"), "Descrição", 250)
             );
 
             TipoPagamento2 = new TipoPagamento(
-                Convert.ToInt32(_configuration["SettingsTest:TipoPagamento2:Id"]),
-                new Texto(_configuration["SettingsTest:TipoPagamento2:Descricao"], "Descrição", 250)
+                _configuration.GetValue<int>("SettingsTest:TipoPagamento2:Id"),
+                new Texto(_configuration.GetValue<string>("SettingsTest:TipoPagamento2:Descricao"), "Descrição", 250)
             );
 
             TipoPagamento3 = new TipoPagamento(
-                Convert.ToInt32(_configuration["SettingsTest:TipoPagamento3:Id"]),
-                new Texto(_configuration["SettingsTest:TipoPagamento3:Descricao"], "Descrição", 250)
+                _configuration.GetValue<int>("SettingsTest:TipoPagamento3:Id"),
+                new Texto(_configuration.GetValue<string>("SettingsTest:TipoPagamento3:Descricao"), "Descrição", 250)
             );
 
             TipoPagamento1Editado = new TipoPagamento(
-                Convert.ToInt32(_configuration["SettingsTest:TipoPagamento1Editado:Id"]),
-                new Texto(_configuration["SettingsTest:TipoPagamento1Editado:Descricao"], "Descrição", 250)
+                _configuration.GetValue<int>("SettingsTest:TipoPagamento1Editado:Id"),
+                new Texto(_configuration.GetValue<string>("SettingsTest:TipoPagamento1Editado:Descricao"), "Descrição", 250)
             );
             #endregion
 
             #region[Setando dados de teste para Pagamento]
             PagamentoAdicionarCommand = new AdicionarPagamentoCommand()
             {
-                IdTipoPagamento = Convert.ToInt32(_configuration["SettingsTest:PagamentoAdicionarCommand:IdTipoPagamento"]),
-                IdEmpresa = Convert.ToInt32(_configuration["SettingsTest:PagamentoAdicionarCommand:IdEmpresa"]),
-                IdPessoa = Convert.ToInt32(_configuration["SettingsTest:PagamentoAdicionarCommand:IdPessoa"]),
-                Descricao = _configuration["SettingsTest:PagamentoAdicionarCommand:Descricao"],
-                Valor = Convert.ToDouble(_configuration["SettingsTest:PagamentoAdicionarCommand:Valor"]),
-                DataVencimento = DateTime.Parse(_configuration["SettingsTest:PagamentoAdicionarCommand:DataVencimento"]),
-                DataPagamento = DateTime.Parse(_configuration["SettingsTest:PagamentoAdicionarCommand:DataPagamento"])
+                IdTipoPagamento = _configuration.GetValue<int>("SettingsTest:PagamentoAdicionarCommand:IdTipoPagamento"),
+                IdEmpresa = _configuration.GetValue<int>("SettingsTest:PagamentoAdicionarCommand:IdEmpresa"),
+                IdPessoa = _configuration.GetValue<int>("SettingsTest:PagamentoAdicionarCommand:IdPessoa"),
+                Descricao = _configuration.GetValue<string>("SettingsTest:PagamentoAdicionarCommand:Descricao"),
+                Valor = _configuration.GetValue<double>("SettingsTest:PagamentoAdicionarCommand:Valor"),
+                DataVencimento = _configuration.GetValue<DateTime>("SettingsTest:PagamentoAdicionarCommand:DataVencimento"),
+                DataPagamento = _configuration.GetValue<DateTime?>("SettingsTest:PagamentoAdicionarCommand:DataPagamento")
             };
 
             PagamentoAtualizarCommand = new AtualizarPagamentoCommand()
             {
-                Id = Convert.ToInt32(_configuration["SettingsTest:PagamentoAtualizarCommand:Id"]),
-                IdTipoPagamento = Convert.ToInt32(_configuration["SettingsTest:PagamentoAtualizarCommand:IdTipoPagamento"]),
-                IdEmpresa = Convert.ToInt32(_configuration["SettingsTest:PagamentoAtualizarCommand:IdEmpresa"]),
-                IdPessoa = Convert.ToInt32(_configuration["SettingsTest:PagamentoAtualizarCommand:IdPessoa"]),
-                Descricao = _configuration["SettingsTest:PagamentoAtualizarCommand:Descricao"],
-                Valor = Convert.ToDouble(_configuration["SettingsTest:PagamentoAtualizarCommand:Valor"]),
-                DataVencimento = DateTime.Parse(_configuration["SettingsTest:PagamentoAtualizarCommand:DataVencimento"]),
-                DataPagamento = DateTime.Parse(_configuration["SettingsTest:PagamentoAtualizarCommand:DataPagamento"])
+                Id = _configuration.GetValue<int>("SettingsTest:PagamentoAtualizarCommand:Id"),
+                IdTipoPagamento = _configuration.GetValue<int>("SettingsTest:PagamentoAtualizarCommand:IdTipoPagamento"),
+                IdEmpresa = _configuration.GetValue<int>("SettingsTest:PagamentoAtualizarCommand:IdEmpresa"),
+                IdPessoa = _configuration.GetValue<int>("SettingsTest:PagamentoAtualizarCommand:IdPessoa"),
+                Descricao = _configuration.GetValue<string>("SettingsTest:PagamentoAtualizarCommand:Descricao"),
+                Valor = _configuration.GetValue<double>("SettingsTest:PagamentoAtualizarCommand:Valor"),
+                DataVencimento = _configuration.GetValue<DateTime>("SettingsTest:PagamentoAtualizarCommand:DataVencimento"),
+                DataPagamento = _configuration.GetValue<DateTime?>("SettingsTest:PagamentoAtualizarCommand:DataPagamento")
             };
 
             PagamentoApagarCommand = new ApagarPagamentoCommand()
             {
-                Id = Convert.ToInt32(_configuration["SettingsTest:PagamentoApagarCommand:Id"])
+                Id = _configuration.GetValue<int>("SettingsTest:PagamentoApagarCommand:Id")
             };
 
             PagamentoObterPorIdCommand = new ObterPagamentoPorIdCommand()
             {
-                Id = Convert.ToInt32(_configuration["SettingsTest:PagamentoObterPorIdCommand:Id"])
+                Id = _configuration.GetValue<int>("SettingsTest:PagamentoObterPorIdCommand:Id")
             };
 
             Pagamento1 = new Pagamento(
-                Convert.ToInt32(_configuration["SettingsTest:Pagamento1:Id"]),
+                _configuration.GetValue<int>("SettingsTest:Pagamento1:Id"),
                 new TipoPagamento(
-                    Convert.ToInt32(_configuration["SettingsTest:Pagamento1:TipoPagamento:Id"]),
-                    new Texto(_configuration["SettingsTest:Pagamento1:TipoPagamento:Descricao"], "Descrição", 250)
+                    _configuration.GetValue<int>("SettingsTest:Pagamento1:TipoPagamento:Id"),
+                    new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento1:TipoPagamento:Descricao"), "Descrição", 250)
                 ),
                 new Empresa(
-                    Convert.ToInt32(_configuration["SettingsTest:Pagamento1:Empresa:Id"]),
-                    new Texto(_configuration["SettingsTest:Pagamento1:Empresa:Nome"], "Nome", 100),
-                    _configuration["SettingsTest:Pagamento1:Empresa:Logo"]
+                    _configuration.GetValue<int>("SettingsTest:Pagamento1:Empresa:Id"),
+                    new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento1:Empresa:Nome"), "Nome", 100),
+                    _configuration.GetValue<string>("SettingsTest:Pagamento1:Empresa:Logo")
                 ),
                 new Pessoa(
-                    Convert.ToInt32(_configuration["SettingsTest:Pagamento1:Pessoa:Id"]),
-                    new Texto(_configuration["SettingsTest:Pagamento1:Pessoa:Nome"], "Nome", 100),
-                    _configuration["SettingsTest:Pagamento1:Pessoa:ImagemPerfil"]
+                    _configuration.GetValue<int>("SettingsTest:Pagamento1:Pessoa:Id"),
+                    new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento1:Pessoa:Nome"), "Nome", 100),
+                    _configuration.GetValue<string>("SettingsTest:Pagamento1:Pessoa:ImagemPerfil")
                 ),
-                new Texto(_configuration["SettingsTest:Pagamento1:Descricao"], "Descrição", 250),
-                Convert.ToDouble(_configuration["SettingsTest:Pagamento1:Valor"]),
-                DateTime.Parse(_configuration["SettingsTest:Pagamento1:DataVencimento"]),
-                DateTime.Parse(_configuration["SettingsTest:Pagamento1:DataPagamento"])
+                new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento1:Descricao"), "Descrição", 250),
+                _configuration.GetValue<double>("SettingsTest:Pagamento1:Valor"),
+                _configuration.GetValue<DateTime>("SettingsTest:Pagamento1:DataVencimento"),
+                _configuration.GetValue<DateTime?>("SettingsTest:Pagamento1:DataPagamento")
             );
 
             Pagamento2 = new Pagamento(
-                Convert.ToInt32(_configuration["SettingsTest:Pagamento2:Id"]),
+                 _configuration.GetValue<int>("SettingsTest:Pagamento2:Id"),
                 new TipoPagamento(
-                    Convert.ToInt32(_configuration["SettingsTest:Pagamento2:TipoPagamento:Id"]),
-                    new Texto(_configuration["SettingsTest:Pagamento2:TipoPagamento:Descricao"], "Descrição", 250)
+                    _configuration.GetValue<int>("SettingsTest:Pagamento2:TipoPagamento:Id"),
+                    new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento2:TipoPagamento:Descricao"), "Descrição", 250)
                 ),
                 new Empresa(
-                    Convert.ToInt32(_configuration["SettingsTest:Pagamento2:Empresa:Id"]),
-                    new Texto(_configuration["SettingsTest:Pagamento2:Empresa:Nome"], "Nome", 100),
-                    _configuration["SettingsTest:Pagamento2:Empresa:Logo"]
+                    _configuration.GetValue<int>("SettingsTest:Pagamento2:Empresa:Id"),
+                    new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento2:Empresa:Nome"), "Nome", 100),
+                    _configuration.GetValue<string>("SettingsTest:Pagamento2:Empresa:Logo")
                 ),
                 new Pessoa(
-                    Convert.ToInt32(_configuration["SettingsTest:Pagamento2:Pessoa:Id"]),
-                    new Texto(_configuration["SettingsTest:Pagamento2:Pessoa:Nome"], "Nome", 100),
-                    _configuration["SettingsTest:Pagamento2:Pessoa:ImagemPerfil"]
+                    _configuration.GetValue<int>("SettingsTest:Pagamento2:Pessoa:Id"),
+                    new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento2:Pessoa:Nome"), "Nome", 100),
+                    _configuration.GetValue<string>("SettingsTest:Pagamento2:Pessoa:ImagemPerfil")
                 ),
-                new Texto(_configuration["SettingsTest:Pagamento2:Descricao"], "Descrição", 250),
-                Convert.ToDouble(_configuration["SettingsTest:Pagamento2:Valor"]),
-                DateTime.Parse(_configuration["SettingsTest:Pagamento2:DataVencimento"]),
-                DateTime.Parse(_configuration["SettingsTest:Pagamento2:DataPagamento"])
+                new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento2:Descricao"), "Descrição", 250),
+                _configuration.GetValue<double>("SettingsTest:Pagamento2:Valor"),
+                _configuration.GetValue<DateTime>("SettingsTest:Pagamento2:DataVencimento"),
+                _configuration.GetValue<DateTime?>("SettingsTest:Pagamento2:DataPagamento")
             );
 
             Pagamento3 = new Pagamento(
-                Convert.ToInt32(_configuration["SettingsTest:Pagamento3:Id"]),
+                 _configuration.GetValue<int>("SettingsTest:Pagamento3:Id"),
                 new TipoPagamento(
-                    Convert.ToInt32(_configuration["SettingsTest:Pagamento3:TipoPagamento:Id"]),
-                    new Texto(_configuration["SettingsTest:Pagamento3:TipoPagamento:Descricao"], "Descrição", 250)
+                    _configuration.GetValue<int>("SettingsTest:Pagamento3:TipoPagamento:Id"),
+                    new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento3:TipoPagamento:Descricao"), "Descrição", 250)
                 ),
                 new Empresa(
-                    Convert.ToInt32(_configuration["SettingsTest:Pagamento3:Empresa:Id"]),
-                    new Texto(_configuration["SettingsTest:Pagamento3:Empresa:Nome"], "Nome", 100),
-                    _configuration["SettingsTest:Pagamento3:Empresa:Logo"]
+                    _configuration.GetValue<int>("SettingsTest:Pagamento3:Empresa:Id"),
+                    new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento3:Empresa:Nome"), "Nome", 100),
+                    _configuration.GetValue<string>("SettingsTest:Pagamento3:Empresa:Logo")
                 ),
                 new Pessoa(
-                    Convert.ToInt32(_configuration["SettingsTest:Pagamento3:Pessoa:Id"]),
-                    new Texto(_configuration["SettingsTest:Pagamento3:Pessoa:Nome"], "Nome", 100),
-                    _configuration["SettingsTest:Pagamento3:Pessoa:ImagemPerfil"]
+                    _configuration.GetValue<int>("SettingsTest:Pagamento3:Pessoa:Id"),
+                    new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento3:Pessoa:Nome"), "Nome", 100),
+                    _configuration.GetValue<string>("SettingsTest:Pagamento3:Pessoa:ImagemPerfil")
                 ),
-                new Texto(_configuration["SettingsTest:Pagamento3:Descricao"], "Descrição", 250),
-                Convert.ToDouble(_configuration["SettingsTest:Pagamento3:Valor"]),
-                DateTime.Parse(_configuration["SettingsTest:Pagamento3:DataVencimento"]),
-                DateTime.Parse(_configuration["SettingsTest:Pagamento3:DataPagamento"])
+                new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento3:Descricao"), "Descrição", 250),
+                _configuration.GetValue<double>("SettingsTest:Pagamento3:Valor"),
+                _configuration.GetValue<DateTime>("SettingsTest:Pagamento3:DataVencimento"),
+                _configuration.GetValue<DateTime?>("SettingsTest:Pagamento3:DataPagamento")
             );
 
             Pagamento1Editado = new Pagamento(
-                Convert.ToInt32(_configuration["SettingsTest:Pagamento1Editada:Id"]),
+                _configuration.GetValue<int>("SettingsTest:Pagamento1Editado:Id"),
                 new TipoPagamento(
-                    Convert.ToInt32(_configuration["SettingsTest:Pagamento1Editada:TipoPagamento:Id"]),
-                    new Texto(_configuration["SettingsTest:Pagamento1Editada:TipoPagamento:Descricao"], "Descrição", 250)
+                    _configuration.GetValue<int>("SettingsTest:Pagamento1Editado:TipoPagamento:Id"),
+                    new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento1Editado:TipoPagamento:Descricao"), "Descrição", 250)
                 ),
                 new Empresa(
-                    Convert.ToInt32(_configuration["SettingsTest:Pagamento1Editada:Empresa:Id"]),
-                    new Texto(_configuration["SettingsTest:Pagamento1Editada:Empresa:Nome"], "Nome", 100),
-                    _configuration["SettingsTest:Pagamento1Editada:Empresa:Logo"]
+                    _configuration.GetValue<int>("SettingsTest:Pagamento1Editado:Empresa:Id"),
+                    new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento1Editado:Empresa:Nome"), "Nome", 100),
+                    _configuration.GetValue<string>("SettingsTest:Pagamento1Editado:Empresa:Logo")
                 ),
                 new Pessoa(
-                    Convert.ToInt32(_configuration["SettingsTest:Pagamento1Editada:Pessoa:Id"]),
-                    new Texto(_configuration["SettingsTest:Pagamento1Editada:Pessoa:Nome"], "Nome", 100),
-                    _configuration["SettingsTest:Pagamento1Editada:Pessoa:ImagemPerfil"]
+                    _configuration.GetValue<int>("SettingsTest:Pagamento1Editado:Pessoa:Id"),
+                    new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento1Editado:Pessoa:Nome"), "Nome", 100),
+                    _configuration.GetValue<string>("SettingsTest:Pagamento1Editado:Pessoa:ImagemPerfil")
                 ),
-                new Texto(_configuration["SettingsTest:Pagamento1Editada:Descricao"], "Descrição", 250),
-                Convert.ToDouble(_configuration["SettingsTest:Pagamento1Editada:Valor"]),
-                DateTime.Parse(_configuration["SettingsTest:Pagamento1Editada:DataVencimento"]),
-                DateTime.Parse(_configuration["SettingsTest:Pagamento1Editada:DataPagamento"])
+                new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento1Editado:Descricao"), "Descrição", 250),
+                _configuration.GetValue<double>("SettingsTest:Pagamento1Editado:Valor"),
+                _configuration.GetValue<DateTime>("SettingsTest:Pagamento1Editado:DataVencimento"),
+                _configuration.GetValue<DateTime?>("SettingsTest:Pagamento1Editado:DataPagamento")
             );
             #endregion
 
             #region[Setando dados de teste para Usuario]
             UsuarioAdicionarCommand = new AdicionarUsuarioCommand()
             {
-                Login = _configuration["SettingsTest:UsuarioAdicionarCommand:Login"],
-                Senha = _configuration["SettingsTest:UsuarioAdicionarCommand:Senha"],
-                Privilegio = (EPrivilegioUsuario)Convert.ToInt32(_configuration["SettingsTest:UsuarioAdicionarCommand:Privilegio"])
+                Login = _configuration.GetValue<string>("SettingsTest:UsuarioAdicionarCommand:Login"),
+                Senha = _configuration.GetValue<string>("SettingsTest:UsuarioAdicionarCommand:Senha"),
+                Privilegio = _configuration.GetValue<EPrivilegioUsuario>("SettingsTest:UsuarioAdicionarCommand:Privilegio")
             };
 
             UsuarioAtualizarCommand = new AtualizarUsuarioCommand()
             {
-                Id = Convert.ToInt32(_configuration["SettingsTest:UsuarioAtualizarCommand:Id"]),
-                Login = _configuration["SettingsTest:UsuarioAtualizarCommand:Login"],
-                Senha = _configuration["SettingsTest:UsuarioAtualizarCommand:Senha"],
-                Privilegio = (EPrivilegioUsuario)Convert.ToInt32(_configuration["SettingsTest:UsuarioAtualizarCommand:Privilegio"])
+                Id = _configuration.GetValue<int>("SettingsTest:UsuarioAtualizarCommand:Id"),
+                Login = _configuration.GetValue<string>("SettingsTest:UsuarioAtualizarCommand:Login"),
+                Senha = _configuration.GetValue<string>("SettingsTest:UsuarioAtualizarCommand:Senha"),
+                Privilegio = _configuration.GetValue<EPrivilegioUsuario>("SettingsTest:UsuarioAtualizarCommand:Privilegio")
             };
 
             UsuarioApagarCommand = new ApagarUsuarioCommand()
             {
-                Id = Convert.ToInt32(_configuration["SettingsTest:UsuarioApagarCommand:Id"])
+                Id = _configuration.GetValue<int>("SettingsTest:UsuarioApagarCommand:Id")
             };
 
             UsuarioObterPorIdCommand = new ObterUsuarioPorIdCommand()
             {
-                Id = Convert.ToInt32(_configuration["SettingsTest:UsuarioObterPorIdCommand:Id"])
+                Id = _configuration.GetValue<int>("SettingsTest:UsuarioObterPorIdCommand:Id")
             };
 
             UsuarioLoginCommand = new LoginUsuarioCommand()
             {
-                Login = _configuration["SettingsTest:UsuarioLoginCommand:Login"],
-                Senha = _configuration["SettingsTest:UsuarioLoginCommand:Senha"]
+                Login = _configuration.GetValue<string>("SettingsTest:UsuarioLoginCommand:Login"),
+                Senha = _configuration.GetValue<string>("SettingsTest:UsuarioLoginCommand:Senha")
             };
 
             Usuario1 = new Usuario(
-                Convert.ToInt32(_configuration["SettingsTest:Usuario1:Id"]),
-                new Texto(_configuration["SettingsTest:Usuario1:Login"], "Login", 50),
-                new SenhaMedia(_configuration["SettingsTest:Usuario1:Senha"]),
-                (EPrivilegioUsuario)Convert.ToInt32(_configuration["SettingsTest:Usuario1:Privilegio"])
-
+                _configuration.GetValue<int>("SettingsTest:Usuario1:Id"),
+                new Texto(_configuration.GetValue<string>("SettingsTest:Usuario1:Login"), "Login", 50),
+                new SenhaMedia(_configuration.GetValue<string>("SettingsTest:Usuario1:Senha")),
+                _configuration.GetValue<EPrivilegioUsuario>("SettingsTest:Usuario1:Privilegio")
             );
 
             Usuario2 = new Usuario(
-                Convert.ToInt32(_configuration["SettingsTest:Usuario2:Id"]),
-                new Texto(_configuration["SettingsTest:Usuario2:Login"], "Login", 50),
-                new SenhaMedia(_configuration["SettingsTest:Usuario2:Senha"]),
-                (EPrivilegioUsuario)Convert.ToInt32(_configuration["SettingsTest:Usuario2:Privilegio"])
+                _configuration.GetValue<int>("SettingsTest:Usuario2:Id"),
+                new Texto(_configuration.GetValue<string>("SettingsTest:Usuario2:Login"), "Login", 50),
+                new SenhaMedia(_configuration.GetValue<string>("SettingsTest:Usuario2:Senha")),
+                _configuration.GetValue<EPrivilegioUsuario>("SettingsTest:Usuario2:Privilegio")
 
             );
 
             Usuario3 = new Usuario(
-                Convert.ToInt32(_configuration["SettingsTest:Usuario3:Id"]),
-                new Texto(_configuration["SettingsTest:Usuario3:Login"], "Login", 50),
-                new SenhaMedia(_configuration["SettingsTest:Usuario3:Senha"]),
-                (EPrivilegioUsuario)Convert.ToInt32(_configuration["SettingsTest:Usuario3:Privilegio"])
+                _configuration.GetValue<int>("SettingsTest:Usuario3:Id"),
+                new Texto(_configuration.GetValue<string>("SettingsTest:Usuario3:Login"), "Login", 50),
+                new SenhaMedia(_configuration.GetValue<string>("SettingsTest:Usuario3:Senha")),
+                _configuration.GetValue<EPrivilegioUsuario>("SettingsTest:Usuario3:Privilegio")
 
             );
 
             Usuario1Editado = new Usuario(
-                Convert.ToInt32(_configuration["SettingsTest:Usuario1Editado:Id"]),
-                new Texto(_configuration["SettingsTest:Usuario1Editado:Login"], "Login", 50),
-                new SenhaMedia(_configuration["SettingsTest:Usuario1Editado:Senha"]),
-                (EPrivilegioUsuario)Convert.ToInt32(_configuration["SettingsTest:Usuario1Editado:Privilegio"])
+                _configuration.GetValue<int>("SettingsTest:Usuario1Editado:Id"),
+                new Texto(_configuration.GetValue<string>("SettingsTest:Usuario1Editado:Login"), "Login", 50),
+                new SenhaMedia(_configuration.GetValue<string>("SettingsTest:Usuario1Editado:Senha")),
+                _configuration.GetValue<EPrivilegioUsuario>("SettingsTest:Usuario1Editado:Privilegio")
 
             );
             #endregion

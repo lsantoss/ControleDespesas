@@ -19,32 +19,34 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
         private IConfiguration _configuration { get; }
         #endregion
 
-        #region[Dados de teste para utlilizar Banco de Dados]
-        public static string ControleDespesasAPINetCore { get; } = @"https://localhost:44323/";
-        public static string ChaveAPI { get; } = @"3150112e-5285-43a8-bc71-b100fe7233d5";
-        public static string ChaveJWT { get; } = @"(B3]U5N{ho+KdXxB%>Q,Fblh9E;O:NE*O8!ke?b@eM,7kk8Ph{DnRp+}u!Hs?LbE+CpP[*}X^&^fR4w0u0E$H{621%Mr[nw#qC}";
+        #region[Dados de teste para API]
+        public string ControleDespesasAPINetCore { get; }
+        public string ChaveAPI { get; }
+        public string ChaveJWT { get; }
+        #endregion
 
-        public static Type TipoBancoDeDdos { get; } = typeof(EBancoDadosRelacional);
-        public static EBancoDadosRelacional BancoDeDadosRelacional { get; } = EBancoDadosRelacional.SQLServer;
-        public static EBancoDadosNaoRelacional BancoDeDadosNaoRelacional { get; } = EBancoDadosNaoRelacional.MongoDB;
+        #region[Dados de teste para Banco de Dados]
+        public Type TipoBancoDeDdos { get; }
+        public EBancoDadosRelacional BancoDeDadosRelacional { get; }
+        public EBancoDadosNaoRelacional BancoDeDadosNaoRelacional { get; }
 
-        public static string ConnectionSQLServerReal { get; } = @"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ControleDespesas;Data Source=SANTOS-PC\SQLEXPRESS;";
-        public static string ConnectionSQLServerTest { get; } = @"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=ControleDespesasTest;Data Source=SANTOS-PC\SQLEXPRESS;";
+        public string ConnectionSQLServerReal { get; }
+        public string ConnectionSQLServerTest { get; }
 
-        public static string ConnectionMySqlReal { get; } = @"";
-        public static string ConnectionMySqlTest { get; } = @"";
+        public string ConnectionMySqlReal { get; }
+        public string ConnectionMySqlTest { get; }
 
-        public static string ConnectionSQLiteReal { get; } = @"";
-        public static string ConnectionSQLiteTest { get; } = @"";
+        public string ConnectionSQLiteReal { get; }
+        public string ConnectionSQLiteTest { get; }
 
-        public static string ConnectionPostgreSQLReal { get; } = @"";
-        public static string ConnectionPostgreSQLTest { get; } = @"";
+        public string ConnectionPostgreSQLReal { get; }
+        public string ConnectionPostgreSQLTest { get; }
 
-        public static string ConnectionOracleReal { get; } = @"";
-        public static string ConnectionOracleTest { get; } = @"";
+        public string ConnectionOracleReal { get; }
+        public string ConnectionOracleTest { get; }
 
-        public static string ConnectionMongoDBReal { get; } = @"";
-        public static string ConnectionMongoDBTest { get; } = @"";
+        public string ConnectionMongoDBReal { get; }
+        public string ConnectionMongoDBTest { get; }
         #endregion
 
         #region [Dados de teste para Empresa]
@@ -107,6 +109,30 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
         {
             #region[Setando IConfiguration - appsettings.json]
             _configuration = new ServiceCollection().AddTransient<IConfiguration>(sp => new ConfigurationBuilder().AddJsonFile("appsettings.json").Build()).BuildServiceProvider().GetService<IConfiguration>();
+            #endregion
+
+            #region[Dados de teste para API]
+            ControleDespesasAPINetCore = _configuration.GetValue<string>["SettingsTest:ControleDespesasAPINetCore"];
+            ChaveAPI = _configuration["SettingsTest:ChaveAPI"];
+            ChaveJWT = _configuration["SettingsTest:ChaveJWT"];
+            #endregion
+
+            #region[Setando dados teste para Banco de Dados]
+            TipoBancoDeDdos = typeof(EBancoDadosRelacional);
+            BancoDeDadosRelacional = EBancoDadosRelacional.SQLServer;
+            BancoDeDadosNaoRelacional = EBancoDadosNaoRelacional.MongoDB;
+            ConnectionSQLServerReal = _configuration["SettingsTest:ConnectionSQLServerReal"];
+            ConnectionSQLServerTest = _configuration["SettingsTest:ConnectionSQLServerTest"];
+            ConnectionMySqlReal = _configuration["SettingsTest:ConnectionMySqlReal"];
+            ConnectionMySqlTest = _configuration["SettingsTest:ConnectionMySqlTest"];
+            ConnectionSQLiteReal = _configuration["SettingsTest:ConnectionSQLiteReal"];
+            ConnectionSQLiteTest = _configuration["SettingsTest:ConnectionSQLiteTest"];
+            ConnectionPostgreSQLReal = _configuration["SettingsTest:ConnectionPostgreSQLReal"];
+            ConnectionPostgreSQLTest = _configuration["SettingsTest:ConnectionPostgreSQLTest"];
+            ConnectionOracleReal = _configuration["SettingsTest:ConnectionOracleReal"];
+            ConnectionOracleTest = _configuration["SettingsTest:ConnectionOracleTest"];
+            ConnectionMongoDBReal = _configuration["SettingsTest:ConnectionMongoDBReal"];
+            ConnectionMongoDBTest = _configuration["SettingsTest:ConnectionMongoDBTest"];
             #endregion
 
             #region[Setando dados de teste para Empresa]

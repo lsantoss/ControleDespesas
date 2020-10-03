@@ -5,6 +5,7 @@ using ControleDespesas.Test.AppConfigurations.Settings;
 using Dapper;
 using LSCode.ConexoesBD.DbContext;
 using LSCode.ConexoesBD.Enums;
+using Microsoft.Extensions.Options;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -16,20 +17,23 @@ namespace ControleDespesas.Test.AppConfigurations.Factory
     {
         private string _connectionReal;
         private string _connectionTest;
+        private  readonly SettingsTest _settingTest;
         protected readonly SettingsInfraData _settingsInfraData;
         protected readonly SettingsAPI _settingsAPI;
 
         public DatabaseFactory()
         {
+            _settingTest = new SettingsTest();
+
             ConfigurarParamentrosConexaoBaseDeDados();
 
             _settingsInfraData = new SettingsInfraData() { ConnectionString = _connectionTest };
 
             _settingsAPI = new SettingsAPI()
             {
-                ControleDespesasAPINetCore = SettingsTest.ControleDespesasAPINetCore,
-                ChaveAPI = SettingsTest.ChaveAPI,
-                ChaveJWT = SettingsTest.ChaveJWT
+                ControleDespesasAPINetCore = _settingTest.ControleDespesasAPINetCore,
+                ChaveAPI = _settingTest.ChaveAPI,
+                ChaveJWT = _settingTest.ChaveJWT
             };
         }
 
@@ -41,150 +45,178 @@ namespace ControleDespesas.Test.AppConfigurations.Factory
 
         private void ConfigurarParamentrosConexaoBaseDeDados()
         {
-            if (SettingsTest.TipoBancoDeDdos.FullName == typeof(EBancoDadosRelacional).FullName)
+            try
             {
-                switch (SettingsTest.BancoDeDadosRelacional)
+                if (_settingTest.TipoBancoDeDdos.FullName == typeof(EBancoDadosRelacional).FullName)
                 {
-                    case EBancoDadosRelacional.SQLServer:
-                        _connectionReal = SettingsTest.ConnectionSQLServerReal;
-                        _connectionTest = SettingsTest.ConnectionSQLServerTest;
-                        break;
+                    switch (_settingTest.BancoDeDadosRelacional)
+                    {
+                        case EBancoDadosRelacional.SQLServer:
+                            _connectionReal = _settingTest.ConnectionSQLServerReal;
+                            _connectionTest = _settingTest.ConnectionSQLServerTest;
+                            break;
 
-                    case EBancoDadosRelacional.MySQL:
-                        _connectionReal = SettingsTest.ConnectionMySqlReal;
-                        _connectionTest = SettingsTest.ConnectionMySqlTest;
-                        break;
+                        case EBancoDadosRelacional.MySQL:
+                            _connectionReal = _settingTest.ConnectionMySqlReal;
+                            _connectionTest = _settingTest.ConnectionMySqlTest;
+                            break;
 
-                    case EBancoDadosRelacional.SQLite:
-                        _connectionReal = SettingsTest.ConnectionSQLiteReal;
-                        _connectionTest = SettingsTest.ConnectionSQLiteTest;
-                        break;
+                        case EBancoDadosRelacional.SQLite:
+                            _connectionReal = _settingTest.ConnectionSQLiteReal;
+                            _connectionTest = _settingTest.ConnectionSQLiteTest;
+                            break;
 
-                    case EBancoDadosRelacional.PostgreSQL:
-                        _connectionReal = SettingsTest.ConnectionPostgreSQLReal;
-                        _connectionTest = SettingsTest.ConnectionPostgreSQLTest;
-                        break;
+                        case EBancoDadosRelacional.PostgreSQL:
+                            _connectionReal = _settingTest.ConnectionPostgreSQLReal;
+                            _connectionTest = _settingTest.ConnectionPostgreSQLTest;
+                            break;
 
-                    case EBancoDadosRelacional.Oracle:
-                        _connectionReal = SettingsTest.ConnectionOracleReal;
-                        _connectionTest = SettingsTest.ConnectionOracleTest;
-                        break;
+                        case EBancoDadosRelacional.Oracle:
+                            _connectionReal = _settingTest.ConnectionOracleReal;
+                            _connectionTest = _settingTest.ConnectionOracleTest;
+                            break;
+                    }
+                }
+                else if (_settingTest.TipoBancoDeDdos.FullName == typeof(EBancoDadosNaoRelacional).FullName)
+                {
+                    switch (_settingTest.BancoDeDadosNaoRelacional)
+                    {
+                        case EBancoDadosNaoRelacional.MongoDB:
+                            _connectionReal = _settingTest.ConnectionMongoDBReal;
+                            _connectionTest = _settingTest.ConnectionMongoDBTest;
+                            break;
+                    }
+                }
+                else
+                {
+                    throw new Exception("Erro ao configurar tipo de base de dados para testes");
                 }
             }
-            else if (SettingsTest.TipoBancoDeDdos.FullName == typeof(EBancoDadosNaoRelacional).FullName)
+            catch (Exception ex)
             {
-                switch (SettingsTest.BancoDeDadosNaoRelacional)
-                {
-                    case EBancoDadosNaoRelacional.MongoDB:
-                        _connectionReal = SettingsTest.ConnectionMongoDBReal;
-                        _connectionTest = SettingsTest.ConnectionMongoDBTest;
-                        break;
-                }
-            }
-            else
-            {
-                throw new Exception("Erro ao configurar tipo de base de dados para testes");
+                throw new Exception($"Erro ao configurar tipo de base de dados para testes: {ex.Message}");
             }
         }
 
         private void RodarScripts(List<string> queries)
         {
-            DbContext ctx = new DbContext(EBancoDadosRelacional.SQLServer, _connectionReal);
-
-            foreach (string sql in queries)
+            try
             {
-                try
+                DbContext ctx = new DbContext(EBancoDadosRelacional.SQLServer, _connectionReal);
+
+                foreach (string sql in queries)
                 {
-                    ctx.SQLServerConexao.Execute(sql);
+                    try
+                    {
+                        ctx.SQLServerConexao.Execute(sql);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception(ex.Message);
+                    }
                 }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao rodar scripts: {ex.Message}");
             }
         }
 
         protected void CriarBaseDeDadosETabelas()
         {
-            if (SettingsTest.TipoBancoDeDdos.FullName == typeof(EBancoDadosRelacional).FullName)
+            try
             {
-                switch (SettingsTest.BancoDeDadosRelacional)
+                if (_settingTest.TipoBancoDeDdos.FullName == typeof(EBancoDadosRelacional).FullName)
                 {
-                    case EBancoDadosRelacional.SQLServer:
-                        RodarScripts(QueriesSQLServer.QueriesCreate);
-                        break;
+                    switch (_settingTest.BancoDeDadosRelacional)
+                    {
+                        case EBancoDadosRelacional.SQLServer:
+                            RodarScripts(QueriesSQLServer.QueriesCreate);
+                            break;
 
-                    case EBancoDadosRelacional.MySQL:
-                        throw new NotImplementedException("Queries MySQL ainda não foram criadas");
-                        break;
+                        case EBancoDadosRelacional.MySQL:
+                            throw new NotImplementedException("Queries MySQL ainda não foram criadas");
+                            break;
 
-                    case EBancoDadosRelacional.SQLite:
-                        throw new NotImplementedException("Queries SQLite ainda não foram criadas");
-                        break;
+                        case EBancoDadosRelacional.SQLite:
+                            throw new NotImplementedException("Queries SQLite ainda não foram criadas");
+                            break;
 
-                    case EBancoDadosRelacional.PostgreSQL:
-                        throw new NotImplementedException("Queries PostgreSQL ainda não foram criadas");
-                        break;
+                        case EBancoDadosRelacional.PostgreSQL:
+                            throw new NotImplementedException("Queries PostgreSQL ainda não foram criadas");
+                            break;
 
-                    case EBancoDadosRelacional.Oracle:
-                        throw new NotImplementedException("Queries Oracle ainda não foram criadas");
-                        break;
+                        case EBancoDadosRelacional.Oracle:
+                            throw new NotImplementedException("Queries Oracle ainda não foram criadas");
+                            break;
+                    }
+                }
+                else if (_settingTest.TipoBancoDeDdos.FullName == typeof(EBancoDadosNaoRelacional).FullName)
+                {
+                    switch (_settingTest.BancoDeDadosNaoRelacional)
+                    {
+                        case EBancoDadosNaoRelacional.MongoDB:
+                            throw new NotImplementedException("Queries MongoDB ainda não foram criadas");
+                            break;
+                    }
+                }
+                else
+                {
+                    throw new Exception("Erro ao rodar scripts de criação de base de dados e tabelas");
                 }
             }
-            else if (SettingsTest.TipoBancoDeDdos.FullName == typeof(EBancoDadosNaoRelacional).FullName)
+            catch (Exception ex)
             {
-                switch (SettingsTest.BancoDeDadosNaoRelacional)
-                {
-                    case EBancoDadosNaoRelacional.MongoDB:
-                        throw new NotImplementedException("Queries MongoDB ainda não foram criadas");
-                        break;
-                }
-            }
-            else
-            {
-                throw new Exception("Erro ao rodar scripts de criação de base de dados e tabelas");
+                throw new Exception(ex.Message);
             }
         }
 
         protected void DroparTabelas()
         {
-            if (SettingsTest.TipoBancoDeDdos.FullName == typeof(EBancoDadosRelacional).FullName)
+            try
             {
-                switch (SettingsTest.BancoDeDadosRelacional)
+                if (_settingTest.TipoBancoDeDdos.FullName == typeof(EBancoDadosRelacional).FullName)
                 {
-                    case EBancoDadosRelacional.SQLServer:
-                        RodarScripts(QueriesSQLServer.QueriesDrop);
-                        break;
+                    switch (_settingTest.BancoDeDadosRelacional)
+                    {
+                        case EBancoDadosRelacional.SQLServer:
+                            RodarScripts(QueriesSQLServer.QueriesDrop);
+                            break;
 
-                    case EBancoDadosRelacional.MySQL:
-                        throw new NotImplementedException("Queries MySQL ainda não foram criadas");
-                        break;
+                        case EBancoDadosRelacional.MySQL:
+                            throw new NotImplementedException("Queries MySQL ainda não foram criadas");
+                            break;
 
-                    case EBancoDadosRelacional.SQLite:
-                        throw new NotImplementedException("Queries SQLite ainda não foram criadas");
-                        break;
+                        case EBancoDadosRelacional.SQLite:
+                            throw new NotImplementedException("Queries SQLite ainda não foram criadas");
+                            break;
 
-                    case EBancoDadosRelacional.PostgreSQL:
-                        throw new NotImplementedException("Queries PostgreSQL ainda não foram criadas");
-                        break;
+                        case EBancoDadosRelacional.PostgreSQL:
+                            throw new NotImplementedException("Queries PostgreSQL ainda não foram criadas");
+                            break;
 
-                    case EBancoDadosRelacional.Oracle:
-                        throw new NotImplementedException("Queries Oracle ainda não foram criadas");
-                        break;
+                        case EBancoDadosRelacional.Oracle:
+                            throw new NotImplementedException("Queries Oracle ainda não foram criadas");
+                            break;
+                    }
+                }
+                else if (_settingTest.TipoBancoDeDdos.FullName == typeof(EBancoDadosNaoRelacional).FullName)
+                {
+                    switch (_settingTest.BancoDeDadosNaoRelacional)
+                    {
+                        case EBancoDadosNaoRelacional.MongoDB:
+                            throw new NotImplementedException("Queries MongoDB ainda não foram criadas");
+                            break;
+                    }
+                }
+                else
+                {
+                    throw new Exception("Erro ao rodar scripts de criação de base de dados e tabelas");
                 }
             }
-            else if (SettingsTest.TipoBancoDeDdos.FullName == typeof(EBancoDadosNaoRelacional).FullName)
+            catch (Exception ex)
             {
-                switch (SettingsTest.BancoDeDadosNaoRelacional)
-                {
-                    case EBancoDadosNaoRelacional.MongoDB:
-                        throw new NotImplementedException("Queries MongoDB ainda não foram criadas");
-                        break;
-                }
-            }
-            else
-            {
-                throw new Exception("Erro ao rodar scripts de criação de base de dados e tabelas");
+                throw new Exception(ex.Message);
             }
         }
     }

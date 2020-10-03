@@ -118,7 +118,7 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
             #endregion
 
             #region[Setando dados teste para Banco de Dados]
-            TipoBancoDeDdos = typeof(EBancoDadosRelacional);
+            TipoBancoDeDdos = _configuration.GetValue<int>("SettingsTest:TipoBancoDeDdos") == 1 ? typeof(EBancoDadosRelacional) : typeof(EBancoDadosRelacional);
             BancoDeDadosRelacional = _configuration.GetValue<EBancoDadosRelacional>("SettingsTest:BancoDeDadosRelacional");
             BancoDeDadosNaoRelacional = _configuration.GetValue<EBancoDadosNaoRelacional>("SettingsTest:BancoDeDadosNaoRelacional");
             ConnectionSQLServerReal = _configuration.GetValue<string>("SettingsTest:ConnectionSQLServerReal");

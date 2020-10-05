@@ -1,15 +1,15 @@
 ﻿using ControleDespesas.Dominio.Commands.Pagamento.Input;
-using ControleDespesas.Test.AppConfigurations.Settings;
+using ControleDespesas.Test.AppConfigurations.Factory;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Commands.Pagamento
 {
-    public class AtualizarPagamentoCommandTest
+    public class AtualizarPagamentoCommandTest : BaseTest
     {
         private AtualizarPagamentoCommand _command;
 
         [SetUp]
-        public void Setup() => _command = new SettingsTest().PagamentoAtualizarCommand;
+        public void Setup() => _command = new AtualizarPagamentoCommandTest().MockSettingsTest.PagamentoAtualizarCommand;
 
         [Test]
         public void ValidarCommand_Valido()

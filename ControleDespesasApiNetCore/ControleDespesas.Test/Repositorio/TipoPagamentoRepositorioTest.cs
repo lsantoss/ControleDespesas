@@ -1,25 +1,18 @@
 ﻿using ControleDespesas.Infra.Data.Repositorio;
-using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.Factory;
-using ControleDespesas.Test.AppConfigurations.Settings;
 using Microsoft.Extensions.Options;
-using Moq;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Repositorio
 {
     public class TipoPagamentoRepositorioTest : DatabaseFactory
     {
-        private readonly SettingsTest _settingsTest;
-        private readonly Mock<IOptions<SettingsInfraData>> _mockOptions = new Mock<IOptions<SettingsInfraData>>();
         private readonly TipoPagamentoRepositorio _repository;
 
         public TipoPagamentoRepositorioTest()
         {
             CriarBaseDeDadosETabelas();
-            _settingsTest = new SettingsTest();
-            _mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
-            _repository = new TipoPagamentoRepositorio(_mockOptions.Object);
+            _repository = new TipoPagamentoRepositorio(Options.Create(MockSettingsInfraData));
         }
 
         [SetUp]
@@ -28,7 +21,7 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Salvar()
         {
-            var tipoPagamento = _settingsTest.TipoPagamento1;
+            var tipoPagamento = MockSettingsTest.TipoPagamento1;
             _repository.Salvar(tipoPagamento);
 
             var retorno = _repository.Obter(tipoPagamento.Id);
@@ -40,10 +33,10 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Atualizar()
         {
-            var tipoPagamento = _settingsTest.TipoPagamento1;
+            var tipoPagamento = MockSettingsTest.TipoPagamento1;
             _repository.Salvar(tipoPagamento);
 
-            tipoPagamento = _settingsTest.TipoPagamento1Editado;
+            tipoPagamento = MockSettingsTest.TipoPagamento1Editado;
             _repository.Atualizar(tipoPagamento);
 
             var retorno = _repository.Obter(tipoPagamento.Id);
@@ -55,9 +48,9 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Deletar()
         {
-            var tipoPagamento1 = _settingsTest.TipoPagamento1;
-            var tipoPagamento2 = _settingsTest.TipoPagamento2;
-            var tipoPagamento3 = _settingsTest.TipoPagamento3;
+            var tipoPagamento1 = MockSettingsTest.TipoPagamento1;
+            var tipoPagamento2 = MockSettingsTest.TipoPagamento2;
+            var tipoPagamento3 = MockSettingsTest.TipoPagamento3;
 
             _repository.Salvar(tipoPagamento1);
             _repository.Salvar(tipoPagamento2);
@@ -77,7 +70,7 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Obter()
         {
-            var tipoPagamento = _settingsTest.TipoPagamento1;
+            var tipoPagamento = MockSettingsTest.TipoPagamento1;
             _repository.Salvar(tipoPagamento);
 
             var retorno = _repository.Obter(tipoPagamento.Id);
@@ -89,9 +82,9 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Listar()
         {
-            var tipoPagamento1 = _settingsTest.TipoPagamento1;
-            var tipoPagamento2 = _settingsTest.TipoPagamento2;
-            var tipoPagamento3 = _settingsTest.TipoPagamento3;
+            var tipoPagamento1 = MockSettingsTest.TipoPagamento1;
+            var tipoPagamento2 = MockSettingsTest.TipoPagamento2;
+            var tipoPagamento3 = MockSettingsTest.TipoPagamento3;
 
             _repository.Salvar(tipoPagamento1);
             _repository.Salvar(tipoPagamento2);
@@ -112,7 +105,7 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void CheckId()
         {
-            var tipoPagamento = _settingsTest.TipoPagamento1;
+            var tipoPagamento = MockSettingsTest.TipoPagamento1;
             _repository.Salvar(tipoPagamento);
 
             var idExistente = _repository.CheckId(tipoPagamento.Id);
@@ -125,9 +118,9 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void LocalizarMaxId()
         {
-            var tipoPagamento1 = _settingsTest.TipoPagamento1;
-            var tipoPagamento2 = _settingsTest.TipoPagamento2;
-            var tipoPagamento3 = _settingsTest.TipoPagamento3;
+            var tipoPagamento1 = MockSettingsTest.TipoPagamento1;
+            var tipoPagamento2 = MockSettingsTest.TipoPagamento2;
+            var tipoPagamento3 = MockSettingsTest.TipoPagamento3;
 
             _repository.Salvar(tipoPagamento1);
             _repository.Salvar(tipoPagamento2);

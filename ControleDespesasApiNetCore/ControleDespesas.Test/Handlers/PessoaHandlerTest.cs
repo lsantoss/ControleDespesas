@@ -1,28 +1,21 @@
 ﻿using ControleDespesas.Dominio.Commands.Pessoa.Output;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Infra.Data.Repositorio;
-using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.Factory;
-using ControleDespesas.Test.AppConfigurations.Settings;
 using Microsoft.Extensions.Options;
-using Moq;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Handlers
 {
     public class PessoaHandlerTest : DatabaseFactory
     {
-        private readonly SettingsTest _settingsTest;
-        private readonly Mock<IOptions<SettingsInfraData>> _mockOptions = new Mock<IOptions<SettingsInfraData>>();
         private readonly PessoaRepositorio _repository;
         private readonly PessoaHandler _handler;
 
         public PessoaHandlerTest()
         {
             CriarBaseDeDadosETabelas();
-            _settingsTest = new SettingsTest();
-            _mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
-            _repository = new PessoaRepositorio(_mockOptions.Object);
+            _repository = new PessoaRepositorio(Options.Create(MockSettingsInfraData));
             _handler = new PessoaHandler(_repository);
         }
 
@@ -32,7 +25,7 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AdicionarPessoa()
         {
-            var pessoaCommand = _settingsTest.PessoaAdicionarCommand;
+            var pessoaCommand = MockSettingsTest.PessoaAdicionarCommand;
 
             var retorno = _handler.Handler(pessoaCommand);
 
@@ -48,9 +41,9 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AtualizarPessoa()
         {
-            var pessoa = _settingsTest.Pessoa1;
+            var pessoa = MockSettingsTest.Pessoa1;
 
-            var pessoaCommand = _settingsTest.PessoaAtualizarCommand;
+            var pessoaCommand = MockSettingsTest.PessoaAtualizarCommand;
 
             _repository.Salvar(pessoa);
 
@@ -68,9 +61,9 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_ApagarPessoa()
         {
-            var pessoa = _settingsTest.Pessoa1;
+            var pessoa = MockSettingsTest.Pessoa1;
 
-            var pessoaCommand = _settingsTest.PessoaApagarCommand;
+            var pessoaCommand = MockSettingsTest.PessoaApagarCommand;
 
             _repository.Salvar(pessoa);
 

@@ -1,10 +1,11 @@
 ﻿using ControleDespesas.Dominio.Helpers;
+using ControleDespesas.Test.AppConfigurations.Factory;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Helpers
 {
-    public class PessoaHelperTest
+    public class PessoaHelperTest : BaseTest
     {
         private readonly SettingsTest _settingsTest;
 

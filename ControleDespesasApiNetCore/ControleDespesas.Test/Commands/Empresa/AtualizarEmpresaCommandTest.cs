@@ -1,15 +1,15 @@
 ﻿using ControleDespesas.Dominio.Commands.Empresa.Input;
-using ControleDespesas.Test.AppConfigurations.Settings;
+using ControleDespesas.Test.AppConfigurations.Factory;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Commands.Empresa
 {
-    public class AtualizarEmpresaCommandTest
+    public class AtualizarEmpresaCommandTest : BaseTest
     {
         private AtualizarEmpresaCommand _command;
 
         [SetUp]
-        public void Setup() => _command = new SettingsTest().EmpresaAtualizarCommand;
+        public void Setup() => _command = new AtualizarEmpresaCommandTest().MockSettingsTest.EmpresaAtualizarCommand;
 
         [Test]
         public void ValidarCommand_Valido()

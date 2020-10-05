@@ -1,18 +1,14 @@
 ﻿using ControleDespesas.Api.Controllers.ControleDespesas;
-using ControleDespesas.Api.Settings;
 using ControleDespesas.Dominio.Commands.Pagamento.Output;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Query.Pagamento;
 using ControleDespesas.Infra.Data.Repositorio;
-using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.Factory;
 using ControleDespesas.Test.AppConfigurations.Models;
-using ControleDespesas.Test.AppConfigurations.Settings;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
-using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using System;
@@ -22,9 +18,6 @@ namespace ControleDespesas.Test.Controllers
 {
     public class PagamentoControllerTest : DatabaseFactory
     {
-        private readonly SettingsTest _settingsTest;
-        private readonly Mock<IOptions<SettingsAPI>> _mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
-        private readonly Mock<IOptions<SettingsInfraData>> _mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
         private readonly EmpresaRepositorio _repositoryEmpresa;
         private readonly PessoaRepositorio _repositoryPessoa;
         private readonly TipoPagamentoRepositorio _repositoryTipoPagamento;
@@ -35,17 +28,17 @@ namespace ControleDespesas.Test.Controllers
         public PagamentoControllerTest()
         {
             CriarBaseDeDadosETabelas();
-            _settingsTest = new SettingsTest();
-            _mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
-            _mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
-            _repositoryEmpresa = new EmpresaRepositorio(_mockOptionsInfra.Object);
-            _repositoryPessoa = new PessoaRepositorio(_mockOptionsInfra.Object);
-            _repositoryTipoPagamento = new TipoPagamentoRepositorio(_mockOptionsInfra.Object);
-            _repositoryPagamento = new PagamentoRepositorio(_mockOptionsInfra.Object);
+            var optionsInfraData = Options.Create(MockSettingsInfraData);
+            var optionsAPI = Options.Create(MockSettingsAPI);
+
+            _repositoryEmpresa = new EmpresaRepositorio(optionsInfraData);
+            _repositoryPessoa = new PessoaRepositorio(optionsInfraData);
+            _repositoryTipoPagamento = new TipoPagamentoRepositorio(optionsInfraData);
+            _repositoryPagamento = new PagamentoRepositorio(optionsInfraData);
             _handler = new PagamentoHandler(_repositoryPagamento, _repositoryEmpresa, _repositoryPessoa, _repositoryTipoPagamento);
-            _controller = new PagamentoController(_repositoryPagamento, _handler, _mockOptionsAPI.Object);
+            _controller = new PagamentoController(_repositoryPagamento, _handler, optionsAPI);
             _controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            _controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
+            _controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = MockSettingsAPI.ChaveAPI;
         }
 
         [SetUp]
@@ -71,8 +64,8 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void Pagamentos()
         {
-            var pagamento1 = _settingsTest.Pagamento1;
-            var pagamento2 = _settingsTest.Pagamento2;
+            var pagamento1 = MockSettingsTest.Pagamento1;
+            var pagamento2 = MockSettingsTest.Pagamento2;
 
             _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento1.Empresa);
@@ -118,10 +111,10 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void Pagamento()
         {
-            var pagamento1 = _settingsTest.Pagamento1;
-            var pagamento2 = _settingsTest.Pagamento2;
+            var pagamento1 = MockSettingsTest.Pagamento1;
+            var pagamento2 = MockSettingsTest.Pagamento2;
 
-            var command = _settingsTest.PagamentoObterPorIdCommand;
+            var command = MockSettingsTest.PagamentoObterPorIdCommand;
 
             _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento1.Empresa);
@@ -158,11 +151,11 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void PagamentoInserir()
         {
-            var tipoPagamento = _settingsTest.Pagamento1.TipoPagamento;
-            var empresa = _settingsTest.Pagamento1.Empresa ;
-            var pessoa = _settingsTest.Pagamento1.Pessoa;
+            var tipoPagamento = MockSettingsTest.Pagamento1.TipoPagamento;
+            var empresa = MockSettingsTest.Pagamento1.Empresa ;
+            var pessoa = MockSettingsTest.Pagamento1.Pessoa;
 
-            var command = _settingsTest.PagamentoAdicionarCommand;
+            var command = MockSettingsTest.PagamentoAdicionarCommand;
 
             _repositoryTipoPagamento.Salvar(tipoPagamento);
             _repositoryEmpresa.Salvar(empresa);
@@ -193,9 +186,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void PagamentoAlterar()
         {
-            var pagamento = _settingsTest.Pagamento1;
+            var pagamento = MockSettingsTest.Pagamento1;
 
-            var command = _settingsTest.PagamentoAtualizarCommand;
+            var command = MockSettingsTest.PagamentoAtualizarCommand;
 
             _repositoryTipoPagamento.Salvar(pagamento.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento.Empresa);
@@ -227,9 +220,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void PagamentoExcluir()
         {
-            var pagamento = _settingsTest.Pagamento1;
+            var pagamento = MockSettingsTest.Pagamento1;
 
-            var command = _settingsTest.PagamentoApagarCommand;
+            var command = MockSettingsTest.PagamentoApagarCommand;
 
             _repositoryTipoPagamento.Salvar(pagamento.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento.Empresa) ;

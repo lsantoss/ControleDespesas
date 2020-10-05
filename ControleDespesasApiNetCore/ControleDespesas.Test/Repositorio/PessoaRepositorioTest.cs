@@ -1,25 +1,18 @@
 ﻿using ControleDespesas.Infra.Data.Repositorio;
-using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.Factory;
-using ControleDespesas.Test.AppConfigurations.Settings;
 using Microsoft.Extensions.Options;
-using Moq;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Repositorio
 {
     public class PessoaRepositorioTest : DatabaseFactory
     {
-        private readonly SettingsTest _settingsTest;
-        private readonly Mock<IOptions<SettingsInfraData>> _mockOptions = new Mock<IOptions<SettingsInfraData>>();
         private readonly PessoaRepositorio _repository;
 
         public PessoaRepositorioTest()
         {
             CriarBaseDeDadosETabelas();
-            _settingsTest = new SettingsTest();
-            _mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
-            _repository = new PessoaRepositorio(_mockOptions.Object);
+            _repository = new PessoaRepositorio(Options.Create(MockSettingsInfraData));
         }
 
         [SetUp]
@@ -28,7 +21,7 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Salvar()
         {
-            var pessoa = _settingsTest.Pessoa1;
+            var pessoa = MockSettingsTest.Pessoa1;
             _repository.Salvar(pessoa);
 
             var retorno = _repository.Obter(pessoa.Id);
@@ -41,10 +34,10 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Atualizar()
         {
-            var pessoa = _settingsTest.Pessoa1;
+            var pessoa = MockSettingsTest.Pessoa1;
             _repository.Salvar(pessoa);
 
-            pessoa = _settingsTest.Pessoa1Editada;
+            pessoa = MockSettingsTest.Pessoa1Editada;
             _repository.Atualizar(pessoa);
 
             var retorno = _repository.Obter(pessoa.Id);
@@ -57,9 +50,9 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Deletar()
         {
-            var pessoa1 = _settingsTest.Pessoa1;
-            var pessoa2 = _settingsTest.Pessoa2;
-            var pessoa3 = _settingsTest.Pessoa3;
+            var pessoa1 = MockSettingsTest.Pessoa1;
+            var pessoa2 = MockSettingsTest.Pessoa2;
+            var pessoa3 = MockSettingsTest.Pessoa3;
 
             _repository.Salvar(pessoa1);
             _repository.Salvar(pessoa2);
@@ -81,7 +74,7 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Obter()
         {
-            var pessoa = _settingsTest.Pessoa1;
+            var pessoa = MockSettingsTest.Pessoa1;
 
             _repository.Salvar(pessoa);
 
@@ -95,9 +88,9 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Listar()
         {
-            var pessoa1 = _settingsTest.Pessoa1;
-            var pessoa2 = _settingsTest.Pessoa2;
-            var pessoa3 = _settingsTest.Pessoa3;
+            var pessoa1 = MockSettingsTest.Pessoa1;
+            var pessoa2 = MockSettingsTest.Pessoa2;
+            var pessoa3 = MockSettingsTest.Pessoa3;
 
             _repository.Salvar(pessoa1);
             _repository.Salvar(pessoa2);
@@ -121,7 +114,7 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void CheckId()
         {
-            var pessoa = _settingsTest.Pessoa1;
+            var pessoa = MockSettingsTest.Pessoa1;
             _repository.Salvar(pessoa);
 
             var idExistente = _repository.CheckId(pessoa.Id);
@@ -134,9 +127,9 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void LocalizarMaxId()
         {
-            var pessoa1 = _settingsTest.Pessoa1;
-            var pessoa2 = _settingsTest.Pessoa2;
-            var pessoa3 = _settingsTest.Pessoa3;
+            var pessoa1 = MockSettingsTest.Pessoa1;
+            var pessoa2 = MockSettingsTest.Pessoa2;
+            var pessoa3 = MockSettingsTest.Pessoa3;
 
             _repository.Salvar(pessoa1);
             _repository.Salvar(pessoa2);

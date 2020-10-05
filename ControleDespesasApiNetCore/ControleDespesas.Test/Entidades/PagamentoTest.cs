@@ -1,16 +1,16 @@
 ﻿using ControleDespesas.Dominio.Entidades;
-using ControleDespesas.Test.AppConfigurations.Settings;
+using ControleDespesas.Test.AppConfigurations.Factory;
 using LSCode.Validador.ValueObjects;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Entidades
 {
-    public class PagamentoTest
+    public class PagamentoTest : BaseTest
     {
         private Pagamento _pagamento;
 
         [SetUp]
-        public void Setup() => _pagamento = new SettingsTest().Pagamento1;
+        public void Setup() => _pagamento = new PagamentoTest().MockSettingsTest.Pagamento1;
 
         [Test]
         public void ValidarEntidade_Valida()

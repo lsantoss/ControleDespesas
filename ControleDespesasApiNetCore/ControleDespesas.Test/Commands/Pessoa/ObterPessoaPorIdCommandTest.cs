@@ -1,15 +1,15 @@
 ﻿using ControleDespesas.Dominio.Commands.Pessoa.Input;
-using ControleDespesas.Test.AppConfigurations.Settings;
+using ControleDespesas.Test.AppConfigurations.Factory;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Commands.Pessoa
 {
-    public class ObterPessoaPorIdCommandTest
+    public class ObterPessoaPorIdCommandTest : BaseTest
     {
         private ObterPessoaPorIdCommand _command;
 
         [SetUp]
-        public void Setup() => _command = new SettingsTest().PessoaObterPorIdCommand;
+        public void Setup() => _command = new ObterPessoaPorIdCommandTest().MockSettingsTest.PessoaObterPorIdCommand;
 
         [Test]
         public void ValidarCommand_Valido()

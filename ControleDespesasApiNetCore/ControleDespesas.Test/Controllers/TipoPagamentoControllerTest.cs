@@ -1,18 +1,14 @@
 ﻿using ControleDespesas.Api.Controllers.ControleDespesas;
-using ControleDespesas.Api.Settings;
 using ControleDespesas.Dominio.Commands.TipoPagamento.Output;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Query.TipoPagamento;
 using ControleDespesas.Infra.Data.Repositorio;
-using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.Factory;
 using ControleDespesas.Test.AppConfigurations.Models;
-using ControleDespesas.Test.AppConfigurations.Settings;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
-using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -21,9 +17,6 @@ namespace ControleDespesas.Test.Controllers
 {
     public class TipoPagamentoControllerTest : DatabaseFactory
     {
-        private readonly SettingsTest _settingsTest;
-        private readonly Mock<IOptions<SettingsAPI>> _mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
-        private readonly Mock<IOptions<SettingsInfraData>> _mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
         private readonly TipoPagamentoRepositorio _repository;
         private readonly TipoPagamentoHandler _handler;
         private readonly TipoPagamentoController _controller;
@@ -31,14 +24,14 @@ namespace ControleDespesas.Test.Controllers
         public TipoPagamentoControllerTest()
         {
             CriarBaseDeDadosETabelas();
-            _settingsTest = new SettingsTest();
-            _mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
-            _mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
-            _repository = new TipoPagamentoRepositorio(_mockOptionsInfra.Object);
+            var optionsInfraData = Options.Create(MockSettingsInfraData);
+            var optionsAPI = Options.Create(MockSettingsAPI);
+
+            _repository = new TipoPagamentoRepositorio(optionsInfraData);
             _handler = new TipoPagamentoHandler(_repository);
-            _controller = new TipoPagamentoController(_repository, _handler, _mockOptionsAPI.Object);
+            _controller = new TipoPagamentoController(_repository, _handler, optionsAPI);
             _controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            _controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
+            _controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = MockSettingsAPI.ChaveAPI;
         }
 
         [SetUp]
@@ -64,9 +57,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void TipoPagamentos()
         {
-            var tipoPagamento1 = _settingsTest.TipoPagamento1;
-            var tipoPagamento2 = _settingsTest.TipoPagamento2;
-            var tipoPagamento3 = _settingsTest.TipoPagamento3;
+            var tipoPagamento1 = MockSettingsTest.TipoPagamento1;
+            var tipoPagamento2 = MockSettingsTest.TipoPagamento2;
+            var tipoPagamento3 = MockSettingsTest.TipoPagamento3;
 
             _repository.Salvar(tipoPagamento1);
             _repository.Salvar(tipoPagamento2);
@@ -97,11 +90,11 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void TipoPagamento()
         {
-            var tipoPagamento1 = _settingsTest.TipoPagamento1;
-            var tipoPagamento2 = _settingsTest.TipoPagamento2;
-            var tipoPagamento3 = _settingsTest.TipoPagamento3;
+            var tipoPagamento1 = MockSettingsTest.TipoPagamento1;
+            var tipoPagamento2 = MockSettingsTest.TipoPagamento2;
+            var tipoPagamento3 = MockSettingsTest.TipoPagamento3;
 
-            var command = _settingsTest.TipoPagamentoObterPorIdCommand;
+            var command = MockSettingsTest.TipoPagamentoObterPorIdCommand;
 
             _repository.Salvar(tipoPagamento1);
             _repository.Salvar(tipoPagamento2);
@@ -126,7 +119,7 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void TipoPagamentoInserir()
         {
-            var command = _settingsTest.TipoPagamentoAdicionarCommand;
+            var command = MockSettingsTest.TipoPagamentoAdicionarCommand;
 
             var response = _controller.TipoPagamentoInserir(command).Result;
 
@@ -147,9 +140,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void TipoPagamentoAlterar()
         {
-            var tipoPagamento = _settingsTest.TipoPagamento1;
+            var tipoPagamento = MockSettingsTest.TipoPagamento1;
 
-            var command = _settingsTest.TipoPagamentoAtualizarCommand;
+            var command = MockSettingsTest.TipoPagamentoAtualizarCommand;
 
             _repository.Salvar(tipoPagamento);
 
@@ -172,9 +165,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void TipoPagamentoExcluir()
         {
-            var tipoPagamento = _settingsTest.TipoPagamento1;
+            var tipoPagamento = MockSettingsTest.TipoPagamento1;
 
-            var command = _settingsTest.TipoPagamentoApagarCommand;
+            var command = MockSettingsTest.TipoPagamentoApagarCommand;
 
             _repository.Salvar(tipoPagamento);
 

@@ -1,14 +1,12 @@
 ﻿using ControleDespesas.Dominio.Helpers;
-using ControleDespesas.Test.AppConfigurations.Settings;
+using ControleDespesas.Test.AppConfigurations.Factory;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Helpers
 {
-    public class EmpresaHelperTest
+    public class EmpresaHelperTest : BaseTest
     {
-        private readonly SettingsTest _settingsTest;
-
-        public EmpresaHelperTest() => _settingsTest = new SettingsTest();
+        public EmpresaHelperTest() { }
 
         [SetUp]
         public void Setup() { }
@@ -16,7 +14,7 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarEntidade_AdcionarEmpresaCommand()
         {
-            var command = _settingsTest.EmpresaAdicionarCommand;
+            var command = MockSettingsTest.EmpresaAdicionarCommand;
 
             var entidade = EmpresaHelper.GerarEntidade(command);
 
@@ -32,7 +30,7 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarEntidade_AtualizarEmpresaCommand()
         {
-            var command = _settingsTest.EmpresaAtualizarCommand;
+            var command = MockSettingsTest.EmpresaAtualizarCommand;
 
             var entidade = EmpresaHelper.GerarEntidade(command);
 
@@ -48,7 +46,7 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarDadosRetornoInsert()
         {
-            var entidade = _settingsTest.Empresa1;
+            var entidade = MockSettingsTest.Empresa1;
 
             var command = EmpresaHelper.GerarDadosRetornoInsert(entidade);
 
@@ -60,7 +58,7 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarDadosRetornoUpdate()
         {
-            var entidade = _settingsTest.Empresa1;
+            var entidade = MockSettingsTest.Empresa1;
 
             var command = EmpresaHelper.GerarDadosRetornoUpdate(entidade);
 
@@ -72,7 +70,7 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarDadosRetornoDelete()
         {
-            var entidade = _settingsTest.Empresa1;
+            var entidade = MockSettingsTest.Empresa1;
             var command = EmpresaHelper.GerarDadosRetornoDelete(entidade.Id);
             Assert.AreEqual(entidade.Id, command.Id);
         }

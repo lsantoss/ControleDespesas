@@ -1,11 +1,8 @@
-﻿using ControleDespesas.Api.Settings;
-using ControleDespesas.Infra.Data.Settings;
+﻿using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.QueriesSQL;
-using ControleDespesas.Test.AppConfigurations.Settings;
 using Dapper;
 using LSCode.ConexoesBD.DbContext;
 using LSCode.ConexoesBD.Enums;
-using Microsoft.Extensions.Options;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -13,83 +10,66 @@ using System.Collections.Generic;
 namespace ControleDespesas.Test.AppConfigurations.Factory
 {
     [TestFixture]
-    public class DatabaseFactory
+    public class DatabaseFactory : BaseTest
     {
-        private string _connectionReal;
-        private string _connectionTest;
-        private  readonly SettingsTest _settingTest;
-        protected readonly SettingsInfraData _settingsInfraData;
-        protected readonly SettingsAPI _settingsAPI;
+        private string ConnectionReal { get; set; }
+        private string ConnectionTest { get; set; }
+        protected SettingsInfraData MockSettingsInfraData { get; }
 
         public DatabaseFactory()
         {
-            _settingTest = new SettingsTest();
-
             ConfigurarParamentrosConexaoBaseDeDados();
 
-            _settingsInfraData = new SettingsInfraData() { ConnectionString = _connectionTest };
-
-            _settingsAPI = new SettingsAPI()
-            {
-                ControleDespesasAPINetCore = _settingTest.ControleDespesasAPINetCore,
-                ChaveAPI = _settingTest.ChaveAPI,
-                ChaveJWT = _settingTest.ChaveJWT
-            };
-        }
-
-        [OneTimeSetUp]
-        private void OneTimeSetUp() { }
-
-        [OneTimeTearDown]
-        private void OneTimeTearDown() { }
+            MockSettingsInfraData = new SettingsInfraData() { ConnectionString = ConnectionTest };            
+        }        
 
         private void ConfigurarParamentrosConexaoBaseDeDados()
         {
             try
             {
-                if (_settingTest.TipoBancoDeDdos.FullName == typeof(EBancoDadosRelacional).FullName)
+                if (MockSettingsTest.TipoBancoDeDdos.FullName == typeof(EBancoDadosRelacional).FullName)
                 {
-                    switch (_settingTest.BancoDeDadosRelacional)
+                    switch (MockSettingsTest.BancoDeDadosRelacional)
                     {
                         case EBancoDadosRelacional.SQLServer:
-                            _connectionReal = _settingTest.ConnectionSQLServerReal;
-                            _connectionTest = _settingTest.ConnectionSQLServerTest;
+                            ConnectionReal = MockSettingsTest.ConnectionSQLServerReal;
+                            ConnectionTest = MockSettingsTest.ConnectionSQLServerTest;
                             break;
 
                         case EBancoDadosRelacional.MySQL:
-                            _connectionReal = _settingTest.ConnectionMySqlReal;
-                            _connectionTest = _settingTest.ConnectionMySqlTest;
+                            ConnectionReal = MockSettingsTest.ConnectionMySqlReal;
+                            ConnectionTest = MockSettingsTest.ConnectionMySqlTest;
                             break;
 
                         case EBancoDadosRelacional.SQLite:
-                            _connectionReal = _settingTest.ConnectionSQLiteReal;
-                            _connectionTest = _settingTest.ConnectionSQLiteTest;
+                            ConnectionReal = MockSettingsTest.ConnectionSQLiteReal;
+                            ConnectionTest = MockSettingsTest.ConnectionSQLiteTest;
                             break;
 
                         case EBancoDadosRelacional.PostgreSQL:
-                            _connectionReal = _settingTest.ConnectionPostgreSQLReal;
-                            _connectionTest = _settingTest.ConnectionPostgreSQLTest;
+                            ConnectionReal = MockSettingsTest.ConnectionPostgreSQLReal;
+                            ConnectionTest = MockSettingsTest.ConnectionPostgreSQLTest;
                             break;
 
                         case EBancoDadosRelacional.Oracle:
-                            _connectionReal = _settingTest.ConnectionOracleReal;
-                            _connectionTest = _settingTest.ConnectionOracleTest;
+                            ConnectionReal = MockSettingsTest.ConnectionOracleReal;
+                            ConnectionTest = MockSettingsTest.ConnectionOracleTest;
                             break;
                     }
                 }
-                else if (_settingTest.TipoBancoDeDdos.FullName == typeof(EBancoDadosNaoRelacional).FullName)
+                else if (MockSettingsTest.TipoBancoDeDdos.FullName == typeof(EBancoDadosNaoRelacional).FullName)
                 {
-                    switch (_settingTest.BancoDeDadosNaoRelacional)
+                    switch (MockSettingsTest.BancoDeDadosNaoRelacional)
                     {
                         case EBancoDadosNaoRelacional.MongoDB:
-                            _connectionReal = _settingTest.ConnectionMongoDBReal;
-                            _connectionTest = _settingTest.ConnectionMongoDBTest;
+                            ConnectionReal = MockSettingsTest.ConnectionMongoDBReal;
+                            ConnectionTest = MockSettingsTest.ConnectionMongoDBTest;
                             break;
                     }
                 }
                 else
                 {
-                    throw new Exception("Erro ao configurar tipo de base de dados para testes");
+                    throw new Exception("Tipo de base de dados incorreto.");
                 }
             }
             catch (Exception ex)
@@ -102,19 +82,10 @@ namespace ControleDespesas.Test.AppConfigurations.Factory
         {
             try
             {
-                DbContext ctx = new DbContext(EBancoDadosRelacional.SQLServer, _connectionReal);
+                DbContext ctx = new DbContext(EBancoDadosRelacional.SQLServer, ConnectionReal);
 
-                foreach (string sql in queries)
-                {
-                    try
-                    {
-                        ctx.SQLServerConexao.Execute(sql);
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new Exception(ex.Message);
-                    }
-                }
+                foreach (string sql in queries) 
+                    ctx.SQLServerConexao.Execute(sql);
             }
             catch (Exception ex)
             {
@@ -126,9 +97,9 @@ namespace ControleDespesas.Test.AppConfigurations.Factory
         {
             try
             {
-                if (_settingTest.TipoBancoDeDdos.FullName == typeof(EBancoDadosRelacional).FullName)
+                if (MockSettingsTest.TipoBancoDeDdos.FullName == typeof(EBancoDadosRelacional).FullName)
                 {
-                    switch (_settingTest.BancoDeDadosRelacional)
+                    switch (MockSettingsTest.BancoDeDadosRelacional)
                     {
                         case EBancoDadosRelacional.SQLServer:
                             RodarScripts(QueriesSQLServer.QueriesCreate);
@@ -151,9 +122,9 @@ namespace ControleDespesas.Test.AppConfigurations.Factory
                             break;
                     }
                 }
-                else if (_settingTest.TipoBancoDeDdos.FullName == typeof(EBancoDadosNaoRelacional).FullName)
+                else if (MockSettingsTest.TipoBancoDeDdos.FullName == typeof(EBancoDadosNaoRelacional).FullName)
                 {
-                    switch (_settingTest.BancoDeDadosNaoRelacional)
+                    switch (MockSettingsTest.BancoDeDadosNaoRelacional)
                     {
                         case EBancoDadosNaoRelacional.MongoDB:
                             throw new NotImplementedException("Queries MongoDB ainda não foram criadas");
@@ -162,12 +133,12 @@ namespace ControleDespesas.Test.AppConfigurations.Factory
                 }
                 else
                 {
-                    throw new Exception("Erro ao rodar scripts de criação de base de dados e tabelas");
+                    throw new Exception("Tipo de base de dados incorreto.");
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception($"Erro ao rodar scripts de criação de base de dados e tabelas: {ex.Message}");
             }
         }
 
@@ -175,9 +146,9 @@ namespace ControleDespesas.Test.AppConfigurations.Factory
         {
             try
             {
-                if (_settingTest.TipoBancoDeDdos.FullName == typeof(EBancoDadosRelacional).FullName)
+                if (MockSettingsTest.TipoBancoDeDdos.FullName == typeof(EBancoDadosRelacional).FullName)
                 {
-                    switch (_settingTest.BancoDeDadosRelacional)
+                    switch (MockSettingsTest.BancoDeDadosRelacional)
                     {
                         case EBancoDadosRelacional.SQLServer:
                             RodarScripts(QueriesSQLServer.QueriesDrop);
@@ -200,9 +171,9 @@ namespace ControleDespesas.Test.AppConfigurations.Factory
                             break;
                     }
                 }
-                else if (_settingTest.TipoBancoDeDdos.FullName == typeof(EBancoDadosNaoRelacional).FullName)
+                else if (MockSettingsTest.TipoBancoDeDdos.FullName == typeof(EBancoDadosNaoRelacional).FullName)
                 {
-                    switch (_settingTest.BancoDeDadosNaoRelacional)
+                    switch (MockSettingsTest.BancoDeDadosNaoRelacional)
                     {
                         case EBancoDadosNaoRelacional.MongoDB:
                             throw new NotImplementedException("Queries MongoDB ainda não foram criadas");
@@ -211,12 +182,12 @@ namespace ControleDespesas.Test.AppConfigurations.Factory
                 }
                 else
                 {
-                    throw new Exception("Erro ao rodar scripts de criação de base de dados e tabelas");
+                    throw new Exception("Tipo de base de dados incorreto.");
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception($"Erro ao rodar scripts de criação de base de dados e tabelas: {ex.Message}");
             }
         }
     }

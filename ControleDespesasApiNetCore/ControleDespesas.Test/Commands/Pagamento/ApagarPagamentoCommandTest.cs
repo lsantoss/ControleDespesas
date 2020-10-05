@@ -1,15 +1,15 @@
 ﻿using ControleDespesas.Dominio.Commands.Pagamento.Input;
-using ControleDespesas.Test.AppConfigurations.Settings;
+using ControleDespesas.Test.AppConfigurations.Factory;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Commands.Pagamento
 {
-    public class ApagarPagamentoCommandTest
+    public class ApagarPagamentoCommandTest : BaseTest
     {
         private ApagarPagamentoCommand _command;
 
         [SetUp]
-        public void Setup() => _command = new SettingsTest().PagamentoApagarCommand;
+        public void Setup() => _command = new ApagarPagamentoCommandTest().MockSettingsTest.PagamentoApagarCommand;
 
         [Test]
         public void ValidarCommand_Valido()

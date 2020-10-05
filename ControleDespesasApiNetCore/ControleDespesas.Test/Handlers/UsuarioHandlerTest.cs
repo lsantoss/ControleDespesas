@@ -3,28 +3,21 @@ using ControleDespesas.Dominio.Enums;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Query.Usuario;
 using ControleDespesas.Infra.Data.Repositorio;
-using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.Factory;
-using ControleDespesas.Test.AppConfigurations.Settings;
 using Microsoft.Extensions.Options;
-using Moq;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Handlers
 {
     class UsuarioHandlerTest : DatabaseFactory
     {
-        private readonly SettingsTest _settingsTest;
-        private readonly Mock<IOptions<SettingsInfraData>> _mockOptions = new Mock<IOptions<SettingsInfraData>>();
         private readonly UsuarioRepositorio _repository;
         private readonly UsuarioHandler _handler;
 
         public UsuarioHandlerTest()
         {
             CriarBaseDeDadosETabelas();
-            _settingsTest = new SettingsTest();
-            _mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
-            _repository = new UsuarioRepositorio(_mockOptions.Object);
+            _repository = new UsuarioRepositorio(Options.Create(MockSettingsInfraData));
             _handler = new UsuarioHandler(_repository);
         }
 
@@ -34,7 +27,7 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AdicionarUsuario()
         {
-            var usuarioCommand = _settingsTest.UsuarioAdicionarCommand;
+            var usuarioCommand = MockSettingsTest.UsuarioAdicionarCommand;
 
             var retorno = _handler.Handler(usuarioCommand);
 
@@ -51,9 +44,9 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AtualizarUsuario()
         {
-            var usuario = _settingsTest.Usuario1;
+            var usuario = MockSettingsTest.Usuario1;
 
-            var usuarioCommand = _settingsTest.UsuarioAtualizarCommand;
+            var usuarioCommand = MockSettingsTest.UsuarioAtualizarCommand;
 
             _repository.Salvar(usuario);
 
@@ -72,10 +65,10 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_ApagarUsuario()
         {
-            var usuario = _settingsTest.Usuario1;
+            var usuario = MockSettingsTest.Usuario1;
             _repository.Salvar(usuario);
 
-            var usuarioCommand = _settingsTest.UsuarioApagarCommand;
+            var usuarioCommand = MockSettingsTest.UsuarioApagarCommand;
 
             var retorno = _handler.Handler(usuarioCommand);
             var retornoDados = (ApagarUsuarioCommandOutput)retorno.Dados;
@@ -88,9 +81,9 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_LoginUsuario()
         {
-            var usuario = _settingsTest.Usuario1;
+            var usuario = MockSettingsTest.Usuario1;
 
-            var usuarioCommand = _settingsTest.UsuarioLoginCommand;
+            var usuarioCommand = MockSettingsTest.UsuarioLoginCommand;
 
             _repository.Salvar(usuario);
 

@@ -1,15 +1,15 @@
 ﻿using ControleDespesas.Dominio.Commands.Empresa.Input;
-using ControleDespesas.Test.AppConfigurations.Settings;
+using ControleDespesas.Test.AppConfigurations.Factory;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Commands.Empresa
 {
-    public class ApagarEmpresaCommandTest
+    public class ApagarEmpresaCommandTest : BaseTest
     {
         private ApagarEmpresaCommand _command;
 
         [SetUp]
-        public void Setup() => _command = new SettingsTest().EmpresaApagarCommand;
+        public void Setup() => _command = new ApagarEmpresaCommandTest().MockSettingsTest.EmpresaApagarCommand;
 
         [Test]
         public void ValidarCommand_Valido()

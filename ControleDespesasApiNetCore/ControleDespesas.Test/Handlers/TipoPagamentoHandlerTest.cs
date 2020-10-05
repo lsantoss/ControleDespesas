@@ -1,28 +1,21 @@
 ﻿using ControleDespesas.Dominio.Commands.TipoPagamento.Output;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Infra.Data.Repositorio;
-using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.Factory;
-using ControleDespesas.Test.AppConfigurations.Settings;
 using Microsoft.Extensions.Options;
-using Moq;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Handlers
 {
     public class TipoPagamentoHandlerTest : DatabaseFactory
     {
-        private readonly SettingsTest _settingsTest;
-        private readonly Mock<IOptions<SettingsInfraData>> _mockOptions = new Mock<IOptions<SettingsInfraData>>();
         private readonly TipoPagamentoRepositorio _repository;
         private readonly TipoPagamentoHandler _handler;
 
         public TipoPagamentoHandlerTest()
         {
             CriarBaseDeDadosETabelas();
-            _settingsTest = new SettingsTest();
-            _mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
-            _repository = new TipoPagamentoRepositorio(_mockOptions.Object);
+            _repository = new TipoPagamentoRepositorio(Options.Create(MockSettingsInfraData));
             _handler = new TipoPagamentoHandler(_repository);
         }
 
@@ -32,7 +25,7 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AdicionarTipoPagamento()
         {
-            var tipoPagamentoCommand = _settingsTest.TipoPagamentoAdicionarCommand;
+            var tipoPagamentoCommand = MockSettingsTest.TipoPagamentoAdicionarCommand;
 
             var retorno = _handler.Handler(tipoPagamentoCommand);
 
@@ -47,9 +40,9 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AtualizarTipoPagamento()
         {
-            var tipoPagamento = _settingsTest.TipoPagamento1;
+            var tipoPagamento = MockSettingsTest.TipoPagamento1;
 
-            var empresaCommand = _settingsTest.TipoPagamentoAtualizarCommand;
+            var empresaCommand = MockSettingsTest.TipoPagamentoAtualizarCommand;
 
             _repository.Salvar(tipoPagamento);
 
@@ -66,9 +59,9 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_ApagarTipoPagamento()
         {
-            var tipoPagamento = _settingsTest.TipoPagamento1;
+            var tipoPagamento = MockSettingsTest.TipoPagamento1;
 
-            var empresaCommand = _settingsTest.TipoPagamentoApagarCommand;
+            var empresaCommand = MockSettingsTest.TipoPagamentoApagarCommand;
 
             _repository.Salvar(tipoPagamento);
 

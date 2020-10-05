@@ -1,15 +1,15 @@
 ﻿using ControleDespesas.Dominio.Commands.Pessoa.Input;
-using ControleDespesas.Test.AppConfigurations.Settings;
+using ControleDespesas.Test.AppConfigurations.Factory;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Commands.Pessoa
 {
-    public class ApagarPessoaCommandTest
+    public class ApagarPessoaCommandTest : BaseTest
     {
         private ApagarPessoaCommand _command;
 
         [SetUp]
-        public void Setup() => _command = new SettingsTest().PessoaApagarCommand;
+        public void Setup() => _command = new ApagarPessoaCommandTest().MockSettingsTest.PessoaApagarCommand;
 
         [Test]
         public void ValidarCommand_Valido()

@@ -1,19 +1,15 @@
 ﻿using ControleDespesas.Api.Controllers.ControleDespesas;
 using ControleDespesas.Api.Services;
-using ControleDespesas.Api.Settings;
 using ControleDespesas.Dominio.Commands.Usuario.Output;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Query.Usuario;
 using ControleDespesas.Infra.Data.Repositorio;
-using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.Factory;
 using ControleDespesas.Test.AppConfigurations.Models;
-using ControleDespesas.Test.AppConfigurations.Settings;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
-using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -22,26 +18,22 @@ namespace ControleDespesas.Test.Controllers
 {
     public class UsuarioControllerTest : DatabaseFactory
     {
-        private readonly SettingsTest _settingsTest;
-        private readonly Mock<IOptions<SettingsAPI>> _mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
-        private readonly Mock<IOptions<SettingsInfraData>> _mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
         private readonly UsuarioRepositorio _repository;
         private readonly UsuarioHandler _handler;
-        private readonly TokenJWTService _tokenJWTService;
         private readonly UsuarioController _controller;
 
         public UsuarioControllerTest()
         {
             CriarBaseDeDadosETabelas();
-            _settingsTest = new SettingsTest();
-            _mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
-            _mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
-            _repository = new UsuarioRepositorio(_mockOptionsInfra.Object);
+            var optionsInfraData = Options.Create(MockSettingsInfraData);
+            var optionsAPI = Options.Create(MockSettingsAPI);
+            var tokenJWTService = new TokenJWTService(optionsAPI);
+
+            _repository = new UsuarioRepositorio(optionsInfraData);
             _handler = new UsuarioHandler(_repository);
-            _tokenJWTService = new TokenJWTService(_mockOptionsAPI.Object);
-            _controller = new UsuarioController(_repository, _handler, _mockOptionsAPI.Object, _tokenJWTService);
+            _controller = new UsuarioController(_repository, _handler, optionsAPI, tokenJWTService);
             _controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            _controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
+            _controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = MockSettingsAPI.ChaveAPI;
         }
 
         [SetUp]
@@ -67,9 +59,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void Usuarios()
         {
-            var usuario1 = _settingsTest.Usuario1;
-            var usuario2 = _settingsTest.Usuario2;
-            var usuario3 = _settingsTest.Usuario3;
+            var usuario1 = MockSettingsTest.Usuario1;
+            var usuario2 = MockSettingsTest.Usuario2;
+            var usuario3 = MockSettingsTest.Usuario3;
 
             _repository.Salvar(usuario1);
             _repository.Salvar(usuario2);
@@ -106,11 +98,11 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void Usuario()
         {
-            var usuario1 = _settingsTest.Usuario1;
-            var usuario2 = _settingsTest.Usuario2;
-            var usuario3 = _settingsTest.Usuario3;
+            var usuario1 = MockSettingsTest.Usuario1;
+            var usuario2 = MockSettingsTest.Usuario2;
+            var usuario3 = MockSettingsTest.Usuario3;
 
-            var command = _settingsTest.UsuarioObterPorIdCommand;
+            var command = MockSettingsTest.UsuarioObterPorIdCommand;
 
             _repository.Salvar(usuario1);
             _repository.Salvar(usuario2);
@@ -137,7 +129,7 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void UsuarioInserir()
         {
-            var command = _settingsTest.UsuarioAdicionarCommand;
+            var command = MockSettingsTest.UsuarioAdicionarCommand;
 
             var response = _controller.UsuarioInserir(command).Result;
 
@@ -160,9 +152,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void UsuarioAlterar()
         {
-            var usuario = _settingsTest.Usuario1;
+            var usuario = MockSettingsTest.Usuario1;
 
-            var command = _settingsTest.UsuarioAtualizarCommand;
+            var command = MockSettingsTest.UsuarioAtualizarCommand;
 
             _repository.Salvar(usuario);
 
@@ -187,9 +179,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void UsuarioExcluir()
         {
-            var usuario = _settingsTest.Usuario1;
+            var usuario = MockSettingsTest.Usuario1;
 
-            var command = _settingsTest.UsuarioApagarCommand;
+            var command = MockSettingsTest.UsuarioApagarCommand;
 
             _repository.Salvar(usuario);
 
@@ -211,9 +203,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void UsuarioLogin()
         {
-            var usuario = _settingsTest.Usuario1;
+            var usuario = MockSettingsTest.Usuario1;
 
-            var command = _settingsTest.UsuarioLoginCommand;
+            var command = MockSettingsTest.UsuarioLoginCommand;
 
             _repository.Salvar(usuario);
 

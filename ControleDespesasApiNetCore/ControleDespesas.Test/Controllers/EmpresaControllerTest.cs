@@ -1,18 +1,14 @@
 ﻿using ControleDespesas.Api.Controllers.ControleDespesas;
-using ControleDespesas.Api.Settings;
 using ControleDespesas.Dominio.Commands.Empresa.Output;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Query.Empresa;
 using ControleDespesas.Infra.Data.Repositorio;
-using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.Factory;
 using ControleDespesas.Test.AppConfigurations.Models;
-using ControleDespesas.Test.AppConfigurations.Settings;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
-using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -21,9 +17,6 @@ namespace ControleDespesas.Test.Controllers
 {
     public class EmpresaControllerTest : DatabaseFactory
     {
-        private readonly SettingsTest _settingsTest;
-        private readonly Mock<IOptions<SettingsAPI>> _mockOptionsAPI = new Mock<IOptions<SettingsAPI>>();
-        private readonly Mock<IOptions<SettingsInfraData>> _mockOptionsInfra = new Mock<IOptions<SettingsInfraData>>();
         private readonly EmpresaRepositorio _repository;
         private readonly EmpresaHandler _handler;
         private readonly EmpresaController _controller;
@@ -31,14 +24,14 @@ namespace ControleDespesas.Test.Controllers
         public EmpresaControllerTest()
         {
             CriarBaseDeDadosETabelas();
-            _settingsTest = new SettingsTest();
-            _mockOptionsAPI.SetupGet(m => m.Value).Returns(_settingsAPI);
-            _mockOptionsInfra.SetupGet(m => m.Value).Returns(_settingsInfraData);
-            _repository = new EmpresaRepositorio(_mockOptionsInfra.Object);
+            var optionsInfraData = Options.Create(MockSettingsInfraData);
+            var optionsAPI = Options.Create(MockSettingsAPI);
+
+            _repository = new EmpresaRepositorio(optionsInfraData);
             _handler = new EmpresaHandler(_repository);
-            _controller = new EmpresaController(_repository, _handler, _mockOptionsAPI.Object);
+            _controller = new EmpresaController(_repository, _handler, optionsAPI);
             _controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            _controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = _settingsAPI.ChaveAPI;
+            _controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = MockSettingsAPI.ChaveAPI;
         }
 
         [SetUp]
@@ -64,9 +57,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void Empresas()
         {
-            var empresa1 = _settingsTest.Empresa1;
-            var empresa2 = _settingsTest.Empresa2;
-            var empresa3 = _settingsTest.Empresa3;
+            var empresa1 = MockSettingsTest.Empresa1;
+            var empresa2 = MockSettingsTest.Empresa2;
+            var empresa3 = MockSettingsTest.Empresa3;
 
             _repository.Salvar(empresa1);
             _repository.Salvar(empresa2);
@@ -100,11 +93,11 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void Empresa()
         {
-            var empresa1 = _settingsTest.Empresa1;
-            var empresa2 = _settingsTest.Empresa2;
-            var empresa3 = _settingsTest.Empresa3;
+            var empresa1 = MockSettingsTest.Empresa1;
+            var empresa2 = MockSettingsTest.Empresa2;
+            var empresa3 = MockSettingsTest.Empresa3;
 
-            var command = _settingsTest.EmpresaObterPorIdCommand;
+            var command = MockSettingsTest.EmpresaObterPorIdCommand;
 
             _repository.Salvar(empresa1);
             _repository.Salvar(empresa2);
@@ -130,7 +123,7 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void EmpresaInserir()
         {
-            var command = _settingsTest.EmpresaAdicionarCommand;
+            var command = MockSettingsTest.EmpresaAdicionarCommand;
 
             var response = _controller.EmpresaInserir(command).Result;
 
@@ -152,9 +145,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void EmpresaAlterar()
         {
-            var empresa = _settingsTest.Empresa1;
+            var empresa = MockSettingsTest.Empresa1;
 
-            var command = _settingsTest.EmpresaAtualizarCommand;
+            var command = MockSettingsTest.EmpresaAtualizarCommand;
 
             _repository.Salvar(empresa);
 
@@ -178,9 +171,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void EmpresaExcluir()
         {
-            var empresa = _settingsTest.Empresa1;
+            var empresa = MockSettingsTest.Empresa1;
 
-            var command = _settingsTest.EmpresaApagarCommand;
+            var command = MockSettingsTest.EmpresaApagarCommand;
 
             _repository.Salvar(empresa);
 

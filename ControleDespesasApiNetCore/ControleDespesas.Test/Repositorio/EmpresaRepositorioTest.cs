@@ -1,25 +1,18 @@
 ﻿using ControleDespesas.Infra.Data.Repositorio;
-using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.Factory;
-using ControleDespesas.Test.AppConfigurations.Settings;
 using Microsoft.Extensions.Options;
-using Moq;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Repositorio
 {
     public class EmpresaRepositorioTest : DatabaseFactory
     {
-        private readonly SettingsTest _settingsTest;
-        private readonly Mock<IOptions<SettingsInfraData>> _mockOptions = new Mock<IOptions<SettingsInfraData>>();
         private readonly EmpresaRepositorio _repository;
 
         public EmpresaRepositorioTest()
         {
             CriarBaseDeDadosETabelas();
-            _settingsTest = new SettingsTest();
-            _mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
-            _repository = new EmpresaRepositorio(_mockOptions.Object);
+            _repository = new EmpresaRepositorio(Options.Create(MockSettingsInfraData));
         }
 
         [SetUp]
@@ -28,7 +21,7 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Salvar()
         {
-            var empresa = _settingsTest.Empresa1;
+            var empresa = MockSettingsTest.Empresa1;
             _repository.Salvar(empresa);
 
             var retorno = _repository.Obter(empresa.Id);
@@ -41,10 +34,10 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Atualizar()
         {
-            var empresa = _settingsTest.Empresa1;           
+            var empresa = MockSettingsTest.Empresa1;           
             _repository.Salvar(empresa);
 
-            empresa = _settingsTest.Empresa1Editada;
+            empresa = MockSettingsTest.Empresa1Editada;
             _repository.Atualizar(empresa);
 
             var retorno = _repository.Obter(empresa.Id);
@@ -57,9 +50,9 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Deletar()
         {
-            var empresa1 = _settingsTest.Empresa1;
-            var empresa2 = _settingsTest.Empresa2;
-            var empresa3 = _settingsTest.Empresa3;
+            var empresa1 = MockSettingsTest.Empresa1;
+            var empresa2 = MockSettingsTest.Empresa2;
+            var empresa3 = MockSettingsTest.Empresa3;
 
             _repository.Salvar(empresa1);
             _repository.Salvar(empresa2);
@@ -81,7 +74,7 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Obter()
         {
-            var empresa = _settingsTest.Empresa1;
+            var empresa = MockSettingsTest.Empresa1;
             _repository.Salvar(empresa);
 
             var retorno = _repository.Obter(empresa.Id);
@@ -94,9 +87,9 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Listar()
         {
-            var empresa1 = _settingsTest.Empresa1;
-            var empresa2 = _settingsTest.Empresa2;
-            var empresa3 = _settingsTest.Empresa3;
+            var empresa1 = MockSettingsTest.Empresa1;
+            var empresa2 = MockSettingsTest.Empresa2;
+            var empresa3 = MockSettingsTest.Empresa3;
 
             _repository.Salvar(empresa1);
             _repository.Salvar(empresa2);
@@ -120,7 +113,7 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void CheckId()
         {
-            var empresa = _settingsTest.Empresa1;
+            var empresa = MockSettingsTest.Empresa1;
             _repository.Salvar(empresa);
 
             var idExistente = _repository.CheckId(empresa.Id);
@@ -133,9 +126,9 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void LocalizarMaxId()
         {
-            var empresa1 = _settingsTest.Empresa1;
-            var empresa2 = _settingsTest.Empresa2;
-            var empresa3 = _settingsTest.Empresa3;
+            var empresa1 = MockSettingsTest.Empresa1;
+            var empresa2 = MockSettingsTest.Empresa2;
+            var empresa3 = MockSettingsTest.Empresa3;
 
             _repository.Salvar(empresa1);
             _repository.Salvar(empresa2);

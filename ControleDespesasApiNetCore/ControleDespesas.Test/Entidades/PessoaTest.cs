@@ -1,16 +1,16 @@
 ﻿using ControleDespesas.Dominio.Entidades;
-using ControleDespesas.Test.AppConfigurations.Settings;
+using ControleDespesas.Test.AppConfigurations.Factory;
 using LSCode.Validador.ValueObjects;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Entidades
 {
-    public class PessoaTest
+    public class PessoaTest : BaseTest
     {
         private Pessoa _pessoa;
 
         [SetUp]
-        public void Setup() => _pessoa = new SettingsTest().Pessoa1;
+        public void Setup() => _pessoa = new PessoaTest().MockSettingsTest.Pessoa1;
 
         [Test]
         public void ValidarEntidade_Valida()

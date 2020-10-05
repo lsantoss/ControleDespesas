@@ -1,15 +1,15 @@
 ﻿using ControleDespesas.Dominio.Commands.Usuario.Input;
-using ControleDespesas.Test.AppConfigurations.Settings;
+using ControleDespesas.Test.AppConfigurations.Factory;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Commands.Usuario
 {
-    public class ApagarUsuarioCommandTest
+    public class ApagarUsuarioCommandTest : BaseTest
     {
         private ApagarUsuarioCommand _command;
 
         [SetUp]
-        public void Setup() => _command = new SettingsTest().UsuarioApagarCommand;
+        public void Setup() => _command = new ApagarUsuarioCommandTest().MockSettingsTest.UsuarioApagarCommand;
 
         [Test]
         public void ValidarCommand_Valido()

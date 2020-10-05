@@ -1,9 +1,6 @@
 ﻿using ControleDespesas.Infra.Data.Repositorio;
-using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.Factory;
-using ControleDespesas.Test.AppConfigurations.Settings;
 using Microsoft.Extensions.Options;
-using Moq;
 using NUnit.Framework;
 using System;
 
@@ -11,8 +8,6 @@ namespace ControleDespesas.Test.Repositorio
 {
     public class PagamentoRepositorioTest : DatabaseFactory
     {
-        private readonly SettingsTest _settingsTest;
-        private readonly Mock<IOptions<SettingsInfraData>> _mockOptions = new Mock<IOptions<SettingsInfraData>>();
         private readonly TipoPagamentoRepositorio _repositoryTipoPagamento;
         private readonly EmpresaRepositorio _repositoryEmpresa;
         private readonly PessoaRepositorio _repositoryPessoa;
@@ -21,12 +16,11 @@ namespace ControleDespesas.Test.Repositorio
         public PagamentoRepositorioTest()
         {
             CriarBaseDeDadosETabelas();
-            _settingsTest = new SettingsTest();
-            _mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
-            _repositoryTipoPagamento = new TipoPagamentoRepositorio(_mockOptions.Object);
-            _repositoryEmpresa = new EmpresaRepositorio(_mockOptions.Object);
-            _repositoryPessoa = new PessoaRepositorio(_mockOptions.Object);
-            _repositoryPagamento = new PagamentoRepositorio(_mockOptions.Object);
+            var optionsInfraData = Options.Create(MockSettingsInfraData);
+            _repositoryTipoPagamento = new TipoPagamentoRepositorio(optionsInfraData);
+            _repositoryEmpresa = new EmpresaRepositorio(optionsInfraData);
+            _repositoryPessoa = new PessoaRepositorio(optionsInfraData);
+            _repositoryPagamento = new PagamentoRepositorio(optionsInfraData);
         }
 
         [SetUp]
@@ -35,7 +29,7 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Salvar()
         {
-            var pagamento = _settingsTest.Pagamento1;
+            var pagamento = MockSettingsTest.Pagamento1;
 
             _repositoryTipoPagamento.Salvar(pagamento.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento.Empresa);
@@ -57,14 +51,14 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Atualizar()
         {
-            var pagamento = _settingsTest.Pagamento1;
+            var pagamento = MockSettingsTest.Pagamento1;
 
             _repositoryTipoPagamento.Salvar(pagamento.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento.Empresa);
             _repositoryPessoa.Salvar(pagamento.Pessoa);
             _repositoryPagamento.Salvar(pagamento);
 
-            pagamento = _settingsTest.Pagamento1Editado;
+            pagamento = MockSettingsTest.Pagamento1Editado;
 
             _repositoryPagamento.Atualizar(pagamento);
 
@@ -83,8 +77,8 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Deletar()
         {
-            var pagamento1 = _settingsTest.Pagamento1;
-            var pagamento2 = _settingsTest.Pagamento2;
+            var pagamento1 = MockSettingsTest.Pagamento1;
+            var pagamento2 = MockSettingsTest.Pagamento2;
 
             _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento1.Empresa);
@@ -113,7 +107,7 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Obter()
         {
-            var pagamento = _settingsTest.Pagamento1;
+            var pagamento = MockSettingsTest.Pagamento1;
             
             _repositoryTipoPagamento.Salvar(pagamento.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento.Empresa);
@@ -135,8 +129,8 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Listar()
         {
-            var pagamento1 = _settingsTest.Pagamento1;
-            var pagamento2 = _settingsTest.Pagamento2;
+            var pagamento1 = MockSettingsTest.Pagamento1;
+            var pagamento2 = MockSettingsTest.Pagamento2;
 
             _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento1.Empresa);
@@ -172,7 +166,7 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void CheckId()
         {
-            var pagamento = _settingsTest.Pagamento1;
+            var pagamento = MockSettingsTest.Pagamento1;
 
             _repositoryTipoPagamento.Salvar(pagamento.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento.Empresa);
@@ -189,8 +183,8 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void LocalizarMaxId()
         {
-            var pagamento1 = _settingsTest.Pagamento1;
-            var pagamento2 = _settingsTest.Pagamento2;
+            var pagamento1 = MockSettingsTest.Pagamento1;
+            var pagamento2 = MockSettingsTest.Pagamento2;
 
             _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento1.Empresa);

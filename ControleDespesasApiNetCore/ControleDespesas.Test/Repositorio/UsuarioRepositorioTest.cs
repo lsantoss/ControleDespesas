@@ -1,28 +1,18 @@
-﻿using ControleDespesas.Dominio.Entidades;
-using ControleDespesas.Dominio.Enums;
-using ControleDespesas.Infra.Data.Repositorio;
-using ControleDespesas.Infra.Data.Settings;
+﻿using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Test.AppConfigurations.Factory;
-using ControleDespesas.Test.AppConfigurations.Settings;
-using LSCode.Validador.ValueObjects;
 using Microsoft.Extensions.Options;
-using Moq;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Repositorio
 {
     public class UsuarioRepositorioTest : DatabaseFactory
     {
-        private readonly SettingsTest _settingsTest;
-        private readonly Mock<IOptions<SettingsInfraData>> _mockOptions = new Mock<IOptions<SettingsInfraData>>();
         private readonly UsuarioRepositorio _repository;
 
         public UsuarioRepositorioTest()
         {
             CriarBaseDeDadosETabelas();
-            _settingsTest = new SettingsTest();
-            _mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
-            _repository = new UsuarioRepositorio(_mockOptions.Object);
+            _repository = new UsuarioRepositorio(Options.Create(MockSettingsInfraData));
         }
 
         [SetUp]
@@ -31,7 +21,7 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Salvar()
         {
-            var usuario = _settingsTest.Usuario1;
+            var usuario = MockSettingsTest.Usuario1;
             _repository.Salvar(usuario);
 
             var retorno = _repository.Obter(usuario.Id);
@@ -45,10 +35,10 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Atualizar()
         {
-            var usuario = _settingsTest.Usuario1;
+            var usuario = MockSettingsTest.Usuario1;
             _repository.Salvar(usuario);
 
-            usuario = _settingsTest.Usuario1Editado;
+            usuario = MockSettingsTest.Usuario1Editado;
             _repository.Atualizar(usuario);
 
             var retorno = _repository.Obter(usuario.Id);
@@ -62,9 +52,9 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Deletar()
         {
-            var usuario1 = _settingsTest.Usuario1;
-            var usuario2 = _settingsTest.Usuario2;
-            var usuario3 = _settingsTest.Usuario3;
+            var usuario1 = MockSettingsTest.Usuario1;
+            var usuario2 = MockSettingsTest.Usuario2;
+            var usuario3 = MockSettingsTest.Usuario3;
 
             _repository.Salvar(usuario1);
             _repository.Salvar(usuario2);
@@ -88,7 +78,7 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Obter()
         {
-            var usuario = _settingsTest.Usuario1;
+            var usuario = MockSettingsTest.Usuario1;
             _repository.Salvar(usuario);
 
             var retorno = _repository.Obter(usuario.Id);
@@ -102,9 +92,9 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Listar()
         {
-            var usuario1 = _settingsTest.Usuario1;
-            var usuario2 = _settingsTest.Usuario2;
-            var usuario3 = _settingsTest.Usuario3;
+            var usuario1 = MockSettingsTest.Usuario1;
+            var usuario2 = MockSettingsTest.Usuario2;
+            var usuario3 = MockSettingsTest.Usuario3;
 
             _repository.Salvar(usuario1);
             _repository.Salvar(usuario2);
@@ -131,7 +121,7 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Logar()
         {
-            var usuario = _settingsTest.Usuario1;
+            var usuario = MockSettingsTest.Usuario1;
             _repository.Salvar(usuario);
 
             var retorno = _repository.Logar(usuario.Login.ToString(), usuario.Senha.ToString());
@@ -145,7 +135,7 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void CheckLogin()
         {
-            var usuario = _settingsTest.Usuario1;
+            var usuario = MockSettingsTest.Usuario1;
             _repository.Salvar(usuario);
 
             var loginExistente = _repository.CheckLogin(usuario.Login.ToString());
@@ -158,7 +148,7 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void CheckId()
         {
-            var usuario = _settingsTest.Usuario1;
+            var usuario = MockSettingsTest.Usuario1;
             _repository.Salvar(usuario);
 
             var idExistente = _repository.CheckId(usuario.Id);
@@ -171,9 +161,9 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void LocalizarMaxId()
         {
-            var usuario1 = _settingsTest.Usuario1;
-            var usuario2 = _settingsTest.Usuario2;
-            var usuario3 = _settingsTest.Usuario3;
+            var usuario1 = MockSettingsTest.Usuario1;
+            var usuario2 = MockSettingsTest.Usuario2;
+            var usuario3 = MockSettingsTest.Usuario3;
 
             _repository.Salvar(usuario1);
             _repository.Salvar(usuario2);

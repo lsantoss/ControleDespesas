@@ -1,15 +1,15 @@
 ﻿using ControleDespesas.Dominio.Commands.Pagamento.Input;
-using ControleDespesas.Test.AppConfigurations.Settings;
+using ControleDespesas.Test.AppConfigurations.Factory;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Commands.Pagamento
 {
-    public class ObterPagamentoPorIdCommandTest
+    public class ObterPagamentoPorIdCommandTest : BaseTest
     {
         private ObterPagamentoPorIdCommand _command;
 
         [SetUp]
-        public void Setup() => _command = new SettingsTest().PagamentoObterPorIdCommand;
+        public void Setup() => _command = new ObterPagamentoPorIdCommandTest().MockSettingsTest.PagamentoObterPorIdCommand;
 
         [Test]
         public void ValidarCommand_Valido()

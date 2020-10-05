@@ -1,11 +1,8 @@
 ﻿using ControleDespesas.Dominio.Commands.Pagamento.Output;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Infra.Data.Repositorio;
-using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.Factory;
-using ControleDespesas.Test.AppConfigurations.Settings;
 using Microsoft.Extensions.Options;
-using Moq;
 using NUnit.Framework;
 using System;
 
@@ -13,8 +10,6 @@ namespace ControleDespesas.Test.Handlers
 {
     public class PagamentoHandlerTest : DatabaseFactory
     {
-        private readonly SettingsTest _settingsTest;
-        private readonly Mock<IOptions<SettingsInfraData>> _mockOptions = new Mock<IOptions<SettingsInfraData>>();
         private readonly TipoPagamentoRepositorio _repositoryTipoPagamento;
         private readonly EmpresaRepositorio _repositoryEmpresa;
         private readonly PessoaRepositorio _repositoryPessoa;
@@ -24,12 +19,11 @@ namespace ControleDespesas.Test.Handlers
         public PagamentoHandlerTest()
         {
             CriarBaseDeDadosETabelas();
-            _settingsTest = new SettingsTest();
-            _mockOptions.SetupGet(m => m.Value).Returns(_settingsInfraData);
-            _repositoryTipoPagamento = new TipoPagamentoRepositorio(_mockOptions.Object);
-            _repositoryEmpresa = new EmpresaRepositorio(_mockOptions.Object);
-            _repositoryPessoa = new PessoaRepositorio(_mockOptions.Object);
-            _repositoryPagamento = new PagamentoRepositorio(_mockOptions.Object);
+            var optionsInfraData = Options.Create(MockSettingsInfraData);
+            _repositoryTipoPagamento = new TipoPagamentoRepositorio(optionsInfraData);
+            _repositoryEmpresa = new EmpresaRepositorio(optionsInfraData);
+            _repositoryPessoa = new PessoaRepositorio(optionsInfraData);
+            _repositoryPagamento = new PagamentoRepositorio(optionsInfraData);
             _handler = new PagamentoHandler(_repositoryPagamento, _repositoryEmpresa, _repositoryPessoa, _repositoryTipoPagamento);
         }
 
@@ -39,11 +33,11 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AdicionarPagamento()
         {
-            var tipoPagamento = _settingsTest.Pagamento1.TipoPagamento;
-            var empresa = _settingsTest.Pagamento1.Empresa;
-            var pessoa = _settingsTest.Pagamento1.Pessoa;
+            var tipoPagamento = MockSettingsTest.Pagamento1.TipoPagamento;
+            var empresa = MockSettingsTest.Pagamento1.Empresa;
+            var pessoa = MockSettingsTest.Pagamento1.Pessoa;
 
-            var pagamentoCommand = _settingsTest.PagamentoAdicionarCommand;
+            var pagamentoCommand = MockSettingsTest.PagamentoAdicionarCommand;
 
             _repositoryTipoPagamento.Salvar(tipoPagamento);
             _repositoryEmpresa.Salvar(empresa);
@@ -68,12 +62,12 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AtualizarPagamento()
         {
-            var tipoPagamento = _settingsTest.Pagamento1.TipoPagamento;
-            var empresa = _settingsTest.Pagamento1.Empresa;
-            var pessoa = _settingsTest.Pagamento1.Pessoa;
-            var pagamento = _settingsTest.Pagamento1;
+            var tipoPagamento = MockSettingsTest.Pagamento1.TipoPagamento;
+            var empresa = MockSettingsTest.Pagamento1.Empresa;
+            var pessoa = MockSettingsTest.Pagamento1.Pessoa;
+            var pagamento = MockSettingsTest.Pagamento1;
 
-            var pagamentoCommand = _settingsTest.PagamentoAtualizarCommand;
+            var pagamentoCommand = MockSettingsTest.PagamentoAtualizarCommand;
 
             _repositoryTipoPagamento.Salvar(tipoPagamento);
             _repositoryEmpresa.Salvar(empresa);
@@ -99,12 +93,12 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_ApagarPagamento()
         {
-            var tipoPagamento = _settingsTest.Pagamento1.TipoPagamento;
-            var empresa = _settingsTest.Pagamento1.Empresa;
-            var pessoa = _settingsTest.Pagamento1.Pessoa;
-            var pagamento = _settingsTest.Pagamento1;
+            var tipoPagamento = MockSettingsTest.Pagamento1.TipoPagamento;
+            var empresa = MockSettingsTest.Pagamento1.Empresa;
+            var pessoa = MockSettingsTest.Pagamento1.Pessoa;
+            var pagamento = MockSettingsTest.Pagamento1;
 
-            var pagamentoCommand = _settingsTest.PagamentoApagarCommand;
+            var pagamentoCommand = MockSettingsTest.PagamentoApagarCommand;
 
             _repositoryTipoPagamento.Salvar(tipoPagamento);
             _repositoryEmpresa.Salvar(empresa);

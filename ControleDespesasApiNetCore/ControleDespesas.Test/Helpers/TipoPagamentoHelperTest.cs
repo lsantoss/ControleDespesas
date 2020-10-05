@@ -1,23 +1,18 @@
 ﻿using ControleDespesas.Dominio.Helpers;
 using ControleDespesas.Test.AppConfigurations.Factory;
-using ControleDespesas.Test.AppConfigurations.Settings;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Helpers
 {
     public class TipoPagamentoHelperTest : BaseTest
     {
-        private readonly SettingsTest _settingsTest;
-
-        public TipoPagamentoHelperTest() => _settingsTest = new SettingsTest();
-
         [SetUp]
         public void Setup() { }
 
         [Test]
         public void GerarEntidade_AdcionarTipoPagamentoCommand()
         {
-            var command = _settingsTest.TipoPagamentoAdicionarCommand;
+            var command = MockSettingsTest.TipoPagamentoAdicionarCommand;
 
             var entidade = TipoPagamentoHelper.GerarEntidade(command);
 
@@ -30,7 +25,7 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarEntidade_AtualizarTipoPagamentoCommand()
         {
-            var command = _settingsTest.TipoPagamentoAtualizarCommand;
+            var command = MockSettingsTest.TipoPagamentoAtualizarCommand;
 
             var entidade = TipoPagamentoHelper.GerarEntidade(command);
 
@@ -43,7 +38,7 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarDadosRetornoInsert()
         {
-            var entidade = _settingsTest.TipoPagamento1;
+            var entidade = MockSettingsTest.TipoPagamento1;
 
             var command = TipoPagamentoHelper.GerarDadosRetornoInsert(entidade);
 
@@ -54,7 +49,7 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarDadosRetornoUpdate()
         {
-            var entidade = _settingsTest.TipoPagamento1;
+            var entidade = MockSettingsTest.TipoPagamento1;
 
             var command = TipoPagamentoHelper.GerarDadosRetornoUpdate(entidade);
 
@@ -65,7 +60,7 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarDadosRetornoDelte()
         {
-            var entidade = _settingsTest.TipoPagamento1;
+            var entidade = MockSettingsTest.TipoPagamento1;
             var command = TipoPagamentoHelper.GerarDadosRetornoDelete(entidade.Id);
             Assert.AreEqual(entidade.Id, command.Id);
         }

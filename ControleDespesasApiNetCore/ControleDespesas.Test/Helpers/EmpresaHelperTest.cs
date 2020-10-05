@@ -6,8 +6,6 @@ namespace ControleDespesas.Test.Helpers
 {
     public class EmpresaHelperTest : BaseTest
     {
-        public EmpresaHelperTest() { }
-
         [SetUp]
         public void Setup() { }
 

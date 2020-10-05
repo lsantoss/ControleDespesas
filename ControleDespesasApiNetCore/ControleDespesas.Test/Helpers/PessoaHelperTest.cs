@@ -1,23 +1,18 @@
 ﻿using ControleDespesas.Dominio.Helpers;
 using ControleDespesas.Test.AppConfigurations.Factory;
-using ControleDespesas.Test.AppConfigurations.Settings;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Helpers
 {
     public class PessoaHelperTest : BaseTest
     {
-        private readonly SettingsTest _settingsTest;
-
-        public PessoaHelperTest() => _settingsTest = new SettingsTest();
-
         [SetUp]
         public void Setup() { }
 
         [Test]
         public void GerarEntidade_AdcionarPessoaCommand()
         {
-            var command = _settingsTest.PessoaAdicionarCommand;
+            var command = MockSettingsTest.PessoaAdicionarCommand;
 
             var entidade = PessoaHelper.GerarEntidade(command);
 
@@ -33,7 +28,7 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarEntidade_AtualizarPessoaCommand()
         {
-            var command = _settingsTest.PessoaAtualizarCommand;
+            var command = MockSettingsTest.PessoaAtualizarCommand;
 
             var entidade = PessoaHelper.GerarEntidade(command);
 
@@ -49,7 +44,7 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarDadosRetornoInsert()
         {
-            var entidade = _settingsTest.Pessoa1;
+            var entidade = MockSettingsTest.Pessoa1;
 
             var command = PessoaHelper.GerarDadosRetornoInsert(entidade);
 
@@ -61,7 +56,7 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarDadosRetornoUpdate()
         {
-            var entidade = _settingsTest.Pessoa1;
+            var entidade = MockSettingsTest.Pessoa1;
 
             var command = PessoaHelper.GerarDadosRetornoUpdate(entidade);
 
@@ -73,7 +68,7 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarDadosRetornoDelte()
         {
-            var entidade = _settingsTest.Pessoa1;
+            var entidade = MockSettingsTest.Pessoa1;
             var command = PessoaHelper.GerarDadosRetornoDelete(entidade.Id);
             Assert.AreEqual(entidade.Id, command.Id);
         }

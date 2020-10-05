@@ -1,23 +1,18 @@
 ﻿using ControleDespesas.Dominio.Helpers;
 using ControleDespesas.Test.AppConfigurations.Factory;
-using ControleDespesas.Test.AppConfigurations.Settings;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Helpers
 {
     public class UsuarioHelperTest : BaseTest
     {
-        private readonly SettingsTest _settingsTest;
-
-        public UsuarioHelperTest() => _settingsTest = new SettingsTest();
-
         [SetUp]
         public void Setup() { }
 
         [Test]
         public void GerarEntidade_AdcionarUsuarioCommand()
         {
-            var command = _settingsTest.UsuarioAdicionarCommand;
+            var command = MockSettingsTest.UsuarioAdicionarCommand;
 
             var entidade = UsuarioHelper.GerarEntidade(command);
 
@@ -36,7 +31,7 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarEntidade_AtualizarUsuarioCommand()
         {
-            var command = _settingsTest.UsuarioAtualizarCommand;
+            var command = MockSettingsTest.UsuarioAtualizarCommand;
 
             var entidade = UsuarioHelper.GerarEntidade(command);
 
@@ -55,7 +50,7 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarDadosRetornoInsert()
         {
-            var entidade = _settingsTest.Usuario1;
+            var entidade = MockSettingsTest.Usuario1;
 
             var command = UsuarioHelper.GerarDadosRetornoInsert(entidade);
 
@@ -68,7 +63,7 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarDadosRetornoUpdate()
         {
-            var entidade = _settingsTest.Usuario1;
+            var entidade = MockSettingsTest.Usuario1;
 
             var command = UsuarioHelper.GerarDadosRetornoUpdate(entidade);
 
@@ -81,7 +76,7 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarDadosRetornoDelte()
         {
-            var entidade = _settingsTest.Empresa1;
+            var entidade = MockSettingsTest.Empresa1;
             var command = UsuarioHelper.GerarDadosRetornoDelete(entidade.Id);
             Assert.AreEqual(entidade.Id, command.Id);
         }

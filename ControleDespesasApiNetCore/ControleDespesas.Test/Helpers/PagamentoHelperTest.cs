@@ -1,23 +1,18 @@
 ﻿using ControleDespesas.Dominio.Helpers;
 using ControleDespesas.Test.AppConfigurations.Factory;
-using ControleDespesas.Test.AppConfigurations.Settings;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Helpers
 {
     public class PagamentoHelperTest : BaseTest
     {
-        private readonly SettingsTest _settingsTest;
-
-        public PagamentoHelperTest() => _settingsTest = new SettingsTest();
-
         [SetUp]
         public void Setup() { }
 
         [Test]
         public void GerarEntidade_AdcionarPagamentoCommand()
         {
-            var command = _settingsTest.PagamentoAdicionarCommand;
+            var command = MockSettingsTest.PagamentoAdicionarCommand;
 
             var entidade = PagamentoHelper.GerarEntidade(command);
 
@@ -38,7 +33,7 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarEntidade_AtualizarPagamentoCommand()
         {
-            var command = _settingsTest.PagamentoAtualizarCommand;
+            var command = MockSettingsTest.PagamentoAtualizarCommand;
 
             var entidade = PagamentoHelper.GerarEntidade(command);
 
@@ -59,7 +54,7 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarDadosRetornoInsert()
         {
-            var entidade = _settingsTest.Pagamento1;
+            var entidade = MockSettingsTest.Pagamento1;
 
             var command = PagamentoHelper.GerarDadosRetornoInsert(entidade);
 
@@ -76,7 +71,7 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarDadosRetornoUpdate()
         {
-            var entidade = _settingsTest.Pagamento1;
+            var entidade = MockSettingsTest.Pagamento1;
 
             var command = PagamentoHelper.GerarDadosRetornoUpdate(entidade);
 
@@ -93,7 +88,7 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarDadosRetornoDelte()
         {
-            var entidade = _settingsTest.Pagamento1;
+            var entidade = MockSettingsTest.Pagamento1;
             var command = PagamentoHelper.GerarDadosRetornoDelete(entidade.Id);
             Assert.AreEqual(entidade.Id, command.Id);
         }

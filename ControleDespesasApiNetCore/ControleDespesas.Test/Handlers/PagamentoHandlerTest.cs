@@ -2,6 +2,7 @@
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Test.AppConfigurations.Factory;
+using ControleDespesas.Test.AppConfigurations.Util;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
 using System;
@@ -48,6 +49,8 @@ namespace ControleDespesas.Test.Handlers
 
             var retornoDados = (AdicionarPagamentoCommandOutput)retorno.Dados;
 
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retornoDados));
+
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Pagamento gravado com sucesso!", retorno.Mensagem);
             Assert.AreEqual(1, retornoDados.Id);
@@ -79,6 +82,8 @@ namespace ControleDespesas.Test.Handlers
 
             var retornoDados = (AtualizarPagamentoCommandOutput)retorno.Dados;
 
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retornoDados));
+
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Pagamento atualizado com sucesso!", retorno.Mensagem);
             Assert.AreEqual(pagamentoCommand.Id, retornoDados.Id);
@@ -109,6 +114,8 @@ namespace ControleDespesas.Test.Handlers
             var retorno = _handler.Handler(pagamentoCommand);
 
             var retornoDados = (ApagarPagamentoCommandOutput)retorno.Dados;
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retornoDados));
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Pagamento excluído com sucesso!", retorno.Mensagem);

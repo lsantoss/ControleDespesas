@@ -4,6 +4,7 @@ using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Query.Usuario;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Test.AppConfigurations.Factory;
+using ControleDespesas.Test.AppConfigurations.Util;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
@@ -35,6 +36,8 @@ namespace ControleDespesas.Test.Handlers
 
             var retornoDados = (AdicionarUsuarioCommandOutput)retorno.Dados;
 
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retornoDados));
+
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Usuário gravado com sucesso!", retorno.Mensagem);
             Assert.AreEqual(1, retornoDados.Id);
@@ -56,6 +59,8 @@ namespace ControleDespesas.Test.Handlers
 
             var retornoDados = (AtualizarUsuarioCommandOutput)retorno.Dados;
 
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retornoDados));
+
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Usuário atualizado com sucesso!", retorno.Mensagem);
             Assert.AreEqual(usuarioCommand.Id, retornoDados.Id);
@@ -73,7 +78,10 @@ namespace ControleDespesas.Test.Handlers
             var usuarioCommand = MockSettingsTest.UsuarioApagarCommand;
 
             var retorno = _handler.Handler(usuarioCommand);
+
             var retornoDados = (ApagarUsuarioCommandOutput)retorno.Dados;
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retornoDados));
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Usuário excluído com sucesso!", retorno.Mensagem);
@@ -92,6 +100,8 @@ namespace ControleDespesas.Test.Handlers
             var retorno = _handler.Handler(usuarioCommand);
 
             var retornoDados = (UsuarioQueryResult)retorno.Dados;
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retornoDados));
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Usuário logado com sucesso!", retorno.Mensagem);

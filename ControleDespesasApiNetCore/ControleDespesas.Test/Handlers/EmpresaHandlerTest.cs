@@ -2,6 +2,7 @@
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Test.AppConfigurations.Factory;
+using ControleDespesas.Test.AppConfigurations.Util;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
@@ -33,6 +34,8 @@ namespace ControleDespesas.Test.Handlers
 
             var retornoDados = (AdicionarEmpresaCommandOutput)retorno.Dados;
 
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retornoDados));
+
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Empresa gravada com sucesso!", retorno.Mensagem);
             Assert.AreEqual(1, retornoDados.Id);
@@ -52,6 +55,8 @@ namespace ControleDespesas.Test.Handlers
 
             var retornoDados = (AtualizarEmpresaCommandOutput)retorno.Dados;
 
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retornoDados));
+
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Empresa atualizada com sucesso!", retorno.Mensagem);
             Assert.AreEqual(empresaCommand.Id, retornoDados.Id);
@@ -70,6 +75,8 @@ namespace ControleDespesas.Test.Handlers
             var retorno = _handler.Handler(empresaCommand);
 
             var retornoDados = (ApagarEmpresaCommandOutput)retorno.Dados;
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retornoDados));
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Empresa excluída com sucesso!", retorno.Mensagem);

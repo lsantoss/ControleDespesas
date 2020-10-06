@@ -1,5 +1,6 @@
 ﻿using ControleDespesas.Dominio.Commands.Usuario.Input;
 using ControleDespesas.Test.AppConfigurations.Factory;
+using ControleDespesas.Test.AppConfigurations.Util;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Commands.Usuario
@@ -14,8 +15,9 @@ namespace ControleDespesas.Test.Commands.Usuario
         [Test]
         public void ValidarCommand_Valido()
         {
-            LoginUsuarioCommand command = _command;
-            bool resultado = command.ValidarCommand();
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_command));
+
+            bool resultado = _command.ValidarCommand();
             Assert.True(resultado);
         }
 
@@ -26,6 +28,9 @@ namespace ControleDespesas.Test.Commands.Usuario
         public void ValidarCommand_LoginInvalido(string login)
         {
             _command.Login = login;
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_command));
+
             Assert.False(_command.ValidarCommand());
             Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }
@@ -36,6 +41,9 @@ namespace ControleDespesas.Test.Commands.Usuario
         public void ValidarCommand_SenhaInvalido(string senha)
         {
             _command.Senha = senha;
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_command));
+
             Assert.False(_command.ValidarCommand());
             Assert.AreNotEqual(0, _command.Notificacoes.Count);
         }

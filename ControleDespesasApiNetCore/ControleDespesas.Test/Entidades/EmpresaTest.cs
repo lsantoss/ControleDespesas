@@ -1,5 +1,6 @@
 ﻿using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Test.AppConfigurations.Factory;
+using ControleDespesas.Test.AppConfigurations.Util;
 using LSCode.Validador.ValueObjects;
 using NUnit.Framework;
 
@@ -15,6 +16,8 @@ namespace ControleDespesas.Test.Entidades
         [Test]
         public void ValidarEntidade_Valida()
         {
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_empresa));
+
             Assert.True(_empresa.Valido);
             Assert.True(_empresa.Nome.Valido);
             Assert.AreEqual(0, _empresa.Notificacoes.Count);
@@ -25,6 +28,8 @@ namespace ControleDespesas.Test.Entidades
         public void ValidarEntidade_NomeInvalido()
         {
             _empresa.Nome = new Texto("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "Nome", 100);
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_empresa));
 
             Assert.False(_empresa.Nome.Valido);
             Assert.AreNotEqual(0, _empresa.Nome.Notificacoes.Count);

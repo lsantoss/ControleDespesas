@@ -1,5 +1,6 @@
 ﻿using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Test.AppConfigurations.Factory;
+using ControleDespesas.Test.AppConfigurations.Util;
 using LSCode.Validador.ValueObjects;
 using NUnit.Framework;
 
@@ -15,6 +16,8 @@ namespace ControleDespesas.Test.Entidades
         [Test]
         public void ValidarEntidade_Valida()
         {
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_usuario));
+
             Assert.True(_usuario.Valido);
             Assert.True(_usuario.Login.Valido);
             Assert.True(_usuario.Senha.Valido);
@@ -27,6 +30,8 @@ namespace ControleDespesas.Test.Entidades
         public void ValidarEntidade_LoginInvalido()
         {
             _usuario.Login = new Texto("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "Login", 50);
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_usuario));
 
             Assert.False(_usuario.Login.Valido);
             Assert.AreNotEqual(0, _usuario.Login.Notificacoes.Count);
@@ -43,6 +48,8 @@ namespace ControleDespesas.Test.Entidades
         {
             _usuario.Senha = new SenhaMedia(senha);
 
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_usuario));
+
             Assert.False(_usuario.Senha.Valido);
             Assert.AreNotEqual(0, _usuario.Senha.Notificacoes.Count);
         }
@@ -52,6 +59,8 @@ namespace ControleDespesas.Test.Entidades
         {
             _usuario.Login = new Texto("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "Login", 50);
             _usuario.Senha = new SenhaMedia("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_usuario));
 
             Assert.False(_usuario.Login.Valido);
             Assert.False(_usuario.Senha.Valido);

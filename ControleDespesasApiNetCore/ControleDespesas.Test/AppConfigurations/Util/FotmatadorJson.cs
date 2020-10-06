@@ -11,5 +11,12 @@ namespace ControleDespesas.Test.AppConfigurations.Util
             var retorno = JsonSerializer.Serialize(objeto, options);
             return retorno;
         }
+
+        public static string FormatarJsonDeSaida<TEntity>(TEntity objeto)
+        {
+            var options = new JsonSerializerOptions() { WriteIndented = true };
+            var retorno = JsonSerializer.Serialize(objeto, options);
+            return retorno;
+        }
     }
 }

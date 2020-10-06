@@ -1,5 +1,6 @@
 ﻿using ControleDespesas.Dominio.Helpers;
 using ControleDespesas.Test.AppConfigurations.Factory;
+using ControleDespesas.Test.AppConfigurations.Util;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Helpers
@@ -15,6 +16,8 @@ namespace ControleDespesas.Test.Helpers
             var command = MockSettingsTest.UsuarioAdicionarCommand;
 
             var entidade = UsuarioHelper.GerarEntidade(command);
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(entidade));
 
             Assert.AreEqual(0, entidade.Id);
             Assert.AreEqual(command.Login, entidade.Login.ToString());
@@ -35,6 +38,8 @@ namespace ControleDespesas.Test.Helpers
 
             var entidade = UsuarioHelper.GerarEntidade(command);
 
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(entidade));
+
             Assert.AreEqual(command.Id, entidade.Id);
             Assert.AreEqual(command.Login, entidade.Login.ToString());
             Assert.AreEqual(command.Senha, entidade.Senha.ToString());
@@ -54,6 +59,8 @@ namespace ControleDespesas.Test.Helpers
 
             var command = UsuarioHelper.GerarDadosRetornoInsert(entidade);
 
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(command));
+
             Assert.AreEqual(entidade.Id, command.Id);
             Assert.AreEqual(entidade.Login.ToString(), command.Login);
             Assert.AreEqual(entidade.Senha.ToString(), command.Senha);
@@ -67,6 +74,8 @@ namespace ControleDespesas.Test.Helpers
 
             var command = UsuarioHelper.GerarDadosRetornoUpdate(entidade);
 
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(command));
+
             Assert.AreEqual(entidade.Id, command.Id);
             Assert.AreEqual(entidade.Login.ToString(), command.Login);
             Assert.AreEqual(entidade.Senha.ToString(), command.Senha);
@@ -77,7 +86,11 @@ namespace ControleDespesas.Test.Helpers
         public void GerarDadosRetornoDelte()
         {
             var entidade = MockSettingsTest.Empresa1;
+
             var command = UsuarioHelper.GerarDadosRetornoDelete(entidade.Id);
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(command));
+
             Assert.AreEqual(entidade.Id, command.Id);
         }
 

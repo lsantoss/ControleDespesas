@@ -1,5 +1,6 @@
 ﻿using ControleDespesas.Dominio.Helpers;
 using ControleDespesas.Test.AppConfigurations.Factory;
+using ControleDespesas.Test.AppConfigurations.Util;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Helpers
@@ -16,6 +17,8 @@ namespace ControleDespesas.Test.Helpers
 
             var entidade = TipoPagamentoHelper.GerarEntidade(command);
 
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(entidade));
+
             Assert.AreEqual(0, entidade.Id);
             Assert.AreEqual(command.Descricao, entidade.Descricao.ToString());
             Assert.True(entidade.Valido);
@@ -28,6 +31,8 @@ namespace ControleDespesas.Test.Helpers
             var command = MockSettingsTest.TipoPagamentoAtualizarCommand;
 
             var entidade = TipoPagamentoHelper.GerarEntidade(command);
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(entidade));
 
             Assert.AreEqual(command.Id, entidade.Id);
             Assert.AreEqual(command.Descricao, entidade.Descricao.ToString());
@@ -42,6 +47,8 @@ namespace ControleDespesas.Test.Helpers
 
             var command = TipoPagamentoHelper.GerarDadosRetornoInsert(entidade);
 
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(command));
+
             Assert.AreEqual(entidade.Id, command.Id);
             Assert.AreEqual(entidade.Descricao.ToString(), command.Descricao);
         }
@@ -53,6 +60,8 @@ namespace ControleDespesas.Test.Helpers
 
             var command = TipoPagamentoHelper.GerarDadosRetornoUpdate(entidade);
 
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(command));
+
             Assert.AreEqual(entidade.Id, command.Id);
             Assert.AreEqual(entidade.Descricao.ToString(), command.Descricao);
         }
@@ -61,7 +70,11 @@ namespace ControleDespesas.Test.Helpers
         public void GerarDadosRetornoDelte()
         {
             var entidade = MockSettingsTest.TipoPagamento1;
+
             var command = TipoPagamentoHelper.GerarDadosRetornoDelete(entidade.Id);
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(command));
+
             Assert.AreEqual(entidade.Id, command.Id);
         }
 

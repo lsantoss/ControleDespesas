@@ -1,5 +1,6 @@
 ﻿using ControleDespesas.Dominio.Helpers;
 using ControleDespesas.Test.AppConfigurations.Factory;
+using ControleDespesas.Test.AppConfigurations.Util;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Helpers
@@ -15,6 +16,8 @@ namespace ControleDespesas.Test.Helpers
             var command = MockSettingsTest.PagamentoAdicionarCommand;
 
             var entidade = PagamentoHelper.GerarEntidade(command);
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(entidade));
 
             Assert.AreEqual(0, entidade.Id);
             Assert.AreEqual(command.IdTipoPagamento, entidade.TipoPagamento.Id);
@@ -37,6 +40,8 @@ namespace ControleDespesas.Test.Helpers
 
             var entidade = PagamentoHelper.GerarEntidade(command);
 
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(entidade));
+
             Assert.AreEqual(command.Id, entidade.Id);
             Assert.AreEqual(command.IdTipoPagamento, entidade.TipoPagamento.Id);
             Assert.AreEqual(command.IdEmpresa, entidade.Empresa.Id);
@@ -58,6 +63,8 @@ namespace ControleDespesas.Test.Helpers
 
             var command = PagamentoHelper.GerarDadosRetornoInsert(entidade);
 
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(command));
+
             Assert.AreEqual(entidade.Id, command.Id);
             Assert.AreEqual(entidade.TipoPagamento.Id, command.IdTipoPagamento);
             Assert.AreEqual(entidade.Empresa.Id, command.IdEmpresa);
@@ -75,6 +82,8 @@ namespace ControleDespesas.Test.Helpers
 
             var command = PagamentoHelper.GerarDadosRetornoUpdate(entidade);
 
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(command));
+
             Assert.AreEqual(entidade.Id, command.Id);
             Assert.AreEqual(entidade.TipoPagamento.Id, command.IdTipoPagamento);
             Assert.AreEqual(entidade.Empresa.Id, command.IdEmpresa);
@@ -89,7 +98,11 @@ namespace ControleDespesas.Test.Helpers
         public void GerarDadosRetornoDelte()
         {
             var entidade = MockSettingsTest.Pagamento1;
+
             var command = PagamentoHelper.GerarDadosRetornoDelete(entidade.Id);
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(command));
+
             Assert.AreEqual(entidade.Id, command.Id);
         }
 

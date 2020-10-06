@@ -15,7 +15,9 @@ namespace ControleDespesas.Test.Handlers
         public TipoPagamentoHandlerTest()
         {
             CriarBaseDeDadosETabelas();
-            _repository = new TipoPagamentoRepositorio(Options.Create(MockSettingsInfraData));
+            var optionsInfraData = Options.Create(MockSettingsInfraData);
+
+            _repository = new TipoPagamentoRepositorio(optionsInfraData);
             _handler = new TipoPagamentoHandler(_repository);
         }
 

@@ -12,7 +12,9 @@ namespace ControleDespesas.Test.Repositorio
         public TipoPagamentoRepositorioTest()
         {
             CriarBaseDeDadosETabelas();
-            _repository = new TipoPagamentoRepositorio(Options.Create(MockSettingsInfraData));
+            var optionsInfraData = Options.Create(MockSettingsInfraData);
+
+            _repository = new TipoPagamentoRepositorio(optionsInfraData);
         }
 
         [SetUp]

@@ -12,7 +12,9 @@ namespace ControleDespesas.Test.Repositorio
         public PessoaRepositorioTest()
         {
             CriarBaseDeDadosETabelas();
-            _repository = new PessoaRepositorio(Options.Create(MockSettingsInfraData));
+            var optionsInfraData = Options.Create(MockSettingsInfraData);
+
+            _repository = new PessoaRepositorio(optionsInfraData);
         }
 
         [SetUp]

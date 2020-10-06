@@ -20,6 +20,7 @@ namespace ControleDespesas.Test.Handlers
         {
             CriarBaseDeDadosETabelas();
             var optionsInfraData = Options.Create(MockSettingsInfraData);
+
             _repositoryTipoPagamento = new TipoPagamentoRepositorio(optionsInfraData);
             _repositoryEmpresa = new EmpresaRepositorio(optionsInfraData);
             _repositoryPessoa = new PessoaRepositorio(optionsInfraData);

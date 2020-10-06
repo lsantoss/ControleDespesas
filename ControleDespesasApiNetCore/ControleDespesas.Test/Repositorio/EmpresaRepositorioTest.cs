@@ -12,7 +12,9 @@ namespace ControleDespesas.Test.Repositorio
         public EmpresaRepositorioTest()
         {
             CriarBaseDeDadosETabelas();
-            _repository = new EmpresaRepositorio(Options.Create(MockSettingsInfraData));
+            var optionsInfraData = Options.Create(MockSettingsInfraData);
+
+             _repository = new EmpresaRepositorio(optionsInfraData);
         }
 
         [SetUp]

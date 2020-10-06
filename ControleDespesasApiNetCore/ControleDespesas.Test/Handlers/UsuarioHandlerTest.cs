@@ -17,7 +17,9 @@ namespace ControleDespesas.Test.Handlers
         public UsuarioHandlerTest()
         {
             CriarBaseDeDadosETabelas();
-            _repository = new UsuarioRepositorio(Options.Create(MockSettingsInfraData));
+            var optionsInfraData = Options.Create(MockSettingsInfraData);
+
+            _repository = new UsuarioRepositorio(optionsInfraData);
             _handler = new UsuarioHandler(_repository);
         }
 

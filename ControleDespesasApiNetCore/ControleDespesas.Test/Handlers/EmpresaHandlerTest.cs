@@ -15,7 +15,9 @@ namespace ControleDespesas.Test.Handlers
         public EmpresaHandlerTest()
         {
             CriarBaseDeDadosETabelas();
-            _repository = new EmpresaRepositorio(Options.Create(MockSettingsInfraData));
+            var optionsInfraData = Options.Create(MockSettingsInfraData);
+
+            _repository = new EmpresaRepositorio(optionsInfraData);
             _handler = new EmpresaHandler(_repository);
         }
 

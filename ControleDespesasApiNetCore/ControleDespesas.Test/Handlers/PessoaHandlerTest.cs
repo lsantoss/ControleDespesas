@@ -15,7 +15,9 @@ namespace ControleDespesas.Test.Handlers
         public PessoaHandlerTest()
         {
             CriarBaseDeDadosETabelas();
-            _repository = new PessoaRepositorio(Options.Create(MockSettingsInfraData));
+            var optionsInfraData = Options.Create(MockSettingsInfraData);
+
+            _repository = new PessoaRepositorio(optionsInfraData);
             _handler = new PessoaHandler(_repository);
         }
 

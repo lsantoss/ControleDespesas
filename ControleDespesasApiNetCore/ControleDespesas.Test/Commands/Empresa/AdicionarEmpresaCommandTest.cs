@@ -15,10 +15,13 @@ namespace ControleDespesas.Test.Commands.Empresa
         [Test]
         public void ValidarCommand_Valido()
         {
+            var valido = _command.ValidarCommand();
+            var notificacoes = _command.Notificacoes.Count;
+
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_command));
 
-            Assert.True(_command.ValidarCommand());
-            Assert.AreEqual(0, _command.Notificacoes.Count);
+            Assert.True(valido);
+            Assert.AreEqual(0, notificacoes);
         }
 
         [Test]
@@ -28,11 +31,13 @@ namespace ControleDespesas.Test.Commands.Empresa
         public void ValidarCommand_NomeInvalido(string nome)
         {
             _command.Nome = nome;
+            var valido = _command.ValidarCommand();
+            var notificacoes = _command.Notificacoes.Count;
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_command));
 
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
+            Assert.False(valido);
+            Assert.AreNotEqual(0, notificacoes);
         }
 
         [Test]
@@ -41,11 +46,13 @@ namespace ControleDespesas.Test.Commands.Empresa
         public void ValidarCommand_LogoInvalido(string logo)
         {
             _command.Logo = logo;
+            var valido = _command.ValidarCommand();
+            var notificacoes = _command.Notificacoes.Count;
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_command));
 
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
+            Assert.False(valido);
+            Assert.AreNotEqual(0, notificacoes);
         }
 
         [TearDown]

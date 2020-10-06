@@ -1,5 +1,6 @@
 ﻿using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Test.AppConfigurations.Factory;
+using ControleDespesas.Test.AppConfigurations.Util;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
@@ -28,6 +29,8 @@ namespace ControleDespesas.Test.Repositorio
 
             var retorno = _repository.Obter(usuario.Id);
 
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+
             Assert.AreEqual(usuario.Id, retorno.Id);
             Assert.AreEqual(usuario.Login.ToString(), retorno.Login);
             Assert.AreEqual(usuario.Senha.ToString(), retorno.Senha);
@@ -44,6 +47,8 @@ namespace ControleDespesas.Test.Repositorio
             _repository.Atualizar(usuario);
 
             var retorno = _repository.Obter(usuario.Id);
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 
             Assert.AreEqual(usuario.Id, retorno.Id);
             Assert.AreEqual(usuario.Login.ToString(), retorno.Login);
@@ -66,6 +71,8 @@ namespace ControleDespesas.Test.Repositorio
 
             var retorno = _repository.Listar();
 
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+
             Assert.AreEqual(usuario1.Id, retorno[0].Id);
             Assert.AreEqual(usuario1.Login.ToString(), retorno[0].Login);
             Assert.AreEqual(usuario1.Senha.ToString(), retorno[0].Senha);
@@ -85,6 +92,8 @@ namespace ControleDespesas.Test.Repositorio
 
             var retorno = _repository.Obter(usuario.Id);
 
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+
             Assert.AreEqual(usuario.Id, retorno.Id);
             Assert.AreEqual(usuario.Login.ToString(), retorno.Login);
             Assert.AreEqual(usuario.Senha.ToString(), retorno.Senha);
@@ -103,6 +112,8 @@ namespace ControleDespesas.Test.Repositorio
             _repository.Salvar(usuario3);
 
             var retorno = _repository.Listar();
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 
             Assert.AreEqual(usuario1.Id, retorno[0].Id);
             Assert.AreEqual(usuario1.Login.ToString(), retorno[0].Login);
@@ -128,6 +139,8 @@ namespace ControleDespesas.Test.Repositorio
 
             var retorno = _repository.Logar(usuario.Login.ToString(), usuario.Senha.ToString());
 
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+
             Assert.AreEqual(usuario.Id, retorno.Id);
             Assert.AreEqual(usuario.Login.ToString(), retorno.Login);
             Assert.AreEqual(usuario.Senha.ToString(), retorno.Senha);
@@ -143,6 +156,9 @@ namespace ControleDespesas.Test.Repositorio
             var loginExistente = _repository.CheckLogin(usuario.Login.ToString());
             var loginNaoExiste = _repository.CheckLogin("LoginErrado");
 
+            TestContext.WriteLine(loginExistente);
+            TestContext.WriteLine(loginNaoExiste);
+
             Assert.True(loginExistente);
             Assert.False(loginNaoExiste);
         }
@@ -155,6 +171,9 @@ namespace ControleDespesas.Test.Repositorio
 
             var idExistente = _repository.CheckId(usuario.Id);
             var idNaoExiste = _repository.CheckId(25);
+
+            TestContext.WriteLine(idExistente);
+            TestContext.WriteLine(idNaoExiste);
 
             Assert.True(idExistente);
             Assert.False(idNaoExiste);
@@ -172,6 +191,8 @@ namespace ControleDespesas.Test.Repositorio
             _repository.Salvar(usuario3);
 
             var maxId = _repository.LocalizarMaxId();
+
+            TestContext.WriteLine(maxId);
 
             Assert.AreEqual(usuario3.Id, maxId);
         }

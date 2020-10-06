@@ -1,5 +1,6 @@
 ﻿using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Test.AppConfigurations.Factory;
+using ControleDespesas.Test.AppConfigurations.Util;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
 using System;
@@ -39,6 +40,8 @@ namespace ControleDespesas.Test.Repositorio
 
             var retorno = _repositoryPagamento.Obter(pagamento.Id);
 
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+
             Assert.AreEqual(pagamento.Id, retorno.Id);
             Assert.AreEqual(pagamento.TipoPagamento.Id, retorno.TipoPagamento.Id);
             Assert.AreEqual(pagamento.Empresa.Id, retorno.Empresa.Id);
@@ -64,6 +67,8 @@ namespace ControleDespesas.Test.Repositorio
             _repositoryPagamento.Atualizar(pagamento);
 
             var retorno = _repositoryPagamento.Obter(pagamento.Id);
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 
             Assert.AreEqual(pagamento.Id, retorno.Id);
             Assert.AreEqual(pagamento.TipoPagamento.Id, retorno.TipoPagamento.Id);
@@ -95,6 +100,8 @@ namespace ControleDespesas.Test.Repositorio
 
             var retorno = _repositoryPagamento.Listar();
 
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+
             Assert.AreEqual(pagamento2.Id, retorno[0].Id);
             Assert.AreEqual(pagamento2.TipoPagamento.Id, retorno[0].TipoPagamento.Id);
             Assert.AreEqual(pagamento2.Empresa.Id, retorno[0].Empresa.Id);
@@ -116,6 +123,8 @@ namespace ControleDespesas.Test.Repositorio
             _repositoryPagamento.Salvar(pagamento);
 
             var retorno = _repositoryPagamento.Obter(pagamento.Id);
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 
             Assert.AreEqual(pagamento.Id, retorno.Id);
             Assert.AreEqual(pagamento.TipoPagamento.Id, retorno.TipoPagamento.Id);
@@ -144,6 +153,8 @@ namespace ControleDespesas.Test.Repositorio
             _repositoryPagamento.Salvar(pagamento2);
 
             var retorno = _repositoryPagamento.Listar();
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 
             Assert.AreEqual(pagamento1.Id, retorno[0].Id);
             Assert.AreEqual(pagamento1.TipoPagamento.Id, retorno[0].TipoPagamento.Id);
@@ -177,6 +188,9 @@ namespace ControleDespesas.Test.Repositorio
             var idExistente = _repositoryPagamento.CheckId(pagamento.Id);
             var idNaoExiste = _repositoryPagamento.CheckId(25);
 
+            TestContext.WriteLine(idExistente);
+            TestContext.WriteLine(idNaoExiste);
+
             Assert.True(idExistente);
             Assert.False(idNaoExiste);
         }
@@ -198,6 +212,8 @@ namespace ControleDespesas.Test.Repositorio
             _repositoryPagamento.Salvar(pagamento2);
 
             var maxId = _repositoryPagamento.LocalizarMaxId();
+
+            TestContext.WriteLine(maxId);
 
             Assert.AreEqual(pagamento2.Id, maxId);
         }

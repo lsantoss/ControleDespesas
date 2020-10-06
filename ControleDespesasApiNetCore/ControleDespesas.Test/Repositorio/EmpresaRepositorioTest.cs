@@ -1,5 +1,6 @@
 ﻿using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Test.AppConfigurations.Factory;
+using ControleDespesas.Test.AppConfigurations.Util;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
@@ -28,6 +29,8 @@ namespace ControleDespesas.Test.Repositorio
 
             var retorno = _repository.Obter(empresa.Id);
 
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+
             Assert.AreEqual(empresa.Id, retorno.Id);
             Assert.AreEqual(empresa.Nome.ToString(), retorno.Nome);
             Assert.AreEqual(empresa.Logo, retorno.Logo);
@@ -43,6 +46,8 @@ namespace ControleDespesas.Test.Repositorio
             _repository.Atualizar(empresa);
 
             var retorno = _repository.Obter(empresa.Id);
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 
             Assert.AreEqual(empresa.Id, retorno.Id);
             Assert.AreEqual(empresa.Nome.ToString(), retorno.Nome);
@@ -64,6 +69,8 @@ namespace ControleDespesas.Test.Repositorio
 
             var retorno = _repository.Listar();
 
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+
             Assert.AreEqual(empresa1.Id, retorno[0].Id);
             Assert.AreEqual(empresa1.Nome.ToString(), retorno[0].Nome);
             Assert.AreEqual(empresa1.Logo, retorno[0].Logo);
@@ -80,6 +87,8 @@ namespace ControleDespesas.Test.Repositorio
             _repository.Salvar(empresa);
 
             var retorno = _repository.Obter(empresa.Id);
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 
             Assert.AreEqual(empresa.Id, retorno.Id);
             Assert.AreEqual(empresa.Nome.ToString(), retorno.Nome);
@@ -98,6 +107,8 @@ namespace ControleDespesas.Test.Repositorio
             _repository.Salvar(empresa3);
 
             var retorno = _repository.Listar();
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 
             Assert.AreEqual(empresa1.Id, retorno[0].Id);
             Assert.AreEqual(empresa1.Nome.ToString(), retorno[0].Nome);
@@ -121,6 +132,9 @@ namespace ControleDespesas.Test.Repositorio
             var idExistente = _repository.CheckId(empresa.Id);
             var idNaoExiste = _repository.CheckId(25);
 
+            TestContext.WriteLine(idExistente);
+            TestContext.WriteLine(idNaoExiste);
+
             Assert.True(idExistente);
             Assert.False(idNaoExiste);
         }
@@ -137,6 +151,8 @@ namespace ControleDespesas.Test.Repositorio
             _repository.Salvar(empresa3);
 
             var maxId = _repository.LocalizarMaxId();
+
+            TestContext.WriteLine(maxId);
 
             Assert.AreEqual(empresa3.Id, maxId);
         }

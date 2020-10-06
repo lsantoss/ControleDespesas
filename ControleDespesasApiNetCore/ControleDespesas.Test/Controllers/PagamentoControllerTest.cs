@@ -10,12 +10,10 @@ using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
-using MongoDB.Bson;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 
 namespace ControleDespesas.Test.Controllers
 {
@@ -56,6 +54,9 @@ namespace ControleDespesas.Test.Controllers
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<string, Notificacao>>>(responseJson);
 
+            var outputTest = FotmatadorJson.FormatarJsonDeSaida<ApiTestResponse<ApiResponseModel<string, Notificacao>>>(responseJson);
+            TestContext.WriteLine(outputTest);
+
             Assert.AreEqual(200, responseObj.StatusCode);
 
             Assert.True(responseObj.Value.Sucesso);
@@ -85,6 +86,9 @@ namespace ControleDespesas.Test.Controllers
             var responseJson = JsonConvert.SerializeObject(response);
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<List<PagamentoQueryResult>, Notificacao>>>(responseJson);
+
+            var outputTest = FotmatadorJson.FormatarJsonDeSaida<ApiTestResponse<ApiResponseModel<List<PagamentoQueryResult>, Notificacao>>>(responseJson);
+            TestContext.WriteLine(outputTest);
 
             Assert.AreEqual(200, responseObj.StatusCode);
 
@@ -173,6 +177,9 @@ namespace ControleDespesas.Test.Controllers
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<AdicionarPagamentoCommandOutput, Notificacao>>>(responseJson);
 
+            var outputTest = FotmatadorJson.FormatarJsonDeSaida<ApiTestResponse<ApiResponseModel<AdicionarPagamentoCommandOutput, Notificacao>>>(responseJson);
+            TestContext.WriteLine(outputTest);
+
             Assert.AreEqual(200, responseObj.StatusCode);
 
             Assert.True(responseObj.Value.Sucesso);
@@ -207,6 +214,9 @@ namespace ControleDespesas.Test.Controllers
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<AtualizarPagamentoCommandOutput, Notificacao>>>(responseJson);
 
+            var outputTest = FotmatadorJson.FormatarJsonDeSaida<ApiTestResponse<ApiResponseModel<AtualizarPagamentoCommandOutput, Notificacao>>>(responseJson);
+            TestContext.WriteLine(outputTest);
+
             Assert.AreEqual(200, responseObj.StatusCode);
 
             Assert.True(responseObj.Value.Sucesso);
@@ -240,6 +250,9 @@ namespace ControleDespesas.Test.Controllers
             var responseJson = JsonConvert.SerializeObject(response);
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<ApagarPagamentoCommandOutput, Notificacao>>>(responseJson);
+
+            var outputTest = FotmatadorJson.FormatarJsonDeSaida<ApiTestResponse<ApiResponseModel<ApagarPagamentoCommandOutput, Notificacao>>>(responseJson);
+            TestContext.WriteLine(outputTest);
 
             Assert.AreEqual(200, responseObj.StatusCode);
 

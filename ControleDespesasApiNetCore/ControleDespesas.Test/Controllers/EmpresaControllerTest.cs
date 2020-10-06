@@ -5,6 +5,7 @@ using ControleDespesas.Dominio.Query.Empresa;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Test.AppConfigurations.Factory;
 using ControleDespesas.Test.AppConfigurations.Models;
+using ControleDespesas.Test.AppConfigurations.Util;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
 using Microsoft.AspNetCore.Http;
@@ -46,6 +47,9 @@ namespace ControleDespesas.Test.Controllers
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<string, Notificacao>>>(responseJson);
 
+            var outputTest = FotmatadorJson.FormatarJsonDeSaida<ApiTestResponse<ApiResponseModel<string, Notificacao>>>(responseJson);
+            TestContext.WriteLine(outputTest);
+
             Assert.AreEqual(200, responseObj.StatusCode);
 
             Assert.True(responseObj.Value.Sucesso);
@@ -70,6 +74,9 @@ namespace ControleDespesas.Test.Controllers
             var responseJson = JsonConvert.SerializeObject(response);
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<List<EmpresaQueryResult>, Notificacao>>>(responseJson);
+
+            var outputTest = FotmatadorJson.FormatarJsonDeSaida<ApiTestResponse<ApiResponseModel<List<EmpresaQueryResult>, Notificacao>>>(responseJson);
+            TestContext.WriteLine(outputTest);
 
             Assert.AreEqual(200, responseObj.StatusCode);
 
@@ -109,6 +116,9 @@ namespace ControleDespesas.Test.Controllers
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<EmpresaQueryResult, Notificacao>>>(responseJson);
 
+            var outputTest = FotmatadorJson.FormatarJsonDeSaida<ApiTestResponse<ApiResponseModel<EmpresaQueryResult, Notificacao>>>(responseJson);
+            TestContext.WriteLine(outputTest);
+
             Assert.AreEqual(200, responseObj.StatusCode);
 
             Assert.True(responseObj.Value.Sucesso);
@@ -130,6 +140,9 @@ namespace ControleDespesas.Test.Controllers
             var responseJson = JsonConvert.SerializeObject(response);
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<AdicionarEmpresaCommandOutput, Notificacao>>>(responseJson);
+
+            var outputTest = FotmatadorJson.FormatarJsonDeSaida<ApiTestResponse<ApiResponseModel<AdicionarEmpresaCommandOutput, Notificacao>>>(responseJson);
+            TestContext.WriteLine(outputTest);
 
             Assert.AreEqual(200, responseObj.StatusCode);
 
@@ -157,6 +170,9 @@ namespace ControleDespesas.Test.Controllers
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<AtualizarEmpresaCommandOutput, Notificacao>>>(responseJson);
 
+            var outputTest = FotmatadorJson.FormatarJsonDeSaida<ApiTestResponse<ApiResponseModel<AtualizarEmpresaCommandOutput, Notificacao>>>(responseJson);
+            TestContext.WriteLine(outputTest);
+
             Assert.AreEqual(200, responseObj.StatusCode);
 
             Assert.True(responseObj.Value.Sucesso);
@@ -182,6 +198,9 @@ namespace ControleDespesas.Test.Controllers
             var responseJson = JsonConvert.SerializeObject(response);
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<ApagarEmpresaCommandOutput, Notificacao>>>(responseJson);
+
+            var outputTest = FotmatadorJson.FormatarJsonDeSaida<ApiTestResponse<ApiResponseModel<ApagarEmpresaCommandOutput, Notificacao>>>(responseJson);
+            TestContext.WriteLine(outputTest);
 
             Assert.AreEqual(200, responseObj.StatusCode);
 

@@ -16,10 +16,13 @@ namespace ControleDespesas.Test.Commands.Usuario
         [Test]
         public void ValidarCommand_Valido()
         {
+            var valido = _command.ValidarCommand();
+            var notificacoes = _command.Notificacoes.Count;
+
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_command));
 
-            Assert.True(_command.ValidarCommand());
-            Assert.AreEqual(0, _command.Notificacoes.Count);
+            Assert.True(valido);
+            Assert.AreEqual(0, notificacoes);
         }
 
         [Test]
@@ -29,11 +32,13 @@ namespace ControleDespesas.Test.Commands.Usuario
         public void ValidarCommand_LoginInvalido(string login)
         {
             _command.Login = login;
+            var valido = _command.ValidarCommand();
+            var notificacoes = _command.Notificacoes.Count;
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_command));
 
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
+            Assert.False(valido);
+            Assert.AreNotEqual(0, notificacoes);
         }
         
         [Test]
@@ -46,11 +51,13 @@ namespace ControleDespesas.Test.Commands.Usuario
         public void ValidarCommand_SenhaInvalida(string senha)
         {
             _command.Senha = senha;
+            var valido = _command.ValidarCommand();
+            var notificacoes = _command.Notificacoes.Count;
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_command));
 
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
+            Assert.False(valido);
+            Assert.AreNotEqual(0, notificacoes);
         }
 
         [Test]
@@ -59,11 +66,13 @@ namespace ControleDespesas.Test.Commands.Usuario
         public void ValidarCommand_PrivilegioInvalido(int privilegio)
         {
             _command.Privilegio = (EPrivilegioUsuario)privilegio;
+            var valido = _command.ValidarCommand();
+            var notificacoes = _command.Notificacoes.Count;
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_command));
 
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
+            Assert.False(valido);
+            Assert.AreNotEqual(0, notificacoes);
         }
 
         [TearDown]

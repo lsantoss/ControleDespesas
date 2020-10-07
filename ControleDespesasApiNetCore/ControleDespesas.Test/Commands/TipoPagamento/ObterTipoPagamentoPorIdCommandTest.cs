@@ -15,10 +15,13 @@ namespace ControleDespesas.Test.Commands.TipoPagamento
         [Test]
         public void ValidarCommand_Valido()
         {
+            var valido = _command.ValidarCommand();
+            var notificacoes = _command.Notificacoes.Count;
+
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_command));
 
-            Assert.True(_command.ValidarCommand());
-            Assert.AreEqual(0, _command.Notificacoes.Count);
+            Assert.True(valido);
+            Assert.AreEqual(0, notificacoes);
         }
 
         [Test]
@@ -27,11 +30,13 @@ namespace ControleDespesas.Test.Commands.TipoPagamento
         public void ValidarCommand_IdInvalido(int id)
         {
             _command.Id = id;
+            var valido = _command.ValidarCommand();
+            var notificacoes = _command.Notificacoes.Count;
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_command));
 
-            Assert.False(_command.ValidarCommand());
-            Assert.AreNotEqual(0, _command.Notificacoes.Count);
+            Assert.False(valido);
+            Assert.AreNotEqual(0, notificacoes);
         }
 
         [TearDown]

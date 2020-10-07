@@ -5,6 +5,7 @@ using ControleDespesas.Dominio.Commands.TipoPagamento.Input;
 using ControleDespesas.Dominio.Commands.Usuario.Input;
 using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Enums;
+using ControleDespesas.Dominio.Query.Usuario;
 using LSCode.ConexoesBD.Enums;
 using LSCode.Validador.ValueObjects;
 using Microsoft.Extensions.Configuration;
@@ -99,6 +100,7 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
         public ApagarUsuarioCommand UsuarioApagarCommand { get; }
         public ObterUsuarioPorIdCommand UsuarioObterPorIdCommand { get; }
         public LoginUsuarioCommand UsuarioLoginCommand { get; }
+        public UsuarioQueryResult UsuarioQR { get; }
         public Usuario Usuario1 { get; }
         public Usuario Usuario2 { get; }
         public Usuario Usuario3 { get; }
@@ -429,6 +431,14 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
             {
                 Login = _configuration.GetValue<string>("SettingsTest:UsuarioLoginCommand:Login"),
                 Senha = _configuration.GetValue<string>("SettingsTest:UsuarioLoginCommand:Senha")
+            };
+
+            UsuarioQR = new UsuarioQueryResult()
+            {
+                Id = _configuration.GetValue<int>("SettingsTest:UsuarioQR:Id"),
+                Login = _configuration.GetValue<string>("SettingsTest:UsuarioQR:Login"),
+                Senha = _configuration.GetValue<string>("SettingsTest:UsuarioQR:Senha"),
+                Privilegio = _configuration.GetValue<EPrivilegioUsuario>("SettingsTest:UsuarioQR:Privilegio")
             };
 
             Usuario1 = new Usuario(

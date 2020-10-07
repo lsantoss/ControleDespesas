@@ -33,10 +33,6 @@
     <ProjectReference Include="..\ControleDespesas.Infra.Data\ControleDespesas.Infra.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Service\" />
-  </ItemGroup>
-
   <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
 
 </Project>

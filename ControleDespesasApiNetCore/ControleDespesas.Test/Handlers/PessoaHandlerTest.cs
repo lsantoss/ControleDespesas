@@ -1,14 +1,14 @@
 ﻿using ControleDespesas.Dominio.Commands.Pessoa.Output;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Infra.Data.Repositorio;
-using ControleDespesas.Test.AppConfigurations.Factory;
+using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Util;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Handlers
 {
-    public class PessoaHandlerTest : DatabaseFactory
+    public class PessoaHandlerTest : DatabaseTest
     {
         private readonly PessoaRepositorio _repository;
         private readonly PessoaHandler _handler;

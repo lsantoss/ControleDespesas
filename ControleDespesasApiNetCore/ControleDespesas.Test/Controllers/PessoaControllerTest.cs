@@ -3,7 +3,7 @@ using ControleDespesas.Dominio.Commands.Pessoa.Output;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Query.Pessoa;
 using ControleDespesas.Infra.Data.Repositorio;
-using ControleDespesas.Test.AppConfigurations.Factory;
+using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Models;
 using ControleDespesas.Test.AppConfigurations.Util;
 using LSCode.Facilitador.Api.Models.Results;
@@ -16,7 +16,7 @@ using System.Collections.Generic;
 
 namespace ControleDespesas.Test.Controllers
 {
-    public class PessoaControllerTest : DatabaseFactory
+    public class PessoaControllerTest : DatabaseTest
     {
         private readonly PessoaRepositorio _repository;
         private readonly PessoaHandler _handler;

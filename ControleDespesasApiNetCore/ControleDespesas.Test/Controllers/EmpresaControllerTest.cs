@@ -3,7 +3,7 @@ using ControleDespesas.Dominio.Commands.Empresa.Output;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Query.Empresa;
 using ControleDespesas.Infra.Data.Repositorio;
-using ControleDespesas.Test.AppConfigurations.Factory;
+using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Models;
 using ControleDespesas.Test.AppConfigurations.Util;
 using LSCode.Facilitador.Api.Models.Results;
@@ -16,7 +16,7 @@ using System.Collections.Generic;
 
 namespace ControleDespesas.Test.Controllers
 {
-    public class EmpresaControllerTest : DatabaseFactory
+    public class EmpresaControllerTest : DatabaseTest
     {
         private readonly EmpresaRepositorio _repository;
         private readonly EmpresaHandler _handler;

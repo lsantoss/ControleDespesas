@@ -1,12 +1,12 @@
 ﻿using ControleDespesas.Infra.Data.Repositorio;
-using ControleDespesas.Test.AppConfigurations.Factory;
+using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Util;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Repositorio
 {
-    public class PessoaRepositorioTest : DatabaseFactory
+    public class PessoaRepositorioTest : DatabaseTest
     {
         private readonly PessoaRepositorio _repository;
 

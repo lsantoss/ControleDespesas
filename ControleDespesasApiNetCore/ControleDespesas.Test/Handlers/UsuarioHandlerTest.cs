@@ -3,14 +3,14 @@ using ControleDespesas.Dominio.Enums;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Query.Usuario;
 using ControleDespesas.Infra.Data.Repositorio;
-using ControleDespesas.Test.AppConfigurations.Factory;
+using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Util;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Handlers
 {
-    class UsuarioHandlerTest : DatabaseFactory
+    class UsuarioHandlerTest : DatabaseTest
     {
         private readonly UsuarioRepositorio _repository;
         private readonly UsuarioHandler _handler;

@@ -1,5 +1,5 @@
 ﻿using ControleDespesas.Infra.Data.Repositorio;
-using ControleDespesas.Test.AppConfigurations.Factory;
+using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Util;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
@@ -7,7 +7,7 @@ using System;
 
 namespace ControleDespesas.Test.Repositorio
 {
-    public class PagamentoRepositorioTest : DatabaseFactory
+    public class PagamentoRepositorioTest : DatabaseTest
     {
         private readonly TipoPagamentoRepositorio _repositoryTipoPagamento;
         private readonly EmpresaRepositorio _repositoryEmpresa;

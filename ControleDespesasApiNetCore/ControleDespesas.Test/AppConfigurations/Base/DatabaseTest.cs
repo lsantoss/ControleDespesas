@@ -7,16 +7,16 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 
-namespace ControleDespesas.Test.AppConfigurations.Factory
+namespace ControleDespesas.Test.AppConfigurations.Base
 {
     [TestFixture]
-    public class DatabaseFactory : BaseTest
+    public class DatabaseTest : BaseTest
     {
         private string ConnectionReal { get; set; }
         private string ConnectionTest { get; set; }
         protected SettingsInfraData MockSettingsInfraData { get; }
 
-        public DatabaseFactory()
+        public DatabaseTest()
         {
             ConfigurarParamentrosConexaoBaseDeDados();
 

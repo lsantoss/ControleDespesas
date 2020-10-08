@@ -1,7 +1,7 @@
 ﻿using ControleDespesas.Dominio.Commands.Pagamento.Output;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Infra.Data.Repositorio;
-using ControleDespesas.Test.AppConfigurations.Factory;
+using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Util;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
@@ -9,7 +9,7 @@ using System;
 
 namespace ControleDespesas.Test.Handlers
 {
-    public class PagamentoHandlerTest : DatabaseFactory
+    public class PagamentoHandlerTest : DatabaseTest
     {
         private readonly TipoPagamentoRepositorio _repositoryTipoPagamento;
         private readonly EmpresaRepositorio _repositoryEmpresa;

@@ -1,5 +1,5 @@
 ﻿using ControleDespesas.Api.Services;
-using ControleDespesas.Test.AppConfigurations.Factory;
+using ControleDespesas.Test.AppConfigurations.Base;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
 

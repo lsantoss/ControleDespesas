@@ -1,5 +1,5 @@
 ﻿using ControleDespesas.Dominio.Commands.Empresa.Input;
-using ControleDespesas.Test.AppConfigurations.Factory;
+using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Util;
 using NUnit.Framework;
 

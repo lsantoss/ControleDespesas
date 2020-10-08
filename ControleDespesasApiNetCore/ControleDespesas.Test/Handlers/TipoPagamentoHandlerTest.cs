@@ -1,14 +1,14 @@
 ﻿using ControleDespesas.Dominio.Commands.TipoPagamento.Output;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Infra.Data.Repositorio;
-using ControleDespesas.Test.AppConfigurations.Factory;
+using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Util;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Handlers
 {
-    public class TipoPagamentoHandlerTest : DatabaseFactory
+    public class TipoPagamentoHandlerTest : DatabaseTest
     {
         private readonly TipoPagamentoRepositorio _repository;
         private readonly TipoPagamentoHandler _handler;

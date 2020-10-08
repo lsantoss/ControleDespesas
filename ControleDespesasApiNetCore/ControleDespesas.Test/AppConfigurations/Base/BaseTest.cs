@@ -2,7 +2,7 @@
 using ControleDespesas.Test.AppConfigurations.Settings;
 using NUnit.Framework;
 
-namespace ControleDespesas.Test.AppConfigurations.Factory
+namespace ControleDespesas.Test.AppConfigurations.Base
 {
     [TestFixture]
     public class BaseTest

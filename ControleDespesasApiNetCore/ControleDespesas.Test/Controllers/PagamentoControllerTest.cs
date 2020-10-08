@@ -3,7 +3,7 @@ using ControleDespesas.Dominio.Commands.Pagamento.Output;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Query.Pagamento;
 using ControleDespesas.Infra.Data.Repositorio;
-using ControleDespesas.Test.AppConfigurations.Factory;
+using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Models;
 using ControleDespesas.Test.AppConfigurations.Util;
 using LSCode.Facilitador.Api.Models.Results;
@@ -17,7 +17,7 @@ using System.Collections.Generic;
 
 namespace ControleDespesas.Test.Controllers
 {
-    public class PagamentoControllerTest : DatabaseFactory
+    public class PagamentoControllerTest : DatabaseTest
     {
         private readonly EmpresaRepositorio _repositoryEmpresa;
         private readonly PessoaRepositorio _repositoryPessoa;

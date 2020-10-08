@@ -1,14 +1,14 @@
 ﻿using ControleDespesas.Dominio.Commands.Empresa.Output;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Infra.Data.Repositorio;
-using ControleDespesas.Test.AppConfigurations.Factory;
+using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Util;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Handlers
 {
-    public class EmpresaHandlerTest : DatabaseFactory
+    public class EmpresaHandlerTest : DatabaseTest
     {
         private readonly EmpresaRepositorio _repository;
         private readonly EmpresaHandler _handler;

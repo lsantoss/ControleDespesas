@@ -88,6 +88,9 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
         public AtualizarPagamentoCommand PagamentoAtualizarCommand { get; }
         public ApagarPagamentoCommand PagamentoApagarCommand { get; }
         public ObterPagamentoPorIdCommand PagamentoObterPorIdCommand { get; }
+        public ObterPagamentoCalculoEstatisticaCommand PagamentoObterCalculoEstatisticaCommand { get; }
+        public ObterPagamentoCalculoEstatisticaAnoCommand PagamentoObterCalculoEstatisticaAnoCommand { get; }
+        public ObterPagamentoCalculoEstatisticaAnoMesCommand PagamentoObterCalculoEstatisticaAnoMesCommand { get; }
         public Pagamento Pagamento1 { get; }
         public Pagamento Pagamento2 { get; }
         public Pagamento Pagamento3 { get; }
@@ -305,6 +308,24 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
             PagamentoApagarCommand = new ApagarPagamentoCommand()
             {
                 Id = _configuration.GetValue<int>("SettingsTest:PagamentoApagarCommand:Id")
+            };
+
+            PagamentoObterCalculoEstatisticaCommand = new ObterPagamentoCalculoEstatisticaCommand()
+            {
+                IdPessoa = _configuration.GetValue<int>("SettingsTest:PagamentoObterCalculoEstatisticaCommand:IdPessoa")
+            };
+
+            PagamentoObterCalculoEstatisticaAnoCommand = new ObterPagamentoCalculoEstatisticaAnoCommand()
+            {
+                IdPessoa = _configuration.GetValue<int>("SettingsTest:PagamentoObterCalculoEstatisticaAnoCommand:IdPessoa"),
+                Ano = _configuration.GetValue<int>("SettingsTest:PagamentoObterCalculoEstatisticaAnoCommand:Ano")
+            };
+
+            PagamentoObterCalculoEstatisticaAnoMesCommand = new ObterPagamentoCalculoEstatisticaAnoMesCommand()
+            {
+                IdPessoa = _configuration.GetValue<int>("SettingsTest:PagamentoObterCalculoEstatisticaAnoMesCommand:IdPessoa"),
+                Ano = _configuration.GetValue<int>("SettingsTest:PagamentoObterCalculoEstatisticaAnoMesCommand:Ano"),
+                Mes = _configuration.GetValue<int>("SettingsTest:PagamentoObterCalculoEstatisticaAnoMesCommand:Mes")
             };
 
             PagamentoObterPorIdCommand = new ObterPagamentoPorIdCommand()

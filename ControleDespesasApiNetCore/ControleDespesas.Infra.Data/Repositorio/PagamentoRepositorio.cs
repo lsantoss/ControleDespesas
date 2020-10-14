@@ -135,6 +135,138 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
         }
 
+        public List<PagamentoQueryResult> ListarPagamentoConcluido(int idPessoa)
+        {
+            try
+            {
+                _parametros.Add("IdPessoa", idPessoa, DbType.Int32);
+
+                return _ctx.SQLServerConexao.Query<PagamentoQueryResult,
+                                                   TipoPagamentoQueryResult,
+                                                   EmpresaQueryResult,
+                                                   PessoaQueryResult,
+                                                   PagamentoQueryResult>(
+                    PagamentoQueries.ListarPagamentoConcluido,
+                    map: (pagamento, tipoPagamento, empresa, pessoa) =>
+                    {
+                        pagamento.TipoPagamento = tipoPagamento;
+                        pagamento.Empresa = empresa;
+                        pagamento.Pessoa = pessoa;
+                        return pagamento;
+                    },
+                    _parametros,
+                    splitOn: "Id, Id, Id, Id").Distinct().ToList();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public List<PagamentoQueryResult> ListarPagamentoPendente(int idPessoa)
+        {
+            try
+            {
+                _parametros.Add("IdPessoa", idPessoa, DbType.Int32);
+
+                return _ctx.SQLServerConexao.Query<PagamentoQueryResult,
+                                                   TipoPagamentoQueryResult,
+                                                   EmpresaQueryResult,
+                                                   PessoaQueryResult,
+                                                   PagamentoQueryResult>(
+                    PagamentoQueries.ListarPagamentoPendente,
+                    map: (pagamento, tipoPagamento, empresa, pessoa) =>
+                    {
+                        pagamento.TipoPagamento = tipoPagamento;
+                        pagamento.Empresa = empresa;
+                        pagamento.Pessoa = pessoa;
+                        return pagamento;
+                    },
+                    _parametros,
+                    splitOn: "Id, Id, Id, Id").Distinct().ToList();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public PagamentoCalculoEstatisticaQueryResult CalcularValorGastoTotal(int idPessoa)
+        {
+            try
+            {
+                _parametros.Add("IdPessoa", idPessoa, DbType.Int32);
+
+                return _ctx.SQLServerConexao.Query<PagamentoCalculoEstatisticaQueryResult>(PagamentoQueries.CalcularValorGastoTotal, _parametros).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public PagamentoCalculoEstatisticaQueryResult CalcularValorGastoAno(int idPessoa, int ano)
+        {
+            try
+            {
+                _parametros.Add("IdPessoa", idPessoa, DbType.Int32);
+                _parametros.Add("Ano", ano, DbType.Int32);
+
+                return _ctx.SQLServerConexao.Query<PagamentoCalculoEstatisticaQueryResult>(PagamentoQueries.CalcularValorGastoAno, _parametros).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public PagamentoCalculoEstatisticaQueryResult CalcularValorGastoAnoMes(int idPessoa, int ano, int mes)
+        {
+            try
+            {
+                _parametros.Add("IdPessoa", idPessoa, DbType.Int32);
+                _parametros.Add("Ano", ano, DbType.Int32);
+                _parametros.Add("Mes", mes, DbType.Int32);
+
+                return _ctx.SQLServerConexao.Query<PagamentoCalculoEstatisticaQueryResult>(PagamentoQueries.CalcularValorGastoAnoMes, _parametros).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public PagamentoCalculoEstatisticaQueryResult CalcularValorGastoMedioAno(int idPessoa, int ano)
+        {
+            try
+            {
+                _parametros.Add("IdPessoa", idPessoa, DbType.Int32);
+                _parametros.Add("Ano", ano, DbType.Int32);
+
+                return _ctx.SQLServerConexao.Query<PagamentoCalculoEstatisticaQueryResult>(PagamentoQueries.CalcularValorGastoMedioAno, _parametros).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public PagamentoCalculoEstatisticaQueryResult CalcularValorGastoMedioAnoMes(int idPessoa, int ano, int mes)
+        {
+            try
+            {
+                _parametros.Add("IdPessoa", idPessoa, DbType.Int32);
+                _parametros.Add("Ano", ano, DbType.Int32);
+                _parametros.Add("Mes", mes, DbType.Int32);
+
+                return _ctx.SQLServerConexao.Query<PagamentoCalculoEstatisticaQueryResult>(PagamentoQueries.CalcularValorGastoMedioAnoMes, _parametros).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
         public bool CheckId(int id)
         {
             try

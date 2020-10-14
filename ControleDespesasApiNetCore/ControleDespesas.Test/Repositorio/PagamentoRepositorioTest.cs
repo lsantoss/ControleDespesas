@@ -176,6 +176,253 @@ namespace ControleDespesas.Test.Repositorio
         }
 
         [Test]
+        public void ListarPagamentoConcluido()
+        {
+            var pagamento1 = MockSettingsTest.Pagamento1;
+            var pagamento2 = MockSettingsTest.Pagamento2;
+            var pagamento3 = MockSettingsTest.Pagamento3;
+
+            pagamento2.Pessoa = pagamento1.Pessoa;
+            pagamento3.Pessoa = pagamento1.Pessoa;
+
+            _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
+            _repositoryEmpresa.Salvar(pagamento1.Empresa);
+            _repositoryPessoa.Salvar(pagamento1.Pessoa);
+            _repositoryPagamento.Salvar(pagamento1);
+
+            _repositoryTipoPagamento.Salvar(pagamento2.TipoPagamento);
+            _repositoryEmpresa.Salvar(pagamento2.Empresa);
+            _repositoryPagamento.Salvar(pagamento2);
+
+            _repositoryTipoPagamento.Salvar(pagamento3.TipoPagamento);
+            _repositoryEmpresa.Salvar(pagamento3.Empresa);
+            _repositoryPagamento.Salvar(pagamento3);
+
+            var retorno = _repositoryPagamento.ListarPagamentoConcluido(pagamento1.Pessoa.Id);
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+
+            Assert.AreEqual(2, retorno.Count);
+
+            Assert.AreEqual(pagamento1.Id, retorno[0].Id);
+            Assert.AreEqual(pagamento1.TipoPagamento.Id, retorno[0].TipoPagamento.Id);
+            Assert.AreEqual(pagamento1.Empresa.Id, retorno[0].Empresa.Id);
+            Assert.AreEqual(pagamento1.Pessoa.Id, retorno[0].Pessoa.Id);
+            Assert.AreEqual(pagamento1.Descricao.ToString(), retorno[0].Descricao);
+            Assert.AreEqual(pagamento1.Valor, retorno[0].Valor);
+            Assert.AreEqual(pagamento1.DataVencimento.Date, retorno[0].DataVencimento.Date);
+            Assert.AreEqual(Convert.ToDateTime(pagamento1.DataPagamento).Date, Convert.ToDateTime(retorno[0].DataPagamento).Date);
+
+            Assert.AreEqual(pagamento2.Id, retorno[1].Id);
+            Assert.AreEqual(pagamento2.TipoPagamento.Id, retorno[1].TipoPagamento.Id);
+            Assert.AreEqual(pagamento2.Empresa.Id, retorno[1].Empresa.Id);
+            Assert.AreEqual(pagamento2.Pessoa.Id, retorno[1].Pessoa.Id);
+            Assert.AreEqual(pagamento2.Descricao.ToString(), retorno[1].Descricao);
+            Assert.AreEqual(pagamento2.Valor, retorno[1].Valor);
+            Assert.AreEqual(pagamento2.DataVencimento.Date, retorno[1].DataVencimento.Date);
+            Assert.AreEqual(Convert.ToDateTime(pagamento2.DataPagamento).Date, Convert.ToDateTime(retorno[1].DataPagamento).Date);
+        }
+
+        [Test]
+        public void ListarPagamentoPendente()
+        {
+            var pagamento1 = MockSettingsTest.Pagamento1;
+            var pagamento2 = MockSettingsTest.Pagamento2;
+            var pagamento3 = MockSettingsTest.Pagamento3;
+
+            pagamento2.Pessoa = pagamento1.Pessoa;
+            pagamento3.Pessoa = pagamento1.Pessoa;
+
+            _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
+            _repositoryEmpresa.Salvar(pagamento1.Empresa);
+            _repositoryPessoa.Salvar(pagamento1.Pessoa);
+            _repositoryPagamento.Salvar(pagamento1);
+
+            _repositoryTipoPagamento.Salvar(pagamento2.TipoPagamento);
+            _repositoryEmpresa.Salvar(pagamento2.Empresa);
+            _repositoryPagamento.Salvar(pagamento2);
+
+            _repositoryTipoPagamento.Salvar(pagamento3.TipoPagamento);
+            _repositoryEmpresa.Salvar(pagamento3.Empresa);
+            _repositoryPagamento.Salvar(pagamento3);
+
+            var retorno = _repositoryPagamento.ListarPagamentoPendente(pagamento1.Pessoa.Id);
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+
+            Assert.AreEqual(1, retorno.Count);
+
+            Assert.AreEqual(pagamento3.Id, retorno[0].Id);
+            Assert.AreEqual(pagamento3.TipoPagamento.Id, retorno[0].TipoPagamento.Id);
+            Assert.AreEqual(pagamento3.Empresa.Id, retorno[0].Empresa.Id);
+            Assert.AreEqual(pagamento3.Pessoa.Id, retorno[0].Pessoa.Id);
+            Assert.AreEqual(pagamento3.Descricao.ToString(), retorno[0].Descricao);
+            Assert.AreEqual(pagamento3.Valor, retorno[0].Valor);
+            Assert.AreEqual(pagamento3.DataVencimento.Date, retorno[0].DataVencimento.Date);
+            Assert.AreEqual(Convert.ToDateTime(pagamento3.DataPagamento).Date, Convert.ToDateTime(retorno[0].DataPagamento).Date);
+        }
+
+        [Test]
+        public void CalcularValorGastoTotal()
+        {
+            var pagamento1 = MockSettingsTest.Pagamento1;
+            var pagamento2 = MockSettingsTest.Pagamento2;
+            var pagamento3 = MockSettingsTest.Pagamento3;
+
+            pagamento2.Pessoa = pagamento1.Pessoa;
+            pagamento3.Pessoa = pagamento1.Pessoa;
+
+            var valorTotalEsperado = pagamento1.Valor + pagamento2.Valor + pagamento3.Valor;
+
+            _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
+            _repositoryEmpresa.Salvar(pagamento1.Empresa);
+            _repositoryPessoa.Salvar(pagamento1.Pessoa);
+            _repositoryPagamento.Salvar(pagamento1);
+
+            _repositoryTipoPagamento.Salvar(pagamento2.TipoPagamento);
+            _repositoryEmpresa.Salvar(pagamento2.Empresa);
+            _repositoryPagamento.Salvar(pagamento2);
+
+            _repositoryTipoPagamento.Salvar(pagamento3.TipoPagamento);
+            _repositoryEmpresa.Salvar(pagamento3.Empresa);
+            _repositoryPagamento.Salvar(pagamento3);
+
+            var retorno = _repositoryPagamento.CalcularValorGastoTotal(pagamento1.Pessoa.Id);
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+
+            Assert.AreEqual(valorTotalEsperado, retorno.Valor);
+        }
+
+        [Test]
+        public void CalcularValorGastoAno()
+        {
+            var pagamento1 = MockSettingsTest.Pagamento1;
+            var pagamento2 = MockSettingsTest.Pagamento2;
+            var pagamento3 = MockSettingsTest.Pagamento3;
+
+            pagamento2.Pessoa = pagamento1.Pessoa;
+            pagamento3.Pessoa = pagamento1.Pessoa;
+
+            var valorTotalEsperado = pagamento2.Valor + pagamento3.Valor;
+
+            _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
+            _repositoryEmpresa.Salvar(pagamento1.Empresa);
+            _repositoryPessoa.Salvar(pagamento1.Pessoa);
+            _repositoryPagamento.Salvar(pagamento1);
+
+            _repositoryTipoPagamento.Salvar(pagamento2.TipoPagamento);
+            _repositoryEmpresa.Salvar(pagamento2.Empresa);
+            _repositoryPagamento.Salvar(pagamento2);
+
+            _repositoryTipoPagamento.Salvar(pagamento3.TipoPagamento);
+            _repositoryEmpresa.Salvar(pagamento3.Empresa);
+            _repositoryPagamento.Salvar(pagamento3);
+
+            var retorno = _repositoryPagamento.CalcularValorGastoAno(pagamento1.Pessoa.Id, 2020);
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+
+            Assert.AreEqual(valorTotalEsperado, retorno.Valor);
+        }
+
+        [Test]
+        public void CalcularValorGastoAnoMes()
+        {
+            var pagamento1 = MockSettingsTest.Pagamento1;
+            var pagamento2 = MockSettingsTest.Pagamento2;
+            var pagamento3 = MockSettingsTest.Pagamento3;
+
+            pagamento2.Pessoa = pagamento1.Pessoa;
+            pagamento3.Pessoa = pagamento1.Pessoa;
+
+            var valorTotalEsperado = pagamento2.Valor + pagamento3.Valor;
+
+            _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
+            _repositoryEmpresa.Salvar(pagamento1.Empresa);
+            _repositoryPessoa.Salvar(pagamento1.Pessoa);
+            _repositoryPagamento.Salvar(pagamento1);
+
+            _repositoryTipoPagamento.Salvar(pagamento2.TipoPagamento);
+            _repositoryEmpresa.Salvar(pagamento2.Empresa);
+            _repositoryPagamento.Salvar(pagamento2);
+
+            _repositoryTipoPagamento.Salvar(pagamento3.TipoPagamento);
+            _repositoryEmpresa.Salvar(pagamento3.Empresa);
+            _repositoryPagamento.Salvar(pagamento3);
+
+            var retorno = _repositoryPagamento.CalcularValorGastoAnoMes(pagamento1.Pessoa.Id, 2020, 11);
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+
+            Assert.AreEqual(valorTotalEsperado, retorno.Valor);
+        }
+
+        [Test]
+        public void CalcularValorGastoMedioAno()
+        {
+            var pagamento1 = MockSettingsTest.Pagamento1;
+            var pagamento2 = MockSettingsTest.Pagamento2;
+            var pagamento3 = MockSettingsTest.Pagamento3;
+
+            pagamento2.Pessoa = pagamento1.Pessoa;
+            pagamento3.Pessoa = pagamento1.Pessoa;
+
+            var valorTotalEsperado = (pagamento2.Valor + pagamento3.Valor) / 2;
+
+            _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
+            _repositoryEmpresa.Salvar(pagamento1.Empresa);
+            _repositoryPessoa.Salvar(pagamento1.Pessoa);
+            _repositoryPagamento.Salvar(pagamento1);
+
+            _repositoryTipoPagamento.Salvar(pagamento2.TipoPagamento);
+            _repositoryEmpresa.Salvar(pagamento2.Empresa);
+            _repositoryPagamento.Salvar(pagamento2);
+
+            _repositoryTipoPagamento.Salvar(pagamento3.TipoPagamento);
+            _repositoryEmpresa.Salvar(pagamento3.Empresa);
+            _repositoryPagamento.Salvar(pagamento3);
+
+            var retorno = _repositoryPagamento.CalcularValorGastoMedioAno(pagamento1.Pessoa.Id, 2020);
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+
+            Assert.AreEqual(valorTotalEsperado, retorno.Valor);
+        }
+
+        [Test]
+        public void CalcularValorGastoMedioAnoMes()
+        {
+            var pagamento1 = MockSettingsTest.Pagamento1;
+            var pagamento2 = MockSettingsTest.Pagamento2;
+            var pagamento3 = MockSettingsTest.Pagamento3;
+
+            pagamento2.Pessoa = pagamento1.Pessoa;
+            pagamento3.Pessoa = pagamento1.Pessoa;
+
+            var valorTotalEsperado = (pagamento2.Valor + pagamento3.Valor) / 2;
+
+            _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
+            _repositoryEmpresa.Salvar(pagamento1.Empresa);
+            _repositoryPessoa.Salvar(pagamento1.Pessoa);
+            _repositoryPagamento.Salvar(pagamento1);
+
+            _repositoryTipoPagamento.Salvar(pagamento2.TipoPagamento);
+            _repositoryEmpresa.Salvar(pagamento2.Empresa);
+            _repositoryPagamento.Salvar(pagamento2);
+
+            _repositoryTipoPagamento.Salvar(pagamento3.TipoPagamento);
+            _repositoryEmpresa.Salvar(pagamento3.Empresa);
+            _repositoryPagamento.Salvar(pagamento3);
+
+            var retorno = _repositoryPagamento.CalcularValorGastoMedioAnoMes(pagamento1.Pessoa.Id, 2020, 11);
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+
+            Assert.AreEqual(valorTotalEsperado, retorno.Valor);
+        }
+
+        [Test]
         public void CheckId()
         {
             var pagamento = MockSettingsTest.Pagamento1;

@@ -10,7 +10,7 @@ namespace ControleDespesas.Test.Commands.Pagamento
         private ObterGastosAnoMesCommand _command;
 
         [SetUp]
-        public void Setup() => _command = new ObterPagamentoCalculoEstatisticaAnoMesCommandTest().MockSettingsTest.PagamentoObterCalculoEstatisticaAnoMesCommand;
+        public void Setup() => _command = new ObterPagamentoCalculoEstatisticaAnoMesCommandTest().MockSettingsTest.PagamentoObterGastosAnoMesCommand;
 
         [Test]
         public void ValidarCommand_Valido()

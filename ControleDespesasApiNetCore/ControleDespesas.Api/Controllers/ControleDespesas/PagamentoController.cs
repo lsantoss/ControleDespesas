@@ -148,7 +148,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<List<PagamentoQueryResult>, Notificacao>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<List<PagamentoQueryResult>, Notificacao>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<List<PagamentoQueryResult>, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<List<PagamentoQueryResult>, Notificacao>> ListarPagamentoConcluido([FromBody] ObterPagamentoPorIdPessoaCommand command)
+        public ActionResult<ApiResponse<List<PagamentoQueryResult>, Notificacao>> PagamentoConcluido([FromBody] ObterPagamentoPorIdPessoaCommand command)
         {
             try
             {
@@ -189,7 +189,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<List<PagamentoQueryResult>, Notificacao>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<List<PagamentoQueryResult>, Notificacao>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<List<PagamentoQueryResult>, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<List<PagamentoQueryResult>, Notificacao>> ListarPagamentoPendente([FromBody] ObterPagamentoPorIdPessoaCommand command)
+        public ActionResult<ApiResponse<List<PagamentoQueryResult>, Notificacao>> PagamentoPendente([FromBody] ObterPagamentoPorIdPessoaCommand command)
         {
             try
             {
@@ -230,7 +230,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<PagamentoGastosQueryResult, Notificacao>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<PagamentoGastosQueryResult, Notificacao>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<PagamentoGastosQueryResult, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<PagamentoGastosQueryResult, Notificacao>> Pagamento([FromBody] ObterGastosCommand command)
+        public ActionResult<ApiResponse<PagamentoGastosQueryResult, Notificacao>> ObterGastos([FromBody] ObterGastosCommand command)
         {
             try
             {

@@ -16,11 +16,9 @@ namespace ControleDespesas.Dominio.Repositorio
         List<PagamentoQueryResult> ListarPagamentoConcluido(int idPessoa);
         List<PagamentoQueryResult> ListarPagamentoPendente(int idPessoa);
 
-        PagamentoCalculoEstatisticaQueryResult CalcularValorGastoTotal(int idPessoa);
-        PagamentoCalculoEstatisticaQueryResult CalcularValorGastoAno(int idPessoa, int ano);
-        PagamentoCalculoEstatisticaQueryResult CalcularValorGastoAnoMes(int idPessoa, int ano, int mes);
-        PagamentoCalculoEstatisticaQueryResult CalcularValorGastoMedioAno(int idPessoa, int ano);
-        PagamentoCalculoEstatisticaQueryResult CalcularValorGastoMedioAnoMes(int idPessoa, int ano, int mes);
+        PagamentoGastosQueryResult CalcularValorGastoTotal(int idPessoa);
+        PagamentoGastosQueryResult CalcularValorGastoAno(int idPessoa, int ano);
+        PagamentoGastosQueryResult CalcularValorGastoAnoMes(int idPessoa, int ano, int mes);
 
         bool CheckId(int id);
         int LocalizarMaxId();

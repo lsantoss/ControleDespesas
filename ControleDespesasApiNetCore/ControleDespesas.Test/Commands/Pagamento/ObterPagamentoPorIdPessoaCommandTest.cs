@@ -5,12 +5,12 @@ using NUnit.Framework;
 
 namespace ControleDespesas.Test.Commands.Pagamento
 {
-    public class ObterPagamentoCalculoEstatisticaAnoCommandTest : BaseTest
+    public class ObterPagamentoPorIdPessoaCommandTest : BaseTest
     {
-        private ObterGastosAnoCommand _command;
+        private ObterPagamentoPorIdPessoaCommand _command;
 
         [SetUp]
-        public void Setup() => _command = new ObterPagamentoCalculoEstatisticaAnoCommandTest().MockSettingsTest.PagamentoObterCalculoEstatisticaAnoCommand;
+        public void Setup() => _command = new ObterPagamentoPorIdPessoaCommandTest().MockSettingsTest.PagamentoObterPorIdPessoaCommand;
 
         [Test]
         public void ValidarCommand_Valido()
@@ -30,21 +30,6 @@ namespace ControleDespesas.Test.Commands.Pagamento
         public void ValidarCommand_IdPessoaInvalido(int idPessoa)
         {
             _command.IdPessoa = idPessoa;
-            var valido = _command.ValidarCommand();
-            var notificacoes = _command.Notificacoes.Count;
-
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_command));
-
-            Assert.False(valido);
-            Assert.AreNotEqual(0, notificacoes);
-        }
-
-        [Test]
-        [TestCase(0)]
-        [TestCase(-1)]
-        public void ValidarCommand_AnoInvalido(int ano)
-        {
-            _command.Ano = ano;
             var valido = _command.ValidarCommand();
             var notificacoes = _command.Notificacoes.Count;
 

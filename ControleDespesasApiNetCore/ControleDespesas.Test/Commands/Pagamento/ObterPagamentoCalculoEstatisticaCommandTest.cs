@@ -7,7 +7,7 @@ namespace ControleDespesas.Test.Commands.Pagamento
 {
     public class ObterPagamentoCalculoEstatisticaCommandTest : BaseTest
     {
-        private ObterPagamentoCalculoEstatisticaCommand _command;
+        private ObterGastosCommand _command;
 
         [SetUp]
         public void Setup() => _command = new ObterPagamentoCalculoEstatisticaCommandTest().MockSettingsTest.PagamentoObterCalculoEstatisticaCommand;

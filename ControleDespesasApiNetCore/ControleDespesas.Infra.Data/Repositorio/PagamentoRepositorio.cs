@@ -191,13 +191,13 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
         }
 
-        public PagamentoCalculoEstatisticaQueryResult CalcularValorGastoTotal(int idPessoa)
+        public PagamentoGastosQueryResult CalcularValorGastoTotal(int idPessoa)
         {
             try
             {
                 _parametros.Add("IdPessoa", idPessoa, DbType.Int32);
 
-                return _ctx.SQLServerConexao.Query<PagamentoCalculoEstatisticaQueryResult>(PagamentoQueries.CalcularValorGastoTotal, _parametros).FirstOrDefault();
+                return _ctx.SQLServerConexao.Query<PagamentoGastosQueryResult>(PagamentoQueries.CalcularValorGastoTotal, _parametros).FirstOrDefault();
             }
             catch (Exception e)
             {
@@ -205,45 +205,14 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
         }
 
-        public PagamentoCalculoEstatisticaQueryResult CalcularValorGastoAno(int idPessoa, int ano)
-        {
-            try
-            {
-                _parametros.Add("IdPessoa", idPessoa, DbType.Int32);
-                _parametros.Add("Ano", ano, DbType.Int32);
-
-                return _ctx.SQLServerConexao.Query<PagamentoCalculoEstatisticaQueryResult>(PagamentoQueries.CalcularValorGastoAno, _parametros).FirstOrDefault();
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-        }
-
-        public PagamentoCalculoEstatisticaQueryResult CalcularValorGastoAnoMes(int idPessoa, int ano, int mes)
-        {
-            try
-            {
-                _parametros.Add("IdPessoa", idPessoa, DbType.Int32);
-                _parametros.Add("Ano", ano, DbType.Int32);
-                _parametros.Add("Mes", mes, DbType.Int32);
-
-                return _ctx.SQLServerConexao.Query<PagamentoCalculoEstatisticaQueryResult>(PagamentoQueries.CalcularValorGastoAnoMes, _parametros).FirstOrDefault();
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-        }
-
-        public PagamentoCalculoEstatisticaQueryResult CalcularValorGastoMedioAno(int idPessoa, int ano)
+        public PagamentoGastosQueryResult CalcularValorGastoAno(int idPessoa, int ano)
         {
             try
             {
                 _parametros.Add("IdPessoa", idPessoa, DbType.Int32);
                 _parametros.Add("Ano", ano, DbType.Int32);
 
-                return _ctx.SQLServerConexao.Query<PagamentoCalculoEstatisticaQueryResult>(PagamentoQueries.CalcularValorGastoMedioAno, _parametros).FirstOrDefault();
+                return _ctx.SQLServerConexao.Query<PagamentoGastosQueryResult>(PagamentoQueries.CalcularValorGastoAno, _parametros).FirstOrDefault();
             }
             catch (Exception e)
             {
@@ -251,7 +220,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
         }
 
-        public PagamentoCalculoEstatisticaQueryResult CalcularValorGastoMedioAnoMes(int idPessoa, int ano, int mes)
+        public PagamentoGastosQueryResult CalcularValorGastoAnoMes(int idPessoa, int ano, int mes)
         {
             try
             {
@@ -259,7 +228,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
                 _parametros.Add("Ano", ano, DbType.Int32);
                 _parametros.Add("Mes", mes, DbType.Int32);
 
-                return _ctx.SQLServerConexao.Query<PagamentoCalculoEstatisticaQueryResult>(PagamentoQueries.CalcularValorGastoMedioAnoMes, _parametros).FirstOrDefault();
+                return _ctx.SQLServerConexao.Query<PagamentoGastosQueryResult>(PagamentoQueries.CalcularValorGastoAnoMes, _parametros).FirstOrDefault();
             }
             catch (Exception e)
             {

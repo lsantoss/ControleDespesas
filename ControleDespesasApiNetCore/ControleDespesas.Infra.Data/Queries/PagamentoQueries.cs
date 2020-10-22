@@ -163,17 +163,6 @@
                                                                    AND YEAR(Pagamento.DataVencimento) = @Ano
                                                                    AND MONTH(Pagamento.DataVencimento) = @Mes";
 
-        public static string CalcularValorGastoMedioAno { get; } = @"SELECT AVG(Pagamento.Valor) As Valor 
-                                                                     FROM Pagamento
-                                                                     WHERE Pagamento.IdPessoa = @IdPessoa 
-                                                                     AND YEAR(Pagamento.DataVencimento) = @Ano";
-
-        public static string CalcularValorGastoMedioAnoMes { get; } = @"SELECT AVG(Pagamento.Valor) As Valor 
-                                                                        FROM Pagamento
-                                                                        WHERE Pagamento.IdPessoa = @IdPessoa 
-                                                                        AND YEAR(Pagamento.DataVencimento) = @Ano
-                                                                        AND MONTH(Pagamento.DataVencimento) = @Mes";
-
         public static string CheckId { get; } = @"SELECT Id FROM Pagamento WHERE Id = @Id";
 
         public static string LocalizarMaxId { get; } = @"SELECT MAX(Id) FROM Pagamento";

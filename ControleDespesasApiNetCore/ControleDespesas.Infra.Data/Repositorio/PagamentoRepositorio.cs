@@ -110,15 +110,17 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
         }
 
-        public List<PagamentoQueryResult> Listar()
+        public List<PagamentoQueryResult> Listar(int idPessoa)
         {
             try
             {
+                _parametros.Add("IdPessoa", idPessoa, DbType.Int32);
+
                 return _ctx.SQLServerConexao.Query<PagamentoQueryResult,
-                                               TipoPagamentoQueryResult,
-                                               EmpresaQueryResult,
-                                               PessoaQueryResult,
-                                               PagamentoQueryResult>(
+                                                   TipoPagamentoQueryResult,
+                                                   EmpresaQueryResult,
+                                                   PessoaQueryResult,
+                                                   PagamentoQueryResult>(
                     PagamentoQueries.Listar,
                     map: (pagamento, tipoPagamento, empresa, pessoa) =>
                     {
@@ -127,6 +129,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
                         pagamento.Pessoa = pessoa;
                         return pagamento;
                     },
+                    _parametros,
                     splitOn: "Id, Id, Id, Id").Distinct().ToList();
             }
             catch (Exception e)

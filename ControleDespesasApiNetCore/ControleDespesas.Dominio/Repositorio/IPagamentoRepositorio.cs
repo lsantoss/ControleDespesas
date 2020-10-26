@@ -11,7 +11,7 @@ namespace ControleDespesas.Dominio.Repositorio
         void Deletar(int id);
 
         PagamentoQueryResult Obter(int id);
-        List<PagamentoQueryResult> Listar();
+        List<PagamentoQueryResult> Listar(int idPessoa);
 
         List<PagamentoQueryResult> ListarPagamentoConcluido(int idPessoa);
         List<PagamentoQueryResult> ListarPagamentoPendente(int idPessoa);

@@ -93,12 +93,11 @@ namespace ControleDespesas.Test.Repositorio
 
             _repositoryTipoPagamento.Salvar(pagamento2.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento2.Empresa);
-            _repositoryPessoa.Salvar(pagamento2.Pessoa);
             _repositoryPagamento.Salvar(pagamento2);
 
             _repositoryPagamento.Deletar(pagamento1.Id);
 
-            var retorno = _repositoryPagamento.Listar();
+            var retorno = _repositoryPagamento.Listar(pagamento1.Pessoa.Id);
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 
@@ -141,6 +140,7 @@ namespace ControleDespesas.Test.Repositorio
         {
             var pagamento1 = MockSettingsTest.Pagamento1;
             var pagamento2 = MockSettingsTest.Pagamento2;
+            var pagamento3 = MockSettingsTest.Pagamento3;
 
             _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento1.Empresa);
@@ -149,10 +149,14 @@ namespace ControleDespesas.Test.Repositorio
 
             _repositoryTipoPagamento.Salvar(pagamento2.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento2.Empresa);
-            _repositoryPessoa.Salvar(pagamento2.Pessoa);
             _repositoryPagamento.Salvar(pagamento2);
 
-            var retorno = _repositoryPagamento.Listar();
+            _repositoryTipoPagamento.Salvar(pagamento3.TipoPagamento);
+            _repositoryEmpresa.Salvar(pagamento3.Empresa);
+            _repositoryPessoa.Salvar(pagamento3.Pessoa);
+            _repositoryPagamento.Salvar(pagamento3);
+
+            var retorno = _repositoryPagamento.Listar(pagamento1.Pessoa.Id);
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 
@@ -182,7 +186,6 @@ namespace ControleDespesas.Test.Repositorio
             var pagamento2 = MockSettingsTest.Pagamento2;
             var pagamento3 = MockSettingsTest.Pagamento3;
 
-            pagamento2.Pessoa = pagamento1.Pessoa;
             pagamento3.Pessoa = pagamento1.Pessoa;
 
             _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
@@ -230,7 +233,6 @@ namespace ControleDespesas.Test.Repositorio
             var pagamento2 = MockSettingsTest.Pagamento2;
             var pagamento3 = MockSettingsTest.Pagamento3;
 
-            pagamento2.Pessoa = pagamento1.Pessoa;
             pagamento3.Pessoa = pagamento1.Pessoa;
 
             _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
@@ -269,7 +271,6 @@ namespace ControleDespesas.Test.Repositorio
             var pagamento2 = MockSettingsTest.Pagamento2;
             var pagamento3 = MockSettingsTest.Pagamento3;
 
-            pagamento2.Pessoa = pagamento1.Pessoa;
             pagamento3.Pessoa = pagamento1.Pessoa;
 
             var valorTotalEsperado = pagamento1.Valor + pagamento2.Valor + pagamento3.Valor;
@@ -301,7 +302,6 @@ namespace ControleDespesas.Test.Repositorio
             var pagamento2 = MockSettingsTest.Pagamento2;
             var pagamento3 = MockSettingsTest.Pagamento3;
 
-            pagamento2.Pessoa = pagamento1.Pessoa;
             pagamento3.Pessoa = pagamento1.Pessoa;
 
             var valorTotalEsperado = pagamento2.Valor + pagamento3.Valor;
@@ -333,7 +333,6 @@ namespace ControleDespesas.Test.Repositorio
             var pagamento2 = MockSettingsTest.Pagamento2;
             var pagamento3 = MockSettingsTest.Pagamento3;
 
-            pagamento2.Pessoa = pagamento1.Pessoa;
             pagamento3.Pessoa = pagamento1.Pessoa;
 
             var valorTotalEsperado = pagamento2.Valor + pagamento3.Valor;
@@ -391,7 +390,6 @@ namespace ControleDespesas.Test.Repositorio
 
             _repositoryTipoPagamento.Salvar(pagamento2.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento2.Empresa);
-            _repositoryPessoa.Salvar(pagamento2.Pessoa);
             _repositoryPagamento.Salvar(pagamento2);
 
             var maxId = _repositoryPagamento.LocalizarMaxId();

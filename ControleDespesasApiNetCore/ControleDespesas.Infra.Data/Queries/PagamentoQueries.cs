@@ -85,6 +85,8 @@
                                                 INNER JOIN Empresa ON Pagamento.IdEmpresa = Empresa.Id 
                                                 INNER JOIN Pessoa ON Pagamento.IdPessoa = Pessoa.Id 
 
+                                                WHERE Pagamento.IdPessoa = @IdPessoa 
+
                                                 ORDER BY Pagamento.Id ASC";
         public static string ListarPagamentoConcluido { get; } = @"SELECT 
                                                                        Pagamento.Id AS Id,

@@ -1,5 +1,4 @@
 ﻿using ControleDespesas.Api.Controllers.ControleDespesas;
-using ControleDespesas.Dominio.Commands.Pagamento.Input;
 using ControleDespesas.Dominio.Commands.Pagamento.Output;
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Query.Pagamento;
@@ -70,6 +69,7 @@ namespace ControleDespesas.Test.Controllers
         {
             var pagamento1 = MockSettingsTest.Pagamento1;
             var pagamento2 = MockSettingsTest.Pagamento2;
+            var pagamento3 = MockSettingsTest.Pagamento3;
 
             _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento1.Empresa);
@@ -78,10 +78,16 @@ namespace ControleDespesas.Test.Controllers
 
             _repositoryTipoPagamento.Salvar(pagamento2.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento2.Empresa);
-            _repositoryPessoa.Salvar(pagamento2.Pessoa);
             _repositoryPagamento.Salvar(pagamento2);
 
-            var response = _controller.Pagamentos().Result;
+            _repositoryTipoPagamento.Salvar(pagamento3.TipoPagamento);
+            _repositoryEmpresa.Salvar(pagamento3.Empresa);
+            _repositoryPessoa.Salvar(pagamento3.Pessoa);
+            _repositoryPagamento.Salvar(pagamento3);
+
+            var command = MockSettingsTest.PagamentoObterPorIdPessoaCommand;
+
+            var response = _controller.Pagamentos(command).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -129,7 +135,6 @@ namespace ControleDespesas.Test.Controllers
 
             _repositoryTipoPagamento.Salvar(pagamento2.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento2.Empresa);
-            _repositoryPessoa.Salvar(pagamento2.Pessoa);
             _repositoryPagamento.Salvar(pagamento2);
 
             var response = _controller.Pagamento(command).Result;
@@ -163,7 +168,6 @@ namespace ControleDespesas.Test.Controllers
             var pagamento2 = MockSettingsTest.Pagamento2;
             var pagamento3 = MockSettingsTest.Pagamento3;
 
-            pagamento2.Pessoa = pagamento1.Pessoa;
             pagamento3.Pessoa = pagamento1.Pessoa;
 
             _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
@@ -195,6 +199,8 @@ namespace ControleDespesas.Test.Controllers
             Assert.AreEqual("Lista de pagamentos obtida com sucesso", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
 
+            Assert.AreEqual(2, responseObj.Value.Dados.Count);
+
             Assert.AreEqual(pagamento1.Id, responseObj.Value.Dados[0].Id);
             Assert.AreEqual(pagamento1.TipoPagamento.Id, responseObj.Value.Dados[0].TipoPagamento.Id);
             Assert.AreEqual(pagamento1.Empresa.Id, responseObj.Value.Dados[0].Empresa.Id);
@@ -221,7 +227,6 @@ namespace ControleDespesas.Test.Controllers
             var pagamento2 = MockSettingsTest.Pagamento2;
             var pagamento3 = MockSettingsTest.Pagamento3;
 
-            pagamento2.Pessoa = pagamento1.Pessoa;
             pagamento3.Pessoa = pagamento1.Pessoa;
 
             _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
@@ -253,6 +258,8 @@ namespace ControleDespesas.Test.Controllers
             Assert.AreEqual("Lista de pagamentos obtida com sucesso", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
 
+            Assert.AreEqual(1, responseObj.Value.Dados.Count);
+
             Assert.AreEqual(pagamento3.Id, responseObj.Value.Dados[0].Id);
             Assert.AreEqual(pagamento3.TipoPagamento.Id, responseObj.Value.Dados[0].TipoPagamento.Id);
             Assert.AreEqual(pagamento3.Empresa.Id, responseObj.Value.Dados[0].Empresa.Id);
@@ -270,7 +277,6 @@ namespace ControleDespesas.Test.Controllers
             var pagamento2 = MockSettingsTest.Pagamento2;
             var pagamento3 = MockSettingsTest.Pagamento3;
 
-            pagamento2.Pessoa = pagamento1.Pessoa;
             pagamento3.Pessoa = pagamento1.Pessoa;
 
             var valorTotalEsperado = pagamento1.Valor + pagamento2.Valor + pagamento3.Valor;
@@ -314,7 +320,6 @@ namespace ControleDespesas.Test.Controllers
             var pagamento2 = MockSettingsTest.Pagamento2;
             var pagamento3 = MockSettingsTest.Pagamento3;
 
-            pagamento2.Pessoa = pagamento1.Pessoa;
             pagamento3.Pessoa = pagamento1.Pessoa;
 
             var valorTotalEsperado = pagamento2.Valor + pagamento3.Valor;
@@ -358,7 +363,6 @@ namespace ControleDespesas.Test.Controllers
             var pagamento2 = MockSettingsTest.Pagamento2;
             var pagamento3 = MockSettingsTest.Pagamento3;
 
-            pagamento2.Pessoa = pagamento1.Pessoa;
             pagamento3.Pessoa = pagamento1.Pessoa;
 
             var valorTotalEsperado = pagamento2.Valor + pagamento3.Valor;

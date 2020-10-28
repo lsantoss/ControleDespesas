@@ -4,6 +4,7 @@
 ControleDespesasApiNetCore/.vs/
 ControleDespesasApiNetCore/ControleDespesas.Api/bin/
 ControleDespesasApiNetCore/ControleDespesas.Api/obj/
+ControleDespesasApiNetCore/ControleDespesas.Api/wwwroot/log
 ControleDespesasApiNetCore/ControleDespesas.Dominio/bin/
 ControleDespesasApiNetCore/ControleDespesas.Dominio/obj/
 ControleDespesasApiNetCore/ControleDespesas.Infra.Data/bin/

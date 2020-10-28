@@ -5,6 +5,7 @@ using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Repositorio;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Infra.Data.Settings;
+using ElmahCore;
 using ElmahCore.Mvc;
 using LSCode.ConexoesBD.DbContext;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -122,10 +123,11 @@ namespace ControleDespesas.Api
             #endregion
 
             #region Log Elmah
-            services.AddElmah(options => { 
-                options.Path = @"elmah";
-                //options.CheckPermissionAction = context => context.User.Identity.IsAuthenticated;
-            });
+            //Log em Memória
+            //services.AddElmah(options => { options.Path = @"elmah"; });
+
+            //Log salvando em XML
+            services.AddElmah<XmlFileErrorLog>(options => { options.LogPath = "~/log"; });
             #endregion
         }
 

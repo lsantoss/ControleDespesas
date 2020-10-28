@@ -5,6 +5,7 @@ using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Repositorio;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Infra.Data.Settings;
+using ElmahCore.Mvc;
 using LSCode.ConexoesBD.DbContext;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -119,6 +120,13 @@ namespace ControleDespesas.Api
                 };
             });
             #endregion
+
+            #region Log Elmah
+            services.AddElmah(options => { 
+                options.Path = @"elmah";
+                //options.CheckPermissionAction = context => context.User.Identity.IsAuthenticated;
+            });
+            #endregion
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -134,6 +142,7 @@ namespace ControleDespesas.Api
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();
+            app.UseElmah();
             app.UseMvc();
         }
     }

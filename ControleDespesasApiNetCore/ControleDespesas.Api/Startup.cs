@@ -123,11 +123,8 @@ namespace ControleDespesas.Api
             #endregion
 
             #region Log Elmah
-            //Log em Memória
-            //services.AddElmah(options => { options.Path = @"elmah"; });
-
-            //Log salvando em XML
-            services.AddElmah<XmlFileErrorLog>(options => { options.LogPath = "~/log"; });
+            //services.AddElmah(options => { options.Path = @"elmah"; }); //Log em Memória               
+            services.AddElmah<XmlFileErrorLog>(options => { options.LogPath = "~/log"; }); //Log salvando em XML
             #endregion
         }
 

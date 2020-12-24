@@ -5,8 +5,8 @@ using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Repositorio;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Infra.Data.Settings;
-using ElmahCore;
 using ElmahCore.Mvc;
+using ElmahCore.Sql;
 using LSCode.ConexoesBD.DataContexts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -123,8 +123,23 @@ namespace ControleDespesas.Api
             #endregion
 
             #region Log Elmah
-            //services.AddElmah(options => { options.Path = @"elmah"; }); //Log em Memória               
-            services.AddElmah<XmlFileErrorLog>(options => { options.LogPath = "~/log"; }); //Log salvando em XML
+            ////Log em Memória
+            //services.AddElmah(options => 
+            //{ 
+            //    options.Path = @"elmah"; 
+            //});
+
+            ////Log salvando em XML
+            //services.AddElmah<XmlFileErrorLog>(options =>
+            //{
+            //    options.LogPath = "~/log";
+            //});
+
+            //Log salvando no banco de dados
+            services.AddElmah<SqlErrorLog>(options =>
+            {
+                options.ConnectionString = Configuration["SettingsInfraData:ConnectionString"];
+            });
             #endregion
         }
 

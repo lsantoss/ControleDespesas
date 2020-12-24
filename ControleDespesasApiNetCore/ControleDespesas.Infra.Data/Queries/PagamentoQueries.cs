@@ -17,7 +17,9 @@
                                                     @Descricao,
                                                     @Valor, 
                                                     @DataPagamento, 
-                                                    @DataVencimento)";
+                                                    @DataVencimento); 
+
+                                                SELECT SCOPE_IDENTITY();";
 
         public static string Atualizar { get; } = @"UPDATE Pagamento SET
                                                         IdTipoPagamento = @IdTipoPagamento,

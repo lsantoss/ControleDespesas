@@ -50,9 +50,7 @@ namespace ControleDespesas.Dominio.Handlers
                 if (Invalido)
                     return new CommandResult<Notificacao>("Inconsistência(s) no(s) dado(s)", Notificacoes);
 
-                _repository.Salvar(pagamento);
-
-                pagamento.Id = _repository.LocalizarMaxId();
+                pagamento = _repository.Salvar(pagamento);
 
                 AdicionarPagamentoCommandOutput dadosRetorno = PagamentoHelper.GerarDadosRetornoInsert(pagamento);
 

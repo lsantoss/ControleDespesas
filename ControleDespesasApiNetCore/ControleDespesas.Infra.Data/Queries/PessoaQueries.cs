@@ -2,7 +2,7 @@
 {
     public static class PessoaQueries
     {
-        public static string Salvar { get; } = @"INSERT INTO Pessoa (Nome, ImagemPerfil) VALUES (@Nome, @ImagemPerfil)";
+        public static string Salvar { get; } = @"INSERT INTO Pessoa (Nome, ImagemPerfil) VALUES (@Nome, @ImagemPerfil); SELECT SCOPE_IDENTITY();";
 
         public static string Atualizar { get; } = @"UPDATE Pessoa SET Nome = @Nome, ImagemPerfil = @ImagemPerfil WHERE Id = @Id";
 

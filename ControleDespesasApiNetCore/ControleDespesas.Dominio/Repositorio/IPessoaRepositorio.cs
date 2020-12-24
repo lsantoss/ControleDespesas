@@ -6,7 +6,7 @@ namespace ControleDespesas.Dominio.Repositorio
 {
     public interface IPessoaRepositorio
     {
-        void Salvar(Pessoa pessoa);
+        Pessoa Salvar(Pessoa pessoa);
         void Atualizar(Pessoa pessoa);
         void Deletar(int id);
 

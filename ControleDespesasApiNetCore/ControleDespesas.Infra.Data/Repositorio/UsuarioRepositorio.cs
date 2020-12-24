@@ -24,7 +24,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             _ctx = new DataContext(EBancoDadosRelacional.SQLServer, options.Value.ConnectionString);
         }
 
-        public void Salvar(Usuario usuario)
+        public Usuario Salvar(Usuario usuario)
         {
             try
             {
@@ -32,7 +32,8 @@ namespace ControleDespesas.Infra.Data.Repositorio
                 _parametros.Add("Senha", usuario.Senha.ToString(), DbType.String);
                 _parametros.Add("Privilegio", usuario.Privilegio, DbType.Int16);
 
-                _ctx.SQLServerConexao.Execute(UsuarioQueries.Salvar, _parametros);
+                usuario.Id = _ctx.SQLServerConexao.ExecuteScalar<int>(UsuarioQueries.Salvar, _parametros);
+                return usuario;
             }
             catch (Exception e)
             {

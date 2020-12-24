@@ -32,9 +32,7 @@ namespace ControleDespesas.Dominio.Handlers
                 if (Invalido)
                     return new CommandResult<Notificacao>("Inconsistência(s) no(s) dado(s)", Notificacoes);
 
-                _repository.Salvar(pessoa);
-
-                pessoa.Id = _repository.LocalizarMaxId();
+                pessoa = _repository.Salvar(pessoa);
 
                 AdicionarPessoaCommandOutput dadosRetorno = PessoaHelper.GerarDadosRetornoInsert(pessoa);
 

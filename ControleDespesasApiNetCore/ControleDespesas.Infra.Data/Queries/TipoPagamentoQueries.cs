@@ -2,7 +2,7 @@
 {
     public static class TipoPagamentoQueries
     {
-        public static string Salvar { get; } = @"INSERT INTO TipoPagamento (Descricao) VALUES (@Descricao)";
+        public static string Salvar { get; } = @"INSERT INTO TipoPagamento (Descricao) VALUES (@Descricao); SELECT SCOPE_IDENTITY();";
 
         public static string Atualizar { get; } = @"UPDATE TipoPagamento SET Descricao = @Descricao WHERE Id = @Id";
 

@@ -5,6 +5,7 @@ using ControleDespesas.Dominio.Query.Pagamento;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Models;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
@@ -67,9 +68,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void Pagamentos()
         {
-            var pagamento1 = MockSettingsTest.Pagamento1;
-            var pagamento2 = MockSettingsTest.Pagamento2;
-            var pagamento3 = MockSettingsTest.Pagamento3;
+            var pagamento1 = new SettingsTest().Pagamento1;
+            var pagamento2 = new SettingsTest().Pagamento2;
+            var pagamento3 = new SettingsTest().Pagamento3;
 
             _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento1.Empresa);

@@ -27,7 +27,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             _ctx = new DataContext(EBancoDadosRelacional.SQLServer, options.Value.ConnectionString);
         }
 
-        public void Salvar(Pagamento pagamento)
+        public Pagamento Salvar(Pagamento pagamento)
         {
             try
             {
@@ -39,7 +39,8 @@ namespace ControleDespesas.Infra.Data.Repositorio
                 _parametros.Add("DataVencimento", pagamento.DataVencimento, DbType.Date);
                 _parametros.Add("DataPagamento", pagamento.DataPagamento, DbType.Date);
 
-                _ctx.SQLServerConexao.Execute(PagamentoQueries.Salvar, _parametros);
+                pagamento.Id = _ctx.SQLServerConexao.ExecuteScalar<int>(PagamentoQueries.Salvar, _parametros);
+                return pagamento;
             }
             catch (Exception e)
             {

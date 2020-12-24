@@ -24,14 +24,15 @@ namespace ControleDespesas.Infra.Data.Repositorio
             _ctx = new DataContext(EBancoDadosRelacional.SQLServer, options.Value.ConnectionString);
         }
 
-        public void Salvar(Pessoa pessoa)
+        public Pessoa Salvar(Pessoa pessoa)
         {
             try
             {
                 _parametros.Add("Nome", pessoa.Nome.ToString(), DbType.String);
                 _parametros.Add("ImagemPerfil", pessoa.ImagemPerfil, DbType.String);
 
-                _ctx.SQLServerConexao.Execute(PessoaQueries.Salvar, _parametros);
+                pessoa.Id = _ctx.SQLServerConexao.ExecuteScalar<int>(PessoaQueries.Salvar, _parametros);
+                return pessoa;
             }
             catch (Exception e)
             {

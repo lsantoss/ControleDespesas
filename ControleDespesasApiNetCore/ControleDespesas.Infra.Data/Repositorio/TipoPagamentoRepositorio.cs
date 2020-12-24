@@ -24,13 +24,14 @@ namespace ControleDespesas.Infra.Data.Repositorio
             _ctx = new DataContext(EBancoDadosRelacional.SQLServer, options.Value.ConnectionString);
         }
 
-        public void Salvar(TipoPagamento tipoPagamento)
+        public TipoPagamento Salvar(TipoPagamento tipoPagamento)
         {
             try
             {
                 _parametros.Add("Descricao", tipoPagamento.Descricao.ToString(), DbType.String);
 
-                _ctx.SQLServerConexao.Execute(TipoPagamentoQueries.Salvar, _parametros);
+                tipoPagamento.Id = _ctx.SQLServerConexao.ExecuteScalar<int>(TipoPagamentoQueries.Salvar, _parametros);
+                return tipoPagamento;
             }
             catch (Exception e)
             {

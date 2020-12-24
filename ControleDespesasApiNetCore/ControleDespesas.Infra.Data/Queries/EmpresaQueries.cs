@@ -2,7 +2,7 @@
 {
     public static class EmpresaQueries
     {
-        public static string Salvar { get; } = @"INSERT INTO Empresa (Nome, Logo) VALUES (@Nome, @Logo)";
+        public static string Salvar { get; } = @"INSERT INTO Empresa (Nome, Logo) VALUES (@Nome, @Logo); SELECT SCOPE_IDENTITY();";
 
         public static string Atualizar { get; } = @"UPDATE Empresa SET Nome = @Nome, Logo = @Logo WHERE Id = @Id";
 

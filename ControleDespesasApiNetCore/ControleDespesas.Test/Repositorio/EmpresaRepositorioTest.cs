@@ -65,7 +65,7 @@ namespace ControleDespesas.Test.Repositorio
             _repository.Salvar(empresa2);
             _repository.Salvar(empresa3);
 
-            _repository.Deletar(2);
+            _repository.Deletar(empresa2.Id);
 
             var retorno = _repository.Listar();
 

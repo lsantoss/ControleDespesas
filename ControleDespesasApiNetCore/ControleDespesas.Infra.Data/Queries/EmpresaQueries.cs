@@ -15,14 +15,12 @@
                                                 FROM Empresa 
                                                 WHERE Id = @Id";
 
-
         public static string Listar { get; } = @"SELECT 
                                                     Id AS Id, 
                                                     Nome AS Nome,
                                                     Logo AS Logo 
                                                 FROM Empresa 
                                                 ORDER BY Id ASC";
-
 
         public static string CheckId { get; } = @"SELECT Id FROM Empresa WHERE Id = @Id";
 

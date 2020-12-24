@@ -88,6 +88,7 @@
                                                 WHERE Pagamento.IdPessoa = @IdPessoa 
 
                                                 ORDER BY Pagamento.Id ASC";
+
         public static string ListarPagamentoConcluido { get; } = @"SELECT 
                                                                        Pagamento.Id AS Id,
                                                                        Pagamento.IdTipoPagamento AS IdTipoPagamento,

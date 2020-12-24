@@ -35,7 +35,6 @@
                                                 FROM Usuario 
                                                 ORDER BY Id ASC";
 
-
         public static string Logar { get; } = @"SELECT 
                                                     Id AS Id,  
                                                     Login AS Login,  

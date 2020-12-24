@@ -4,7 +4,7 @@ using ControleDespesas.Dominio.Repositorio;
 using ControleDespesas.Infra.Data.Queries;
 using ControleDespesas.Infra.Data.Settings;
 using Dapper;
-using LSCode.ConexoesBD.DbContext;
+using LSCode.ConexoesBD.DataContexts;
 using LSCode.ConexoesBD.Enums;
 using Microsoft.Extensions.Options;
 using System;
@@ -17,11 +17,11 @@ namespace ControleDespesas.Infra.Data.Repositorio
     public class PessoaRepositorio : IPessoaRepositorio
     {
         private readonly DynamicParameters _parametros = new DynamicParameters();
-        private readonly DbContext _ctx;
+        private readonly DataContext _ctx;
 
         public PessoaRepositorio(IOptions<SettingsInfraData> options)
         {
-            _ctx = new DbContext(EBancoDadosRelacional.SQLServer, options.Value.ConnectionString);
+            _ctx = new DataContext(EBancoDadosRelacional.SQLServer, options.Value.ConnectionString);
         }
 
         public void Salvar(Pessoa pessoa)

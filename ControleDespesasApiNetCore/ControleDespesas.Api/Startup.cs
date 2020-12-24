@@ -7,7 +7,7 @@ using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Infra.Data.Settings;
 using ElmahCore;
 using ElmahCore.Mvc;
-using LSCode.ConexoesBD.DbContext;
+using LSCode.ConexoesBD.DataContexts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,7 +37,7 @@ namespace ControleDespesas.Api
             #endregion
 
             #region DataContext
-            services.AddScoped<DbContext>();
+            services.AddScoped<DataContext>();
             #endregion
 
             #region Repositorios

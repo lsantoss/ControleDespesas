@@ -1,7 +1,7 @@
 ﻿using ControleDespesas.Infra.Data.Settings;
 using ControleDespesas.Test.AppConfigurations.QueriesSQL;
 using Dapper;
-using LSCode.ConexoesBD.DbContext;
+using LSCode.ConexoesBD.DataContexts;
 using LSCode.ConexoesBD.Enums;
 using NUnit.Framework;
 using System;
@@ -82,7 +82,7 @@ namespace ControleDespesas.Test.AppConfigurations.Base
         {
             try
             {
-                DbContext ctx = new DbContext(EBancoDadosRelacional.SQLServer, ConnectionReal);
+                DataContext ctx = new DataContext(EBancoDadosRelacional.SQLServer, ConnectionReal);
 
                 foreach (string sql in queries) 
                     ctx.SQLServerConexao.Execute(sql);

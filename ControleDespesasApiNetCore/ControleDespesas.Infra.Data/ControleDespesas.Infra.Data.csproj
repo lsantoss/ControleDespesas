@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.35" />
-    <PackageReference Include="LSCode.ConexoesBD" Version="1.5.0" />
+    <PackageReference Include="LSCode.ConexoesBD" Version="1.7.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="3.1.4" />
   </ItemGroup>
 

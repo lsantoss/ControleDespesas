@@ -14,6 +14,8 @@ namespace ControleDespesas.Dominio.Entidades
         public double Valor { get; set; }
         public DateTime DataVencimento { get; set; }
         public DateTime? DataPagamento { get; set; }
+        public string ArquivoPagamento { get; set; }
+        public string ArquivoComprovante { get; set; }
 
         public Pagamento(int id, 
                          TipoPagamento tipoPagamento, 
@@ -22,7 +24,9 @@ namespace ControleDespesas.Dominio.Entidades
                          Texto descricao, 
                          double valor, 
                          DateTime dataVencimento, 
-                         DateTime? dataPagamento)
+                         DateTime? dataPagamento,
+                         string arquivoPagamento,
+                         string arquivoComprovante)
         {
             Id = id;
             TipoPagamento = tipoPagamento;
@@ -32,6 +36,8 @@ namespace ControleDespesas.Dominio.Entidades
             Valor = valor;
             DataVencimento = dataVencimento;
             DataPagamento = dataPagamento;
+            ArquivoPagamento = arquivoPagamento;
+            ArquivoComprovante = arquivoComprovante;
         }
 
         public Pagamento(int id) => Id = id;

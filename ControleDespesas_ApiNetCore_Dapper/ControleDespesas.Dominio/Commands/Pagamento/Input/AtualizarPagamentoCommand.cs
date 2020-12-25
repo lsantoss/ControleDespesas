@@ -30,6 +30,10 @@ namespace ControleDespesas.Dominio.Commands.Pagamento.Input
 
         public DateTime? DataPagamento { get; set; }
 
+        public string ArquivoPagamento { get; set; }
+
+        public string ArquivoComprovante { get; set; }
+
         public bool ValidarCommand()
         {
             try

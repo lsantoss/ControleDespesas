@@ -28,6 +28,8 @@ namespace ControleDespesas.Test.Helpers
             Assert.AreEqual(command.Valor, entidade.Valor);
             Assert.AreEqual(command.DataVencimento, entidade.DataVencimento);
             Assert.AreEqual(command.DataPagamento, entidade.DataPagamento);
+            Assert.AreEqual(command.ArquivoPagamento, entidade.ArquivoPagamento);
+            Assert.AreEqual(command.ArquivoComprovante, entidade.ArquivoComprovante);
             Assert.True(entidade.Valido);
             Assert.True(entidade.Descricao.Valido);
             Assert.AreEqual(0, entidade.Notificacoes.Count);
@@ -51,6 +53,8 @@ namespace ControleDespesas.Test.Helpers
             Assert.AreEqual(command.Valor, entidade.Valor);
             Assert.AreEqual(command.DataVencimento, entidade.DataVencimento);
             Assert.AreEqual(command.DataPagamento, entidade.DataPagamento);
+            Assert.AreEqual(command.ArquivoPagamento, entidade.ArquivoPagamento);
+            Assert.AreEqual(command.ArquivoComprovante, entidade.ArquivoComprovante);
             Assert.True(entidade.Valido);
             Assert.True(entidade.Descricao.Valido);
             Assert.AreEqual(0, entidade.Notificacoes.Count);
@@ -74,6 +78,8 @@ namespace ControleDespesas.Test.Helpers
             Assert.AreEqual(entidade.Valor, command.Valor);
             Assert.AreEqual(entidade.DataVencimento, command.DataVencimento);
             Assert.AreEqual(entidade.DataPagamento, command.DataPagamento);
+            Assert.AreEqual(entidade.ArquivoPagamento, command.ArquivoPagamento);
+            Assert.AreEqual(entidade.ArquivoComprovante, command.ArquivoComprovante);
         }
 
         [Test]
@@ -93,6 +99,8 @@ namespace ControleDespesas.Test.Helpers
             Assert.AreEqual(entidade.Valor, command.Valor);
             Assert.AreEqual(entidade.DataVencimento, command.DataVencimento);
             Assert.AreEqual(entidade.DataPagamento, command.DataPagamento);
+            Assert.AreEqual(entidade.ArquivoPagamento, command.ArquivoPagamento);
+            Assert.AreEqual(entidade.ArquivoComprovante, command.ArquivoComprovante);
         }
 
         [Test]

@@ -12,5 +12,7 @@ namespace ControleDespesas.Dominio.Commands.Pagamento.Output
         public double Valor { get; set; }
         public DateTime DataVencimento { get; set; }
         public DateTime? DataPagamento { get; set; }
+        public string ArquivoPagamento { get; set; }
+        public string ArquivoComprovante { get; set; }
     }
 }

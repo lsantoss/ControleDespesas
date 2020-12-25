@@ -19,8 +19,10 @@ namespace ControleDespesas.Dominio.Helpers
                 double valor = command.Valor;
                 DateTime dataVencimento = command.DataVencimento;
                 DateTime? dataPagamento = command.DataPagamento;
+                string arquivoPagamento = command.ArquivoPagamento;
+                string arquivoComprovante = command.ArquivoComprovante;
 
-                Pagamento pagamento = new Pagamento(0, tipoPagamento, empresa, pessoa, descricao, valor, dataVencimento, dataPagamento);
+                Pagamento pagamento = new Pagamento(0, tipoPagamento, empresa, pessoa, descricao, valor, dataVencimento, dataPagamento, arquivoPagamento, arquivoComprovante);
                 return pagamento;
             }
             catch (Exception e)
@@ -41,8 +43,10 @@ namespace ControleDespesas.Dominio.Helpers
                 double valor = command.Valor;
                 DateTime dataVencimento = command.DataVencimento;
                 DateTime? dataPagamento = command.DataPagamento;
+                string arquivoPagamento = command.ArquivoPagamento;
+                string arquivoComprovante = command.ArquivoComprovante;
 
-                Pagamento pagamento = new Pagamento(id, tipoPagamento, empresa, pessoa, descricao, valor, dataVencimento, dataPagamento);
+                Pagamento pagamento = new Pagamento(id, tipoPagamento, empresa, pessoa, descricao, valor, dataVencimento, dataPagamento, arquivoPagamento, arquivoComprovante);
                 return pagamento;
             }
             catch (Exception e)
@@ -64,7 +68,9 @@ namespace ControleDespesas.Dominio.Helpers
                     Descricao = pagamento.Descricao.ToString(),
                     Valor = pagamento.Valor,
                     DataVencimento = pagamento.DataVencimento,
-                    DataPagamento = pagamento.DataPagamento
+                    DataPagamento = pagamento.DataPagamento,
+                    ArquivoPagamento = pagamento.ArquivoPagamento,
+                    ArquivoComprovante = pagamento.ArquivoComprovante
                 };
             }
             catch (Exception e)
@@ -86,7 +92,9 @@ namespace ControleDespesas.Dominio.Helpers
                     Descricao = pagamento.Descricao.ToString(),
                     Valor = pagamento.Valor,
                     DataVencimento = pagamento.DataVencimento,
-                    DataPagamento = pagamento.DataPagamento
+                    DataPagamento = pagamento.DataPagamento,
+                    ArquivoPagamento = pagamento.ArquivoPagamento,
+                    ArquivoComprovante = pagamento.ArquivoComprovante
                 };
             }
             catch (Exception e)

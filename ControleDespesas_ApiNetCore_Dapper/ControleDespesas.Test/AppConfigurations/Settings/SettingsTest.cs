@@ -303,7 +303,9 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                 Descricao = _configuration.GetValue<string>("SettingsTest:PagamentoAdicionarCommand:Descricao"),
                 Valor = _configuration.GetValue<double>("SettingsTest:PagamentoAdicionarCommand:Valor"),
                 DataVencimento = _configuration.GetValue<DateTime>("SettingsTest:PagamentoAdicionarCommand:DataVencimento"),
-                DataPagamento = _configuration.GetValue<DateTime?>("SettingsTest:PagamentoAdicionarCommand:DataPagamento")
+                DataPagamento = _configuration.GetValue<DateTime?>("SettingsTest:PagamentoAdicionarCommand:DataPagamento"),
+                ArquivoPagamento = _configuration.GetValue<string>("SettingsTest:PagamentoAdicionarCommand:ArquivoPagamento"),
+                ArquivoComprovante = _configuration.GetValue<string>("SettingsTest:PagamentoAdicionarCommand:ArquivoComprovante")
             };
 
             PagamentoAtualizarCommand = new AtualizarPagamentoCommand()
@@ -315,7 +317,9 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                 Descricao = _configuration.GetValue<string>("SettingsTest:PagamentoAtualizarCommand:Descricao"),
                 Valor = _configuration.GetValue<double>("SettingsTest:PagamentoAtualizarCommand:Valor"),
                 DataVencimento = _configuration.GetValue<DateTime>("SettingsTest:PagamentoAtualizarCommand:DataVencimento"),
-                DataPagamento = _configuration.GetValue<DateTime?>("SettingsTest:PagamentoAtualizarCommand:DataPagamento")
+                DataPagamento = _configuration.GetValue<DateTime?>("SettingsTest:PagamentoAtualizarCommand:DataPagamento"),
+                ArquivoPagamento = _configuration.GetValue<string>("SettingsTest:PagamentoAtualizarCommand:ArquivoPagamento"),
+                ArquivoComprovante = _configuration.GetValue<string>("SettingsTest:PagamentoAtualizarCommand:ArquivoComprovante")
             };
 
             PagamentoApagarCommand = new ApagarPagamentoCommand()
@@ -371,7 +375,9 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                 new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento1:Descricao"), "Descrição", 250),
                 _configuration.GetValue<double>("SettingsTest:Pagamento1:Valor"),
                 _configuration.GetValue<DateTime>("SettingsTest:Pagamento1:DataVencimento"),
-                _configuration.GetValue<DateTime?>("SettingsTest:Pagamento1:DataPagamento")
+                _configuration.GetValue<DateTime?>("SettingsTest:Pagamento1:DataPagamento"),
+                _configuration.GetValue<string>("SettingsTest:Pagamento1:ArquivoPagamento"),
+                _configuration.GetValue<string>("SettingsTest:Pagamento1:ArquivoComprovante")
             );
 
             Pagamento2 = new Pagamento(
@@ -394,7 +400,9 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                 new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento2:Descricao"), "Descrição", 250),
                 _configuration.GetValue<double>("SettingsTest:Pagamento2:Valor"),
                 _configuration.GetValue<DateTime>("SettingsTest:Pagamento2:DataVencimento"),
-                _configuration.GetValue<DateTime?>("SettingsTest:Pagamento2:DataPagamento")
+                _configuration.GetValue<DateTime?>("SettingsTest:Pagamento2:DataPagamento"),
+                _configuration.GetValue<string>("SettingsTest:Pagamento2:ArquivoPagamento"),
+                _configuration.GetValue<string>("SettingsTest:Pagamento2:ArquivoComprovante")
             );
 
             Pagamento3 = new Pagamento(
@@ -417,7 +425,9 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                 new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento3:Descricao"), "Descrição", 250),
                 _configuration.GetValue<double>("SettingsTest:Pagamento3:Valor"),
                 _configuration.GetValue<DateTime>("SettingsTest:Pagamento3:DataVencimento"),
-                _configuration.GetValue<DateTime?>("SettingsTest:Pagamento3:DataPagamento")
+                _configuration.GetValue<DateTime?>("SettingsTest:Pagamento3:DataPagamento"),
+                _configuration.GetValue<string>("SettingsTest:Pagamento3:ArquivoPagamento"),
+                _configuration.GetValue<string>("SettingsTest:Pagamento3:ArquivoComprovante")
             );
 
             Pagamento1Editado = new Pagamento(
@@ -440,7 +450,9 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                 new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento1Editado:Descricao"), "Descrição", 250),
                 _configuration.GetValue<double>("SettingsTest:Pagamento1Editado:Valor"),
                 _configuration.GetValue<DateTime>("SettingsTest:Pagamento1Editado:DataVencimento"),
-                _configuration.GetValue<DateTime?>("SettingsTest:Pagamento1Editado:DataPagamento")
+                _configuration.GetValue<DateTime?>("SettingsTest:Pagamento1Editado:DataPagamento"),
+                _configuration.GetValue<string>("SettingsTest:Pagamento1Editado:ArquivoPagamento"),
+                _configuration.GetValue<string>("SettingsTest:Pagamento1Editado:ArquivoComprovante")
             );
             #endregion
 

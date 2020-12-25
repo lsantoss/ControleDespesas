@@ -66,6 +66,8 @@ namespace ControleDespesas.Test.Handlers
             Assert.AreEqual(pagamentoCommand.Descricao, retornoDados.Descricao);
             Assert.AreEqual(pagamentoCommand.Valor, retornoDados.Valor);
             Assert.AreEqual(pagamentoCommand.DataVencimento.Date, retornoDados.DataVencimento.Date);
+            Assert.AreEqual(pagamentoCommand.ArquivoPagamento, retornoDados.ArquivoPagamento);
+            Assert.AreEqual(pagamentoCommand.ArquivoComprovante, retornoDados.ArquivoComprovante);
             Assert.AreEqual(Convert.ToDateTime(pagamentoCommand.DataPagamento).Date, Convert.ToDateTime(retornoDados.DataPagamento).Date);
         }
 
@@ -102,6 +104,8 @@ namespace ControleDespesas.Test.Handlers
             Assert.AreEqual(pagamentoCommand.Descricao, retornoDados.Descricao);
             Assert.AreEqual(pagamentoCommand.Valor, retornoDados.Valor);
             Assert.AreEqual(pagamentoCommand.DataVencimento.Date, retornoDados.DataVencimento.Date);
+            Assert.AreEqual(pagamentoCommand.ArquivoPagamento, retornoDados.ArquivoPagamento);
+            Assert.AreEqual(pagamentoCommand.ArquivoComprovante, retornoDados.ArquivoComprovante);
             Assert.AreEqual(Convert.ToDateTime(pagamentoCommand.DataPagamento).Date, Convert.ToDateTime(retornoDados.DataPagamento).Date);
         }
 

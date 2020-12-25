@@ -38,6 +38,8 @@ namespace ControleDespesas.Infra.Data.Repositorio
                 _parametros.Add("Valor", pagamento.Valor, DbType.Double);
                 _parametros.Add("DataVencimento", pagamento.DataVencimento, DbType.Date);
                 _parametros.Add("DataPagamento", pagamento.DataPagamento, DbType.Date);
+                _parametros.Add("ArquivoPagamento", pagamento.ArquivoPagamento, DbType.String);
+                _parametros.Add("ArquivoComprovante", pagamento.ArquivoComprovante, DbType.String);
 
                 pagamento.Id = _ctx.SQLServerConexao.ExecuteScalar<int>(PagamentoQueries.Salvar, _parametros);
                 return pagamento;
@@ -60,6 +62,8 @@ namespace ControleDespesas.Infra.Data.Repositorio
                 _parametros.Add("Valor", pagamento.Valor, DbType.Double);
                 _parametros.Add("DataVencimento", pagamento.DataVencimento, DbType.Date);
                 _parametros.Add("DataPagamento", pagamento.DataPagamento, DbType.Date);
+                _parametros.Add("ArquivoPagamento", pagamento.ArquivoPagamento, DbType.String);
+                _parametros.Add("ArquivoComprovante", pagamento.ArquivoComprovante, DbType.String);
 
                 _ctx.SQLServerConexao.Execute(PagamentoQueries.Atualizar, _parametros);
             }

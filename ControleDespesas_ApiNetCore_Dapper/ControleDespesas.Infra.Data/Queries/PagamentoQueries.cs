@@ -9,7 +9,9 @@
                                                     Descricao,
                                                     Valor, 
                                                     DataPagamento, 
-                                                    DataVencimento)
+                                                    DataVencimento,
+                                                    ArquivoPagamento,
+                                                    ArquivoComprovante)
                                                 VALUES(
                                                     @IdTipoPagamento, 
                                                     @IdEmpresa,
@@ -17,7 +19,9 @@
                                                     @Descricao,
                                                     @Valor, 
                                                     @DataPagamento, 
-                                                    @DataVencimento); 
+                                                    @DataVencimento,
+                                                    @ArquivoPagamento,
+                                                    @ArquivoComprovante); 
 
                                                 SELECT SCOPE_IDENTITY();";
 
@@ -28,7 +32,9 @@
                                                         Descricao = @Descricao,
                                                         Valor = @Valor,
                                                         DataPagamento = @DataPagamento,
-                                                        DataVencimento = @DataVencimento 
+                                                        DataVencimento = @DataVencimento,
+                                                        ArquivoPagamento = @ArquivoPagamento,
+                                                        ArquivoComprovante = @ArquivoComprovante  
                                                     WHERE Id = @Id";
 
         public static string Deletar { get; } = @"DELETE FROM Pagamento WHERE Id = @Id";

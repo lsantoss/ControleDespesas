@@ -460,6 +460,8 @@ namespace ControleDespesas.Test.Controllers
             Assert.AreEqual(command.Descricao.ToString(), responseObj.Value.Dados.Descricao);
             Assert.AreEqual(command.Valor, responseObj.Value.Dados.Valor);
             Assert.AreEqual(command.DataVencimento.Date, responseObj.Value.Dados.DataVencimento.Date);
+            Assert.AreEqual(command.ArquivoPagamento, responseObj.Value.Dados.ArquivoPagamento);
+            Assert.AreEqual(command.ArquivoComprovante, responseObj.Value.Dados.ArquivoComprovante);
             Assert.AreEqual(Convert.ToDateTime(command.DataPagamento).Date, Convert.ToDateTime(responseObj.Value.Dados.DataPagamento).Date);
         }
 
@@ -499,6 +501,8 @@ namespace ControleDespesas.Test.Controllers
             Assert.AreEqual(command.Descricao.ToString(), responseObj.Value.Dados.Descricao);
             Assert.AreEqual(command.Valor, responseObj.Value.Dados.Valor);
             Assert.AreEqual(command.DataVencimento.Date, responseObj.Value.Dados.DataVencimento.Date);
+            Assert.AreEqual(command.ArquivoPagamento, responseObj.Value.Dados.ArquivoPagamento);
+            Assert.AreEqual(command.ArquivoComprovante, responseObj.Value.Dados.ArquivoComprovante);
             Assert.AreEqual(Convert.ToDateTime(command.DataPagamento).Date, Convert.ToDateTime(responseObj.Value.Dados.DataPagamento).Date);
         }
 

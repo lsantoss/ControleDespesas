@@ -16,6 +16,8 @@ CREATE TABLE [dbo].[Pagamento](
 	[Valor] [money] NOT NULL,
 	[DataVencimento] [smalldatetime] NOT NULL,
 	[DataPagamento] [smalldatetime] NULL,
+	[ArquivoPagamento] [text] NULL,
+	[ArquivoComprovante] [text] NULL,
  CONSTRAINT [PK_Pagamento] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

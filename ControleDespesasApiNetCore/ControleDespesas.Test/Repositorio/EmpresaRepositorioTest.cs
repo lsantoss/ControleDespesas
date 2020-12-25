@@ -1,5 +1,6 @@
 ﻿using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Test.AppConfigurations.Base;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
@@ -24,7 +25,7 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Salvar()
         {
-            var empresa = MockSettingsTest.Empresa1;
+            var empresa = new SettingsTest().Empresa1;
             _repository.Salvar(empresa);
 
             var retorno = _repository.Obter(empresa.Id);
@@ -39,10 +40,10 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Atualizar()
         {
-            var empresa = MockSettingsTest.Empresa1;           
+            var empresa = new SettingsTest().Empresa1;           
             _repository.Salvar(empresa);
 
-            empresa = MockSettingsTest.Empresa1Editada;
+            empresa = new SettingsTest().Empresa1Editada;
             _repository.Atualizar(empresa);
 
             var retorno = _repository.Obter(empresa.Id);
@@ -57,9 +58,9 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Deletar()
         {
-            var empresa1 = MockSettingsTest.Empresa1;
-            var empresa2 = MockSettingsTest.Empresa2;
-            var empresa3 = MockSettingsTest.Empresa3;
+            var empresa1 = new SettingsTest().Empresa1;
+            var empresa2 = new SettingsTest().Empresa2;
+            var empresa3 = new SettingsTest().Empresa3;
 
             _repository.Salvar(empresa1);
             _repository.Salvar(empresa2);
@@ -83,7 +84,7 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Obter()
         {
-            var empresa = MockSettingsTest.Empresa1;
+            var empresa = new SettingsTest().Empresa1;
             _repository.Salvar(empresa);
 
             var retorno = _repository.Obter(empresa.Id);
@@ -98,9 +99,9 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Listar()
         {
-            var empresa1 = MockSettingsTest.Empresa1;
-            var empresa2 = MockSettingsTest.Empresa2;
-            var empresa3 = MockSettingsTest.Empresa3;
+            var empresa1 = new SettingsTest().Empresa1;
+            var empresa2 = new SettingsTest().Empresa2;
+            var empresa3 = new SettingsTest().Empresa3;
 
             _repository.Salvar(empresa1);
             _repository.Salvar(empresa2);
@@ -126,7 +127,7 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void CheckId()
         {
-            var empresa = MockSettingsTest.Empresa1;
+            var empresa = new SettingsTest().Empresa1;
             _repository.Salvar(empresa);
 
             var idExistente = _repository.CheckId(empresa.Id);
@@ -142,9 +143,9 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void LocalizarMaxId()
         {
-            var empresa1 = MockSettingsTest.Empresa1;
-            var empresa2 = MockSettingsTest.Empresa2;
-            var empresa3 = MockSettingsTest.Empresa3;
+            var empresa1 = new SettingsTest().Empresa1;
+            var empresa2 = new SettingsTest().Empresa2;
+            var empresa3 = new SettingsTest().Empresa3;
 
             _repository.Salvar(empresa1);
             _repository.Salvar(empresa2);

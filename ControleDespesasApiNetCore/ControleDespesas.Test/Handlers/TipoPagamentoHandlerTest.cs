@@ -2,6 +2,7 @@
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Test.AppConfigurations.Base;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
@@ -28,7 +29,7 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AdicionarTipoPagamento()
         {
-            var tipoPagamentoCommand = MockSettingsTest.TipoPagamentoAdicionarCommand;
+            var tipoPagamentoCommand = new SettingsTest().TipoPagamentoAdicionarCommand;
 
             var retorno = _handler.Handler(tipoPagamentoCommand);
 
@@ -45,9 +46,9 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AtualizarTipoPagamento()
         {
-            var tipoPagamento = MockSettingsTest.TipoPagamento1;
+            var tipoPagamento = new SettingsTest().TipoPagamento1;
 
-            var empresaCommand = MockSettingsTest.TipoPagamentoAtualizarCommand;
+            var empresaCommand = new SettingsTest().TipoPagamentoAtualizarCommand;
 
             _repository.Salvar(tipoPagamento);
 
@@ -66,9 +67,9 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_ApagarTipoPagamento()
         {
-            var tipoPagamento = MockSettingsTest.TipoPagamento1;
+            var tipoPagamento = new SettingsTest().TipoPagamento1;
 
-            var empresaCommand = MockSettingsTest.TipoPagamentoApagarCommand;
+            var empresaCommand = new SettingsTest().TipoPagamentoApagarCommand;
 
             _repository.Salvar(tipoPagamento);
 

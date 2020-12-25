@@ -1,5 +1,6 @@
 ﻿using ControleDespesas.Dominio.Commands.Pagamento.Input;
 using ControleDespesas.Test.AppConfigurations.Base;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
 using NUnit.Framework;
 
@@ -10,7 +11,7 @@ namespace ControleDespesas.Test.Commands.Pagamento
         private ObterGastosAnoMesCommand _command;
 
         [SetUp]
-        public void Setup() => _command = new ObterPagamentoCalculoEstatisticaAnoMesCommandTest().MockSettingsTest.PagamentoObterGastosAnoMesCommand;
+        public void Setup() => _command = new SettingsTest().PagamentoObterGastosAnoMesCommand;
 
         [Test]
         public void ValidarCommand_Valido()

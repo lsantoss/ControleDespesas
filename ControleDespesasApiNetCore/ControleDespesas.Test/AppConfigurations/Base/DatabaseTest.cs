@@ -107,19 +107,15 @@ namespace ControleDespesas.Test.AppConfigurations.Base
 
                         case EBancoDadosRelacional.MySQL:
                             throw new NotImplementedException("Queries MySQL ainda não foram criadas");
-                            break;
 
                         case EBancoDadosRelacional.SQLite:
                             throw new NotImplementedException("Queries SQLite ainda não foram criadas");
-                            break;
 
                         case EBancoDadosRelacional.PostgreSQL:
                             throw new NotImplementedException("Queries PostgreSQL ainda não foram criadas");
-                            break;
 
                         case EBancoDadosRelacional.Oracle:
                             throw new NotImplementedException("Queries Oracle ainda não foram criadas");
-                            break;
                     }
                 }
                 else if (MockSettingsTest.TipoBancoDeDdos.FullName == typeof(EBancoDadosNaoRelacional).FullName)
@@ -127,8 +123,7 @@ namespace ControleDespesas.Test.AppConfigurations.Base
                     switch (MockSettingsTest.BancoDeDadosNaoRelacional)
                     {
                         case EBancoDadosNaoRelacional.MongoDB:
-                            throw new NotImplementedException("Queries MongoDB ainda não foram criadas");
-                            break;
+                            throw new NotImplementedException("Collections no MongoDB ainda não foram criadas");
                     }
                 }
                 else
@@ -156,19 +151,15 @@ namespace ControleDespesas.Test.AppConfigurations.Base
 
                         case EBancoDadosRelacional.MySQL:
                             throw new NotImplementedException("Queries MySQL ainda não foram criadas");
-                            break;
 
                         case EBancoDadosRelacional.SQLite:
                             throw new NotImplementedException("Queries SQLite ainda não foram criadas");
-                            break;
 
                         case EBancoDadosRelacional.PostgreSQL:
                             throw new NotImplementedException("Queries PostgreSQL ainda não foram criadas");
-                            break;
 
                         case EBancoDadosRelacional.Oracle:
                             throw new NotImplementedException("Queries Oracle ainda não foram criadas");
-                            break;
                     }
                 }
                 else if (MockSettingsTest.TipoBancoDeDdos.FullName == typeof(EBancoDadosNaoRelacional).FullName)
@@ -176,8 +167,7 @@ namespace ControleDespesas.Test.AppConfigurations.Base
                     switch (MockSettingsTest.BancoDeDadosNaoRelacional)
                     {
                         case EBancoDadosNaoRelacional.MongoDB:
-                            throw new NotImplementedException("Queries MongoDB ainda não foram criadas");
-                            break;
+                            throw new NotImplementedException("Collections no MongoDB ainda não foram criadas");
                     }
                 }
                 else

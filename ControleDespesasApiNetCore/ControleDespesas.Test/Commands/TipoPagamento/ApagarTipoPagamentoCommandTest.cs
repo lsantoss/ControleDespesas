@@ -1,5 +1,6 @@
 ﻿using ControleDespesas.Dominio.Commands.TipoPagamento.Input;
 using ControleDespesas.Test.AppConfigurations.Base;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
 using NUnit.Framework;
 
@@ -10,7 +11,7 @@ namespace ControleDespesas.Test.Commands.TipoPagamento
         private ApagarTipoPagamentoCommand _command;
 
         [SetUp]
-        public void Setup() => _command = new ApagarTipoPagamentoCommandTest().MockSettingsTest.TipoPagamentoApagarCommand;
+        public void Setup() => _command = new SettingsTest().TipoPagamentoApagarCommand;
 
         [Test]
         public void ValidarCommand_Valido()

@@ -2,6 +2,7 @@
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Test.AppConfigurations.Base;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
@@ -28,7 +29,7 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AdicionarPessoa()
         {
-            var pessoaCommand = MockSettingsTest.PessoaAdicionarCommand;
+            var pessoaCommand = new SettingsTest().PessoaAdicionarCommand;
 
             var retorno = _handler.Handler(pessoaCommand);
 
@@ -46,9 +47,9 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AtualizarPessoa()
         {
-            var pessoa = MockSettingsTest.Pessoa1;
+            var pessoa = new SettingsTest().Pessoa1;
 
-            var pessoaCommand = MockSettingsTest.PessoaAtualizarCommand;
+            var pessoaCommand = new SettingsTest().PessoaAtualizarCommand;
 
             _repository.Salvar(pessoa);
 
@@ -68,9 +69,9 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_ApagarPessoa()
         {
-            var pessoa = MockSettingsTest.Pessoa1;
+            var pessoa = new SettingsTest().Pessoa1;
 
-            var pessoaCommand = MockSettingsTest.PessoaApagarCommand;
+            var pessoaCommand = new SettingsTest().PessoaApagarCommand;
 
             _repository.Salvar(pessoa);
 

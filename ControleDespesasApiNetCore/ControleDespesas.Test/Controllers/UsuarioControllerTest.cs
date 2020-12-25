@@ -6,6 +6,7 @@ using ControleDespesas.Dominio.Query.Usuario;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Models;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
@@ -62,9 +63,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void Usuarios()
         {
-            var usuario1 = MockSettingsTest.Usuario1;
-            var usuario2 = MockSettingsTest.Usuario2;
-            var usuario3 = MockSettingsTest.Usuario3;
+            var usuario1 = new SettingsTest().Usuario1;
+            var usuario2 = new SettingsTest().Usuario2;
+            var usuario3 = new SettingsTest().Usuario3;
 
             _repository.Salvar(usuario1);
             _repository.Salvar(usuario2);
@@ -103,11 +104,11 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void Usuario()
         {
-            var usuario1 = MockSettingsTest.Usuario1;
-            var usuario2 = MockSettingsTest.Usuario2;
-            var usuario3 = MockSettingsTest.Usuario3;
+            var usuario1 = new SettingsTest().Usuario1;
+            var usuario2 = new SettingsTest().Usuario2;
+            var usuario3 = new SettingsTest().Usuario3;
 
-            var command = MockSettingsTest.UsuarioObterPorIdCommand;
+            var command = new SettingsTest().UsuarioObterPorIdCommand;
 
             _repository.Salvar(usuario1);
             _repository.Salvar(usuario2);
@@ -136,7 +137,7 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void UsuarioInserir()
         {
-            var command = MockSettingsTest.UsuarioAdicionarCommand;
+            var command = new SettingsTest().UsuarioAdicionarCommand;
 
             var response = _controller.UsuarioInserir(command).Result;
 
@@ -161,9 +162,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void UsuarioAlterar()
         {
-            var usuario = MockSettingsTest.Usuario1;
+            var usuario = new SettingsTest().Usuario1;
 
-            var command = MockSettingsTest.UsuarioAtualizarCommand;
+            var command = new SettingsTest().UsuarioAtualizarCommand;
 
             _repository.Salvar(usuario);
 
@@ -190,9 +191,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void UsuarioExcluir()
         {
-            var usuario = MockSettingsTest.Usuario1;
+            var usuario = new SettingsTest().Usuario1;
 
-            var command = MockSettingsTest.UsuarioApagarCommand;
+            var command = new SettingsTest().UsuarioApagarCommand;
 
             _repository.Salvar(usuario);
 
@@ -216,9 +217,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void UsuarioLogin()
         {
-            var usuario = MockSettingsTest.Usuario1;
+            var usuario = new SettingsTest().Usuario1;
 
-            var command = MockSettingsTest.UsuarioLoginCommand;
+            var command = new SettingsTest().UsuarioLoginCommand;
 
             _repository.Salvar(usuario);
 

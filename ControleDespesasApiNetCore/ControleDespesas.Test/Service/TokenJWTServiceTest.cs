@@ -1,5 +1,6 @@
 ﻿using ControleDespesas.Api.Services;
 using ControleDespesas.Test.AppConfigurations.Base;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
@@ -21,7 +22,7 @@ namespace ControleDespesas.Test.Service
         [Test]
         public void GenerateToken()
         {
-            var usuarioQR = MockSettingsTest.UsuarioQR;
+            var usuarioQR = new SettingsTest().UsuarioQR;
 
             var tokenJWT = _tokenJWTService.GenerateToken(usuarioQR);
 

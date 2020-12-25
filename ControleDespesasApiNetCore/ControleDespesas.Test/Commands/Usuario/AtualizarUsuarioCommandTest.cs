@@ -1,6 +1,7 @@
 ﻿using ControleDespesas.Dominio.Commands.Usuario.Input;
 using ControleDespesas.Dominio.Enums;
 using ControleDespesas.Test.AppConfigurations.Base;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
 using NUnit.Framework;
 
@@ -11,7 +12,7 @@ namespace ControleDespesas.Test.Commands.Usuario
         private AtualizarUsuarioCommand _command;
 
         [SetUp]
-        public void Setup() => _command = new AtualizarUsuarioCommandTest().MockSettingsTest.UsuarioAtualizarCommand;
+        public void Setup() => _command = new SettingsTest().UsuarioAtualizarCommand;
 
         [Test]
         public void ValidarCommand_Valido()

@@ -1,5 +1,6 @@
 ﻿using ControleDespesas.Dominio.Helpers;
 using ControleDespesas.Test.AppConfigurations.Base;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
 using NUnit.Framework;
 
@@ -13,7 +14,7 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarEntidade_AdcionarPagamentoCommand()
         {
-            var command = MockSettingsTest.PagamentoAdicionarCommand;
+            var command = new SettingsTest().PagamentoAdicionarCommand;
 
             var entidade = PagamentoHelper.GerarEntidade(command);
 
@@ -36,7 +37,7 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarEntidade_AtualizarPagamentoCommand()
         {
-            var command = MockSettingsTest.PagamentoAtualizarCommand;
+            var command = new SettingsTest().PagamentoAtualizarCommand;
 
             var entidade = PagamentoHelper.GerarEntidade(command);
 
@@ -59,7 +60,7 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarDadosRetornoInsert()
         {
-            var entidade = MockSettingsTest.Pagamento1;
+            var entidade = new SettingsTest().Pagamento1;
 
             var command = PagamentoHelper.GerarDadosRetornoInsert(entidade);
 
@@ -78,7 +79,7 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarDadosRetornoUpdate()
         {
-            var entidade = MockSettingsTest.Pagamento1;
+            var entidade = new SettingsTest().Pagamento1;
 
             var command = PagamentoHelper.GerarDadosRetornoUpdate(entidade);
 
@@ -97,7 +98,7 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarDadosRetornoDelte()
         {
-            var entidade = MockSettingsTest.Pagamento1;
+            var entidade = new SettingsTest().Pagamento1;
 
             var command = PagamentoHelper.GerarDadosRetornoDelete(entidade.Id);
 

@@ -86,7 +86,7 @@ namespace ControleDespesas.Test.Controllers
             _repositoryPessoa.Salvar(pagamento3.Pessoa);
             _repositoryPagamento.Salvar(pagamento3);
 
-            var command = MockSettingsTest.PagamentoObterPorIdPessoaCommand;
+            var command = new SettingsTest().PagamentoObterPorIdPessoaCommand;
 
             var response = _controller.Pagamentos(command).Result;
 
@@ -124,10 +124,10 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void Pagamento()
         {
-            var pagamento1 = MockSettingsTest.Pagamento1;
-            var pagamento2 = MockSettingsTest.Pagamento2;
+            var pagamento1 = new SettingsTest().Pagamento1;
+            var pagamento2 = new SettingsTest().Pagamento2;
 
-            var command = MockSettingsTest.PagamentoObterPorIdCommand;
+            var command = new SettingsTest().PagamentoObterPorIdCommand;
 
             _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento1.Empresa);
@@ -165,9 +165,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void PagamentosConcluidos()
         {
-            var pagamento1 = MockSettingsTest.Pagamento1;
-            var pagamento2 = MockSettingsTest.Pagamento2;
-            var pagamento3 = MockSettingsTest.Pagamento3;
+            var pagamento1 = new SettingsTest().Pagamento1;
+            var pagamento2 = new SettingsTest().Pagamento2;
+            var pagamento3 = new SettingsTest().Pagamento3;
 
             pagamento3.Pessoa = pagamento1.Pessoa;
 
@@ -184,7 +184,7 @@ namespace ControleDespesas.Test.Controllers
             _repositoryEmpresa.Salvar(pagamento3.Empresa);
             _repositoryPagamento.Salvar(pagamento3);
 
-            var command = MockSettingsTest.PagamentoObterPorIdPessoaCommand;
+            var command = new SettingsTest().PagamentoObterPorIdPessoaCommand;
 
             var response = _controller.PagamentoConcluido(command).Result;
 
@@ -224,9 +224,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void PagamentosPendentes()
         {
-            var pagamento1 = MockSettingsTest.Pagamento1;
-            var pagamento2 = MockSettingsTest.Pagamento2;
-            var pagamento3 = MockSettingsTest.Pagamento3;
+            var pagamento1 = new SettingsTest().Pagamento1;
+            var pagamento2 = new SettingsTest().Pagamento2;
+            var pagamento3 = new SettingsTest().Pagamento3;
 
             pagamento3.Pessoa = pagamento1.Pessoa;
 
@@ -243,7 +243,7 @@ namespace ControleDespesas.Test.Controllers
             _repositoryEmpresa.Salvar(pagamento3.Empresa);
             _repositoryPagamento.Salvar(pagamento3);
 
-            var command = MockSettingsTest.PagamentoObterPorIdPessoaCommand;
+            var command = new SettingsTest().PagamentoObterPorIdPessoaCommand;
 
             var response = _controller.PagamentoPendente(command).Result;
 
@@ -274,9 +274,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void ObterGastos()
         {
-            var pagamento1 = MockSettingsTest.Pagamento1;
-            var pagamento2 = MockSettingsTest.Pagamento2;
-            var pagamento3 = MockSettingsTest.Pagamento3;
+            var pagamento1 = new SettingsTest().Pagamento1;
+            var pagamento2 = new SettingsTest().Pagamento2;
+            var pagamento3 = new SettingsTest().Pagamento3;
 
             pagamento3.Pessoa = pagamento1.Pessoa;
 
@@ -295,7 +295,7 @@ namespace ControleDespesas.Test.Controllers
             _repositoryEmpresa.Salvar(pagamento3.Empresa);
             _repositoryPagamento.Salvar(pagamento3);
 
-            var command = MockSettingsTest.PagamentoObterGastosCommand;
+            var command = new SettingsTest().PagamentoObterGastosCommand;
 
             var response = _controller.ObterGastos(command).Result;
 
@@ -317,9 +317,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void ObterGastosAno()
         {
-            var pagamento1 = MockSettingsTest.Pagamento1;
-            var pagamento2 = MockSettingsTest.Pagamento2;
-            var pagamento3 = MockSettingsTest.Pagamento3;
+            var pagamento1 = new SettingsTest().Pagamento1;
+            var pagamento2 = new SettingsTest().Pagamento2;
+            var pagamento3 = new SettingsTest().Pagamento3;
 
             pagamento3.Pessoa = pagamento1.Pessoa;
 
@@ -338,7 +338,7 @@ namespace ControleDespesas.Test.Controllers
             _repositoryEmpresa.Salvar(pagamento3.Empresa);
             _repositoryPagamento.Salvar(pagamento3);
 
-            var command = MockSettingsTest.PagamentoObterGastosAnoCommand;
+            var command = new SettingsTest().PagamentoObterGastosAnoCommand;
 
             var response = _controller.ObterGastosAno(command).Result;
 
@@ -360,9 +360,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void ObterGastosAnoMes()
         {
-            var pagamento1 = MockSettingsTest.Pagamento1;
-            var pagamento2 = MockSettingsTest.Pagamento2;
-            var pagamento3 = MockSettingsTest.Pagamento3;
+            var pagamento1 = new SettingsTest().Pagamento1;
+            var pagamento2 = new SettingsTest().Pagamento2;
+            var pagamento3 = new SettingsTest().Pagamento3;
 
             pagamento3.Pessoa = pagamento1.Pessoa;
 
@@ -381,7 +381,7 @@ namespace ControleDespesas.Test.Controllers
             _repositoryEmpresa.Salvar(pagamento3.Empresa);
             _repositoryPagamento.Salvar(pagamento3);
 
-            var command = MockSettingsTest.PagamentoObterGastosAnoMesCommand;
+            var command = new SettingsTest().PagamentoObterGastosAnoMesCommand;
 
             var response = _controller.ObterGastosAnoMes(command).Result;
 
@@ -403,11 +403,11 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void PagamentoInserir()
         {
-            var tipoPagamento = MockSettingsTest.Pagamento1.TipoPagamento;
-            var empresa = MockSettingsTest.Pagamento1.Empresa ;
-            var pessoa = MockSettingsTest.Pagamento1.Pessoa;
+            var tipoPagamento = new SettingsTest().Pagamento1.TipoPagamento;
+            var empresa = new SettingsTest().Pagamento1.Empresa ;
+            var pessoa = new SettingsTest().Pagamento1.Pessoa;
 
-            var command = MockSettingsTest.PagamentoAdicionarCommand;
+            var command = new SettingsTest().PagamentoAdicionarCommand;
 
             _repositoryTipoPagamento.Salvar(tipoPagamento);
             _repositoryEmpresa.Salvar(empresa);
@@ -440,9 +440,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void PagamentoAlterar()
         {
-            var pagamento = MockSettingsTest.Pagamento1;
+            var pagamento = new SettingsTest().Pagamento1;
 
-            var command = MockSettingsTest.PagamentoAtualizarCommand;
+            var command = new SettingsTest().PagamentoAtualizarCommand;
 
             _repositoryTipoPagamento.Salvar(pagamento.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento.Empresa);
@@ -476,9 +476,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void PagamentoExcluir()
         {
-            var pagamento = MockSettingsTest.Pagamento1;
+            var pagamento = new SettingsTest().Pagamento1;
 
-            var command = MockSettingsTest.PagamentoApagarCommand;
+            var command = new SettingsTest().PagamentoApagarCommand;
 
             _repositoryTipoPagamento.Salvar(pagamento.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento.Empresa) ;

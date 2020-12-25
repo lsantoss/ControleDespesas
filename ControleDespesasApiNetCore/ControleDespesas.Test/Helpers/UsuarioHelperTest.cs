@@ -1,5 +1,6 @@
 ﻿using ControleDespesas.Dominio.Helpers;
 using ControleDespesas.Test.AppConfigurations.Base;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
 using NUnit.Framework;
 
@@ -13,7 +14,7 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarEntidade_AdcionarUsuarioCommand()
         {
-            var command = MockSettingsTest.UsuarioAdicionarCommand;
+            var command = new SettingsTest().UsuarioAdicionarCommand;
 
             var entidade = UsuarioHelper.GerarEntidade(command);
 
@@ -34,7 +35,7 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarEntidade_AtualizarUsuarioCommand()
         {
-            var command = MockSettingsTest.UsuarioAtualizarCommand;
+            var command = new SettingsTest().UsuarioAtualizarCommand;
 
             var entidade = UsuarioHelper.GerarEntidade(command);
 
@@ -55,7 +56,7 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarDadosRetornoInsert()
         {
-            var entidade = MockSettingsTest.Usuario1;
+            var entidade = new SettingsTest().Usuario1;
 
             var command = UsuarioHelper.GerarDadosRetornoInsert(entidade);
 
@@ -70,7 +71,7 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarDadosRetornoUpdate()
         {
-            var entidade = MockSettingsTest.Usuario1;
+            var entidade = new SettingsTest().Usuario1;
 
             var command = UsuarioHelper.GerarDadosRetornoUpdate(entidade);
 
@@ -85,7 +86,7 @@ namespace ControleDespesas.Test.Helpers
         [Test]
         public void GerarDadosRetornoDelte()
         {
-            var entidade = MockSettingsTest.Empresa1;
+            var entidade = new SettingsTest().Empresa1;
 
             var command = UsuarioHelper.GerarDadosRetornoDelete(entidade.Id);
 

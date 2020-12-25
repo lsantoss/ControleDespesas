@@ -1,5 +1,6 @@
 ﻿using ControleDespesas.Dominio.Commands.Pessoa.Input;
 using ControleDespesas.Test.AppConfigurations.Base;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
 using NUnit.Framework;
 
@@ -10,7 +11,7 @@ namespace ControleDespesas.Test.Commands.Pessoa
         private AdicionarPessoaCommand _command;
 
         [SetUp]
-        public void Setup() => _command = new AdicionarPessoaCommandTest().MockSettingsTest.PessoaAdicionarCommand;
+        public void Setup() => _command = new SettingsTest().PessoaAdicionarCommand;
 
         [Test]
         public void ValidarCommand_Valido()

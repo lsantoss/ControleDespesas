@@ -1,5 +1,6 @@
 ﻿using ControleDespesas.Dominio.Commands.Usuario.Input;
 using ControleDespesas.Test.AppConfigurations.Base;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
 using NUnit.Framework;
 
@@ -10,7 +11,7 @@ namespace ControleDespesas.Test.Commands.Usuario
         private LoginUsuarioCommand _command;
 
         [SetUp]
-        public void Setup() => _command = new LoginUsuarioCommandTest().MockSettingsTest.UsuarioLoginCommand;
+        public void Setup() => _command = new SettingsTest().UsuarioLoginCommand;
 
         [Test]
         public void ValidarCommand_Valido()

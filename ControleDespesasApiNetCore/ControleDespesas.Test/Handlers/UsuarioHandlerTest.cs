@@ -4,6 +4,7 @@ using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Dominio.Query.Usuario;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Test.AppConfigurations.Base;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
@@ -30,7 +31,7 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AdicionarUsuario()
         {
-            var usuarioCommand = MockSettingsTest.UsuarioAdicionarCommand;
+            var usuarioCommand = new SettingsTest().UsuarioAdicionarCommand;
 
             var retorno = _handler.Handler(usuarioCommand);
 
@@ -49,9 +50,9 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AtualizarUsuario()
         {
-            var usuario = MockSettingsTest.Usuario1;
+            var usuario = new SettingsTest().Usuario1;
 
-            var usuarioCommand = MockSettingsTest.UsuarioAtualizarCommand;
+            var usuarioCommand = new SettingsTest().UsuarioAtualizarCommand;
 
             _repository.Salvar(usuario);
 
@@ -72,10 +73,10 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_ApagarUsuario()
         {
-            var usuario = MockSettingsTest.Usuario1;
+            var usuario = new SettingsTest().Usuario1;
             _repository.Salvar(usuario);
 
-            var usuarioCommand = MockSettingsTest.UsuarioApagarCommand;
+            var usuarioCommand = new SettingsTest().UsuarioApagarCommand;
 
             var retorno = _handler.Handler(usuarioCommand);
 
@@ -91,9 +92,9 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_LoginUsuario()
         {
-            var usuario = MockSettingsTest.Usuario1;
+            var usuario = new SettingsTest().Usuario1;
 
-            var usuarioCommand = MockSettingsTest.UsuarioLoginCommand;
+            var usuarioCommand = new SettingsTest().UsuarioLoginCommand;
 
             _repository.Salvar(usuario);
 

@@ -5,6 +5,7 @@ using ControleDespesas.Dominio.Query.Empresa;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Models;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
@@ -60,9 +61,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void Empresas()
         {
-            var empresa1 = MockSettingsTest.Empresa1;
-            var empresa2 = MockSettingsTest.Empresa2;
-            var empresa3 = MockSettingsTest.Empresa3;
+            var empresa1 = new SettingsTest().Empresa1;
+            var empresa2 = new SettingsTest().Empresa2;
+            var empresa3 = new SettingsTest().Empresa3;
 
             _repository.Salvar(empresa1);
             _repository.Salvar(empresa2);
@@ -98,11 +99,11 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void Empresa()
         {
-            var empresa1 = MockSettingsTest.Empresa1;
-            var empresa2 = MockSettingsTest.Empresa2;
-            var empresa3 = MockSettingsTest.Empresa3;
+            var empresa1 = new SettingsTest().Empresa1;
+            var empresa2 = new SettingsTest().Empresa2;
+            var empresa3 = new SettingsTest().Empresa3;
 
-            var command = MockSettingsTest.EmpresaObterPorIdCommand;
+            var command = new SettingsTest().EmpresaObterPorIdCommand;
 
             _repository.Salvar(empresa1);
             _repository.Salvar(empresa2);
@@ -130,7 +131,7 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void EmpresaInserir()
         {
-            var command = MockSettingsTest.EmpresaAdicionarCommand;
+            var command = new SettingsTest().EmpresaAdicionarCommand;
 
             var response = _controller.EmpresaInserir(command).Result;
 
@@ -154,9 +155,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void EmpresaAlterar()
         {
-            var empresa = MockSettingsTest.Empresa1;
+            var empresa = new SettingsTest().Empresa1;
 
-            var command = MockSettingsTest.EmpresaAtualizarCommand;
+            var command = new SettingsTest().EmpresaAtualizarCommand;
 
             _repository.Salvar(empresa);
 
@@ -182,9 +183,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void EmpresaExcluir()
         {
-            var empresa = MockSettingsTest.Empresa1;
+            var empresa = new SettingsTest().Empresa1;
 
-            var command = MockSettingsTest.EmpresaApagarCommand;
+            var command = new SettingsTest().EmpresaApagarCommand;
 
             _repository.Salvar(empresa);
 

@@ -2,6 +2,7 @@
 using ControleDespesas.Dominio.Handlers;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Test.AppConfigurations.Base;
+using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
@@ -28,7 +29,7 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AdicionarEmpresa()
         {
-            var empresaCommand = MockSettingsTest.EmpresaAdicionarCommand;
+            var empresaCommand = new SettingsTest().EmpresaAdicionarCommand;
 
             var retorno = _handler.Handler(empresaCommand);
 
@@ -46,9 +47,9 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AtualizarEmpresa()
         {
-            var empresaCommand = MockSettingsTest.EmpresaAtualizarCommand;
+            var empresaCommand = new SettingsTest().EmpresaAtualizarCommand;
 
-            var empresa = MockSettingsTest.Empresa1;
+            var empresa = new SettingsTest().Empresa1;
             _repository.Salvar(empresa);
 
             var retorno = _handler.Handler(empresaCommand);
@@ -67,9 +68,9 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_ApagarEmpresa()
         {
-            var empresaCommand = MockSettingsTest.EmpresaApagarCommand;
+            var empresaCommand = new SettingsTest().EmpresaApagarCommand;
 
-            var empresa = MockSettingsTest.Empresa1;
+            var empresa = new SettingsTest().Empresa1;
             _repository.Salvar(empresa);
 
             var retorno = _handler.Handler(empresaCommand);

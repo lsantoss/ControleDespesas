@@ -12,6 +12,7 @@ namespace ControleDespesas.Test.Handlers
 {
     public class PagamentoHandlerTest : DatabaseTest
     {
+        private readonly UsuarioRepositorio _repositoryUsuario;
         private readonly TipoPagamentoRepositorio _repositoryTipoPagamento;
         private readonly EmpresaRepositorio _repositoryEmpresa;
         private readonly PessoaRepositorio _repositoryPessoa;
@@ -23,6 +24,7 @@ namespace ControleDespesas.Test.Handlers
             CriarBaseDeDadosETabelas();
             var optionsInfraData = Options.Create(MockSettingsInfraData);
 
+            _repositoryUsuario = new UsuarioRepositorio(optionsInfraData);
             _repositoryTipoPagamento = new TipoPagamentoRepositorio(optionsInfraData);
             _repositoryEmpresa = new EmpresaRepositorio(optionsInfraData);
             _repositoryPessoa = new PessoaRepositorio(optionsInfraData);
@@ -36,6 +38,9 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AdicionarPagamento()
         {
+            var usuario = new SettingsTest().Usuario1;
+            _repositoryUsuario.Salvar(usuario);
+
             var tipoPagamento = new SettingsTest().Pagamento1.TipoPagamento;
             var empresa = new SettingsTest().Pagamento1.Empresa;
             var pessoa = new SettingsTest().Pagamento1.Pessoa;
@@ -67,6 +72,9 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AtualizarPagamento()
         {
+            var usuario = new SettingsTest().Usuario1;
+            _repositoryUsuario.Salvar(usuario);
+
             var tipoPagamento = new SettingsTest().Pagamento1.TipoPagamento;
             var empresa = new SettingsTest().Pagamento1.Empresa;
             var pessoa = new SettingsTest().Pagamento1.Pessoa;
@@ -100,6 +108,9 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_ApagarPagamento()
         {
+            var usuario = new SettingsTest().Usuario1;
+            _repositoryUsuario.Salvar(usuario);
+
             var tipoPagamento = new SettingsTest().Pagamento1.TipoPagamento;
             var empresa = new SettingsTest().Pagamento1.Empresa;
             var pessoa = new SettingsTest().Pagamento1.Pessoa;

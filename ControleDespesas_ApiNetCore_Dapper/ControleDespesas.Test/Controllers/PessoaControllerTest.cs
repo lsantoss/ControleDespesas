@@ -19,7 +19,8 @@ namespace ControleDespesas.Test.Controllers
 {
     public class PessoaControllerTest : DatabaseTest
     {
-        private readonly PessoaRepositorio _repository;
+        private readonly UsuarioRepositorio _repositoryUsuario;
+        private readonly PessoaRepositorio _repositoryPessoa;
         private readonly PessoaHandler _handler;
         private readonly PessoaController _controller;
 
@@ -28,10 +29,11 @@ namespace ControleDespesas.Test.Controllers
             CriarBaseDeDadosETabelas();
             var optionsInfraData = Options.Create(MockSettingsInfraData);
             var optionsAPI = Options.Create(MockSettingsAPI);
-            
-            _repository = new PessoaRepositorio(optionsInfraData);
-            _handler = new PessoaHandler(_repository);
-            _controller = new PessoaController(_repository, _handler, optionsAPI);
+
+            _repositoryUsuario = new UsuarioRepositorio(optionsInfraData);
+            _repositoryPessoa = new PessoaRepositorio(optionsInfraData);
+            _handler = new PessoaHandler(_repositoryPessoa);
+            _controller = new PessoaController(_repositoryPessoa, _handler, optionsAPI);
             _controller.ControllerContext.HttpContext = new DefaultHttpContext();
             _controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = MockSettingsAPI.ChaveAPI;
         }
@@ -61,13 +63,16 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void Pessoas()
         {
+            var usuario = new SettingsTest().Usuario1;
+            _repositoryUsuario.Salvar(usuario);
+
             var pessoa1 = new SettingsTest().Pessoa1;
             var pessoa2 = new SettingsTest().Pessoa2;
             var pessoa3 = new SettingsTest().Pessoa3;
 
-            _repository.Salvar(pessoa1);
-            _repository.Salvar(pessoa2);
-            _repository.Salvar(pessoa3);
+            _repositoryPessoa.Salvar(pessoa1);
+            _repositoryPessoa.Salvar(pessoa2);
+            _repositoryPessoa.Salvar(pessoa3);
 
             var response = _controller.Pessoas().Result;
 
@@ -99,15 +104,18 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void Empresa()
         {
+            var usuario = new SettingsTest().Usuario1;
+            _repositoryUsuario.Salvar(usuario);
+
             var pessoa1 = new SettingsTest().Pessoa1;
             var pessoa2 = new SettingsTest().Pessoa2;
             var pessoa3 = new SettingsTest().Pessoa3;
 
             var command = new SettingsTest().PessoaObterPorIdCommand;
 
-            _repository.Salvar(pessoa1);
-            _repository.Salvar(pessoa2);
-            _repository.Salvar(pessoa3);
+            _repositoryPessoa.Salvar(pessoa1);
+            _repositoryPessoa.Salvar(pessoa2);
+            _repositoryPessoa.Salvar(pessoa3);
 
             var response = _controller.Pessoa(command).Result;
 
@@ -131,6 +139,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void EmpresaInserir()
         {
+            var usuario = new SettingsTest().Usuario1;
+            _repositoryUsuario.Salvar(usuario);
+
             var command = new SettingsTest().PessoaAdicionarCommand;
 
             var response = _controller.PessoaInserir(command).Result;
@@ -155,11 +166,14 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void EmpresaAlterar()
         {
+            var usuario = new SettingsTest().Usuario1;
+            _repositoryUsuario.Salvar(usuario);
+
             var pessoa = new SettingsTest().Pessoa1;
 
             var command = new SettingsTest().PessoaAtualizarCommand;
 
-            _repository.Salvar(pessoa);
+            _repositoryPessoa.Salvar(pessoa);
 
             var response = _controller.PessoaAlterar(command).Result;
 
@@ -183,11 +197,14 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void EmpresaExcluir()
         {
+            var usuario = new SettingsTest().Usuario1;
+            _repositoryUsuario.Salvar(usuario);
+
             var pessoa = new SettingsTest().Pessoa1;
 
             var command = new SettingsTest().PessoaApagarCommand;
 
-            _repository.Salvar(pessoa);
+            _repositoryPessoa.Salvar(pessoa);
 
             var response = _controller.PessoaExcluir(command).Result;
 

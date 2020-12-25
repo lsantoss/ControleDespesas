@@ -28,6 +28,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
         {
             try
             {
+                _parametros.Add("IdUsuario", pessoa.Usuario.Id, DbType.Int32);
                 _parametros.Add("Nome", pessoa.Nome.ToString(), DbType.String);
                 _parametros.Add("ImagemPerfil", pessoa.ImagemPerfil, DbType.String);
 
@@ -45,6 +46,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             try
             {
                 _parametros.Add("Id", pessoa.Id, DbType.Int32);
+                _parametros.Add("IdUsuario", pessoa.Usuario.Id, DbType.Int32);
                 _parametros.Add("Nome", pessoa.Nome.ToString(), DbType.String);
                 _parametros.Add("ImagemPerfil", pessoa.ImagemPerfil, DbType.String);
 

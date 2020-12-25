@@ -2,14 +2,15 @@
 {
     public static class PessoaQueries
     {
-        public static string Salvar { get; } = @"INSERT INTO Pessoa (Nome, ImagemPerfil) VALUES (@Nome, @ImagemPerfil); SELECT SCOPE_IDENTITY();";
+        public static string Salvar { get; } = @"INSERT INTO Pessoa (IdUsuario, Nome, ImagemPerfil) VALUES (@IdUsuario, @Nome, @ImagemPerfil); SELECT SCOPE_IDENTITY();";
 
-        public static string Atualizar { get; } = @"UPDATE Pessoa SET Nome = @Nome, ImagemPerfil = @ImagemPerfil WHERE Id = @Id";
+        public static string Atualizar { get; } = @"UPDATE Pessoa SET IdUsuario = @IdUsuario, Nome = @Nome, ImagemPerfil = @ImagemPerfil WHERE Id = @Id";
 
         public static string Deletar { get; } = @"DELETE FROM Pessoa WHERE Id = @Id";
 
         public static string Obter { get; } = @"SELECT
                                                     Id AS Id,
+                                                    IdUsuario AS IdUsuario,
                                                     Nome AS Nome,
                                                     ImagemPerfil AS ImagemPerfil 
                                                 FROM Pessoa 
@@ -17,6 +18,7 @@
 
         public static string Listar { get; } = @"SELECT
                                                     Id AS Id,
+                                                    IdUsuario AS IdUsuario,
                                                     Nome AS Nome,
                                                     ImagemPerfil AS ImagemPerfil 
                                                 FROM Pessoa 

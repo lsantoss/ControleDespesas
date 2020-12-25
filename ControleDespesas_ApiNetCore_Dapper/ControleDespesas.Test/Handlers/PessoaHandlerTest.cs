@@ -11,7 +11,8 @@ namespace ControleDespesas.Test.Handlers
 {
     public class PessoaHandlerTest : DatabaseTest
     {
-        private readonly PessoaRepositorio _repository;
+        private readonly UsuarioRepositorio _repositoryUsuario;
+        private readonly PessoaRepositorio _repositoryPessoa;
         private readonly PessoaHandler _handler;
 
         public PessoaHandlerTest()
@@ -19,8 +20,9 @@ namespace ControleDespesas.Test.Handlers
             CriarBaseDeDadosETabelas();
             var optionsInfraData = Options.Create(MockSettingsInfraData);
 
-            _repository = new PessoaRepositorio(optionsInfraData);
-            _handler = new PessoaHandler(_repository);
+            _repositoryUsuario = new UsuarioRepositorio(optionsInfraData);
+            _repositoryPessoa = new PessoaRepositorio(optionsInfraData);
+            _handler = new PessoaHandler(_repositoryPessoa);
         }
 
         [SetUp]
@@ -29,6 +31,9 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AdicionarPessoa()
         {
+            var usuario = new SettingsTest().Usuario1;
+            _repositoryUsuario.Salvar(usuario);
+
             var pessoaCommand = new SettingsTest().PessoaAdicionarCommand;
 
             var retorno = _handler.Handler(pessoaCommand);
@@ -47,11 +52,14 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AtualizarPessoa()
         {
+            var usuario = new SettingsTest().Usuario1;
+            _repositoryUsuario.Salvar(usuario);
+
             var pessoa = new SettingsTest().Pessoa1;
 
             var pessoaCommand = new SettingsTest().PessoaAtualizarCommand;
 
-            _repository.Salvar(pessoa);
+            _repositoryPessoa.Salvar(pessoa);
 
             var retorno = _handler.Handler(pessoaCommand);
 
@@ -69,11 +77,14 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_ApagarPessoa()
         {
+            var usuario = new SettingsTest().Usuario1;
+            _repositoryUsuario.Salvar(usuario);
+
             var pessoa = new SettingsTest().Pessoa1;
 
             var pessoaCommand = new SettingsTest().PessoaApagarCommand;
 
-            _repository.Salvar(pessoa);
+            _repositoryPessoa.Salvar(pessoa);
 
             var retorno = _handler.Handler(pessoaCommand);
 

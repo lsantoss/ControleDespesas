@@ -51,6 +51,7 @@
                                                     Empresa.Logo AS Logo,
 
                                                     Pessoa.Id AS Id, 
+                                                    Pessoa.IdUsuario AS IdUsuario,
                                                     Pessoa.Nome AS Nome,
                                                     Pessoa.ImagemPerfil AS ImagemPerfil
 
@@ -80,6 +81,7 @@
 
                                                     Pessoa.Id AS Id, 
                                                     Pessoa.Nome AS Nome,
+                                                    Pessoa.IdUsuario AS IdUsuario,
                                                     Pessoa.ImagemPerfil AS ImagemPerfil
 
                                                 FROM Pagamento 
@@ -110,6 +112,7 @@
 
                                                                        Pessoa.Id AS Id, 
                                                                        Pessoa.Nome AS Nome,
+                                                                       Pessoa.IdUsuario AS IdUsuario,
                                                                        Pessoa.ImagemPerfil AS ImagemPerfil
 
                                                                    FROM Pagamento 
@@ -141,6 +144,7 @@
 
                                                                        Pessoa.Id AS Id, 
                                                                        Pessoa.Nome AS Nome,
+                                                                       Pessoa.IdUsuario AS IdUsuario,
                                                                        Pessoa.ImagemPerfil AS ImagemPerfil
 
                                                                    FROM Pagamento 

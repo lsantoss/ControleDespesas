@@ -5,9 +5,12 @@ namespace ControleDespesas.Dominio.Enums
     public enum EPrivilegioUsuario
     {
         [Description("Administrador")]
-        Admin = 1,
+        Administrador = 1,
+
+        [Description("Escrita")]
+        Escrita = 2,
 
         [Description("Somente Leitura")]
-        ReadOnly = 2
+        SomenteLeitura = 3
     }
 }

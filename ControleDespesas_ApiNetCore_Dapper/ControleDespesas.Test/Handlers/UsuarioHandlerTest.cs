@@ -109,7 +109,7 @@ namespace ControleDespesas.Test.Handlers
             Assert.AreEqual(1, retornoDados.Id);
             Assert.AreEqual(usuarioCommand.Login, retornoDados.Login);
             Assert.AreEqual(usuarioCommand.Senha, retornoDados.Senha);
-            Assert.AreEqual(EPrivilegioUsuario.Admin, retornoDados.Privilegio);
+            Assert.AreEqual(EPrivilegioUsuario.Administrador, retornoDados.Privilegio);
         }
 
         [TearDown]

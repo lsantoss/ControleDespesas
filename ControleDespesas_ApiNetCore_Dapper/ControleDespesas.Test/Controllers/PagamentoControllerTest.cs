@@ -20,6 +20,7 @@ namespace ControleDespesas.Test.Controllers
 {
     public class PagamentoControllerTest : DatabaseTest
     {
+        private readonly UsuarioRepositorio _repositoryUsuario;
         private readonly EmpresaRepositorio _repositoryEmpresa;
         private readonly PessoaRepositorio _repositoryPessoa;
         private readonly TipoPagamentoRepositorio _repositoryTipoPagamento;
@@ -33,6 +34,7 @@ namespace ControleDespesas.Test.Controllers
             var optionsInfraData = Options.Create(MockSettingsInfraData);
             var optionsAPI = Options.Create(MockSettingsAPI);
 
+            _repositoryUsuario = new UsuarioRepositorio(optionsInfraData);
             _repositoryEmpresa = new EmpresaRepositorio(optionsInfraData);
             _repositoryPessoa = new PessoaRepositorio(optionsInfraData);
             _repositoryTipoPagamento = new TipoPagamentoRepositorio(optionsInfraData);
@@ -68,6 +70,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void Pagamentos()
         {
+            var usuario = new SettingsTest().Usuario1;
+            _repositoryUsuario.Salvar(usuario);
+
             var pagamento1 = new SettingsTest().Pagamento1;
             var pagamento2 = new SettingsTest().Pagamento2;
             var pagamento3 = new SettingsTest().Pagamento3;
@@ -124,6 +129,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void Pagamento()
         {
+            var usuario = new SettingsTest().Usuario1;
+            _repositoryUsuario.Salvar(usuario);
+
             var pagamento1 = new SettingsTest().Pagamento1;
             var pagamento2 = new SettingsTest().Pagamento2;
 
@@ -165,6 +173,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void PagamentosConcluidos()
         {
+            var usuario = new SettingsTest().Usuario1;
+            _repositoryUsuario.Salvar(usuario);
+
             var pagamento1 = new SettingsTest().Pagamento1;
             var pagamento2 = new SettingsTest().Pagamento2;
             var pagamento3 = new SettingsTest().Pagamento3;
@@ -224,6 +235,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void PagamentosPendentes()
         {
+            var usuario = new SettingsTest().Usuario1;
+            _repositoryUsuario.Salvar(usuario);
+
             var pagamento1 = new SettingsTest().Pagamento1;
             var pagamento2 = new SettingsTest().Pagamento2;
             var pagamento3 = new SettingsTest().Pagamento3;
@@ -274,6 +288,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void ObterGastos()
         {
+            var usuario = new SettingsTest().Usuario1;
+            _repositoryUsuario.Salvar(usuario);
+
             var pagamento1 = new SettingsTest().Pagamento1;
             var pagamento2 = new SettingsTest().Pagamento2;
             var pagamento3 = new SettingsTest().Pagamento3;
@@ -317,6 +334,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void ObterGastosAno()
         {
+            var usuario = new SettingsTest().Usuario1;
+            _repositoryUsuario.Salvar(usuario);
+
             var pagamento1 = new SettingsTest().Pagamento1;
             var pagamento2 = new SettingsTest().Pagamento2;
             var pagamento3 = new SettingsTest().Pagamento3;
@@ -360,6 +380,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void ObterGastosAnoMes()
         {
+            var usuario = new SettingsTest().Usuario1;
+            _repositoryUsuario.Salvar(usuario);
+
             var pagamento1 = new SettingsTest().Pagamento1;
             var pagamento2 = new SettingsTest().Pagamento2;
             var pagamento3 = new SettingsTest().Pagamento3;
@@ -403,6 +426,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void PagamentoInserir()
         {
+            var usuario = new SettingsTest().Usuario1;
+            _repositoryUsuario.Salvar(usuario);
+
             var tipoPagamento = new SettingsTest().Pagamento1.TipoPagamento;
             var empresa = new SettingsTest().Pagamento1.Empresa ;
             var pessoa = new SettingsTest().Pagamento1.Pessoa;
@@ -440,6 +466,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void PagamentoAlterar()
         {
+            var usuario = new SettingsTest().Usuario1;
+            _repositoryUsuario.Salvar(usuario);
+
             var pagamento = new SettingsTest().Pagamento1;
 
             var command = new SettingsTest().PagamentoAtualizarCommand;
@@ -476,6 +505,9 @@ namespace ControleDespesas.Test.Controllers
         [Test]
         public void PagamentoExcluir()
         {
+            var usuario = new SettingsTest().Usuario1;
+            _repositoryUsuario.Salvar(usuario);
+
             var pagamento = new SettingsTest().Pagamento1;
 
             var command = new SettingsTest().PagamentoApagarCommand;

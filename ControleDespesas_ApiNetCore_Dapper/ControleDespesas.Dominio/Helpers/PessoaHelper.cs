@@ -12,10 +12,11 @@ namespace ControleDespesas.Dominio.Helpers
         {
             try
             {
+                Usuario usuario = new Usuario(command.IdUsuario);
                 Texto nome = new Texto(command.Nome, "Nome", 100);
                 string imagemPerfil = command.ImagemPerfil;
 
-                Pessoa pessoa = new Pessoa(0, nome, imagemPerfil);
+                Pessoa pessoa = new Pessoa(0, usuario, nome, imagemPerfil);
                 return pessoa;
             }
             catch (Exception e)
@@ -29,10 +30,11 @@ namespace ControleDespesas.Dominio.Helpers
             try
             {
                 int id = command.Id;
+                Usuario usuario = new Usuario(command.IdUsuario);
                 Texto nome = new Texto(command.Nome, "Nome", 100);
                 string imagemPerfil = command.ImagemPerfil;
 
-                Pessoa pessoa = new Pessoa(id, nome, imagemPerfil);
+                Pessoa pessoa = new Pessoa(id, usuario, nome, imagemPerfil);
                 return pessoa;
             }
             catch (Exception e)
@@ -48,6 +50,7 @@ namespace ControleDespesas.Dominio.Helpers
                 return new AdicionarPessoaCommandOutput
                 {
                     Id = pessoa.Id,
+                    IdUsuario = pessoa.Usuario.Id,
                     Nome = pessoa.Nome.ToString(),
                     ImagemPerfil = pessoa.ImagemPerfil
                 };
@@ -65,6 +68,7 @@ namespace ControleDespesas.Dominio.Helpers
                 return new AtualizarPessoaCommandOutput
                 {
                     Id = pessoa.Id,
+                    IdUsuario = pessoa.Usuario.Id,
                     Nome = pessoa.Nome.ToString(),
                     ImagemPerfil = pessoa.ImagemPerfil
                 };

@@ -9,14 +9,16 @@ namespace ControleDespesas.Test.Repositorio
 {
     public class PessoaRepositorioTest : DatabaseTest
     {
-        private readonly PessoaRepositorio _repository;
+        private readonly UsuarioRepositorio _repositoryUsuario;
+        private readonly PessoaRepositorio _repositoryPessoa;
 
         public PessoaRepositorioTest()
         {
             CriarBaseDeDadosETabelas();
             var optionsInfraData = Options.Create(MockSettingsInfraData);
 
-            _repository = new PessoaRepositorio(optionsInfraData);
+            _repositoryUsuario = new UsuarioRepositorio(optionsInfraData);
+            _repositoryPessoa = new PessoaRepositorio(optionsInfraData);
         }
 
         [SetUp]
@@ -25,14 +27,18 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Salvar()
         {
-            var pessoa = new SettingsTest().Pessoa1;
-            _repository.Salvar(pessoa);
+            var usuario = new SettingsTest().Usuario1;
+            _repositoryUsuario.Salvar(usuario);
 
-            var retorno = _repository.Obter(pessoa.Id);
+            var pessoa = new SettingsTest().Pessoa1;
+            _repositoryPessoa.Salvar(pessoa);
+
+            var retorno = _repositoryPessoa.Obter(pessoa.Id);
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 
             Assert.AreEqual(pessoa.Id, retorno.Id);
+            Assert.AreEqual(pessoa.Usuario.Id, retorno.IdUsuario);
             Assert.AreEqual(pessoa.Nome.ToString(), retorno.Nome);
             Assert.AreEqual(pessoa.ImagemPerfil, retorno.ImagemPerfil);
         }
@@ -40,17 +46,21 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Atualizar()
         {
+            var usuario = new SettingsTest().Usuario1;
+            _repositoryUsuario.Salvar(usuario);
+
             var pessoa = new SettingsTest().Pessoa1;
-            _repository.Salvar(pessoa);
+            _repositoryPessoa.Salvar(pessoa);
 
             pessoa = new SettingsTest().Pessoa1Editada;
-            _repository.Atualizar(pessoa);
+            _repositoryPessoa.Atualizar(pessoa);
 
-            var retorno = _repository.Obter(pessoa.Id);
+            var retorno = _repositoryPessoa.Obter(pessoa.Id);
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 
             Assert.AreEqual(pessoa.Id, retorno.Id);
+            Assert.AreEqual(pessoa.Usuario.Id, retorno.IdUsuario);
             Assert.AreEqual(pessoa.Nome.ToString(), retorno.Nome);
             Assert.AreEqual(pessoa.ImagemPerfil, retorno.ImagemPerfil);
         }
@@ -58,25 +68,30 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Deletar()
         {
+            var usuario = new SettingsTest().Usuario1;
+            _repositoryUsuario.Salvar(usuario);
+
             var pessoa1 = new SettingsTest().Pessoa1;
             var pessoa2 = new SettingsTest().Pessoa2;
             var pessoa3 = new SettingsTest().Pessoa3;
 
-            _repository.Salvar(pessoa1);
-            _repository.Salvar(pessoa2);
-            _repository.Salvar(pessoa3);
+            _repositoryPessoa.Salvar(pessoa1);
+            _repositoryPessoa.Salvar(pessoa2);
+            _repositoryPessoa.Salvar(pessoa3);
 
-            _repository.Deletar(pessoa2.Id);
+            _repositoryPessoa.Deletar(pessoa2.Id);
 
-            var retorno = _repository.Listar();
+            var retorno = _repositoryPessoa.Listar();
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 
             Assert.AreEqual(pessoa1.Id, retorno[0].Id);
+            Assert.AreEqual(pessoa1.Usuario.Id, retorno[0].IdUsuario);
             Assert.AreEqual(pessoa1.Nome.ToString(), retorno[0].Nome);
             Assert.AreEqual(pessoa1.ImagemPerfil, retorno[0].ImagemPerfil);
 
             Assert.AreEqual(pessoa3.Id, retorno[1].Id);
+            Assert.AreEqual(pessoa3.Usuario.Id, retorno[1].IdUsuario);
             Assert.AreEqual(pessoa3.Nome.ToString(), retorno[1].Nome);
             Assert.AreEqual(pessoa3.ImagemPerfil, retorno[1].ImagemPerfil);
         }
@@ -84,15 +99,19 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Obter()
         {
+            var usuario = new SettingsTest().Usuario1;
+            _repositoryUsuario.Salvar(usuario);
+
             var pessoa = new SettingsTest().Pessoa1;
 
-            _repository.Salvar(pessoa);
+            _repositoryPessoa.Salvar(pessoa);
 
-            var retorno = _repository.Obter(pessoa.Id);
+            var retorno = _repositoryPessoa.Obter(pessoa.Id);
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 
             Assert.AreEqual(pessoa.Id, retorno.Id);
+            Assert.AreEqual(pessoa.Usuario.Id, retorno.IdUsuario);
             Assert.AreEqual(pessoa.Nome.ToString(), retorno.Nome);
             Assert.AreEqual(pessoa.ImagemPerfil, retorno.ImagemPerfil);
         }
@@ -100,27 +119,33 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void Listar()
         {
+            var usuario = new SettingsTest().Usuario1;
+            _repositoryUsuario.Salvar(usuario);
+
             var pessoa1 = new SettingsTest().Pessoa1;
             var pessoa2 = new SettingsTest().Pessoa2;
             var pessoa3 = new SettingsTest().Pessoa3;
 
-            _repository.Salvar(pessoa1);
-            _repository.Salvar(pessoa2);
-            _repository.Salvar(pessoa3);
+            _repositoryPessoa.Salvar(pessoa1);
+            _repositoryPessoa.Salvar(pessoa2);
+            _repositoryPessoa.Salvar(pessoa3);
 
-            var retorno = _repository.Listar();
+            var retorno = _repositoryPessoa.Listar();
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 
             Assert.AreEqual(pessoa1.Id, retorno[0].Id);
+            Assert.AreEqual(pessoa1.Usuario.Id, retorno[0].IdUsuario);
             Assert.AreEqual(pessoa1.Nome.ToString(), retorno[0].Nome);
             Assert.AreEqual(pessoa1.ImagemPerfil, retorno[0].ImagemPerfil);
 
             Assert.AreEqual(pessoa2.Id, retorno[1].Id);
+            Assert.AreEqual(pessoa2.Usuario.Id, retorno[1].IdUsuario);
             Assert.AreEqual(pessoa2.Nome.ToString(), retorno[1].Nome);
             Assert.AreEqual(pessoa2.ImagemPerfil, retorno[1].ImagemPerfil);
 
             Assert.AreEqual(pessoa3.Id, retorno[2].Id);
+            Assert.AreEqual(pessoa3.Usuario.Id, retorno[2].IdUsuario);
             Assert.AreEqual(pessoa3.Nome.ToString(), retorno[2].Nome);
             Assert.AreEqual(pessoa3.ImagemPerfil, retorno[2].ImagemPerfil);
         }
@@ -128,11 +153,14 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void CheckId()
         {
-            var pessoa = new SettingsTest().Pessoa1;
-            _repository.Salvar(pessoa);
+            var usuario = new SettingsTest().Usuario1;
+            _repositoryUsuario.Salvar(usuario);
 
-            var idExistente = _repository.CheckId(pessoa.Id);
-            var idNaoExiste = _repository.CheckId(25);
+            var pessoa = new SettingsTest().Pessoa1;
+            _repositoryPessoa.Salvar(pessoa);
+
+            var idExistente = _repositoryPessoa.CheckId(pessoa.Id);
+            var idNaoExiste = _repositoryPessoa.CheckId(25);
 
             TestContext.WriteLine(idExistente);
             TestContext.WriteLine(idNaoExiste);
@@ -144,15 +172,18 @@ namespace ControleDespesas.Test.Repositorio
         [Test]
         public void LocalizarMaxId()
         {
+            var usuario = new SettingsTest().Usuario1;
+            _repositoryUsuario.Salvar(usuario);
+
             var pessoa1 = new SettingsTest().Pessoa1;
             var pessoa2 = new SettingsTest().Pessoa2;
             var pessoa3 = new SettingsTest().Pessoa3;
 
-            _repository.Salvar(pessoa1);
-            _repository.Salvar(pessoa2);
-            _repository.Salvar(pessoa3);
+            _repositoryPessoa.Salvar(pessoa1);
+            _repositoryPessoa.Salvar(pessoa2);
+            _repositoryPessoa.Salvar(pessoa3);
 
-            var maxId = _repository.LocalizarMaxId();
+            var maxId = _repositoryPessoa.LocalizarMaxId();
 
             TestContext.WriteLine(maxId);
 

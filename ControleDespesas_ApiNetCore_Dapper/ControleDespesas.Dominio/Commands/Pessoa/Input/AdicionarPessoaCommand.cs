@@ -8,6 +8,9 @@ namespace ControleDespesas.Dominio.Commands.Pessoa.Input
     public class AdicionarPessoaCommand : Notificadora, CommandPadrao
     {
         [Required]
+        public int IdUsuario { get; set; }
+
+        [Required]
         public string Nome { get; set; }
 
         [Required]
@@ -17,6 +20,8 @@ namespace ControleDespesas.Dominio.Commands.Pessoa.Input
         {
             try
             {
+                AddNotificacao(new ContratoValidacao().EhMaior(IdUsuario, 0, "Id do Usuário", "Id do Usuário não é valido"));
+
                 AddNotificacao(new ContratoValidacao().NaoEhNuloOuVazio(Nome, "Nome", "Nome é um campo obrigatório"));
                 AddNotificacao(new ContratoValidacao().TamanhoMaximo(Nome, 100, "Nome", "Nome maior que o esperado"));
 

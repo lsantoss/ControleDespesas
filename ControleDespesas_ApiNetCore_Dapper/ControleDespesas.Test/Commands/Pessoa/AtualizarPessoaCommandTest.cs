@@ -28,6 +28,21 @@ namespace ControleDespesas.Test.Commands.Pessoa
         [Test]
         [TestCase(0)]
         [TestCase(-1)]
+        public void ValidarCommand_IdUsuarioInvalido(int id)
+        {
+            _command.IdUsuario = id;
+            var valido = _command.ValidarCommand();
+            var notificacoes = _command.Notificacoes.Count;
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_command));
+
+            Assert.False(valido);
+            Assert.AreNotEqual(0, notificacoes);
+        }
+
+        [Test]
+        [TestCase(0)]
+        [TestCase(-1)]
         public void ValidarCommand_IdInvalido(int id)
         {
             _command.Id = id;

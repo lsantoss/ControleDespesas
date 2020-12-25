@@ -74,14 +74,20 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<List<PessoaQueryResult>, Notificacao>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<List<PessoaQueryResult>, Notificacao>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<List<PessoaQueryResult>, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<List<PessoaQueryResult>, Notificacao>> Pessoas()
+        public ActionResult<ApiResponse<List<PessoaQueryResult>, Notificacao>> Pessoas([FromBody] ObterPessoasPorIdUsuarioCommand command)
         {
             try
             {
                 if (Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
                     return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
 
-                var result = _repositorio.Listar();
+                if (command == null)
+                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
+
+                if (!command.ValidarCommand())
+                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
+
+                var result = _repositorio.Listar(command.IdUsuario);
 
                 if (result != null)
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<PessoaQueryResult>, Notificacao>("Lista de pessoas obtida com sucesso", result));

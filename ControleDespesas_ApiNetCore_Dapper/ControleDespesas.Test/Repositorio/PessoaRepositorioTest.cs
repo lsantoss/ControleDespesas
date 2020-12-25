@@ -81,7 +81,7 @@ namespace ControleDespesas.Test.Repositorio
 
             _repositoryPessoa.Deletar(pessoa2.Id);
 
-            var retorno = _repositoryPessoa.Listar();
+            var retorno = _repositoryPessoa.Listar(usuario.Id);
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 
@@ -130,7 +130,7 @@ namespace ControleDespesas.Test.Repositorio
             _repositoryPessoa.Salvar(pessoa2);
             _repositoryPessoa.Salvar(pessoa3);
 
-            var retorno = _repositoryPessoa.Listar();
+            var retorno = _repositoryPessoa.Listar(usuario.Id);
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 

@@ -70,11 +70,13 @@ namespace ControleDespesas.Test.Controllers
             var pessoa2 = new SettingsTest().Pessoa2;
             var pessoa3 = new SettingsTest().Pessoa3;
 
+            var command = new SettingsTest().PessoaObterPorIdUsuarioCommand;
+
             _repositoryPessoa.Salvar(pessoa1);
             _repositoryPessoa.Salvar(pessoa2);
             _repositoryPessoa.Salvar(pessoa3);
 
-            var response = _controller.Pessoas().Result;
+            var response = _controller.Pessoas(command).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -102,7 +104,7 @@ namespace ControleDespesas.Test.Controllers
         }
 
         [Test]
-        public void Empresa()
+        public void Pessoa()
         {
             var usuario = new SettingsTest().Usuario1;
             _repositoryUsuario.Salvar(usuario);
@@ -137,7 +139,7 @@ namespace ControleDespesas.Test.Controllers
         }
 
         [Test]
-        public void EmpresaInserir()
+        public void PessoaInserir()
         {
             var usuario = new SettingsTest().Usuario1;
             _repositoryUsuario.Salvar(usuario);
@@ -164,7 +166,7 @@ namespace ControleDespesas.Test.Controllers
         }
 
         [Test]
-        public void EmpresaAlterar()
+        public void PessoaAlterar()
         {
             var usuario = new SettingsTest().Usuario1;
             _repositoryUsuario.Salvar(usuario);
@@ -195,7 +197,7 @@ namespace ControleDespesas.Test.Controllers
         }
 
         [Test]
-        public void EmpresaExcluir()
+        public void PessoaExcluir()
         {
             var usuario = new SettingsTest().Usuario1;
             _repositoryUsuario.Salvar(usuario);

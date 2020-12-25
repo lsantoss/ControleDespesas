@@ -86,11 +86,13 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
         }
 
-        public List<PessoaQueryResult> Listar()
+        public List<PessoaQueryResult> Listar(int idUsuario)
         {
             try
             {
-                return _ctx.SQLServerConexao.Query<PessoaQueryResult>(PessoaQueries.Listar).ToList();
+                _parametros.Add("IdUsuario", idUsuario, DbType.Int32);
+
+                return _ctx.SQLServerConexao.Query<PessoaQueryResult>(PessoaQueries.Listar, _parametros).ToList();
             }
             catch (Exception e)
             {

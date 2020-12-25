@@ -11,7 +11,7 @@ namespace ControleDespesas.Dominio.Repositorio
         void Deletar(int id);
 
         PessoaQueryResult Obter(int id);
-        List<PessoaQueryResult> Listar();
+        List<PessoaQueryResult> Listar(int idUsuario);
 
         bool CheckId(int id);
         int LocalizarMaxId();

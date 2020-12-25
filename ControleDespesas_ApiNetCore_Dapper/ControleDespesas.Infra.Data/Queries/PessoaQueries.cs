@@ -22,6 +22,7 @@
                                                     Nome AS Nome,
                                                     ImagemPerfil AS ImagemPerfil 
                                                 FROM Pessoa 
+                                                WHERE IdUsuario = @IdUsuario 
                                                 ORDER BY Id ASC";
 
         public static string CheckId { get; } = @"SELECT Id FROM Pessoa WHERE Id = @Id";

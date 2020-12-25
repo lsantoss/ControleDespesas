@@ -66,6 +66,7 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
         public AtualizarPessoaCommand PessoaAtualizarCommand { get; }
         public ApagarPessoaCommand PessoaApagarCommand { get; }
         public ObterPessoaPorIdCommand PessoaObterPorIdCommand { get; }
+        public ObterPessoasPorIdUsuarioCommand PessoaObterPorIdUsuarioCommand { get; }
         public Pessoa Pessoa1 { get; }
         public Pessoa Pessoa2 { get; }
         public Pessoa Pessoa3 { get; }
@@ -214,6 +215,11 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
             PessoaObterPorIdCommand = new ObterPessoaPorIdCommand()
             {
                 Id = _configuration.GetValue<int>("SettingsTest:PessoaObterPorIdCommand:Id")
+            };
+
+            PessoaObterPorIdUsuarioCommand = new ObterPessoasPorIdUsuarioCommand()
+            {
+                IdUsuario = _configuration.GetValue<int>("SettingsTest:PessoaObterPorIdUsuarioCommand:IdUsuario")
             };
 
             Pessoa1 = new Pessoa(

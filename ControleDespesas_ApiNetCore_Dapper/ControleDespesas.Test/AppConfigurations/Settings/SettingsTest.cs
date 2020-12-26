@@ -90,6 +90,8 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
         public ApagarPagamentoCommand PagamentoApagarCommand { get; }
         public ObterPagamentoPorIdCommand PagamentoObterPorIdCommand { get; }
         public ObterPagamentoPorIdPessoaCommand PagamentoObterPorIdPessoaCommand { get; }
+        public ObterArquivoPagamentoCommand PagamentoObterArquivoPagamentoCommand { get; set; }
+        public ObterArquivoComprovanteCommand PagamentoObterArquivoComprovanteCommand { get; set; }
         public ObterGastosCommand PagamentoObterGastosCommand { get; }
         public ObterGastosAnoCommand PagamentoObterGastosAnoCommand { get; }
         public ObterGastosAnoMesCommand PagamentoObterGastosAnoMesCommand { get; }
@@ -353,6 +355,16 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
             PagamentoObterPorIdPessoaCommand = new ObterPagamentoPorIdPessoaCommand()
             {
                 IdPessoa = _configuration.GetValue<int>("SettingsTest:PagamentoObterPorIdPessoaCommand:IdPessoa")
+            };
+
+            PagamentoObterArquivoPagamentoCommand = new ObterArquivoPagamentoCommand()
+            {
+                IdPagamento = _configuration.GetValue<int>("SettingsTest:PagamentoObterArquivoPagamentoCommand:IdPagamento")
+            };
+
+            PagamentoObterArquivoComprovanteCommand = new ObterArquivoComprovanteCommand()
+            {
+                IdPagamento = _configuration.GetValue<int>("SettingsTest:PagamentoObterArquivoComprovanteCommand:IdPagamento")
             };
 
             Pagamento1 = new Pagamento(

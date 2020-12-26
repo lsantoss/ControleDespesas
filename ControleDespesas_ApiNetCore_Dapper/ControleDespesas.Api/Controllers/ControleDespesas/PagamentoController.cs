@@ -89,7 +89,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
 
                 var result = _repositorio.Listar(command.IdPessoa);
 
-                if (result != null)
+                if (result != null && result.Count > 0)
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<PagamentoQueryResult>, Notificacao>("Lista de pagamentos obtida com sucesso", result));
                 else
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<PagamentoQueryResult>, Notificacao>("Nenhum pagamento cadastrado atualmente", new List<PagamentoQueryResult>()));
@@ -173,7 +173,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
 
                 var result = _repositorio.ListarPagamentoConcluido(command.IdPessoa);
 
-                if (result != null)
+                if (result != null && result.Count > 0)
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<PagamentoQueryResult>, Notificacao>("Lista de pagamentos obtida com sucesso", result));
                 else
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<PagamentoQueryResult>, Notificacao>("Nenhum pagamento concluído foi encontrado", new List<PagamentoQueryResult>()));
@@ -215,7 +215,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
 
                 var result = _repositorio.ListarPagamentoPendente(command.IdPessoa);
 
-                if (result != null)
+                if (result != null && result.Count > 0)
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<PagamentoQueryResult>, Notificacao>("Lista de pagamentos obtida com sucesso", result));
                 else
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<PagamentoQueryResult>, Notificacao>("Nenhum pagamento pendente foi encontrado", new List<PagamentoQueryResult>()));

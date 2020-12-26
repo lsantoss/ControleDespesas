@@ -83,7 +83,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
 
                 var result = _repositorio.Listar();
 
-                if (result != null)
+                if (result != null && result.Count > 0)
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<TipoPagamentoQueryResult>, Notificacao>("Lista de tipos de pagamento obtida com sucesso", result));
                 else
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<TipoPagamentoQueryResult>, Notificacao>("Nenhum tipo de pagamento cadastrado atualmente", new List<TipoPagamentoQueryResult>()));

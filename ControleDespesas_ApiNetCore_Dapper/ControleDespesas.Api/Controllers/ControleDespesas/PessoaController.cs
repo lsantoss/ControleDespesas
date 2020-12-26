@@ -89,7 +89,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
 
                 var result = _repositorio.Listar(command.IdUsuario);
 
-                if (result != null)
+                if (result != null && result.Count > 0)
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<PessoaQueryResult>, Notificacao>("Lista de pessoas obtida com sucesso", result));
                 else
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<PessoaQueryResult>, Notificacao>("Nenhuma pessoa cadastrada atualmente", new List<PessoaQueryResult>()));

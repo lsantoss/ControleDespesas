@@ -83,7 +83,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
 
                 var result = _repositorio.Listar();
 
-                if (result != null)
+                if (result != null && result.Count > 0)
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<EmpresaQueryResult>, Notificacao>("Lista de empresas obtida com sucesso", result));
                 else
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<EmpresaQueryResult>, Notificacao>("Nenhuma empresa cadastrada atualmente", new List<EmpresaQueryResult>()));

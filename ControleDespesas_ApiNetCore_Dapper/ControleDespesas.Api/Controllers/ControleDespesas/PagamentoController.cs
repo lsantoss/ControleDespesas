@@ -258,7 +258,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
                 var result = _repositorio.ObterArquivoPagamento(command.IdPagamento);
 
                 if (result?.ArquivoPagamento != null)
-                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<PagamentoArquivoPagamentoQueryResult, Notificacao>("Arquivo encontrado com sucesso!", result));
+                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<PagamentoArquivoPagamentoQueryResult, Notificacao>("Arquivo encontrado com sucesso", result));
                 else
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<PagamentoArquivoPagamentoQueryResult, Notificacao>("Arquivo não encontrado", result));
             }
@@ -300,7 +300,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
                 var result = _repositorio.ObterArquivoComprovante(command.IdPagamento);
 
                 if (result?.ArquivoComprovante != null)
-                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<PagamentoArquivoComprovanteQueryResult, Notificacao>("Arquivo encontrado com sucesso!", result));
+                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<PagamentoArquivoComprovanteQueryResult, Notificacao>("Arquivo encontrado com sucesso", result));
                 else
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<PagamentoArquivoComprovanteQueryResult, Notificacao>("Arquivo não encontrado", result));
             }

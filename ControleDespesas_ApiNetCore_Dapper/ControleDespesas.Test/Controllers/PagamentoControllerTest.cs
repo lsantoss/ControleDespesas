@@ -286,6 +286,70 @@ namespace ControleDespesas.Test.Controllers
         }
 
         [Test]
+        public void ObterArquivoPagamento()
+        {
+            var usuario = new SettingsTest().Usuario1;
+            _repositoryUsuario.Salvar(usuario);
+
+            var pagamento1 = new SettingsTest().Pagamento1;
+
+            var command = new SettingsTest().PagamentoObterArquivoPagamentoCommand;
+
+            _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
+            _repositoryEmpresa.Salvar(pagamento1.Empresa);
+            _repositoryPessoa.Salvar(pagamento1.Pessoa);
+            _repositoryPagamento.Salvar(pagamento1);
+
+            var response = _controller.ObterArquivoPagamento(command).Result;
+
+            var responseJson = JsonConvert.SerializeObject(response);
+
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<PagamentoArquivoPagamentoQueryResult, Notificacao>>>(responseJson);
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
+
+            Assert.AreEqual(200, responseObj.StatusCode);
+
+            Assert.True(responseObj.Value.Sucesso);
+            Assert.AreEqual("Arquivo encontrado com sucesso", responseObj.Value.Mensagem);
+            Assert.Null(responseObj.Value.Erros);
+
+            Assert.AreEqual(pagamento1.ArquivoPagamento, responseObj.Value.Dados.ArquivoPagamento);
+        }
+
+        [Test]
+        public void ObterArquivoComprovante()
+        {
+            var usuario = new SettingsTest().Usuario1;
+            _repositoryUsuario.Salvar(usuario);
+
+            var pagamento1 = new SettingsTest().Pagamento1;
+
+            var command = new SettingsTest().PagamentoObterArquivoComprovanteCommand;
+
+            _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
+            _repositoryEmpresa.Salvar(pagamento1.Empresa);
+            _repositoryPessoa.Salvar(pagamento1.Pessoa);
+            _repositoryPagamento.Salvar(pagamento1);
+
+            var response = _controller.ObterArquivoComprovante(command).Result;
+
+            var responseJson = JsonConvert.SerializeObject(response);
+
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<PagamentoArquivoComprovanteQueryResult, Notificacao>>>(responseJson);
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
+
+            Assert.AreEqual(200, responseObj.StatusCode);
+
+            Assert.True(responseObj.Value.Sucesso);
+            Assert.AreEqual("Arquivo encontrado com sucesso", responseObj.Value.Mensagem);
+            Assert.Null(responseObj.Value.Erros);
+
+            Assert.AreEqual(pagamento1.ArquivoComprovante, responseObj.Value.Dados.ArquivoComprovante);
+        }
+
+        [Test]
         public void ObterGastos()
         {
             var usuario = new SettingsTest().Usuario1;

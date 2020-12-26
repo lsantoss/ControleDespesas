@@ -289,6 +289,46 @@ namespace ControleDespesas.Test.Repositorio
         }
 
         [Test]
+        public void ObterArquivoPagamento()
+        {
+            var usuario = new SettingsTest().Usuario1;
+            _repositoryUsuario.Salvar(usuario);
+
+            var pagamento = new SettingsTest().Pagamento1;
+
+            _repositoryTipoPagamento.Salvar(pagamento.TipoPagamento);
+            _repositoryEmpresa.Salvar(pagamento.Empresa);
+            _repositoryPessoa.Salvar(pagamento.Pessoa);
+            _repositoryPagamento.Salvar(pagamento);
+
+            var retorno = _repositoryPagamento.ObterArquivoPagamento(pagamento.Id);
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+
+            Assert.AreEqual(pagamento.ArquivoPagamento, retorno.ArquivoPagamento);
+        }
+
+        [Test]
+        public void ObterArquivoComprovante()
+        {
+            var usuario = new SettingsTest().Usuario1;
+            _repositoryUsuario.Salvar(usuario);
+
+            var pagamento = new SettingsTest().Pagamento1;
+
+            _repositoryTipoPagamento.Salvar(pagamento.TipoPagamento);
+            _repositoryEmpresa.Salvar(pagamento.Empresa);
+            _repositoryPessoa.Salvar(pagamento.Pessoa);
+            _repositoryPagamento.Salvar(pagamento);
+
+            var retorno = _repositoryPagamento.ObterArquivoComprovante(pagamento.Id);
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+
+            Assert.AreEqual(pagamento.ArquivoComprovante, retorno.ArquivoComprovante);
+        }
+
+        [Test]
         public void CalcularValorGastoTotal()
         {
             var usuario = new SettingsTest().Usuario1;

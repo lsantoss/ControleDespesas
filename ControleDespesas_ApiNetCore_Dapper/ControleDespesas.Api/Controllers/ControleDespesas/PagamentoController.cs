@@ -228,6 +228,90 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         }
 
         /// <summary>
+        /// Obter Arquivo para Pagamento
+        /// </summary>                
+        /// <remarks><h2><b>Consulta o arquivo para pagamento através do id do pagamento.</b></h2></remarks>
+        /// <param name="command">Parâmetro requerido command de Obter Arquivo Pagamento</param>
+        /// <response code="200">OK Request</response>
+        /// <response code="400">Bad Request</response>
+        /// <response code="401">Unauthorized</response>
+        /// <response code="500">Internal Server Error</response>
+        [HttpGet]
+        [Route("v1/ObterArquivoPagamento")]
+        [ProducesResponseType(typeof(ApiResponse<PagamentoArquivoPagamentoQueryResult, Notificacao>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<PagamentoArquivoPagamentoQueryResult, Notificacao>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<PagamentoArquivoPagamentoQueryResult, Notificacao>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<PagamentoArquivoPagamentoQueryResult, Notificacao>), StatusCodes.Status500InternalServerError)]
+        public ActionResult<ApiResponse<PagamentoArquivoPagamentoQueryResult, Notificacao>> ObterArquivoPagamento([FromBody] ObterArquivoPagamentoCommand command)
+        {
+            try
+            {
+                if (Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
+                    return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
+
+                if (command == null)
+                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
+
+                if (!command.ValidarCommand())
+                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
+
+                var result = _repositorio.ObterArquivoPagamento(command.IdPagamento);
+
+                if (result?.ArquivoPagamento != null)
+                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<PagamentoArquivoPagamentoQueryResult, Notificacao>("Arquivo encontrado com sucesso!", result));
+                else
+                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<PagamentoArquivoPagamentoQueryResult, Notificacao>("Arquivo não encontrado", result));
+            }
+            catch (Exception e)
+            {
+                HttpContext.RiseError(e);
+                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
+            }
+        }
+
+        /// <summary>
+        /// Obter Arquivo de Comprovante
+        /// </summary>                
+        /// <remarks><h2><b>Consulta o arquivo de comprovante através do id do pagamento.</b></h2></remarks>
+        /// <param name="command">Parâmetro requerido command de Obter Arquivo Comprovante</param>
+        /// <response code="200">OK Request</response>
+        /// <response code="400">Bad Request</response>
+        /// <response code="401">Unauthorized</response>
+        /// <response code="500">Internal Server Error</response>
+        [HttpGet]
+        [Route("v1/ObterArquivoComprovante")]
+        [ProducesResponseType(typeof(ApiResponse<PagamentoArquivoComprovanteQueryResult, Notificacao>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<PagamentoArquivoComprovanteQueryResult, Notificacao>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<PagamentoArquivoComprovanteQueryResult, Notificacao>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<PagamentoArquivoComprovanteQueryResult, Notificacao>), StatusCodes.Status500InternalServerError)]
+        public ActionResult<ApiResponse<PagamentoArquivoComprovanteQueryResult, Notificacao>> ObterArquivoComprovante([FromBody] ObterArquivoComprovanteCommand command)
+        {
+            try
+            {
+                if (Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
+                    return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
+
+                if (command == null)
+                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
+
+                if (!command.ValidarCommand())
+                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
+
+                var result = _repositorio.ObterArquivoComprovante(command.IdPagamento);
+
+                if (result?.ArquivoComprovante != null)
+                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<PagamentoArquivoComprovanteQueryResult, Notificacao>("Arquivo encontrado com sucesso!", result));
+                else
+                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<PagamentoArquivoComprovanteQueryResult, Notificacao>("Arquivo não encontrado", result));
+            }
+            catch (Exception e)
+            {
+                HttpContext.RiseError(e);
+                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
+            }
+        }
+
+        /// <summary>
         /// Total Gasto
         /// </summary>                
         /// <remarks><h2><b>Consulta o total gasto pela pessoa.</b></h2></remarks>

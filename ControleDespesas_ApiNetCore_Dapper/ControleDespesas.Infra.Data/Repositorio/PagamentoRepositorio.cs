@@ -199,6 +199,34 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
         }
 
+        public PagamentoArquivoPagamentoQueryResult ObterArquivoPagamento(int idPagamento)
+        {
+            try
+            {
+                _parametros.Add("IdPagamento", idPagamento, DbType.Int32);
+
+                return _ctx.SQLServerConexao.Query<PagamentoArquivoPagamentoQueryResult>(PagamentoQueries.ObterArquivoPagamento, _parametros).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public PagamentoArquivoComprovanteQueryResult ObterArquivoComprovante(int idPagamento)
+        {
+            try
+            {
+                _parametros.Add("IdPagamento", idPagamento, DbType.Int32);
+
+                return _ctx.SQLServerConexao.Query<PagamentoArquivoComprovanteQueryResult>(PagamentoQueries.ObterArquivoComprovante, _parametros).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
         public PagamentoGastosQueryResult CalcularValorGastoTotal(int idPessoa)
         {
             try

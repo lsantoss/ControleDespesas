@@ -20,12 +20,17 @@ namespace ControleDespesas.Dominio.Commands.Empresa.Input
         {
             try
             {
-                AddNotificacao(new ContratoValidacao().EhMaior(Id, 0, "Id", "Id não é valido"));
+                if (Id <= 0)
+                    AddNotificacao("Id", "Id não é valido");
 
-                AddNotificacao(new ContratoValidacao().NaoEhNuloOuVazio(Nome, "Nome", "Nome é um campo obrigatório"));
-                AddNotificacao(new ContratoValidacao().TamanhoMaximo(Nome, 100, "Nome", "Nome maior que o esperado"));
+                if (string.IsNullOrEmpty(Nome))
+                    AddNotificacao("Nome", "Nome é um campo obrigatório");
 
-                AddNotificacao(new ContratoValidacao().NaoEhNuloOuVazio(Logo, "Logo", "Logo é um campo obrigatório"));
+                if (Nome.Length > 100)
+                    AddNotificacao("Nome", "Nome maior que o esperado");
+
+                if (string.IsNullOrEmpty(Logo))
+                    AddNotificacao("Logo", "Logo é um campo obrigatório");
 
                 return Valido;
             }

@@ -1,4 +1,5 @@
-﻿using LSCode.Validador.ValidacoesNotificacoes;
+﻿using LSCode.Validador.ValidacoesBooleanas;
+using LSCode.Validador.ValidacoesNotificacoes;
 
 namespace ControleDespesas.Dominio.Entidades
 {
@@ -21,10 +22,14 @@ namespace ControleDespesas.Dominio.Entidades
 
         public void Validar()
         {
-            AddNotificacao(new ContratoValidacao().NaoEhNuloOuVazio(Nome, "Nome", "Nome é um campo obrigatório"));
-            AddNotificacao(new ContratoValidacao().TamanhoMaximo(Nome, 100, "Nome", "Nome maior que o esperado"));
+            if (string.IsNullOrEmpty(Nome))
+                AddNotificacao("Nome", "Nome é um campo obrigatório");
 
-            AddNotificacao(new ContratoValidacao().NaoEhNuloOuVazio(Logo, "Logo", "Logo é um campo obrigatório"));
+            if (Nome.Length > 100)
+                AddNotificacao("Nome", "Nome maior que o esperado");
+
+            if (string.IsNullOrEmpty(Logo))
+                AddNotificacao("Logo", "Logo é um campo obrigatório");
         }
     }
 }

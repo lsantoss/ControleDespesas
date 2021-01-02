@@ -21,12 +21,10 @@ namespace ControleDespesas.Test.Helpers
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(entidade));
 
             Assert.AreEqual(0, entidade.Id);
-            Assert.AreEqual(command.Nome, entidade.Nome.ToString());
+            Assert.AreEqual(command.Nome, entidade.Nome);
             Assert.AreEqual(command.Logo, entidade.Logo); 
             Assert.True(entidade.Valido);
-            Assert.True(entidade.Nome.Valido);
             Assert.AreEqual(0, entidade.Notificacoes.Count);
-            Assert.AreEqual(0, entidade.Nome.Notificacoes.Count);
         }
 
         [Test]
@@ -39,12 +37,10 @@ namespace ControleDespesas.Test.Helpers
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(entidade));
 
             Assert.AreEqual(command.Id, entidade.Id);
-            Assert.AreEqual(command.Nome, entidade.Nome.ToString());
+            Assert.AreEqual(command.Nome, entidade.Nome);
             Assert.AreEqual(command.Logo, entidade.Logo);
             Assert.True(entidade.Valido);
-            Assert.True(entidade.Nome.Valido);
             Assert.AreEqual(0, entidade.Notificacoes.Count);
-            Assert.AreEqual(0, entidade.Nome.Notificacoes.Count);
         }
 
         [Test]
@@ -57,7 +53,7 @@ namespace ControleDespesas.Test.Helpers
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(command));
 
             Assert.AreEqual(entidade.Id, command.Id);
-            Assert.AreEqual(entidade.Nome.ToString(), command.Nome);
+            Assert.AreEqual(entidade.Nome, command.Nome);
             Assert.AreEqual(entidade.Logo, command.Logo);
         }
 
@@ -71,7 +67,7 @@ namespace ControleDespesas.Test.Helpers
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(command));
 
             Assert.AreEqual(entidade.Id, command.Id);
-            Assert.AreEqual(entidade.Nome.ToString(), command.Nome);
+            Assert.AreEqual(entidade.Nome, command.Nome);
             Assert.AreEqual(entidade.Logo, command.Logo);
         }
 

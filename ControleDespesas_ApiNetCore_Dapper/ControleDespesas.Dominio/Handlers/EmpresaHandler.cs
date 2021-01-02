@@ -27,7 +27,7 @@ namespace ControleDespesas.Dominio.Handlers
             {
                 Empresa empresa = EmpresaHelper.GerarEntidade(command);
 
-                AddNotificacao(empresa.Nome.Notificacoes);
+                AddNotificacao(empresa.Notificacoes);
 
                 if (Invalido)
                     return new CommandResult<Notificacao>("Inconsistência(s) no(s) dado(s)", Notificacoes);
@@ -50,7 +50,7 @@ namespace ControleDespesas.Dominio.Handlers
             {
                 Empresa empresa = EmpresaHelper.GerarEntidade(command);
 
-                AddNotificacao(empresa.Nome.Notificacoes);
+                AddNotificacao(empresa.Notificacoes);
 
                 if (!_repository.CheckId(empresa.Id))
                     AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");

@@ -33,7 +33,7 @@ namespace ControleDespesas.Test.Repositorio
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 
             Assert.AreEqual(empresa.Id, retorno.Id);
-            Assert.AreEqual(empresa.Nome.ToString(), retorno.Nome);
+            Assert.AreEqual(empresa.Nome, retorno.Nome);
             Assert.AreEqual(empresa.Logo, retorno.Logo);
         }
 
@@ -51,7 +51,7 @@ namespace ControleDespesas.Test.Repositorio
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 
             Assert.AreEqual(empresa.Id, retorno.Id);
-            Assert.AreEqual(empresa.Nome.ToString(), retorno.Nome);
+            Assert.AreEqual(empresa.Nome, retorno.Nome);
             Assert.AreEqual(empresa.Logo, retorno.Logo);
         }
 
@@ -73,11 +73,11 @@ namespace ControleDespesas.Test.Repositorio
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 
             Assert.AreEqual(empresa1.Id, retorno[0].Id);
-            Assert.AreEqual(empresa1.Nome.ToString(), retorno[0].Nome);
+            Assert.AreEqual(empresa1.Nome, retorno[0].Nome);
             Assert.AreEqual(empresa1.Logo, retorno[0].Logo);
 
             Assert.AreEqual(empresa3.Id, retorno[1].Id);
-            Assert.AreEqual(empresa3.Nome.ToString(), retorno[1].Nome);
+            Assert.AreEqual(empresa3.Nome, retorno[1].Nome);
             Assert.AreEqual(empresa3.Logo, retorno[1].Logo);
         }
 
@@ -92,7 +92,7 @@ namespace ControleDespesas.Test.Repositorio
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 
             Assert.AreEqual(empresa.Id, retorno.Id);
-            Assert.AreEqual(empresa.Nome.ToString(), retorno.Nome);
+            Assert.AreEqual(empresa.Nome, retorno.Nome);
             Assert.AreEqual(empresa.Logo, retorno.Logo);
         }
 
@@ -112,15 +112,15 @@ namespace ControleDespesas.Test.Repositorio
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 
             Assert.AreEqual(empresa1.Id, retorno[0].Id);
-            Assert.AreEqual(empresa1.Nome.ToString(), retorno[0].Nome);
+            Assert.AreEqual(empresa1.Nome, retorno[0].Nome);
             Assert.AreEqual(empresa1.Logo, retorno[0].Logo);
 
             Assert.AreEqual(empresa2.Id, retorno[1].Id);
-            Assert.AreEqual(empresa2.Nome.ToString(), retorno[1].Nome);
+            Assert.AreEqual(empresa2.Nome, retorno[1].Nome);
             Assert.AreEqual(empresa2.Logo, retorno[1].Logo);
 
             Assert.AreEqual(empresa3.Id, retorno[2].Id);
-            Assert.AreEqual(empresa3.Nome.ToString(), retorno[2].Nome);
+            Assert.AreEqual(empresa3.Nome, retorno[2].Nome);
             Assert.AreEqual(empresa3.Logo, retorno[2].Logo);
         }
 

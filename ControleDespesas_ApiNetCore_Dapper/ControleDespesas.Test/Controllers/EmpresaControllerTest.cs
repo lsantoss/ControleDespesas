@@ -84,15 +84,15 @@ namespace ControleDespesas.Test.Controllers
             Assert.Null(responseObj.Value.Erros);
 
             Assert.AreEqual(empresa1.Id, responseObj.Value.Dados[0].Id);
-            Assert.AreEqual(empresa1.Nome.ToString(), responseObj.Value.Dados[0].Nome);
+            Assert.AreEqual(empresa1.Nome, responseObj.Value.Dados[0].Nome);
             Assert.AreEqual(empresa1.Logo, responseObj.Value.Dados[0].Logo);
 
             Assert.AreEqual(empresa2.Id, responseObj.Value.Dados[1].Id);
-            Assert.AreEqual(empresa2.Nome.ToString(), responseObj.Value.Dados[1].Nome);
+            Assert.AreEqual(empresa2.Nome, responseObj.Value.Dados[1].Nome);
             Assert.AreEqual(empresa2.Logo, responseObj.Value.Dados[1].Logo);
 
             Assert.AreEqual(empresa3.Id, responseObj.Value.Dados[2].Id);
-            Assert.AreEqual(empresa3.Nome.ToString(), responseObj.Value.Dados[2].Nome);
+            Assert.AreEqual(empresa3.Nome, responseObj.Value.Dados[2].Nome);
             Assert.AreEqual(empresa3.Logo, responseObj.Value.Dados[2].Logo);
         }
 
@@ -124,7 +124,7 @@ namespace ControleDespesas.Test.Controllers
             Assert.Null(responseObj.Value.Erros);
 
             Assert.AreEqual(empresa2.Id, responseObj.Value.Dados.Id);
-            Assert.AreEqual(empresa2.Nome.ToString(), responseObj.Value.Dados.Nome);
+            Assert.AreEqual(empresa2.Nome, responseObj.Value.Dados.Nome);
             Assert.AreEqual(empresa2.Logo, responseObj.Value.Dados.Logo);
         }
 

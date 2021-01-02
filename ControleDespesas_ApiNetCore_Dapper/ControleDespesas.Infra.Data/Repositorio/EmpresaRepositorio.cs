@@ -28,7 +28,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
         {
             try
             {
-                _parametros.Add("Nome", empresa.Nome.ToString(), DbType.String);
+                _parametros.Add("Nome", empresa.Nome, DbType.String);
                 _parametros.Add("Logo", empresa.Logo, DbType.String);
 
                 empresa.Id = _ctx.SQLServerConexao.ExecuteScalar<int>(EmpresaQueries.Salvar, _parametros);
@@ -45,7 +45,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             try
             {
                 _parametros.Add("Id", empresa.Id, DbType.Int32);
-                _parametros.Add("Nome", empresa.Nome.ToString(), DbType.String);
+                _parametros.Add("Nome", empresa.Nome, DbType.String);
                 _parametros.Add("Logo", empresa.Logo, DbType.String);
 
                 _ctx.SQLServerConexao.Execute(EmpresaQueries.Atualizar, _parametros);

@@ -170,25 +170,25 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
 
             Empresa1 = new Empresa(
                 _configuration.GetValue<int>("SettingsTest:Empresa1:Id"),
-                new Texto(_configuration.GetValue<string>("SettingsTest:Empresa1:Nome"), "Nome", 100),
+                _configuration.GetValue<string>("SettingsTest:Empresa1:Nome"),
                 _configuration.GetValue<string>("SettingsTest:Empresa1:Logo")
             );
 
             Empresa2 = new Empresa(
                 _configuration.GetValue<int>("SettingsTest:Empresa2:Id"),
-                new Texto(_configuration.GetValue<string>("SettingsTest:Empresa2:Nome"), "Nome", 100),
+                _configuration.GetValue<string>("SettingsTest:Empresa2:Nome"),
                 _configuration.GetValue<string>("SettingsTest:Empresa2:Logo")
             );
 
             Empresa3 = new Empresa(
                 _configuration.GetValue<int>("SettingsTest:Empresa3:Id"),
-                new Texto(_configuration.GetValue<string>("SettingsTest:Empresa3:Nome"), "Nome", 100),
+                _configuration.GetValue<string>("SettingsTest:Empresa3:Nome"),
                 _configuration.GetValue<string>("SettingsTest:Empresa3:Logo")
             );
 
             Empresa1Editada = new Empresa(
                 _configuration.GetValue<int>("SettingsTest:Empresa1Editada:Id"),
-                new Texto(_configuration.GetValue<string>("SettingsTest:Empresa1Editada:Nome"), "Nome", 100),
+                _configuration.GetValue<string>("SettingsTest:Empresa1Editada:Nome"),
                 _configuration.GetValue<string>("SettingsTest:Empresa1Editada:Logo")
             );
             #endregion
@@ -375,7 +375,7 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                 ),
                 new Empresa(
                     _configuration.GetValue<int>("SettingsTest:Pagamento1:Empresa:Id"),
-                    new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento1:Empresa:Nome"), "Nome", 100),
+                    _configuration.GetValue<string>("SettingsTest:Pagamento1:Empresa:Nome"),
                     _configuration.GetValue<string>("SettingsTest:Pagamento1:Empresa:Logo")
                 ),
                 new Pessoa(
@@ -400,7 +400,7 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                 ),
                 new Empresa(
                     _configuration.GetValue<int>("SettingsTest:Pagamento2:Empresa:Id"),
-                    new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento2:Empresa:Nome"), "Nome", 100),
+                    _configuration.GetValue<string>("SettingsTest:Pagamento2:Empresa:Nome"),
                     _configuration.GetValue<string>("SettingsTest:Pagamento2:Empresa:Logo")
                 ),
                 new Pessoa(
@@ -425,7 +425,7 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                 ),
                 new Empresa(
                     _configuration.GetValue<int>("SettingsTest:Pagamento3:Empresa:Id"),
-                    new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento3:Empresa:Nome"), "Nome", 100),
+                    _configuration.GetValue<string>("SettingsTest:Pagamento3:Empresa:Nome"),
                     _configuration.GetValue<string>("SettingsTest:Pagamento3:Empresa:Logo")
                 ),
                 new Pessoa(
@@ -450,7 +450,7 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                 ),
                 new Empresa(
                     _configuration.GetValue<int>("SettingsTest:Pagamento1Editado:Empresa:Id"),
-                    new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento1Editado:Empresa:Nome"), "Nome", 100),
+                    _configuration.GetValue<string>("SettingsTest:Pagamento1Editado:Empresa:Nome"),
                     _configuration.GetValue<string>("SettingsTest:Pagamento1Editado:Empresa:Logo")
                 ),
                 new Pessoa(

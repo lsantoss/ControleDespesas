@@ -91,15 +91,15 @@ namespace ControleDespesas.Test.Controllers
             Assert.Null(responseObj.Value.Erros);
 
             Assert.AreEqual(pessoa1.Id, responseObj.Value.Dados[0].Id);
-            Assert.AreEqual(pessoa1.Nome.ToString(), responseObj.Value.Dados[0].Nome);
+            Assert.AreEqual(pessoa1.Nome, responseObj.Value.Dados[0].Nome);
             Assert.AreEqual(pessoa1.ImagemPerfil, responseObj.Value.Dados[0].ImagemPerfil);
 
             Assert.AreEqual(pessoa2.Id, responseObj.Value.Dados[1].Id);
-            Assert.AreEqual(pessoa2.Nome.ToString(), responseObj.Value.Dados[1].Nome);
+            Assert.AreEqual(pessoa2.Nome, responseObj.Value.Dados[1].Nome);
             Assert.AreEqual(pessoa2.ImagemPerfil, responseObj.Value.Dados[1].ImagemPerfil);
 
             Assert.AreEqual(pessoa3.Id, responseObj.Value.Dados[2].Id);
-            Assert.AreEqual(pessoa3.Nome.ToString(), responseObj.Value.Dados[2].Nome);
+            Assert.AreEqual(pessoa3.Nome, responseObj.Value.Dados[2].Nome);
             Assert.AreEqual(pessoa3.ImagemPerfil, responseObj.Value.Dados[2].ImagemPerfil);
         }
 
@@ -134,7 +134,7 @@ namespace ControleDespesas.Test.Controllers
             Assert.Null(responseObj.Value.Erros);
 
             Assert.AreEqual(pessoa2.Id, responseObj.Value.Dados.Id);
-            Assert.AreEqual(pessoa2.Nome.ToString(), responseObj.Value.Dados.Nome);
+            Assert.AreEqual(pessoa2.Nome, responseObj.Value.Dados.Nome);
             Assert.AreEqual(pessoa2.ImagemPerfil, responseObj.Value.Dados.ImagemPerfil);
         }
 

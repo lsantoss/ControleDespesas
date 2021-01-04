@@ -27,7 +27,7 @@ namespace ControleDespesas.Dominio.Handlers
             {
                 Pessoa pessoa = PessoaHelper.GerarEntidade(command);
 
-                AddNotificacao(pessoa.Nome.Notificacoes);
+                AddNotificacao(pessoa.Notificacoes);
 
                 if (Invalido)
                     return new CommandResult<Notificacao>("Inconsistência(s) no(s) dado(s)", Notificacoes);
@@ -50,7 +50,7 @@ namespace ControleDespesas.Dominio.Handlers
             {
                 Pessoa pessoa = PessoaHelper.GerarEntidade(command);
 
-                AddNotificacao(pessoa.Nome.Notificacoes);
+                AddNotificacao(pessoa.Notificacoes);
 
                 if (pessoa.Id == 0)
                     AddNotificacao("Id", "Id não está vinculado à operação solicitada");

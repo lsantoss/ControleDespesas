@@ -227,28 +227,28 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
             Pessoa1 = new Pessoa(
                 _configuration.GetValue<int>("SettingsTest:Pessoa1:Id"),
                 new Usuario(_configuration.GetValue<int>("SettingsTest:Pessoa1:IdUsuario")),
-                new Texto(_configuration.GetValue<string>("SettingsTest:Pessoa1:Nome"), "Nome", 100),
+                _configuration.GetValue<string>("SettingsTest:Pessoa1:Nome"),
                 _configuration.GetValue<string>("SettingsTest:Pessoa1:ImagemPerfil")
             );
 
             Pessoa2 = new Pessoa(
                 _configuration.GetValue<int>("SettingsTest:Pessoa2:Id"),
                 new Usuario(_configuration.GetValue<int>("SettingsTest:Pessoa2:IdUsuario")),
-                new Texto(_configuration.GetValue<string>("SettingsTest:Pessoa2:Nome"), "Nome", 100),
+                _configuration.GetValue<string>("SettingsTest:Pessoa2:Nome"),
                 _configuration.GetValue<string>("SettingsTest:Pessoa2:ImagemPerfil")
             );
 
             Pessoa3 = new Pessoa(
                 _configuration.GetValue<int>("SettingsTest:Pessoa3:Id"),
                 new Usuario(_configuration.GetValue<int>("SettingsTest:Pessoa3:IdUsuario")),
-                new Texto(_configuration.GetValue<string>("SettingsTest:Pessoa3:Nome"), "Nome", 100),
+                _configuration.GetValue<string>("SettingsTest:Pessoa3:Nome"),
                 _configuration.GetValue<string>("SettingsTest:Pessoa3:ImagemPerfil")
             );
 
             Pessoa1Editada = new Pessoa(
                 _configuration.GetValue<int>("SettingsTest:Pessoa1Editada:Id"),
                 new Usuario(_configuration.GetValue<int>("SettingsTest:Pessoa1Editada:IdUsuario")),
-                new Texto(_configuration.GetValue<string>("SettingsTest:Pessoa1Editada:Nome"), "Nome", 100),
+                _configuration.GetValue<string>("SettingsTest:Pessoa1Editada:Nome"),
                 _configuration.GetValue<string>("SettingsTest:Pessoa1Editada:ImagemPerfil")
             );
             #endregion
@@ -381,7 +381,7 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                 new Pessoa(
                     _configuration.GetValue<int>("SettingsTest:Pagamento1:Pessoa:Id"),
                     new Usuario(_configuration.GetValue<int>("SettingsTest:Pagamento1:Pessoa:IdUsuario")),
-                    new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento1:Pessoa:Nome"), "Nome", 100),
+                    _configuration.GetValue<string>("SettingsTest:Pagamento1:Pessoa:Nome"),
                     _configuration.GetValue<string>("SettingsTest:Pagamento1:Pessoa:ImagemPerfil")
                 ),
                 new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento1:Descricao"), "Descrição", 250),
@@ -406,7 +406,7 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                 new Pessoa(
                     _configuration.GetValue<int>("SettingsTest:Pagamento2:Pessoa:Id"),
                     new Usuario(_configuration.GetValue<int>("SettingsTest:Pagamento2:Pessoa:IdUsuario")),
-                    new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento2:Pessoa:Nome"), "Nome", 100),
+                    _configuration.GetValue<string>("SettingsTest:Pagamento2:Pessoa:Nome"),
                     _configuration.GetValue<string>("SettingsTest:Pagamento2:Pessoa:ImagemPerfil")
                 ),
                 new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento2:Descricao"), "Descrição", 250),
@@ -431,7 +431,7 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                 new Pessoa(
                     _configuration.GetValue<int>("SettingsTest:Pagamento3:Pessoa:Id"),
                     new Usuario(_configuration.GetValue<int>("SettingsTest:Pagamento3:Pessoa:IdUsuario")),
-                    new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento3:Pessoa:Nome"), "Nome", 100),
+                    _configuration.GetValue<string>("SettingsTest:Pagamento3:Pessoa:Nome"),
                     _configuration.GetValue<string>("SettingsTest:Pagamento3:Pessoa:ImagemPerfil")
                 ),
                 new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento3:Descricao"), "Descrição", 250),
@@ -456,7 +456,7 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                 new Pessoa(
                     _configuration.GetValue<int>("SettingsTest:Pagamento1Editado:Pessoa:Id"),
                     new Usuario(_configuration.GetValue<int>("SettingsTest:Pagamento1Editado:Pessoa:IdUsuario")),
-                    new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento1Editado:Pessoa:Nome"), "Nome", 100),
+                    _configuration.GetValue<string>("SettingsTest:Pagamento1Editado:Pessoa:Nome"),
                     _configuration.GetValue<string>("SettingsTest:Pagamento1Editado:Pessoa:ImagemPerfil")
                 ),
                 new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento1Editado:Descricao"), "Descrição", 250),

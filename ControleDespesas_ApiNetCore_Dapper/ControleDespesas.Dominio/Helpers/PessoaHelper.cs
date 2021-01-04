@@ -1,7 +1,6 @@
 ﻿using ControleDespesas.Dominio.Commands.Pessoa.Input;
 using ControleDespesas.Dominio.Commands.Pessoa.Output;
 using ControleDespesas.Dominio.Entidades;
-using LSCode.Validador.ValueObjects;
 using System;
 
 namespace ControleDespesas.Dominio.Helpers
@@ -13,7 +12,7 @@ namespace ControleDespesas.Dominio.Helpers
             try
             {
                 Usuario usuario = new Usuario(command.IdUsuario);
-                Texto nome = new Texto(command.Nome, "Nome", 100);
+                string nome = command.Nome;
                 string imagemPerfil = command.ImagemPerfil;
 
                 Pessoa pessoa = new Pessoa(0, usuario, nome, imagemPerfil);
@@ -31,7 +30,7 @@ namespace ControleDespesas.Dominio.Helpers
             {
                 int id = command.Id;
                 Usuario usuario = new Usuario(command.IdUsuario);
-                Texto nome = new Texto(command.Nome, "Nome", 100);
+                string nome = command.Nome;
                 string imagemPerfil = command.ImagemPerfil;
 
                 Pessoa pessoa = new Pessoa(id, usuario, nome, imagemPerfil);
@@ -51,7 +50,7 @@ namespace ControleDespesas.Dominio.Helpers
                 {
                     Id = pessoa.Id,
                     IdUsuario = pessoa.Usuario.Id,
-                    Nome = pessoa.Nome.ToString(),
+                    Nome = pessoa.Nome,
                     ImagemPerfil = pessoa.ImagemPerfil
                 };
             }
@@ -69,7 +68,7 @@ namespace ControleDespesas.Dominio.Helpers
                 {
                     Id = pessoa.Id,
                     IdUsuario = pessoa.Usuario.Id,
-                    Nome = pessoa.Nome.ToString(),
+                    Nome = pessoa.Nome,
                     ImagemPerfil = pessoa.ImagemPerfil
                 };
             }

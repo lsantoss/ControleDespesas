@@ -20,12 +20,16 @@ namespace ControleDespesas.Dominio.Commands.Pessoa.Input
         {
             try
             {
-                AddNotificacao(new ContratoValidacao().EhMaior(IdUsuario, 0, "Id do Usuário", "Id do Usuário não é valido"));
+                if (IdUsuario <= 0)
+                    AddNotificacao("Id do Usuário", "Id do Usuário não é valido");
 
-                AddNotificacao(new ContratoValidacao().NaoEhNuloOuVazio(Nome, "Nome", "Nome é um campo obrigatório"));
-                AddNotificacao(new ContratoValidacao().TamanhoMaximo(Nome, 100, "Nome", "Nome maior que o esperado"));
+                if (string.IsNullOrEmpty(Nome))
+                    AddNotificacao("Nome", "Nome é um campo obrigatório");
+                else if(Nome.Length > 100)
+                    AddNotificacao("Nome", "Nome maior que o esperado");
 
-                AddNotificacao(new ContratoValidacao().NaoEhNuloOuVazio(ImagemPerfil, "Imagem de Perfil", "Imagem de Perfil é um campo obrigatório"));
+                if (string.IsNullOrEmpty(ImagemPerfil))
+                    AddNotificacao("Imagem de Perfil", "Imagem de Perfil é um campo obrigatório");
 
                 return Valido;
             }

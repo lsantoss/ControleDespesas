@@ -25,9 +25,7 @@ namespace ControleDespesas.Test.Helpers
             Assert.AreEqual(command.Nome, entidade.Nome.ToString());
             Assert.AreEqual(command.ImagemPerfil, entidade.ImagemPerfil);
             Assert.True(entidade.Valido);
-            Assert.True(entidade.Nome.Valido);
             Assert.AreEqual(0, entidade.Notificacoes.Count);
-            Assert.AreEqual(0, entidade.Nome.Notificacoes.Count);
         }
 
         [Test]
@@ -44,9 +42,7 @@ namespace ControleDespesas.Test.Helpers
             Assert.AreEqual(command.Nome, entidade.Nome.ToString());
             Assert.AreEqual(command.ImagemPerfil, entidade.ImagemPerfil);
             Assert.True(entidade.Valido);
-            Assert.True(entidade.Nome.Valido);
             Assert.AreEqual(0, entidade.Notificacoes.Count);
-            Assert.AreEqual(0, entidade.Nome.Notificacoes.Count);
         }
 
         [Test]
@@ -60,7 +56,7 @@ namespace ControleDespesas.Test.Helpers
 
             Assert.AreEqual(entidade.Id, command.Id);
             Assert.AreEqual(entidade.Usuario.Id, command.IdUsuario);
-            Assert.AreEqual(entidade.Nome.ToString(), command.Nome);
+            Assert.AreEqual(entidade.Nome, command.Nome);
             Assert.AreEqual(entidade.ImagemPerfil, command.ImagemPerfil);
         }
 
@@ -75,7 +71,7 @@ namespace ControleDespesas.Test.Helpers
 
             Assert.AreEqual(entidade.Id, command.Id);
             Assert.AreEqual(entidade.Usuario.Id, command.IdUsuario);
-            Assert.AreEqual(entidade.Nome.ToString(), command.Nome);
+            Assert.AreEqual(entidade.Nome, command.Nome);
             Assert.AreEqual(entidade.ImagemPerfil, command.ImagemPerfil);
         }
 

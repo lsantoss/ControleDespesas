@@ -39,7 +39,7 @@ namespace ControleDespesas.Test.Repositorio
 
             Assert.AreEqual(pessoa.Id, retorno.Id);
             Assert.AreEqual(pessoa.Usuario.Id, retorno.IdUsuario);
-            Assert.AreEqual(pessoa.Nome.ToString(), retorno.Nome);
+            Assert.AreEqual(pessoa.Nome, retorno.Nome);
             Assert.AreEqual(pessoa.ImagemPerfil, retorno.ImagemPerfil);
         }
 
@@ -61,7 +61,7 @@ namespace ControleDespesas.Test.Repositorio
 
             Assert.AreEqual(pessoa.Id, retorno.Id);
             Assert.AreEqual(pessoa.Usuario.Id, retorno.IdUsuario);
-            Assert.AreEqual(pessoa.Nome.ToString(), retorno.Nome);
+            Assert.AreEqual(pessoa.Nome, retorno.Nome);
             Assert.AreEqual(pessoa.ImagemPerfil, retorno.ImagemPerfil);
         }
 
@@ -87,12 +87,12 @@ namespace ControleDespesas.Test.Repositorio
 
             Assert.AreEqual(pessoa1.Id, retorno[0].Id);
             Assert.AreEqual(pessoa1.Usuario.Id, retorno[0].IdUsuario);
-            Assert.AreEqual(pessoa1.Nome.ToString(), retorno[0].Nome);
+            Assert.AreEqual(pessoa1.Nome, retorno[0].Nome);
             Assert.AreEqual(pessoa1.ImagemPerfil, retorno[0].ImagemPerfil);
 
             Assert.AreEqual(pessoa3.Id, retorno[1].Id);
             Assert.AreEqual(pessoa3.Usuario.Id, retorno[1].IdUsuario);
-            Assert.AreEqual(pessoa3.Nome.ToString(), retorno[1].Nome);
+            Assert.AreEqual(pessoa3.Nome, retorno[1].Nome);
             Assert.AreEqual(pessoa3.ImagemPerfil, retorno[1].ImagemPerfil);
         }
 
@@ -112,7 +112,7 @@ namespace ControleDespesas.Test.Repositorio
 
             Assert.AreEqual(pessoa.Id, retorno.Id);
             Assert.AreEqual(pessoa.Usuario.Id, retorno.IdUsuario);
-            Assert.AreEqual(pessoa.Nome.ToString(), retorno.Nome);
+            Assert.AreEqual(pessoa.Nome, retorno.Nome);
             Assert.AreEqual(pessoa.ImagemPerfil, retorno.ImagemPerfil);
         }
 
@@ -136,17 +136,17 @@ namespace ControleDespesas.Test.Repositorio
 
             Assert.AreEqual(pessoa1.Id, retorno[0].Id);
             Assert.AreEqual(pessoa1.Usuario.Id, retorno[0].IdUsuario);
-            Assert.AreEqual(pessoa1.Nome.ToString(), retorno[0].Nome);
+            Assert.AreEqual(pessoa1.Nome, retorno[0].Nome);
             Assert.AreEqual(pessoa1.ImagemPerfil, retorno[0].ImagemPerfil);
 
             Assert.AreEqual(pessoa2.Id, retorno[1].Id);
             Assert.AreEqual(pessoa2.Usuario.Id, retorno[1].IdUsuario);
-            Assert.AreEqual(pessoa2.Nome.ToString(), retorno[1].Nome);
+            Assert.AreEqual(pessoa2.Nome, retorno[1].Nome);
             Assert.AreEqual(pessoa2.ImagemPerfil, retorno[1].ImagemPerfil);
 
             Assert.AreEqual(pessoa3.Id, retorno[2].Id);
             Assert.AreEqual(pessoa3.Usuario.Id, retorno[2].IdUsuario);
-            Assert.AreEqual(pessoa3.Nome.ToString(), retorno[2].Nome);
+            Assert.AreEqual(pessoa3.Nome, retorno[2].Nome);
             Assert.AreEqual(pessoa3.ImagemPerfil, retorno[2].ImagemPerfil);
         }
 

@@ -20,20 +20,19 @@ namespace ControleDespesas.Test.Entidades
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_pessoa));
 
             Assert.True(_pessoa.Valido);
-            Assert.True(_pessoa.Nome.Valido);
             Assert.AreEqual(0, _pessoa.Notificacoes.Count);
-            Assert.AreEqual(0, _pessoa.Nome.Notificacoes.Count);
         }
 
         [Test]
         public void ValidarEntidade_NomeInvalido()
         {
-            _pessoa.Nome = new Texto("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "Nome", 100);
+            _pessoa.Nome = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            _pessoa.Validar();
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_pessoa));
 
-            Assert.False(_pessoa.Nome.Valido);
-            Assert.AreNotEqual(0, _pessoa.Nome.Notificacoes.Count);
+            Assert.False(_pessoa.Valido);
+            Assert.AreNotEqual(0, _pessoa.Notificacoes.Count);
         }
 
         [TearDown]

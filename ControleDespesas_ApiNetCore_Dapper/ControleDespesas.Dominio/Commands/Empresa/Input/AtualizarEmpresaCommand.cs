@@ -25,8 +25,7 @@ namespace ControleDespesas.Dominio.Commands.Empresa.Input
 
                 if (string.IsNullOrEmpty(Nome))
                     AddNotificacao("Nome", "Nome é um campo obrigatório");
-
-                if (Nome.Length > 100)
+                else if (Nome.Length > 100)
                     AddNotificacao("Nome", "Nome maior que o esperado");
 
                 if (string.IsNullOrEmpty(Logo))

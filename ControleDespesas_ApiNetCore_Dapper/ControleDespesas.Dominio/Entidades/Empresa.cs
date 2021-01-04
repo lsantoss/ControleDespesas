@@ -1,5 +1,4 @@
-﻿using LSCode.Validador.ValidacoesBooleanas;
-using LSCode.Validador.ValidacoesNotificacoes;
+﻿using LSCode.Validador.ValidacoesNotificacoes;
 
 namespace ControleDespesas.Dominio.Entidades
 {

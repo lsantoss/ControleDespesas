@@ -14,7 +14,8 @@ namespace ControleDespesas.Dominio.Commands.Pessoa.Input
         {
             try
             {
-                AddNotificacao(new ContratoValidacao().EhMaior(IdUsuario, 0, "Id do Usuário", "Id do Usuário não é valido"));
+                if (IdUsuario <= 0)
+                    AddNotificacao("Id do Usuário", "Id do Usuário não é valido");
 
                 return Valido;
             }

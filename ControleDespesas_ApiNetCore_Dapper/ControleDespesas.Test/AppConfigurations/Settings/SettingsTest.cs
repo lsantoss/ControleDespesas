@@ -384,7 +384,7 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                     _configuration.GetValue<string>("SettingsTest:Pagamento1:Pessoa:Nome"),
                     _configuration.GetValue<string>("SettingsTest:Pagamento1:Pessoa:ImagemPerfil")
                 ),
-                new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento1:Descricao"), "Descrição", 250),
+                _configuration.GetValue<string>("SettingsTest:Pagamento1:Descricao"),
                 _configuration.GetValue<double>("SettingsTest:Pagamento1:Valor"),
                 _configuration.GetValue<DateTime>("SettingsTest:Pagamento1:DataVencimento"),
                 _configuration.GetValue<DateTime?>("SettingsTest:Pagamento1:DataPagamento"),
@@ -409,7 +409,7 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                     _configuration.GetValue<string>("SettingsTest:Pagamento2:Pessoa:Nome"),
                     _configuration.GetValue<string>("SettingsTest:Pagamento2:Pessoa:ImagemPerfil")
                 ),
-                new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento2:Descricao"), "Descrição", 250),
+                _configuration.GetValue<string>("SettingsTest:Pagamento2:Descricao"),
                 _configuration.GetValue<double>("SettingsTest:Pagamento2:Valor"),
                 _configuration.GetValue<DateTime>("SettingsTest:Pagamento2:DataVencimento"),
                 _configuration.GetValue<DateTime?>("SettingsTest:Pagamento2:DataPagamento"),
@@ -434,7 +434,7 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                     _configuration.GetValue<string>("SettingsTest:Pagamento3:Pessoa:Nome"),
                     _configuration.GetValue<string>("SettingsTest:Pagamento3:Pessoa:ImagemPerfil")
                 ),
-                new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento3:Descricao"), "Descrição", 250),
+                _configuration.GetValue<string>("SettingsTest:Pagamento3:Descricao"),
                 _configuration.GetValue<double>("SettingsTest:Pagamento3:Valor"),
                 _configuration.GetValue<DateTime>("SettingsTest:Pagamento3:DataVencimento"),
                 _configuration.GetValue<DateTime?>("SettingsTest:Pagamento3:DataPagamento"),
@@ -459,7 +459,7 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                     _configuration.GetValue<string>("SettingsTest:Pagamento1Editado:Pessoa:Nome"),
                     _configuration.GetValue<string>("SettingsTest:Pagamento1Editado:Pessoa:ImagemPerfil")
                 ),
-                new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento1Editado:Descricao"), "Descrição", 250),
+                _configuration.GetValue<string>("SettingsTest:Pagamento1Editado:Descricao"),
                 _configuration.GetValue<double>("SettingsTest:Pagamento1Editado:Valor"),
                 _configuration.GetValue<DateTime>("SettingsTest:Pagamento1Editado:DataVencimento"),
                 _configuration.GetValue<DateTime?>("SettingsTest:Pagamento1Editado:DataPagamento"),

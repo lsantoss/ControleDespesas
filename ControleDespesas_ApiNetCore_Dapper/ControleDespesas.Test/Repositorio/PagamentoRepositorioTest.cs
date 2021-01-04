@@ -52,7 +52,7 @@ namespace ControleDespesas.Test.Repositorio
             Assert.AreEqual(pagamento.TipoPagamento.Id, retorno.TipoPagamento.Id);
             Assert.AreEqual(pagamento.Empresa.Id, retorno.Empresa.Id);
             Assert.AreEqual(pagamento.Pessoa.Id, retorno.Pessoa.Id);
-            Assert.AreEqual(pagamento.Descricao.ToString(), retorno.Descricao);
+            Assert.AreEqual(pagamento.Descricao, retorno.Descricao);
             Assert.AreEqual(pagamento.Valor, retorno.Valor);
             Assert.AreEqual(pagamento.DataVencimento.Date, retorno.DataVencimento.Date);
             Assert.AreEqual(Convert.ToDateTime(pagamento.DataPagamento).Date, Convert.ToDateTime(retorno.DataPagamento).Date);
@@ -83,7 +83,7 @@ namespace ControleDespesas.Test.Repositorio
             Assert.AreEqual(pagamento.TipoPagamento.Id, retorno.TipoPagamento.Id);
             Assert.AreEqual(pagamento.Empresa.Id, retorno.Empresa.Id);
             Assert.AreEqual(pagamento.Pessoa.Id, retorno.Pessoa.Id);
-            Assert.AreEqual(pagamento.Descricao.ToString(), retorno.Descricao);
+            Assert.AreEqual(pagamento.Descricao, retorno.Descricao);
             Assert.AreEqual(pagamento.Valor, retorno.Valor);
             Assert.AreEqual(pagamento.DataVencimento.Date, retorno.DataVencimento.Date);
             Assert.AreEqual(Convert.ToDateTime(pagamento.DataPagamento).Date, Convert.ToDateTime(retorno.DataPagamento).Date);
@@ -117,7 +117,7 @@ namespace ControleDespesas.Test.Repositorio
             Assert.AreEqual(pagamento2.TipoPagamento.Id, retorno[0].TipoPagamento.Id);
             Assert.AreEqual(pagamento2.Empresa.Id, retorno[0].Empresa.Id);
             Assert.AreEqual(pagamento2.Pessoa.Id, retorno[0].Pessoa.Id);
-            Assert.AreEqual(pagamento2.Descricao.ToString(), retorno[0].Descricao);
+            Assert.AreEqual(pagamento2.Descricao, retorno[0].Descricao);
             Assert.AreEqual(pagamento2.Valor, retorno[0].Valor);
             Assert.AreEqual(pagamento2.DataVencimento.Date, retorno[0].DataVencimento.Date);
             Assert.AreEqual(Convert.ToDateTime(pagamento2.DataPagamento).Date, Convert.ToDateTime(retorno[0].DataPagamento).Date);
@@ -144,7 +144,7 @@ namespace ControleDespesas.Test.Repositorio
             Assert.AreEqual(pagamento.TipoPagamento.Id, retorno.TipoPagamento.Id);
             Assert.AreEqual(pagamento.Empresa.Id, retorno.Empresa.Id);
             Assert.AreEqual(pagamento.Pessoa.Id, retorno.Pessoa.Id);
-            Assert.AreEqual(pagamento.Descricao.ToString(), retorno.Descricao);
+            Assert.AreEqual(pagamento.Descricao, retorno.Descricao);
             Assert.AreEqual(pagamento.Valor, retorno.Valor);
             Assert.AreEqual(pagamento.DataVencimento.Date, retorno.DataVencimento.Date);
             Assert.AreEqual(Convert.ToDateTime(pagamento.DataPagamento).Date, Convert.ToDateTime(retorno.DataPagamento).Date);
@@ -182,7 +182,7 @@ namespace ControleDespesas.Test.Repositorio
             Assert.AreEqual(pagamento1.TipoPagamento.Id, retorno[0].TipoPagamento.Id);
             Assert.AreEqual(pagamento1.Empresa.Id, retorno[0].Empresa.Id);
             Assert.AreEqual(pagamento1.Pessoa.Id, retorno[0].Pessoa.Id);
-            Assert.AreEqual(pagamento1.Descricao.ToString(), retorno[0].Descricao);
+            Assert.AreEqual(pagamento1.Descricao, retorno[0].Descricao);
             Assert.AreEqual(pagamento1.Valor, retorno[0].Valor);
             Assert.AreEqual(pagamento1.DataVencimento.Date, retorno[0].DataVencimento.Date);
             Assert.AreEqual(Convert.ToDateTime(pagamento1.DataPagamento).Date, Convert.ToDateTime(retorno[0].DataPagamento).Date);
@@ -191,7 +191,7 @@ namespace ControleDespesas.Test.Repositorio
             Assert.AreEqual(pagamento2.TipoPagamento.Id, retorno[1].TipoPagamento.Id);
             Assert.AreEqual(pagamento2.Empresa.Id, retorno[1].Empresa.Id);
             Assert.AreEqual(pagamento2.Pessoa.Id, retorno[1].Pessoa.Id);
-            Assert.AreEqual(pagamento2.Descricao.ToString(), retorno[1].Descricao);
+            Assert.AreEqual(pagamento2.Descricao, retorno[1].Descricao);
             Assert.AreEqual(pagamento2.Valor, retorno[1].Valor);
             Assert.AreEqual(pagamento2.DataVencimento.Date, retorno[1].DataVencimento.Date);
             Assert.AreEqual(Convert.ToDateTime(pagamento2.DataPagamento).Date, Convert.ToDateTime(retorno[1].DataPagamento).Date);
@@ -232,7 +232,7 @@ namespace ControleDespesas.Test.Repositorio
             Assert.AreEqual(pagamento1.TipoPagamento.Id, retorno[0].TipoPagamento.Id);
             Assert.AreEqual(pagamento1.Empresa.Id, retorno[0].Empresa.Id);
             Assert.AreEqual(pagamento1.Pessoa.Id, retorno[0].Pessoa.Id);
-            Assert.AreEqual(pagamento1.Descricao.ToString(), retorno[0].Descricao);
+            Assert.AreEqual(pagamento1.Descricao, retorno[0].Descricao);
             Assert.AreEqual(pagamento1.Valor, retorno[0].Valor);
             Assert.AreEqual(pagamento1.DataVencimento.Date, retorno[0].DataVencimento.Date);
             Assert.AreEqual(Convert.ToDateTime(pagamento1.DataPagamento).Date, Convert.ToDateTime(retorno[0].DataPagamento).Date);
@@ -241,7 +241,7 @@ namespace ControleDespesas.Test.Repositorio
             Assert.AreEqual(pagamento2.TipoPagamento.Id, retorno[1].TipoPagamento.Id);
             Assert.AreEqual(pagamento2.Empresa.Id, retorno[1].Empresa.Id);
             Assert.AreEqual(pagamento2.Pessoa.Id, retorno[1].Pessoa.Id);
-            Assert.AreEqual(pagamento2.Descricao.ToString(), retorno[1].Descricao);
+            Assert.AreEqual(pagamento2.Descricao, retorno[1].Descricao);
             Assert.AreEqual(pagamento2.Valor, retorno[1].Valor);
             Assert.AreEqual(pagamento2.DataVencimento.Date, retorno[1].DataVencimento.Date);
             Assert.AreEqual(Convert.ToDateTime(pagamento2.DataPagamento).Date, Convert.ToDateTime(retorno[1].DataPagamento).Date);
@@ -282,7 +282,7 @@ namespace ControleDespesas.Test.Repositorio
             Assert.AreEqual(pagamento3.TipoPagamento.Id, retorno[0].TipoPagamento.Id);
             Assert.AreEqual(pagamento3.Empresa.Id, retorno[0].Empresa.Id);
             Assert.AreEqual(pagamento3.Pessoa.Id, retorno[0].Pessoa.Id);
-            Assert.AreEqual(pagamento3.Descricao.ToString(), retorno[0].Descricao);
+            Assert.AreEqual(pagamento3.Descricao, retorno[0].Descricao);
             Assert.AreEqual(pagamento3.Valor, retorno[0].Valor);
             Assert.AreEqual(pagamento3.DataVencimento.Date, retorno[0].DataVencimento.Date);
             Assert.AreEqual(Convert.ToDateTime(pagamento3.DataPagamento).Date, Convert.ToDateTime(retorno[0].DataPagamento).Date);

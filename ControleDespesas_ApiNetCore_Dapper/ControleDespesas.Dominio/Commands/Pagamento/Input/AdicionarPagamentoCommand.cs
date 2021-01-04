@@ -35,16 +35,22 @@ namespace ControleDespesas.Dominio.Commands.Pagamento.Input
         {
             try
             {
-                AddNotificacao(new ContratoValidacao().EhMaior(IdTipoPagamento, 0, "Id Tipo Pagamento", "Id Tipo Pagamento não é valido"));
+                if (IdTipoPagamento <= 0)
+                    AddNotificacao("Id Tipo Pagamento", "Id Tipo Pagamento não é valido");
 
-                AddNotificacao(new ContratoValidacao().EhMaior(IdEmpresa, 0, "Id Empresa", "Id Empresa não é valido"));
+                if (IdEmpresa <= 0)
+                    AddNotificacao("Id Empresa", "Id Empresa não é valido");
 
-                AddNotificacao(new ContratoValidacao().EhMaior(IdPessoa, 0, "Id Pessoa", "Id Pessoa não é valido"));
+                if (IdPessoa <= 0)
+                    AddNotificacao("Id Pessoa", "Id Pessoa não é valido");
 
-                AddNotificacao(new ContratoValidacao().NaoEhNuloOuVazio(Descricao, "Descrição", "Descrição é um campo obrigatório"));
-                AddNotificacao(new ContratoValidacao().TamanhoMaximo(Descricao, 250, "Descrição", "Descrição maior que o esperado"));
+                if (string.IsNullOrEmpty(Descricao))
+                    AddNotificacao("Descrição", "Descrição é um campo obrigatório");
+                else if (Descricao.Length > 250)
+                    AddNotificacao("Descrição", "Descrição maior que o esperado");
 
-                AddNotificacao(new ContratoValidacao().EhMaior(Valor, 0, "Valor", "Valor não é valido"));
+                if (Valor <= 0)
+                    AddNotificacao("Valor", "Valor não é valido");
 
                 return Valido;
             }

@@ -36,7 +36,7 @@ namespace ControleDespesas.Dominio.Handlers
             {
                 Pagamento pagamento = PagamentoHelper.GerarEntidade(command);
 
-                AddNotificacao(pagamento.Descricao.Notificacoes);
+                AddNotificacao(pagamento.Notificacoes);
 
                 if(!_repositoryEmpresa.CheckId(pagamento.Empresa.Id))
                     AddNotificacao("Id Empresa", "Id inválido. Este id não está cadastrado!");
@@ -68,7 +68,7 @@ namespace ControleDespesas.Dominio.Handlers
             {
                 Pagamento pagamento = PagamentoHelper.GerarEntidade(command);
 
-                AddNotificacao(pagamento.Descricao.Notificacoes);
+                AddNotificacao(pagamento.Notificacoes);
 
                 if (!_repository.CheckId(pagamento.Id))
                     AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");

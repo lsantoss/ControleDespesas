@@ -1,5 +1,4 @@
 ﻿using LSCode.Validador.ValidacoesNotificacoes;
-using LSCode.Validador.ValueObjects;
 using System;
 
 namespace ControleDespesas.Dominio.Entidades
@@ -10,7 +9,7 @@ namespace ControleDespesas.Dominio.Entidades
         public TipoPagamento TipoPagamento { get; set; }
         public Empresa Empresa { get; set; }
         public Pessoa Pessoa { get; set; }
-        public Texto Descricao { get; set; }
+        public string Descricao { get; set; }
         public double Valor { get; set; }
         public DateTime DataVencimento { get; set; }
         public DateTime? DataPagamento { get; set; }
@@ -21,7 +20,7 @@ namespace ControleDespesas.Dominio.Entidades
                          TipoPagamento tipoPagamento, 
                          Empresa empresa, 
                          Pessoa pessoa,
-                         Texto descricao, 
+                         string descricao, 
                          double valor, 
                          DateTime dataVencimento, 
                          DateTime? dataPagamento,
@@ -38,8 +37,30 @@ namespace ControleDespesas.Dominio.Entidades
             DataPagamento = dataPagamento;
             ArquivoPagamento = arquivoPagamento;
             ArquivoComprovante = arquivoComprovante;
+
+            Validar();
         }
 
         public Pagamento(int id) => Id = id;
+
+        public void Validar()
+        {
+            if (TipoPagamento.Id <= 0)
+                AddNotificacao("Id Tipo Pagamento", "Id Tipo Pagamento não é valido");
+
+            if (Empresa.Id <= 0)
+                AddNotificacao("Id Empresa", "Id Empresa não é valido");
+
+            if (Pessoa.Id <= 0)
+                AddNotificacao("Id Pessoa", "Id Pessoa não é valido");
+
+            if (string.IsNullOrEmpty(Descricao))
+                AddNotificacao("Descrição", "Descrição é um campo obrigatório");
+            else if (Descricao.Length > 250)
+                AddNotificacao("Descrição", "Descrição maior que o esperado");
+
+            if (Valor <= 0)
+                AddNotificacao("Valor", "Valor não é valido");
+        }
     }
 }

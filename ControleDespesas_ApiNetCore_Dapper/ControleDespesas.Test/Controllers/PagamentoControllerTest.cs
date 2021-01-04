@@ -111,7 +111,7 @@ namespace ControleDespesas.Test.Controllers
             Assert.AreEqual(pagamento1.TipoPagamento.Id, responseObj.Value.Dados[0].TipoPagamento.Id);
             Assert.AreEqual(pagamento1.Empresa.Id, responseObj.Value.Dados[0].Empresa.Id);
             Assert.AreEqual(pagamento1.Pessoa.Id, responseObj.Value.Dados[0].Pessoa.Id);
-            Assert.AreEqual(pagamento1.Descricao.ToString(), responseObj.Value.Dados[0].Descricao);
+            Assert.AreEqual(pagamento1.Descricao, responseObj.Value.Dados[0].Descricao);
             Assert.AreEqual(pagamento1.Valor, responseObj.Value.Dados[0].Valor);
             Assert.AreEqual(pagamento1.DataVencimento.Date, responseObj.Value.Dados[0].DataVencimento.Date);
             Assert.AreEqual(Convert.ToDateTime(pagamento1.DataPagamento).Date, Convert.ToDateTime(responseObj.Value.Dados[0].DataPagamento).Date);
@@ -120,7 +120,7 @@ namespace ControleDespesas.Test.Controllers
             Assert.AreEqual(pagamento2.TipoPagamento.Id, responseObj.Value.Dados[1].TipoPagamento.Id);
             Assert.AreEqual(pagamento2.Empresa.Id, responseObj.Value.Dados[1].Empresa.Id);
             Assert.AreEqual(pagamento2.Pessoa.Id, responseObj.Value.Dados[1].Pessoa.Id);
-            Assert.AreEqual(pagamento2.Descricao.ToString(), responseObj.Value.Dados[1].Descricao);
+            Assert.AreEqual(pagamento2.Descricao, responseObj.Value.Dados[1].Descricao);
             Assert.AreEqual(pagamento2.Valor, responseObj.Value.Dados[1].Valor);
             Assert.AreEqual(pagamento2.DataVencimento.Date, responseObj.Value.Dados[1].DataVencimento.Date);
             Assert.AreEqual(Convert.ToDateTime(pagamento2.DataPagamento).Date, Convert.ToDateTime(responseObj.Value.Dados[1].DataPagamento).Date);
@@ -164,7 +164,7 @@ namespace ControleDespesas.Test.Controllers
             Assert.AreEqual(pagamento2.TipoPagamento.Id, responseObj.Value.Dados.TipoPagamento.Id);
             Assert.AreEqual(pagamento2.Empresa.Id, responseObj.Value.Dados.Empresa.Id);
             Assert.AreEqual(pagamento2.Pessoa.Id, responseObj.Value.Dados.Pessoa.Id);
-            Assert.AreEqual(pagamento2.Descricao.ToString(), responseObj.Value.Dados.Descricao);
+            Assert.AreEqual(pagamento2.Descricao, responseObj.Value.Dados.Descricao);
             Assert.AreEqual(pagamento2.Valor, responseObj.Value.Dados.Valor);
             Assert.AreEqual(pagamento2.DataVencimento.Date, responseObj.Value.Dados.DataVencimento.Date);
             Assert.AreEqual(Convert.ToDateTime(pagamento2.DataPagamento).Date, Convert.ToDateTime(responseObj.Value.Dados.DataPagamento).Date);
@@ -217,7 +217,7 @@ namespace ControleDespesas.Test.Controllers
             Assert.AreEqual(pagamento1.TipoPagamento.Id, responseObj.Value.Dados[0].TipoPagamento.Id);
             Assert.AreEqual(pagamento1.Empresa.Id, responseObj.Value.Dados[0].Empresa.Id);
             Assert.AreEqual(pagamento1.Pessoa.Id, responseObj.Value.Dados[0].Pessoa.Id);
-            Assert.AreEqual(pagamento1.Descricao.ToString(), responseObj.Value.Dados[0].Descricao);
+            Assert.AreEqual(pagamento1.Descricao, responseObj.Value.Dados[0].Descricao);
             Assert.AreEqual(pagamento1.Valor, responseObj.Value.Dados[0].Valor);
             Assert.AreEqual(pagamento1.DataVencimento.Date, responseObj.Value.Dados[0].DataVencimento.Date);
             Assert.AreEqual(Convert.ToDateTime(pagamento1.DataPagamento).Date, Convert.ToDateTime(responseObj.Value.Dados[0].DataPagamento).Date);
@@ -226,7 +226,7 @@ namespace ControleDespesas.Test.Controllers
             Assert.AreEqual(pagamento2.TipoPagamento.Id, responseObj.Value.Dados[1].TipoPagamento.Id);
             Assert.AreEqual(pagamento2.Empresa.Id, responseObj.Value.Dados[1].Empresa.Id);
             Assert.AreEqual(pagamento2.Pessoa.Id, responseObj.Value.Dados[1].Pessoa.Id);
-            Assert.AreEqual(pagamento2.Descricao.ToString(), responseObj.Value.Dados[1].Descricao);
+            Assert.AreEqual(pagamento2.Descricao, responseObj.Value.Dados[1].Descricao);
             Assert.AreEqual(pagamento2.Valor, responseObj.Value.Dados[1].Valor);
             Assert.AreEqual(pagamento2.DataVencimento.Date, responseObj.Value.Dados[1].DataVencimento.Date);
             Assert.AreEqual(Convert.ToDateTime(pagamento2.DataPagamento).Date, Convert.ToDateTime(responseObj.Value.Dados[1].DataPagamento).Date);
@@ -279,7 +279,7 @@ namespace ControleDespesas.Test.Controllers
             Assert.AreEqual(pagamento3.TipoPagamento.Id, responseObj.Value.Dados[0].TipoPagamento.Id);
             Assert.AreEqual(pagamento3.Empresa.Id, responseObj.Value.Dados[0].Empresa.Id);
             Assert.AreEqual(pagamento3.Pessoa.Id, responseObj.Value.Dados[0].Pessoa.Id);
-            Assert.AreEqual(pagamento3.Descricao.ToString(), responseObj.Value.Dados[0].Descricao);
+            Assert.AreEqual(pagamento3.Descricao, responseObj.Value.Dados[0].Descricao);
             Assert.AreEqual(pagamento3.Valor, responseObj.Value.Dados[0].Valor);
             Assert.AreEqual(pagamento3.DataVencimento.Date, responseObj.Value.Dados[0].DataVencimento.Date);
             Assert.AreEqual(Convert.ToDateTime(pagamento3.DataPagamento).Date, Convert.ToDateTime(responseObj.Value.Dados[0].DataPagamento).Date);
@@ -521,7 +521,7 @@ namespace ControleDespesas.Test.Controllers
             Assert.AreEqual(command.IdTipoPagamento, responseObj.Value.Dados.IdTipoPagamento);
             Assert.AreEqual(command.IdEmpresa, responseObj.Value.Dados.IdEmpresa);
             Assert.AreEqual(command.IdPessoa, responseObj.Value.Dados.IdPessoa);
-            Assert.AreEqual(command.Descricao.ToString(), responseObj.Value.Dados.Descricao);
+            Assert.AreEqual(command.Descricao, responseObj.Value.Dados.Descricao);
             Assert.AreEqual(command.Valor, responseObj.Value.Dados.Valor);
             Assert.AreEqual(command.DataVencimento.Date, responseObj.Value.Dados.DataVencimento.Date);
             Assert.AreEqual(command.ArquivoPagamento, responseObj.Value.Dados.ArquivoPagamento);
@@ -562,7 +562,7 @@ namespace ControleDespesas.Test.Controllers
             Assert.AreEqual(command.IdTipoPagamento, responseObj.Value.Dados.IdTipoPagamento);
             Assert.AreEqual(command.IdEmpresa, responseObj.Value.Dados.IdEmpresa);
             Assert.AreEqual(command.IdPessoa, responseObj.Value.Dados.IdPessoa);
-            Assert.AreEqual(command.Descricao.ToString(), responseObj.Value.Dados.Descricao);
+            Assert.AreEqual(command.Descricao, responseObj.Value.Dados.Descricao);
             Assert.AreEqual(command.Valor, responseObj.Value.Dados.Valor);
             Assert.AreEqual(command.DataVencimento.Date, responseObj.Value.Dados.DataVencimento.Date);
             Assert.AreEqual(command.ArquivoPagamento, responseObj.Value.Dados.ArquivoPagamento);

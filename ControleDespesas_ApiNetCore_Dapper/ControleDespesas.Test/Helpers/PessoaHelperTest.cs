@@ -22,7 +22,7 @@ namespace ControleDespesas.Test.Helpers
 
             Assert.AreEqual(0, entidade.Id);
             Assert.AreEqual(command.IdUsuario, entidade.Usuario.Id);
-            Assert.AreEqual(command.Nome, entidade.Nome.ToString());
+            Assert.AreEqual(command.Nome, entidade.Nome);
             Assert.AreEqual(command.ImagemPerfil, entidade.ImagemPerfil);
             Assert.True(entidade.Valido);
             Assert.AreEqual(0, entidade.Notificacoes.Count);
@@ -39,7 +39,7 @@ namespace ControleDespesas.Test.Helpers
 
             Assert.AreEqual(command.Id, entidade.Id);
             Assert.AreEqual(command.IdUsuario, entidade.Usuario.Id);
-            Assert.AreEqual(command.Nome, entidade.Nome.ToString());
+            Assert.AreEqual(command.Nome, entidade.Nome);
             Assert.AreEqual(command.ImagemPerfil, entidade.ImagemPerfil);
             Assert.True(entidade.Valido);
             Assert.AreEqual(0, entidade.Notificacoes.Count);

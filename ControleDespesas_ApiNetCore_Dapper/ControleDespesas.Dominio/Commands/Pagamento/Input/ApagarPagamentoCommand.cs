@@ -14,7 +14,8 @@ namespace ControleDespesas.Dominio.Commands.Pagamento.Input
         {
             try
             {
-                AddNotificacao(new ContratoValidacao().EhMaior(Id, 0, "Id", "Id não é valido"));
+                if (Id <= 0)
+                    AddNotificacao("Id", "Id não é valido");
 
                 return Valido;
             }

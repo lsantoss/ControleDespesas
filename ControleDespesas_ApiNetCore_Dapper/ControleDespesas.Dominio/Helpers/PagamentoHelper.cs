@@ -1,7 +1,6 @@
 ﻿using ControleDespesas.Dominio.Commands.Pagamento.Input;
 using ControleDespesas.Dominio.Commands.Pagamento.Output;
 using ControleDespesas.Dominio.Entidades;
-using LSCode.Validador.ValueObjects;
 using System;
 
 namespace ControleDespesas.Dominio.Helpers
@@ -15,7 +14,7 @@ namespace ControleDespesas.Dominio.Helpers
                 TipoPagamento tipoPagamento = new TipoPagamento(command.IdTipoPagamento);
                 Empresa empresa = new Empresa(command.IdEmpresa);
                 Pessoa pessoa = new Pessoa(command.IdPessoa);
-                Texto descricao = new Texto(command.Descricao, "Descrição", 250);
+                string descricao = command.Descricao;
                 double valor = command.Valor;
                 DateTime dataVencimento = command.DataVencimento;
                 DateTime? dataPagamento = command.DataPagamento;
@@ -39,7 +38,7 @@ namespace ControleDespesas.Dominio.Helpers
                 TipoPagamento tipoPagamento = new TipoPagamento(command.IdTipoPagamento);
                 Empresa empresa = new Empresa(command.IdEmpresa);
                 Pessoa pessoa = new Pessoa(command.IdPessoa);
-                Texto descricao = new Texto(command.Descricao, "Descrição", 250);
+                string descricao = command.Descricao;
                 double valor = command.Valor;
                 DateTime dataVencimento = command.DataVencimento;
                 DateTime? dataPagamento = command.DataPagamento;
@@ -65,7 +64,7 @@ namespace ControleDespesas.Dominio.Helpers
                     IdTipoPagamento = pagamento.TipoPagamento.Id,
                     IdEmpresa = pagamento.Empresa.Id,
                     IdPessoa = pagamento.Pessoa.Id,
-                    Descricao = pagamento.Descricao.ToString(),
+                    Descricao = pagamento.Descricao,
                     Valor = pagamento.Valor,
                     DataVencimento = pagamento.DataVencimento,
                     DataPagamento = pagamento.DataPagamento,
@@ -89,7 +88,7 @@ namespace ControleDespesas.Dominio.Helpers
                     IdTipoPagamento = pagamento.TipoPagamento.Id,
                     IdEmpresa = pagamento.Empresa.Id,
                     IdPessoa = pagamento.Pessoa.Id,
-                    Descricao = pagamento.Descricao.ToString(),
+                    Descricao = pagamento.Descricao,
                     Valor = pagamento.Valor,
                     DataVencimento = pagamento.DataVencimento,
                     DataPagamento = pagamento.DataPagamento,

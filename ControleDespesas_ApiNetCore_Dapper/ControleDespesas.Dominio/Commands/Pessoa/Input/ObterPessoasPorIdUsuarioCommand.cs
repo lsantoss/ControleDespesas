@@ -15,7 +15,7 @@ namespace ControleDespesas.Dominio.Commands.Pessoa.Input
             try
             {
                 if (IdUsuario <= 0)
-                    AddNotificacao("Id do Usuário", "Id do Usuário não é valido");
+                    AddNotificacao("IdUsuario", "IdUsuario não é valido");
 
                 return Valido;
             }

@@ -15,9 +15,9 @@ namespace ControleDespesas.Dominio.Commands.TipoPagamento.Input
             try
             {
                 if (string.IsNullOrEmpty(Descricao))
-                    AddNotificacao("Descrição", "Descrição é um campo obrigatório");
+                    AddNotificacao("Descricao", "Descricao é um campo obrigatório");
                 else if (Descricao.Length > 250)
-                    AddNotificacao("Descrição", "Descrição maior que o esperado");
+                    AddNotificacao("Descricao", "Descricao maior que o esperado");
 
                 return Valido;
             }

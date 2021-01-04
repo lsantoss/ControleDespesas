@@ -15,7 +15,7 @@ namespace ControleDespesas.Dominio.Commands.Pagamento.Input
             try
             {
                 if (IdPagamento <= 0)
-                    AddNotificacao("Id do Pagamento", "Id do Pagamento não é valido");
+                    AddNotificacao("IdPagamento", "IdPagamento não é valido");
 
                 return Valido;
             }

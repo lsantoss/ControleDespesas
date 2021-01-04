@@ -27,7 +27,7 @@ namespace ControleDespesas.Dominio.Commands.Pagamento.Input
                     AddNotificacao("Ano", "Ano não é valido");
 
                 if (Mes <= 0)
-                    AddNotificacao("Mes", "Mês não é valido");
+                    AddNotificacao("Mes", "Mes não é valido");
 
                 return Valido;
             }

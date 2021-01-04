@@ -21,7 +21,7 @@ namespace ControleDespesas.Dominio.Commands.Pessoa.Input
             try
             {
                 if (IdUsuario <= 0)
-                    AddNotificacao("Id do Usuário", "Id do Usuário não é valido");
+                    AddNotificacao("IdUsuario", "IdUsuario não é valido");
 
                 if (string.IsNullOrEmpty(Nome))
                     AddNotificacao("Nome", "Nome é um campo obrigatório");
@@ -29,7 +29,7 @@ namespace ControleDespesas.Dominio.Commands.Pessoa.Input
                     AddNotificacao("Nome", "Nome maior que o esperado");
 
                 if (string.IsNullOrEmpty(ImagemPerfil))
-                    AddNotificacao("Imagem de Perfil", "Imagem de Perfil é um campo obrigatório");
+                    AddNotificacao("ImagemPerfil", "ImagemPerfil é um campo obrigatório");
 
                 return Valido;
             }

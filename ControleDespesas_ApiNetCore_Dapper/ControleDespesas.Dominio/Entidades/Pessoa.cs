@@ -32,7 +32,7 @@ namespace ControleDespesas.Dominio.Entidades
                 AddNotificacao("Nome", "Nome maior que o esperado");
 
             if (string.IsNullOrEmpty(ImagemPerfil))
-                AddNotificacao("Imagem de Perfil", "Imagem de Perfil é um campo obrigatório");
+                AddNotificacao("ImagemPerfil", "ImagemPerfil é um campo obrigatório");
         }
     }
 }

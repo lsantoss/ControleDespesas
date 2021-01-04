@@ -44,7 +44,7 @@ namespace ControleDespesas.Dominio.Entidades
                 AddNotificacao("SenhaMedia", "Senha deve conter no mínimo 1 número");
 
             if ((int)Privilegio <= 0)
-                AddNotificacao("Privilegio", "Privilégio é um campo obrigatório");
+                AddNotificacao("Privilegio", "Privilegio é um campo obrigatório");
         }
     }
 }

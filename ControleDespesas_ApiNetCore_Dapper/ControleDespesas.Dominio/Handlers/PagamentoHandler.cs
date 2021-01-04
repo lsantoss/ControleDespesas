@@ -39,13 +39,13 @@ namespace ControleDespesas.Dominio.Handlers
                 AddNotificacao(pagamento.Notificacoes);
 
                 if(!_repositoryEmpresa.CheckId(pagamento.Empresa.Id))
-                    AddNotificacao("Id Empresa", "Id inválido. Este id não está cadastrado!");
+                    AddNotificacao("IdEmpresa", "Id inválido. Este id não está cadastrado!");
 
                 if (!_repositoryPessoa.CheckId(pagamento.Pessoa.Id))
-                    AddNotificacao("Id Pessoa", "Id inválido. Este id não está cadastrado!");
+                    AddNotificacao("IdPessoa", "Id inválido. Este id não está cadastrado!");
 
                 if (!_repositoryTipoPagamento.CheckId(pagamento.TipoPagamento.Id))
-                    AddNotificacao("Id Tipo Pagamento", "Id inválido. Este id não está cadastrado!");
+                    AddNotificacao("IdTipoPagamento", "Id inválido. Este id não está cadastrado!");
 
                 if (Invalido)
                     return new CommandResult<Notificacao>("Inconsistência(s) no(s) dado(s)", Notificacoes);
@@ -74,13 +74,13 @@ namespace ControleDespesas.Dominio.Handlers
                     AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");
 
                 if (!_repositoryEmpresa.CheckId(pagamento.Empresa.Id))
-                    AddNotificacao("Id Empresa", "Id inválido. Este id não está cadastrado!");
+                    AddNotificacao("IdEmpresa", "Id inválido. Este id não está cadastrado!");
 
                 if (!_repositoryPessoa.CheckId(pagamento.Pessoa.Id))
-                    AddNotificacao("Id Pessoa", "Id inválido. Este id não está cadastrado!");
+                    AddNotificacao("IdPessoa", "Id inválido. Este id não está cadastrado!");
 
                 if (!_repositoryTipoPagamento.CheckId(pagamento.TipoPagamento.Id))
-                    AddNotificacao("Id Tipo Pagamento", "Id inválido. Este id não está cadastrado!");
+                    AddNotificacao("IdTipoPagamento", "Id inválido. Este id não está cadastrado!");
 
                 if (Invalido)
                     return new CommandResult<Notificacao>("Inconsistência(s) no(s) dado(s)", Notificacoes);

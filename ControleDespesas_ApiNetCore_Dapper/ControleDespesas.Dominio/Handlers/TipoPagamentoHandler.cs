@@ -27,7 +27,7 @@ namespace ControleDespesas.Dominio.Handlers
             {
                 TipoPagamento tipoPagamento = TipoPagamentoHelper.GerarEntidade(command);
 
-                AddNotificacao(tipoPagamento.Descricao.Notificacoes);
+                AddNotificacao(tipoPagamento.Notificacoes);
 
                 if (Invalido)
                     return new CommandResult<Notificacao>("Inconsistência(s) no(s) dado(s)", Notificacoes);
@@ -50,7 +50,7 @@ namespace ControleDespesas.Dominio.Handlers
             {
                 TipoPagamento tipoPagamento = TipoPagamentoHelper.GerarEntidade(command);
 
-                AddNotificacao(tipoPagamento.Descricao.Notificacoes);
+                AddNotificacao(tipoPagamento.Notificacoes);
 
                 if (!_repository.CheckId(tipoPagamento.Id))
                     AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");

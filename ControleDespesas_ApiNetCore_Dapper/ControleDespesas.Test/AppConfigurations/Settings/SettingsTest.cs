@@ -277,22 +277,22 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
 
             TipoPagamento1 = new TipoPagamento(
                 _configuration.GetValue<int>("SettingsTest:TipoPagamento1:Id"),
-                new Texto(_configuration.GetValue<string>("SettingsTest:TipoPagamento1:Descricao"), "Descrição", 250)
+                _configuration.GetValue<string>("SettingsTest:TipoPagamento1:Descricao")
             );
 
             TipoPagamento2 = new TipoPagamento(
                 _configuration.GetValue<int>("SettingsTest:TipoPagamento2:Id"),
-                new Texto(_configuration.GetValue<string>("SettingsTest:TipoPagamento2:Descricao"), "Descrição", 250)
+                _configuration.GetValue<string>("SettingsTest:TipoPagamento2:Descricao")
             );
 
             TipoPagamento3 = new TipoPagamento(
                 _configuration.GetValue<int>("SettingsTest:TipoPagamento3:Id"),
-                new Texto(_configuration.GetValue<string>("SettingsTest:TipoPagamento3:Descricao"), "Descrição", 250)
+                _configuration.GetValue<string>("SettingsTest:TipoPagamento3:Descricao")
             );
 
             TipoPagamento1Editado = new TipoPagamento(
                 _configuration.GetValue<int>("SettingsTest:TipoPagamento1Editado:Id"),
-                new Texto(_configuration.GetValue<string>("SettingsTest:TipoPagamento1Editado:Descricao"), "Descrição", 250)
+                _configuration.GetValue<string>("SettingsTest:TipoPagamento1Editado:Descricao")
             );
             #endregion
 
@@ -371,7 +371,7 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                 _configuration.GetValue<int>("SettingsTest:Pagamento1:Id"),
                 new TipoPagamento(
                     _configuration.GetValue<int>("SettingsTest:Pagamento1:TipoPagamento:Id"),
-                    new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento1:TipoPagamento:Descricao"), "Descrição", 250)
+                    _configuration.GetValue<string>("SettingsTest:Pagamento1:TipoPagamento:Descricao")
                 ),
                 new Empresa(
                     _configuration.GetValue<int>("SettingsTest:Pagamento1:Empresa:Id"),
@@ -396,7 +396,7 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                  _configuration.GetValue<int>("SettingsTest:Pagamento2:Id"),
                 new TipoPagamento(
                     _configuration.GetValue<int>("SettingsTest:Pagamento2:TipoPagamento:Id"),
-                    new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento2:TipoPagamento:Descricao"), "Descrição", 250)
+                    _configuration.GetValue<string>("SettingsTest:Pagamento2:TipoPagamento:Descricao")
                 ),
                 new Empresa(
                     _configuration.GetValue<int>("SettingsTest:Pagamento2:Empresa:Id"),
@@ -421,7 +421,7 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                  _configuration.GetValue<int>("SettingsTest:Pagamento3:Id"),
                 new TipoPagamento(
                     _configuration.GetValue<int>("SettingsTest:Pagamento3:TipoPagamento:Id"),
-                    new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento3:TipoPagamento:Descricao"), "Descrição", 250)
+                    _configuration.GetValue<string>("SettingsTest:Pagamento3:TipoPagamento:Descricao")
                 ),
                 new Empresa(
                     _configuration.GetValue<int>("SettingsTest:Pagamento3:Empresa:Id"),
@@ -446,7 +446,7 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                 _configuration.GetValue<int>("SettingsTest:Pagamento1Editado:Id"),
                 new TipoPagamento(
                     _configuration.GetValue<int>("SettingsTest:Pagamento1Editado:TipoPagamento:Id"),
-                    new Texto(_configuration.GetValue<string>("SettingsTest:Pagamento1Editado:TipoPagamento:Descricao"), "Descrição", 250)
+                    _configuration.GetValue<string>("SettingsTest:Pagamento1Editado:TipoPagamento:Descricao")
                 ),
                 new Empresa(
                     _configuration.GetValue<int>("SettingsTest:Pagamento1Editado:Empresa:Id"),

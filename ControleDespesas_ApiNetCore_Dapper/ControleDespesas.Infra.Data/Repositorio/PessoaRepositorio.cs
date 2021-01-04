@@ -29,7 +29,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             try
             {
                 _parametros.Add("IdUsuario", pessoa.Usuario.Id, DbType.Int32);
-                _parametros.Add("Nome", pessoa.Nome.ToString(), DbType.String);
+                _parametros.Add("Nome", pessoa.Nome, DbType.String);
                 _parametros.Add("ImagemPerfil", pessoa.ImagemPerfil, DbType.String);
 
                 pessoa.Id = _ctx.SQLServerConexao.ExecuteScalar<int>(PessoaQueries.Salvar, _parametros);
@@ -47,7 +47,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             {
                 _parametros.Add("Id", pessoa.Id, DbType.Int32);
                 _parametros.Add("IdUsuario", pessoa.Usuario.Id, DbType.Int32);
-                _parametros.Add("Nome", pessoa.Nome.ToString(), DbType.String);
+                _parametros.Add("Nome", pessoa.Nome, DbType.String);
                 _parametros.Add("ImagemPerfil", pessoa.ImagemPerfil, DbType.String);
 
                 _ctx.SQLServerConexao.Execute(PessoaQueries.Atualizar, _parametros);

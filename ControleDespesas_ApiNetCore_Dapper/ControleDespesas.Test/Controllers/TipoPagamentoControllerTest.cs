@@ -84,13 +84,13 @@ namespace ControleDespesas.Test.Controllers
             Assert.Null(responseObj.Value.Erros);
 
             Assert.AreEqual(tipoPagamento1.Id, responseObj.Value.Dados[0].Id);
-            Assert.AreEqual(tipoPagamento1.Descricao.ToString(), responseObj.Value.Dados[0].Descricao);
+            Assert.AreEqual(tipoPagamento1.Descricao, responseObj.Value.Dados[0].Descricao);
 
             Assert.AreEqual(tipoPagamento2.Id, responseObj.Value.Dados[1].Id);
-            Assert.AreEqual(tipoPagamento2.Descricao.ToString(), responseObj.Value.Dados[1].Descricao);
+            Assert.AreEqual(tipoPagamento2.Descricao, responseObj.Value.Dados[1].Descricao);
 
             Assert.AreEqual(tipoPagamento3.Id, responseObj.Value.Dados[2].Id);
-            Assert.AreEqual(tipoPagamento3.Descricao.ToString(), responseObj.Value.Dados[2].Descricao);
+            Assert.AreEqual(tipoPagamento3.Descricao, responseObj.Value.Dados[2].Descricao);
         }
 
         [Test]
@@ -121,7 +121,7 @@ namespace ControleDespesas.Test.Controllers
             Assert.Null(responseObj.Value.Erros);
 
             Assert.AreEqual(tipoPagamento2.Id, responseObj.Value.Dados.Id);
-            Assert.AreEqual(tipoPagamento2.Descricao.ToString(), responseObj.Value.Dados.Descricao);
+            Assert.AreEqual(tipoPagamento2.Descricao, responseObj.Value.Dados.Descricao);
         }
 
         [Test]

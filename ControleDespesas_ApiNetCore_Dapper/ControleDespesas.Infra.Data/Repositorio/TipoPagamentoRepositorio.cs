@@ -28,7 +28,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
         {
             try
             {
-                _parametros.Add("Descricao", tipoPagamento.Descricao.ToString(), DbType.String);
+                _parametros.Add("Descricao", tipoPagamento.Descricao, DbType.String);
 
                 tipoPagamento.Id = _ctx.SQLServerConexao.ExecuteScalar<int>(TipoPagamentoQueries.Salvar, _parametros);
                 return tipoPagamento;
@@ -44,7 +44,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             try
             {
                 _parametros.Add("Id", tipoPagamento.Id, DbType.Int32);
-                _parametros.Add("Descricao", tipoPagamento.Descricao.ToString(), DbType.String);
+                _parametros.Add("Descricao", tipoPagamento.Descricao, DbType.String);
 
                 _ctx.SQLServerConexao.Execute(TipoPagamentoQueries.Atualizar, _parametros);
             }

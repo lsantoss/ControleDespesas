@@ -33,7 +33,7 @@ namespace ControleDespesas.Test.Repositorio
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 
             Assert.AreEqual(tipoPagamento.Id, retorno.Id);
-            Assert.AreEqual(tipoPagamento.Descricao.ToString(), retorno.Descricao);
+            Assert.AreEqual(tipoPagamento.Descricao, retorno.Descricao);
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace ControleDespesas.Test.Repositorio
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 
             Assert.AreEqual(tipoPagamento.Id, retorno.Id);
-            Assert.AreEqual(tipoPagamento.Descricao.ToString(), retorno.Descricao);
+            Assert.AreEqual(tipoPagamento.Descricao, retorno.Descricao);
         }
 
         [Test]
@@ -71,10 +71,10 @@ namespace ControleDespesas.Test.Repositorio
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 
             Assert.AreEqual(tipoPagamento1.Id, retorno[0].Id);
-            Assert.AreEqual(tipoPagamento1.Descricao.ToString(), retorno[0].Descricao);
+            Assert.AreEqual(tipoPagamento1.Descricao, retorno[0].Descricao);
 
             Assert.AreEqual(tipoPagamento3.Id, retorno[1].Id);
-            Assert.AreEqual(tipoPagamento3.Descricao.ToString(), retorno[1].Descricao);
+            Assert.AreEqual(tipoPagamento3.Descricao, retorno[1].Descricao);
         }
 
         [Test]
@@ -88,7 +88,7 @@ namespace ControleDespesas.Test.Repositorio
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 
             Assert.AreEqual(tipoPagamento.Id, retorno.Id);
-            Assert.AreEqual(tipoPagamento.Descricao.ToString(), retorno.Descricao);
+            Assert.AreEqual(tipoPagamento.Descricao, retorno.Descricao);
         }
 
         [Test]
@@ -107,13 +107,13 @@ namespace ControleDespesas.Test.Repositorio
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 
             Assert.AreEqual(tipoPagamento1.Id, retorno[0].Id);
-            Assert.AreEqual(tipoPagamento1.Descricao.ToString(), retorno[0].Descricao);
+            Assert.AreEqual(tipoPagamento1.Descricao, retorno[0].Descricao);
 
             Assert.AreEqual(tipoPagamento2.Id, retorno[1].Id);
-            Assert.AreEqual(tipoPagamento2.Descricao.ToString(), retorno[1].Descricao);
+            Assert.AreEqual(tipoPagamento2.Descricao, retorno[1].Descricao);
 
             Assert.AreEqual(tipoPagamento3.Id, retorno[2].Id);
-            Assert.AreEqual(tipoPagamento3.Descricao.ToString(), retorno[2].Descricao);
+            Assert.AreEqual(tipoPagamento3.Descricao, retorno[2].Descricao);
         }
 
         [Test]

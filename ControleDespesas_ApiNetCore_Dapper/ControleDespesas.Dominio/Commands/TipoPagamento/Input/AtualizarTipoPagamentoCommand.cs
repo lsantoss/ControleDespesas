@@ -17,10 +17,13 @@ namespace ControleDespesas.Dominio.Commands.TipoPagamento.Input
         {
             try
             {
-                AddNotificacao(new ContratoValidacao().EhMaior(Id, 0, "Id", "Id não é valido"));
+                if (Id <= 0)
+                    AddNotificacao("Id", "Id não é valido");
 
-                AddNotificacao(new ContratoValidacao().NaoEhNuloOuVazio(Descricao, "Descrição", "Descrição é um campo obrigatório"));
-                AddNotificacao(new ContratoValidacao().TamanhoMaximo(Descricao, 250, "Descrição", "Descrição maior que o esperado"));
+                if (string.IsNullOrEmpty(Descricao))
+                    AddNotificacao("Descrição", "Descrição é um campo obrigatório");
+                else if (Descricao.Length > 250)
+                    AddNotificacao("Descrição", "Descrição maior que o esperado");
 
                 return Valido;
             }

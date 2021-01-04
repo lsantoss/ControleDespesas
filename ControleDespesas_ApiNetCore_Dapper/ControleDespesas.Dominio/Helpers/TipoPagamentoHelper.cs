@@ -1,7 +1,6 @@
 ﻿using ControleDespesas.Dominio.Commands.TipoPagamento.Input;
 using ControleDespesas.Dominio.Commands.TipoPagamento.Output;
 using ControleDespesas.Dominio.Entidades;
-using LSCode.Validador.ValueObjects;
 using System;
 
 namespace ControleDespesas.Dominio.Helpers
@@ -12,7 +11,7 @@ namespace ControleDespesas.Dominio.Helpers
         {
             try
             {
-                Texto descricao = new Texto(command.Descricao, "Descrição", 250);
+                string descricao = command.Descricao;
 
                 TipoPagamento tipoPagamento = new TipoPagamento(0, descricao);
                 return tipoPagamento;
@@ -28,7 +27,7 @@ namespace ControleDespesas.Dominio.Helpers
             try
             {
                 int id = command.Id;
-                Texto descricao = new Texto(command.Descricao, "Descrição", 250);
+                string descricao = command.Descricao;
 
                 TipoPagamento tipoPagamento = new TipoPagamento(id, descricao);
                 return tipoPagamento;
@@ -46,7 +45,7 @@ namespace ControleDespesas.Dominio.Helpers
                 return new AdicionarTipoPagamentoCommandOutput
                 {
                     Id = tipoPagamento.Id,
-                    Descricao = tipoPagamento.Descricao.ToString(),
+                    Descricao = tipoPagamento.Descricao,
                 };
             }
             catch (Exception e)
@@ -62,7 +61,7 @@ namespace ControleDespesas.Dominio.Helpers
                 return new AtualizarTipoPagamentoCommandOutput
                 {
                     Id = tipoPagamento.Id,
-                    Descricao = tipoPagamento.Descricao.ToString(),
+                    Descricao = tipoPagamento.Descricao,
                 };
             }
             catch (Exception e)

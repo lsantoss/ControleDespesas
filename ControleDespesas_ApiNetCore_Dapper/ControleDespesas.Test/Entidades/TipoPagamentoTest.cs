@@ -2,7 +2,6 @@
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
-using LSCode.Validador.ValueObjects;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Entidades
@@ -20,22 +19,22 @@ namespace ControleDespesas.Test.Entidades
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_tipoPagamento));
 
             Assert.True(_tipoPagamento.Valido);
-            Assert.True(_tipoPagamento.Descricao.Valido);
             Assert.AreEqual(0, _tipoPagamento.Notificacoes.Count);
-            Assert.AreEqual(0, _tipoPagamento.Descricao.Notificacoes.Count);
         }
 
         [Test]
         public void ValidarEntidade_DescricaoInvalida()
         {
-            _tipoPagamento.Descricao = new Texto(@"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                                                   aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                                                   aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "Descrição", 250);
+            _tipoPagamento.Descricao = @"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                                         aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                                         aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+
+            _tipoPagamento.Validar();
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_tipoPagamento));
 
-            Assert.False(_tipoPagamento.Descricao.Valido);
-            Assert.AreNotEqual(0, _tipoPagamento.Descricao.Notificacoes.Count);
+            Assert.False(_tipoPagamento.Valido);
+            Assert.AreNotEqual(0, _tipoPagamento.Notificacoes.Count);
         }
 
         [TearDown]

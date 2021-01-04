@@ -21,7 +21,7 @@ namespace ControleDespesas.Test.Helpers
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(entidade));
 
             Assert.AreEqual(0, entidade.Id);
-            Assert.AreEqual(command.Descricao, entidade.Descricao.ToString());
+            Assert.AreEqual(command.Descricao, entidade.Descricao);
             Assert.True(entidade.Valido);
             Assert.AreEqual(0, entidade.Notificacoes.Count);
         }
@@ -36,7 +36,7 @@ namespace ControleDespesas.Test.Helpers
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(entidade));
 
             Assert.AreEqual(command.Id, entidade.Id);
-            Assert.AreEqual(command.Descricao, entidade.Descricao.ToString());
+            Assert.AreEqual(command.Descricao, entidade.Descricao);
             Assert.True(entidade.Valido);
             Assert.AreEqual(0, entidade.Notificacoes.Count);
         }
@@ -51,7 +51,7 @@ namespace ControleDespesas.Test.Helpers
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(command));
 
             Assert.AreEqual(entidade.Id, command.Id);
-            Assert.AreEqual(entidade.Descricao.ToString(), command.Descricao);
+            Assert.AreEqual(entidade.Descricao, command.Descricao);
         }
 
         [Test]
@@ -64,7 +64,7 @@ namespace ControleDespesas.Test.Helpers
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(command));
 
             Assert.AreEqual(entidade.Id, command.Id);
-            Assert.AreEqual(entidade.Descricao.ToString(), command.Descricao);
+            Assert.AreEqual(entidade.Descricao, command.Descricao);
         }
 
         [Test]

@@ -1,19 +1,28 @@
 ﻿using LSCode.Validador.ValidacoesNotificacoes;
-using LSCode.Validador.ValueObjects;
 
 namespace ControleDespesas.Dominio.Entidades
 {
     public class TipoPagamento : Notificadora
     {
         public int Id { get; set; }
-        public Texto Descricao { get; set; }
+        public string Descricao { get; set; }
 
-        public TipoPagamento(int id, Texto descricao)
+        public TipoPagamento(int id, string descricao)
         {
             Id = id;
             Descricao = descricao;
+
+            Validar();
         }
 
         public TipoPagamento(int id) => Id = id;
+
+        public void Validar()
+        {
+            if (string.IsNullOrEmpty(Descricao))
+                AddNotificacao("Descrição", "Descrição é um campo obrigatório");
+            else if (Descricao.Length > 250)
+                AddNotificacao("Descrição", "Descrição maior que o esperado");
+        }
     }
 }

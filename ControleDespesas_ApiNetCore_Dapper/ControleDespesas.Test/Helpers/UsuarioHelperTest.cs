@@ -21,15 +21,11 @@ namespace ControleDespesas.Test.Helpers
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(entidade));
 
             Assert.AreEqual(0, entidade.Id);
-            Assert.AreEqual(command.Login, entidade.Login.ToString());
-            Assert.AreEqual(command.Senha, entidade.Senha.ToString());
+            Assert.AreEqual(command.Login, entidade.Login);
+            Assert.AreEqual(command.Senha, entidade.Senha);
             Assert.AreEqual(command.Privilegio, entidade.Privilegio);
-            Assert.True(entidade.Valido); 
-            Assert.True(entidade.Login.Valido); 
-            Assert.True(entidade.Senha.Valido);
+            Assert.True(entidade.Valido);  
             Assert.AreEqual(0, entidade.Notificacoes.Count);
-            Assert.AreEqual(0, entidade.Login.Notificacoes.Count);
-            Assert.AreEqual(0, entidade.Senha.Notificacoes.Count);
         }
 
         [Test]
@@ -42,15 +38,11 @@ namespace ControleDespesas.Test.Helpers
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(entidade));
 
             Assert.AreEqual(command.Id, entidade.Id);
-            Assert.AreEqual(command.Login, entidade.Login.ToString());
-            Assert.AreEqual(command.Senha, entidade.Senha.ToString());
+            Assert.AreEqual(command.Login, entidade.Login);
+            Assert.AreEqual(command.Senha, entidade.Senha);
             Assert.AreEqual(command.Privilegio, entidade.Privilegio);
             Assert.True(entidade.Valido);
-            Assert.True(entidade.Login.Valido);
-            Assert.True(entidade.Senha.Valido);
             Assert.AreEqual(0, entidade.Notificacoes.Count);
-            Assert.AreEqual(0, entidade.Login.Notificacoes.Count);
-            Assert.AreEqual(0, entidade.Senha.Notificacoes.Count);
         }
 
         [Test]
@@ -63,8 +55,8 @@ namespace ControleDespesas.Test.Helpers
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(command));
 
             Assert.AreEqual(entidade.Id, command.Id);
-            Assert.AreEqual(entidade.Login.ToString(), command.Login);
-            Assert.AreEqual(entidade.Senha.ToString(), command.Senha);
+            Assert.AreEqual(entidade.Login, command.Login);
+            Assert.AreEqual(entidade.Senha, command.Senha);
             Assert.AreEqual(entidade.Privilegio, command.Privilegio);
         }
 
@@ -78,8 +70,8 @@ namespace ControleDespesas.Test.Helpers
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(command));
 
             Assert.AreEqual(entidade.Id, command.Id);
-            Assert.AreEqual(entidade.Login.ToString(), command.Login);
-            Assert.AreEqual(entidade.Senha.ToString(), command.Senha);
+            Assert.AreEqual(entidade.Login, command.Login);
+            Assert.AreEqual(entidade.Senha, command.Senha);
             Assert.AreEqual(entidade.Privilegio, command.Privilegio);
         }
 

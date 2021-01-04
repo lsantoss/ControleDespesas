@@ -7,7 +7,6 @@ using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Enums;
 using ControleDespesas.Dominio.Query.Usuario;
 using LSCode.ConexoesBD.Enums;
-using LSCode.Validador.ValueObjects;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -510,31 +509,31 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
 
             Usuario1 = new Usuario(
                 _configuration.GetValue<int>("SettingsTest:Usuario1:Id"),
-                new Texto(_configuration.GetValue<string>("SettingsTest:Usuario1:Login"), "Login", 50),
-                new SenhaMedia(_configuration.GetValue<string>("SettingsTest:Usuario1:Senha")),
+                _configuration.GetValue<string>("SettingsTest:Usuario1:Login"),
+                _configuration.GetValue<string>("SettingsTest:Usuario1:Senha"),
                 _configuration.GetValue<EPrivilegioUsuario>("SettingsTest:Usuario1:Privilegio")
             );
 
             Usuario2 = new Usuario(
                 _configuration.GetValue<int>("SettingsTest:Usuario2:Id"),
-                new Texto(_configuration.GetValue<string>("SettingsTest:Usuario2:Login"), "Login", 50),
-                new SenhaMedia(_configuration.GetValue<string>("SettingsTest:Usuario2:Senha")),
+                _configuration.GetValue<string>("SettingsTest:Usuario2:Login"),
+                _configuration.GetValue<string>("SettingsTest:Usuario2:Senha"),
                 _configuration.GetValue<EPrivilegioUsuario>("SettingsTest:Usuario2:Privilegio")
 
             );
 
             Usuario3 = new Usuario(
                 _configuration.GetValue<int>("SettingsTest:Usuario3:Id"),
-                new Texto(_configuration.GetValue<string>("SettingsTest:Usuario3:Login"), "Login", 50),
-                new SenhaMedia(_configuration.GetValue<string>("SettingsTest:Usuario3:Senha")),
+                _configuration.GetValue<string>("SettingsTest:Usuario3:Login"),
+                _configuration.GetValue<string>("SettingsTest:Usuario3:Senha"),
                 _configuration.GetValue<EPrivilegioUsuario>("SettingsTest:Usuario3:Privilegio")
 
             );
 
             Usuario1Editado = new Usuario(
                 _configuration.GetValue<int>("SettingsTest:Usuario1Editado:Id"),
-                new Texto(_configuration.GetValue<string>("SettingsTest:Usuario1Editado:Login"), "Login", 50),
-                new SenhaMedia(_configuration.GetValue<string>("SettingsTest:Usuario1Editado:Senha")),
+                _configuration.GetValue<string>("SettingsTest:Usuario1Editado:Login"),
+                _configuration.GetValue<string>("SettingsTest:Usuario1Editado:Senha"),
                 _configuration.GetValue<EPrivilegioUsuario>("SettingsTest:Usuario1Editado:Privilegio")
 
             );

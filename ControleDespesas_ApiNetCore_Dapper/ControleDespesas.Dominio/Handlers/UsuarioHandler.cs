@@ -29,8 +29,7 @@ namespace ControleDespesas.Dominio.Handlers
             {
                 Usuario usuario = UsuarioHelper.GerarEntidade(command);
 
-                AddNotificacao(usuario.Login.Notificacoes);
-                AddNotificacao(usuario.Senha.Notificacoes);
+                AddNotificacao(usuario.Notificacoes);
 
                 if (_repository.CheckLogin(usuario.Login.ToString()))
                     AddNotificacao("Login", "Esse login não está disponível pois já está sendo usado por outro usuário");
@@ -56,8 +55,7 @@ namespace ControleDespesas.Dominio.Handlers
             {
                 Usuario usuario = UsuarioHelper.GerarEntidade(command);
 
-                AddNotificacao(usuario.Login.Notificacoes);
-                AddNotificacao(usuario.Senha.Notificacoes);
+                AddNotificacao(usuario.Notificacoes);
 
                 if (!_repository.CheckId(usuario.Id))
                     AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");

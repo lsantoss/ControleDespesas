@@ -86,18 +86,18 @@ namespace ControleDespesas.Test.Controllers
             Assert.Null(responseObj.Value.Erros);
 
             Assert.AreEqual(usuario1.Id, responseObj.Value.Dados[0].Id);
-            Assert.AreEqual(usuario1.Login.ToString(), responseObj.Value.Dados[0].Login);
-            Assert.AreEqual(usuario1.Senha.ToString(), responseObj.Value.Dados[0].Senha);
+            Assert.AreEqual(usuario1.Login, responseObj.Value.Dados[0].Login);
+            Assert.AreEqual(usuario1.Senha, responseObj.Value.Dados[0].Senha);
             Assert.AreEqual(usuario1.Privilegio, responseObj.Value.Dados[0].Privilegio);
 
             Assert.AreEqual(usuario2.Id, responseObj.Value.Dados[1].Id);
-            Assert.AreEqual(usuario2.Login.ToString(), responseObj.Value.Dados[1].Login);
-            Assert.AreEqual(usuario2.Senha.ToString(), responseObj.Value.Dados[1].Senha);
+            Assert.AreEqual(usuario2.Login, responseObj.Value.Dados[1].Login);
+            Assert.AreEqual(usuario2.Senha, responseObj.Value.Dados[1].Senha);
             Assert.AreEqual(usuario1.Privilegio, responseObj.Value.Dados[0].Privilegio);
 
             Assert.AreEqual(usuario3.Id, responseObj.Value.Dados[2].Id);
-            Assert.AreEqual(usuario3.Login.ToString(), responseObj.Value.Dados[2].Login);
-            Assert.AreEqual(usuario3.Senha.ToString(), responseObj.Value.Dados[2].Senha);
+            Assert.AreEqual(usuario3.Login, responseObj.Value.Dados[2].Login);
+            Assert.AreEqual(usuario3.Senha, responseObj.Value.Dados[2].Senha);
             Assert.AreEqual(usuario1.Privilegio, responseObj.Value.Dados[0].Privilegio);
         }
 
@@ -129,8 +129,8 @@ namespace ControleDespesas.Test.Controllers
             Assert.Null(responseObj.Value.Erros);
 
             Assert.AreEqual(usuario2.Id, responseObj.Value.Dados.Id);
-            Assert.AreEqual(usuario2.Login.ToString(), responseObj.Value.Dados.Login);
-            Assert.AreEqual(usuario2.Senha.ToString(), responseObj.Value.Dados.Senha);
+            Assert.AreEqual(usuario2.Login, responseObj.Value.Dados.Login);
+            Assert.AreEqual(usuario2.Senha, responseObj.Value.Dados.Senha);
             Assert.AreEqual(usuario2.Privilegio, responseObj.Value.Dados.Privilegio);
         }
 
@@ -238,8 +238,8 @@ namespace ControleDespesas.Test.Controllers
             Assert.Null(responseObj.Value.Erros);
 
             Assert.AreEqual(usuario.Id, responseObj.Value.Dados.Id);
-            Assert.AreEqual(usuario.Login.ToString(), responseObj.Value.Dados.Login);
-            Assert.AreEqual(usuario.Senha.ToString(), responseObj.Value.Dados.Senha);
+            Assert.AreEqual(usuario.Login, responseObj.Value.Dados.Login);
+            Assert.AreEqual(usuario.Senha, responseObj.Value.Dados.Senha);
             Assert.AreEqual(usuario.Privilegio, responseObj.Value.Dados.Privilegio);
         }
 

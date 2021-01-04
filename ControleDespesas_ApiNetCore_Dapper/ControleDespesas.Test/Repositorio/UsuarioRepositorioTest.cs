@@ -33,8 +33,8 @@ namespace ControleDespesas.Test.Repositorio
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 
             Assert.AreEqual(usuario.Id, retorno.Id);
-            Assert.AreEqual(usuario.Login.ToString(), retorno.Login);
-            Assert.AreEqual(usuario.Senha.ToString(), retorno.Senha);
+            Assert.AreEqual(usuario.Login, retorno.Login);
+            Assert.AreEqual(usuario.Senha, retorno.Senha);
             Assert.AreEqual(usuario.Privilegio, retorno.Privilegio);
         }
 
@@ -52,8 +52,8 @@ namespace ControleDespesas.Test.Repositorio
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 
             Assert.AreEqual(usuario.Id, retorno.Id);
-            Assert.AreEqual(usuario.Login.ToString(), retorno.Login);
-            Assert.AreEqual(usuario.Senha.ToString(), retorno.Senha);
+            Assert.AreEqual(usuario.Login, retorno.Login);
+            Assert.AreEqual(usuario.Senha, retorno.Senha);
             Assert.AreEqual(usuario.Privilegio, retorno.Privilegio);
         }
 
@@ -75,13 +75,13 @@ namespace ControleDespesas.Test.Repositorio
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 
             Assert.AreEqual(usuario1.Id, retorno[0].Id);
-            Assert.AreEqual(usuario1.Login.ToString(), retorno[0].Login);
-            Assert.AreEqual(usuario1.Senha.ToString(), retorno[0].Senha);
+            Assert.AreEqual(usuario1.Login, retorno[0].Login);
+            Assert.AreEqual(usuario1.Senha, retorno[0].Senha);
             Assert.AreEqual(usuario1.Privilegio, retorno[0].Privilegio);
 
             Assert.AreEqual(usuario3.Id, retorno[1].Id);
-            Assert.AreEqual(usuario3.Login.ToString(), retorno[1].Login);
-            Assert.AreEqual(usuario3.Senha.ToString(), retorno[1].Senha);
+            Assert.AreEqual(usuario3.Login, retorno[1].Login);
+            Assert.AreEqual(usuario3.Senha, retorno[1].Senha);
             Assert.AreEqual(usuario3.Privilegio, retorno[1].Privilegio);
         }
 
@@ -96,8 +96,8 @@ namespace ControleDespesas.Test.Repositorio
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 
             Assert.AreEqual(usuario.Id, retorno.Id);
-            Assert.AreEqual(usuario.Login.ToString(), retorno.Login);
-            Assert.AreEqual(usuario.Senha.ToString(), retorno.Senha);
+            Assert.AreEqual(usuario.Login, retorno.Login);
+            Assert.AreEqual(usuario.Senha, retorno.Senha);
             Assert.AreEqual(usuario.Privilegio, retorno.Privilegio);
         }
 
@@ -117,18 +117,18 @@ namespace ControleDespesas.Test.Repositorio
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 
             Assert.AreEqual(usuario1.Id, retorno[0].Id);
-            Assert.AreEqual(usuario1.Login.ToString(), retorno[0].Login);
-            Assert.AreEqual(usuario1.Senha.ToString(), retorno[0].Senha);
+            Assert.AreEqual(usuario1.Login, retorno[0].Login);
+            Assert.AreEqual(usuario1.Senha, retorno[0].Senha);
             Assert.AreEqual(usuario1.Privilegio, retorno[0].Privilegio);
 
             Assert.AreEqual(usuario2.Id, retorno[1].Id);
-            Assert.AreEqual(usuario2.Login.ToString(), retorno[1].Login);
-            Assert.AreEqual(usuario2.Senha.ToString(), retorno[1].Senha);
+            Assert.AreEqual(usuario2.Login, retorno[1].Login);
+            Assert.AreEqual(usuario2.Senha, retorno[1].Senha);
             Assert.AreEqual(usuario2.Privilegio, retorno[1].Privilegio);
 
             Assert.AreEqual(usuario3.Id, retorno[2].Id);
-            Assert.AreEqual(usuario3.Login.ToString(), retorno[2].Login);
-            Assert.AreEqual(usuario3.Senha.ToString(), retorno[2].Senha);
+            Assert.AreEqual(usuario3.Login, retorno[2].Login);
+            Assert.AreEqual(usuario3.Senha, retorno[2].Senha);
             Assert.AreEqual(usuario3.Privilegio, retorno[2].Privilegio);
         }
 
@@ -143,8 +143,8 @@ namespace ControleDespesas.Test.Repositorio
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 
             Assert.AreEqual(usuario.Id, retorno.Id);
-            Assert.AreEqual(usuario.Login.ToString(), retorno.Login);
-            Assert.AreEqual(usuario.Senha.ToString(), retorno.Senha);
+            Assert.AreEqual(usuario.Login, retorno.Login);
+            Assert.AreEqual(usuario.Senha, retorno.Senha);
             Assert.AreEqual(usuario.Privilegio, retorno.Privilegio);
         }
 

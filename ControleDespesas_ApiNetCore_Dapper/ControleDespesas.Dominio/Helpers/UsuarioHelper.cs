@@ -2,7 +2,6 @@
 using ControleDespesas.Dominio.Commands.Usuario.Output;
 using ControleDespesas.Dominio.Entidades;
 using ControleDespesas.Dominio.Enums;
-using LSCode.Validador.ValueObjects;
 using System;
 
 namespace ControleDespesas.Dominio.Helpers
@@ -13,8 +12,8 @@ namespace ControleDespesas.Dominio.Helpers
         {
             try
             {
-                Texto login = new Texto(command.Login, "Login", 50);
-                SenhaMedia senha = new SenhaMedia(command.Senha);
+                string login = command.Login;
+                string senha = command.Senha;
                 EPrivilegioUsuario privilegio = command.Privilegio;
 
                 Usuario usuario = new Usuario(0, login, senha, privilegio);
@@ -31,8 +30,8 @@ namespace ControleDespesas.Dominio.Helpers
             try
             {
                 int id = command.Id;
-                Texto login = new Texto(command.Login, "Login", 50);
-                SenhaMedia senha = new SenhaMedia(command.Senha);
+                string login = command.Login;
+                string senha = command.Senha;
                 EPrivilegioUsuario privilegio = command.Privilegio;
 
                 Usuario usuario = new Usuario(id, login, senha, privilegio);
@@ -51,8 +50,8 @@ namespace ControleDespesas.Dominio.Helpers
                 return new AdicionarUsuarioCommandOutput
                 {
                     Id = usuario.Id,
-                    Login = usuario.Login.ToString(),
-                    Senha = usuario.Senha.ToString(),
+                    Login = usuario.Login,
+                    Senha = usuario.Senha,
                     Privilegio = usuario.Privilegio
                 };
             }
@@ -69,8 +68,8 @@ namespace ControleDespesas.Dominio.Helpers
                 return new AtualizarUsuarioCommandOutput
                 {
                     Id = usuario.Id,
-                    Login = usuario.Login.ToString(),
-                    Senha = usuario.Senha.ToString(),
+                    Login = usuario.Login,
+                    Senha = usuario.Senha,
                     Privilegio = usuario.Privilegio
                 };
             }

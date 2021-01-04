@@ -17,10 +17,13 @@ namespace ControleDespesas.Dominio.Commands.Usuario.Input
         {
             try
             {
-                AddNotificacao(new ContratoValidacao().TamanhoMinimo(Login, 1, "Login", "Login é um campo obrigatório"));
-                AddNotificacao(new ContratoValidacao().TamanhoMaximo(Login, 50, "Login", "Login maior que o esperado"));
+                if (string.IsNullOrEmpty(Login))
+                    AddNotificacao("Login", "Login é um campo obrigatório");
+                else if (Login.Length > 50)
+                    AddNotificacao("Login", "Login maior que o esperado");
 
-                AddNotificacao(new ContratoValidacao().NaoEhNuloOuVazio(Senha, "Senha", "Senha é um campo obrigatório"));
+                if (string.IsNullOrEmpty(Senha))
+                    AddNotificacao("Senha", "Senha é um campo obrigatório");
 
                 return Valido;
             }

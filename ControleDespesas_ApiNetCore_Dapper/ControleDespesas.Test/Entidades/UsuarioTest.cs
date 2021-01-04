@@ -2,7 +2,6 @@
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
-using LSCode.Validador.ValueObjects;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Entidades
@@ -20,22 +19,19 @@ namespace ControleDespesas.Test.Entidades
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_usuario));
 
             Assert.True(_usuario.Valido);
-            Assert.True(_usuario.Login.Valido);
-            Assert.True(_usuario.Senha.Valido);
             Assert.AreEqual(0, _usuario.Notificacoes.Count);
-            Assert.AreEqual(0, _usuario.Login.Notificacoes.Count);
-            Assert.AreEqual(0, _usuario.Senha.Notificacoes.Count);
         }
 
         [Test]
         public void ValidarEntidade_LoginInvalido()
         {
-            _usuario.Login = new Texto("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "Login", 50);
+            _usuario.Login = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            _usuario.Validar();
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_usuario));
 
-            Assert.False(_usuario.Login.Valido);
-            Assert.AreNotEqual(0, _usuario.Login.Notificacoes.Count);
+            Assert.False(_usuario.Valido);
+            Assert.AreNotEqual(0, _usuario.Notificacoes.Count);
         }
 
         [Test]
@@ -47,26 +43,26 @@ namespace ControleDespesas.Test.Entidades
         [TestCase("AAAAAa")]
         public void ValidarEntidade_SenhaInvalida(string senha)
         {
-            _usuario.Senha = new SenhaMedia(senha);
+            _usuario.Senha = senha;
+            _usuario.Validar();
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_usuario));
 
-            Assert.False(_usuario.Senha.Valido);
-            Assert.AreNotEqual(0, _usuario.Senha.Notificacoes.Count);
+            Assert.False(_usuario.Valido);
+            Assert.AreNotEqual(0, _usuario.Notificacoes.Count);
         }
 
         [Test]
         public void ValidarEntidade_LoginESenhaInvalida()
         {
-            _usuario.Login = new Texto("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "Login", 50);
-            _usuario.Senha = new SenhaMedia("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            _usuario.Login = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            _usuario.Senha = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            _usuario.Validar();
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_usuario));
 
-            Assert.False(_usuario.Login.Valido);
-            Assert.False(_usuario.Senha.Valido);
-            Assert.AreNotEqual(0, _usuario.Login.Notificacoes.Count);
-            Assert.AreNotEqual(0, _usuario.Senha.Notificacoes.Count);
+            Assert.False(_usuario.Valido);
+            Assert.AreNotEqual(0, _usuario.Notificacoes.Count);
         }
 
         [TearDown]

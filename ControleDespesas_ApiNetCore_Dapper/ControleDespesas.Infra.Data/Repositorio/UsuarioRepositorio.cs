@@ -28,8 +28,8 @@ namespace ControleDespesas.Infra.Data.Repositorio
         {
             try
             {
-                _parametros.Add("Login", usuario.Login.ToString(), DbType.String);
-                _parametros.Add("Senha", usuario.Senha.ToString(), DbType.String);
+                _parametros.Add("Login", usuario.Login, DbType.String);
+                _parametros.Add("Senha", usuario.Senha, DbType.String);
                 _parametros.Add("Privilegio", usuario.Privilegio, DbType.Int16);
 
                 usuario.Id = _ctx.SQLServerConexao.ExecuteScalar<int>(UsuarioQueries.Salvar, _parametros);
@@ -46,8 +46,8 @@ namespace ControleDespesas.Infra.Data.Repositorio
             try
             {
                 _parametros.Add("Id", usuario.Id, DbType.Int32);
-                _parametros.Add("Login", usuario.Login.ToString(), DbType.String);
-                _parametros.Add("Senha", usuario.Senha.ToString(), DbType.String);
+                _parametros.Add("Login", usuario.Login, DbType.String);
+                _parametros.Add("Senha", usuario.Senha, DbType.String);
                 _parametros.Add("Privilegio", usuario.Privilegio, DbType.Int16);
 
                 _ctx.SQLServerConexao.Execute(UsuarioQueries.Atualizar, _parametros);

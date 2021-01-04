@@ -1,5 +1,6 @@
 ﻿using ControleDespesas.Dominio.Enums;
 using LSCode.Facilitador.Api.Interfaces.Commands;
+using LSCode.Validador.ValidacoesBooleanas;
 using LSCode.Validador.ValidacoesNotificacoes;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -25,23 +26,29 @@ namespace ControleDespesas.Dominio.Commands.Usuario.Input
         {
             try
             {
-                AddNotificacao(new ContratoValidacao().EhMaior(Id, 0, "Id", "Id não é valido"));
+                if (Id <= 0)
+                    AddNotificacao("Id", "Id não é valido");
 
-                AddNotificacao(new ContratoValidacao().NaoEhNuloOuVazio(Login, "Login", "Login é um campo obrigatório"));
-                AddNotificacao(new ContratoValidacao().TamanhoMaximo(Login, 50, "Login", "Login maior que o esperado"));
+                if (string.IsNullOrEmpty(Login))
+                    AddNotificacao("Login", "Login é um campo obrigatório");
+                else if (Login.Length > 50)
+                    AddNotificacao("Login", "Login maior que o esperado");
 
-                AddNotificacao(new ContratoValidacao().NaoEhNuloOuVazio(Senha, "Senha", "Senha é um campo obrigatório"));
-                AddNotificacao(new ContratoValidacao().TamanhoMinimo(Senha, 6, "Senha", "Senha deve conter no mínimo 6 caracteres"));
-                AddNotificacao(new ContratoValidacao().TamanhoMaximo(Senha, 15, "Senha", "Senha deve conter no máximo 15 caracteres"));
+                if (string.IsNullOrEmpty(Senha))
+                    AddNotificacao("Senha", "Senha é um campo obrigatório");
+                else if (Senha.Length < 6)
+                    AddNotificacao("Senha", "Senha deve conter no mínimo 6 caracteres");
+                else if (Senha.Length > 15)
+                    AddNotificacao("Senha", "Senha deve conter no máximo 15 caracteres");
+                else if (!ValidacaoBooleana.ContemLetraMaiuscula(Senha))
+                    AddNotificacao("Senha", "Senha deve conter no mínimo 1 letra maíuscula");
+                else if (!ValidacaoBooleana.ContemLetraMinuscula(Senha))
+                    AddNotificacao("SenhaMedia", "Senha deve conter no mínimo 1 letra minúscula");
+                else if (!ValidacaoBooleana.ContemNumero(Senha))
+                    AddNotificacao("SenhaMedia", "Senha deve conter no mínimo 1 número");
 
-                if (Senha != null)
-                {
-                    if (!Regex.IsMatch(Senha, @"[A-Z]+")) AddNotificacao("Senha", "Senha deve conter no mínimo 1 letra maíuscula");
-                    if (!Regex.IsMatch(Senha, @"[a-z]+")) AddNotificacao("SenhaMedia", "Senha deve conter no mínimo 1 letra minúscula");
-                    if (!Regex.IsMatch(Senha, @"[0-9]+")) AddNotificacao("SenhaMedia", "Senha deve conter no mínimo 1 número");
-                }
-
-                AddNotificacao(new ContratoValidacao().EhMaior((int)Privilegio, 0, "Privilegio", "Privilégio é um campo obrigatório"));
+                if ((int)Privilegio <= 0)
+                    AddNotificacao("Privilegio", "Privilégio é um campo obrigatório");
 
                 return Valido;
             }

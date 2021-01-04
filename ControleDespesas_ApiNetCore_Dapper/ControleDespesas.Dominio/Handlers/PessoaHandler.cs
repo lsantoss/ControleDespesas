@@ -52,9 +52,6 @@ namespace ControleDespesas.Dominio.Handlers
 
                 AddNotificacao(pessoa.Notificacoes);
 
-                if (pessoa.Id == 0)
-                    AddNotificacao("Id", "Id não está vinculado à operação solicitada");
-
                 if (!_repository.CheckId(pessoa.Id))
                     AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");
 

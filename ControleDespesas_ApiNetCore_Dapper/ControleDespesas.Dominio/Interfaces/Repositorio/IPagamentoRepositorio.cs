@@ -2,7 +2,7 @@
 using ControleDespesas.Dominio.Query.Pagamento;
 using System.Collections.Generic;
 
-namespace ControleDespesas.Dominio.Repositorio
+namespace ControleDespesas.Dominio.Interfaces.Repositorio
 {
     public interface IPagamentoRepositorio
     {

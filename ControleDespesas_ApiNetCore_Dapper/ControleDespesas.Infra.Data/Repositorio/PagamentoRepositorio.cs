@@ -3,7 +3,7 @@ using ControleDespesas.Dominio.Query.Empresa;
 using ControleDespesas.Dominio.Query.Pagamento;
 using ControleDespesas.Dominio.Query.Pessoa;
 using ControleDespesas.Dominio.Query.TipoPagamento;
-using ControleDespesas.Dominio.Repositorio;
+using ControleDespesas.Dominio.Interfaces.Repositorio;
 using ControleDespesas.Infra.Data.Queries;
 using ControleDespesas.Infra.Data.Settings;
 using Dapper;

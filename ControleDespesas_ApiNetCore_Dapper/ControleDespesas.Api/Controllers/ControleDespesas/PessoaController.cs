@@ -2,8 +2,8 @@
 using ControleDespesas.Dominio.Commands.Pessoa.Input;
 using ControleDespesas.Dominio.Commands.Pessoa.Output;
 using ControleDespesas.Dominio.Handlers;
+using ControleDespesas.Dominio.Interfaces.Repositorio;
 using ControleDespesas.Dominio.Query.Pessoa;
-using ControleDespesas.Dominio.Repositorio;
 using ElmahCore;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;

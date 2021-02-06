@@ -1,4 +1,5 @@
-﻿using ControleDespesas.Infra.Data.Repositorio;
+﻿using ControleDespesas.Dominio.Interfaces.Repositorio;
+using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
@@ -9,7 +10,7 @@ namespace ControleDespesas.Test.Repositorio
 {
     public class EmpresaRepositorioTest : DatabaseTest
     {
-        private readonly EmpresaRepositorio _repository;
+        private readonly IEmpresaRepositorio _repository;
 
         public EmpresaRepositorioTest()
         {

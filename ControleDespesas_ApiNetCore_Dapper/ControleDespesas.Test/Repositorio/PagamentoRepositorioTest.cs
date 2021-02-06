@@ -1,4 +1,5 @@
-﻿using ControleDespesas.Infra.Data.Repositorio;
+﻿using ControleDespesas.Dominio.Interfaces.Repositorio;
+using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
@@ -10,11 +11,11 @@ namespace ControleDespesas.Test.Repositorio
 {
     public class PagamentoRepositorioTest : DatabaseTest
     {
-        private readonly UsuarioRepositorio _repositoryUsuario;
-        private readonly TipoPagamentoRepositorio _repositoryTipoPagamento;
-        private readonly EmpresaRepositorio _repositoryEmpresa;
-        private readonly PessoaRepositorio _repositoryPessoa;
-        private readonly PagamentoRepositorio _repositoryPagamento;
+        private readonly IUsuarioRepositorio _repositoryUsuario;
+        private readonly ITipoPagamentoRepositorio _repositoryTipoPagamento;
+        private readonly IEmpresaRepositorio _repositoryEmpresa;
+        private readonly IPessoaRepositorio _repositoryPessoa;
+        private readonly IPagamentoRepositorio _repositoryPagamento;
 
         public PagamentoRepositorioTest()
         {

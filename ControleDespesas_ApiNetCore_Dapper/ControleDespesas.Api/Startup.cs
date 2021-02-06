@@ -2,7 +2,7 @@
 using ControleDespesas.Api.Settings;
 using ControleDespesas.Api.Swagger;
 using ControleDespesas.Dominio.Handlers;
-using ControleDespesas.Dominio.Repositorio;
+using ControleDespesas.Dominio.Interfaces.Repositorio;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Infra.Data.Settings;
 using ElmahCore.Mvc;

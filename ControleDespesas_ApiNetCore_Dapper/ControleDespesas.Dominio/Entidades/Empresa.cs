@@ -1,4 +1,5 @@
 ﻿using LSCode.Validador.ValidacoesNotificacoes;
+using System;
 
 namespace ControleDespesas.Dominio.Entidades
 {
@@ -19,13 +20,20 @@ namespace ControleDespesas.Dominio.Entidades
 
         public void Validar()
         {
-            if (string.IsNullOrEmpty(Nome))
-                AddNotificacao("Nome", "Nome é um campo obrigatório");
-            else if (Nome.Length > 100)
-                AddNotificacao("Nome", "Nome maior que o esperado");
+            try
+            {
+                if (string.IsNullOrEmpty(Nome))
+                    AddNotificacao("Nome", "Nome é um campo obrigatório");
+                else if (Nome.Length > 100)
+                    AddNotificacao("Nome", "Nome maior que o esperado");
 
-            if (string.IsNullOrEmpty(Logo))
-                AddNotificacao("Logo", "Logo é um campo obrigatório");
+                if (string.IsNullOrEmpty(Logo))
+                    AddNotificacao("Logo", "Logo é um campo obrigatório");
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
     }
 }

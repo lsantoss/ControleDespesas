@@ -35,7 +35,7 @@ namespace ControleDespesas.Dominio.Commands.Pessoa.Input
             }
             catch (Exception e)
             {
-                throw new Exception(e.Message);
+                throw e;
             }
         }
     }

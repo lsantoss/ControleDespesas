@@ -21,7 +21,7 @@ namespace ControleDespesas.Dominio.Commands.Pagamento.Input
             }
             catch (Exception e)
             {
-                throw new Exception(e.Message);
+                throw e;
             }
         }
     }

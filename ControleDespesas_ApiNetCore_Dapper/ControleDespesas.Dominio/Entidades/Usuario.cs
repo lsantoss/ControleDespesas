@@ -1,6 +1,7 @@
 ﻿using ControleDespesas.Dominio.Enums;
 using LSCode.Validador.ValidacoesBooleanas;
 using LSCode.Validador.ValidacoesNotificacoes;
+using System;
 
 namespace ControleDespesas.Dominio.Entidades
 {
@@ -23,26 +24,33 @@ namespace ControleDespesas.Dominio.Entidades
 
         public void Validar()
         {
-            if (string.IsNullOrEmpty(Login))
-                AddNotificacao("Login", "Login é um campo obrigatório");
-            else if (Login.Length > 50)
-                AddNotificacao("Login", "Login maior que o esperado");
+            try
+            {
+                if (string.IsNullOrEmpty(Login))
+                    AddNotificacao("Login", "Login é um campo obrigatório");
+                else if (Login.Length > 50)
+                    AddNotificacao("Login", "Login maior que o esperado");
 
-            if (string.IsNullOrEmpty(Senha))
-                AddNotificacao("Senha", "Senha é um campo obrigatório");
-            else if (Senha.Length < 6)
-                AddNotificacao("Senha", "Senha deve conter no mínimo 6 caracteres");
-            else if (Senha.Length > 15)
-                AddNotificacao("Senha", "Senha deve conter no máximo 15 caracteres");
-            else if (!ValidacaoBooleana.ContemLetraMaiuscula(Senha))
-                AddNotificacao("Senha", "Senha deve conter no mínimo 1 letra maíuscula");
-            else if (!ValidacaoBooleana.ContemLetraMinuscula(Senha))
-                AddNotificacao("SenhaMedia", "Senha deve conter no mínimo 1 letra minúscula");
-            else if (!ValidacaoBooleana.ContemNumero(Senha))
-                AddNotificacao("SenhaMedia", "Senha deve conter no mínimo 1 número");
+                if (string.IsNullOrEmpty(Senha))
+                    AddNotificacao("Senha", "Senha é um campo obrigatório");
+                else if (Senha.Length < 6)
+                    AddNotificacao("Senha", "Senha deve conter no mínimo 6 caracteres");
+                else if (Senha.Length > 15)
+                    AddNotificacao("Senha", "Senha deve conter no máximo 15 caracteres");
+                else if (!ValidacaoBooleana.ContemLetraMaiuscula(Senha))
+                    AddNotificacao("Senha", "Senha deve conter no mínimo 1 letra maíuscula");
+                else if (!ValidacaoBooleana.ContemLetraMinuscula(Senha))
+                    AddNotificacao("SenhaMedia", "Senha deve conter no mínimo 1 letra minúscula");
+                else if (!ValidacaoBooleana.ContemNumero(Senha))
+                    AddNotificacao("SenhaMedia", "Senha deve conter no mínimo 1 número");
 
-            if ((int)Privilegio <= 0)
-                AddNotificacao("Privilegio", "Privilegio é um campo obrigatório");
+                if ((int)Privilegio <= 0)
+                    AddNotificacao("Privilegio", "Privilegio é um campo obrigatório");
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
     }
 }

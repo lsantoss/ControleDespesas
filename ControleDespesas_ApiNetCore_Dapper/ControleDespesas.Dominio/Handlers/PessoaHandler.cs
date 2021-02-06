@@ -40,7 +40,7 @@ namespace ControleDespesas.Dominio.Handlers
             }
             catch (Exception e)
             {
-                throw new Exception(e.Message);
+                throw e;
             }
         }
 
@@ -63,11 +63,10 @@ namespace ControleDespesas.Dominio.Handlers
                 AtualizarPessoaCommandOutput dadosRetorno = PessoaHelper.GerarDadosRetornoUpdate(pessoa);
 
                 return new CommandResult<Notificacao>("Pessoa atualizada com sucesso!", dadosRetorno);
-
             }
             catch (Exception e)
             {
-                throw new Exception(e.Message);
+                throw e;
             }
         }
 
@@ -89,7 +88,7 @@ namespace ControleDespesas.Dominio.Handlers
             }
             catch (Exception e)
             {
-                throw new Exception(e.Message);
+                throw e;
             }
         }
     }

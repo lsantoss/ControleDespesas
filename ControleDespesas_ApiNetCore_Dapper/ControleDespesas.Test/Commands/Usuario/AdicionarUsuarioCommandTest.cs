@@ -45,6 +45,7 @@ namespace ControleDespesas.Test.Commands.Usuario
         [Test]
         [TestCase(null)]
         [TestCase("")]
+        [TestCase("a")]
         [TestCase("1Aaaaaaaaaaaaaaa")]
         [TestCase("aaaaa1")]
         [TestCase("AAAAA1")]

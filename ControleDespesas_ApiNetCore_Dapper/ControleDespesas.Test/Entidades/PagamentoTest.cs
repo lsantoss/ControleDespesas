@@ -23,12 +23,68 @@ namespace ControleDespesas.Test.Entidades
         }
 
         [Test]
-        public void ValidarEntidade_DescricaoInvalida()
+        [TestCase(0)]
+        [TestCase(-1)]
+        public void ValidarEntidade_IdTipoPagamentoInvalido(int idTipoPagamento)
         {
-            _pagamento.Descricao = @"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                                     aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                                     aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            _pagamento.TipoPagamento.Id = idTipoPagamento;
+            _pagamento.Validar();
 
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_pagamento));
+
+            Assert.False(_pagamento.Valido);
+            Assert.AreNotEqual(0, _pagamento.Notificacoes.Count);
+        }
+
+        [Test]
+        [TestCase(0)]
+        [TestCase(-1)]
+        public void ValidarEntidade_IdEmpresaInvalido(int empresa)
+        {
+            _pagamento.Empresa.Id = empresa;
+            _pagamento.Validar();
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_pagamento));
+
+            Assert.False(_pagamento.Valido);
+            Assert.AreNotEqual(0, _pagamento.Notificacoes.Count);
+        }
+
+        [Test]
+        [TestCase(0)]
+        [TestCase(-1)]
+        public void ValidarEntidade_IdPesssoaInvalido(int pessoa)
+        {
+            _pagamento.Pessoa.Id = pessoa;
+            _pagamento.Validar();
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_pagamento));
+
+            Assert.False(_pagamento.Valido);
+            Assert.AreNotEqual(0, _pagamento.Notificacoes.Count);
+        }
+
+        [Test]
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        public void ValidarEntidade_DescricaoInvalida(string descricao)
+        {
+            _pagamento.Descricao = descricao;
+            _pagamento.Validar();
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_pagamento));
+
+            Assert.False(_pagamento.Valido);
+            Assert.AreNotEqual(0, _pagamento.Notificacoes.Count);
+        }
+
+        [Test]
+        [TestCase(0)]
+        [TestCase(-1)]
+        public void ValidarEntidade_ValorInvalido(double valor)
+        {
+            _pagamento.Valor = valor;
             _pagamento.Validar();
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_pagamento));

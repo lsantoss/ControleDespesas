@@ -23,9 +23,12 @@ namespace ControleDespesas.Test.Entidades
         }
 
         [Test]
-        public void ValidarEntidade_LoginInvalido()
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        public void ValidarEntidade_LoginInvalido(string login)
         {
-            _usuario.Login = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            _usuario.Login = login;
             _usuario.Validar();
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_usuario));
@@ -37,6 +40,7 @@ namespace ControleDespesas.Test.Entidades
         [Test]
         [TestCase(null)]
         [TestCase("")]
+        [TestCase("a")]
         [TestCase("1Aaaaaaaaaaaaaaa")]
         [TestCase("aaaaa1")]
         [TestCase("AAAAA1")]
@@ -44,19 +48,6 @@ namespace ControleDespesas.Test.Entidades
         public void ValidarEntidade_SenhaInvalida(string senha)
         {
             _usuario.Senha = senha;
-            _usuario.Validar();
-
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_usuario));
-
-            Assert.False(_usuario.Valido);
-            Assert.AreNotEqual(0, _usuario.Notificacoes.Count);
-        }
-
-        [Test]
-        public void ValidarEntidade_LoginESenhaInvalida()
-        {
-            _usuario.Login = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            _usuario.Senha = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
             _usuario.Validar();
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_usuario));

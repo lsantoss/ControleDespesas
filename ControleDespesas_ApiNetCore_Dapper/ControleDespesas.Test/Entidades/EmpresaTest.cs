@@ -23,9 +23,26 @@ namespace ControleDespesas.Test.Entidades
         }
 
         [Test]
-        public void ValidarEntidade_NomeInvalido()
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        public void ValidarEntidade_NomeInvalido(string nome)
         {
-            _empresa.Nome = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            _empresa.Nome = nome;
+            _empresa.Validar();
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_empresa));
+
+            Assert.False(_empresa.Valido);
+            Assert.AreNotEqual(0, _empresa.Notificacoes.Count);
+        }
+
+        [Test]
+        [TestCase(null)]
+        [TestCase("")]
+        public void ValidarEntidade_LogoInvalido(string logo)
+        {
+            _empresa.Logo = logo;
             _empresa.Validar();
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_empresa));

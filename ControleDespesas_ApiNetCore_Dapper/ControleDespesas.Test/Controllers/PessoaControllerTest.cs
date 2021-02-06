@@ -1,7 +1,7 @@
 ﻿using ControleDespesas.Api.Controllers.ControleDespesas;
-using ControleDespesas.Dominio.Commands.Pessoa.Output;
-using ControleDespesas.Dominio.Handlers;
-using ControleDespesas.Dominio.Query.Pessoa;
+using ControleDespesas.Domain.Commands.Pessoa.Output;
+using ControleDespesas.Domain.Handlers;
+using ControleDespesas.Domain.Query.Pessoa;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Models;

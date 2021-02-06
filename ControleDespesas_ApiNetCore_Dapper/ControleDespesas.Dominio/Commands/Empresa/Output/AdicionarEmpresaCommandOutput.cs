@@ -1,4 +1,4 @@
-﻿namespace ControleDespesas.Dominio.Commands.Empresa.Output
+﻿namespace ControleDespesas.Domain.Commands.Empresa.Output
 {
     public class AdicionarEmpresaCommandOutput
     {

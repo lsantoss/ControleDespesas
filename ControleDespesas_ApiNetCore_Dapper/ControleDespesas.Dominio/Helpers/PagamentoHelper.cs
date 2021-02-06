@@ -1,9 +1,9 @@
-﻿using ControleDespesas.Dominio.Commands.Pagamento.Input;
-using ControleDespesas.Dominio.Commands.Pagamento.Output;
-using ControleDespesas.Dominio.Entities;
+﻿using ControleDespesas.Domain.Commands.Pagamento.Input;
+using ControleDespesas.Domain.Commands.Pagamento.Output;
+using ControleDespesas.Domain.Entities;
 using System;
 
-namespace ControleDespesas.Dominio.Helpers
+namespace ControleDespesas.Domain.Helpers
 {
     public static class PagamentoHelper
     {

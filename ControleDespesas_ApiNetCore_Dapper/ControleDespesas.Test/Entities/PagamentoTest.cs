@@ -1,4 +1,4 @@
-﻿using ControleDespesas.Dominio.Entities;
+﻿using ControleDespesas.Domain.Entities;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;

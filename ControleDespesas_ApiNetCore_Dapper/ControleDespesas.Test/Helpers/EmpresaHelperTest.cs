@@ -1,4 +1,4 @@
-﻿using ControleDespesas.Dominio.Helpers;
+﻿using ControleDespesas.Domain.Helpers;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;

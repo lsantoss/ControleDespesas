@@ -1,4 +1,4 @@
-﻿namespace ControleDespesas.Dominio.Commands.Pagamento.Output
+﻿namespace ControleDespesas.Domain.Commands.Pagamento.Output
 {
     public class ApagarPagamentoCommandOutput
     {

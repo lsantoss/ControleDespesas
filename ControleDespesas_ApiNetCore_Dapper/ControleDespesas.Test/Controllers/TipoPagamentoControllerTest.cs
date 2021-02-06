@@ -1,7 +1,7 @@
 ﻿using ControleDespesas.Api.Controllers.ControleDespesas;
-using ControleDespesas.Dominio.Commands.TipoPagamento.Output;
-using ControleDespesas.Dominio.Handlers;
-using ControleDespesas.Dominio.Query.TipoPagamento;
+using ControleDespesas.Domain.Commands.TipoPagamento.Output;
+using ControleDespesas.Domain.Handlers;
+using ControleDespesas.Domain.Query.TipoPagamento;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Models;

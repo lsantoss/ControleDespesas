@@ -1,9 +1,9 @@
 ﻿using ControleDespesas.Api.Settings;
-using ControleDespesas.Dominio.Commands.Pessoa.Input;
-using ControleDespesas.Dominio.Commands.Pessoa.Output;
-using ControleDespesas.Dominio.Handlers;
-using ControleDespesas.Dominio.Interfaces.Repositorio;
-using ControleDespesas.Dominio.Query.Pessoa;
+using ControleDespesas.Domain.Commands.Pessoa.Input;
+using ControleDespesas.Domain.Commands.Pessoa.Output;
+using ControleDespesas.Domain.Handlers;
+using ControleDespesas.Domain.Interfaces.Repositorio;
+using ControleDespesas.Domain.Query.Pessoa;
 using ElmahCore;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;

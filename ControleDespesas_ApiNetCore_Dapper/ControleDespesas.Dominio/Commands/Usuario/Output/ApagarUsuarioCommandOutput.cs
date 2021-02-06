@@ -1,4 +1,4 @@
-﻿namespace ControleDespesas.Dominio.Commands.Usuario.Output
+﻿namespace ControleDespesas.Domain.Commands.Usuario.Output
 {
     public class ApagarUsuarioCommandOutput
     {

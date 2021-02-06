@@ -1,9 +1,9 @@
 ﻿using ControleDespesas.Api.Settings;
-using ControleDespesas.Dominio.Commands.Pagamento.Input;
-using ControleDespesas.Dominio.Commands.Pagamento.Output;
-using ControleDespesas.Dominio.Handlers;
-using ControleDespesas.Dominio.Interfaces.Repositorio;
-using ControleDespesas.Dominio.Query.Pagamento;
+using ControleDespesas.Domain.Commands.Pagamento.Input;
+using ControleDespesas.Domain.Commands.Pagamento.Output;
+using ControleDespesas.Domain.Handlers;
+using ControleDespesas.Domain.Interfaces.Repositorio;
+using ControleDespesas.Domain.Query.Pagamento;
 using ElmahCore;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;

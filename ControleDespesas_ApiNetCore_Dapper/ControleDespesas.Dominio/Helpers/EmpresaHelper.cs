@@ -1,9 +1,9 @@
-﻿using ControleDespesas.Dominio.Commands.Empresa.Input;
-using ControleDespesas.Dominio.Commands.Empresa.Output;
-using ControleDespesas.Dominio.Entities;
+﻿using ControleDespesas.Domain.Commands.Empresa.Input;
+using ControleDespesas.Domain.Commands.Empresa.Output;
+using ControleDespesas.Domain.Entities;
 using System;
 
-namespace ControleDespesas.Dominio.Helpers
+namespace ControleDespesas.Domain.Helpers
 {
     public static class EmpresaHelper
     {

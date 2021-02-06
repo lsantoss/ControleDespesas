@@ -1,4 +1,4 @@
-﻿using ControleDespesas.Dominio.Interfaces.Repositorio;
+﻿using ControleDespesas.Domain.Interfaces.Repositorio;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;

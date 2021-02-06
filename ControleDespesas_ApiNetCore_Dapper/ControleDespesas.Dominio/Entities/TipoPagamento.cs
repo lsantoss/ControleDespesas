@@ -1,7 +1,7 @@
 ﻿using LSCode.Validador.ValidacoesNotificacoes;
 using System;
 
-namespace ControleDespesas.Dominio.Entities
+namespace ControleDespesas.Domain.Entities
 {
     public class TipoPagamento : Notificadora
     {

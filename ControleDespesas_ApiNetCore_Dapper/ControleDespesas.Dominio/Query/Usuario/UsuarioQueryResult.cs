@@ -1,6 +1,6 @@
-﻿using ControleDespesas.Dominio.Enums;
+﻿using ControleDespesas.Domain.Enums;
 
-namespace ControleDespesas.Dominio.Query.Usuario
+namespace ControleDespesas.Domain.Query.Usuario
 {
     public class UsuarioQueryResult
     {

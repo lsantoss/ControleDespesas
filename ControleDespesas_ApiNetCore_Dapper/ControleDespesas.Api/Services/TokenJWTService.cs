@@ -1,5 +1,5 @@
 ﻿using ControleDespesas.Api.Settings;
-using ControleDespesas.Dominio.Query.Usuario;
+using ControleDespesas.Domain.Query.Usuario;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;

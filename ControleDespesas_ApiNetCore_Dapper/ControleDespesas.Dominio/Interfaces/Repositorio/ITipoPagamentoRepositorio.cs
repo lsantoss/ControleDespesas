@@ -1,8 +1,8 @@
-﻿using ControleDespesas.Dominio.Entities;
-using ControleDespesas.Dominio.Query.TipoPagamento;
+﻿using ControleDespesas.Domain.Entities;
+using ControleDespesas.Domain.Query.TipoPagamento;
 using System.Collections.Generic;
 
-namespace ControleDespesas.Dominio.Interfaces.Repositorio
+namespace ControleDespesas.Domain.Interfaces.Repositorio
 {
     public interface ITipoPagamentoRepositorio
     {

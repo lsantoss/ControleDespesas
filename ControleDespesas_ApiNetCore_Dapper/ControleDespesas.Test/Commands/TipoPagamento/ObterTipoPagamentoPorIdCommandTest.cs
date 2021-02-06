@@ -1,4 +1,4 @@
-﻿using ControleDespesas.Dominio.Commands.TipoPagamento.Input;
+﻿using ControleDespesas.Domain.Commands.TipoPagamento.Input;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;

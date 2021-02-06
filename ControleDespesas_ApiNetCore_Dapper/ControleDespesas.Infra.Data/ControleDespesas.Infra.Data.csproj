@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ControleDespesas.Dominio\ControleDespesas.Dominio.csproj" />
+    <ProjectReference Include="..\ControleDespesas.Dominio\ControleDespesas.Domain.csproj" />
   </ItemGroup>
 
 </Project>

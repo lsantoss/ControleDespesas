@@ -1,9 +1,9 @@
-﻿using ControleDespesas.Dominio.Enums;
+﻿using ControleDespesas.Domain.Enums;
 using LSCode.Validador.ValidacoesBooleanas;
 using LSCode.Validador.ValidacoesNotificacoes;
 using System;
 
-namespace ControleDespesas.Dominio.Entities
+namespace ControleDespesas.Domain.Entities
 {
     public class Usuario : Notificadora
     {

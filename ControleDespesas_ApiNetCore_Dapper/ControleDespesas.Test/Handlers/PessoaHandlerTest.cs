@@ -1,5 +1,5 @@
-﻿using ControleDespesas.Dominio.Commands.Pessoa.Output;
-using ControleDespesas.Dominio.Handlers;
+﻿using ControleDespesas.Domain.Commands.Pessoa.Output;
+using ControleDespesas.Domain.Handlers;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;

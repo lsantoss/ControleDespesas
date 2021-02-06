@@ -1,6 +1,6 @@
-﻿using ControleDespesas.Dominio.Enums;
+﻿using ControleDespesas.Domain.Enums;
 
-namespace ControleDespesas.Dominio.Commands.Usuario.Output
+namespace ControleDespesas.Domain.Commands.Usuario.Output
 {
     public class AdicionarUsuarioCommandOutput
     {

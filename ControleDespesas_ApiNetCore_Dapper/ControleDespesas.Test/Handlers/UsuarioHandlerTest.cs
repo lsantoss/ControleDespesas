@@ -1,7 +1,7 @@
-﻿using ControleDespesas.Dominio.Commands.Usuario.Output;
-using ControleDespesas.Dominio.Enums;
-using ControleDespesas.Dominio.Handlers;
-using ControleDespesas.Dominio.Query.Usuario;
+﻿using ControleDespesas.Domain.Commands.Usuario.Output;
+using ControleDespesas.Domain.Enums;
+using ControleDespesas.Domain.Handlers;
+using ControleDespesas.Domain.Query.Usuario;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;

@@ -3,7 +3,7 @@ using LSCode.Validador.ValidacoesNotificacoes;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace ControleDespesas.Dominio.Commands.TipoPagamento.Input
+namespace ControleDespesas.Domain.Commands.TipoPagamento.Input
 {
     public class AdicionarTipoPagamentoCommand : Notificadora, CommandPadrao
     {

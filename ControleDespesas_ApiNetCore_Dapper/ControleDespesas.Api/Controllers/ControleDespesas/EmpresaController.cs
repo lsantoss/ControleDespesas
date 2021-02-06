@@ -1,9 +1,9 @@
 ﻿using ControleDespesas.Api.Settings;
-using ControleDespesas.Dominio.Commands.Empresa.Input;
-using ControleDespesas.Dominio.Commands.Empresa.Output;
-using ControleDespesas.Dominio.Handlers;
-using ControleDespesas.Dominio.Interfaces.Repositorio;
-using ControleDespesas.Dominio.Query.Empresa;
+using ControleDespesas.Domain.Commands.Empresa.Input;
+using ControleDespesas.Domain.Commands.Empresa.Output;
+using ControleDespesas.Domain.Handlers;
+using ControleDespesas.Domain.Interfaces.Repositorio;
+using ControleDespesas.Domain.Query.Empresa;
 using ElmahCore;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;

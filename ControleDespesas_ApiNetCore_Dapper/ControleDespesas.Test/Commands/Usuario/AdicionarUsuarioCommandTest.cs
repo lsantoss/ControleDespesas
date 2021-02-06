@@ -1,5 +1,5 @@
-﻿using ControleDespesas.Dominio.Commands.Usuario.Input;
-using ControleDespesas.Dominio.Enums;
+﻿using ControleDespesas.Domain.Commands.Usuario.Input;
+using ControleDespesas.Domain.Enums;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;

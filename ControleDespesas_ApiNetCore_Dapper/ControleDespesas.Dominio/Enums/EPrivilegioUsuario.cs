@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace ControleDespesas.Dominio.Enums
+namespace ControleDespesas.Domain.Enums
 {
     public enum EPrivilegioUsuario
     {

@@ -1,9 +1,9 @@
-﻿using ControleDespesas.Dominio.Commands.Pessoa.Input;
-using ControleDespesas.Dominio.Commands.Pessoa.Output;
-using ControleDespesas.Dominio.Entities;
+﻿using ControleDespesas.Domain.Commands.Pessoa.Input;
+using ControleDespesas.Domain.Commands.Pessoa.Output;
+using ControleDespesas.Domain.Entities;
 using System;
 
-namespace ControleDespesas.Dominio.Helpers
+namespace ControleDespesas.Domain.Helpers
 {
     public static class PessoaHelper
     {

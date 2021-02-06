@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControleDespesas.Api", "ControleDespesas.Api\ControleDespesas.Api.csproj", "{B213DE3A-5279-4312-A99F-C0D2ED887AE8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControleDespesas.Dominio", "ControleDespesas.Dominio\ControleDespesas.Dominio.csproj", "{6CED3E53-AE3A-465A-8B15-B5A351F9307F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControleDespesas.Domain", "ControleDespesas.Dominio\ControleDespesas.Domain.csproj", "{6CED3E53-AE3A-465A-8B15-B5A351F9307F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControleDespesas.Infra.Data", "ControleDespesas.Infra.Data\ControleDespesas.Infra.Data.csproj", "{3FD1C90A-6925-4A86-AC0F-1472E6B739C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControleDespesas.Test", "ControleDespesas.Test\ControleDespesas.Test.csproj", "{6D1823F1-DF91-471B-96DD-4EC59D023436}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControleDespesas.Test", "ControleDespesas.Test\ControleDespesas.Test.csproj", "{6D1823F1-DF91-471B-96DD-4EC59D023436}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

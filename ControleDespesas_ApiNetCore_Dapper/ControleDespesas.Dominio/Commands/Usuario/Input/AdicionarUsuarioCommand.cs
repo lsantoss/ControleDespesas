@@ -1,11 +1,11 @@
-﻿using ControleDespesas.Dominio.Enums;
+﻿using ControleDespesas.Domain.Enums;
 using LSCode.Facilitador.Api.Interfaces.Commands;
 using LSCode.Validador.ValidacoesBooleanas;
 using LSCode.Validador.ValidacoesNotificacoes;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace ControleDespesas.Dominio.Commands.Usuario.Input
+namespace ControleDespesas.Domain.Commands.Usuario.Input
 {
     public class AdicionarUsuarioCommand : Notificadora, CommandPadrao
     {

@@ -1,5 +1,5 @@
-﻿using ControleDespesas.Dominio.Commands.TipoPagamento.Output;
-using ControleDespesas.Dominio.Handlers;
+﻿using ControleDespesas.Domain.Commands.TipoPagamento.Output;
+using ControleDespesas.Domain.Handlers;
 using ControleDespesas.Infra.Data.Repositorio;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;

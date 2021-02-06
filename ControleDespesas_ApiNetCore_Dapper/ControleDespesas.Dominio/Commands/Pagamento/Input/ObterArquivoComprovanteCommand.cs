@@ -3,7 +3,7 @@ using LSCode.Validador.ValidacoesNotificacoes;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace ControleDespesas.Dominio.Commands.Pagamento.Input
+namespace ControleDespesas.Domain.Commands.Pagamento.Input
 {
     public class ObterArquivoComprovanteCommand : Notificadora, CommandPadrao
     {

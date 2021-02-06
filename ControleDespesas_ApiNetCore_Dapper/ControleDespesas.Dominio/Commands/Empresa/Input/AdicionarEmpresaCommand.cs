@@ -3,7 +3,7 @@ using LSCode.Validador.ValidacoesNotificacoes;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace ControleDespesas.Dominio.Commands.Empresa.Input
+namespace ControleDespesas.Domain.Commands.Empresa.Input
 {
     public class AdicionarEmpresaCommand : Notificadora, CommandPadrao
     {

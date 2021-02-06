@@ -1,4 +1,4 @@
-﻿using ControleDespesas.Dominio.Commands.Empresa.Input;
+﻿using ControleDespesas.Domain.Commands.Empresa.Input;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;

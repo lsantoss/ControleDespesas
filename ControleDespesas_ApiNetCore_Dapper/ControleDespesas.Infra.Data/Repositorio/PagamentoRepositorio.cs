@@ -1,9 +1,9 @@
-﻿using ControleDespesas.Dominio.Entities;
-using ControleDespesas.Dominio.Query.Empresa;
-using ControleDespesas.Dominio.Query.Pagamento;
-using ControleDespesas.Dominio.Query.Pessoa;
-using ControleDespesas.Dominio.Query.TipoPagamento;
-using ControleDespesas.Dominio.Interfaces.Repositorio;
+﻿using ControleDespesas.Domain.Entities;
+using ControleDespesas.Domain.Query.Empresa;
+using ControleDespesas.Domain.Query.Pagamento;
+using ControleDespesas.Domain.Query.Pessoa;
+using ControleDespesas.Domain.Query.TipoPagamento;
+using ControleDespesas.Domain.Interfaces.Repositorio;
 using ControleDespesas.Infra.Data.Queries;
 using ControleDespesas.Infra.Data.Settings;
 using Dapper;

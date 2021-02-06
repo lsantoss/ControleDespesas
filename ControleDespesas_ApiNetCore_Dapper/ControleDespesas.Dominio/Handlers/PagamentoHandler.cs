@@ -1,14 +1,14 @@
-﻿using ControleDespesas.Dominio.Commands.Pagamento.Input;
-using ControleDespesas.Dominio.Commands.Pagamento.Output;
-using ControleDespesas.Dominio.Entities;
-using ControleDespesas.Dominio.Helpers;
-using ControleDespesas.Dominio.Interfaces.Repositorio;
+﻿using ControleDespesas.Domain.Commands.Pagamento.Input;
+using ControleDespesas.Domain.Commands.Pagamento.Output;
+using ControleDespesas.Domain.Entities;
+using ControleDespesas.Domain.Helpers;
+using ControleDespesas.Domain.Interfaces.Repositorio;
 using LSCode.Facilitador.Api.Interfaces.Commands;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
 using System;
 
-namespace ControleDespesas.Dominio.Handlers
+namespace ControleDespesas.Domain.Handlers
 {
     public class PagamentoHandler : Notificadora, ICommandHandler<AdicionarPagamentoCommand, Notificacao>,
                                                   ICommandHandler<AtualizarPagamentoCommand, Notificacao>,

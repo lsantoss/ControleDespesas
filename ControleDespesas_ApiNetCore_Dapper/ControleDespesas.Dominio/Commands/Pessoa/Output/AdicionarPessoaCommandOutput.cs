@@ -1,4 +1,4 @@
-﻿namespace ControleDespesas.Dominio.Commands.Pessoa.Output
+﻿namespace ControleDespesas.Domain.Commands.Pessoa.Output
 {
     public class AdicionarPessoaCommandOutput
     {

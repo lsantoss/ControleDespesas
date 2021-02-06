@@ -1,10 +1,10 @@
-﻿using ControleDespesas.Dominio.Commands.Usuario.Input;
-using ControleDespesas.Dominio.Commands.Usuario.Output;
-using ControleDespesas.Dominio.Entities;
-using ControleDespesas.Dominio.Enums;
+﻿using ControleDespesas.Domain.Commands.Usuario.Input;
+using ControleDespesas.Domain.Commands.Usuario.Output;
+using ControleDespesas.Domain.Entities;
+using ControleDespesas.Domain.Enums;
 using System;
 
-namespace ControleDespesas.Dominio.Helpers
+namespace ControleDespesas.Domain.Helpers
 {
     public static class UsuarioHelper
     {

@@ -1,4 +1,4 @@
-﻿namespace ControleDespesas.Dominio.Query.Pessoa
+﻿namespace ControleDespesas.Domain.Query.Pessoa
 {
     public class PessoaQueryResult
     {

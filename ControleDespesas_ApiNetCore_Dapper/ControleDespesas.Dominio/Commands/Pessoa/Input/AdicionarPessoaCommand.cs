@@ -3,7 +3,7 @@ using LSCode.Validador.ValidacoesNotificacoes;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace ControleDespesas.Dominio.Commands.Pessoa.Input
+namespace ControleDespesas.Domain.Commands.Pessoa.Input
 {
     public class AdicionarPessoaCommand : Notificadora, CommandPadrao
     {

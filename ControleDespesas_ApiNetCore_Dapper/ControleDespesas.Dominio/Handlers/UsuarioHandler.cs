@@ -1,15 +1,15 @@
-﻿using ControleDespesas.Dominio.Commands.Usuario.Input;
-using ControleDespesas.Dominio.Commands.Usuario.Output;
-using ControleDespesas.Dominio.Entities;
-using ControleDespesas.Dominio.Helpers;
-using ControleDespesas.Dominio.Query.Usuario;
-using ControleDespesas.Dominio.Interfaces.Repositorio;
+﻿using ControleDespesas.Domain.Commands.Usuario.Input;
+using ControleDespesas.Domain.Commands.Usuario.Output;
+using ControleDespesas.Domain.Entities;
+using ControleDespesas.Domain.Helpers;
+using ControleDespesas.Domain.Query.Usuario;
+using ControleDespesas.Domain.Interfaces.Repositorio;
 using LSCode.Facilitador.Api.Interfaces.Commands;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
 using System;
 
-namespace ControleDespesas.Dominio.Handlers
+namespace ControleDespesas.Domain.Handlers
 {
     public class UsuarioHandler : Notificadora, ICommandHandler<AdicionarUsuarioCommand, Notificacao>,
                                                 ICommandHandler<AtualizarUsuarioCommand, Notificacao>,

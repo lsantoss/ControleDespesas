@@ -3,7 +3,7 @@ using LSCode.Validador.ValidacoesNotificacoes;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace ControleDespesas.Dominio.Commands.Usuario.Input
+namespace ControleDespesas.Domain.Commands.Usuario.Input
 {
     public class ApagarUsuarioCommand : Notificadora, CommandPadrao
     {

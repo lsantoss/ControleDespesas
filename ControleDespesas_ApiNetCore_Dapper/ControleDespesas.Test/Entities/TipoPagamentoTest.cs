@@ -1,10 +1,10 @@
-﻿using ControleDespesas.Dominio.Entidades;
+﻿using ControleDespesas.Dominio.Entities;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
 using NUnit.Framework;
 
-namespace ControleDespesas.Test.Entidades
+namespace ControleDespesas.Test.Entities
 {
     public class TipoPagamentoTest : BaseTest
     {

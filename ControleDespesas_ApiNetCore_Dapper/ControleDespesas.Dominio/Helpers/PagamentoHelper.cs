@@ -1,6 +1,6 @@
 ﻿using ControleDespesas.Dominio.Commands.Pagamento.Input;
 using ControleDespesas.Dominio.Commands.Pagamento.Output;
-using ControleDespesas.Dominio.Entidades;
+using ControleDespesas.Dominio.Entities;
 using System;
 
 namespace ControleDespesas.Dominio.Helpers

@@ -1,4 +1,4 @@
-﻿using ControleDespesas.Dominio.Entidades;
+﻿using ControleDespesas.Dominio.Entities;
 using ControleDespesas.Dominio.Query.Pagamento;
 using System.Collections.Generic;
 

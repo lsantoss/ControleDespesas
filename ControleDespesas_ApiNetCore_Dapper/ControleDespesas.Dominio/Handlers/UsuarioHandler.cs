@@ -1,6 +1,6 @@
 ﻿using ControleDespesas.Dominio.Commands.Usuario.Input;
 using ControleDespesas.Dominio.Commands.Usuario.Output;
-using ControleDespesas.Dominio.Entidades;
+using ControleDespesas.Dominio.Entities;
 using ControleDespesas.Dominio.Helpers;
 using ControleDespesas.Dominio.Query.Usuario;
 using ControleDespesas.Dominio.Interfaces.Repositorio;

@@ -1,4 +1,4 @@
-﻿using ControleDespesas.Dominio.Entidades;
+﻿using ControleDespesas.Dominio.Entities;
 using ControleDespesas.Dominio.Query.Pessoa;
 using ControleDespesas.Dominio.Interfaces.Repositorio;
 using ControleDespesas.Infra.Data.Queries;

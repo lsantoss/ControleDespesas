@@ -3,7 +3,7 @@ using ControleDespesas.Dominio.Commands.Pagamento.Input;
 using ControleDespesas.Dominio.Commands.Pessoa.Input;
 using ControleDespesas.Dominio.Commands.TipoPagamento.Input;
 using ControleDespesas.Dominio.Commands.Usuario.Input;
-using ControleDespesas.Dominio.Entidades;
+using ControleDespesas.Dominio.Entities;
 using ControleDespesas.Dominio.Enums;
 using ControleDespesas.Dominio.Query.Usuario;
 using LSCode.ConexoesBD.Enums;

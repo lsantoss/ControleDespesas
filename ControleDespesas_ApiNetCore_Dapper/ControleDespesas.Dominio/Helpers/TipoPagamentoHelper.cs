@@ -14,6 +14,7 @@ namespace ControleDespesas.Dominio.Helpers
                 string descricao = command.Descricao;
 
                 TipoPagamento tipoPagamento = new TipoPagamento(0, descricao);
+                tipoPagamento.Validar();
                 return tipoPagamento;
             }
             catch (Exception e)
@@ -30,6 +31,7 @@ namespace ControleDespesas.Dominio.Helpers
                 string descricao = command.Descricao;
 
                 TipoPagamento tipoPagamento = new TipoPagamento(id, descricao);
+                tipoPagamento.Validar();
                 return tipoPagamento;
             }
             catch (Exception e)

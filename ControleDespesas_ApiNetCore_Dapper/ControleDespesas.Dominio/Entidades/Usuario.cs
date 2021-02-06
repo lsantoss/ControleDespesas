@@ -17,8 +17,6 @@ namespace ControleDespesas.Dominio.Entidades
             Login = login;
             Senha = senha;
             Privilegio = privilegio;
-
-            Validar();
         }
 
         public Usuario(int id) => Id = id;

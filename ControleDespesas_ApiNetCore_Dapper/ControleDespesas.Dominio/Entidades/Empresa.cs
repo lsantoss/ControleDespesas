@@ -13,8 +13,6 @@ namespace ControleDespesas.Dominio.Entidades
             Id = id;
             Nome = nome;
             Logo = logo;
-
-            Validar();
         }
 
         public Empresa(int id) => Id = id;

@@ -15,6 +15,7 @@ namespace ControleDespesas.Dominio.Helpers
                 string logo = command.Logo;
 
                 Empresa empresa = new Empresa(0, nome, logo);
+                empresa.Validar();
                 return empresa;
             }
             catch (Exception e)
@@ -32,6 +33,7 @@ namespace ControleDespesas.Dominio.Helpers
                 string logo = command.Logo;
 
                 Empresa empresa = new Empresa(id, nome, logo);
+                empresa.Validar();
                 return empresa;
             }
             catch (Exception e)

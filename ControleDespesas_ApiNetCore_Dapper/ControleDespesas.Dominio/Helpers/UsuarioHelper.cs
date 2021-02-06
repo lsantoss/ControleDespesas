@@ -17,6 +17,7 @@ namespace ControleDespesas.Dominio.Helpers
                 EPrivilegioUsuario privilegio = command.Privilegio;
 
                 Usuario usuario = new Usuario(0, login, senha, privilegio);
+                usuario.Validar();
                 return usuario;
             }
             catch (Exception e)
@@ -35,6 +36,7 @@ namespace ControleDespesas.Dominio.Helpers
                 EPrivilegioUsuario privilegio = command.Privilegio;
 
                 Usuario usuario = new Usuario(id, login, senha, privilegio);
+                usuario.Validar();
                 return usuario;
             }
             catch (Exception e)

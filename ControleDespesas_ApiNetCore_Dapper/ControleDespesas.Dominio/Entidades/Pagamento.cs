@@ -37,8 +37,6 @@ namespace ControleDespesas.Dominio.Entidades
             DataPagamento = dataPagamento;
             ArquivoPagamento = arquivoPagamento;
             ArquivoComprovante = arquivoComprovante;
-
-            Validar();
         }
 
         public Pagamento(int id) => Id = id;

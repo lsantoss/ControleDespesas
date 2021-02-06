@@ -16,6 +16,7 @@ namespace ControleDespesas.Dominio.Helpers
                 string imagemPerfil = command.ImagemPerfil;
 
                 Pessoa pessoa = new Pessoa(0, usuario, nome, imagemPerfil);
+                pessoa.Validar();
                 return pessoa;
             }
             catch (Exception e)
@@ -34,6 +35,7 @@ namespace ControleDespesas.Dominio.Helpers
                 string imagemPerfil = command.ImagemPerfil;
 
                 Pessoa pessoa = new Pessoa(id, usuario, nome, imagemPerfil);
+                pessoa.Validar();
                 return pessoa;
             }
             catch (Exception e)

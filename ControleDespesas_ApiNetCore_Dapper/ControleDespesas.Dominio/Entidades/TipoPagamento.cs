@@ -11,8 +11,6 @@ namespace ControleDespesas.Dominio.Entidades
         {
             Id = id;
             Descricao = descricao;
-
-            Validar();
         }
 
         public TipoPagamento(int id) => Id = id;

@@ -15,8 +15,6 @@ namespace ControleDespesas.Dominio.Entidades
             Usuario = usuario;
             Nome = nome;
             ImagemPerfil = imagemPerfil;
-
-            Validar();
         }
 
         public Pessoa(int id) => Id = id;

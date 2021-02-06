@@ -108,15 +108,25 @@ namespace ControleDespesas.Test.AppConfigurations.QueriesSQL
                                                                 ALTER TABLE [dbo].[Pagamento] CHECK CONSTRAINT [FK_Pagamento_TipoPagamento]
                                                                 END";        
 
-        private static string DropTableUsuario { get; } = @"USE [ControleDespesasTest] DROP TABLE IF EXISTS Usuario";
+        private static string DropTableUsuario { get; } = @"USE [ControleDespesasTest]
+                                                            IF OBJECT_ID('dbo.Usuario', 'U') IS NOT NULL 
+                                                            DROP TABLE dbo.Usuario";
 
-        private static string DropTablePagamento { get; } = @"USE [ControleDespesasTest] DROP TABLE IF EXISTS Pagamento";
+        private static string DropTablePagamento { get; } = @"USE [ControleDespesasTest]
+                                                              IF OBJECT_ID('dbo.Pagamento', 'U') IS NOT NULL 
+                                                              DROP TABLE dbo.Pagamento";
 
-        private static string DropTableTipoPagamento { get; } = @"USE [ControleDespesasTest] DROP TABLE IF EXISTS TipoPagamento";
+        private static string DropTableTipoPagamento { get; } = @"USE [ControleDespesasTest]
+                                                                  IF OBJECT_ID('dbo.TipoPagamento', 'U') IS NOT NULL 
+                                                                  DROP TABLE dbo.TipoPagamento";
 
-        private static string DropTablePessoa { get; } = @"USE [ControleDespesasTest] DROP TABLE IF EXISTS Pessoa";
+        private static string DropTablePessoa { get; } = @"USE [ControleDespesasTest]
+                                                           IF OBJECT_ID('dbo.Pessoa', 'U') IS NOT NULL 
+                                                           DROP TABLE dbo.Pessoa";
 
-        private static string DropTableEmpresa { get; } = @"USE [ControleDespesasTest] DROP TABLE IF EXISTS Empresa";
+        private static string DropTableEmpresa { get; } = @"USE [ControleDespesasTest]
+                                                            IF OBJECT_ID('dbo.Empresa', 'U') IS NOT NULL 
+                                                            DROP TABLE dbo.Empresa";
 
         private static string DropDataBase { get; } = @"USE [master] DROP DATABASE IF EXISTS [ControleDespesasTest]";
 

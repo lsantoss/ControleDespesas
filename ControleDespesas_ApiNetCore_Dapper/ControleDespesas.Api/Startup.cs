@@ -35,30 +35,6 @@ namespace ControleDespesas.Api
             services.Configure<SettingsAPI>(options => Configuration.GetSection("SettingsAPI").Bind(options));
             #endregion
 
-            #region DataContext
-            services.AddScoped<DataContext>();
-            #endregion
-
-            #region Repositories
-            services.AddTransient<IPessoaRepository, PessoaRepository>();
-            services.AddTransient<IEmpresaRepository, EmpresaRepository>();
-            services.AddTransient<ITipoPagamentoRepository, TipoPagamentoRepository>();
-            services.AddTransient<IPagamentoRepository, PagamentoRepository>();
-            services.AddTransient<IUsuarioRepository, UsuarioRepository>();
-            #endregion
-
-            #region Handler
-            services.AddTransient<PessoaHandler, PessoaHandler>();
-            services.AddTransient<EmpresaHandler, EmpresaHandler>();
-            services.AddTransient<TipoPagamentoHandler, TipoPagamentoHandler>();
-            services.AddTransient<PagamentoHandler, PagamentoHandler>();
-            services.AddTransient<UsuarioHandler, UsuarioHandler>();
-            #endregion
-
-            #region Services
-            services.AddTransient<ITokenJWTService, TokenJWTService>();
-            #endregion
-            
             #region Swagger
             services.AddSwaggerGen(c =>
             {
@@ -66,11 +42,11 @@ namespace ControleDespesas.Api
                 c.DescribeAllParametersInCamelCase();
                 c.IncludeXmlComments($@"{AppDomain.CurrentDomain.BaseDirectory}\Swagger.xml");
                 c.OperationFilter<SwaggerOperationFilters>();
-                c.SwaggerDoc("v1", new Info 
-                { 
-                    Title = "Controle de Despesas", 
-                    Version = "v1", 
-                    Description = "WebApi do Projeto Controle de Despesas", 
+                c.SwaggerDoc("v1", new Info
+                {
+                    Title = "Controle de Despesas",
+                    Version = "v1",
+                    Description = "WebApi do Projeto Controle de Despesas",
                     Contact = new Contact
                     {
                         Name = "Lucas Santos",
@@ -122,23 +98,38 @@ namespace ControleDespesas.Api
             #endregion
 
             #region Log Elmah
-            ////Log em Memória
-            //services.AddElmah(options => 
-            //{ 
-            //    options.Path = @"elmah"; 
-            //});
+            //Log em Memória
+            //services.AddElmah(options => { options.Path = @"elmah"; });
 
             ////Log salvando em XML
-            //services.AddElmah<XmlFileErrorLog>(options =>
-            //{
-            //    options.LogPath = "~/log";
-            //});
+            //services.AddElmah<XmlFileErrorLog>(options => { options.LogPath = "~/log"; });
 
             //Log salvando no banco de dados
-            services.AddElmah<SqlErrorLog>(options =>
-            {
-                options.ConnectionString = Configuration["SettingsInfraData:ConnectionString"];
-            });
+            services.AddElmah<SqlErrorLog>(options => { options.ConnectionString = Configuration["SettingsInfraData:ConnectionString"]; });
+            #endregion
+
+            #region DataContext
+            services.AddScoped<DataContext>();
+            #endregion
+
+            #region Repositories
+            services.AddTransient<IPessoaRepository, PessoaRepository>();
+            services.AddTransient<IEmpresaRepository, EmpresaRepository>();
+            services.AddTransient<ITipoPagamentoRepository, TipoPagamentoRepository>();
+            services.AddTransient<IPagamentoRepository, PagamentoRepository>();
+            services.AddTransient<IUsuarioRepository, UsuarioRepository>();
+            #endregion
+
+            #region Handler
+            services.AddTransient<PessoaHandler, PessoaHandler>();
+            services.AddTransient<EmpresaHandler, EmpresaHandler>();
+            services.AddTransient<TipoPagamentoHandler, TipoPagamentoHandler>();
+            services.AddTransient<PagamentoHandler, PagamentoHandler>();
+            services.AddTransient<UsuarioHandler, UsuarioHandler>();
+            #endregion
+
+            #region Services
+            services.AddTransient<ITokenJWTService, TokenJWTService>();
             #endregion
 
             services.AddMvc().AddControllersAsServices();

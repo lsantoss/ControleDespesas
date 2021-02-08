@@ -3,7 +3,7 @@ using ControleDespesas.Api.Settings;
 using ControleDespesas.Domain.Commands.Usuario.Input;
 using ControleDespesas.Domain.Commands.Usuario.Output;
 using ControleDespesas.Domain.Handlers;
-using ControleDespesas.Domain.Interfaces.Repositorio;
+using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Domain.Query.Usuario;
 using ElmahCore;
 using LSCode.Facilitador.Api.Models.Results;
@@ -24,12 +24,12 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
     [Authorize]
     public class UsuarioController : ControllerBase
     {
-        private readonly IUsuarioRepositorio _repositorio;
+        private readonly IUsuarioRepository _repositorio;
         private readonly UsuarioHandler _handler;
         private readonly string _ChaveAPI;
         private readonly TokenJWTService _tokenService;
 
-        public UsuarioController(IUsuarioRepositorio repositorio, UsuarioHandler handler, IOptions<SettingsAPI> options, TokenJWTService tokenService)
+        public UsuarioController(IUsuarioRepository repositorio, UsuarioHandler handler, IOptions<SettingsAPI> options, TokenJWTService tokenService)
         {
             _repositorio = repositorio;
             _handler = handler;

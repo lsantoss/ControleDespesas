@@ -2,7 +2,7 @@
 using ControleDespesas.Domain.Commands.Pagamento.Output;
 using ControleDespesas.Domain.Entities;
 using ControleDespesas.Domain.Helpers;
-using ControleDespesas.Domain.Interfaces.Repositorio;
+using ControleDespesas.Domain.Interfaces.Repositories;
 using LSCode.Facilitador.Api.Interfaces.Commands;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
@@ -14,15 +14,15 @@ namespace ControleDespesas.Domain.Handlers
                                                   ICommandHandler<AtualizarPagamentoCommand, Notificacao>,
                                                   ICommandHandler<ApagarPagamentoCommand, Notificacao>
     {
-        private readonly IPagamentoRepositorio _repository;
-        private readonly IEmpresaRepositorio _repositoryEmpresa;
-        private readonly IPessoaRepositorio _repositoryPessoa;
-        private readonly ITipoPagamentoRepositorio _repositoryTipoPagamento;
+        private readonly IPagamentoRepository _repository;
+        private readonly IEmpresaRepository _repositoryEmpresa;
+        private readonly IPessoaRepository _repositoryPessoa;
+        private readonly ITipoPagamentoRepository _repositoryTipoPagamento;
 
-        public PagamentoHandler(IPagamentoRepositorio repository, 
-                                IEmpresaRepositorio repositoryEmpresa,
-                                IPessoaRepositorio repositoryPessoa,
-                                ITipoPagamentoRepositorio repositoryTipoPagamento)
+        public PagamentoHandler(IPagamentoRepository repository, 
+                                IEmpresaRepository repositoryEmpresa,
+                                IPessoaRepository repositoryPessoa,
+                                ITipoPagamentoRepository repositoryTipoPagamento)
         {
             _repository = repository;
             _repositoryEmpresa = repositoryEmpresa;

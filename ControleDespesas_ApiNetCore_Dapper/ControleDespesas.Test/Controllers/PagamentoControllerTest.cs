@@ -1,8 +1,9 @@
 ﻿using ControleDespesas.Api.Controllers.ControleDespesas;
 using ControleDespesas.Domain.Commands.Pagamento.Output;
 using ControleDespesas.Domain.Handlers;
+using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Domain.Query.Pagamento;
-using ControleDespesas.Infra.Data.Repositorio;
+using ControleDespesas.Infra.Data.Repositories;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Models;
 using ControleDespesas.Test.AppConfigurations.Settings;
@@ -20,11 +21,11 @@ namespace ControleDespesas.Test.Controllers
 {
     public class PagamentoControllerTest : DatabaseTest
     {
-        private readonly UsuarioRepositorio _repositoryUsuario;
-        private readonly EmpresaRepositorio _repositoryEmpresa;
-        private readonly PessoaRepositorio _repositoryPessoa;
-        private readonly TipoPagamentoRepositorio _repositoryTipoPagamento;
-        private readonly PagamentoRepositorio _repositoryPagamento;
+        private readonly IUsuarioRepository _repositoryUsuario;
+        private readonly IEmpresaRepository _repositoryEmpresa;
+        private readonly IPessoaRepository _repositoryPessoa;
+        private readonly ITipoPagamentoRepository _repositoryTipoPagamento;
+        private readonly IPagamentoRepository _repositoryPagamento;
         private readonly PagamentoHandler _handler;
         private readonly PagamentoController _controller;
 
@@ -34,11 +35,11 @@ namespace ControleDespesas.Test.Controllers
             var optionsInfraData = Options.Create(MockSettingsInfraData);
             var optionsAPI = Options.Create(MockSettingsAPI);
 
-            _repositoryUsuario = new UsuarioRepositorio(optionsInfraData);
-            _repositoryEmpresa = new EmpresaRepositorio(optionsInfraData);
-            _repositoryPessoa = new PessoaRepositorio(optionsInfraData);
-            _repositoryTipoPagamento = new TipoPagamentoRepositorio(optionsInfraData);
-            _repositoryPagamento = new PagamentoRepositorio(optionsInfraData);
+            _repositoryUsuario = new UsuarioRepository(optionsInfraData);
+            _repositoryEmpresa = new EmpresaRepository(optionsInfraData);
+            _repositoryPessoa = new PessoaRepository(optionsInfraData);
+            _repositoryTipoPagamento = new TipoPagamentoRepository(optionsInfraData);
+            _repositoryPagamento = new PagamentoRepository(optionsInfraData);
             _handler = new PagamentoHandler(_repositoryPagamento, _repositoryEmpresa, _repositoryPessoa, _repositoryTipoPagamento);
             _controller = new PagamentoController(_repositoryPagamento, _handler, optionsAPI);
             _controller.ControllerContext.HttpContext = new DefaultHttpContext();

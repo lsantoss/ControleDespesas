@@ -2,7 +2,7 @@
 using ControleDespesas.Domain.Commands.TipoPagamento.Output;
 using ControleDespesas.Domain.Entities;
 using ControleDespesas.Domain.Helpers;
-using ControleDespesas.Domain.Interfaces.Repositorio;
+using ControleDespesas.Domain.Interfaces.Repositories;
 using LSCode.Facilitador.Api.Interfaces.Commands;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
@@ -14,9 +14,9 @@ namespace ControleDespesas.Domain.Handlers
                                                       ICommandHandler<AtualizarTipoPagamentoCommand, Notificacao>,
                                                       ICommandHandler<ApagarTipoPagamentoCommand, Notificacao>
     {
-        private readonly ITipoPagamentoRepositorio _repository;
+        private readonly ITipoPagamentoRepository _repository;
 
-        public TipoPagamentoHandler(ITipoPagamentoRepositorio repository)
+        public TipoPagamentoHandler(ITipoPagamentoRepository repository)
         {
             _repository = repository;
         }

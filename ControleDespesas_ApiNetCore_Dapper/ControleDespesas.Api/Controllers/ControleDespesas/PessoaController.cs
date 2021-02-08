@@ -2,7 +2,7 @@
 using ControleDespesas.Domain.Commands.Pessoa.Input;
 using ControleDespesas.Domain.Commands.Pessoa.Output;
 using ControleDespesas.Domain.Handlers;
-using ControleDespesas.Domain.Interfaces.Repositorio;
+using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Domain.Query.Pessoa;
 using ElmahCore;
 using LSCode.Facilitador.Api.Models.Results;
@@ -23,11 +23,11 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
     [Authorize]
     public class PessoaController : ControllerBase
     {
-        private readonly IPessoaRepositorio _repositorio;
+        private readonly IPessoaRepository _repositorio;
         private readonly PessoaHandler _handler;
         private readonly string _ChaveAPI;
 
-        public PessoaController(IPessoaRepositorio repositorio, PessoaHandler handler, IOptions<SettingsAPI> options)
+        public PessoaController(IPessoaRepository repositorio, PessoaHandler handler, IOptions<SettingsAPI> options)
         {
             _repositorio = repositorio;
             _handler = handler;

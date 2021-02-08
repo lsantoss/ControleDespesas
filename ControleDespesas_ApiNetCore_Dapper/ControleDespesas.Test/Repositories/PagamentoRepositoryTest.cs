@@ -1,5 +1,5 @@
-﻿using ControleDespesas.Domain.Interfaces.Repositorio;
-using ControleDespesas.Infra.Data.Repositorio;
+﻿using ControleDespesas.Domain.Interfaces.Repositories;
+using ControleDespesas.Infra.Data.Repositories;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
@@ -7,26 +7,26 @@ using Microsoft.Extensions.Options;
 using NUnit.Framework;
 using System;
 
-namespace ControleDespesas.Test.Repositorio
+namespace ControleDespesas.Test.Repositories
 {
-    public class PagamentoRepositorioTest : DatabaseTest
+    public class PagamentoRepositoryTest : DatabaseTest
     {
-        private readonly IUsuarioRepositorio _repositoryUsuario;
-        private readonly ITipoPagamentoRepositorio _repositoryTipoPagamento;
-        private readonly IEmpresaRepositorio _repositoryEmpresa;
-        private readonly IPessoaRepositorio _repositoryPessoa;
-        private readonly IPagamentoRepositorio _repositoryPagamento;
+        private readonly IUsuarioRepository _repositoryUsuario;
+        private readonly ITipoPagamentoRepository _repositoryTipoPagamento;
+        private readonly IEmpresaRepository _repositoryEmpresa;
+        private readonly IPessoaRepository _repositoryPessoa;
+        private readonly IPagamentoRepository _repositoryPagamento;
 
-        public PagamentoRepositorioTest()
+        public PagamentoRepositoryTest()
         {
             CriarBaseDeDadosETabelas();
             var optionsInfraData = Options.Create(MockSettingsInfraData);
 
-            _repositoryUsuario = new UsuarioRepositorio(optionsInfraData);
-            _repositoryTipoPagamento = new TipoPagamentoRepositorio(optionsInfraData);
-            _repositoryEmpresa = new EmpresaRepositorio(optionsInfraData);
-            _repositoryPessoa = new PessoaRepositorio(optionsInfraData);
-            _repositoryPagamento = new PagamentoRepositorio(optionsInfraData);
+            _repositoryUsuario = new UsuarioRepository(optionsInfraData);
+            _repositoryTipoPagamento = new TipoPagamentoRepository(optionsInfraData);
+            _repositoryEmpresa = new EmpresaRepository(optionsInfraData);
+            _repositoryPessoa = new PessoaRepository(optionsInfraData);
+            _repositoryPagamento = new PagamentoRepository(optionsInfraData);
         }
 
         [SetUp]

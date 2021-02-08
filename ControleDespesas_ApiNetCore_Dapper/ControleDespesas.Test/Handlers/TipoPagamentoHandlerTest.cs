@@ -1,6 +1,7 @@
 ﻿using ControleDespesas.Domain.Commands.TipoPagamento.Output;
 using ControleDespesas.Domain.Handlers;
-using ControleDespesas.Infra.Data.Repositorio;
+using ControleDespesas.Domain.Interfaces.Repositories;
+using ControleDespesas.Infra.Data.Repositories;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
@@ -11,7 +12,7 @@ namespace ControleDespesas.Test.Handlers
 {
     public class TipoPagamentoHandlerTest : DatabaseTest
     {
-        private readonly TipoPagamentoRepositorio _repository;
+        private readonly ITipoPagamentoRepository _repository;
         private readonly TipoPagamentoHandler _handler;
 
         public TipoPagamentoHandlerTest()
@@ -19,7 +20,7 @@ namespace ControleDespesas.Test.Handlers
             CriarBaseDeDadosETabelas();
             var optionsInfraData = Options.Create(MockSettingsInfraData);
 
-            _repository = new TipoPagamentoRepositorio(optionsInfraData);
+            _repository = new TipoPagamentoRepository(optionsInfraData);
             _handler = new TipoPagamentoHandler(_repository);
         }
 

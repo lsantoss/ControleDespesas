@@ -2,7 +2,7 @@
 using ControleDespesas.Domain.Commands.TipoPagamento.Input;
 using ControleDespesas.Domain.Commands.TipoPagamento.Output;
 using ControleDespesas.Domain.Handlers;
-using ControleDespesas.Domain.Interfaces.Repositorio;
+using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Domain.Query.TipoPagamento;
 using ElmahCore;
 using LSCode.Facilitador.Api.Models.Results;
@@ -23,11 +23,11 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
     [Authorize]
     public class TipoPagamentoController : ControllerBase
     {
-        private readonly ITipoPagamentoRepositorio _repositorio;
+        private readonly ITipoPagamentoRepository _repositorio;
         private readonly TipoPagamentoHandler _handler;
         private readonly string _ChaveAPI;
 
-        public TipoPagamentoController(ITipoPagamentoRepositorio repositorio, TipoPagamentoHandler handler, IOptions<SettingsAPI> options)
+        public TipoPagamentoController(ITipoPagamentoRepository repositorio, TipoPagamentoHandler handler, IOptions<SettingsAPI> options)
         {
             _repositorio = repositorio;
             _handler = handler;

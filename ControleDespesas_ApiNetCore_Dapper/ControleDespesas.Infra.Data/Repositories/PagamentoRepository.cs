@@ -3,7 +3,7 @@ using ControleDespesas.Domain.Query.Empresa;
 using ControleDespesas.Domain.Query.Pagamento;
 using ControleDespesas.Domain.Query.Pessoa;
 using ControleDespesas.Domain.Query.TipoPagamento;
-using ControleDespesas.Domain.Interfaces.Repositorio;
+using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Infra.Data.Queries;
 using ControleDespesas.Infra.Data.Settings;
 using Dapper;
@@ -15,14 +15,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
-namespace ControleDespesas.Infra.Data.Repositorio
+namespace ControleDespesas.Infra.Data.Repositories
 {
-    public class PagamentoRepositorio : IPagamentoRepositorio
+    public class PagamentoRepository : IPagamentoRepository
     {
         private readonly DynamicParameters _parametros = new DynamicParameters();
         private readonly DataContext _ctx;
 
-        public PagamentoRepositorio(IOptions<SettingsInfraData> options)
+        public PagamentoRepository(IOptions<SettingsInfraData> options)
         {
             _ctx = new DataContext(EBancoDadosRelacional.SQLServer, options.Value.ConnectionString);
         }

@@ -2,8 +2,8 @@
 using ControleDespesas.Api.Settings;
 using ControleDespesas.Api.Swagger;
 using ControleDespesas.Domain.Handlers;
-using ControleDespesas.Domain.Interfaces.Repositorio;
-using ControleDespesas.Infra.Data.Repositorio;
+using ControleDespesas.Domain.Interfaces.Repositories;
+using ControleDespesas.Infra.Data.Repositories;
 using ControleDespesas.Infra.Data.Settings;
 using ElmahCore.Mvc;
 using ElmahCore.Sql;
@@ -29,8 +29,6 @@ namespace ControleDespesas.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().AddControllersAsServices();
-
             #region AppSettings
             services.Configure<SettingsInfraData>(options => Configuration.GetSection("SettingsInfraData").Bind(options));
             services.Configure<SettingsAPI>(options => Configuration.GetSection("SettingsAPI").Bind(options));
@@ -40,12 +38,12 @@ namespace ControleDespesas.Api
             services.AddScoped<DataContext>();
             #endregion
 
-            #region Repositorios
-            services.AddTransient<IPessoaRepositorio, PessoaRepositorio>();
-            services.AddTransient<IEmpresaRepositorio, EmpresaRepositorio>();
-            services.AddTransient<ITipoPagamentoRepositorio, TipoPagamentoRepositorio>();
-            services.AddTransient<IPagamentoRepositorio, PagamentoRepositorio>();
-            services.AddTransient<IUsuarioRepositorio, UsuarioRepositorio>();
+            #region Repositories
+            services.AddTransient<IPessoaRepository, PessoaRepository>();
+            services.AddTransient<IEmpresaRepository, EmpresaRepository>();
+            services.AddTransient<ITipoPagamentoRepository, TipoPagamentoRepository>();
+            services.AddTransient<IPagamentoRepository, PagamentoRepository>();
+            services.AddTransient<IUsuarioRepository, UsuarioRepository>();
             #endregion
 
             #region Handler
@@ -141,6 +139,8 @@ namespace ControleDespesas.Api
                 options.ConnectionString = Configuration["SettingsInfraData:ConnectionString"];
             });
             #endregion
+
+            services.AddMvc().AddControllersAsServices();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -150,13 +150,17 @@ namespace ControleDespesas.Api
             else
                 app.UseHsts();
 
+            app.UseHttpsRedirection();
+
+            app.UseStaticFiles();
+
+            app.UseAuthentication();
+
+            app.UseElmah();
+
             app.UseSwagger();
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "ControleDespesas"); });
 
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-            app.UseAuthentication();
-            app.UseElmah();
             app.UseMvc();
         }
     }

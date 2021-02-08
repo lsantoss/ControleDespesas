@@ -3,7 +3,7 @@ using ControleDespesas.Domain.Commands.Usuario.Output;
 using ControleDespesas.Domain.Entities;
 using ControleDespesas.Domain.Helpers;
 using ControleDespesas.Domain.Query.Usuario;
-using ControleDespesas.Domain.Interfaces.Repositorio;
+using ControleDespesas.Domain.Interfaces.Repositories;
 using LSCode.Facilitador.Api.Interfaces.Commands;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
@@ -16,9 +16,9 @@ namespace ControleDespesas.Domain.Handlers
                                                 ICommandHandler<ApagarUsuarioCommand, Notificacao>,
                                                 ICommandHandler<LoginUsuarioCommand, Notificacao>
     {
-        private readonly IUsuarioRepositorio _repository;
+        private readonly IUsuarioRepository _repository;
 
-        public UsuarioHandler(IUsuarioRepositorio repository)
+        public UsuarioHandler(IUsuarioRepository repository)
         {
             _repository = repository;
         }

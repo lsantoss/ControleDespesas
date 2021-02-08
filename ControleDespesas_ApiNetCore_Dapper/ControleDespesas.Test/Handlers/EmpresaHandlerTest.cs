@@ -1,6 +1,7 @@
 ﻿using ControleDespesas.Domain.Commands.Empresa.Output;
 using ControleDespesas.Domain.Handlers;
-using ControleDespesas.Infra.Data.Repositorio;
+using ControleDespesas.Domain.Interfaces.Repositories;
+using ControleDespesas.Infra.Data.Repositories;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
@@ -11,7 +12,7 @@ namespace ControleDespesas.Test.Handlers
 {
     public class EmpresaHandlerTest : DatabaseTest
     {
-        private readonly EmpresaRepositorio _repository;
+        private readonly IEmpresaRepository _repository;
         private readonly EmpresaHandler _handler;
 
         public EmpresaHandlerTest()
@@ -19,7 +20,7 @@ namespace ControleDespesas.Test.Handlers
             CriarBaseDeDadosETabelas();
             var optionsInfraData = Options.Create(MockSettingsInfraData);
 
-            _repository = new EmpresaRepositorio(optionsInfraData);
+            _repository = new EmpresaRepository(optionsInfraData);
             _handler = new EmpresaHandler(_repository);
         }
 

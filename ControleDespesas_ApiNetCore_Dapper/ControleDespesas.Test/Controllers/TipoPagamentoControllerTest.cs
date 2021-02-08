@@ -1,8 +1,9 @@
 ﻿using ControleDespesas.Api.Controllers.ControleDespesas;
 using ControleDespesas.Domain.Commands.TipoPagamento.Output;
 using ControleDespesas.Domain.Handlers;
+using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Domain.Query.TipoPagamento;
-using ControleDespesas.Infra.Data.Repositorio;
+using ControleDespesas.Infra.Data.Repositories;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Models;
 using ControleDespesas.Test.AppConfigurations.Settings;
@@ -19,7 +20,7 @@ namespace ControleDespesas.Test.Controllers
 {
     public class TipoPagamentoControllerTest : DatabaseTest
     {
-        private readonly TipoPagamentoRepositorio _repository;
+        private readonly ITipoPagamentoRepository _repository;
         private readonly TipoPagamentoHandler _handler;
         private readonly TipoPagamentoController _controller;
 
@@ -29,7 +30,7 @@ namespace ControleDespesas.Test.Controllers
             var optionsInfraData = Options.Create(MockSettingsInfraData);
             var optionsAPI = Options.Create(MockSettingsAPI);
 
-            _repository = new TipoPagamentoRepositorio(optionsInfraData);
+            _repository = new TipoPagamentoRepository(optionsInfraData);
             _handler = new TipoPagamentoHandler(_repository);
             _controller = new TipoPagamentoController(_repository, _handler, optionsAPI);
             _controller.ControllerContext.HttpContext = new DefaultHttpContext();

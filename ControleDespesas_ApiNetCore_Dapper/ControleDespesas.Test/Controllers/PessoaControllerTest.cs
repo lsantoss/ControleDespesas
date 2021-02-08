@@ -1,8 +1,9 @@
 ﻿using ControleDespesas.Api.Controllers.ControleDespesas;
 using ControleDespesas.Domain.Commands.Pessoa.Output;
 using ControleDespesas.Domain.Handlers;
+using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Domain.Query.Pessoa;
-using ControleDespesas.Infra.Data.Repositorio;
+using ControleDespesas.Infra.Data.Repositories;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Models;
 using ControleDespesas.Test.AppConfigurations.Settings;
@@ -19,8 +20,8 @@ namespace ControleDespesas.Test.Controllers
 {
     public class PessoaControllerTest : DatabaseTest
     {
-        private readonly UsuarioRepositorio _repositoryUsuario;
-        private readonly PessoaRepositorio _repositoryPessoa;
+        private readonly IUsuarioRepository _repositoryUsuario;
+        private readonly IPessoaRepository _repositoryPessoa;
         private readonly PessoaHandler _handler;
         private readonly PessoaController _controller;
 
@@ -30,8 +31,8 @@ namespace ControleDespesas.Test.Controllers
             var optionsInfraData = Options.Create(MockSettingsInfraData);
             var optionsAPI = Options.Create(MockSettingsAPI);
 
-            _repositoryUsuario = new UsuarioRepositorio(optionsInfraData);
-            _repositoryPessoa = new PessoaRepositorio(optionsInfraData);
+            _repositoryUsuario = new UsuarioRepository(optionsInfraData);
+            _repositoryPessoa = new PessoaRepository(optionsInfraData);
             _handler = new PessoaHandler(_repositoryPessoa);
             _controller = new PessoaController(_repositoryPessoa, _handler, optionsAPI);
             _controller.ControllerContext.HttpContext = new DefaultHttpContext();

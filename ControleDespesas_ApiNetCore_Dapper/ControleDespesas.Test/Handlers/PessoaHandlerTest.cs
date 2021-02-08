@@ -1,6 +1,7 @@
 ﻿using ControleDespesas.Domain.Commands.Pessoa.Output;
 using ControleDespesas.Domain.Handlers;
-using ControleDespesas.Infra.Data.Repositorio;
+using ControleDespesas.Domain.Interfaces.Repositories;
+using ControleDespesas.Infra.Data.Repositories;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
@@ -11,8 +12,8 @@ namespace ControleDespesas.Test.Handlers
 {
     public class PessoaHandlerTest : DatabaseTest
     {
-        private readonly UsuarioRepositorio _repositoryUsuario;
-        private readonly PessoaRepositorio _repositoryPessoa;
+        private readonly IUsuarioRepository _repositoryUsuario;
+        private readonly IPessoaRepository _repositoryPessoa;
         private readonly PessoaHandler _handler;
 
         public PessoaHandlerTest()
@@ -20,8 +21,8 @@ namespace ControleDespesas.Test.Handlers
             CriarBaseDeDadosETabelas();
             var optionsInfraData = Options.Create(MockSettingsInfraData);
 
-            _repositoryUsuario = new UsuarioRepositorio(optionsInfraData);
-            _repositoryPessoa = new PessoaRepositorio(optionsInfraData);
+            _repositoryUsuario = new UsuarioRepository(optionsInfraData);
+            _repositoryPessoa = new PessoaRepository(optionsInfraData);
             _handler = new PessoaHandler(_repositoryPessoa);
         }
 

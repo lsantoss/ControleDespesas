@@ -1,6 +1,7 @@
 ﻿using ControleDespesas.Domain.Commands.Pagamento.Output;
 using ControleDespesas.Domain.Handlers;
-using ControleDespesas.Infra.Data.Repositorio;
+using ControleDespesas.Domain.Interfaces.Repositories;
+using ControleDespesas.Infra.Data.Repositories;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
@@ -12,11 +13,11 @@ namespace ControleDespesas.Test.Handlers
 {
     public class PagamentoHandlerTest : DatabaseTest
     {
-        private readonly UsuarioRepositorio _repositoryUsuario;
-        private readonly TipoPagamentoRepositorio _repositoryTipoPagamento;
-        private readonly EmpresaRepositorio _repositoryEmpresa;
-        private readonly PessoaRepositorio _repositoryPessoa;
-        private readonly PagamentoRepositorio _repositoryPagamento;
+        private readonly IUsuarioRepository _repositoryUsuario;
+        private readonly ITipoPagamentoRepository _repositoryTipoPagamento;
+        private readonly IEmpresaRepository _repositoryEmpresa;
+        private readonly IPessoaRepository _repositoryPessoa;
+        private readonly IPagamentoRepository _repositoryPagamento;
         private readonly PagamentoHandler _handler;
 
         public PagamentoHandlerTest()
@@ -24,11 +25,11 @@ namespace ControleDespesas.Test.Handlers
             CriarBaseDeDadosETabelas();
             var optionsInfraData = Options.Create(MockSettingsInfraData);
 
-            _repositoryUsuario = new UsuarioRepositorio(optionsInfraData);
-            _repositoryTipoPagamento = new TipoPagamentoRepositorio(optionsInfraData);
-            _repositoryEmpresa = new EmpresaRepositorio(optionsInfraData);
-            _repositoryPessoa = new PessoaRepositorio(optionsInfraData);
-            _repositoryPagamento = new PagamentoRepositorio(optionsInfraData);
+            _repositoryUsuario = new UsuarioRepository(optionsInfraData);
+            _repositoryTipoPagamento = new TipoPagamentoRepository(optionsInfraData);
+            _repositoryEmpresa = new EmpresaRepository(optionsInfraData);
+            _repositoryPessoa = new PessoaRepository(optionsInfraData);
+            _repositoryPagamento = new PagamentoRepository(optionsInfraData);
             _handler = new PagamentoHandler(_repositoryPagamento, _repositoryEmpresa, _repositoryPessoa, _repositoryTipoPagamento);
         }
 

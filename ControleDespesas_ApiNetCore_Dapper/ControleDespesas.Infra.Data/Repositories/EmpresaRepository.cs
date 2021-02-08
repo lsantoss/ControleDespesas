@@ -1,6 +1,6 @@
 ﻿using ControleDespesas.Domain.Entities;
-using ControleDespesas.Domain.Query.TipoPagamento;
-using ControleDespesas.Domain.Interfaces.Repositorio;
+using ControleDespesas.Domain.Query.Empresa;
+using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Infra.Data.Queries;
 using ControleDespesas.Infra.Data.Settings;
 using Dapper;
@@ -12,26 +12,27 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
-namespace ControleDespesas.Infra.Data.Repositorio
+namespace ControleDespesas.Infra.Data.Repositories
 {
-    public class TipoPagamentoRepositorio : ITipoPagamentoRepositorio
+    public class EmpresaRepository : IEmpresaRepository
     {
         private readonly DynamicParameters _parametros = new DynamicParameters();
         private readonly DataContext _ctx;
 
-        public TipoPagamentoRepositorio(IOptions<SettingsInfraData> options)
+        public EmpresaRepository(IOptions<SettingsInfraData> options)
         {
             _ctx = new DataContext(EBancoDadosRelacional.SQLServer, options.Value.ConnectionString);
         }
 
-        public TipoPagamento Salvar(TipoPagamento tipoPagamento)
+        public Empresa Salvar(Empresa empresa)
         {
             try
             {
-                _parametros.Add("Descricao", tipoPagamento.Descricao, DbType.String);
+                _parametros.Add("Nome", empresa.Nome, DbType.String);
+                _parametros.Add("Logo", empresa.Logo, DbType.String);
 
-                tipoPagamento.Id = _ctx.SQLServerConexao.ExecuteScalar<int>(TipoPagamentoQueries.Salvar, _parametros);
-                return tipoPagamento;
+                empresa.Id = _ctx.SQLServerConexao.ExecuteScalar<int>(EmpresaQueries.Salvar, _parametros);
+                return empresa;
             }
             catch (Exception e)
             {
@@ -39,14 +40,15 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
         }
 
-        public void Atualizar(TipoPagamento tipoPagamento)
+        public void Atualizar(Empresa empresa)
         {
             try
             {
-                _parametros.Add("Id", tipoPagamento.Id, DbType.Int32);
-                _parametros.Add("Descricao", tipoPagamento.Descricao, DbType.String);
+                _parametros.Add("Id", empresa.Id, DbType.Int32);
+                _parametros.Add("Nome", empresa.Nome, DbType.String);
+                _parametros.Add("Logo", empresa.Logo, DbType.String);
 
-                _ctx.SQLServerConexao.Execute(TipoPagamentoQueries.Atualizar, _parametros);
+                _ctx.SQLServerConexao.Execute(EmpresaQueries.Atualizar, _parametros);
             }
             catch (Exception e)
             {
@@ -58,9 +60,9 @@ namespace ControleDespesas.Infra.Data.Repositorio
         {
             try
             {
-                _parametros.Add("Id", id, DbType.Int32);
+                _parametros.Add("Id", id, DbType.Int32);                
 
-                _ctx.SQLServerConexao.Execute(TipoPagamentoQueries.Deletar, _parametros);
+                _ctx.SQLServerConexao.Execute(EmpresaQueries.Deletar, _parametros);
             }
             catch (Exception e)
             {
@@ -68,13 +70,13 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
         }
 
-        public TipoPagamentoQueryResult Obter(int id)
+        public EmpresaQueryResult Obter(int id)
         {
             try
             {
                 _parametros.Add("Id", id, DbType.Int32);
 
-                return _ctx.SQLServerConexao.Query<TipoPagamentoQueryResult>(TipoPagamentoQueries.Obter, _parametros).FirstOrDefault();
+                return _ctx.SQLServerConexao.Query<EmpresaQueryResult>(EmpresaQueries.Obter, _parametros).FirstOrDefault();
             }
             catch (Exception e)
             {
@@ -82,11 +84,11 @@ namespace ControleDespesas.Infra.Data.Repositorio
             }
         }
 
-        public List<TipoPagamentoQueryResult> Listar()
+        public List<EmpresaQueryResult> Listar()
         {
             try
             {
-                return _ctx.SQLServerConexao.Query<TipoPagamentoQueryResult>(TipoPagamentoQueries.Listar).ToList();
+                return _ctx.SQLServerConexao.Query<EmpresaQueryResult>(EmpresaQueries.Listar).ToList();
             }
             catch (Exception e)
             {
@@ -100,7 +102,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
             {
                 _parametros.Add("Id", id, DbType.Int32);
 
-                return _ctx.SQLServerConexao.Query<bool>(TipoPagamentoQueries.CheckId, _parametros).FirstOrDefault();
+                return _ctx.SQLServerConexao.Query<bool>(EmpresaQueries.CheckId, _parametros).FirstOrDefault();
             }
             catch (Exception e)
             {
@@ -112,7 +114,7 @@ namespace ControleDespesas.Infra.Data.Repositorio
         {
             try
             {
-                return _ctx.SQLServerConexao.Query<int>(TipoPagamentoQueries.LocalizarMaxId).FirstOrDefault();
+                return _ctx.SQLServerConexao.Query<int>(EmpresaQueries.LocalizarMaxId).FirstOrDefault();
             }
             catch (Exception e)
             {

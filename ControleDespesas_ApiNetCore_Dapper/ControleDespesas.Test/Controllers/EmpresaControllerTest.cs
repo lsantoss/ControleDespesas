@@ -1,8 +1,9 @@
 ﻿using ControleDespesas.Api.Controllers.ControleDespesas;
 using ControleDespesas.Domain.Commands.Empresa.Output;
 using ControleDespesas.Domain.Handlers;
+using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Domain.Query.Empresa;
-using ControleDespesas.Infra.Data.Repositorio;
+using ControleDespesas.Infra.Data.Repositories;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Models;
 using ControleDespesas.Test.AppConfigurations.Settings;
@@ -19,7 +20,7 @@ namespace ControleDespesas.Test.Controllers
 {
     public class EmpresaControllerTest : DatabaseTest
     {
-        private readonly EmpresaRepositorio _repository;
+        private readonly IEmpresaRepository _repository;
         private readonly EmpresaHandler _handler;
         private readonly EmpresaController _controller;
 
@@ -29,7 +30,7 @@ namespace ControleDespesas.Test.Controllers
             var optionsInfraData = Options.Create(MockSettingsInfraData);
             var optionsAPI = Options.Create(MockSettingsAPI);
 
-            _repository = new EmpresaRepositorio(optionsInfraData);
+            _repository = new EmpresaRepository(optionsInfraData);
             _handler = new EmpresaHandler(_repository);
             _controller = new EmpresaController(_repository, _handler, optionsAPI);
             _controller.ControllerContext.HttpContext = new DefaultHttpContext();

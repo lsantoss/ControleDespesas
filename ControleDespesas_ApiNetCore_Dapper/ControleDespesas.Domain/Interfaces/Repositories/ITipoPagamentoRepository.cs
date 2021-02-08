@@ -2,9 +2,9 @@
 using ControleDespesas.Domain.Query.TipoPagamento;
 using System.Collections.Generic;
 
-namespace ControleDespesas.Domain.Interfaces.Repositorio
+namespace ControleDespesas.Domain.Interfaces.Repositories
 {
-    public interface ITipoPagamentoRepositorio
+    public interface ITipoPagamentoRepository
     {
         TipoPagamento Salvar(TipoPagamento tipoPagamento);
         void Atualizar(TipoPagamento tipoPagamento);

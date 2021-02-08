@@ -1,25 +1,25 @@
-﻿using ControleDespesas.Domain.Interfaces.Repositorio;
-using ControleDespesas.Infra.Data.Repositorio;
+﻿using ControleDespesas.Domain.Interfaces.Repositories;
+using ControleDespesas.Infra.Data.Repositories;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
-namespace ControleDespesas.Test.Repositorio
+namespace ControleDespesas.Test.Repositories
 {
-    public class PessoaRepositorioTest : DatabaseTest
+    public class PessoaRepositoryTest : DatabaseTest
     {
-        private readonly IUsuarioRepositorio _repositoryUsuario;
-        private readonly IPessoaRepositorio _repositoryPessoa;
+        private readonly IUsuarioRepository _repositoryUsuario;
+        private readonly IPessoaRepository _repositoryPessoa;
 
-        public PessoaRepositorioTest()
+        public PessoaRepositoryTest()
         {
             CriarBaseDeDadosETabelas();
             var optionsInfraData = Options.Create(MockSettingsInfraData);
 
-            _repositoryUsuario = new UsuarioRepositorio(optionsInfraData);
-            _repositoryPessoa = new PessoaRepositorio(optionsInfraData);
+            _repositoryUsuario = new UsuarioRepository(optionsInfraData);
+            _repositoryPessoa = new PessoaRepository(optionsInfraData);
         }
 
         [SetUp]

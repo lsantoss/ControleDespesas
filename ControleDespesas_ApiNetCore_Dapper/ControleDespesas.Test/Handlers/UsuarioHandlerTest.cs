@@ -1,8 +1,9 @@
 ﻿using ControleDespesas.Domain.Commands.Usuario.Output;
 using ControleDespesas.Domain.Enums;
 using ControleDespesas.Domain.Handlers;
+using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Domain.Query.Usuario;
-using ControleDespesas.Infra.Data.Repositorio;
+using ControleDespesas.Infra.Data.Repositories;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
@@ -13,7 +14,7 @@ namespace ControleDespesas.Test.Handlers
 {
     class UsuarioHandlerTest : DatabaseTest
     {
-        private readonly UsuarioRepositorio _repository;
+        private readonly IUsuarioRepository _repository;
         private readonly UsuarioHandler _handler;
 
         public UsuarioHandlerTest()
@@ -21,7 +22,7 @@ namespace ControleDespesas.Test.Handlers
             CriarBaseDeDadosETabelas();
             var optionsInfraData = Options.Create(MockSettingsInfraData);
 
-            _repository = new UsuarioRepositorio(optionsInfraData);
+            _repository = new UsuarioRepository(optionsInfraData);
             _handler = new UsuarioHandler(_repository);
         }
 

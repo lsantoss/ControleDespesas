@@ -2,7 +2,7 @@
 using ControleDespesas.Domain.Commands.Empresa.Output;
 using ControleDespesas.Domain.Entities;
 using ControleDespesas.Domain.Helpers;
-using ControleDespesas.Domain.Interfaces.Repositorio;
+using ControleDespesas.Domain.Interfaces.Repositories;
 using LSCode.Facilitador.Api.Interfaces.Commands;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
@@ -14,9 +14,9 @@ namespace ControleDespesas.Domain.Handlers
                                                 ICommandHandler<AtualizarEmpresaCommand, Notificacao>,
                                                 ICommandHandler<ApagarEmpresaCommand, Notificacao>
     {
-        private readonly IEmpresaRepositorio _repository;
+        private readonly IEmpresaRepository _repository;
 
-        public EmpresaHandler(IEmpresaRepositorio repository)
+        public EmpresaHandler(IEmpresaRepository repository)
         {
             _repository = repository;
         }

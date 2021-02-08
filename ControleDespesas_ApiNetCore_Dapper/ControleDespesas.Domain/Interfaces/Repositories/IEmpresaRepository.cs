@@ -2,9 +2,9 @@
 using ControleDespesas.Domain.Query.Empresa;
 using System.Collections.Generic;
 
-namespace ControleDespesas.Domain.Interfaces.Repositorio
+namespace ControleDespesas.Domain.Interfaces.Repositories
 {
-    public interface IEmpresaRepositorio
+    public interface IEmpresaRepository
     {
         Empresa Salvar(Empresa empresa);
         void Atualizar(Empresa empresa);

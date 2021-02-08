@@ -2,8 +2,9 @@
 using ControleDespesas.Api.Services;
 using ControleDespesas.Domain.Commands.Usuario.Output;
 using ControleDespesas.Domain.Handlers;
+using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Domain.Query.Usuario;
-using ControleDespesas.Infra.Data.Repositorio;
+using ControleDespesas.Infra.Data.Repositories;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Models;
 using ControleDespesas.Test.AppConfigurations.Settings;
@@ -20,7 +21,7 @@ namespace ControleDespesas.Test.Controllers
 {
     public class UsuarioControllerTest : DatabaseTest
     {
-        private readonly UsuarioRepositorio _repository;
+        private readonly IUsuarioRepository _repository;
         private readonly UsuarioHandler _handler;
         private readonly UsuarioController _controller;
 
@@ -31,7 +32,7 @@ namespace ControleDespesas.Test.Controllers
             var optionsAPI = Options.Create(MockSettingsAPI);
             var tokenJWTService = new TokenJWTService(optionsAPI);
 
-            _repository = new UsuarioRepositorio(optionsInfraData);
+            _repository = new UsuarioRepository(optionsInfraData);
             _handler = new UsuarioHandler(_repository);
             _controller = new UsuarioController(_repository, _handler, optionsAPI, tokenJWTService);
             _controller.ControllerContext.HttpContext = new DefaultHttpContext();

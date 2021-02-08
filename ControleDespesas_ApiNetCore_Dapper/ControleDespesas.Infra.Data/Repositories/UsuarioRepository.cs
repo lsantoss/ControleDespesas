@@ -1,6 +1,6 @@
 ﻿using ControleDespesas.Domain.Entities;
 using ControleDespesas.Domain.Query.Usuario;
-using ControleDespesas.Domain.Interfaces.Repositorio;
+using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Infra.Data.Queries;
 using ControleDespesas.Infra.Data.Settings;
 using Dapper;
@@ -12,14 +12,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
-namespace ControleDespesas.Infra.Data.Repositorio
+namespace ControleDespesas.Infra.Data.Repositories
 {
-    public class UsuarioRepositorio : IUsuarioRepositorio
+    public class UsuarioRepository : IUsuarioRepository
     {
         private readonly DynamicParameters _parametros = new DynamicParameters();
         private readonly DataContext _ctx;
 
-        public UsuarioRepositorio(IOptions<SettingsInfraData> options)
+        public UsuarioRepository(IOptions<SettingsInfraData> options)
         {
             _ctx = new DataContext(EBancoDadosRelacional.SQLServer, options.Value.ConnectionString);
         }

@@ -2,9 +2,9 @@
 using ControleDespesas.Domain.Query.Usuario;
 using System.Collections.Generic;
 
-namespace ControleDespesas.Domain.Interfaces.Repositorio
+namespace ControleDespesas.Domain.Interfaces.Repositories
 {
-    public interface IUsuarioRepositorio
+    public interface IUsuarioRepository
     {
         Usuario Salvar(Usuario usuario);
         void Atualizar(Usuario usuario);

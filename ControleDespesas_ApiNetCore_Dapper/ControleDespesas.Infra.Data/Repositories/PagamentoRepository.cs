@@ -19,11 +19,11 @@ namespace ControleDespesas.Infra.Data.Repositories
     public class PagamentoRepository : IPagamentoRepository
     {
         private readonly DynamicParameters _parametros = new DynamicParameters();
-        private readonly DataContext _ctx;
+        private readonly DataContext _dataContext;
 
         public PagamentoRepository(SettingsInfraData settings)
         {
-            _ctx = new DataContext(EBancoDadosRelacional.SQLServer, settings.ConnectionString);
+            _dataContext = new DataContext(EBancoDadosRelacional.SQLServer, settings.ConnectionString);
         }
 
         public Pagamento Salvar(Pagamento pagamento)
@@ -40,7 +40,7 @@ namespace ControleDespesas.Infra.Data.Repositories
                 _parametros.Add("ArquivoPagamento", pagamento.ArquivoPagamento, DbType.String);
                 _parametros.Add("ArquivoComprovante", pagamento.ArquivoComprovante, DbType.String);
 
-                pagamento.Id = _ctx.SQLServerConexao.ExecuteScalar<int>(PagamentoQueries.Salvar, _parametros);
+                pagamento.Id = _dataContext.SQLServerConexao.ExecuteScalar<int>(PagamentoQueries.Salvar, _parametros);
                 return pagamento;
             }
             catch (Exception e)
@@ -64,7 +64,7 @@ namespace ControleDespesas.Infra.Data.Repositories
                 _parametros.Add("ArquivoPagamento", pagamento.ArquivoPagamento, DbType.String);
                 _parametros.Add("ArquivoComprovante", pagamento.ArquivoComprovante, DbType.String);
 
-                _ctx.SQLServerConexao.Execute(PagamentoQueries.Atualizar, _parametros);
+                _dataContext.SQLServerConexao.Execute(PagamentoQueries.Atualizar, _parametros);
             }
             catch (Exception e)
             {
@@ -78,7 +78,7 @@ namespace ControleDespesas.Infra.Data.Repositories
             {
                 _parametros.Add("Id", id, DbType.Int32);
 
-                _ctx.SQLServerConexao.Execute(PagamentoQueries.Deletar, _parametros);
+                _dataContext.SQLServerConexao.Execute(PagamentoQueries.Deletar, _parametros);
             }
             catch (Exception e)
             {
@@ -92,7 +92,7 @@ namespace ControleDespesas.Infra.Data.Repositories
             {
                 _parametros.Add("Id", id, DbType.Int32);
 
-                return _ctx.SQLServerConexao.Query<PagamentoQueryResult,
+                return _dataContext.SQLServerConexao.Query<PagamentoQueryResult,
                                                    TipoPagamentoQueryResult,
                                                    EmpresaQueryResult,
                                                    PessoaQueryResult,
@@ -120,7 +120,7 @@ namespace ControleDespesas.Infra.Data.Repositories
             {
                 _parametros.Add("IdPessoa", idPessoa, DbType.Int32);
 
-                return _ctx.SQLServerConexao.Query<PagamentoQueryResult,
+                return _dataContext.SQLServerConexao.Query<PagamentoQueryResult,
                                                    TipoPagamentoQueryResult,
                                                    EmpresaQueryResult,
                                                    PessoaQueryResult,
@@ -148,7 +148,7 @@ namespace ControleDespesas.Infra.Data.Repositories
             {
                 _parametros.Add("IdPessoa", idPessoa, DbType.Int32);
 
-                return _ctx.SQLServerConexao.Query<PagamentoQueryResult,
+                return _dataContext.SQLServerConexao.Query<PagamentoQueryResult,
                                                    TipoPagamentoQueryResult,
                                                    EmpresaQueryResult,
                                                    PessoaQueryResult,
@@ -176,7 +176,7 @@ namespace ControleDespesas.Infra.Data.Repositories
             {
                 _parametros.Add("IdPessoa", idPessoa, DbType.Int32);
 
-                return _ctx.SQLServerConexao.Query<PagamentoQueryResult,
+                return _dataContext.SQLServerConexao.Query<PagamentoQueryResult,
                                                    TipoPagamentoQueryResult,
                                                    EmpresaQueryResult,
                                                    PessoaQueryResult,
@@ -204,7 +204,7 @@ namespace ControleDespesas.Infra.Data.Repositories
             {
                 _parametros.Add("IdPagamento", idPagamento, DbType.Int32);
 
-                return _ctx.SQLServerConexao.Query<PagamentoArquivoPagamentoQueryResult>(PagamentoQueries.ObterArquivoPagamento, _parametros).FirstOrDefault();
+                return _dataContext.SQLServerConexao.Query<PagamentoArquivoPagamentoQueryResult>(PagamentoQueries.ObterArquivoPagamento, _parametros).FirstOrDefault();
             }
             catch (Exception e)
             {
@@ -218,7 +218,7 @@ namespace ControleDespesas.Infra.Data.Repositories
             {
                 _parametros.Add("IdPagamento", idPagamento, DbType.Int32);
 
-                return _ctx.SQLServerConexao.Query<PagamentoArquivoComprovanteQueryResult>(PagamentoQueries.ObterArquivoComprovante, _parametros).FirstOrDefault();
+                return _dataContext.SQLServerConexao.Query<PagamentoArquivoComprovanteQueryResult>(PagamentoQueries.ObterArquivoComprovante, _parametros).FirstOrDefault();
             }
             catch (Exception e)
             {
@@ -232,7 +232,7 @@ namespace ControleDespesas.Infra.Data.Repositories
             {
                 _parametros.Add("IdPessoa", idPessoa, DbType.Int32);
 
-                return _ctx.SQLServerConexao.Query<PagamentoGastosQueryResult>(PagamentoQueries.CalcularValorGastoTotal, _parametros).FirstOrDefault();
+                return _dataContext.SQLServerConexao.Query<PagamentoGastosQueryResult>(PagamentoQueries.CalcularValorGastoTotal, _parametros).FirstOrDefault();
             }
             catch (Exception e)
             {
@@ -247,7 +247,7 @@ namespace ControleDespesas.Infra.Data.Repositories
                 _parametros.Add("IdPessoa", idPessoa, DbType.Int32);
                 _parametros.Add("Ano", ano, DbType.Int32);
 
-                return _ctx.SQLServerConexao.Query<PagamentoGastosQueryResult>(PagamentoQueries.CalcularValorGastoAno, _parametros).FirstOrDefault();
+                return _dataContext.SQLServerConexao.Query<PagamentoGastosQueryResult>(PagamentoQueries.CalcularValorGastoAno, _parametros).FirstOrDefault();
             }
             catch (Exception e)
             {
@@ -263,7 +263,7 @@ namespace ControleDespesas.Infra.Data.Repositories
                 _parametros.Add("Ano", ano, DbType.Int32);
                 _parametros.Add("Mes", mes, DbType.Int32);
 
-                return _ctx.SQLServerConexao.Query<PagamentoGastosQueryResult>(PagamentoQueries.CalcularValorGastoAnoMes, _parametros).FirstOrDefault();
+                return _dataContext.SQLServerConexao.Query<PagamentoGastosQueryResult>(PagamentoQueries.CalcularValorGastoAnoMes, _parametros).FirstOrDefault();
             }
             catch (Exception e)
             {
@@ -277,7 +277,7 @@ namespace ControleDespesas.Infra.Data.Repositories
             {
                 _parametros.Add("Id", id, DbType.Int32);
 
-                return _ctx.SQLServerConexao.Query<bool>(PagamentoQueries.CheckId, _parametros).FirstOrDefault();
+                return _dataContext.SQLServerConexao.Query<bool>(PagamentoQueries.CheckId, _parametros).FirstOrDefault();
             }
             catch (Exception e)
             {
@@ -289,7 +289,7 @@ namespace ControleDespesas.Infra.Data.Repositories
         {
             try
             {
-                return _ctx.SQLServerConexao.Query<int>(PagamentoQueries.LocalizarMaxId).FirstOrDefault();
+                return _dataContext.SQLServerConexao.Query<int>(PagamentoQueries.LocalizarMaxId).FirstOrDefault();
             }
             catch (Exception e)
             {

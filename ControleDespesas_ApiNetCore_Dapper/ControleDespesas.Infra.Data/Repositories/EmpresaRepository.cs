@@ -16,11 +16,11 @@ namespace ControleDespesas.Infra.Data.Repositories
     public class EmpresaRepository : IEmpresaRepository
     {
         private readonly DynamicParameters _parametros = new DynamicParameters();
-        private readonly DataContext _ctx;
+        private readonly DataContext _dataContext;
 
         public EmpresaRepository(SettingsInfraData settings)
         {
-            _ctx = new DataContext(EBancoDadosRelacional.SQLServer, settings.ConnectionString);
+            _dataContext = new DataContext(EBancoDadosRelacional.SQLServer, settings.ConnectionString);
         }
 
         public Empresa Salvar(Empresa empresa)
@@ -30,7 +30,7 @@ namespace ControleDespesas.Infra.Data.Repositories
                 _parametros.Add("Nome", empresa.Nome, DbType.String);
                 _parametros.Add("Logo", empresa.Logo, DbType.String);
 
-                empresa.Id = _ctx.SQLServerConexao.ExecuteScalar<int>(EmpresaQueries.Salvar, _parametros);
+                empresa.Id = _dataContext.SQLServerConexao.ExecuteScalar<int>(EmpresaQueries.Salvar, _parametros);
                 return empresa;
             }
             catch (Exception e)
@@ -47,7 +47,7 @@ namespace ControleDespesas.Infra.Data.Repositories
                 _parametros.Add("Nome", empresa.Nome, DbType.String);
                 _parametros.Add("Logo", empresa.Logo, DbType.String);
 
-                _ctx.SQLServerConexao.Execute(EmpresaQueries.Atualizar, _parametros);
+                _dataContext.SQLServerConexao.Execute(EmpresaQueries.Atualizar, _parametros);
             }
             catch (Exception e)
             {
@@ -61,7 +61,7 @@ namespace ControleDespesas.Infra.Data.Repositories
             {
                 _parametros.Add("Id", id, DbType.Int32);                
 
-                _ctx.SQLServerConexao.Execute(EmpresaQueries.Deletar, _parametros);
+                _dataContext.SQLServerConexao.Execute(EmpresaQueries.Deletar, _parametros);
             }
             catch (Exception e)
             {
@@ -75,7 +75,7 @@ namespace ControleDespesas.Infra.Data.Repositories
             {
                 _parametros.Add("Id", id, DbType.Int32);
 
-                return _ctx.SQLServerConexao.Query<EmpresaQueryResult>(EmpresaQueries.Obter, _parametros).FirstOrDefault();
+                return _dataContext.SQLServerConexao.Query<EmpresaQueryResult>(EmpresaQueries.Obter, _parametros).FirstOrDefault();
             }
             catch (Exception e)
             {
@@ -87,7 +87,7 @@ namespace ControleDespesas.Infra.Data.Repositories
         {
             try
             {
-                return _ctx.SQLServerConexao.Query<EmpresaQueryResult>(EmpresaQueries.Listar).ToList();
+                return _dataContext.SQLServerConexao.Query<EmpresaQueryResult>(EmpresaQueries.Listar).ToList();
             }
             catch (Exception e)
             {
@@ -101,7 +101,7 @@ namespace ControleDespesas.Infra.Data.Repositories
             {
                 _parametros.Add("Id", id, DbType.Int32);
 
-                return _ctx.SQLServerConexao.Query<bool>(EmpresaQueries.CheckId, _parametros).FirstOrDefault();
+                return _dataContext.SQLServerConexao.Query<bool>(EmpresaQueries.CheckId, _parametros).FirstOrDefault();
             }
             catch (Exception e)
             {
@@ -113,7 +113,7 @@ namespace ControleDespesas.Infra.Data.Repositories
         {
             try
             {
-                return _ctx.SQLServerConexao.Query<int>(EmpresaQueries.LocalizarMaxId).FirstOrDefault();
+                return _dataContext.SQLServerConexao.Query<int>(EmpresaQueries.LocalizarMaxId).FirstOrDefault();
             }
             catch (Exception e)
             {

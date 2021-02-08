@@ -16,11 +16,11 @@ namespace ControleDespesas.Infra.Data.Repositories
     public class TipoPagamentoRepository : ITipoPagamentoRepository
     {
         private readonly DynamicParameters _parametros = new DynamicParameters();
-        private readonly DataContext _ctx;
+        private readonly DataContext _dataContext;
 
         public TipoPagamentoRepository(SettingsInfraData settings)
         {
-            _ctx = new DataContext(EBancoDadosRelacional.SQLServer, settings.ConnectionString);
+            _dataContext = new DataContext(EBancoDadosRelacional.SQLServer, settings.ConnectionString);
         }
 
         public TipoPagamento Salvar(TipoPagamento tipoPagamento)
@@ -29,7 +29,7 @@ namespace ControleDespesas.Infra.Data.Repositories
             {
                 _parametros.Add("Descricao", tipoPagamento.Descricao, DbType.String);
 
-                tipoPagamento.Id = _ctx.SQLServerConexao.ExecuteScalar<int>(TipoPagamentoQueries.Salvar, _parametros);
+                tipoPagamento.Id = _dataContext.SQLServerConexao.ExecuteScalar<int>(TipoPagamentoQueries.Salvar, _parametros);
                 return tipoPagamento;
             }
             catch (Exception e)
@@ -45,7 +45,7 @@ namespace ControleDespesas.Infra.Data.Repositories
                 _parametros.Add("Id", tipoPagamento.Id, DbType.Int32);
                 _parametros.Add("Descricao", tipoPagamento.Descricao, DbType.String);
 
-                _ctx.SQLServerConexao.Execute(TipoPagamentoQueries.Atualizar, _parametros);
+                _dataContext.SQLServerConexao.Execute(TipoPagamentoQueries.Atualizar, _parametros);
             }
             catch (Exception e)
             {
@@ -59,7 +59,7 @@ namespace ControleDespesas.Infra.Data.Repositories
             {
                 _parametros.Add("Id", id, DbType.Int32);
 
-                _ctx.SQLServerConexao.Execute(TipoPagamentoQueries.Deletar, _parametros);
+                _dataContext.SQLServerConexao.Execute(TipoPagamentoQueries.Deletar, _parametros);
             }
             catch (Exception e)
             {
@@ -73,7 +73,7 @@ namespace ControleDespesas.Infra.Data.Repositories
             {
                 _parametros.Add("Id", id, DbType.Int32);
 
-                return _ctx.SQLServerConexao.Query<TipoPagamentoQueryResult>(TipoPagamentoQueries.Obter, _parametros).FirstOrDefault();
+                return _dataContext.SQLServerConexao.Query<TipoPagamentoQueryResult>(TipoPagamentoQueries.Obter, _parametros).FirstOrDefault();
             }
             catch (Exception e)
             {
@@ -85,7 +85,7 @@ namespace ControleDespesas.Infra.Data.Repositories
         {
             try
             {
-                return _ctx.SQLServerConexao.Query<TipoPagamentoQueryResult>(TipoPagamentoQueries.Listar).ToList();
+                return _dataContext.SQLServerConexao.Query<TipoPagamentoQueryResult>(TipoPagamentoQueries.Listar).ToList();
             }
             catch (Exception e)
             {
@@ -99,7 +99,7 @@ namespace ControleDespesas.Infra.Data.Repositories
             {
                 _parametros.Add("Id", id, DbType.Int32);
 
-                return _ctx.SQLServerConexao.Query<bool>(TipoPagamentoQueries.CheckId, _parametros).FirstOrDefault();
+                return _dataContext.SQLServerConexao.Query<bool>(TipoPagamentoQueries.CheckId, _parametros).FirstOrDefault();
             }
             catch (Exception e)
             {
@@ -111,7 +111,7 @@ namespace ControleDespesas.Infra.Data.Repositories
         {
             try
             {
-                return _ctx.SQLServerConexao.Query<int>(TipoPagamentoQueries.LocalizarMaxId).FirstOrDefault();
+                return _dataContext.SQLServerConexao.Query<int>(TipoPagamentoQueries.LocalizarMaxId).FirstOrDefault();
             }
             catch (Exception e)
             {

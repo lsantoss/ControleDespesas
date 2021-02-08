@@ -16,11 +16,11 @@ namespace ControleDespesas.Infra.Data.Repositories
     public class PessoaRepository : IPessoaRepository
     {
         private readonly DynamicParameters _parametros = new DynamicParameters();
-        private readonly DataContext _ctx;
+        private readonly DataContext _dataContext;
 
         public PessoaRepository(SettingsInfraData settings)
         {
-            _ctx = new DataContext(EBancoDadosRelacional.SQLServer, settings.ConnectionString);
+            _dataContext = new DataContext(EBancoDadosRelacional.SQLServer, settings.ConnectionString);
         }
 
         public Pessoa Salvar(Pessoa pessoa)
@@ -31,7 +31,7 @@ namespace ControleDespesas.Infra.Data.Repositories
                 _parametros.Add("Nome", pessoa.Nome, DbType.String);
                 _parametros.Add("ImagemPerfil", pessoa.ImagemPerfil, DbType.String);
 
-                pessoa.Id = _ctx.SQLServerConexao.ExecuteScalar<int>(PessoaQueries.Salvar, _parametros);
+                pessoa.Id = _dataContext.SQLServerConexao.ExecuteScalar<int>(PessoaQueries.Salvar, _parametros);
                 return pessoa;
             }
             catch (Exception e)
@@ -49,7 +49,7 @@ namespace ControleDespesas.Infra.Data.Repositories
                 _parametros.Add("Nome", pessoa.Nome, DbType.String);
                 _parametros.Add("ImagemPerfil", pessoa.ImagemPerfil, DbType.String);
 
-                _ctx.SQLServerConexao.Execute(PessoaQueries.Atualizar, _parametros);
+                _dataContext.SQLServerConexao.Execute(PessoaQueries.Atualizar, _parametros);
             }
             catch (Exception e)
             {
@@ -63,7 +63,7 @@ namespace ControleDespesas.Infra.Data.Repositories
             {
                 _parametros.Add("Id", id, DbType.Int32);
 
-                _ctx.SQLServerConexao.Execute(PessoaQueries.Deletar, _parametros);
+                _dataContext.SQLServerConexao.Execute(PessoaQueries.Deletar, _parametros);
             }
             catch (Exception e)
             {
@@ -77,7 +77,7 @@ namespace ControleDespesas.Infra.Data.Repositories
             {
                 _parametros.Add("Id", id, DbType.Int32);
 
-                return _ctx.SQLServerConexao.Query<PessoaQueryResult>(PessoaQueries.Obter, _parametros).FirstOrDefault();
+                return _dataContext.SQLServerConexao.Query<PessoaQueryResult>(PessoaQueries.Obter, _parametros).FirstOrDefault();
             }
             catch (Exception e)
             {
@@ -91,7 +91,7 @@ namespace ControleDespesas.Infra.Data.Repositories
             {
                 _parametros.Add("IdUsuario", idUsuario, DbType.Int32);
 
-                return _ctx.SQLServerConexao.Query<PessoaQueryResult>(PessoaQueries.Listar, _parametros).ToList();
+                return _dataContext.SQLServerConexao.Query<PessoaQueryResult>(PessoaQueries.Listar, _parametros).ToList();
             }
             catch (Exception e)
             {
@@ -105,7 +105,7 @@ namespace ControleDespesas.Infra.Data.Repositories
             {
                 _parametros.Add("Id", id, DbType.Int32);
 
-                return _ctx.SQLServerConexao.Query<bool>(PessoaQueries.CheckId, _parametros).FirstOrDefault();
+                return _dataContext.SQLServerConexao.Query<bool>(PessoaQueries.CheckId, _parametros).FirstOrDefault();
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace ControleDespesas.Infra.Data.Repositories
         {
             try
             {
-                return _ctx.SQLServerConexao.Query<int>(PessoaQueries.LocalizarMaxId).FirstOrDefault();
+                return _dataContext.SQLServerConexao.Query<int>(PessoaQueries.LocalizarMaxId).FirstOrDefault();
             }
             catch (Exception e)
             {

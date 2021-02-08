@@ -16,11 +16,11 @@ namespace ControleDespesas.Infra.Data.Repositories
     public class UsuarioRepository : IUsuarioRepository
     {
         private readonly DynamicParameters _parametros = new DynamicParameters();
-        private readonly DataContext _ctx;
+        private readonly DataContext _dataContext;
 
         public UsuarioRepository(SettingsInfraData settings)
         {
-            _ctx = new DataContext(EBancoDadosRelacional.SQLServer, settings.ConnectionString);
+            _dataContext = new DataContext(EBancoDadosRelacional.SQLServer, settings.ConnectionString);
         }
 
         public Usuario Salvar(Usuario usuario)
@@ -31,7 +31,7 @@ namespace ControleDespesas.Infra.Data.Repositories
                 _parametros.Add("Senha", usuario.Senha, DbType.String);
                 _parametros.Add("Privilegio", usuario.Privilegio, DbType.Int16);
 
-                usuario.Id = _ctx.SQLServerConexao.ExecuteScalar<int>(UsuarioQueries.Salvar, _parametros);
+                usuario.Id = _dataContext.SQLServerConexao.ExecuteScalar<int>(UsuarioQueries.Salvar, _parametros);
                 return usuario;
             }
             catch (Exception e)
@@ -49,7 +49,7 @@ namespace ControleDespesas.Infra.Data.Repositories
                 _parametros.Add("Senha", usuario.Senha, DbType.String);
                 _parametros.Add("Privilegio", usuario.Privilegio, DbType.Int16);
 
-                _ctx.SQLServerConexao.Execute(UsuarioQueries.Atualizar, _parametros);
+                _dataContext.SQLServerConexao.Execute(UsuarioQueries.Atualizar, _parametros);
             }
             catch (Exception e)
             {
@@ -63,7 +63,7 @@ namespace ControleDespesas.Infra.Data.Repositories
             {
                 _parametros.Add("Id", id, DbType.Int32);
 
-                _ctx.SQLServerConexao.Execute(UsuarioQueries.Deletar, _parametros);
+                _dataContext.SQLServerConexao.Execute(UsuarioQueries.Deletar, _parametros);
             }
             catch (Exception e)
             {
@@ -77,7 +77,7 @@ namespace ControleDespesas.Infra.Data.Repositories
             {
                 _parametros.Add("Id", id, DbType.Int32);
 
-                return _ctx.SQLServerConexao.Query<UsuarioQueryResult>(UsuarioQueries.Obter, _parametros).FirstOrDefault();
+                return _dataContext.SQLServerConexao.Query<UsuarioQueryResult>(UsuarioQueries.Obter, _parametros).FirstOrDefault();
             }
             catch (Exception e)
             {
@@ -89,7 +89,7 @@ namespace ControleDespesas.Infra.Data.Repositories
         {
             try
             {
-                return _ctx.SQLServerConexao.Query<UsuarioQueryResult>(UsuarioQueries.Listar).ToList();
+                return _dataContext.SQLServerConexao.Query<UsuarioQueryResult>(UsuarioQueries.Listar).ToList();
             }
             catch (Exception e)
             {
@@ -104,7 +104,7 @@ namespace ControleDespesas.Infra.Data.Repositories
                 _parametros.Add("Login", login, DbType.String);
                 _parametros.Add("Senha", senha, DbType.String);
 
-                return _ctx.SQLServerConexao.Query<UsuarioQueryResult>(UsuarioQueries.Logar, _parametros).FirstOrDefault();
+                return _dataContext.SQLServerConexao.Query<UsuarioQueryResult>(UsuarioQueries.Logar, _parametros).FirstOrDefault();
             }
             catch (Exception e)
             {
@@ -118,7 +118,7 @@ namespace ControleDespesas.Infra.Data.Repositories
             {
                 _parametros.Add("Login", login, DbType.String);
 
-                string retono = _ctx.SQLServerConexao.Query<string>(UsuarioQueries.CheckLogin, _parametros).FirstOrDefault();
+                string retono = _dataContext.SQLServerConexao.Query<string>(UsuarioQueries.CheckLogin, _parametros).FirstOrDefault();
 
                 return retono != null ? true : false;
             }
@@ -134,7 +134,7 @@ namespace ControleDespesas.Infra.Data.Repositories
             {
                 _parametros.Add("Id", id, DbType.Int32);
 
-                return _ctx.SQLServerConexao.Query<bool>(UsuarioQueries.CheckId, _parametros).FirstOrDefault();
+                return _dataContext.SQLServerConexao.Query<bool>(UsuarioQueries.CheckId, _parametros).FirstOrDefault();
             }
             catch (Exception e)
             {
@@ -146,7 +146,7 @@ namespace ControleDespesas.Infra.Data.Repositories
         {
             try
             {
-                return _ctx.SQLServerConexao.Query<int>(UsuarioQueries.LocalizarMaxId).FirstOrDefault();
+                return _dataContext.SQLServerConexao.Query<int>(UsuarioQueries.LocalizarMaxId).FirstOrDefault();
             }
             catch (Exception e)
             {

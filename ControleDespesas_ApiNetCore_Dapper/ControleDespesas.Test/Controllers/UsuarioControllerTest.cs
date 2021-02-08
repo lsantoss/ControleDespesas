@@ -34,7 +34,7 @@ namespace ControleDespesas.Test.Controllers
 
             _repository = new UsuarioRepository(optionsInfraData);
             _handler = new UsuarioHandler(_repository);
-            _controller = new UsuarioController(_repository, _handler, optionsAPI, tokenJWTService);
+            _controller = new UsuarioController(_repository, _handler, tokenJWTService, optionsAPI);
             _controller.ControllerContext.HttpContext = new DefaultHttpContext();
             _controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = MockSettingsAPI.ChaveAPI;
         }

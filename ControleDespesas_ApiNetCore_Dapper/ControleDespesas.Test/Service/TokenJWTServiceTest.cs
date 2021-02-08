@@ -1,4 +1,5 @@
 ﻿using ControleDespesas.Api.Services;
+using ControleDespesas.Domain.Interfaces.Services;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using Microsoft.Extensions.Options;
@@ -8,7 +9,7 @@ namespace ControleDespesas.Test.Service
 {
     public class TokenJWTServiceTest : BaseTest
     {
-        private readonly TokenJWTService _tokenJWTService;
+        private readonly ITokenJWTService _tokenJWTService;
 
         public TokenJWTServiceTest()
         {

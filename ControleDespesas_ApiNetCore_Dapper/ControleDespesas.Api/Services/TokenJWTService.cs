@@ -1,4 +1,5 @@
 ﻿using ControleDespesas.Api.Settings;
+using ControleDespesas.Domain.Interfaces.Services;
 using ControleDespesas.Domain.Query.Usuario;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -9,7 +10,7 @@ using System.Text;
 
 namespace ControleDespesas.Api.Services
 {
-    public class TokenJWTService
+    public class TokenJWTService : ITokenJWTService
     {
         private readonly string _ChaveJWT;
 

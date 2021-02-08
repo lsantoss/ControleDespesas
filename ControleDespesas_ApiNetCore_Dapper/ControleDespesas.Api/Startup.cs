@@ -3,6 +3,7 @@ using ControleDespesas.Api.Settings;
 using ControleDespesas.Api.Swagger;
 using ControleDespesas.Domain.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
+using ControleDespesas.Domain.Interfaces.Services;
 using ControleDespesas.Infra.Data.Repositories;
 using ControleDespesas.Infra.Data.Settings;
 using ElmahCore.Mvc;
@@ -55,7 +56,7 @@ namespace ControleDespesas.Api
             #endregion
 
             #region Services
-            services.AddTransient<TokenJWTService, TokenJWTService>();
+            services.AddTransient<ITokenJWTService, TokenJWTService>();
             #endregion
             
             #region Swagger

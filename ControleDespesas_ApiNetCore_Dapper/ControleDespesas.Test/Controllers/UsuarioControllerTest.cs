@@ -12,7 +12,6 @@ using ControleDespesas.Test.AppConfigurations.Util;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -28,13 +27,11 @@ namespace ControleDespesas.Test.Controllers
         public UsuarioControllerTest()
         {
             CriarBaseDeDadosETabelas();
-            var optionsInfraData = Options.Create(MockSettingsInfraData);
-            var optionsAPI = Options.Create(MockSettingsAPI);
-            var tokenJWTService = new TokenJWTService(optionsAPI);
+            var tokenJWTService = new TokenJWTService(MockSettingsAPI);
 
-            _repository = new UsuarioRepository(optionsInfraData);
+            _repository = new UsuarioRepository(MockSettingsInfraData);
             _handler = new UsuarioHandler(_repository);
-            _controller = new UsuarioController(_repository, _handler, tokenJWTService, optionsAPI);
+            _controller = new UsuarioController(_repository, _handler, tokenJWTService, MockSettingsAPI);
             _controller.ControllerContext.HttpContext = new DefaultHttpContext();
             _controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = MockSettingsAPI.ChaveAPI;
         }

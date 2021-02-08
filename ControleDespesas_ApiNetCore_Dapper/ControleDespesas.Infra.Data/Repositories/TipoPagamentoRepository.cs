@@ -1,12 +1,11 @@
 ﻿using ControleDespesas.Domain.Entities;
-using ControleDespesas.Domain.Query.TipoPagamento;
 using ControleDespesas.Domain.Interfaces.Repositories;
+using ControleDespesas.Domain.Query.TipoPagamento;
 using ControleDespesas.Infra.Data.Queries;
 using ControleDespesas.Infra.Data.Settings;
 using Dapper;
 using LSCode.ConexoesBD.DataContexts;
 using LSCode.ConexoesBD.Enums;
-using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -19,9 +18,9 @@ namespace ControleDespesas.Infra.Data.Repositories
         private readonly DynamicParameters _parametros = new DynamicParameters();
         private readonly DataContext _ctx;
 
-        public TipoPagamentoRepository(IOptions<SettingsInfraData> options)
+        public TipoPagamentoRepository(SettingsInfraData settings)
         {
-            _ctx = new DataContext(EBancoDadosRelacional.SQLServer, options.Value.ConnectionString);
+            _ctx = new DataContext(EBancoDadosRelacional.SQLServer, settings.ConnectionString);
         }
 
         public TipoPagamento Salvar(TipoPagamento tipoPagamento)

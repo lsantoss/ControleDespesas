@@ -11,7 +11,6 @@ using ControleDespesas.Test.AppConfigurations.Util;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -27,12 +26,10 @@ namespace ControleDespesas.Test.Controllers
         public TipoPagamentoControllerTest()
         {
             CriarBaseDeDadosETabelas();
-            var optionsInfraData = Options.Create(MockSettingsInfraData);
-            var optionsAPI = Options.Create(MockSettingsAPI);
 
-            _repository = new TipoPagamentoRepository(optionsInfraData);
+            _repository = new TipoPagamentoRepository(MockSettingsInfraData);
             _handler = new TipoPagamentoHandler(_repository);
-            _controller = new TipoPagamentoController(_repository, _handler, optionsAPI);
+            _controller = new TipoPagamentoController(_repository, _handler, MockSettingsAPI);
             _controller.ControllerContext.HttpContext = new DefaultHttpContext();
             _controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = MockSettingsAPI.ChaveAPI;
         }

@@ -11,7 +11,6 @@ using ControleDespesas.Test.AppConfigurations.Util;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -27,12 +26,10 @@ namespace ControleDespesas.Test.Controllers
         public EmpresaControllerTest()
         {
             CriarBaseDeDadosETabelas();
-            var optionsInfraData = Options.Create(MockSettingsInfraData);
-            var optionsAPI = Options.Create(MockSettingsAPI);
 
-            _repository = new EmpresaRepository(optionsInfraData);
+            _repository = new EmpresaRepository(MockSettingsInfraData);
             _handler = new EmpresaHandler(_repository);
-            _controller = new EmpresaController(_repository, _handler, optionsAPI);
+            _controller = new EmpresaController(_repository, _handler, MockSettingsAPI);
             _controller.ControllerContext.HttpContext = new DefaultHttpContext();
             _controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = MockSettingsAPI.ChaveAPI;
         }

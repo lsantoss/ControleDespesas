@@ -10,7 +10,6 @@ using LSCode.Validador.ValidacoesNotificacoes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 
@@ -27,11 +26,11 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         private readonly PessoaHandler _handler;
         private readonly string _ChaveAPI;
 
-        public PessoaController(IPessoaRepository repository, PessoaHandler handler, IOptions<SettingsAPI> options)
+        public PessoaController(IPessoaRepository repository, PessoaHandler handler, SettingsAPI settings)
         {
             _repository = repository;
             _handler = handler;
-            _ChaveAPI = options.Value.ChaveAPI;
+            _ChaveAPI = settings.ChaveAPI;
         }
 
         /// <summary>

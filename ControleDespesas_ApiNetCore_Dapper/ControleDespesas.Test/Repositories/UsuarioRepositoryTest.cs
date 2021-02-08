@@ -15,9 +15,8 @@ namespace ControleDespesas.Test.Repositories
         public UsuarioRepositoryTest()
         {
             CriarBaseDeDadosETabelas();
-            var optionsInfraData = Options.Create(MockSettingsInfraData);
 
-            _repository = new UsuarioRepository(optionsInfraData);
+            _repository = new UsuarioRepository(MockSettingsInfraData);
         }
 
         [SetUp]

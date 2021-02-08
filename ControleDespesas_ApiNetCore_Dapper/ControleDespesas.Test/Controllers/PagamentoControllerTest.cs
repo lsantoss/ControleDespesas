@@ -11,7 +11,6 @@ using ControleDespesas.Test.AppConfigurations.Util;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using System;
@@ -32,16 +31,14 @@ namespace ControleDespesas.Test.Controllers
         public PagamentoControllerTest()
         {
             CriarBaseDeDadosETabelas();
-            var optionsInfraData = Options.Create(MockSettingsInfraData);
-            var optionsAPI = Options.Create(MockSettingsAPI);
 
-            _repositoryUsuario = new UsuarioRepository(optionsInfraData);
-            _repositoryEmpresa = new EmpresaRepository(optionsInfraData);
-            _repositoryPessoa = new PessoaRepository(optionsInfraData);
-            _repositoryTipoPagamento = new TipoPagamentoRepository(optionsInfraData);
-            _repositoryPagamento = new PagamentoRepository(optionsInfraData);
+            _repositoryUsuario = new UsuarioRepository(MockSettingsInfraData);
+            _repositoryEmpresa = new EmpresaRepository(MockSettingsInfraData);
+            _repositoryPessoa = new PessoaRepository(MockSettingsInfraData);
+            _repositoryTipoPagamento = new TipoPagamentoRepository(MockSettingsInfraData);
+            _repositoryPagamento = new PagamentoRepository(MockSettingsInfraData);
             _handler = new PagamentoHandler(_repositoryPagamento, _repositoryEmpresa, _repositoryPessoa, _repositoryTipoPagamento);
-            _controller = new PagamentoController(_repositoryPagamento, _handler, optionsAPI);
+            _controller = new PagamentoController(_repositoryPagamento, _handler, MockSettingsAPI);
             _controller.ControllerContext.HttpContext = new DefaultHttpContext();
             _controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = MockSettingsAPI.ChaveAPI;
         }

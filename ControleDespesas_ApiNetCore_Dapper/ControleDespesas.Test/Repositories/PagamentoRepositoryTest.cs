@@ -3,7 +3,6 @@ using ControleDespesas.Infra.Data.Repositories;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
-using Microsoft.Extensions.Options;
 using NUnit.Framework;
 using System;
 
@@ -20,13 +19,12 @@ namespace ControleDespesas.Test.Repositories
         public PagamentoRepositoryTest()
         {
             CriarBaseDeDadosETabelas();
-            var optionsInfraData = Options.Create(MockSettingsInfraData);
 
-            _repositoryUsuario = new UsuarioRepository(optionsInfraData);
-            _repositoryTipoPagamento = new TipoPagamentoRepository(optionsInfraData);
-            _repositoryEmpresa = new EmpresaRepository(optionsInfraData);
-            _repositoryPessoa = new PessoaRepository(optionsInfraData);
-            _repositoryPagamento = new PagamentoRepository(optionsInfraData);
+            _repositoryUsuario = new UsuarioRepository(MockSettingsInfraData);
+            _repositoryTipoPagamento = new TipoPagamentoRepository(MockSettingsInfraData);
+            _repositoryEmpresa = new EmpresaRepository(MockSettingsInfraData);
+            _repositoryPessoa = new PessoaRepository(MockSettingsInfraData);
+            _repositoryPagamento = new PagamentoRepository(MockSettingsInfraData);
         }
 
         [SetUp]

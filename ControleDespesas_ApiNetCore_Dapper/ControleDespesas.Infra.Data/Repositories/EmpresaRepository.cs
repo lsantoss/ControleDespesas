@@ -1,12 +1,11 @@
 ﻿using ControleDespesas.Domain.Entities;
-using ControleDespesas.Domain.Query.Empresa;
 using ControleDespesas.Domain.Interfaces.Repositories;
+using ControleDespesas.Domain.Query.Empresa;
 using ControleDespesas.Infra.Data.Queries;
 using ControleDespesas.Infra.Data.Settings;
 using Dapper;
 using LSCode.ConexoesBD.DataContexts;
 using LSCode.ConexoesBD.Enums;
-using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -19,9 +18,9 @@ namespace ControleDespesas.Infra.Data.Repositories
         private readonly DynamicParameters _parametros = new DynamicParameters();
         private readonly DataContext _ctx;
 
-        public EmpresaRepository(IOptions<SettingsInfraData> options)
+        public EmpresaRepository(SettingsInfraData settings)
         {
-            _ctx = new DataContext(EBancoDadosRelacional.SQLServer, options.Value.ConnectionString);
+            _ctx = new DataContext(EBancoDadosRelacional.SQLServer, settings.ConnectionString);
         }
 
         public Empresa Salvar(Empresa empresa)

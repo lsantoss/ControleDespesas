@@ -31,8 +31,13 @@ namespace ControleDespesas.Api
         public void ConfigureServices(IServiceCollection services)
         {
             #region AppSettings
-            services.Configure<SettingsInfraData>(options => Configuration.GetSection("SettingsInfraData").Bind(options));
-            services.Configure<SettingsAPI>(options => Configuration.GetSection("SettingsAPI").Bind(options));
+            SettingsAPI settingsAPI = new SettingsAPI();
+            Configuration.GetSection("SettingsAPI").Bind(settingsAPI);
+            services.AddSingleton(settingsAPI);
+
+            SettingsInfraData settingsInfraData = new SettingsInfraData();
+            Configuration.GetSection("SettingsInfraData").Bind(settingsInfraData);
+            services.AddSingleton(settingsInfraData);
             #endregion
 
             #region Swagger

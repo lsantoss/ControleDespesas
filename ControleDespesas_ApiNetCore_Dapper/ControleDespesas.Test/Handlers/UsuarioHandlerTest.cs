@@ -7,7 +7,6 @@ using ControleDespesas.Infra.Data.Repositories;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
-using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Handlers
@@ -20,9 +19,8 @@ namespace ControleDespesas.Test.Handlers
         public UsuarioHandlerTest()
         {
             CriarBaseDeDadosETabelas();
-            var optionsInfraData = Options.Create(MockSettingsInfraData);
 
-            _repository = new UsuarioRepository(optionsInfraData);
+            _repository = new UsuarioRepository(MockSettingsInfraData);
             _handler = new UsuarioHandler(_repository);
         }
 

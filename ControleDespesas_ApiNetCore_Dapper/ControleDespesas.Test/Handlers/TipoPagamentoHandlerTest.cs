@@ -5,7 +5,6 @@ using ControleDespesas.Infra.Data.Repositories;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
-using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Handlers
@@ -18,9 +17,8 @@ namespace ControleDespesas.Test.Handlers
         public TipoPagamentoHandlerTest()
         {
             CriarBaseDeDadosETabelas();
-            var optionsInfraData = Options.Create(MockSettingsInfraData);
 
-            _repository = new TipoPagamentoRepository(optionsInfraData);
+            _repository = new TipoPagamentoRepository(MockSettingsInfraData);
             _handler = new TipoPagamentoHandler(_repository);
         }
 

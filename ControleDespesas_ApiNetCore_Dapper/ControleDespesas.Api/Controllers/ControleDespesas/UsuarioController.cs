@@ -11,7 +11,6 @@ using LSCode.Validador.ValidacoesNotificacoes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 
@@ -29,12 +28,12 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         private readonly ITokenJWTService _tokenService;
         private readonly string _ChaveAPI;
 
-        public UsuarioController(IUsuarioRepository repository, UsuarioHandler handler, ITokenJWTService tokenService, IOptions<SettingsAPI> options)
+        public UsuarioController(IUsuarioRepository repository, UsuarioHandler handler, ITokenJWTService tokenService, SettingsAPI settings)
         {
             _repository = repository;
             _handler = handler;
             _tokenService = tokenService;
-            _ChaveAPI = options.Value.ChaveAPI;
+            _ChaveAPI = settings.ChaveAPI;
         }
 
         /// <summary>

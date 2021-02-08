@@ -2,7 +2,6 @@
 using ControleDespesas.Domain.Interfaces.Services;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;
-using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Service
@@ -13,8 +12,7 @@ namespace ControleDespesas.Test.Service
 
         public TokenJWTServiceTest()
         {
-            var optionsAPI = Options.Create(MockSettingsAPI);
-            _tokenJWTService = new TokenJWTService(optionsAPI);
+            _tokenJWTService = new TokenJWTService(MockSettingsAPI);
         }
 
         [SetUp]

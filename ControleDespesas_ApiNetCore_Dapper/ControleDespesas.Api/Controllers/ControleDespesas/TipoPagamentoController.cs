@@ -23,13 +23,13 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
     [Authorize]
     public class TipoPagamentoController : ControllerBase
     {
-        private readonly ITipoPagamentoRepository _repositorio;
+        private readonly ITipoPagamentoRepository _repository;
         private readonly TipoPagamentoHandler _handler;
         private readonly string _ChaveAPI;
 
-        public TipoPagamentoController(ITipoPagamentoRepository repositorio, TipoPagamentoHandler handler, IOptions<SettingsAPI> options)
+        public TipoPagamentoController(ITipoPagamentoRepository repository, TipoPagamentoHandler handler, IOptions<SettingsAPI> options)
         {
-            _repositorio = repositorio;
+            _repository = repository;
             _handler = handler;
             _ChaveAPI = options.Value.ChaveAPI;
         }
@@ -81,7 +81,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
                 if (Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
                     return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
 
-                var result = _repositorio.Listar();
+                var result = _repository.Listar();
 
                 if (result != null && result.Count > 0)
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<TipoPagamentoQueryResult>, Notificacao>("Lista de tipos de pagamento obtida com sucesso", result));
@@ -123,7 +123,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
                 if (!command.ValidarCommand())
                     return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
 
-                var result = _repositorio.Obter(command.Id);
+                var result = _repository.Obter(command.Id);
 
                 if (result != null)
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<TipoPagamentoQueryResult, Notificacao>("Tipo de pagameto obtido com sucesso", result));

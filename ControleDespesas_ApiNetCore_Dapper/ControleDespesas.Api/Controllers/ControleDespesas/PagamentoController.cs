@@ -23,13 +23,13 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
     [Authorize]
     public class PagamentoController : ControllerBase
     {
-        private readonly IPagamentoRepository _repositorio;
+        private readonly IPagamentoRepository _repository;
         private readonly PagamentoHandler _handler;
         private readonly string _ChaveAPI;
 
-        public PagamentoController(IPagamentoRepository repositorio, PagamentoHandler handler, IOptions<SettingsAPI> options)
+        public PagamentoController(IPagamentoRepository repository, PagamentoHandler handler, IOptions<SettingsAPI> options)
         {
-            _repositorio = repositorio;
+            _repository = repository;
             _handler = handler;
             _ChaveAPI = options.Value.ChaveAPI;
         }
@@ -87,7 +87,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
                 if (!command.ValidarCommand())
                     return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
 
-                var result = _repositorio.Listar(command.IdPessoa);
+                var result = _repository.Listar(command.IdPessoa);
 
                 if (result != null && result.Count > 0)
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<PagamentoQueryResult>, Notificacao>("Lista de pagamentos obtida com sucesso", result));
@@ -129,7 +129,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
                 if (!command.ValidarCommand())
                     return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
 
-                var result = _repositorio.Obter(command.Id);
+                var result = _repository.Obter(command.Id);
 
                 if (result != null)
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<PagamentoQueryResult, Notificacao>("Pagamento obtido com sucesso", result));
@@ -171,7 +171,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
                 if (!command.ValidarCommand())
                     return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
 
-                var result = _repositorio.ListarPagamentoConcluido(command.IdPessoa);
+                var result = _repository.ListarPagamentoConcluido(command.IdPessoa);
 
                 if (result != null && result.Count > 0)
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<PagamentoQueryResult>, Notificacao>("Lista de pagamentos obtida com sucesso", result));
@@ -213,7 +213,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
                 if (!command.ValidarCommand())
                     return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
 
-                var result = _repositorio.ListarPagamentoPendente(command.IdPessoa);
+                var result = _repository.ListarPagamentoPendente(command.IdPessoa);
 
                 if (result != null && result.Count > 0)
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<PagamentoQueryResult>, Notificacao>("Lista de pagamentos obtida com sucesso", result));
@@ -255,7 +255,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
                 if (!command.ValidarCommand())
                     return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
 
-                var result = _repositorio.ObterArquivoPagamento(command.IdPagamento);
+                var result = _repository.ObterArquivoPagamento(command.IdPagamento);
 
                 if (result?.ArquivoPagamento != null)
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<PagamentoArquivoPagamentoQueryResult, Notificacao>("Arquivo encontrado com sucesso", result));
@@ -297,7 +297,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
                 if (!command.ValidarCommand())
                     return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
 
-                var result = _repositorio.ObterArquivoComprovante(command.IdPagamento);
+                var result = _repository.ObterArquivoComprovante(command.IdPagamento);
 
                 if (result?.ArquivoComprovante != null)
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<PagamentoArquivoComprovanteQueryResult, Notificacao>("Arquivo encontrado com sucesso", result));
@@ -339,7 +339,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
                 if (!command.ValidarCommand())
                     return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
 
-                var result = _repositorio.CalcularValorGastoTotal(command.IdPessoa);
+                var result = _repository.CalcularValorGastoTotal(command.IdPessoa);
 
                 if (result != null)
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<PagamentoGastosQueryResult, Notificacao>("Cáculo obtido com sucesso", result));
@@ -381,7 +381,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
                 if (!command.ValidarCommand())
                     return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
 
-                var result = _repositorio.CalcularValorGastoAno(command.IdPessoa, command.Ano);
+                var result = _repository.CalcularValorGastoAno(command.IdPessoa, command.Ano);
 
                 if (result != null)
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<PagamentoGastosQueryResult, Notificacao>("Cáculo obtido com sucesso", result));
@@ -423,7 +423,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
                 if (!command.ValidarCommand())
                     return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
 
-                var result = _repositorio.CalcularValorGastoAnoMes(command.IdPessoa, command.Ano, command.Mes);
+                var result = _repository.CalcularValorGastoAnoMes(command.IdPessoa, command.Ano, command.Mes);
 
                 if (result != null)
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<PagamentoGastosQueryResult, Notificacao>("Cáculo obtido com sucesso", result));

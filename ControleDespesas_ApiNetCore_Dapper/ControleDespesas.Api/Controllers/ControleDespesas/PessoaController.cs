@@ -23,13 +23,13 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
     [Authorize]
     public class PessoaController : ControllerBase
     {
-        private readonly IPessoaRepository _repositorio;
+        private readonly IPessoaRepository _repository;
         private readonly PessoaHandler _handler;
         private readonly string _ChaveAPI;
 
-        public PessoaController(IPessoaRepository repositorio, PessoaHandler handler, IOptions<SettingsAPI> options)
+        public PessoaController(IPessoaRepository repository, PessoaHandler handler, IOptions<SettingsAPI> options)
         {
-            _repositorio = repositorio;
+            _repository = repository;
             _handler = handler;
             _ChaveAPI = options.Value.ChaveAPI;
         }
@@ -87,7 +87,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
                 if (!command.ValidarCommand())
                     return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
 
-                var result = _repositorio.Listar(command.IdUsuario);
+                var result = _repository.Listar(command.IdUsuario);
 
                 if (result != null && result.Count > 0)
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<PessoaQueryResult>, Notificacao>("Lista de pessoas obtida com sucesso", result));
@@ -129,7 +129,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
                 if (!command.ValidarCommand())
                     return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
 
-                var result = _repositorio.Obter(command.Id);
+                var result = _repository.Obter(command.Id);
 
                 if (result != null)
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<PessoaQueryResult, Notificacao>("Pessoa obtida com sucesso", result));

@@ -24,14 +24,14 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
     [Authorize]
     public class UsuarioController : ControllerBase
     {
-        private readonly IUsuarioRepository _repositorio;
+        private readonly IUsuarioRepository _repository;
         private readonly UsuarioHandler _handler;
         private readonly string _ChaveAPI;
         private readonly TokenJWTService _tokenService;
 
-        public UsuarioController(IUsuarioRepository repositorio, UsuarioHandler handler, IOptions<SettingsAPI> options, TokenJWTService tokenService)
+        public UsuarioController(IUsuarioRepository repository, UsuarioHandler handler, IOptions<SettingsAPI> options, TokenJWTService tokenService)
         {
-            _repositorio = repositorio;
+            _repository = repository;
             _handler = handler;
             _ChaveAPI = options.Value.ChaveAPI;
             _tokenService = tokenService;
@@ -84,7 +84,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
                 if (Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
                     return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
 
-                var result = _repositorio.Listar();
+                var result = _repository.Listar();
 
                 if (result != null && result.Count > 0)
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<UsuarioQueryResult>, Notificacao>("Lista de usuários obtida com sucesso", result));
@@ -126,7 +126,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
                 if (!command.ValidarCommand())
                     return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
 
-                var result = _repositorio.Obter(command.Id);
+                var result = _repository.Obter(command.Id);
 
                 if (result != null)
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<UsuarioQueryResult, Notificacao>("Usuário obtido com sucesso", result));

@@ -39,25 +39,6 @@ namespace ControleDespesas.Test.Controllers
         public void Setup() => CriarBaseDeDadosETabelas();
 
         [Test]
-        public void EmpresaHealthCheck()
-        {
-            var response = _controller.EmpresaHealthCheck().Result;
-
-            var responseJson = JsonConvert.SerializeObject(response);
-
-            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<string, Notificacao>>>(responseJson);
-
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
-
-            Assert.AreEqual(200, responseObj.StatusCode);
-
-            Assert.True(responseObj.Value.Sucesso);
-            Assert.AreEqual("Sucesso", responseObj.Value.Mensagem);
-            Assert.AreEqual("API Controle de Despesas - Empresa OK", responseObj.Value.Dados);
-            Assert.Null(responseObj.Value.Erros);
-        }
-
-        [Test]
         public void Empresas()
         {
             var empresa1 = new SettingsTest().Empresa1;

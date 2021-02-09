@@ -18,7 +18,10 @@ namespace ControleDespesas.Api.Controllers.Comum
     {
         protected readonly string _ChaveAPI;
 
-        public BaseController(SettingsAPI settings) => _ChaveAPI = settings.ChaveAPI;
+        public BaseController(SettingsAPI settings)
+        {
+            _ChaveAPI = settings.ChaveAPI;
+        }
 
         protected ActionResult<ApiResponse<string, Notificacao>> ResultHealthCheck()
         {
@@ -28,12 +31,7 @@ namespace ControleDespesas.Api.Controllers.Comum
 
                 if (chaveApiRequest != _ChaveAPI)
                 {
-                    var statusCode = StatusCodes.Status401Unauthorized;
-                    var mensagem = "Acesso negado";
-                    var notificacao = new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada");
-                    var erros = new List<Notificacao>() { notificacao };
-                    var result = new ApiResponse<object, Notificacao>(mensagem, erros);
-                    return StatusCode(statusCode, result);
+                    return GerarRetornoUnauthorized();
                 }
                 else
                 {
@@ -46,14 +44,29 @@ namespace ControleDespesas.Api.Controllers.Comum
             }
             catch (Exception e)
             {
-                HttpContext.RiseError(e);
-                var statusCode = StatusCodes.Status500InternalServerError;
-                var mensagem = "Erro";
-                var notificacao = new Notificacao("Erro", e.Message);
-                var erros = new List<Notificacao>() { notificacao };
-                var result = new ApiResponse<object, Notificacao>(mensagem, erros);
-                return StatusCode(statusCode, result);
+                return GerarRetornoInternalServerError(e);
             }
+        }
+
+        private ActionResult<ApiResponse<string, Notificacao>> GerarRetornoUnauthorized()
+        {
+            var statusCode = StatusCodes.Status401Unauthorized;
+            var mensagem = "Acesso negado";
+            var notificacao = new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada");
+            var erros = new List<Notificacao>() { notificacao };
+            var result = new ApiResponse<object, Notificacao>(mensagem, erros);
+            return StatusCode(statusCode, result);
+        }
+
+        private ActionResult<ApiResponse<string, Notificacao>> GerarRetornoInternalServerError(Exception e)
+        {
+            HttpContext.RiseError(e);
+            var statusCode = StatusCodes.Status500InternalServerError;
+            var mensagem = "Erro";
+            var notificacao = new Notificacao("Erro", e.Message);
+            var erros = new List<Notificacao>() { notificacao };
+            var result = new ApiResponse<object, Notificacao>(mensagem, erros);
+            return StatusCode(statusCode, result);
         }
     }
 }

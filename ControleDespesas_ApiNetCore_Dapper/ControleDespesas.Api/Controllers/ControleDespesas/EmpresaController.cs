@@ -1,4 +1,5 @@
-﻿using ControleDespesas.Api.Settings;
+﻿using ControleDespesas.Api.Controllers.Comum;
+using ControleDespesas.Api.Settings;
 using ControleDespesas.Domain.Commands.Empresa.Input;
 using ControleDespesas.Domain.Commands.Empresa.Output;
 using ControleDespesas.Domain.Interfaces.Handlers;
@@ -7,7 +8,6 @@ using ControleDespesas.Domain.Query.Empresa;
 using ElmahCore;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,50 +15,19 @@ using System.Collections.Generic;
 
 namespace ControleDespesas.Api.Controllers.ControleDespesas
 {
+    [ApiController]
+    [Route("Empresa")]
     [Consumes("application/json")]
     [Produces("application/json")]
-    [Route("Empresa")]
-    [ApiController]
-    [Authorize]
-    public class EmpresaController : ControllerBase
+    public class EmpresaController : BaseController
     {
         private readonly IEmpresaRepository _repository;
         private readonly IEmpresaHandler _handler;
-        private readonly string _ChaveAPI;
 
-        public EmpresaController(IEmpresaRepository repository, IEmpresaHandler handler, SettingsAPI settings)
+        public EmpresaController(IEmpresaRepository repository, IEmpresaHandler handler, SettingsAPI settings) : base(settings)
         {
             _repository = repository;
             _handler = handler;
-            _ChaveAPI = settings.ChaveAPI;
-        }
-
-        /// <summary>
-        /// Health Check
-        /// </summary>        
-        /// <remarks><h2><b>Afere a resposta deste contexto do serviço.</b></h2></remarks>
-        /// <response code="200">OK Request</response>
-        /// <response code="401">Unauthorized</response>
-        /// <response code="500">Internal Server Error</response>
-        [HttpGet]
-        [Route("v1/HealthCheck")]
-        [ProducesResponseType(typeof(ApiResponse<string, Notificacao>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<string, Notificacao>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ApiResponse<string, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<string, Notificacao>> EmpresaHealthCheck()
-        {
-            try
-            {
-                if(Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
-                    return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
-
-                return StatusCode(StatusCodes.Status200OK, new ApiResponse<string, Notificacao>("Sucesso", "API Controle de Despesas - Empresa OK"));
-            }
-            catch (Exception e)
-            {
-                HttpContext.RiseError(e);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
-            }
         }
 
         /// <summary>

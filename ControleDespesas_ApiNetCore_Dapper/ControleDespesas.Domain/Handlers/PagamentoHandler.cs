@@ -2,6 +2,7 @@
 using ControleDespesas.Domain.Commands.Pagamento.Output;
 using ControleDespesas.Domain.Entities;
 using ControleDespesas.Domain.Helpers;
+using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
 using LSCode.Facilitador.Api.Interfaces.Commands;
 using LSCode.Facilitador.Api.Models.Results;
@@ -10,9 +11,7 @@ using System;
 
 namespace ControleDespesas.Domain.Handlers
 {
-    public class PagamentoHandler : Notificadora, ICommandHandler<AdicionarPagamentoCommand, Notificacao>,
-                                                  ICommandHandler<AtualizarPagamentoCommand, Notificacao>,
-                                                  ICommandHandler<ApagarPagamentoCommand, Notificacao>
+    public class PagamentoHandler : Notificadora, IPagamentoHandler
     {
         private readonly IPagamentoRepository _repository;
         private readonly IEmpresaRepository _repositoryEmpresa;

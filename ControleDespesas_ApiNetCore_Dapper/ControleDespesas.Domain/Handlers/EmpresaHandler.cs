@@ -2,6 +2,7 @@
 using ControleDespesas.Domain.Commands.Empresa.Output;
 using ControleDespesas.Domain.Entities;
 using ControleDespesas.Domain.Helpers;
+using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
 using LSCode.Facilitador.Api.Interfaces.Commands;
 using LSCode.Facilitador.Api.Models.Results;
@@ -10,9 +11,7 @@ using System;
 
 namespace ControleDespesas.Domain.Handlers
 {
-    public class EmpresaHandler : Notificadora, ICommandHandler<AdicionarEmpresaCommand, Notificacao>,
-                                                ICommandHandler<AtualizarEmpresaCommand, Notificacao>,
-                                                ICommandHandler<ApagarEmpresaCommand, Notificacao>
+    public class EmpresaHandler : Notificadora, IEmpresaHandler
     {
         private readonly IEmpresaRepository _repository;
 

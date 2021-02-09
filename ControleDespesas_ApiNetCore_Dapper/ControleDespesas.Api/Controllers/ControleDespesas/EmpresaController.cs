@@ -1,7 +1,7 @@
 ﻿using ControleDespesas.Api.Settings;
 using ControleDespesas.Domain.Commands.Empresa.Input;
 using ControleDespesas.Domain.Commands.Empresa.Output;
-using ControleDespesas.Domain.Handlers;
+using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Domain.Query.Empresa;
 using ElmahCore;
@@ -23,10 +23,10 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
     public class EmpresaController : ControllerBase
     {
         private readonly IEmpresaRepository _repository;
-        private readonly EmpresaHandler _handler;
+        private readonly IEmpresaHandler _handler;
         private readonly string _ChaveAPI;
 
-        public EmpresaController(IEmpresaRepository repository, EmpresaHandler handler, SettingsAPI settings)
+        public EmpresaController(IEmpresaRepository repository, IEmpresaHandler handler, SettingsAPI settings)
         {
             _repository = repository;
             _handler = handler;

@@ -9,8 +9,4 @@
     <PackageReference Include="LSCode.Validador" Version="2.0.5" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Interfaces\Handlers\" />
-  </ItemGroup>
-
 </Project>

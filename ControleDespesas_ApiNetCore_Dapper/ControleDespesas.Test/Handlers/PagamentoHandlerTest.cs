@@ -1,5 +1,6 @@
 ﻿using ControleDespesas.Domain.Commands.Pagamento.Output;
 using ControleDespesas.Domain.Handlers;
+using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Infra.Data.Repositories;
 using ControleDespesas.Test.AppConfigurations.Base;
@@ -17,7 +18,7 @@ namespace ControleDespesas.Test.Handlers
         private readonly IEmpresaRepository _repositoryEmpresa;
         private readonly IPessoaRepository _repositoryPessoa;
         private readonly IPagamentoRepository _repositoryPagamento;
-        private readonly PagamentoHandler _handler;
+        private readonly IPagamentoHandler _handler;
 
         public PagamentoHandlerTest()
         {

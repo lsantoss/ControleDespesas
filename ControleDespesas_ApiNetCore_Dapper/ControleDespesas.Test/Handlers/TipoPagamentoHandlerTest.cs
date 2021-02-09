@@ -1,5 +1,6 @@
 ﻿using ControleDespesas.Domain.Commands.TipoPagamento.Output;
 using ControleDespesas.Domain.Handlers;
+using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Infra.Data.Repositories;
 using ControleDespesas.Test.AppConfigurations.Base;
@@ -12,7 +13,7 @@ namespace ControleDespesas.Test.Handlers
     public class TipoPagamentoHandlerTest : DatabaseTest
     {
         private readonly ITipoPagamentoRepository _repository;
-        private readonly TipoPagamentoHandler _handler;
+        private readonly ITipoPagamentoHandler _handler;
 
         public TipoPagamentoHandlerTest()
         {

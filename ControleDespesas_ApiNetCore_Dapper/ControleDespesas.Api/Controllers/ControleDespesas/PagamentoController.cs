@@ -1,7 +1,7 @@
 ﻿using ControleDespesas.Api.Settings;
 using ControleDespesas.Domain.Commands.Pagamento.Input;
 using ControleDespesas.Domain.Commands.Pagamento.Output;
-using ControleDespesas.Domain.Handlers;
+using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Domain.Query.Pagamento;
 using ElmahCore;
@@ -23,10 +23,10 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
     public class PagamentoController : ControllerBase
     {
         private readonly IPagamentoRepository _repository;
-        private readonly PagamentoHandler _handler;
+        private readonly IPagamentoHandler _handler;
         private readonly string _ChaveAPI;
 
-        public PagamentoController(IPagamentoRepository repository, PagamentoHandler handler, SettingsAPI settings)
+        public PagamentoController(IPagamentoRepository repository, IPagamentoHandler handler, SettingsAPI settings)
         {
             _repository = repository;
             _handler = handler;

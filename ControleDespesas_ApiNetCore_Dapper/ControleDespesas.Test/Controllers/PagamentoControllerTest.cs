@@ -1,6 +1,7 @@
 ﻿using ControleDespesas.Api.Controllers.ControleDespesas;
 using ControleDespesas.Domain.Commands.Pagamento.Output;
 using ControleDespesas.Domain.Handlers;
+using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Domain.Query.Pagamento;
 using ControleDespesas.Infra.Data.Repositories;
@@ -25,7 +26,7 @@ namespace ControleDespesas.Test.Controllers
         private readonly IPessoaRepository _repositoryPessoa;
         private readonly ITipoPagamentoRepository _repositoryTipoPagamento;
         private readonly IPagamentoRepository _repositoryPagamento;
-        private readonly PagamentoHandler _handler;
+        private readonly IPagamentoHandler _handler;
         private readonly PagamentoController _controller;
 
         public PagamentoControllerTest()

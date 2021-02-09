@@ -8,13 +8,11 @@ using LSCode.Facilitador.Api.Interfaces.Commands;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
 using System;
+using ControleDespesas.Domain.Interfaces.Handlers;
 
 namespace ControleDespesas.Domain.Handlers
 {
-    public class UsuarioHandler : Notificadora, ICommandHandler<AdicionarUsuarioCommand, Notificacao>,
-                                                ICommandHandler<AtualizarUsuarioCommand, Notificacao>,
-                                                ICommandHandler<ApagarUsuarioCommand, Notificacao>,
-                                                ICommandHandler<LoginUsuarioCommand, Notificacao>
+    public class UsuarioHandler : Notificadora, IUsuarioHandler
     {
         private readonly IUsuarioRepository _repository;
 

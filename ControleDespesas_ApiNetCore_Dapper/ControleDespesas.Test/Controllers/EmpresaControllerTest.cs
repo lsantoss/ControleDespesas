@@ -1,6 +1,7 @@
 ﻿using ControleDespesas.Api.Controllers.ControleDespesas;
 using ControleDespesas.Domain.Commands.Empresa.Output;
 using ControleDespesas.Domain.Handlers;
+using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Domain.Query.Empresa;
 using ControleDespesas.Infra.Data.Repositories;
@@ -20,7 +21,7 @@ namespace ControleDespesas.Test.Controllers
     public class EmpresaControllerTest : DatabaseTest
     {
         private readonly IEmpresaRepository _repository;
-        private readonly EmpresaHandler _handler;
+        private readonly IEmpresaHandler _handler;
         private readonly EmpresaController _controller;
 
         public EmpresaControllerTest()

@@ -2,6 +2,7 @@
 using ControleDespesas.Api.Services;
 using ControleDespesas.Domain.Commands.Usuario.Output;
 using ControleDespesas.Domain.Handlers;
+using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Domain.Query.Usuario;
 using ControleDespesas.Infra.Data.Repositories;
@@ -21,7 +22,7 @@ namespace ControleDespesas.Test.Controllers
     public class UsuarioControllerTest : DatabaseTest
     {
         private readonly IUsuarioRepository _repository;
-        private readonly UsuarioHandler _handler;
+        private readonly IUsuarioHandler _handler;
         private readonly UsuarioController _controller;
 
         public UsuarioControllerTest()

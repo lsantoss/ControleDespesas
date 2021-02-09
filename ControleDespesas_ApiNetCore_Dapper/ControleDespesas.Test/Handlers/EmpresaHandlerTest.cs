@@ -1,5 +1,6 @@
 ﻿using ControleDespesas.Domain.Commands.Empresa.Output;
 using ControleDespesas.Domain.Handlers;
+using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Infra.Data.Repositories;
 using ControleDespesas.Test.AppConfigurations.Base;
@@ -12,7 +13,7 @@ namespace ControleDespesas.Test.Handlers
     public class EmpresaHandlerTest : DatabaseTest
     {
         private readonly IEmpresaRepository _repository;
-        private readonly EmpresaHandler _handler;
+        private readonly IEmpresaHandler _handler;
 
         public EmpresaHandlerTest()
         {

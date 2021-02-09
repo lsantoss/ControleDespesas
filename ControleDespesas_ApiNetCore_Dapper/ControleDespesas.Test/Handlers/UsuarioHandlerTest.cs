@@ -1,6 +1,7 @@
 ﻿using ControleDespesas.Domain.Commands.Usuario.Output;
 using ControleDespesas.Domain.Enums;
 using ControleDespesas.Domain.Handlers;
+using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Domain.Query.Usuario;
 using ControleDespesas.Infra.Data.Repositories;
@@ -14,7 +15,7 @@ namespace ControleDespesas.Test.Handlers
     class UsuarioHandlerTest : DatabaseTest
     {
         private readonly IUsuarioRepository _repository;
-        private readonly UsuarioHandler _handler;
+        private readonly IUsuarioHandler _handler;
 
         public UsuarioHandlerTest()
         {

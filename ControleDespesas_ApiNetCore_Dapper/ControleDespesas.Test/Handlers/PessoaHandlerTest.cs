@@ -1,5 +1,6 @@
 ﻿using ControleDespesas.Domain.Commands.Pessoa.Output;
 using ControleDespesas.Domain.Handlers;
+using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Infra.Data.Repositories;
 using ControleDespesas.Test.AppConfigurations.Base;
@@ -13,7 +14,7 @@ namespace ControleDespesas.Test.Handlers
     {
         private readonly IUsuarioRepository _repositoryUsuario;
         private readonly IPessoaRepository _repositoryPessoa;
-        private readonly PessoaHandler _handler;
+        private readonly IPessoaHandler _handler;
 
         public PessoaHandlerTest()
         {

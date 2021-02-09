@@ -2,6 +2,7 @@
 using ControleDespesas.Api.Settings;
 using ControleDespesas.Api.Swagger;
 using ControleDespesas.Domain.Handlers;
+using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Domain.Interfaces.Services;
 using ControleDespesas.Infra.Data.Repositories;
@@ -126,11 +127,11 @@ namespace ControleDespesas.Api
             #endregion
 
             #region Handler
-            services.AddTransient<PessoaHandler, PessoaHandler>();
-            services.AddTransient<EmpresaHandler, EmpresaHandler>();
-            services.AddTransient<TipoPagamentoHandler, TipoPagamentoHandler>();
-            services.AddTransient<PagamentoHandler, PagamentoHandler>();
-            services.AddTransient<UsuarioHandler, UsuarioHandler>();
+            services.AddTransient<IPessoaHandler, PessoaHandler>();
+            services.AddTransient<IEmpresaHandler, EmpresaHandler>();
+            services.AddTransient<ITipoPagamentoHandler, TipoPagamentoHandler>();
+            services.AddTransient<IPagamentoHandler, PagamentoHandler>();
+            services.AddTransient<IUsuarioHandler, UsuarioHandler>();
             #endregion
 
             #region Services

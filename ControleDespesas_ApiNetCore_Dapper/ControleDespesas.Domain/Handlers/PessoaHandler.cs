@@ -2,6 +2,7 @@
 using ControleDespesas.Domain.Commands.Pessoa.Output;
 using ControleDespesas.Domain.Entities;
 using ControleDespesas.Domain.Helpers;
+using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
 using LSCode.Facilitador.Api.Interfaces.Commands;
 using LSCode.Facilitador.Api.Models.Results;
@@ -10,9 +11,7 @@ using System;
 
 namespace ControleDespesas.Domain.Handlers
 {
-    public class PessoaHandler : Notificadora, ICommandHandler<AdicionarPessoaCommand, Notificacao>,
-                                               ICommandHandler<AtualizarPessoaCommand, Notificacao>,
-                                               ICommandHandler<ApagarPessoaCommand, Notificacao>
+    public class PessoaHandler : Notificadora, IPessoaHandler
     {
         private readonly IPessoaRepository _repository;
 

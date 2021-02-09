@@ -1,7 +1,7 @@
 ﻿using ControleDespesas.Api.Settings;
 using ControleDespesas.Domain.Commands.Usuario.Input;
 using ControleDespesas.Domain.Commands.Usuario.Output;
-using ControleDespesas.Domain.Handlers;
+using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Domain.Interfaces.Services;
 using ControleDespesas.Domain.Query.Usuario;
@@ -24,11 +24,11 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
     public class UsuarioController : ControllerBase
     {
         private readonly IUsuarioRepository _repository;
-        private readonly UsuarioHandler _handler;
+        private readonly IUsuarioHandler _handler;
         private readonly ITokenJWTService _tokenService;
         private readonly string _ChaveAPI;
 
-        public UsuarioController(IUsuarioRepository repository, UsuarioHandler handler, ITokenJWTService tokenService, SettingsAPI settings)
+        public UsuarioController(IUsuarioRepository repository, IUsuarioHandler handler, ITokenJWTService tokenService, SettingsAPI settings)
         {
             _repository = repository;
             _handler = handler;

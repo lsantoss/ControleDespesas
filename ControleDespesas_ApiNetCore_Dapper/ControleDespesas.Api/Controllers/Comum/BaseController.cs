@@ -23,42 +23,26 @@ namespace ControleDespesas.Api.Controllers.Comum
             _ChaveAPI = settings.ChaveAPI;
         }
 
-        protected ActionResult<ApiResponse<string, Notificacao>> ResultHealthCheck()
+        protected ActionResult<ApiResponse<string, Notificacao>> ResultOK()
         {
-            try
-            {
-                var chaveApiRequest = Request.Headers["ChaveAPI"].ToString();
-
-                if (chaveApiRequest != _ChaveAPI)
-                {
-                    return GerarRetornoUnauthorized();
-                }
-                else
-                {
-                    var statusCode = StatusCodes.Status200OK;
-                    var mensagem = "Sucesso";
-                    var dados = "API Controle de Despesas - OK";
-                    var result = new ApiResponse<string, Notificacao>(mensagem, dados);
-                    return StatusCode(statusCode, result);
-                }
-            }
-            catch (Exception e)
-            {
-                return GerarRetornoInternalServerError(e);
-            }
+            var statusCode = StatusCodes.Status200OK;
+            var mensagem = "Sucesso";
+            var dados = "API Controle de Despesas - OK";
+            var result = new ApiResponse<string, Notificacao>(mensagem, dados);
+            return StatusCode(statusCode, result);
         }
 
-        private ActionResult<ApiResponse<string, Notificacao>> GerarRetornoUnauthorized()
+        protected ActionResult<ApiResponse<string, Notificacao>> ResultUnauthorized()
         {
             var statusCode = StatusCodes.Status401Unauthorized;
             var mensagem = "Acesso negado";
             var notificacao = new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada");
             var erros = new List<Notificacao>() { notificacao };
             var result = new ApiResponse<object, Notificacao>(mensagem, erros);
-            return StatusCode(statusCode, result);
+            return StatusCode(statusCode, result);          
         }
 
-        private ActionResult<ApiResponse<string, Notificacao>> GerarRetornoInternalServerError(Exception e)
+        protected ActionResult<ApiResponse<string, Notificacao>> ResultInternalServerError(Exception e)
         {
             HttpContext.RiseError(e);
             var statusCode = StatusCodes.Status500InternalServerError;

@@ -3,6 +3,7 @@ using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace ControleDespesas.Api.Controllers.Comum
 {
@@ -25,7 +26,14 @@ namespace ControleDespesas.Api.Controllers.Comum
         [ProducesResponseType(typeof(ApiResponse<string, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<string, Notificacao>> HealthCheck()
         {
-            return ResultHealthCheck();
+            try
+            {
+                return Request.Headers["ChaveAPI"].ToString() != _ChaveAPI ? ResultUnauthorized() : ResultOK();
+            }
+            catch (Exception e)
+            {
+                return ResultInternalServerError(e);
+            }
         }        
     }
 }

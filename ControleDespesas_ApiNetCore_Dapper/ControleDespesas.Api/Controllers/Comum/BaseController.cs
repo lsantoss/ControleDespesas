@@ -24,15 +24,35 @@ namespace ControleDespesas.Api.Controllers.Comum
         {
             try
             {
-                if (Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
-                    return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
+                var chaveApiRequest = Request.Headers["ChaveAPI"].ToString();
 
-                return StatusCode(StatusCodes.Status200OK, new ApiResponse<string, Notificacao>("Sucesso", "API Controle de Despesas - OK"));
+                if (chaveApiRequest != _ChaveAPI)
+                {
+                    var statusCode = StatusCodes.Status401Unauthorized;
+                    var mensagem = "Acesso negado";
+                    var notificacao = new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada");
+                    var erros = new List<Notificacao>() { notificacao };
+                    var result = new ApiResponse<object, Notificacao>(mensagem, erros);
+                    return StatusCode(statusCode, result);
+                }
+                else
+                {
+                    var statusCode = StatusCodes.Status200OK;
+                    var mensagem = "Sucesso";
+                    var dados = "API Controle de Despesas - OK";
+                    var result = new ApiResponse<string, Notificacao>(mensagem, dados);
+                    return StatusCode(statusCode, result);
+                }
             }
             catch (Exception e)
             {
                 HttpContext.RiseError(e);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
+                var statusCode = StatusCodes.Status500InternalServerError;
+                var mensagem = "Erro";
+                var notificacao = new Notificacao("Erro", e.Message);
+                var erros = new List<Notificacao>() { notificacao };
+                var result = new ApiResponse<object, Notificacao>(mensagem, erros);
+                return StatusCode(statusCode, result);
             }
         }
     }

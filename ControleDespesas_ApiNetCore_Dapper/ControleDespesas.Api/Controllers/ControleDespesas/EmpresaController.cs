@@ -1,5 +1,4 @@
-﻿using ControleDespesas.Api.Controllers.Comum;
-using ControleDespesas.Api.Settings;
+﻿using ControleDespesas.Api.Settings;
 using ControleDespesas.Domain.Commands.Empresa.Input;
 using ControleDespesas.Domain.Commands.Empresa.Output;
 using ControleDespesas.Domain.Interfaces.Handlers;
@@ -8,6 +7,7 @@ using ControleDespesas.Domain.Query.Empresa;
 using ElmahCore;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,19 +15,22 @@ using System.Collections.Generic;
 
 namespace ControleDespesas.Api.Controllers.ControleDespesas
 {
+    [Authorize]
     [ApiController]
     [Route("Empresa")]
     [Consumes("application/json")]
     [Produces("application/json")]
-    public class EmpresaController : BaseController
+    public class EmpresaController : ControllerBase
     {
         private readonly IEmpresaRepository _repository;
         private readonly IEmpresaHandler _handler;
+        private readonly string _ChaveAPI;
 
-        public EmpresaController(IEmpresaRepository repository, IEmpresaHandler handler, SettingsAPI settings) : base(settings)
+        public EmpresaController(IEmpresaRepository repository, IEmpresaHandler handler, SettingsAPI settings)
         {
             _repository = repository;
             _handler = handler;
+            _ChaveAPI = settings.ChaveAPI;
         }
 
         /// <summary>

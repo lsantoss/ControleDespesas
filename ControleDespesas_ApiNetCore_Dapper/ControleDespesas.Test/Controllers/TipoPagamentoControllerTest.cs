@@ -39,25 +39,6 @@ namespace ControleDespesas.Test.Controllers
         public void Setup() => CriarBaseDeDadosETabelas();
 
         [Test]
-        public void TipoPagamentoHealthCheck()
-        {
-            var response = _controller.TipoPagamentoHealthCheck().Result;
-
-            var responseJson = JsonConvert.SerializeObject(response);
-
-            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<string, Notificacao>>>(responseJson);
-
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
-
-            Assert.AreEqual(200, responseObj.StatusCode);
-
-            Assert.True(responseObj.Value.Sucesso);
-            Assert.AreEqual("Sucesso", responseObj.Value.Mensagem);
-            Assert.AreEqual("API Controle de Despesas - Tipo de Pagamento OK", responseObj.Value.Dados);
-            Assert.Null(responseObj.Value.Erros);
-        }
-
-        [Test]
         public void TipoPagamentos()
         {
             var tipoPagamento1 = new SettingsTest().TipoPagamento1;

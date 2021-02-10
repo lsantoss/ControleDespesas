@@ -16,11 +16,11 @@ using System.Collections.Generic;
 
 namespace ControleDespesas.Api.Controllers.ControleDespesas
 {
+    [Authorize]
+    [ApiController]
+    [Route("Usuario")]
     [Consumes("application/json")]
     [Produces("application/json")]
-    [Route("Usuario")]
-    [ApiController]
-    [Authorize]
     public class UsuarioController : ControllerBase
     {
         private readonly IUsuarioRepository _repository;
@@ -34,34 +34,6 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
             _handler = handler;
             _tokenService = tokenService;
             _ChaveAPI = settings.ChaveAPI;
-        }
-
-        /// <summary>
-        /// Health Check
-        /// </summary>        
-        /// <remarks><h2><b>Afere a resposta deste contexto do serviço.</b></h2></remarks>
-        /// <response code="200">OK Request</response>
-        /// <response code="401">Unauthorized</response>
-        /// <response code="500">Internal Server Error</response>
-        [HttpGet]
-        [Route("v1/HealthCheck")]
-        [ProducesResponseType(typeof(ApiResponse<string, Notificacao>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<string, Notificacao>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ApiResponse<string, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<string, Notificacao>> UsuarioHealthCheck()
-        {
-            try
-            {
-                if (Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
-                    return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
-
-                return StatusCode(StatusCodes.Status200OK, new ApiResponse<string, Notificacao>("Sucesso", "API Controle de Despesas - Usuário OK"));
-            }
-            catch (Exception e)
-            {
-                HttpContext.RiseError(e);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
-            }
         }
 
         /// <summary>

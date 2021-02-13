@@ -13,9 +13,11 @@ using LSCode.ConexoesBD.DataContexts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Collections.Generic;
@@ -138,7 +140,9 @@ namespace ControleDespesas.Api
             services.AddTransient<ITokenJWTService, TokenJWTService>();
             #endregion
 
-            services.AddMvc().AddControllersAsServices();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddJsonOptions(options => {
+                options.SerializerSettings.Formatting = Formatting.Indented;
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

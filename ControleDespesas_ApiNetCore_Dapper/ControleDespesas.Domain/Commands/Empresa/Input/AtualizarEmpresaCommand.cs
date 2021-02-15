@@ -1,5 +1,6 @@
 ﻿using LSCode.Facilitador.Api.Interfaces.Commands;
 using LSCode.Validador.ValidacoesNotificacoes;
+using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -7,7 +8,7 @@ namespace ControleDespesas.Domain.Commands.Empresa.Input
 {
     public class AtualizarEmpresaCommand : Notificadora, CommandPadrao
     {
-        [Required]
+        [JsonIgnore]
         public int Id { get; set; }
 
         [Required]

@@ -68,12 +68,10 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_ApagarEmpresa()
         {
-            var empresaCommand = new SettingsTest().EmpresaApagarCommand;
-
             var empresa = new SettingsTest().Empresa1;
             _repository.Salvar(empresa);
 
-            var retorno = _handler.Handler(empresaCommand);
+            var retorno = _handler.Handler(empresa.Id);
 
             var retornoDados = (ApagarEmpresaCommandOutput)retorno.Dados;
 
@@ -81,7 +79,7 @@ namespace ControleDespesas.Test.Handlers
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Empresa excluída com sucesso!", retorno.Mensagem);
-            Assert.AreEqual(empresaCommand.Id, retornoDados.Id);
+            Assert.AreEqual(empresa.Id, retornoDados.Id);
         }
 
         [TearDown]

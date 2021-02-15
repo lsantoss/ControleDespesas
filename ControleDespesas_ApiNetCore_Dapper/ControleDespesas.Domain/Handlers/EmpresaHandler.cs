@@ -69,19 +69,19 @@ namespace ControleDespesas.Domain.Handlers
             }
         }
 
-        public ICommandResult<Notificacao> Handler(ApagarEmpresaCommand command)
+        public ICommandResult<Notificacao> Handler(int id)
         {
             try
             {
-                if (!_repository.CheckId(command.Id))
+                if (!_repository.CheckId(id))
                     AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");
 
                 if (Invalido)
                     return new CommandResult<Notificacao>("Inconsistência(s) no(s) dado(s)", Notificacoes);
 
-                _repository.Deletar(command.Id);
+                _repository.Deletar(id);
 
-                ApagarEmpresaCommandOutput dadosRetorno = EmpresaHelper.GerarDadosRetornoDelete(command.Id);
+                ApagarEmpresaCommandOutput dadosRetorno = EmpresaHelper.GerarDadosRetornoDelete(id);
 
                 return new CommandResult<Notificacao>("Empresa excluída com sucesso!", dadosRetorno);
             }

@@ -1,0 +1,1502 @@
+{
+	"info": {
+		"_postman_id": "65be3235-9c2e-4247-a30d-68828ce8f9c7",
+		"name": "ControleDespesas .NetCore Dapper",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Health Check",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "ChaveAPI",
+								"value": "{{ChaveAPI}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:44323/v1/healthCheck",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44323",
+							"path": [
+								"v1",
+								"healthCheck"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Usuario",
+			"item": [
+				{
+					"name": "Usuarios",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "ChaveAPI",
+								"value": "{{ChaveAPI}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL_Base}}Usuario/v1/Usuarios",
+							"host": [
+								"{{URL_Base}}Usuario"
+							],
+							"path": [
+								"v1",
+								"Usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuario",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "ChaveAPI",
+								"value": "{{ChaveAPI}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_Base}}Usuario/v1/Usuario",
+							"host": [
+								"{{URL_Base}}Usuario"
+							],
+							"path": [
+								"v1",
+								"Usuario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Incluir Usuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "ChaveAPI",
+								"value": "{{ChaveAPI}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"login\": \"lucas.santos\",\r\n  \"senha\": \"Senha123\",\r\n  \"privilegio\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_Base}}Usuario/v1/UsuarioInserir",
+							"host": [
+								"{{URL_Base}}Usuario"
+							],
+							"path": [
+								"v1",
+								"UsuarioInserir"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Alterar Usuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "ChaveAPI",
+								"value": "{{ChaveAPI}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 10,\r\n  \"login\": \"sth\",\r\n  \"senha\": \"aA123456\",\r\n  \"privilegio\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_Base}}Usuario/v1/UsuarioAlterar",
+							"host": [
+								"{{URL_Base}}Usuario"
+							],
+							"path": [
+								"v1",
+								"UsuarioAlterar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Apagar Usuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "ChaveAPI",
+								"value": "{{ChaveAPI}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_Base}}Usuario/v1/UsuarioExcluir",
+							"host": [
+								"{{URL_Base}}Usuario"
+							],
+							"path": [
+								"v1",
+								"UsuarioExcluir"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Usuario",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "ChaveAPI",
+								"value": "{{ChaveAPI}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"login\": \"admin\",\r\n  \"senha\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_Base}}Usuario/v1/UsuarioLogin",
+							"host": [
+								"{{URL_Base}}Usuario"
+							],
+							"path": [
+								"v1",
+								"UsuarioLogin"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Empresa",
+			"item": [
+				{
+					"name": "Empresas",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "ChaveAPI",
+								"value": "{{ChaveAPI}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL_Base}}/v1/empresas",
+							"host": [
+								"{{URL_Base}}"
+							],
+							"path": [
+								"v1",
+								"empresas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Empresa",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "ChaveAPI",
+								"value": "{{ChaveAPI}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL_Base}}/v1/empresas/:id",
+							"host": [
+								"{{URL_Base}}"
+							],
+							"path": [
+								"v1",
+								"empresas",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Incluir Empresa",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "ChaveAPI",
+								"value": "{{ChaveAPI}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Oi\",\n  \"logo\": \"Logo\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_Base}}/v1/empresas",
+							"host": [
+								"{{URL_Base}}"
+							],
+							"path": [
+								"v1",
+								"empresas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Alterar Empresa",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "ChaveAPI",
+								"value": "{{ChaveAPI}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"Vivo\",\r\n  \"logo\": \"string123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_Base}}/v1/empresas/:id",
+							"host": [
+								"{{URL_Base}}"
+							],
+							"path": [
+								"v1",
+								"empresas",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Apagar Empresa",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "ChaveAPI",
+								"value": "{{ChaveAPI}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL_Base}}/v1/empresas/:id",
+							"host": [
+								"{{URL_Base}}"
+							],
+							"path": [
+								"v1",
+								"empresas",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "104"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tipo Pagamento",
+			"item": [
+				{
+					"name": "Tipos Pagamento",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "ChaveAPI",
+								"value": "{{ChaveAPI}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL_Base}}TipoPagamento/v1/TipoPagamentos",
+							"host": [
+								"{{URL_Base}}TipoPagamento"
+							],
+							"path": [
+								"v1",
+								"TipoPagamentos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Tipo Pagamento",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "ChaveAPI",
+								"value": "{{ChaveAPI}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_Base}}TipoPagamento/v1/TipoPagamento",
+							"host": [
+								"{{URL_Base}}TipoPagamento"
+							],
+							"path": [
+								"v1",
+								"TipoPagamento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Incluir Tipo Pagamento",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "ChaveAPI",
+								"value": "{{ChaveAPI}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"descricao\": \"Telefonia móvel\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_Base}}TipoPagamento/v1/TipoPagamentoInserir",
+							"host": [
+								"{{URL_Base}}TipoPagamento"
+							],
+							"path": [
+								"v1",
+								"TipoPagamentoInserir"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Alterar Tipo Pagamento",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "ChaveAPI",
+								"value": "{{ChaveAPI}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 4,\r\n  \"descricao\": \"IPTU\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_Base}}TipoPagamento/v1/TipoPagamentoAlterar",
+							"host": [
+								"{{URL_Base}}TipoPagamento"
+							],
+							"path": [
+								"v1",
+								"TipoPagamentoAlterar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Apagar Tipo Pagamento",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "ChaveAPI",
+								"value": "{{ChaveAPI}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 4\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_Base}}TipoPagamento/v1/TipoPagamentoExcluir",
+							"host": [
+								"{{URL_Base}}TipoPagamento"
+							],
+							"path": [
+								"v1",
+								"TipoPagamentoExcluir"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pessoa",
+			"item": [
+				{
+					"name": "Pessoas",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "ChaveAPI",
+								"value": "{{ChaveAPI}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idUsuario\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_Base}}Pessoa/v1/Pessoas",
+							"host": [
+								"{{URL_Base}}Pessoa"
+							],
+							"path": [
+								"v1",
+								"Pessoas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pessoa",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "ChaveAPI",
+								"value": "{{ChaveAPI}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_Base}}Pessoa/v1/Pessoa",
+							"host": [
+								"{{URL_Base}}Pessoa"
+							],
+							"path": [
+								"v1",
+								"Pessoa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Incluir Pessoa",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "ChaveAPI",
+								"value": "{{ChaveAPI}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idUsuario\": 2,\r\n    \"nome\": \"Lucas Santos\",\r\n    \"imagemPerfil\": \"FotoPerfilBase64\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_Base}}Pessoa/v1/PessoaInserir",
+							"host": [
+								"{{URL_Base}}Pessoa"
+							],
+							"path": [
+								"v1",
+								"PessoaInserir"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Alterar Pessoa",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "ChaveAPI",
+								"value": "{{ChaveAPI}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1,\r\n  \"idUsuario\": 2,\r\n  \"nome\": \"Lucas Santos Faria\",\r\n  \"imagemPerfil\": \"SemFotoBase64\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_Base}}Pessoa/v1/PessoaAlterar",
+							"host": [
+								"{{URL_Base}}Pessoa"
+							],
+							"path": [
+								"v1",
+								"PessoaAlterar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Apagar Pessoa",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "ChaveAPI",
+								"value": "{{ChaveAPI}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 4\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_Base}}Pessoa/v1/PessoaExcluir",
+							"host": [
+								"{{URL_Base}}Pessoa"
+							],
+							"path": [
+								"v1",
+								"PessoaExcluir"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pagamento",
+			"item": [
+				{
+					"name": "Pagamentos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "ChaveAPI",
+								"value": "{{ChaveAPI}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idPessoa\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_Base}}Pagamento/v1/Pagamentos",
+							"host": [
+								"{{URL_Base}}Pagamento"
+							],
+							"path": [
+								"v1",
+								"Pagamentos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pagamento",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "ChaveAPI",
+								"value": "{{ChaveAPI}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_Base}}Pagamento/v1/Pagamento",
+							"host": [
+								"{{URL_Base}}Pagamento"
+							],
+							"path": [
+								"v1",
+								"Pagamento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pagamentos Concluídos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "ChaveAPI",
+								"value": "{{ChaveAPI}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idPessoa\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_Base}}Pagamento/v1/PagamentosConcluidos",
+							"host": [
+								"{{URL_Base}}Pagamento"
+							],
+							"path": [
+								"v1",
+								"PagamentosConcluidos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pagamentos Pendentes",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "ChaveAPI",
+								"value": "{{ChaveAPI}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idPessoa\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_Base}}Pagamento/v1/PagamentosPendentes",
+							"host": [
+								"{{URL_Base}}Pagamento"
+							],
+							"path": [
+								"v1",
+								"PagamentosPendentes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Arquivo Pagamento",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "ChaveAPI",
+								"value": "{{ChaveAPI}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idPagamento\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_Base}}Pagamento/v1/ObterArquivoPagamento",
+							"host": [
+								"{{URL_Base}}Pagamento"
+							],
+							"path": [
+								"v1",
+								"ObterArquivoPagamento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Arquivo Comprovante",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "ChaveAPI",
+								"value": "{{ChaveAPI}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idPagamento\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_Base}}Pagamento/v1/ObterArquivoComprovante",
+							"host": [
+								"{{URL_Base}}Pagamento"
+							],
+							"path": [
+								"v1",
+								"ObterArquivoComprovante"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Total Gastos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "ChaveAPI",
+								"value": "{{ChaveAPI}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idPessoa\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_Base}}Pagamento/v1/ObterGastos",
+							"host": [
+								"{{URL_Base}}Pagamento"
+							],
+							"path": [
+								"v1",
+								"ObterGastos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Total Gasto Ano",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "ChaveAPI",
+								"value": "{{ChaveAPI}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idPessoa\": 1,\r\n  \"ano\": 2020\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_Base}}Pagamento/v1/ObterGastosAno",
+							"host": [
+								"{{URL_Base}}Pagamento"
+							],
+							"path": [
+								"v1",
+								"ObterGastosAno"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Total Gasto Ano/Mes",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "ChaveAPI",
+								"value": "{{ChaveAPI}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idPessoa\": 1,\r\n  \"ano\": 2020,\r\n  \"mes\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_Base}}Pagamento/v1/ObterGastosAnoMes",
+							"host": [
+								"{{URL_Base}}Pagamento"
+							],
+							"path": [
+								"v1",
+								"ObterGastosAnoMes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Incluir Pagamento",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "ChaveAPI",
+								"value": "{{ChaveAPI}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idTipoPagamento\": 1,\r\n  \"idEmpresa\": 1,\r\n  \"idPessoa\": 1,\r\n  \"descricao\": \"Pagamento\",\r\n  \"valor\": 35.45,\r\n  \"dataVencimento\": \"2020-05-25T09:51:26\",\r\n  \"dataPagamento\": null,\r\n  \"arquivoPagamento\": \"arquivoPagamentoBase64String\",\r\n  \"arquivoComprovante\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_Base}}Pagamento/v1/PagamentoInserir",
+							"host": [
+								"{{URL_Base}}Pagamento"
+							],
+							"path": [
+								"v1",
+								"PagamentoInserir"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Alterar Pagamento",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "ChaveAPI",
+								"value": "{{ChaveAPI}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 4,\r\n  \"idTipoPagamento\": 1,\r\n  \"idEmpresa\": 1,\r\n  \"idPessoa\": 1,\r\n  \"descricao\": \"Teste 123\",\r\n  \"valor\": 42,\r\n  \"dataVencimento\": \"2020-05-25T09:51:26\",\r\n  \"dataPagamento\": \"2020-05-23T08:00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_Base}}Pagamento/v1/PagamentoAlterar",
+							"host": [
+								"{{URL_Base}}Pagamento"
+							],
+							"path": [
+								"v1",
+								"PagamentoAlterar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Apagar Pagamento",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TokenJWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "ChaveAPI",
+								"value": "{{ChaveAPI}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_Base}}Pagamento/v1/PagamentoExcluir",
+							"host": [
+								"{{URL_Base}}Pagamento"
+							],
+							"path": [
+								"v1",
+								"PagamentoExcluir"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

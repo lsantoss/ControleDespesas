@@ -52,8 +52,6 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
         #region [Dados de teste para Empresa]
         public AdicionarEmpresaCommand EmpresaAdicionarCommand { get; }
         public AtualizarEmpresaCommand EmpresaAtualizarCommand { get; }
-        public ApagarEmpresaCommand EmpresaApagarCommand { get; }
-        public ObterEmpresaPorIdCommand EmpresaObterPorIdCommand { get; }
         public Empresa Empresa1 { get; }
         public Empresa Empresa2 { get; }
         public Empresa Empresa3 { get; }
@@ -155,16 +153,6 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                 Id = _configuration.GetValue<int>("SettingsTest:EmpresaAtualizarCommand:Id"),
                 Nome = _configuration.GetValue<string>("SettingsTest:EmpresaAtualizarCommand:Nome"),
                 Logo = _configuration.GetValue<string>("SettingsTest:EmpresaAtualizarCommand:Logo")
-            };
-
-            EmpresaApagarCommand = new ApagarEmpresaCommand()
-            {
-                Id = _configuration.GetValue<int>("SettingsTest:EmpresaApagarCommand:Id")
-            };
-
-            EmpresaObterPorIdCommand = new ObterEmpresaPorIdCommand()
-            {
-                Id = _configuration.GetValue<int>("SettingsTest:EmpresaObterPorIdCommand:Id")
             };
 
             Empresa1 = new Empresa(

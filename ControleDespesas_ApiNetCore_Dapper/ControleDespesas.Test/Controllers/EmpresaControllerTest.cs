@@ -83,13 +83,11 @@ namespace ControleDespesas.Test.Controllers
             var empresa2 = new SettingsTest().Empresa2;
             var empresa3 = new SettingsTest().Empresa3;
 
-            var command = new SettingsTest().EmpresaObterPorIdCommand;
-
             _repository.Salvar(empresa1);
             _repository.Salvar(empresa2);
             _repository.Salvar(empresa3);
 
-            var response = _controller.Empresa(command).Result;
+            var response = _controller.Empresa(empresa2.Id).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -141,7 +139,7 @@ namespace ControleDespesas.Test.Controllers
 
             _repository.Salvar(empresa);
 
-            var response = _controller.EmpresaAlterar(command).Result;
+            var response = _controller.EmpresaAlterar(command.Id, command).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -165,11 +163,9 @@ namespace ControleDespesas.Test.Controllers
         {
             var empresa = new SettingsTest().Empresa1;
 
-            var command = new SettingsTest().EmpresaApagarCommand;
-
             _repository.Salvar(empresa);
 
-            var response = _controller.EmpresaExcluir(command).Result;
+            var response = _controller.EmpresaExcluir(empresa.Id).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -183,7 +179,7 @@ namespace ControleDespesas.Test.Controllers
             Assert.AreEqual("Empresa excluída com sucesso!", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
 
-            Assert.AreEqual(command.Id, responseObj.Value.Dados.Id);
+            Assert.AreEqual(empresa.Id, responseObj.Value.Dados.Id);
         }
 
         [TearDown]

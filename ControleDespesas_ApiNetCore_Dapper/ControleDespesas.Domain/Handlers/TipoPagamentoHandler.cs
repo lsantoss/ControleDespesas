@@ -69,19 +69,19 @@ namespace ControleDespesas.Domain.Handlers
             }
         }
 
-        public ICommandResult<Notificacao> Handler(ApagarTipoPagamentoCommand command)
+        public ICommandResult<Notificacao> Handler(int id)
         {
             try
             {
-                if (!_repository.CheckId(command.Id))
+                if (!_repository.CheckId(id))
                     AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");
 
                 if (Invalido)
                     return new CommandResult<Notificacao>("Inconsistência(s) no(s) dado(s)", Notificacoes);
 
-                _repository.Deletar(command.Id);
+                _repository.Deletar(id);
 
-                ApagarTipoPagamentoCommandOutput dadosRetorno = TipoPagamentoHelper.GerarDadosRetornoDelete(command.Id);
+                ApagarTipoPagamentoCommandOutput dadosRetorno = TipoPagamentoHelper.GerarDadosRetornoDelete(id);
 
                 return new CommandResult<Notificacao>("Tipo Pagamento excluído com sucesso!", dadosRetorno);
             }

@@ -80,13 +80,11 @@ namespace ControleDespesas.Test.Controllers
             var tipoPagamento2 = new SettingsTest().TipoPagamento2;
             var tipoPagamento3 = new SettingsTest().TipoPagamento3;
 
-            var command = new SettingsTest().TipoPagamentoObterPorIdCommand;
-
             _repository.Salvar(tipoPagamento1);
             _repository.Salvar(tipoPagamento2);
             _repository.Salvar(tipoPagamento3);
 
-            var response = _controller.TipoPagamento(command).Result;
+            var response = _controller.TipoPagamento(tipoPagamento2.Id).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -136,7 +134,7 @@ namespace ControleDespesas.Test.Controllers
 
             _repository.Salvar(tipoPagamento);
 
-            var response = _controller.TipoPagamentoAlterar(command).Result;
+            var response = _controller.TipoPagamentoAlterar(command.Id, command).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -159,11 +157,9 @@ namespace ControleDespesas.Test.Controllers
         {
             var tipoPagamento = new SettingsTest().TipoPagamento1;
 
-            var command = new SettingsTest().TipoPagamentoApagarCommand;
-
             _repository.Salvar(tipoPagamento);
 
-            var response = _controller.TipoPagamentoExcluir(command).Result;
+            var response = _controller.TipoPagamentoExcluir(tipoPagamento.Id).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -177,7 +173,7 @@ namespace ControleDespesas.Test.Controllers
             Assert.AreEqual("Tipo Pagamento excluído com sucesso!", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
 
-            Assert.AreEqual(command.Id, responseObj.Value.Dados.Id);
+            Assert.AreEqual(tipoPagamento.Id, responseObj.Value.Dados.Id);
         }
 
         [TearDown]

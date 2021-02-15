@@ -73,8 +73,6 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
         #region[Dados de teste para TipoPagamento]
         public AdicionarTipoPagamentoCommand TipoPagamentoAdicionarCommand { get; }
         public AtualizarTipoPagamentoCommand TipoPagamentoAtualizarCommand { get; }
-        public ApagarTipoPagamentoCommand TipoPagamentoApagarCommand { get; }
-        public ObterTipoPagamentoPorIdCommand TipoPagamentoObterPorIdCommand { get; }
         public TipoPagamento TipoPagamento1 { get; }
         public TipoPagamento TipoPagamento2 { get; }
         public TipoPagamento TipoPagamento3 { get; }
@@ -240,16 +238,6 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
             {
                 Id = _configuration.GetValue<int>("SettingsTest:TipoPagamentoAtualizarCommand:Id"),
                 Descricao = _configuration.GetValue<string>("SettingsTest:TipoPagamentoAtualizarCommand:Descricao")
-            };
-
-            TipoPagamentoApagarCommand = new ApagarTipoPagamentoCommand()
-            {
-                Id = _configuration.GetValue<int>("SettingsTest:TipoPagamentoApagarCommand:Id")
-            };
-
-            TipoPagamentoObterPorIdCommand = new ObterTipoPagamentoPorIdCommand()
-            {
-                Id = _configuration.GetValue<int>("SettingsTest:TipoPagamentoObterPorIdCommand:Id")
             };
 
             TipoPagamento1 = new TipoPagamento(

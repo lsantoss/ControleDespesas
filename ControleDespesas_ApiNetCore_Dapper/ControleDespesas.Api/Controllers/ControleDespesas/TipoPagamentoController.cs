@@ -17,20 +17,21 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
 {
     [Authorize]
     [ApiController]
-    [Route("TipoPagamento")]
     [Consumes("application/json")]
     [Produces("application/json")]
     public class TipoPagamentoController : ControllerBase
     {
         private readonly ITipoPagamentoRepository _repository;
         private readonly ITipoPagamentoHandler _handler;
-        private readonly string _ChaveAPI;
+        private readonly SettingsAPI _settings;
 
-        public TipoPagamentoController(ITipoPagamentoRepository repository, ITipoPagamentoHandler handler, SettingsAPI settings)
+        public TipoPagamentoController(ITipoPagamentoRepository repository, 
+                                       ITipoPagamentoHandler handler,
+                                       SettingsAPI settings)
         {
             _repository = repository;
             _handler = handler;
-            _ChaveAPI = settings.ChaveAPI;
+            _settings = settings;
         }
 
         /// <summary>
@@ -41,7 +42,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="401">Unauthorized</response>
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
-        [Route("v1/TipoPagamentos")]
+        [Route("v1/tipos-pagamentos")]
         [ProducesResponseType(typeof(ApiResponse<List<TipoPagamentoQueryResult>, Notificacao>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<List<TipoPagamentoQueryResult>, Notificacao>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<List<TipoPagamentoQueryResult>, Notificacao>), StatusCodes.Status500InternalServerError)]
@@ -49,7 +50,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
-                if (Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
+                if (Request.Headers["ChaveAPI"].ToString() != _settings.ChaveAPI)
                     return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
 
                 var result = _repository.Listar();
@@ -70,31 +71,25 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// Tipo de Pagamento
         /// </summary>                
         /// <remarks><h2><b>Consulta o Tipo de Pagamento.</b></h2></remarks>
-        /// <param name="command">Parâmetro requerido command de Obter pelo Id</param>
+        /// <param name="id">Parâmetro requerido Id do Tipo de Pagamento</param>
         /// <response code="200">OK Request</response>
         /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
-        [Route("v1/TipoPagamento")]
+        [Route("v1/tipos-pagamentos/{id}")]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoQueryResult, Notificacao>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoQueryResult, Notificacao>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoQueryResult, Notificacao>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoQueryResult, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<TipoPagamentoQueryResult, Notificacao>> TipoPagamento([FromBody] ObterTipoPagamentoPorIdCommand command)
+        public ActionResult<ApiResponse<TipoPagamentoQueryResult, Notificacao>> TipoPagamento(int id)
         {
             try
             {
-                if (Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
+                if (Request.Headers["ChaveAPI"].ToString() != _settings.ChaveAPI)
                     return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
 
-                if (command == null)
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
-
-                if (!command.ValidarCommand())
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
-
-                var result = _repository.Obter(command.Id);
+                var result = _repository.Obter(id);
 
                 if (result != null)
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<TipoPagamentoQueryResult, Notificacao>("Tipo de pagameto obtido com sucesso", result));
@@ -118,7 +113,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="401">Unauthorized</response>
         /// <response code="500">Internal Server Error</response>
         [HttpPost]
-        [Route("v1/TipoPagamentoInserir")]
+        [Route("v1/tipos-pagamentos")]
         [ProducesResponseType(typeof(ApiResponse<AdicionarTipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<AdicionarTipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<AdicionarTipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
@@ -127,7 +122,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
-                if (Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
+                if (Request.Headers["ChaveAPI"].ToString() != _settings.ChaveAPI)
                     return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
 
                 if (command == null)
@@ -153,27 +148,30 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <summary>
         /// Alterar Tipo de Pagamento
         /// </summary>        
-        /// <remarks><h2><b>Altera Tipo de Pagamento na base de dados.</b></h2></remarks>        
+        /// <remarks><h2><b>Altera Tipo de Pagamento na base de dados.</b></h2></remarks>  
+        /// <param name="id">Parâmetro requerido Id do Tipo de Pagamento</param>      
         /// <param name="command">Parâmetro requerido command de Update</param>
         /// <response code="200">OK Request</response>
         /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="500">Internal Server Error</response>
         [HttpPut]
-        [Route("v1/TipoPagamentoAlterar")]
+        [Route("v1/tipos-pagamentos/{id}")]
         [ProducesResponseType(typeof(ApiResponse<AtualizarTipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<AtualizarTipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<AtualizarTipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<AtualizarTipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<AtualizarTipoPagamentoCommandOutput, Notificacao>> TipoPagamentoAlterar([FromBody] AtualizarTipoPagamentoCommand command)
+        public ActionResult<ApiResponse<AtualizarTipoPagamentoCommandOutput, Notificacao>> TipoPagamentoAlterar(int id, [FromBody] AtualizarTipoPagamentoCommand command)
         {
             try
             {
-                if (Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
+                if (Request.Headers["ChaveAPI"].ToString() != _settings.ChaveAPI)
                     return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
 
                 if (command == null)
                     return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
+
+                command.Id = id;
 
                 if (!command.ValidarCommand())
                     return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
@@ -196,31 +194,25 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// Excluir Tipo de Pagamento
         /// </summary>                
         /// <remarks><h2><b>Exclui Tipo de Pagamento na base de dados.</b></h2></remarks>
-        /// <param name="command">Parâmetro requerido command de Delete</param>
+        /// <param name="id">Parâmetro requerido Id do Tipo de Pagamento</param>  
         /// <response code="200">OK Request</response>
         /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="500">Internal Server Error</response>
         [HttpDelete]
-        [Route("v1/TipoPagamentoExcluir")]
+        [Route("v1/tipos-pagamentos/{id}")]
         [ProducesResponseType(typeof(ApiResponse<ApagarTipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<ApagarTipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<ApagarTipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<ApagarTipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<ApagarTipoPagamentoCommandOutput, Notificacao>> TipoPagamentoExcluir([FromBody] ApagarTipoPagamentoCommand command)
+        public ActionResult<ApiResponse<ApagarTipoPagamentoCommandOutput, Notificacao>> TipoPagamentoExcluir(int id)
         {
             try
             {
-                if (Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
+                if (Request.Headers["ChaveAPI"].ToString() != _settings.ChaveAPI)
                     return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
 
-                if (command == null)
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
-
-                if (!command.ValidarCommand())
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
-
-                var result = _handler.Handler(command);
+                var result = _handler.Handler(id);
 
                 if (result.Sucesso)
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));

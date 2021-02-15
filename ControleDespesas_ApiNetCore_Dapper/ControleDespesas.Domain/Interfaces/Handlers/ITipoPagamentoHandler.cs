@@ -8,6 +8,6 @@ namespace ControleDespesas.Domain.Interfaces.Handlers
     {
         ICommandResult<Notificacao> Handler(AdicionarTipoPagamentoCommand command);
         ICommandResult<Notificacao> Handler(AtualizarTipoPagamentoCommand command);
-        ICommandResult<Notificacao> Handler(ApagarTipoPagamentoCommand command);
+        ICommandResult<Notificacao> Handler(int id);
     }
 }

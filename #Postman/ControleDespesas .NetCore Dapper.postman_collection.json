@@ -537,13 +537,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{URL_Base}}TipoPagamento/v1/TipoPagamentos",
+							"raw": "{{URL_Base}}/v1/tipos-pagamentos",
 							"host": [
-								"{{URL_Base}}TipoPagamento"
+								"{{URL_Base}}"
 							],
 							"path": [
 								"v1",
-								"TipoPagamentos"
+								"tipos-pagamentos"
 							]
 						}
 					},
@@ -551,9 +551,6 @@
 				},
 				{
 					"name": "Tipo Pagamento",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -573,23 +570,21 @@
 								"type": "text"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"id\": 2\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "{{URL_Base}}TipoPagamento/v1/TipoPagamento",
+							"raw": "{{URL_Base}}/v1/tipos-pagamentos/:id",
 							"host": [
-								"{{URL_Base}}TipoPagamento"
+								"{{URL_Base}}"
 							],
 							"path": [
 								"v1",
-								"TipoPagamento"
+								"tipos-pagamentos",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
 							]
 						}
 					},
@@ -626,13 +621,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL_Base}}TipoPagamento/v1/TipoPagamentoInserir",
+							"raw": "{{URL_Base}}/v1/tipos-pagamentos",
 							"host": [
-								"{{URL_Base}}TipoPagamento"
+								"{{URL_Base}}"
 							],
 							"path": [
 								"v1",
-								"TipoPagamentoInserir"
+								"tipos-pagamentos"
 							]
 						}
 					},
@@ -661,7 +656,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"id\": 4,\r\n  \"descricao\": \"IPTU\"\r\n}",
+							"raw": "{\r\n  \"descricao\": \"IPTU\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -669,13 +664,20 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL_Base}}TipoPagamento/v1/TipoPagamentoAlterar",
+							"raw": "{{URL_Base}}/v1/tipos-pagamentos/:id",
 							"host": [
-								"{{URL_Base}}TipoPagamento"
+								"{{URL_Base}}"
 							],
 							"path": [
 								"v1",
-								"TipoPagamentoAlterar"
+								"tipos-pagamentos",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
 							]
 						}
 					},
@@ -702,23 +704,21 @@
 								"type": "text"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"id\": 4\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "{{URL_Base}}TipoPagamento/v1/TipoPagamentoExcluir",
+							"raw": "{{URL_Base}}/v1/tipos-pagamentos/:id",
 							"host": [
-								"{{URL_Base}}TipoPagamento"
+								"{{URL_Base}}"
 							],
 							"path": [
 								"v1",
-								"TipoPagamentoExcluir"
+								"tipos-pagamentos",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
 							]
 						}
 					},

@@ -1,5 +1,6 @@
 ﻿using LSCode.Facilitador.Api.Interfaces.Commands;
 using LSCode.Validador.ValidacoesNotificacoes;
+using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations;
 

@@ -82,11 +82,9 @@ namespace ControleDespesas.Test.Handlers
 
             var pessoa = new SettingsTest().Pessoa1;
 
-            var pessoaCommand = new SettingsTest().PessoaApagarCommand;
-
             _repositoryPessoa.Salvar(pessoa);
 
-            var retorno = _handler.Handler(pessoaCommand);
+            var retorno = _handler.Handler(pessoa.Id);
 
             var retornoDados = (ApagarPessoaCommandOutput)retorno.Dados;
 
@@ -94,7 +92,7 @@ namespace ControleDespesas.Test.Handlers
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Pessoa excluída com sucesso!", retorno.Mensagem);
-            Assert.AreEqual(pessoaCommand.Id, retornoDados.Id);
+            Assert.AreEqual(pessoa.Id, retornoDados.Id);
         }
 
         [TearDown]

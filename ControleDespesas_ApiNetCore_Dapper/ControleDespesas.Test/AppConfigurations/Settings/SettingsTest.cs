@@ -61,8 +61,6 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
         #region[Dados de teste para Pessoa]
         public AdicionarPessoaCommand PessoaAdicionarCommand { get; }
         public AtualizarPessoaCommand PessoaAtualizarCommand { get; }
-        public ApagarPessoaCommand PessoaApagarCommand { get; }
-        public ObterPessoaPorIdCommand PessoaObterPorIdCommand { get; }
         public ObterPessoasPorIdUsuarioCommand PessoaObterPorIdUsuarioCommand { get; }
         public Pessoa Pessoa1 { get; }
         public Pessoa Pessoa2 { get; }
@@ -194,16 +192,6 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                 IdUsuario = _configuration.GetValue<int>("SettingsTest:PessoaAtualizarCommand:IdUsuario"),
                 Nome = _configuration.GetValue<string>("SettingsTest:PessoaAtualizarCommand:Nome"),
                 ImagemPerfil = _configuration.GetValue<string>("SettingsTest:PessoaAtualizarCommand:ImagemPerfil")
-            };
-
-            PessoaApagarCommand = new ApagarPessoaCommand()
-            {
-                Id = _configuration.GetValue<int>("SettingsTest:PessoaApagarCommand:Id")
-            };
-
-            PessoaObterPorIdCommand = new ObterPessoaPorIdCommand()
-            {
-                Id = _configuration.GetValue<int>("SettingsTest:PessoaObterPorIdCommand:Id")
             };
 
             PessoaObterPorIdUsuarioCommand = new ObterPessoasPorIdUsuarioCommand()

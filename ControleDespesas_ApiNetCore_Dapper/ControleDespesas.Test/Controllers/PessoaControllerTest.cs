@@ -93,13 +93,11 @@ namespace ControleDespesas.Test.Controllers
             var pessoa2 = new SettingsTest().Pessoa2;
             var pessoa3 = new SettingsTest().Pessoa3;
 
-            var command = new SettingsTest().PessoaObterPorIdCommand;
-
             _repositoryPessoa.Salvar(pessoa1);
             _repositoryPessoa.Salvar(pessoa2);
             _repositoryPessoa.Salvar(pessoa3);
 
-            var response = _controller.Pessoa(command).Result;
+            var response = _controller.Pessoa(pessoa2.Id).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -157,7 +155,7 @@ namespace ControleDespesas.Test.Controllers
 
             _repositoryPessoa.Salvar(pessoa);
 
-            var response = _controller.PessoaAlterar(command).Result;
+            var response = _controller.PessoaAlterar(command.Id, command).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -184,11 +182,9 @@ namespace ControleDespesas.Test.Controllers
 
             var pessoa = new SettingsTest().Pessoa1;
 
-            var command = new SettingsTest().PessoaApagarCommand;
-
             _repositoryPessoa.Salvar(pessoa);
 
-            var response = _controller.PessoaExcluir(command).Result;
+            var response = _controller.PessoaExcluir(pessoa.Id).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -202,7 +198,7 @@ namespace ControleDespesas.Test.Controllers
             Assert.AreEqual("Pessoa excluída com sucesso!", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
 
-            Assert.AreEqual(command.Id, responseObj.Value.Dados.Id);
+            Assert.AreEqual(pessoa.Id, responseObj.Value.Dados.Id);
         }
 
         [TearDown]

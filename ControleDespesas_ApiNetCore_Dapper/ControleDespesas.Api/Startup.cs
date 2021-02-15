@@ -10,6 +10,7 @@ using ControleDespesas.Infra.Data.Settings;
 using ElmahCore.Mvc;
 using ElmahCore.Sql;
 using LSCode.ConexoesBD.DataContexts;
+using LSCode.Validador.ValidacoesNotificacoes;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -44,13 +45,15 @@ namespace ControleDespesas.Api
             #endregion
 
             #region Swagger
-            services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(swagger =>
             {
-                //c.DescribeAllEnumsAsStrings();
-                c.DescribeAllParametersInCamelCase();
-                c.IncludeXmlComments($@"{AppDomain.CurrentDomain.BaseDirectory}\Swagger.xml");
-                c.OperationFilter<SwaggerOperationFilters>();
-                c.SwaggerDoc("v1", new Info
+                //swagger.DescribeAllEnumsAsStrings();
+                swagger.DescribeAllParametersInCamelCase();
+                swagger.IncludeXmlComments($@"{AppDomain.CurrentDomain.BaseDirectory}\Swagger.xml");
+                swagger.OperationFilter<SwaggerNonBodyParameterFilter>();
+                swagger.OperationFilter<SwaggerJsonIgnoreFilter>();
+                swagger.OperationFilter<SwaggerClassTypeIgnoreFilter<Notificadora>>();
+                swagger.SwaggerDoc("v1", new Info
                 {
                     Title = "Controle de Despesas",
                     Version = "v1",
@@ -68,7 +71,7 @@ namespace ControleDespesas.Api
                     }
                 });
 
-                c.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                swagger.AddSecurityDefinition("Bearer", new ApiKeyScheme
                 {
                     In = "header",
                     Description = "Para autenticar use a palavra 'Bearer' + (um espaço entre a palavra Bearer e o Token) + 'Token'",
@@ -76,7 +79,7 @@ namespace ControleDespesas.Api
                     Type = "apiKey"
                 });
 
-                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
+                swagger.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
                 {
                     {"Bearer", new string[] { }},
                 });
@@ -140,9 +143,11 @@ namespace ControleDespesas.Api
             services.AddTransient<ITokenJWTService, TokenJWTService>();
             #endregion
 
+            #region Indented Pretty Print Formatting JSON
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddJsonOptions(options => {
                 options.SerializerSettings.Formatting = Formatting.Indented;
             });
+            #endregion
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

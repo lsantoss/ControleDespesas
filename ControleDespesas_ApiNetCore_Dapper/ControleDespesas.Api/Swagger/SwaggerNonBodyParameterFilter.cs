@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ControleDespesas.Api.Swagger
 {
-    public class SwaggerOperationFilters : IOperationFilter
+    public class SwaggerNonBodyParameterFilter : IOperationFilter
     {
         public void Apply(Operation operation, OperationFilterContext context)
         {

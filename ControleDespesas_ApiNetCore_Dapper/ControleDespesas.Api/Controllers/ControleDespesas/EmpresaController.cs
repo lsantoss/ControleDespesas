@@ -25,8 +25,8 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         private readonly IEmpresaHandler _handler;
         private readonly SettingsAPI _settings;
 
-        public EmpresaController(IEmpresaRepository repository, 
-                                 IEmpresaHandler handler, 
+        public EmpresaController(IEmpresaRepository repository,
+                                 IEmpresaHandler handler,
                                  SettingsAPI settings)
         {
             _repository = repository;

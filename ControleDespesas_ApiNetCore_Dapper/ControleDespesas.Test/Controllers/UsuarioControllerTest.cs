@@ -88,13 +88,11 @@ namespace ControleDespesas.Test.Controllers
             var usuario2 = new SettingsTest().Usuario2;
             var usuario3 = new SettingsTest().Usuario3;
 
-            var command = new SettingsTest().UsuarioObterPorIdCommand;
-
             _repository.Salvar(usuario1);
             _repository.Salvar(usuario2);
             _repository.Salvar(usuario3);
 
-            var response = _controller.Usuario(command).Result;
+            var response = _controller.Usuario(usuario2.Id).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -148,7 +146,7 @@ namespace ControleDespesas.Test.Controllers
 
             _repository.Salvar(usuario);
 
-            var response = _controller.UsuarioAlterar(command).Result;
+            var response = _controller.UsuarioAlterar(command.Id, command).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -173,11 +171,9 @@ namespace ControleDespesas.Test.Controllers
         {
             var usuario = new SettingsTest().Usuario1;
 
-            var command = new SettingsTest().UsuarioApagarCommand;
-
             _repository.Salvar(usuario);
 
-            var response = _controller.UsuarioExcluir(command).Result;
+            var response = _controller.UsuarioExcluir(usuario.Id).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -191,7 +187,7 @@ namespace ControleDespesas.Test.Controllers
             Assert.AreEqual("Usuário excluído com sucesso!", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
 
-            Assert.AreEqual(command.Id, responseObj.Value.Dados.Id);
+            Assert.AreEqual(usuario.Id, responseObj.Value.Dados.Id);
         }
 
         [Test]

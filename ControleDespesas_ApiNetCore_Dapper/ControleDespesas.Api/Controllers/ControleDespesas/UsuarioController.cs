@@ -18,7 +18,6 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
 {
     [Authorize]
     [ApiController]
-    [Route("Usuario")]
     [Consumes("application/json")]
     [Produces("application/json")]
     public class UsuarioController : ControllerBase
@@ -26,14 +25,17 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         private readonly IUsuarioRepository _repository;
         private readonly IUsuarioHandler _handler;
         private readonly ITokenJWTService _tokenService;
-        private readonly string _ChaveAPI;
+        private readonly SettingsAPI _settings;
 
-        public UsuarioController(IUsuarioRepository repository, IUsuarioHandler handler, ITokenJWTService tokenService, SettingsAPI settings)
+        public UsuarioController(IUsuarioRepository repository, 
+                                 IUsuarioHandler handler, 
+                                 ITokenJWTService tokenService, 
+                                 SettingsAPI settings)
         {
             _repository = repository;
             _handler = handler;
             _tokenService = tokenService;
-            _ChaveAPI = settings.ChaveAPI;
+            _settings = settings;
         }
 
         /// <summary>
@@ -44,7 +46,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="401">Unauthorized</response>
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
-        [Route("v1/Usuarios")]
+        [Route("v1/usuarios")]
         [ProducesResponseType(typeof(ApiResponse<List<UsuarioQueryResult>, Notificacao>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<List<UsuarioQueryResult>, Notificacao>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<List<UsuarioQueryResult>, Notificacao>), StatusCodes.Status500InternalServerError)]
@@ -52,7 +54,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
-                if (Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
+                if (Request.Headers["ChaveAPI"].ToString() != _settings.ChaveAPI)
                     return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
 
                 var result = _repository.Listar();
@@ -73,31 +75,25 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// Usuario
         /// </summary>                
         /// <remarks><h2><b>Consulta o Usuário.</b></h2></remarks>
-        /// <param name="command">Parâmetro requerido command de Obter pelo Id</param>
+        /// <param name="id">Parâmetro requerido Id do Usuário</param>
         /// <response code="200">OK Request</response>
         /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
-        [Route("v1/Usuario")]
+        [Route("v1/usuarios/{id}")]
         [ProducesResponseType(typeof(ApiResponse<UsuarioQueryResult, Notificacao>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<UsuarioQueryResult, Notificacao>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<UsuarioQueryResult, Notificacao>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<UsuarioQueryResult, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<UsuarioQueryResult, Notificacao>> Usuario([FromBody] ObterUsuarioPorIdCommand command)
+        public ActionResult<ApiResponse<UsuarioQueryResult, Notificacao>> Usuario(int id)
         {
             try
             {
-                if (Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
+                if (Request.Headers["ChaveAPI"].ToString() != _settings.ChaveAPI)
                     return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
 
-                if (command == null)
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
-
-                if (!command.ValidarCommand())
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
-
-                var result = _repository.Obter(command.Id);
+                var result = _repository.Obter(id);
 
                 if (result != null)
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<UsuarioQueryResult, Notificacao>("Usuário obtido com sucesso", result));
@@ -121,7 +117,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="401">Unauthorized</response>
         /// <response code="500">Internal Server Error</response>
         [HttpPost]
-        [Route("v1/UsuarioInserir")]
+        [Route("v1/usuarios")]
         [ProducesResponseType(typeof(ApiResponse<AdicionarUsuarioCommandOutput, Notificacao>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<AdicionarUsuarioCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<AdicionarUsuarioCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
@@ -130,7 +126,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
-                if (Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
+                if (Request.Headers["ChaveAPI"].ToString() != _settings.ChaveAPI)
                     return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
 
                 if (command == null)
@@ -156,27 +152,30 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <summary>
         /// Alterar Usuario
         /// </summary>        
-        /// <remarks><h2><b>Altera Usuário na base de dados.</b></h2></remarks>        
+        /// <remarks><h2><b>Altera Usuário na base de dados.</b></h2></remarks>  
+        /// <param name="id">Parâmetro requerido Id do Usuário</param>      
         /// <param name="command">Parâmetro requerido command de Update</param>
         /// <response code="200">OK Request</response>
         /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="500">Internal Server Error</response>
         [HttpPut]
-        [Route("v1/UsuarioAlterar")]
+        [Route("v1/usuarios/{id}")]
         [ProducesResponseType(typeof(ApiResponse<AtualizarUsuarioCommandOutput, Notificacao>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<AtualizarUsuarioCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<AtualizarUsuarioCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<AtualizarUsuarioCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<AtualizarUsuarioCommandOutput, Notificacao>> UsuarioAlterar([FromBody] AtualizarUsuarioCommand command)
+        public ActionResult<ApiResponse<AtualizarUsuarioCommandOutput, Notificacao>> UsuarioAlterar(int id, [FromBody] AtualizarUsuarioCommand command)
         {
             try
             {
-                if (Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
+                if (Request.Headers["ChaveAPI"].ToString() != _settings.ChaveAPI)
                     return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
 
                 if (command == null)
                     return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
+
+                command.Id = id;
 
                 if (!command.ValidarCommand())
                     return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
@@ -199,31 +198,25 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// Excluir Usuario
         /// </summary>                
         /// <remarks><h2><b>Exclui Usuário na base de dados.</b></h2></remarks>
-        /// <param name="command">Parâmetro requerido command de Delete</param>
+        /// <param name="id">Parâmetro requerido Id do Usuário</param>      
         /// <response code="200">OK Request</response>
         /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="500">Internal Server Error</response>
         [HttpDelete]
-        [Route("v1/UsuarioExcluir")]
+        [Route("v1/usuarios/{id}")]
         [ProducesResponseType(typeof(ApiResponse<ApagarUsuarioCommandOutput, Notificacao>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<ApagarUsuarioCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<ApagarUsuarioCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<ApagarUsuarioCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<ApagarUsuarioCommandOutput, Notificacao>> UsuarioExcluir([FromBody] ApagarUsuarioCommand command)
+        public ActionResult<ApiResponse<ApagarUsuarioCommandOutput, Notificacao>> UsuarioExcluir(int id)
         {
             try
             {
-                if (Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
+                if (Request.Headers["ChaveAPI"].ToString() != _settings.ChaveAPI)
                     return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
 
-                if (command == null)
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
-
-                if (!command.ValidarCommand())
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
-
-                var result = _handler.Handler(command);
+                var result = _handler.Handler(id);
 
                 if (result.Sucesso)
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
@@ -248,7 +241,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [AllowAnonymous]
         [HttpPost]
-        [Route("v1/UsuarioLogin")]
+        [Route("v1/usuarios/login")]
         [ProducesResponseType(typeof(ApiResponse<UsuarioTokenQueryResult, Notificacao>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<UsuarioTokenQueryResult, Notificacao>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<UsuarioTokenQueryResult, Notificacao>), StatusCodes.Status401Unauthorized)]
@@ -257,7 +250,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
-                if (Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
+                if (Request.Headers["ChaveAPI"].ToString() != _settings.ChaveAPI)
                     return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
 
                 if (command == null)

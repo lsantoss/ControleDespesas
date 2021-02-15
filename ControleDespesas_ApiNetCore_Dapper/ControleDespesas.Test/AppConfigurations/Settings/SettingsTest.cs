@@ -6,7 +6,6 @@ using ControleDespesas.Domain.Commands.Usuario.Input;
 using ControleDespesas.Domain.Entities;
 using ControleDespesas.Domain.Enums;
 using ControleDespesas.Domain.Query.Pessoa.Input;
-using ControleDespesas.Domain.Query.Usuario;
 using ControleDespesas.Domain.Query.Usuario.Results;
 using LSCode.ConexoesBD.Enums;
 using Microsoft.Extensions.Configuration;
@@ -99,8 +98,6 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
         #region[Dados de teste para Usuario]
         public AdicionarUsuarioCommand UsuarioAdicionarCommand { get; }
         public AtualizarUsuarioCommand UsuarioAtualizarCommand { get; }
-        public ApagarUsuarioCommand UsuarioApagarCommand { get; }
-        public ObterUsuarioPorIdCommand UsuarioObterPorIdCommand { get; }
         public LoginUsuarioCommand UsuarioLoginCommand { get; }
         public UsuarioQueryResult UsuarioQR { get; }
         public Usuario Usuario1 { get; }
@@ -447,16 +444,6 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                 Login = _configuration.GetValue<string>("SettingsTest:UsuarioAtualizarCommand:Login"),
                 Senha = _configuration.GetValue<string>("SettingsTest:UsuarioAtualizarCommand:Senha"),
                 Privilegio = _configuration.GetValue<EPrivilegioUsuario>("SettingsTest:UsuarioAtualizarCommand:Privilegio")
-            };
-
-            UsuarioApagarCommand = new ApagarUsuarioCommand()
-            {
-                Id = _configuration.GetValue<int>("SettingsTest:UsuarioApagarCommand:Id")
-            };
-
-            UsuarioObterPorIdCommand = new ObterUsuarioPorIdCommand()
-            {
-                Id = _configuration.GetValue<int>("SettingsTest:UsuarioObterPorIdCommand:Id")
             };
 
             UsuarioLoginCommand = new LoginUsuarioCommand()

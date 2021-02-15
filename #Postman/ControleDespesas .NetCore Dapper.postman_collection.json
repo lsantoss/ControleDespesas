@@ -71,14 +71,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{URL_Base}}/Usuario/v1/Usuarios",
+							"raw": "{{URL_Base}}/v1/usuarios",
 							"host": [
 								"{{URL_Base}}"
 							],
 							"path": [
-								"Usuario",
 								"v1",
-								"Usuarios"
+								"usuarios"
 							]
 						}
 					},
@@ -86,9 +85,6 @@
 				},
 				{
 					"name": "Usuario",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -108,23 +104,21 @@
 								"type": "text"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"id\": 2\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "{{URL_Base}}Usuario/v1/Usuario",
+							"raw": "{{URL_Base}}/v1/usuarios/:id",
 							"host": [
-								"{{URL_Base}}Usuario"
+								"{{URL_Base}}"
 							],
 							"path": [
 								"v1",
-								"Usuario"
+								"usuarios",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
 							]
 						}
 					},
@@ -161,13 +155,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL_Base}}Usuario/v1/UsuarioInserir",
+							"raw": "{{URL_Base}}/v1/usuarios",
 							"host": [
-								"{{URL_Base}}Usuario"
+								"{{URL_Base}}"
 							],
 							"path": [
 								"v1",
-								"UsuarioInserir"
+								"usuarios"
 							]
 						}
 					},
@@ -196,7 +190,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"id\": 10,\r\n  \"login\": \"sth\",\r\n  \"senha\": \"aA123456\",\r\n  \"privilegio\": 2\r\n}",
+							"raw": "{\r\n  \"login\": \"sth\",\r\n  \"senha\": \"aA123456\",\r\n  \"privilegio\": 2\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -204,13 +198,20 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL_Base}}Usuario/v1/UsuarioAlterar",
+							"raw": "{{URL_Base}}/v1/usuarios/:id",
 							"host": [
-								"{{URL_Base}}Usuario"
+								"{{URL_Base}}"
 							],
 							"path": [
 								"v1",
-								"UsuarioAlterar"
+								"usuarios",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
 							]
 						}
 					},
@@ -237,23 +238,21 @@
 								"type": "text"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"id\": 10\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "{{URL_Base}}Usuario/v1/UsuarioExcluir",
+							"raw": "{{URL_Base}}/v1/usuarios/:id",
 							"host": [
-								"{{URL_Base}}Usuario"
+								"{{URL_Base}}"
 							],
 							"path": [
 								"v1",
-								"UsuarioExcluir"
+								"usuarios",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
 							]
 						}
 					},
@@ -280,14 +279,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL_Base}}/Usuario/v1/UsuarioLogin",
+							"raw": "{{URL_Base}}/v1/usuarios/login",
 							"host": [
 								"{{URL_Base}}"
 							],
 							"path": [
-								"Usuario",
 								"v1",
-								"UsuarioLogin"
+								"usuarios",
+								"login"
 							]
 						}
 					},

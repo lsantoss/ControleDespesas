@@ -76,9 +76,7 @@ namespace ControleDespesas.Test.Handlers
             var usuario = new SettingsTest().Usuario1;
             _repository.Salvar(usuario);
 
-            var usuarioCommand = new SettingsTest().UsuarioApagarCommand;
-
-            var retorno = _handler.Handler(usuarioCommand);
+            var retorno = _handler.Handler(usuario.Id);
 
             var retornoDados = (ApagarUsuarioCommandOutput)retorno.Dados;
 
@@ -86,7 +84,7 @@ namespace ControleDespesas.Test.Handlers
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Usuário excluído com sucesso!", retorno.Mensagem);
-            Assert.AreEqual(usuarioCommand.Id, retornoDados.Id);
+            Assert.AreEqual(usuario.Id, retornoDados.Id);
         }
 
         [Test]

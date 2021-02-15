@@ -47,12 +47,12 @@ namespace ControleDespesas.Api
             #region Swagger
             services.AddSwaggerGen(swagger =>
             {
-                //swagger.DescribeAllEnumsAsStrings();
+                swagger.DescribeAllEnumsAsStrings();
                 swagger.DescribeAllParametersInCamelCase();
                 swagger.IncludeXmlComments($@"{AppDomain.CurrentDomain.BaseDirectory}\Swagger.xml");
                 swagger.OperationFilter<SwaggerNonBodyParameterFilter>();
-                swagger.OperationFilter<SwaggerJsonIgnoreFilter>();
                 swagger.OperationFilter<SwaggerClassTypeIgnoreFilter<Notificadora>>();
+                //swagger.OperationFilter<SwaggerJsonIgnoreFilter>();
                 swagger.SwaggerDoc("v1", new Info
                 {
                     Title = "Controle de Despesas",

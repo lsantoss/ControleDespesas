@@ -1,6 +1,6 @@
 ﻿using ControleDespesas.Api.Settings;
 using ControleDespesas.Domain.Interfaces.Services;
-using ControleDespesas.Domain.Query.Usuario;
+using ControleDespesas.Domain.Query.Usuario.Results;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;

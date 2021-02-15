@@ -7,6 +7,7 @@ using ControleDespesas.Domain.Entities;
 using ControleDespesas.Domain.Enums;
 using ControleDespesas.Domain.Query.Pessoa.Input;
 using ControleDespesas.Domain.Query.Usuario;
+using ControleDespesas.Domain.Query.Usuario.Results;
 using LSCode.ConexoesBD.Enums;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

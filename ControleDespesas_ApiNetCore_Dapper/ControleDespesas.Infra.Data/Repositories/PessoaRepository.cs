@@ -1,6 +1,6 @@
 ﻿using ControleDespesas.Domain.Entities;
 using ControleDespesas.Domain.Interfaces.Repositories;
-using ControleDespesas.Domain.Query.Pessoa;
+using ControleDespesas.Domain.Query.Pessoa.Results;
 using ControleDespesas.Infra.Data.Queries;
 using ControleDespesas.Infra.Data.Settings;
 using Dapper;

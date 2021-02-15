@@ -3,7 +3,7 @@ using ControleDespesas.Domain.Enums;
 using ControleDespesas.Domain.Handlers;
 using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
-using ControleDespesas.Domain.Query.Usuario;
+using ControleDespesas.Domain.Query.Usuario.Results;
 using ControleDespesas.Infra.Data.Repositories;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;

@@ -1,4 +1,4 @@
-﻿using ControleDespesas.Domain.Query.Usuario;
+﻿using ControleDespesas.Domain.Query.Usuario.Results;
 
 namespace ControleDespesas.Domain.Interfaces.Services
 {

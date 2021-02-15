@@ -3,7 +3,7 @@ using ControleDespesas.Domain.Commands.Empresa.Output;
 using ControleDespesas.Domain.Handlers;
 using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
-using ControleDespesas.Domain.Query.Empresa;
+using ControleDespesas.Domain.Query.Empresa.Results;
 using ControleDespesas.Infra.Data.Repositories;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Models;

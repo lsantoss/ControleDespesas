@@ -1,4 +1,4 @@
-﻿namespace ControleDespesas.Domain.Query.Pagamento
+﻿namespace ControleDespesas.Domain.Query.Pagamento.Results
 {
     public class PagamentoGastosQueryResult
     {

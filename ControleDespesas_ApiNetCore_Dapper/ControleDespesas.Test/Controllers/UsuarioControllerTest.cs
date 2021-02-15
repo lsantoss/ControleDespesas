@@ -4,7 +4,7 @@ using ControleDespesas.Domain.Commands.Usuario.Output;
 using ControleDespesas.Domain.Handlers;
 using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
-using ControleDespesas.Domain.Query.Usuario;
+using ControleDespesas.Domain.Query.Usuario.Results;
 using ControleDespesas.Infra.Data.Repositories;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Models;

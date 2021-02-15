@@ -3,7 +3,7 @@ using ControleDespesas.Domain.Commands.Pagamento.Input;
 using ControleDespesas.Domain.Commands.Pagamento.Output;
 using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
-using ControleDespesas.Domain.Query.Pagamento;
+using ControleDespesas.Domain.Query.Pagamento.Results;
 using ElmahCore;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;

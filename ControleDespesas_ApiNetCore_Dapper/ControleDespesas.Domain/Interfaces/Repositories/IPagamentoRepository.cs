@@ -1,5 +1,5 @@
 ﻿using ControleDespesas.Domain.Entities;
-using ControleDespesas.Domain.Query.Pagamento;
+using ControleDespesas.Domain.Query.Pagamento.Results;
 using System.Collections.Generic;
 
 namespace ControleDespesas.Domain.Interfaces.Repositories

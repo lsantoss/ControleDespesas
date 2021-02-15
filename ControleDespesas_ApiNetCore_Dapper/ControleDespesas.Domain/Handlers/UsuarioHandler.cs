@@ -2,13 +2,13 @@
 using ControleDespesas.Domain.Commands.Usuario.Output;
 using ControleDespesas.Domain.Entities;
 using ControleDespesas.Domain.Helpers;
-using ControleDespesas.Domain.Query.Usuario;
+using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
+using ControleDespesas.Domain.Query.Usuario.Results;
 using LSCode.Facilitador.Api.Interfaces.Commands;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
 using System;
-using ControleDespesas.Domain.Interfaces.Handlers;
 
 namespace ControleDespesas.Domain.Handlers
 {

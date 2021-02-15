@@ -3,7 +3,7 @@ using ControleDespesas.Domain.Commands.Empresa.Input;
 using ControleDespesas.Domain.Commands.Empresa.Output;
 using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
-using ControleDespesas.Domain.Query.Empresa;
+using ControleDespesas.Domain.Query.Empresa.Results;
 using ElmahCore;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;

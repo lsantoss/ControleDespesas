@@ -1,4 +1,4 @@
-﻿namespace ControleDespesas.Domain.Query.Empresa
+﻿namespace ControleDespesas.Domain.Query.Empresa.Results
 {
     public class EmpresaQueryResult
     {

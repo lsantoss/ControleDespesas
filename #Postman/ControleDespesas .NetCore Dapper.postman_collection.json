@@ -71,11 +71,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{URL_Base}}Usuario/v1/Usuarios",
+							"raw": "{{URL_Base}}/Usuario/v1/Usuarios",
 							"host": [
-								"{{URL_Base}}Usuario"
+								"{{URL_Base}}"
 							],
 							"path": [
+								"Usuario",
 								"v1",
 								"Usuarios"
 							]
@@ -279,11 +280,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL_Base}}Usuario/v1/UsuarioLogin",
+							"raw": "{{URL_Base}}/Usuario/v1/UsuarioLogin",
 							"host": [
-								"{{URL_Base}}Usuario"
+								"{{URL_Base}}"
 							],
 							"path": [
+								"Usuario",
 								"v1",
 								"UsuarioLogin"
 							]
@@ -729,9 +731,6 @@
 			"item": [
 				{
 					"name": "Pessoas",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -751,23 +750,20 @@
 								"type": "text"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"idUsuario\": 2\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "{{URL_Base}}Pessoa/v1/Pessoas",
+							"raw": "{{URL_Base}}/v1/pessoas?IdUsuario=1",
 							"host": [
-								"{{URL_Base}}Pessoa"
+								"{{URL_Base}}"
 							],
 							"path": [
 								"v1",
-								"Pessoas"
+								"pessoas"
+							],
+							"query": [
+								{
+									"key": "IdUsuario",
+									"value": "1"
+								}
 							]
 						}
 					},
@@ -775,9 +771,6 @@
 				},
 				{
 					"name": "Pessoa",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -797,23 +790,21 @@
 								"type": "text"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"id\": 1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "{{URL_Base}}Pessoa/v1/Pessoa",
+							"raw": "{{URL_Base}}/v1/pessoas/:id",
 							"host": [
-								"{{URL_Base}}Pessoa"
+								"{{URL_Base}}"
 							],
 							"path": [
 								"v1",
-								"Pessoa"
+								"pessoas",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
 							]
 						}
 					},
@@ -842,7 +833,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"idUsuario\": 2,\r\n    \"nome\": \"Lucas Santos\",\r\n    \"imagemPerfil\": \"FotoPerfilBase64\"\r\n}",
+							"raw": "{\r\n    \"idUsuario\": 1,\r\n    \"nome\": \"Lucas Santos\",\r\n    \"imagemPerfil\": \"FotoPerfilBase64\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -850,13 +841,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL_Base}}Pessoa/v1/PessoaInserir",
+							"raw": "{{URL_Base}}/v1/pessoas",
 							"host": [
-								"{{URL_Base}}Pessoa"
+								"{{URL_Base}}"
 							],
 							"path": [
 								"v1",
-								"PessoaInserir"
+								"pessoas"
 							]
 						}
 					},
@@ -885,7 +876,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"id\": 1,\r\n  \"idUsuario\": 2,\r\n  \"nome\": \"Lucas Santos Faria\",\r\n  \"imagemPerfil\": \"SemFotoBase64\"\r\n}",
+							"raw": "{\r\n  \"idUsuario\": 1,\r\n  \"nome\": \"Lucas Santos Faria\",\r\n  \"imagemPerfil\": \"SemFotoBase64\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -893,13 +884,20 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL_Base}}Pessoa/v1/PessoaAlterar",
+							"raw": "{{URL_Base}}/v1/pessoas/:id",
 							"host": [
-								"{{URL_Base}}Pessoa"
+								"{{URL_Base}}"
 							],
 							"path": [
 								"v1",
-								"PessoaAlterar"
+								"pessoas",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
 							]
 						}
 					},
@@ -926,23 +924,21 @@
 								"type": "text"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"id\": 4\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "{{URL_Base}}Pessoa/v1/PessoaExcluir",
+							"raw": "{{URL_Base}}/v1/pessoas/:id",
 							"host": [
-								"{{URL_Base}}Pessoa"
+								"{{URL_Base}}"
 							],
 							"path": [
 								"v1",
-								"PessoaExcluir"
+								"pessoas",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
 							]
 						}
 					},

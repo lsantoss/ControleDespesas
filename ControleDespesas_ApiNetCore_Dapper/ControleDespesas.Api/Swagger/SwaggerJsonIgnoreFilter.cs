@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Swashbuckle.AspNetCore.Swagger;
+﻿using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.Linq;
@@ -11,19 +10,37 @@ namespace ControleDespesas.Api.Swagger
     {
         public void Apply(Operation operation, OperationFilterContext context)
         {
-            var ignoredProperties = context.MethodInfo.GetParameters()
-                .SelectMany(p => p.ParameterType.GetProperties()
-                .Where(prop => prop.GetCustomAttribute<JsonIgnoreAttribute>() != null))
+            //Newtonsoft.Json.JsonIgnoreAttribute
+            JsonIgnoreNewtonsoftJson(operation, context);
+
+            //System.Text.Json.Serialization.JsonIgnoreAttribute
+            JsonIgnoreSystemTextJsonSerialization(operation, context);
+        }
+
+        private void JsonIgnoreNewtonsoftJson(Operation operation, OperationFilterContext context)
+        {
+            var propriedadesIgnoradas = context.MethodInfo.GetParameters()
+                .SelectMany(param => param.ParameterType.GetProperties()
+                .Where(prop => prop.GetCustomAttribute<Newtonsoft.Json.JsonIgnoreAttribute>() != null))
                 .ToList();
 
-            if (!ignoredProperties.Any()) return;
+            if (!propriedadesIgnoradas.Any()) return;
 
-            foreach (var property in ignoredProperties)
-            {
-                operation.Parameters = operation.Parameters
-                    .Where(p => !p.Name.ToLower().Equals(property.Name.ToLower(), StringComparison.InvariantCulture))
-                    .ToList();
-            }
+            foreach (var prop in propriedadesIgnoradas)
+                operation.Parameters = operation.Parameters.Where(param => !param.Name.Equals(prop.Name, StringComparison.InvariantCulture)).ToList();
+        }
+
+        private void JsonIgnoreSystemTextJsonSerialization(Operation operation, OperationFilterContext context)
+        {
+            var propriedadesIgnoradas = context.MethodInfo.GetParameters()
+                .SelectMany(param => param.ParameterType.GetProperties()
+                .Where(prop => prop.GetCustomAttribute<System.Text.Json.Serialization.JsonIgnoreAttribute>() != null))
+                .ToList();
+
+            if (!propriedadesIgnoradas.Any()) return;
+
+            foreach (var prop in propriedadesIgnoradas)
+                operation.Parameters = operation.Parameters.Where(p => !p.Name.Equals(prop.Name, StringComparison.InvariantCulture)).ToList();
         }
     }
 }

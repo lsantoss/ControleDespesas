@@ -52,7 +52,7 @@ namespace ControleDespesas.Api
                 swagger.IncludeXmlComments($@"{AppDomain.CurrentDomain.BaseDirectory}\Swagger.xml");
                 swagger.OperationFilter<SwaggerNonBodyParameterFilter>();
                 swagger.OperationFilter<SwaggerClassTypeIgnoreFilter<Notificadora>>();
-                //swagger.OperationFilter<SwaggerJsonIgnoreFilter>();
+                swagger.OperationFilter<SwaggerJsonIgnoreFilter>();
                 swagger.SwaggerDoc("v1", new Info
                 {
                     Title = "Controle de Despesas",

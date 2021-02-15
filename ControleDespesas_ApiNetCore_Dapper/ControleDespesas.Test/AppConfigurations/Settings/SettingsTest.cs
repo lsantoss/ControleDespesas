@@ -5,6 +5,7 @@ using ControleDespesas.Domain.Commands.TipoPagamento.Input;
 using ControleDespesas.Domain.Commands.Usuario.Input;
 using ControleDespesas.Domain.Entities;
 using ControleDespesas.Domain.Enums;
+using ControleDespesas.Domain.Query.Pessoa.Input;
 using ControleDespesas.Domain.Query.Usuario;
 using LSCode.ConexoesBD.Enums;
 using Microsoft.Extensions.Configuration;
@@ -61,7 +62,7 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
         #region[Dados de teste para Pessoa]
         public AdicionarPessoaCommand PessoaAdicionarCommand { get; }
         public AtualizarPessoaCommand PessoaAtualizarCommand { get; }
-        public ObterPessoasPorIdUsuarioCommand PessoaObterPorIdUsuarioCommand { get; }
+        public ObterPessoasQuery PessoaObterQuery { get; }
         public Pessoa Pessoa1 { get; }
         public Pessoa Pessoa2 { get; }
         public Pessoa Pessoa3 { get; }
@@ -194,9 +195,9 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                 ImagemPerfil = _configuration.GetValue<string>("SettingsTest:PessoaAtualizarCommand:ImagemPerfil")
             };
 
-            PessoaObterPorIdUsuarioCommand = new ObterPessoasPorIdUsuarioCommand()
+            PessoaObterQuery = new ObterPessoasQuery()
             {
-                IdUsuario = _configuration.GetValue<int>("SettingsTest:PessoaObterPorIdUsuarioCommand:IdUsuario")
+                IdUsuario = _configuration.GetValue<int>("SettingsTest:PessoaObterQuery:IdUsuario")
             };
 
             Pessoa1 = new Pessoa(

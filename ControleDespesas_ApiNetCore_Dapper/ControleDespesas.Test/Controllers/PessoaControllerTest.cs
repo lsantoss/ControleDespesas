@@ -50,13 +50,13 @@ namespace ControleDespesas.Test.Controllers
             var pessoa2 = new SettingsTest().Pessoa2;
             var pessoa3 = new SettingsTest().Pessoa3;
 
-            var command = new SettingsTest().PessoaObterPorIdUsuarioCommand;
+            var query = new SettingsTest().PessoaObterQuery;
 
             _repositoryPessoa.Salvar(pessoa1);
             _repositoryPessoa.Salvar(pessoa2);
             _repositoryPessoa.Salvar(pessoa3);
 
-            var response = _controller.Pessoas(command).Result;
+            var response = _controller.Pessoas(query).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 

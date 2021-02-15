@@ -4,6 +4,7 @@ using ControleDespesas.Domain.Commands.Pessoa.Output;
 using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Domain.Query.Pessoa;
+using ControleDespesas.Domain.Query.Pessoa.Input;
 using ElmahCore;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
@@ -38,7 +39,9 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// Pessoas
         /// </summary>                
         /// <remarks><h2><b>Lista todas as Pessoas.</b></h2></remarks>
+        /// <param name="query">Parâmetro requerido query de busca</param>
         /// <response code="200">OK Request</response>
+        /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
@@ -46,20 +49,20 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<List<PessoaQueryResult>, Notificacao>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<List<PessoaQueryResult>, Notificacao>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<List<PessoaQueryResult>, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<List<PessoaQueryResult>, Notificacao>> Pessoas([FromQuery] ObterPessoasPorIdUsuarioCommand command)
+        public ActionResult<ApiResponse<List<PessoaQueryResult>, Notificacao>> Pessoas([FromQuery] ObterPessoasQuery query)
         {
             try
             {
                 if (Request.Headers["ChaveAPI"].ToString() != _settings.ChaveAPI)
                     return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
 
-                if (command == null)
+                if (query == null)
                     return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
 
-                if (!command.ValidarCommand())
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
+                if (!query.ValidarCommand())
+                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", query.Notificacoes));
 
-                var result = _repository.Listar(command.IdUsuario);
+                var result = _repository.Listar(query.IdUsuario);
 
                 if (result != null && result.Count > 0)
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<PessoaQueryResult>, Notificacao>("Lista de pessoas obtida com sucesso", result));

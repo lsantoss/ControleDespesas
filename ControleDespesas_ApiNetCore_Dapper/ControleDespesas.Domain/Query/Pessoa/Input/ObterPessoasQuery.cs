@@ -1,12 +1,11 @@
 ﻿using LSCode.Facilitador.Api.Interfaces.Commands;
 using LSCode.Validador.ValidacoesNotificacoes;
-using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace ControleDespesas.Domain.Commands.Pessoa.Input
+namespace ControleDespesas.Domain.Query.Pessoa.Input
 {
-    public class ObterPessoasPorIdUsuarioCommand : Notificadora, CommandPadrao
+    public class ObterPessoasQuery : Notificadora, CommandPadrao
     {
         [Required]
         public int IdUsuario { get; set; }

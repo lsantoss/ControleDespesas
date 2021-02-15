@@ -1,17 +1,17 @@
-﻿using ControleDespesas.Domain.Commands.Pessoa.Input;
+﻿using ControleDespesas.Domain.Query.Pessoa.Input;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
 using NUnit.Framework;
 
-namespace ControleDespesas.Test.Commands.Pessoa
+namespace ControleDespesas.Test.Query.Pessoa
 {
-    public class ObterPessoasPorIdUsuarioCommandTest : BaseTest
+    public class ObterPessoasQueryTest : BaseTest
     {
-        private ObterPessoasPorIdUsuarioCommand _command;
+        private ObterPessoasQuery _command;
 
         [SetUp]
-        public void Setup() => _command = new SettingsTest().PessoaObterPorIdUsuarioCommand;
+        public void Setup() => _command = new SettingsTest().PessoaObterQuery;
 
         [Test]
         public void ValidarCommand_Valido()

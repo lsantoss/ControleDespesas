@@ -7,7 +7,6 @@ namespace ControleDespesas.Domain.Commands.TipoPagamento.Input
 {
     public class AdicionarTipoPagamentoCommand : Notificadora, CommandPadrao
     {
-        [Required]
         public string Descricao { get; set; }
 
         public bool ValidarCommand()

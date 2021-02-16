@@ -2,7 +2,6 @@
 using LSCode.Validador.ValidacoesNotificacoes;
 using Newtonsoft.Json;
 using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace ControleDespesas.Domain.Commands.TipoPagamento.Input
 {
@@ -10,8 +9,6 @@ namespace ControleDespesas.Domain.Commands.TipoPagamento.Input
     {
         [JsonIgnore]
         public int Id { get; set; }
-
-        [Required]
         public string Descricao { get; set; }
 
         public bool ValidarCommand()

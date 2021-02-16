@@ -4,7 +4,6 @@ using LSCode.Validador.ValidacoesBooleanas;
 using LSCode.Validador.ValidacoesNotificacoes;
 using Newtonsoft.Json;
 using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace ControleDespesas.Domain.Commands.Usuario.Input
 {
@@ -12,14 +11,8 @@ namespace ControleDespesas.Domain.Commands.Usuario.Input
     {
         [JsonIgnore]
         public int Id { get; set; }
-
-        [Required]
         public string Login { get; set; }
-
-        [Required]
         public string Senha { get; set; }
-
-        [Required]
         public EPrivilegioUsuario Privilegio { get; set; }
 
         public bool ValidarCommand()

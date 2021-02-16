@@ -2,7 +2,6 @@
 using LSCode.Validador.ValidacoesNotificacoes;
 using Newtonsoft.Json;
 using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace ControleDespesas.Domain.Commands.Empresa.Input
 {
@@ -10,11 +9,7 @@ namespace ControleDespesas.Domain.Commands.Empresa.Input
     {
         [JsonIgnore]
         public int Id { get; set; }
-
-        [Required]
         public string Nome { get; set; }
-
-        [Required]
         public string Logo { get; set; }
 
         public bool ValidarCommand()

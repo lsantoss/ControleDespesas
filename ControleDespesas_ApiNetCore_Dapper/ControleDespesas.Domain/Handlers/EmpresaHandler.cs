@@ -15,6 +15,7 @@ namespace ControleDespesas.Domain.Handlers
     public class EmpresaHandler : Notificadora, IEmpresaHandler
     {
         private readonly IEmpresaRepository _repository;
+        private CommandResult<Notificacao> commandResult;
 
         public EmpresaHandler(IEmpresaRepository repository)
         {

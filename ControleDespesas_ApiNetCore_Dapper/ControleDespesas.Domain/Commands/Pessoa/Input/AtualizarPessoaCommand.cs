@@ -2,7 +2,6 @@
 using LSCode.Validador.ValidacoesNotificacoes;
 using Newtonsoft.Json;
 using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace ControleDespesas.Domain.Commands.Pessoa.Input
 {
@@ -10,14 +9,8 @@ namespace ControleDespesas.Domain.Commands.Pessoa.Input
     {
         [JsonIgnore]
         public int Id { get; set; }
-
-        [Required]
         public int IdUsuario { get; set; }
-
-        [Required]
         public string Nome { get; set; }
-
-        [Required]
         public string ImagemPerfil { get; set; }
 
         public bool ValidarCommand()

@@ -1,16 +1,12 @@
 ﻿using LSCode.Facilitador.Api.Interfaces.Commands;
 using LSCode.Validador.ValidacoesNotificacoes;
 using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace ControleDespesas.Domain.Commands.Usuario.Input
 {
     public class LoginUsuarioCommand : Notificadora, CommandPadrao
     {
-        [Required]
         public string Login { get; set; }
-
-        [Required]
         public string Senha { get; set; }
 
         public bool ValidarCommand()

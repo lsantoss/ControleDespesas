@@ -16,8 +16,8 @@ namespace ControleDespesas.Domain.Interfaces.Repositories
         List<PagamentoQueryResult> ListarPagamentoConcluido(int idPessoa);
         List<PagamentoQueryResult> ListarPagamentoPendente(int idPessoa);
 
-        PagamentoArquivoPagamentoQueryResult ObterArquivoPagamento(int idPagamento);
-        PagamentoArquivoComprovanteQueryResult ObterArquivoComprovante(int idPagamento);
+        PagamentoArquivoQueryResult ObterArquivoPagamento(int idPagamento);
+        PagamentoArquivoQueryResult ObterArquivoComprovante(int idPagamento);
 
         PagamentoGastosQueryResult CalcularValorGastoTotal(int idPessoa);
         PagamentoGastosQueryResult CalcularValorGastoAno(int idPessoa, int ano);

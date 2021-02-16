@@ -304,7 +304,7 @@ namespace ControleDespesas.Test.Repositories
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 
-            Assert.AreEqual(pagamento.ArquivoPagamento, retorno.ArquivoPagamento);
+            Assert.AreEqual(pagamento.ArquivoPagamento, retorno.Arquivo);
         }
 
         [Test]
@@ -324,7 +324,7 @@ namespace ControleDespesas.Test.Repositories
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 
-            Assert.AreEqual(pagamento.ArquivoComprovante, retorno.ArquivoComprovante);
+            Assert.AreEqual(pagamento.ArquivoComprovante, retorno.Arquivo);
         }
 
         [Test]

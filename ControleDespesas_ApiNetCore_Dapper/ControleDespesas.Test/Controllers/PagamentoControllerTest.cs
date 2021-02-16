@@ -115,8 +115,6 @@ namespace ControleDespesas.Test.Controllers
             var pagamento1 = new SettingsTest().Pagamento1;
             var pagamento2 = new SettingsTest().Pagamento2;
 
-            var command = new SettingsTest().PagamentoObterPorIdCommand;
-
             _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento1.Empresa);
             _repositoryPessoa.Salvar(pagamento1.Pessoa);
@@ -126,7 +124,7 @@ namespace ControleDespesas.Test.Controllers
             _repositoryEmpresa.Salvar(pagamento2.Empresa);
             _repositoryPagamento.Salvar(pagamento2);
 
-            var response = _controller.Pagamento(command).Result;
+            var response = _controller.Pagamento(pagamento2.Id).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -273,18 +271,16 @@ namespace ControleDespesas.Test.Controllers
 
             var pagamento1 = new SettingsTest().Pagamento1;
 
-            var command = new SettingsTest().PagamentoObterArquivoPagamentoCommand;
-
             _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento1.Empresa);
             _repositoryPessoa.Salvar(pagamento1.Pessoa);
             _repositoryPagamento.Salvar(pagamento1);
 
-            var response = _controller.ObterArquivoPagamento(command).Result;
+            var response = _controller.ObterArquivoPagamento(pagamento1.Id).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
-            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<PagamentoArquivoPagamentoQueryResult, Notificacao>>>(responseJson);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<PagamentoArquivoQueryResult, Notificacao>>>(responseJson);
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
 
@@ -294,7 +290,7 @@ namespace ControleDespesas.Test.Controllers
             Assert.AreEqual("Arquivo encontrado com sucesso", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
 
-            Assert.AreEqual(pagamento1.ArquivoPagamento, responseObj.Value.Dados.ArquivoPagamento);
+            Assert.AreEqual(pagamento1.ArquivoPagamento, responseObj.Value.Dados.Arquivo);
         }
 
         [Test]
@@ -305,18 +301,16 @@ namespace ControleDespesas.Test.Controllers
 
             var pagamento1 = new SettingsTest().Pagamento1;
 
-            var command = new SettingsTest().PagamentoObterArquivoComprovanteCommand;
-
             _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento1.Empresa);
             _repositoryPessoa.Salvar(pagamento1.Pessoa);
             _repositoryPagamento.Salvar(pagamento1);
 
-            var response = _controller.ObterArquivoComprovante(command).Result;
+            var response = _controller.ObterArquivoComprovante(pagamento1.Id).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
-            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<PagamentoArquivoComprovanteQueryResult, Notificacao>>>(responseJson);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<PagamentoArquivoQueryResult, Notificacao>>>(responseJson);
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
 
@@ -326,7 +320,7 @@ namespace ControleDespesas.Test.Controllers
             Assert.AreEqual("Arquivo encontrado com sucesso", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
 
-            Assert.AreEqual(pagamento1.ArquivoComprovante, responseObj.Value.Dados.ArquivoComprovante);
+            Assert.AreEqual(pagamento1.ArquivoComprovante, responseObj.Value.Dados.Arquivo);
         }
 
         [Test]
@@ -524,7 +518,7 @@ namespace ControleDespesas.Test.Controllers
             _repositoryPessoa.Salvar(pagamento.Pessoa);
             _repositoryPagamento.Salvar(pagamento);
 
-            var response = _controller.PagamentoAlterar(command).Result;
+            var response = _controller.PagamentoAlterar(command.Id, command).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -558,14 +552,12 @@ namespace ControleDespesas.Test.Controllers
 
             var pagamento = new SettingsTest().Pagamento1;
 
-            var command = new SettingsTest().PagamentoApagarCommand;
-
             _repositoryTipoPagamento.Salvar(pagamento.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento.Empresa) ;
             _repositoryPessoa.Salvar(pagamento.Pessoa);
             _repositoryPagamento.Salvar(pagamento);
 
-            var response = _controller.PagamentoExcluir(command).Result;
+            var response = _controller.PagamentoExcluir(pagamento.Id).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -579,7 +571,7 @@ namespace ControleDespesas.Test.Controllers
             Assert.AreEqual("Pagamento excluído com sucesso!", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
 
-            Assert.AreEqual(command.Id, responseObj.Value.Dados.Id);
+            Assert.AreEqual(pagamento.Id, responseObj.Value.Dados.Id);
         }
 
         [TearDown]

@@ -120,14 +120,12 @@ namespace ControleDespesas.Test.Handlers
             var pessoa = new SettingsTest().Pagamento1.Pessoa;
             var pagamento = new SettingsTest().Pagamento1;
 
-            var pagamentoCommand = new SettingsTest().PagamentoApagarCommand;
-
             _repositoryTipoPagamento.Salvar(tipoPagamento);
             _repositoryEmpresa.Salvar(empresa);
             _repositoryPessoa.Salvar(pessoa);
             _repositoryPagamento.Salvar(pagamento);
 
-            var retorno = _handler.Handler(pagamentoCommand);
+            var retorno = _handler.Handler(pagamento.Id);
 
             var retornoDados = (ApagarPagamentoCommandOutput)retorno.Dados;
 
@@ -135,7 +133,7 @@ namespace ControleDespesas.Test.Handlers
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Pagamento excluído com sucesso!", retorno.Mensagem);
-            Assert.AreEqual(pagamentoCommand.Id, retornoDados.Id);
+            Assert.AreEqual(pagamento.Id, retornoDados.Id);
         }
 
         [TearDown]

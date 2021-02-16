@@ -996,9 +996,6 @@
 				},
 				{
 					"name": "Pagamento",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1018,23 +1015,21 @@
 								"type": "text"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"id\": 1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "{{URL_Base}}Pagamento/v1/Pagamento",
+							"raw": "{{URL_Base}}/v1/pagamentos/:id",
 							"host": [
-								"{{URL_Base}}Pagamento"
+								"{{URL_Base}}"
 							],
 							"path": [
 								"v1",
-								"Pagamento"
+								"pagamentos",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
 							]
 						}
 					},
@@ -1134,9 +1129,6 @@
 				},
 				{
 					"name": "Arquivo Pagamento",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1156,23 +1148,22 @@
 								"type": "text"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"idPagamento\": 1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "{{URL_Base}}Pagamento/v1/ObterArquivoPagamento",
+							"raw": "{{URL_Base}}/v1/pagamentos/:id/arquivo-pagamento",
 							"host": [
-								"{{URL_Base}}Pagamento"
+								"{{URL_Base}}"
 							],
 							"path": [
 								"v1",
-								"ObterArquivoPagamento"
+								"pagamentos",
+								":id",
+								"arquivo-pagamento"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
 							]
 						}
 					},
@@ -1180,9 +1171,6 @@
 				},
 				{
 					"name": "Arquivo Comprovante",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1202,23 +1190,22 @@
 								"type": "text"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"idPagamento\": 2\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "{{URL_Base}}Pagamento/v1/ObterArquivoComprovante",
+							"raw": "{{URL_Base}}/v1/pagamentos/:id/arquivo-comprovante",
 							"host": [
-								"{{URL_Base}}Pagamento"
+								"{{URL_Base}}"
 							],
 							"path": [
 								"v1",
-								"ObterArquivoComprovante"
+								"pagamentos",
+								":id",
+								"arquivo-comprovante"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
 							]
 						}
 					},
@@ -1393,13 +1380,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL_Base}}Pagamento/v1/PagamentoInserir",
+							"raw": "{{URL_Base}}/v1/pagamentos",
 							"host": [
-								"{{URL_Base}}Pagamento"
+								"{{URL_Base}}"
 							],
 							"path": [
 								"v1",
-								"PagamentoInserir"
+								"pagamentos"
 							]
 						}
 					},
@@ -1428,7 +1415,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"id\": 4,\r\n  \"idTipoPagamento\": 1,\r\n  \"idEmpresa\": 1,\r\n  \"idPessoa\": 1,\r\n  \"descricao\": \"Teste 123\",\r\n  \"valor\": 42,\r\n  \"dataVencimento\": \"2020-05-25T09:51:26\",\r\n  \"dataPagamento\": \"2020-05-23T08:00:00\"\r\n}",
+							"raw": "{\r\n  \"idTipoPagamento\": 1,\r\n  \"idEmpresa\": 1,\r\n  \"idPessoa\": 1,\r\n  \"descricao\": \"Teste 123\",\r\n  \"valor\": 42,\r\n  \"dataVencimento\": \"2020-05-25T09:51:26\",\r\n  \"dataPagamento\": \"2020-05-23T08:00:00\",\r\n  \"arquivoPagamento\": \"arquivoPagamentoBase64String\",\r\n  \"arquivoComprovante\": \"arquivoComprovanteBase64String\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1436,13 +1423,20 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL_Base}}Pagamento/v1/PagamentoAlterar",
+							"raw": "{{URL_Base}}/v1/pagamentos/:id",
 							"host": [
-								"{{URL_Base}}Pagamento"
+								"{{URL_Base}}"
 							],
 							"path": [
 								"v1",
-								"PagamentoAlterar"
+								"pagamentos",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
 							]
 						}
 					},
@@ -1469,23 +1463,21 @@
 								"type": "text"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"id\": 1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "{{URL_Base}}Pagamento/v1/PagamentoExcluir",
+							"raw": "{{URL_Base}}/v1/pagamentos/:id",
 							"host": [
-								"{{URL_Base}}Pagamento"
+								"{{URL_Base}}"
 							],
 							"path": [
 								"v1",
-								"PagamentoExcluir"
+								"pagamentos",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
 							]
 						}
 					},

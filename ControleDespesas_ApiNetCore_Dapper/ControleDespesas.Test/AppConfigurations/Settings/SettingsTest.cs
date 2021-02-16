@@ -81,11 +81,7 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
         #region[Dados de teste para Pagamento]
         public AdicionarPagamentoCommand PagamentoAdicionarCommand { get; }
         public AtualizarPagamentoCommand PagamentoAtualizarCommand { get; }
-        public ApagarPagamentoCommand PagamentoApagarCommand { get; }
-        public ObterPagamentoPorIdCommand PagamentoObterPorIdCommand { get; }
         public ObterPagamentoPorIdPessoaCommand PagamentoObterPorIdPessoaCommand { get; }
-        public ObterArquivoPagamentoCommand PagamentoObterArquivoPagamentoCommand { get; set; }
-        public ObterArquivoComprovanteCommand PagamentoObterArquivoComprovanteCommand { get; set; }
         public ObterGastosCommand PagamentoObterGastosCommand { get; }
         public ObterGastosAnoCommand PagamentoObterGastosAnoCommand { get; }
         public ObterGastosAnoMesCommand PagamentoObterGastosAnoMesCommand { get; }
@@ -286,11 +282,6 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                 ArquivoComprovante = _configuration.GetValue<string>("SettingsTest:PagamentoAtualizarCommand:ArquivoComprovante")
             };
 
-            PagamentoApagarCommand = new ApagarPagamentoCommand()
-            {
-                Id = _configuration.GetValue<int>("SettingsTest:PagamentoApagarCommand:Id")
-            };
-
             PagamentoObterGastosCommand = new ObterGastosCommand()
             {
                 IdPessoa = _configuration.GetValue<int>("SettingsTest:PagamentoObterGastosCommand:IdPessoa")
@@ -309,24 +300,9 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                 Mes = _configuration.GetValue<int>("SettingsTest:PagamentoObterGastosAnoMesCommand:Mes")
             };
 
-            PagamentoObterPorIdCommand = new ObterPagamentoPorIdCommand()
-            {
-                Id = _configuration.GetValue<int>("SettingsTest:PagamentoObterPorIdCommand:Id")
-            };
-
             PagamentoObterPorIdPessoaCommand = new ObterPagamentoPorIdPessoaCommand()
             {
                 IdPessoa = _configuration.GetValue<int>("SettingsTest:PagamentoObterPorIdPessoaCommand:IdPessoa")
-            };
-
-            PagamentoObterArquivoPagamentoCommand = new ObterArquivoPagamentoCommand()
-            {
-                IdPagamento = _configuration.GetValue<int>("SettingsTest:PagamentoObterArquivoPagamentoCommand:IdPagamento")
-            };
-
-            PagamentoObterArquivoComprovanteCommand = new ObterArquivoComprovanteCommand()
-            {
-                IdPagamento = _configuration.GetValue<int>("SettingsTest:PagamentoObterArquivoComprovanteCommand:IdPagamento")
             };
 
             Pagamento1 = new Pagamento(

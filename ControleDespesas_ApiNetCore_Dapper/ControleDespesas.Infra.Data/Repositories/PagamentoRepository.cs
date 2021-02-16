@@ -198,13 +198,13 @@ namespace ControleDespesas.Infra.Data.Repositories
             }
         }
 
-        public PagamentoArquivoPagamentoQueryResult ObterArquivoPagamento(int idPagamento)
+        public PagamentoArquivoQueryResult ObterArquivoPagamento(int idPagamento)
         {
             try
             {
                 _parametros.Add("IdPagamento", idPagamento, DbType.Int32);
 
-                return _dataContext.SQLServerConexao.Query<PagamentoArquivoPagamentoQueryResult>(PagamentoQueries.ObterArquivoPagamento, _parametros).FirstOrDefault();
+                return _dataContext.SQLServerConexao.Query<PagamentoArquivoQueryResult>(PagamentoQueries.ObterArquivoPagamento, _parametros).FirstOrDefault();
             }
             catch (Exception e)
             {
@@ -212,13 +212,13 @@ namespace ControleDespesas.Infra.Data.Repositories
             }
         }
 
-        public PagamentoArquivoComprovanteQueryResult ObterArquivoComprovante(int idPagamento)
+        public PagamentoArquivoQueryResult ObterArquivoComprovante(int idPagamento)
         {
             try
             {
                 _parametros.Add("IdPagamento", idPagamento, DbType.Int32);
 
-                return _dataContext.SQLServerConexao.Query<PagamentoArquivoComprovanteQueryResult>(PagamentoQueries.ObterArquivoComprovante, _parametros).FirstOrDefault();
+                return _dataContext.SQLServerConexao.Query<PagamentoArquivoQueryResult>(PagamentoQueries.ObterArquivoComprovante, _parametros).FirstOrDefault();
             }
             catch (Exception e)
             {

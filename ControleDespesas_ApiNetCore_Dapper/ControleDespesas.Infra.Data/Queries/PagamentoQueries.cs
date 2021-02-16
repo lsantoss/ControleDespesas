@@ -163,9 +163,9 @@
 
                                                                    ORDER BY Pagamento.Id ASC";
 
-        public static string ObterArquivoPagamento { get; } = @"SELECT ArquivoPagamento FROM Pagamento WHERE Id = @IdPagamento";
+        public static string ObterArquivoPagamento { get; } = @"SELECT ArquivoPagamento AS Arquivo FROM Pagamento WHERE Id = @IdPagamento";
 
-        public static string ObterArquivoComprovante { get; } = @"SELECT ArquivoComprovante FROM Pagamento WHERE Id = @IdPagamento";
+        public static string ObterArquivoComprovante { get; } = @"SELECT ArquivoComprovante AS Arquivo FROM Pagamento WHERE Id = @IdPagamento";
 
         public static string CalcularValorGastoTotal { get; } = @"SELECT SUM(Pagamento.Valor) As Valor 
                                                                   FROM Pagamento

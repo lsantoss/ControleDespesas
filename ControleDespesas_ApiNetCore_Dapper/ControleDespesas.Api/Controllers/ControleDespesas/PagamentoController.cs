@@ -17,20 +17,21 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
 {
     [Authorize]
     [ApiController]
-    [Route("Pagamento")]
     [Consumes("application/json")]
     [Produces("application/json")]
     public class PagamentoController : ControllerBase
     {
         private readonly IPagamentoRepository _repository;
         private readonly IPagamentoHandler _handler;
-        private readonly string _ChaveAPI;
+        private readonly SettingsAPI _settings;
 
-        public PagamentoController(IPagamentoRepository repository, IPagamentoHandler handler, SettingsAPI settings)
+        public PagamentoController(IPagamentoRepository repository, 
+                                   IPagamentoHandler handler, 
+                                   SettingsAPI settings)
         {
             _repository = repository;
             _handler = handler;
-            _ChaveAPI = settings.ChaveAPI;
+            _settings = settings;
         }
 
         /// <summary>
@@ -49,7 +50,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
-                if (Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
+                if (Request.Headers["ChaveAPI"].ToString() != _settings.ChaveAPI)
                     return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
 
                 if (command == null)
@@ -76,31 +77,24 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// Pagamento
         /// </summary>                
         /// <remarks><h2><b>Consulta o Pagamento.</b></h2></remarks>
-        /// <param name="command">Parâmetro requerido command de Obter pelo Id</param>
+        /// <param name="id">Parâmetro requerido Id do Pagamento</param>
         /// <response code="200">OK Request</response>
-        /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
-        [Route("v1/Pagamento")]
+        [Route("v1/pagamentos/{id}")]
         [ProducesResponseType(typeof(ApiResponse<PagamentoQueryResult, Notificacao>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<PagamentoQueryResult, Notificacao>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<PagamentoQueryResult, Notificacao>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<PagamentoQueryResult, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<PagamentoQueryResult, Notificacao>> Pagamento([FromBody] ObterPagamentoPorIdCommand command)
+        public ActionResult<ApiResponse<PagamentoQueryResult, Notificacao>> Pagamento(int id)
         {
             try
             {
-                if (Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
+                if (Request.Headers["ChaveAPI"].ToString() != _settings.ChaveAPI)
                     return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
 
-                if (command == null)
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
-
-                if (!command.ValidarCommand())
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
-
-                var result = _repository.Obter(command.Id);
+                var result = _repository.Obter(id);
 
                 if (result != null)
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<PagamentoQueryResult, Notificacao>("Pagamento obtido com sucesso", result));
@@ -133,7 +127,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
-                if (Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
+                if (Request.Headers["ChaveAPI"].ToString() != _settings.ChaveAPI)
                     return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
 
                 if (command == null)
@@ -175,7 +169,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
-                if (Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
+                if (Request.Headers["ChaveAPI"].ToString() != _settings.ChaveAPI)
                     return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
 
                 if (command == null)
@@ -202,36 +196,30 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// Obter Arquivo para Pagamento
         /// </summary>                
         /// <remarks><h2><b>Consulta o arquivo para pagamento através do id do pagamento.</b></h2></remarks>
-        /// <param name="command">Parâmetro requerido command de Obter Arquivo Pagamento</param>
+        /// <param name="id">Parâmetro requerido Id do Pagamento</param>
         /// <response code="200">OK Request</response>
         /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
-        [Route("v1/ObterArquivoPagamento")]
-        [ProducesResponseType(typeof(ApiResponse<PagamentoArquivoPagamentoQueryResult, Notificacao>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<PagamentoArquivoPagamentoQueryResult, Notificacao>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(ApiResponse<PagamentoArquivoPagamentoQueryResult, Notificacao>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ApiResponse<PagamentoArquivoPagamentoQueryResult, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<PagamentoArquivoPagamentoQueryResult, Notificacao>> ObterArquivoPagamento([FromBody] ObterArquivoPagamentoCommand command)
+        [Route("v1/pagamentos/{id}/arquivo-pagamento")]
+        [ProducesResponseType(typeof(ApiResponse<PagamentoArquivoQueryResult, Notificacao>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<PagamentoArquivoQueryResult, Notificacao>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<PagamentoArquivoQueryResult, Notificacao>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<PagamentoArquivoQueryResult, Notificacao>), StatusCodes.Status500InternalServerError)]
+        public ActionResult<ApiResponse<PagamentoArquivoQueryResult, Notificacao>> ObterArquivoPagamento(int id)
         {
             try
             {
-                if (Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
+                if (Request.Headers["ChaveAPI"].ToString() != _settings.ChaveAPI)
                     return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
 
-                if (command == null)
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
+                var result = _repository.ObterArquivoPagamento(id);
 
-                if (!command.ValidarCommand())
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
-
-                var result = _repository.ObterArquivoPagamento(command.IdPagamento);
-
-                if (result?.ArquivoPagamento != null)
-                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<PagamentoArquivoPagamentoQueryResult, Notificacao>("Arquivo encontrado com sucesso", result));
+                if (result?.Arquivo != null)
+                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<PagamentoArquivoQueryResult, Notificacao>("Arquivo encontrado com sucesso", result));
                 else
-                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<PagamentoArquivoPagamentoQueryResult, Notificacao>("Arquivo não encontrado", result));
+                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<PagamentoArquivoQueryResult, Notificacao>("Arquivo não encontrado", result));
             }
             catch (Exception e)
             {
@@ -244,36 +232,30 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// Obter Arquivo de Comprovante
         /// </summary>                
         /// <remarks><h2><b>Consulta o arquivo de comprovante através do id do pagamento.</b></h2></remarks>
-        /// <param name="command">Parâmetro requerido command de Obter Arquivo Comprovante</param>
+        /// <param name="id">Parâmetro requerido Id do Pagamento</param>
         /// <response code="200">OK Request</response>
         /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
-        [Route("v1/ObterArquivoComprovante")]
-        [ProducesResponseType(typeof(ApiResponse<PagamentoArquivoComprovanteQueryResult, Notificacao>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<PagamentoArquivoComprovanteQueryResult, Notificacao>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(ApiResponse<PagamentoArquivoComprovanteQueryResult, Notificacao>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ApiResponse<PagamentoArquivoComprovanteQueryResult, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<PagamentoArquivoComprovanteQueryResult, Notificacao>> ObterArquivoComprovante([FromBody] ObterArquivoComprovanteCommand command)
+        [Route("v1/pagamentos/{id}/arquivo-comprovante")]
+        [ProducesResponseType(typeof(ApiResponse<PagamentoArquivoQueryResult, Notificacao>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<PagamentoArquivoQueryResult, Notificacao>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<PagamentoArquivoQueryResult, Notificacao>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<PagamentoArquivoQueryResult, Notificacao>), StatusCodes.Status500InternalServerError)]
+        public ActionResult<ApiResponse<PagamentoArquivoQueryResult, Notificacao>> ObterArquivoComprovante(int id)
         {
             try
             {
-                if (Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
+                if (Request.Headers["ChaveAPI"].ToString() != _settings.ChaveAPI)
                     return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
 
-                if (command == null)
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
+                var result = _repository.ObterArquivoComprovante(id);
 
-                if (!command.ValidarCommand())
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
-
-                var result = _repository.ObterArquivoComprovante(command.IdPagamento);
-
-                if (result?.ArquivoComprovante != null)
-                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<PagamentoArquivoComprovanteQueryResult, Notificacao>("Arquivo encontrado com sucesso", result));
+                if (result?.Arquivo != null)
+                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<PagamentoArquivoQueryResult, Notificacao>("Arquivo encontrado com sucesso", result));
                 else
-                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<PagamentoArquivoComprovanteQueryResult, Notificacao>("Arquivo não encontrado", result));
+                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<PagamentoArquivoQueryResult, Notificacao>("Arquivo não encontrado", result));
             }
             catch (Exception e)
             {
@@ -301,7 +283,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
-                if (Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
+                if (Request.Headers["ChaveAPI"].ToString() != _settings.ChaveAPI)
                     return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
 
                 if (command == null)
@@ -343,7 +325,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
-                if (Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
+                if (Request.Headers["ChaveAPI"].ToString() != _settings.ChaveAPI)
                     return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
 
                 if (command == null)
@@ -385,7 +367,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
-                if (Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
+                if (Request.Headers["ChaveAPI"].ToString() != _settings.ChaveAPI)
                     return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
 
                 if (command == null)
@@ -418,7 +400,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="401">Unauthorized</response>
         /// <response code="500">Internal Server Error</response>
         [HttpPost]
-        [Route("v1/PagamentoInserir")]
+        [Route("v1/pagamentos")]
         [ProducesResponseType(typeof(ApiResponse<AdicionarPagamentoCommandOutput, Notificacao>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<AdicionarPagamentoCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<AdicionarPagamentoCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
@@ -427,7 +409,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
-                if (Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
+                if (Request.Headers["ChaveAPI"].ToString() != _settings.ChaveAPI)
                     return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
 
                 if (command == null)
@@ -453,27 +435,30 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <summary>
         /// Alterar Pagamento
         /// </summary>        
-        /// <remarks><h2><b>Altera Pagamento na base de dados.</b></h2></remarks>        
+        /// <remarks><h2><b>Altera Pagamento na base de dados.</b></h2></remarks> 
+        /// <param name="id">Parâmetro requerido Id do Pagamento</param>       
         /// <param name="command">Parâmetro requerido command de Update</param>
         /// <response code="200">OK Request</response>
         /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="500">Internal Server Error</response>
         [HttpPut]
-        [Route("v1/PagamentoAlterar")]
+        [Route("v1/pagamentos/{id}")]
         [ProducesResponseType(typeof(ApiResponse<AtualizarPagamentoCommandOutput, Notificacao>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<AtualizarPagamentoCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<AtualizarPagamentoCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<AtualizarPagamentoCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<AtualizarPagamentoCommandOutput, Notificacao>> PagamentoAlterar([FromBody] AtualizarPagamentoCommand command)
+        public ActionResult<ApiResponse<AtualizarPagamentoCommandOutput, Notificacao>> PagamentoAlterar(int id, [FromBody] AtualizarPagamentoCommand command)
         {
             try
             {
-                if (Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
+                if (Request.Headers["ChaveAPI"].ToString() != _settings.ChaveAPI)
                     return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
 
                 if (command == null)
                     return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
+
+                command.Id = id;
 
                 if (!command.ValidarCommand())
                     return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
@@ -496,31 +481,25 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// Excluir Pagamento
         /// </summary>                
         /// <remarks><h2><b>Exclui Pagamento na base de dados.</b></h2></remarks>
-        /// <param name="command">Parâmetro requerido command de Delete</param>
+        /// <param name="id">Parâmetro requerido Id do Pagamento</param>
         /// <response code="200">OK Request</response>
         /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="500">Internal Server Error</response>
         [HttpDelete]
-        [Route("v1/PagamentoExcluir")]
+        [Route("v1/pagamentos/{id}")]
         [ProducesResponseType(typeof(ApiResponse<ApagarPagamentoCommandOutput, Notificacao>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<ApagarPagamentoCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<ApagarPagamentoCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<ApagarPagamentoCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<ApagarPagamentoCommandOutput, Notificacao>> PagamentoExcluir([FromBody] ApagarPagamentoCommand command)
+        public ActionResult<ApiResponse<ApagarPagamentoCommandOutput, Notificacao>> PagamentoExcluir(int id)
         {
             try
             {
-                if (Request.Headers["ChaveAPI"].ToString() != _ChaveAPI)
+                if (Request.Headers["ChaveAPI"].ToString() != _settings.ChaveAPI)
                     return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
 
-                if (command == null)
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
-
-                if (!command.ValidarCommand())
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
-
-                var result = _handler.Handler(command);
+                var result = _handler.Handler(id);
 
                 if (result.Sucesso)
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));

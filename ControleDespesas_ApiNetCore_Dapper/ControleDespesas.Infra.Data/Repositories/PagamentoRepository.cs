@@ -226,36 +226,7 @@ namespace ControleDespesas.Infra.Data.Repositories
             }
         }
 
-        public PagamentoGastosQueryResult CalcularValorGastoTotal(int idPessoa)
-        {
-            try
-            {
-                _parametros.Add("IdPessoa", idPessoa, DbType.Int32);
-
-                return _dataContext.SQLServerConexao.Query<PagamentoGastosQueryResult>(PagamentoQueries.CalcularValorGastoTotal, _parametros).FirstOrDefault();
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
-
-        public PagamentoGastosQueryResult CalcularValorGastoAno(int idPessoa, int ano)
-        {
-            try
-            {
-                _parametros.Add("IdPessoa", idPessoa, DbType.Int32);
-                _parametros.Add("Ano", ano, DbType.Int32);
-
-                return _dataContext.SQLServerConexao.Query<PagamentoGastosQueryResult>(PagamentoQueries.CalcularValorGastoAno, _parametros).FirstOrDefault();
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
-
-        public PagamentoGastosQueryResult CalcularValorGastoAnoMes(int idPessoa, int ano, int mes)
+        public PagamentoGastosQueryResult ObterGastos(int idPessoa, int? ano, int? mes)
         {
             try
             {
@@ -263,7 +234,18 @@ namespace ControleDespesas.Infra.Data.Repositories
                 _parametros.Add("Ano", ano, DbType.Int32);
                 _parametros.Add("Mes", mes, DbType.Int32);
 
-                return _dataContext.SQLServerConexao.Query<PagamentoGastosQueryResult>(PagamentoQueries.CalcularValorGastoAnoMes, _parametros).FirstOrDefault();
+                string sql = "";
+
+                if (ano == null && mes == null)
+                    sql = PagamentoQueries.ObterGastos;
+
+                else if (mes == null)
+                    sql = PagamentoQueries.ObterGastosAno;
+
+                else
+                    sql = PagamentoQueries.ObterGastosAnoMes;
+
+                return _dataContext.SQLServerConexao.Query<PagamentoGastosQueryResult>(sql, _parametros).FirstOrDefault();
             }
             catch (Exception e)
             {

@@ -3,6 +3,7 @@ using ControleDespesas.Domain.Commands.Pagamento.Input;
 using ControleDespesas.Domain.Commands.Pagamento.Output;
 using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
+using ControleDespesas.Domain.Query.Pagamento.Input;
 using ControleDespesas.Domain.Query.Pagamento.Results;
 using ElmahCore;
 using LSCode.Facilitador.Api.Models.Results;
@@ -265,118 +266,34 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         }
 
         /// <summary>
-        /// Total Gasto
-        /// </summary>                
-        /// <remarks><h2><b>Consulta o total gasto pela pessoa.</b></h2></remarks>
-        /// <param name="command">Parâmetro requerido command de Obter Gastos</param>
-        /// <response code="200">OK Request</response>
-        /// <response code="400">Bad Request</response>
-        /// <response code="401">Unauthorized</response>
-        /// <response code="500">Internal Server Error</response>
-        [HttpGet]
-        [Route("v1/ObterGastos")]
-        [ProducesResponseType(typeof(ApiResponse<PagamentoGastosQueryResult, Notificacao>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<PagamentoGastosQueryResult, Notificacao>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(ApiResponse<PagamentoGastosQueryResult, Notificacao>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ApiResponse<PagamentoGastosQueryResult, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<PagamentoGastosQueryResult, Notificacao>> ObterGastos([FromBody] ObterGastosCommand command)
-        {
-            try
-            {
-                if (Request.Headers["ChaveAPI"].ToString() != _settings.ChaveAPI)
-                    return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
-
-                if (command == null)
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
-
-                if (!command.ValidarCommand())
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
-
-                var result = _repository.CalcularValorGastoTotal(command.IdPessoa);
-
-                if (result != null)
-                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<PagamentoGastosQueryResult, Notificacao>("Cáculo obtido com sucesso", result));
-                else
-                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<PagamentoGastosQueryResult, Notificacao>("Cáculo não obtido", result));
-            }
-            catch (Exception e)
-            {
-                HttpContext.RiseError(e);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
-            }
-        }
-
-        /// <summary>
-        /// Total Gasto no Ano
-        /// </summary>                
-        /// <remarks><h2><b>Consulta o total gasto pela pessoa durante o ano.</b></h2></remarks>
-        /// <param name="command">Parâmetro requerido command de Obter Gastos Ano</param>
-        /// <response code="200">OK Request</response>
-        /// <response code="400">Bad Request</response>
-        /// <response code="401">Unauthorized</response>
-        /// <response code="500">Internal Server Error</response>
-        [HttpGet]
-        [Route("v1/ObterGastosAno")]
-        [ProducesResponseType(typeof(ApiResponse<PagamentoGastosQueryResult, Notificacao>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<PagamentoGastosQueryResult, Notificacao>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(ApiResponse<PagamentoGastosQueryResult, Notificacao>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ApiResponse<PagamentoGastosQueryResult, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<PagamentoGastosQueryResult, Notificacao>> ObterGastosAno([FromBody] ObterGastosAnoCommand command)
-        {
-            try
-            {
-                if (Request.Headers["ChaveAPI"].ToString() != _settings.ChaveAPI)
-                    return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
-
-                if (command == null)
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
-
-                if (!command.ValidarCommand())
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
-
-                var result = _repository.CalcularValorGastoAno(command.IdPessoa, command.Ano);
-
-                if (result != null)
-                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<PagamentoGastosQueryResult, Notificacao>("Cáculo obtido com sucesso", result));
-                else
-                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<PagamentoGastosQueryResult, Notificacao>("Cáculo não obtido", result));
-            }
-            catch (Exception e)
-            {
-                HttpContext.RiseError(e);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
-            }
-        }
-
-        /// <summary>
         /// Total Gasto no Ano/Mês
         /// </summary>                
         /// <remarks><h2><b>Consulta o total gasto pela pessoa durante o ano/mês.</b></h2></remarks>
-        /// <param name="command">Parâmetro requerido command de Obter Gastos Ano/Mes.</param>
+        /// <param name="query">Parâmetro requerido command de Obter Gastos Ano/Mes.</param>
         /// <response code="200">OK Request</response>
         /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
-        [Route("v1/ObterGastosAnoMes")]
+        [Route("v1/pagamentos/gastos")]
         [ProducesResponseType(typeof(ApiResponse<PagamentoGastosQueryResult, Notificacao>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<PagamentoGastosQueryResult, Notificacao>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<PagamentoGastosQueryResult, Notificacao>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<PagamentoGastosQueryResult, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<PagamentoGastosQueryResult, Notificacao>> ObterGastosAnoMes([FromBody] ObterGastosAnoMesCommand command)
+        public ActionResult<ApiResponse<PagamentoGastosQueryResult, Notificacao>> ObterGastos([FromQuery] PagamentoGastosQuery query)
         {
             try
             {
                 if (Request.Headers["ChaveAPI"].ToString() != _settings.ChaveAPI)
                     return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
 
-                if (command == null)
+                if (query == null)
                     return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
 
-                if (!command.ValidarCommand())
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
+                if (!query.ValidarCommand())
+                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", query.Notificacoes));
 
-                var result = _repository.CalcularValorGastoAnoMes(command.IdPessoa, command.Ano, command.Mes);
+                var result = _repository.ObterGastos(query.IdPessoa, query.Ano, query.Mes);
 
                 if (result != null)
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<PagamentoGastosQueryResult, Notificacao>("Cáculo obtido com sucesso", result));

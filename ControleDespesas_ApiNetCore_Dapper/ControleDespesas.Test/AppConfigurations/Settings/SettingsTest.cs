@@ -5,6 +5,7 @@ using ControleDespesas.Domain.Commands.TipoPagamento.Input;
 using ControleDespesas.Domain.Commands.Usuario.Input;
 using ControleDespesas.Domain.Entities;
 using ControleDespesas.Domain.Enums;
+using ControleDespesas.Domain.Query.Pagamento.Input;
 using ControleDespesas.Domain.Query.Pessoa.Input;
 using ControleDespesas.Domain.Query.Usuario.Results;
 using LSCode.ConexoesBD.Enums;
@@ -82,9 +83,7 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
         public AdicionarPagamentoCommand PagamentoAdicionarCommand { get; }
         public AtualizarPagamentoCommand PagamentoAtualizarCommand { get; }
         public ObterPagamentoPorIdPessoaCommand PagamentoObterPorIdPessoaCommand { get; }
-        public ObterGastosCommand PagamentoObterGastosCommand { get; }
-        public ObterGastosAnoCommand PagamentoObterGastosAnoCommand { get; }
-        public ObterGastosAnoMesCommand PagamentoObterGastosAnoMesCommand { get; }
+        public PagamentoGastosQuery PagamentoGastosQuery { get; }
         public Pagamento Pagamento1 { get; }
         public Pagamento Pagamento2 { get; }
         public Pagamento Pagamento3 { get; }
@@ -282,22 +281,11 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                 ArquivoComprovante = _configuration.GetValue<string>("SettingsTest:PagamentoAtualizarCommand:ArquivoComprovante")
             };
 
-            PagamentoObterGastosCommand = new ObterGastosCommand()
+            PagamentoGastosQuery = new PagamentoGastosQuery()
             {
-                IdPessoa = _configuration.GetValue<int>("SettingsTest:PagamentoObterGastosCommand:IdPessoa")
-            };
-
-            PagamentoObterGastosAnoCommand = new ObterGastosAnoCommand()
-            {
-                IdPessoa = _configuration.GetValue<int>("SettingsTest:PagamentoObterGastosAnoCommand:IdPessoa"),
-                Ano = _configuration.GetValue<int>("SettingsTest:PagamentoObterGastosAnoCommand:Ano")
-            };
-
-            PagamentoObterGastosAnoMesCommand = new ObterGastosAnoMesCommand()
-            {
-                IdPessoa = _configuration.GetValue<int>("SettingsTest:PagamentoObterGastosAnoMesCommand:IdPessoa"),
-                Ano = _configuration.GetValue<int>("SettingsTest:PagamentoObterGastosAnoMesCommand:Ano"),
-                Mes = _configuration.GetValue<int>("SettingsTest:PagamentoObterGastosAnoMesCommand:Mes")
+                IdPessoa = _configuration.GetValue<int>("SettingsTest:PagamentoGastosQuery:IdPessoa"),
+                Ano = _configuration.GetValue<int>("SettingsTest:PagamentoGastosQuery:Ano"),
+                Mes = _configuration.GetValue<int>("SettingsTest:PagamentoGastosQuery:Mes")
             };
 
             PagamentoObterPorIdPessoaCommand = new ObterPagamentoPorIdPessoaCommand()

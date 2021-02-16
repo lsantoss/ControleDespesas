@@ -167,20 +167,20 @@
 
         public static string ObterArquivoComprovante { get; } = @"SELECT ArquivoComprovante AS Arquivo FROM Pagamento WHERE Id = @IdPagamento";
 
-        public static string CalcularValorGastoTotal { get; } = @"SELECT SUM(Pagamento.Valor) As Valor 
-                                                                  FROM Pagamento
-                                                                  WHERE Pagamento.IdPessoa = @IdPessoa";
+        public static string ObterGastos { get; } = @"SELECT SUM(Pagamento.Valor) As Valor 
+                                                      FROM Pagamento
+                                                      WHERE Pagamento.IdPessoa = @IdPessoa";
 
-        public static string CalcularValorGastoAno { get; } = @"SELECT SUM(Pagamento.Valor) As Valor 
-                                                                FROM Pagamento
-                                                                WHERE Pagamento.IdPessoa = @IdPessoa 
-                                                                AND YEAR(Pagamento.DataVencimento) = @Ano";
+        public static string ObterGastosAno { get; } = @"SELECT SUM(Pagamento.Valor) As Valor 
+                                                         FROM Pagamento
+                                                         WHERE Pagamento.IdPessoa = @IdPessoa 
+                                                         AND YEAR(Pagamento.DataVencimento) = @Ano";
 
-        public static string CalcularValorGastoAnoMes { get; } = @"SELECT SUM(Pagamento.Valor) As Valor 
-                                                                   FROM Pagamento
-                                                                   WHERE Pagamento.IdPessoa = @IdPessoa 
-                                                                   AND YEAR(Pagamento.DataVencimento) = @Ano
-                                                                   AND MONTH(Pagamento.DataVencimento) = @Mes";
+        public static string ObterGastosAnoMes { get; } = @"SELECT SUM(Pagamento.Valor) As Valor 
+                                                            FROM Pagamento
+                                                            WHERE Pagamento.IdPessoa = @IdPessoa 
+                                                            AND YEAR(Pagamento.DataVencimento) = @Ano
+                                                            AND MONTH(Pagamento.DataVencimento) = @Mes";
 
         public static string CheckId { get; } = @"SELECT Id FROM Pagamento WHERE Id = @Id";
 

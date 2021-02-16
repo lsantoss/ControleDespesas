@@ -328,41 +328,7 @@ namespace ControleDespesas.Test.Repositories
         }
 
         [Test]
-        public void CalcularValorGastoTotal()
-        {
-            var usuario = new SettingsTest().Usuario1;
-            _repositoryUsuario.Salvar(usuario);
-
-            var pagamento1 = new SettingsTest().Pagamento1;
-            var pagamento2 = new SettingsTest().Pagamento2;
-            var pagamento3 = new SettingsTest().Pagamento3;
-
-            pagamento3.Pessoa = pagamento1.Pessoa;
-
-            var valorTotalEsperado = pagamento1.Valor + pagamento2.Valor + pagamento3.Valor;
-
-            _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
-            _repositoryEmpresa.Salvar(pagamento1.Empresa);
-            _repositoryPessoa.Salvar(pagamento1.Pessoa);
-            _repositoryPagamento.Salvar(pagamento1);
-
-            _repositoryTipoPagamento.Salvar(pagamento2.TipoPagamento);
-            _repositoryEmpresa.Salvar(pagamento2.Empresa);
-            _repositoryPagamento.Salvar(pagamento2);
-
-            _repositoryTipoPagamento.Salvar(pagamento3.TipoPagamento);
-            _repositoryEmpresa.Salvar(pagamento3.Empresa);
-            _repositoryPagamento.Salvar(pagamento3);
-
-            var retorno = _repositoryPagamento.CalcularValorGastoTotal(pagamento1.Pessoa.Id);
-
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
-
-            Assert.AreEqual(valorTotalEsperado, retorno.Valor);
-        }
-
-        [Test]
-        public void CalcularValorGastoAno()
+        public void ObterGastos()
         {
             var usuario = new SettingsTest().Usuario1;
             _repositoryUsuario.Salvar(usuario);
@@ -388,41 +354,7 @@ namespace ControleDespesas.Test.Repositories
             _repositoryEmpresa.Salvar(pagamento3.Empresa);
             _repositoryPagamento.Salvar(pagamento3);
 
-            var retorno = _repositoryPagamento.CalcularValorGastoAno(pagamento1.Pessoa.Id, 2020);
-
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
-
-            Assert.AreEqual(valorTotalEsperado, retorno.Valor);
-        }
-
-        [Test]
-        public void CalcularValorGastoAnoMes()
-        {
-            var usuario = new SettingsTest().Usuario1;
-            _repositoryUsuario.Salvar(usuario);
-
-            var pagamento1 = new SettingsTest().Pagamento1;
-            var pagamento2 = new SettingsTest().Pagamento2;
-            var pagamento3 = new SettingsTest().Pagamento3;
-
-            pagamento3.Pessoa = pagamento1.Pessoa;
-
-            var valorTotalEsperado = pagamento2.Valor + pagamento3.Valor;
-
-            _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
-            _repositoryEmpresa.Salvar(pagamento1.Empresa);
-            _repositoryPessoa.Salvar(pagamento1.Pessoa);
-            _repositoryPagamento.Salvar(pagamento1);
-
-            _repositoryTipoPagamento.Salvar(pagamento2.TipoPagamento);
-            _repositoryEmpresa.Salvar(pagamento2.Empresa);
-            _repositoryPagamento.Salvar(pagamento2);
-
-            _repositoryTipoPagamento.Salvar(pagamento3.TipoPagamento);
-            _repositoryEmpresa.Salvar(pagamento3.Empresa);
-            _repositoryPagamento.Salvar(pagamento3);
-
-            var retorno = _repositoryPagamento.CalcularValorGastoAnoMes(pagamento1.Pessoa.Id, 2020, 11);
+            var retorno = _repositoryPagamento.ObterGastos(pagamento1.Pessoa.Id, 2020, 11);
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
 

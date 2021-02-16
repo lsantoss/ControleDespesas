@@ -19,9 +19,7 @@ namespace ControleDespesas.Domain.Interfaces.Repositories
         PagamentoArquivoQueryResult ObterArquivoPagamento(int idPagamento);
         PagamentoArquivoQueryResult ObterArquivoComprovante(int idPagamento);
 
-        PagamentoGastosQueryResult CalcularValorGastoTotal(int idPessoa);
-        PagamentoGastosQueryResult CalcularValorGastoAno(int idPessoa, int ano);
-        PagamentoGastosQueryResult CalcularValorGastoAnoMes(int idPessoa, int ano, int mes);
+        PagamentoGastosQueryResult ObterGastos(int idPessoa, int? ano, int? mes);
 
         bool CheckId(int id);
         int LocalizarMaxId();

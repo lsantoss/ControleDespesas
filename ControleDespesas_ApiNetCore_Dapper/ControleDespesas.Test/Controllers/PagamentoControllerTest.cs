@@ -335,52 +335,6 @@ namespace ControleDespesas.Test.Controllers
 
             pagamento3.Pessoa = pagamento1.Pessoa;
 
-            var valorTotalEsperado = pagamento1.Valor + pagamento2.Valor + pagamento3.Valor;
-
-            _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
-            _repositoryEmpresa.Salvar(pagamento1.Empresa);
-            _repositoryPessoa.Salvar(pagamento1.Pessoa);
-            _repositoryPagamento.Salvar(pagamento1);
-
-            _repositoryTipoPagamento.Salvar(pagamento2.TipoPagamento);
-            _repositoryEmpresa.Salvar(pagamento2.Empresa);
-            _repositoryPagamento.Salvar(pagamento2);
-
-            _repositoryTipoPagamento.Salvar(pagamento3.TipoPagamento);
-            _repositoryEmpresa.Salvar(pagamento3.Empresa);
-            _repositoryPagamento.Salvar(pagamento3);
-
-            var command = new SettingsTest().PagamentoObterGastosCommand;
-
-            var response = _controller.ObterGastos(command).Result;
-
-            var responseJson = JsonConvert.SerializeObject(response);
-
-            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<PagamentoGastosQueryResult, Notificacao>>>(responseJson);
-
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
-
-            Assert.AreEqual(200, responseObj.StatusCode);
-
-            Assert.True(responseObj.Value.Sucesso);
-            Assert.AreEqual("Cáculo obtido com sucesso", responseObj.Value.Mensagem);
-            Assert.Null(responseObj.Value.Erros);
-
-            Assert.AreEqual(valorTotalEsperado, responseObj.Value.Dados.Valor);
-        }
-
-        [Test]
-        public void ObterGastosAno()
-        {
-            var usuario = new SettingsTest().Usuario1;
-            _repositoryUsuario.Salvar(usuario);
-
-            var pagamento1 = new SettingsTest().Pagamento1;
-            var pagamento2 = new SettingsTest().Pagamento2;
-            var pagamento3 = new SettingsTest().Pagamento3;
-
-            pagamento3.Pessoa = pagamento1.Pessoa;
-
             var valorTotalEsperado = pagamento2.Valor + pagamento3.Valor;
 
             _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
@@ -396,55 +350,9 @@ namespace ControleDespesas.Test.Controllers
             _repositoryEmpresa.Salvar(pagamento3.Empresa);
             _repositoryPagamento.Salvar(pagamento3);
 
-            var command = new SettingsTest().PagamentoObterGastosAnoCommand;
+            var query = new SettingsTest().PagamentoGastosQuery;
 
-            var response = _controller.ObterGastosAno(command).Result;
-
-            var responseJson = JsonConvert.SerializeObject(response);
-
-            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<PagamentoGastosQueryResult, Notificacao>>>(responseJson);
-
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
-
-            Assert.AreEqual(200, responseObj.StatusCode);
-
-            Assert.True(responseObj.Value.Sucesso);
-            Assert.AreEqual("Cáculo obtido com sucesso", responseObj.Value.Mensagem);
-            Assert.Null(responseObj.Value.Erros);
-
-            Assert.AreEqual(valorTotalEsperado, responseObj.Value.Dados.Valor);
-        }
-
-        [Test]
-        public void ObterGastosAnoMes()
-        {
-            var usuario = new SettingsTest().Usuario1;
-            _repositoryUsuario.Salvar(usuario);
-
-            var pagamento1 = new SettingsTest().Pagamento1;
-            var pagamento2 = new SettingsTest().Pagamento2;
-            var pagamento3 = new SettingsTest().Pagamento3;
-
-            pagamento3.Pessoa = pagamento1.Pessoa;
-
-            var valorTotalEsperado = pagamento2.Valor + pagamento3.Valor;
-
-            _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
-            _repositoryEmpresa.Salvar(pagamento1.Empresa);
-            _repositoryPessoa.Salvar(pagamento1.Pessoa);
-            _repositoryPagamento.Salvar(pagamento1);
-
-            _repositoryTipoPagamento.Salvar(pagamento2.TipoPagamento);
-            _repositoryEmpresa.Salvar(pagamento2.Empresa);
-            _repositoryPagamento.Salvar(pagamento2);
-
-            _repositoryTipoPagamento.Salvar(pagamento3.TipoPagamento);
-            _repositoryEmpresa.Salvar(pagamento3.Empresa);
-            _repositoryPagamento.Salvar(pagamento3);
-
-            var command = new SettingsTest().PagamentoObterGastosAnoMesCommand;
-
-            var response = _controller.ObterGastosAnoMes(command).Result;
+            var response = _controller.ObterGastos(query).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 

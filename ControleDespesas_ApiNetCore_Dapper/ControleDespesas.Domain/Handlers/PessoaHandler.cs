@@ -29,13 +29,13 @@ namespace ControleDespesas.Domain.Handlers
                 AddNotificacao(pessoa.Notificacoes);
 
                 if (Invalido)
-                    return new CommandResult<Notificacao>("Inconsistência(s) no(s) dado(s)", Notificacoes);
+                    return new CommandResult<Notificacao>(422, "Inconsistência(s) no(s) dado(s)", Notificacoes);
 
                 pessoa = _repository.Salvar(pessoa);
 
                 AdicionarPessoaCommandOutput dadosRetorno = PessoaHelper.GerarDadosRetornoInsert(pessoa);
 
-                return new CommandResult<Notificacao>("Pessoa gravada com sucesso!", dadosRetorno);
+                return new CommandResult<Notificacao>(201, "Pessoa gravada com sucesso!", dadosRetorno);
             }
             catch (Exception e)
             {
@@ -55,13 +55,13 @@ namespace ControleDespesas.Domain.Handlers
                     AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");
 
                 if (Invalido)
-                    return new CommandResult<Notificacao>("Inconsistência(s) no(s) dado(s)", Notificacoes);
+                    return new CommandResult<Notificacao>(422, "Inconsistência(s) no(s) dado(s)", Notificacoes);
 
                 _repository.Atualizar(pessoa);
 
                 AtualizarPessoaCommandOutput dadosRetorno = PessoaHelper.GerarDadosRetornoUpdate(pessoa);
 
-                return new CommandResult<Notificacao>("Pessoa atualizada com sucesso!", dadosRetorno);
+                return new CommandResult<Notificacao>(200, "Pessoa atualizada com sucesso!", dadosRetorno);
             }
             catch (Exception e)
             {
@@ -77,13 +77,13 @@ namespace ControleDespesas.Domain.Handlers
                     AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");
 
                 if (Invalido)
-                    return new CommandResult<Notificacao>("Inconsistência(s) no(s) dado(s)", Notificacoes);
+                    return new CommandResult<Notificacao>(422, "Inconsistência(s) no(s) dado(s)", Notificacoes);
 
                 _repository.Deletar(id);
 
                 ApagarPessoaCommandOutput dadosRetorno = PessoaHelper.GerarDadosRetornoDelete(id);
 
-                return new CommandResult<Notificacao>("Pessoa excluída com sucesso!", dadosRetorno);
+                return new CommandResult<Notificacao>(200, "Pessoa excluída com sucesso!", dadosRetorno);
             }
             catch (Exception e)
             {

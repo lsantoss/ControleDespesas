@@ -16,7 +16,7 @@ namespace ControleDespesas.Test.Query.Pessoa
         [Test]
         public void ValidarCommand_Valido()
         {
-            var valido = _query.ValidarCommand();
+            var valido = _query.ValidarQuery();
             var notificacoes = _query.Notificacoes.Count;
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_query));
@@ -31,7 +31,7 @@ namespace ControleDespesas.Test.Query.Pessoa
         public void ValidarCommand_IdUsuarioInvalido(int idUsuario)
         {
             _query.IdUsuario = idUsuario;
-            var valido = _query.ValidarCommand();
+            var valido = _query.ValidarQuery();
             var notificacoes = _query.Notificacoes.Count;
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_query));

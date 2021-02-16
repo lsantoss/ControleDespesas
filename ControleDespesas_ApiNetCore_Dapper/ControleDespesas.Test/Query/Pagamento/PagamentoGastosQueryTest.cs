@@ -16,7 +16,7 @@ namespace ControleDespesas.Test.Query.Pagamento
         [Test]
         public void ValidarCommand_Valido()
         {
-            var valido = _query.ValidarCommand();
+            var valido = _query.ValidarQuery();
             var notificacoes = _query.Notificacoes.Count;
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_query));
@@ -31,7 +31,7 @@ namespace ControleDespesas.Test.Query.Pagamento
         public void ValidarCommand_IdPessoaInvalido(int idPessoa)
         {
             _query.IdPessoa = idPessoa;
-            var valido = _query.ValidarCommand();
+            var valido = _query.ValidarQuery();
             var notificacoes = _query.Notificacoes.Count;
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_query));
@@ -47,7 +47,7 @@ namespace ControleDespesas.Test.Query.Pagamento
         public void ValidarCommand_AnoInvalido(int? ano)
         {
             _query.Ano = ano;
-            var valido = _query.ValidarCommand();
+            var valido = _query.ValidarQuery();
             var notificacoes = _query.Notificacoes.Count;
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_query));
@@ -63,7 +63,7 @@ namespace ControleDespesas.Test.Query.Pagamento
         public void ValidarCommand_MesInvalido(int mes)
         {
             _query.Mes = mes;
-            var valido = _query.ValidarCommand();
+            var valido = _query.ValidarQuery();
             var notificacoes = _query.Notificacoes.Count;
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_query));

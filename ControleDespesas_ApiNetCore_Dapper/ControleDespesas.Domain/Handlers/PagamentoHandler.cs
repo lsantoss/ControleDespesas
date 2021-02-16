@@ -47,13 +47,13 @@ namespace ControleDespesas.Domain.Handlers
                     AddNotificacao("IdTipoPagamento", "Id inválido. Este id não está cadastrado!");
 
                 if (Invalido)
-                    return new CommandResult<Notificacao>("Inconsistência(s) no(s) dado(s)", Notificacoes);
+                    return new CommandResult<Notificacao>(422, "Inconsistência(s) no(s) dado(s)", Notificacoes);
 
                 pagamento = _repository.Salvar(pagamento);
 
                 AdicionarPagamentoCommandOutput dadosRetorno = PagamentoHelper.GerarDadosRetornoInsert(pagamento);
 
-                return new CommandResult<Notificacao>("Pagamento gravado com sucesso!", dadosRetorno);
+                return new CommandResult<Notificacao>(201, "Pagamento gravado com sucesso!", dadosRetorno);
             }
             catch (Exception e)
             {
@@ -82,13 +82,13 @@ namespace ControleDespesas.Domain.Handlers
                     AddNotificacao("IdTipoPagamento", "Id inválido. Este id não está cadastrado!");
 
                 if (Invalido)
-                    return new CommandResult<Notificacao>("Inconsistência(s) no(s) dado(s)", Notificacoes);
+                    return new CommandResult<Notificacao>(422, "Inconsistência(s) no(s) dado(s)", Notificacoes);
 
                 _repository.Atualizar(pagamento);
 
                 AtualizarPagamentoCommandOutput dadosRetorno = PagamentoHelper.GerarDadosRetornoUpdate(pagamento);
 
-                return new CommandResult<Notificacao>("Pagamento atualizado com sucesso!", dadosRetorno);
+                return new CommandResult<Notificacao>(200, "Pagamento atualizado com sucesso!", dadosRetorno);
             }
             catch (Exception e)
             {
@@ -104,13 +104,13 @@ namespace ControleDespesas.Domain.Handlers
                     AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");
 
                 if (Invalido)
-                    return new CommandResult<Notificacao>("Inconsistência(s) no(s) dado(s)", Notificacoes);
+                    return new CommandResult<Notificacao>(422, "Inconsistência(s) no(s) dado(s)", Notificacoes);
 
                 _repository.Deletar(id);
 
                 ApagarPagamentoCommandOutput dadosRetorno = PagamentoHelper.GerarDadosRetornoDelete(id);
 
-                return new CommandResult<Notificacao>("Pagamento excluído com sucesso!", dadosRetorno);
+                return new CommandResult<Notificacao>(200, "Pagamento excluído com sucesso!", dadosRetorno);
             }
             catch (Exception e)
             {

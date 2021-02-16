@@ -52,7 +52,7 @@ namespace ControleDespesas.Test.Handlers
             var empresa = new SettingsTest().Empresa1;
             _repository.Salvar(empresa);
 
-            var retorno = _handler.Handler(empresaCommand);
+            var retorno = _handler.Handler(empresa.Id, empresaCommand);
 
             var retornoDados = (AtualizarEmpresaCommandOutput)retorno.Dados;
 

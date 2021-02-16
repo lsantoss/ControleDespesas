@@ -57,7 +57,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
                 if (query == null)
                     return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
 
-                if (!query.ValidarCommand())
+                if (!query.ValidarQuery())
                     return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", query.Notificacoes));
 
                 var result = _repository.Listar(query.IdPessoa, query.Status);
@@ -206,7 +206,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
                 if (query == null)
                     return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
 
-                if (!query.ValidarCommand())
+                if (!query.ValidarQuery())
                     return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", query.Notificacoes));
 
                 var result = _repository.ObterGastos(query.IdPessoa, query.Ano, query.Mes);

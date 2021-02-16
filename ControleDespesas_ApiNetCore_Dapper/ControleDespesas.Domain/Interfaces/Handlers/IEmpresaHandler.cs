@@ -7,7 +7,7 @@ namespace ControleDespesas.Domain.Interfaces.Handlers
     public interface IEmpresaHandler
     {
         ICommandResult<Notificacao> Handler(AdicionarEmpresaCommand command);
-        ICommandResult<Notificacao> Handler(AtualizarEmpresaCommand command);
+        ICommandResult<Notificacao> Handler(int id, AtualizarEmpresaCommand command);
         ICommandResult<Notificacao> Handler(int id);
     }
 }

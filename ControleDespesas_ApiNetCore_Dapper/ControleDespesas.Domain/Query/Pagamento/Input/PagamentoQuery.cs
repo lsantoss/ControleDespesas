@@ -1,19 +1,19 @@
 ﻿using ControleDespesas.Domain.Enums;
-using LSCode.Facilitador.Api.Interfaces.Commands;
+using LSCode.Facilitador.Api.Interfaces.Query;
 using LSCode.Validador.ValidacoesNotificacoes;
 using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace ControleDespesas.Domain.Query.Pagamento.Input
 {
-    public class PagamentoQuery : Notificadora, CommandPadrao
+    public class PagamentoQuery : Notificadora, QueryPadrao
     {
         [Required]
         public int IdPessoa { get; set; }
 
         public EPagamentoStatus? Status { get; set; }
 
-        public bool ValidarCommand()
+        public bool ValidarQuery()
         {
             try
             {

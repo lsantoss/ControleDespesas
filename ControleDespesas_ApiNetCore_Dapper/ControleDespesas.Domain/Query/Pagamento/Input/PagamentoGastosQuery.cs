@@ -1,11 +1,11 @@
-﻿using LSCode.Facilitador.Api.Interfaces.Commands;
+﻿using LSCode.Facilitador.Api.Interfaces.Query;
 using LSCode.Validador.ValidacoesNotificacoes;
 using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace ControleDespesas.Domain.Query.Pagamento.Input
 {
-    public class PagamentoGastosQuery : Notificadora, CommandPadrao
+    public class PagamentoGastosQuery : Notificadora, QueryPadrao
     {
         [Required]
         public int IdPessoa { get; set; }
@@ -14,7 +14,7 @@ namespace ControleDespesas.Domain.Query.Pagamento.Input
 
         public int? Mes { get; set; }
 
-        public bool ValidarCommand()
+        public bool ValidarQuery()
         {
             try
             {

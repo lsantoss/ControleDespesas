@@ -1,14 +1,17 @@
-﻿using LSCode.Facilitador.Api.Interfaces.Commands;
+﻿using ControleDespesas.Domain.Enums;
+using LSCode.Facilitador.Api.Interfaces.Commands;
 using LSCode.Validador.ValidacoesNotificacoes;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace ControleDespesas.Domain.Commands.Pagamento.Input
+namespace ControleDespesas.Domain.Query.Pagamento.Input
 {
-    public class ObterPagamentoPorIdPessoaCommand : Notificadora, CommandPadrao
+    public class PagamentoQuery : Notificadora, CommandPadrao
     {
         [Required]
         public int IdPessoa { get; set; }
+
+        public EPagamentoStatus? Status { get; set; }
 
         public bool ValidarCommand()
         {

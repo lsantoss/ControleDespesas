@@ -950,9 +950,6 @@
 			"item": [
 				{
 					"name": "Pagamentos",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -972,23 +969,25 @@
 								"type": "text"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"idPessoa\": 1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "{{URL_Base}}Pagamento/v1/Pagamentos",
+							"raw": "{{URL_Base}}/v1/pagamentos?idPessoa=1",
 							"host": [
-								"{{URL_Base}}Pagamento"
+								"{{URL_Base}}"
 							],
 							"path": [
 								"v1",
-								"Pagamentos"
+								"pagamentos"
+							],
+							"query": [
+								{
+									"key": "idPessoa",
+									"value": "1"
+								},
+								{
+									"key": "status",
+									"value": "1",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -1030,98 +1029,6 @@
 									"key": "id",
 									"value": "1"
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Pagamentos Concluídos",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{TokenJWT}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "ChaveAPI",
-								"value": "{{ChaveAPI}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"idPessoa\": 1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{URL_Base}}Pagamento/v1/PagamentosConcluidos",
-							"host": [
-								"{{URL_Base}}Pagamento"
-							],
-							"path": [
-								"v1",
-								"PagamentosConcluidos"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Pagamentos Pendentes",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{TokenJWT}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "ChaveAPI",
-								"value": "{{ChaveAPI}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"idPessoa\": 1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{URL_Base}}Pagamento/v1/PagamentosPendentes",
-							"host": [
-								"{{URL_Base}}Pagamento"
-							],
-							"path": [
-								"v1",
-								"PagamentosPendentes"
 							]
 						}
 					},
@@ -1213,9 +1120,6 @@
 				},
 				{
 					"name": "Total Gastos",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1235,115 +1139,29 @@
 								"type": "text"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"idPessoa\": 1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "{{URL_Base}}Pagamento/v1/ObterGastos",
+							"raw": "{{URL_Base}}/v1/pagamentos/gastos?idPessoa=1&ano=2020&mes=5",
 							"host": [
-								"{{URL_Base}}Pagamento"
+								"{{URL_Base}}"
 							],
 							"path": [
 								"v1",
-								"ObterGastos"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Total Gasto Ano",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
+								"pagamentos",
+								"gastos"
+							],
+							"query": [
 								{
-									"key": "token",
-									"value": "{{TokenJWT}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "ChaveAPI",
-								"value": "{{ChaveAPI}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"idPessoa\": 1,\r\n  \"ano\": 2020\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{URL_Base}}Pagamento/v1/ObterGastosAno",
-							"host": [
-								"{{URL_Base}}Pagamento"
-							],
-							"path": [
-								"v1",
-								"ObterGastosAno"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Total Gasto Ano/Mes",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
+									"key": "idPessoa",
+									"value": "1"
+								},
 								{
-									"key": "token",
-									"value": "{{TokenJWT}}",
-									"type": "string"
+									"key": "ano",
+									"value": "2020"
+								},
+								{
+									"key": "mes",
+									"value": "5"
 								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "ChaveAPI",
-								"value": "{{ChaveAPI}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"idPessoa\": 1,\r\n  \"ano\": 2020,\r\n  \"mes\": 3\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{URL_Base}}Pagamento/v1/ObterGastosAnoMes",
-							"host": [
-								"{{URL_Base}}Pagamento"
-							],
-							"path": [
-								"v1",
-								"ObterGastosAnoMes"
 							]
 						}
 					},

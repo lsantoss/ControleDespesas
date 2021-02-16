@@ -71,9 +71,9 @@ namespace ControleDespesas.Test.Controllers
             _repositoryPessoa.Salvar(pagamento3.Pessoa);
             _repositoryPagamento.Salvar(pagamento3);
 
-            var command = new SettingsTest().PagamentoObterPorIdPessoaCommand;
+            var query = new SettingsTest().PagamentoQuery;
 
-            var response = _controller.Pagamentos(command).Result;
+            var response = _controller.Pagamentos(query).Result;
 
             var responseJson = JsonConvert.SerializeObject(response);
 
@@ -104,6 +104,115 @@ namespace ControleDespesas.Test.Controllers
             Assert.AreEqual(pagamento2.Valor, responseObj.Value.Dados[1].Valor);
             Assert.AreEqual(pagamento2.DataVencimento.Date, responseObj.Value.Dados[1].DataVencimento.Date);
             Assert.AreEqual(Convert.ToDateTime(pagamento2.DataPagamento).Date, Convert.ToDateTime(responseObj.Value.Dados[1].DataPagamento).Date);
+        }
+
+        [Test]
+        public void PagamentosPagos()
+        {
+            var usuario = new SettingsTest().Usuario1;
+            _repositoryUsuario.Salvar(usuario);
+
+            var pagamento1 = new SettingsTest().Pagamento1;
+            var pagamento2 = new SettingsTest().Pagamento2;
+            var pagamento3 = new SettingsTest().Pagamento3;
+
+            _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
+            _repositoryEmpresa.Salvar(pagamento1.Empresa);
+            _repositoryPessoa.Salvar(pagamento1.Pessoa);
+            _repositoryPagamento.Salvar(pagamento1);
+
+            _repositoryTipoPagamento.Salvar(pagamento2.TipoPagamento);
+            _repositoryEmpresa.Salvar(pagamento2.Empresa);
+            _repositoryPagamento.Salvar(pagamento2);
+
+            _repositoryTipoPagamento.Salvar(pagamento3.TipoPagamento);
+            _repositoryEmpresa.Salvar(pagamento3.Empresa);
+            _repositoryPessoa.Salvar(pagamento3.Pessoa);
+            _repositoryPagamento.Salvar(pagamento3);
+
+            var query = new SettingsTest().PagamentoQueryPagos;
+
+            var response = _controller.Pagamentos(query).Result;
+
+            var responseJson = JsonConvert.SerializeObject(response);
+
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<List<PagamentoQueryResult>, Notificacao>>>(responseJson);
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
+
+            Assert.AreEqual(200, responseObj.StatusCode);
+
+            Assert.True(responseObj.Value.Sucesso);
+            Assert.AreEqual("Lista de pagamentos obtida com sucesso", responseObj.Value.Mensagem);
+            Assert.Null(responseObj.Value.Erros);
+
+            Assert.AreEqual(pagamento1.Id, responseObj.Value.Dados[0].Id);
+            Assert.AreEqual(pagamento1.TipoPagamento.Id, responseObj.Value.Dados[0].TipoPagamento.Id);
+            Assert.AreEqual(pagamento1.Empresa.Id, responseObj.Value.Dados[0].Empresa.Id);
+            Assert.AreEqual(pagamento1.Pessoa.Id, responseObj.Value.Dados[0].Pessoa.Id);
+            Assert.AreEqual(pagamento1.Descricao, responseObj.Value.Dados[0].Descricao);
+            Assert.AreEqual(pagamento1.Valor, responseObj.Value.Dados[0].Valor);
+            Assert.AreEqual(pagamento1.DataVencimento.Date, responseObj.Value.Dados[0].DataVencimento.Date);
+            Assert.AreEqual(Convert.ToDateTime(pagamento1.DataPagamento).Date, Convert.ToDateTime(responseObj.Value.Dados[0].DataPagamento).Date);
+
+            Assert.AreEqual(pagamento2.Id, responseObj.Value.Dados[1].Id);
+            Assert.AreEqual(pagamento2.TipoPagamento.Id, responseObj.Value.Dados[1].TipoPagamento.Id);
+            Assert.AreEqual(pagamento2.Empresa.Id, responseObj.Value.Dados[1].Empresa.Id);
+            Assert.AreEqual(pagamento2.Pessoa.Id, responseObj.Value.Dados[1].Pessoa.Id);
+            Assert.AreEqual(pagamento2.Descricao, responseObj.Value.Dados[1].Descricao);
+            Assert.AreEqual(pagamento2.Valor, responseObj.Value.Dados[1].Valor);
+            Assert.AreEqual(pagamento2.DataVencimento.Date, responseObj.Value.Dados[1].DataVencimento.Date);
+            Assert.AreEqual(Convert.ToDateTime(pagamento2.DataPagamento).Date, Convert.ToDateTime(responseObj.Value.Dados[1].DataPagamento).Date);
+        }
+
+        [Test]
+        public void PagamentosPendentes()
+        {
+            var usuario = new SettingsTest().Usuario1;
+            _repositoryUsuario.Salvar(usuario);
+
+            var pagamento1 = new SettingsTest().Pagamento1;
+            var pagamento2 = new SettingsTest().Pagamento2;
+            var pagamento3 = new SettingsTest().Pagamento3;
+
+            _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
+            _repositoryEmpresa.Salvar(pagamento1.Empresa);
+            _repositoryPessoa.Salvar(pagamento1.Pessoa);
+            _repositoryPagamento.Salvar(pagamento1);
+
+            _repositoryTipoPagamento.Salvar(pagamento2.TipoPagamento);
+            _repositoryEmpresa.Salvar(pagamento2.Empresa);
+            _repositoryPagamento.Salvar(pagamento2);
+
+            _repositoryTipoPagamento.Salvar(pagamento3.TipoPagamento);
+            _repositoryEmpresa.Salvar(pagamento3.Empresa);
+            _repositoryPessoa.Salvar(pagamento3.Pessoa);
+            _repositoryPagamento.Salvar(pagamento3);
+
+            var query = new SettingsTest().PagamentoQueryPendentes;
+
+            var response = _controller.Pagamentos(query).Result;
+
+            var responseJson = JsonConvert.SerializeObject(response);
+
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<List<PagamentoQueryResult>, Notificacao>>>(responseJson);
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
+
+            Assert.AreEqual(200, responseObj.StatusCode);
+
+            Assert.True(responseObj.Value.Sucesso);
+            Assert.AreEqual("Lista de pagamentos obtida com sucesso", responseObj.Value.Mensagem);
+            Assert.Null(responseObj.Value.Erros);
+
+            Assert.AreEqual(pagamento3.Id, responseObj.Value.Dados[0].Id);
+            Assert.AreEqual(pagamento3.TipoPagamento.Id, responseObj.Value.Dados[0].TipoPagamento.Id);
+            Assert.AreEqual(pagamento3.Empresa.Id, responseObj.Value.Dados[0].Empresa.Id);
+            Assert.AreEqual(pagamento3.Pessoa.Id, responseObj.Value.Dados[0].Pessoa.Id);
+            Assert.AreEqual(pagamento3.Descricao, responseObj.Value.Dados[0].Descricao);
+            Assert.AreEqual(pagamento3.Valor, responseObj.Value.Dados[0].Valor);
+            Assert.AreEqual(pagamento3.DataVencimento.Date, responseObj.Value.Dados[0].DataVencimento.Date);
+            Assert.AreEqual(Convert.ToDateTime(pagamento3.DataPagamento).Date, Convert.ToDateTime(responseObj.Value.Dados[0].DataPagamento).Date);
         }
 
         [Test]

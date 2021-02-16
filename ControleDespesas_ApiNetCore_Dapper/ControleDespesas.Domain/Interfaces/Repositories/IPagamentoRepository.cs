@@ -1,4 +1,5 @@
 ﻿using ControleDespesas.Domain.Entities;
+using ControleDespesas.Domain.Enums;
 using ControleDespesas.Domain.Query.Pagamento.Results;
 using System.Collections.Generic;
 
@@ -11,7 +12,7 @@ namespace ControleDespesas.Domain.Interfaces.Repositories
         void Deletar(int id);
 
         PagamentoQueryResult Obter(int id);
-        List<PagamentoQueryResult> Listar(int idPessoa);
+        List<PagamentoQueryResult> Listar(int idPessoa, EPagamentoStatus? status);
 
         PagamentoArquivoQueryResult ObterArquivoPagamento(int idPagamento);
         PagamentoArquivoQueryResult ObterArquivoComprovante(int idPagamento);

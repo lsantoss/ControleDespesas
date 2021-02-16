@@ -1,4 +1,5 @@
 ﻿using ControleDespesas.Domain.Entities;
+using ControleDespesas.Domain.Enums;
 using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Domain.Query.Empresa.Results;
 using ControleDespesas.Domain.Query.Pagamento.Results;
@@ -114,18 +115,21 @@ namespace ControleDespesas.Infra.Data.Repositories
             }
         }
 
-        public List<PagamentoQueryResult> Listar(int idPessoa)
+        public List<PagamentoQueryResult> Listar(int idPessoa, EPagamentoStatus? status)
         {
             try
             {
                 _parametros.Add("IdPessoa", idPessoa, DbType.Int32);
+
+                string sql = status == EPagamentoStatus.Pago ? PagamentoQueries.ListarPagamentoConcluido
+                           : status == EPagamentoStatus.Pendente ? PagamentoQueries.ListarPagamentoPendente : PagamentoQueries.Listar;
 
                 return _dataContext.SQLServerConexao.Query<PagamentoQueryResult,
                                                    TipoPagamentoQueryResult,
                                                    EmpresaQueryResult,
                                                    PessoaQueryResult,
                                                    PagamentoQueryResult>(
-                    PagamentoQueries.Listar,
+                    sql,
                     map: (pagamento, tipoPagamento, empresa, pessoa) =>
                     {
                         pagamento.TipoPagamento = tipoPagamento;
@@ -178,16 +182,8 @@ namespace ControleDespesas.Infra.Data.Repositories
                 _parametros.Add("Ano", ano, DbType.Int32);
                 _parametros.Add("Mes", mes, DbType.Int32);
 
-                string sql = "";
-
-                if (ano == null && mes == null)
-                    sql = PagamentoQueries.ObterGastos;
-
-                else if (mes == null)
-                    sql = PagamentoQueries.ObterGastosAno;
-
-                else
-                    sql = PagamentoQueries.ObterGastosAnoMes;
+                string sql = ano == null && mes == null ? PagamentoQueries.ObterGastos
+                           : mes == null ? PagamentoQueries.ObterGastosAno : PagamentoQueries.ObterGastosAnoMes;
 
                 return _dataContext.SQLServerConexao.Query<PagamentoGastosQueryResult>(sql, _parametros).FirstOrDefault();
             }

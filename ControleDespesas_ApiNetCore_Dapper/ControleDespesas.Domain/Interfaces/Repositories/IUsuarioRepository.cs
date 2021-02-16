@@ -12,6 +12,7 @@ namespace ControleDespesas.Domain.Interfaces.Repositories
 
         UsuarioQueryResult Obter(int id);
         List<UsuarioQueryResult> Listar();
+
         UsuarioQueryResult Logar(string login, string senha);
 
         bool CheckLogin(string login);

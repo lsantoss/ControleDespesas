@@ -142,62 +142,6 @@ namespace ControleDespesas.Infra.Data.Repositories
             }
         }
 
-        public List<PagamentoQueryResult> ListarPagamentoConcluido(int idPessoa)
-        {
-            try
-            {
-                _parametros.Add("IdPessoa", idPessoa, DbType.Int32);
-
-                return _dataContext.SQLServerConexao.Query<PagamentoQueryResult,
-                                                   TipoPagamentoQueryResult,
-                                                   EmpresaQueryResult,
-                                                   PessoaQueryResult,
-                                                   PagamentoQueryResult>(
-                    PagamentoQueries.ListarPagamentoConcluido,
-                    map: (pagamento, tipoPagamento, empresa, pessoa) =>
-                    {
-                        pagamento.TipoPagamento = tipoPagamento;
-                        pagamento.Empresa = empresa;
-                        pagamento.Pessoa = pessoa;
-                        return pagamento;
-                    },
-                    _parametros,
-                    splitOn: "Id, Id, Id, Id").Distinct().ToList();
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
-
-        public List<PagamentoQueryResult> ListarPagamentoPendente(int idPessoa)
-        {
-            try
-            {
-                _parametros.Add("IdPessoa", idPessoa, DbType.Int32);
-
-                return _dataContext.SQLServerConexao.Query<PagamentoQueryResult,
-                                                   TipoPagamentoQueryResult,
-                                                   EmpresaQueryResult,
-                                                   PessoaQueryResult,
-                                                   PagamentoQueryResult>(
-                    PagamentoQueries.ListarPagamentoPendente,
-                    map: (pagamento, tipoPagamento, empresa, pessoa) =>
-                    {
-                        pagamento.TipoPagamento = tipoPagamento;
-                        pagamento.Empresa = empresa;
-                        pagamento.Pessoa = pessoa;
-                        return pagamento;
-                    },
-                    _parametros,
-                    splitOn: "Id, Id, Id, Id").Distinct().ToList();
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
-
         public PagamentoArquivoQueryResult ObterArquivoPagamento(int idPagamento)
         {
             try

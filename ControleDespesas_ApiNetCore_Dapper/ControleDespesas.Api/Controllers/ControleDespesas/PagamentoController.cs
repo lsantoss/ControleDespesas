@@ -43,7 +43,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="401">Unauthorized</response>
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
-        [Route("v1/Pagamentos")]
+        [Route("v1/pagamentos")]
         [ProducesResponseType(typeof(ApiResponse<List<PagamentoQueryResult>, Notificacao>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<List<PagamentoQueryResult>, Notificacao>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<List<PagamentoQueryResult>, Notificacao>), StatusCodes.Status500InternalServerError)]
@@ -101,90 +101,6 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<PagamentoQueryResult, Notificacao>("Pagamento obtido com sucesso", result));
                 else
                     return StatusCode(StatusCodes.Status200OK, new ApiResponse<PagamentoQueryResult, Notificacao>("Pagamento não cadastrado", result));
-            }
-            catch (Exception e)
-            {
-                HttpContext.RiseError(e);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
-            }
-        }
-
-        /// <summary>
-        /// Pagamentos Concluídos
-        /// </summary>                
-        /// <remarks><h2><b>Lista todos os Pagamentos Concluídos.</b></h2></remarks>
-        /// <param name="command">Parâmetro requerido command de Obter pelo Id da Pessoa</param>
-        /// <response code="200">OK Request</response>
-        /// <response code="400">Bad Request</response>
-        /// <response code="401">Unauthorized</response>
-        /// <response code="500">Internal Server Error</response>
-        [HttpGet]
-        [Route("v1/PagamentosConcluidos")]
-        [ProducesResponseType(typeof(ApiResponse<List<PagamentoQueryResult>, Notificacao>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<List<PagamentoQueryResult>, Notificacao>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(ApiResponse<List<PagamentoQueryResult>, Notificacao>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ApiResponse<List<PagamentoQueryResult>, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<List<PagamentoQueryResult>, Notificacao>> PagamentoConcluido([FromBody] ObterPagamentoPorIdPessoaCommand command)
-        {
-            try
-            {
-                if (Request.Headers["ChaveAPI"].ToString() != _settings.ChaveAPI)
-                    return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
-
-                if (command == null)
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
-
-                if (!command.ValidarCommand())
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
-
-                var result = _repository.ListarPagamentoConcluido(command.IdPessoa);
-
-                if (result != null && result.Count > 0)
-                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<PagamentoQueryResult>, Notificacao>("Lista de pagamentos obtida com sucesso", result));
-                else
-                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<PagamentoQueryResult>, Notificacao>("Nenhum pagamento concluído foi encontrado", new List<PagamentoQueryResult>()));
-            }
-            catch (Exception e)
-            {
-                HttpContext.RiseError(e);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
-            }
-        }
-
-        /// <summary>
-        /// Pagamentos Pendentes
-        /// </summary>                
-        /// <remarks><h2><b>Lista todos os Pagamentos Pendentes.</b></h2></remarks>
-        /// <param name="command">Parâmetro requerido command de Obter pelo Id da Pessoa</param>
-        /// <response code="200">OK Request</response>
-        /// <response code="400">Bad Request</response>
-        /// <response code="401">Unauthorized</response>
-        /// <response code="500">Internal Server Error</response>
-        [HttpGet]
-        [Route("v1/PagamentosPendentes")]
-        [ProducesResponseType(typeof(ApiResponse<List<PagamentoQueryResult>, Notificacao>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<List<PagamentoQueryResult>, Notificacao>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(ApiResponse<List<PagamentoQueryResult>, Notificacao>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ApiResponse<List<PagamentoQueryResult>, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<List<PagamentoQueryResult>, Notificacao>> PagamentoPendente([FromBody] ObterPagamentoPorIdPessoaCommand command)
-        {
-            try
-            {
-                if (Request.Headers["ChaveAPI"].ToString() != _settings.ChaveAPI)
-                    return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
-
-                if (command == null)
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
-
-                if (!command.ValidarCommand())
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
-
-                var result = _repository.ListarPagamentoPendente(command.IdPessoa);
-
-                if (result != null && result.Count > 0)
-                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<PagamentoQueryResult>, Notificacao>("Lista de pagamentos obtida com sucesso", result));
-                else
-                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<PagamentoQueryResult>, Notificacao>("Nenhum pagamento pendente foi encontrado", new List<PagamentoQueryResult>()));
             }
             catch (Exception e)
             {

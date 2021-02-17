@@ -4,18 +4,19 @@ using ControleDespesas.Domain.Entities;
 using ControleDespesas.Domain.Helpers;
 using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
+using ControleDespesas.Infra.Commands;
 using LSCode.Facilitador.Api.Interfaces.Commands;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
 using Microsoft.AspNetCore.Http;
 using System;
+using System.Collections.Generic;
 
 namespace ControleDespesas.Domain.Handlers
 {
     public class EmpresaHandler : Notificadora, IEmpresaHandler
     {
         private readonly IEmpresaRepository _repository;
-        private CommandResult<Notificacao> commandResult;
 
         public EmpresaHandler(IEmpresaRepository repository)
         {
@@ -26,18 +27,33 @@ namespace ControleDespesas.Domain.Handlers
         {
             try
             {
-                Empresa empresa = EmpresaHelper.GerarEntidade(command);
+                if (command == null)
+                    return CommandHelper.Result(StatusCodes.Status400BadRequest, 
+                                                "Parâmentros inválidos", 
+                                                "Parâmetros de entrada", 
+                                                "Parâmetros de entrada estão nulos");
+
+                if (!command.ValidarCommand())
+                    return CommandHelper.Result(StatusCodes.Status422UnprocessableEntity, 
+                                                "Parâmentros inválidos", 
+                                                command.Notificacoes);
+
+                var empresa = EmpresaHelper.GerarEntidade(command);
 
                 AddNotificacao(empresa.Notificacoes);
 
                 if (Invalido)
-                    return new CommandResult<Notificacao>(422, "Inconsistência(s) no(s) dado(s)", Notificacoes);
+                    return CommandHelper.Result(StatusCodes.Status422UnprocessableEntity, 
+                                                "Inconsistência(s) no(s) dado(s)", 
+                                                Notificacoes);
 
                 empresa = _repository.Salvar(empresa);
 
-                AdicionarEmpresaCommandOutput dadosRetorno = EmpresaHelper.GerarDadosRetornoInsert(empresa);
+                var dadosRetorno = EmpresaHelper.GerarDadosRetornoInsert(empresa);
 
-                return new CommandResult<Notificacao>(201, "Empresa gravada com sucesso!", dadosRetorno);
+                return CommandHelper.Result(StatusCodes.Status201Created, 
+                                            "Empresa gravada com sucesso!", 
+                                            dadosRetorno);
             }
             catch (Exception e)
             {
@@ -50,34 +66,40 @@ namespace ControleDespesas.Domain.Handlers
             try
             {
                 if (command == null)
-                {
-                    AddNotificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos");
-                    return new CommandResult<Notificacao>(StatusCodes.Status400BadRequest, "Parâmetros de entrada", Notificacoes);
-                }                    
+                    return CommandHelper.Result(StatusCodes.Status400BadRequest, 
+                                                "Parâmetros de entrada", 
+                                                "Parâmetros de entrada", 
+                                                "Parâmetros de entrada estão nulos");
 
                 command.Id = id;
 
                 if (!command.ValidarCommand())
-                    return new CommandResult<Notificacao>(StatusCodes.Status422UnprocessableEntity, "Parâmentros inválidos", command.Notificacoes);
+                    return CommandHelper.Result(StatusCodes.Status422UnprocessableEntity, 
+                                                "Parâmentros inválidos", 
+                                                command.Notificacoes);
 
-                Empresa empresa = EmpresaHelper.GerarEntidade(command);
+                var empresa = EmpresaHelper.GerarEntidade(command);
 
                 AddNotificacao(empresa.Notificacoes);
 
                 if (Invalido)
-                    return new CommandResult<Notificacao>(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", Notificacoes);
+                    return CommandHelper.Result(StatusCodes.Status422UnprocessableEntity, 
+                                                "Inconsistência(s) no(s) dado(s)", 
+                                                Notificacoes);
 
                 if (!_repository.CheckId(empresa.Id))
-                {
-                    AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");
-                    return new CommandResult<Notificacao>(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", Notificacoes);
-                }
+                    return CommandHelper.Result(StatusCodes.Status422UnprocessableEntity, 
+                                                "Inconsistência(s) no(s) dado(s)", 
+                                                "Id", 
+                                                "Id inválido. Este id não está cadastrado!");
 
                 _repository.Atualizar(empresa);
 
-                AtualizarEmpresaCommandOutput dadosRetorno = EmpresaHelper.GerarDadosRetornoUpdate(empresa);
+                var dadosRetorno = EmpresaHelper.GerarDadosRetornoUpdate(empresa);
 
-                return new CommandResult<Notificacao>(StatusCodes.Status200OK, "Empresa atualizada com sucesso!", dadosRetorno);
+                return CommandHelper.Result(StatusCodes.Status200OK, 
+                                            "Empresa atualizada com sucesso!", 
+                                            dadosRetorno);
             }
             catch (Exception e)
             {
@@ -90,16 +112,18 @@ namespace ControleDespesas.Domain.Handlers
             try
             {
                 if (!_repository.CheckId(id))
-                    AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");
-
-                if (Invalido)
-                    return new CommandResult<Notificacao>(422, "Inconsistência(s) no(s) dado(s)", Notificacoes);
+                    return CommandHelper.Result(StatusCodes.Status422UnprocessableEntity, 
+                                                "Inconsistência(s) no(s) dado(s)", 
+                                                "Id", 
+                                                "Id inválido. Este id não está cadastrado!");
 
                 _repository.Deletar(id);
 
-                ApagarEmpresaCommandOutput dadosRetorno = EmpresaHelper.GerarDadosRetornoDelete(id);
+                var dadosRetorno = EmpresaHelper.GerarDadosRetornoDelete(id);
 
-                return new CommandResult<Notificacao>(200, "Empresa excluída com sucesso!", dadosRetorno);
+                return CommandHelper.Result(StatusCodes.Status200OK, 
+                                            "Empresa excluída com sucesso!", 
+                                            dadosRetorno);
             }
             catch (Exception e)
             {

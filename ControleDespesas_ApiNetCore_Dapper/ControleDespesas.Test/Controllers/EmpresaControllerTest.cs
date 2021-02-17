@@ -119,7 +119,7 @@ namespace ControleDespesas.Test.Controllers
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
 
-            Assert.AreEqual(200, responseObj.StatusCode);
+            Assert.AreEqual(201, responseObj.StatusCode);
 
             Assert.True(responseObj.Value.Sucesso);
             Assert.AreEqual("Empresa gravada com sucesso!", responseObj.Value.Mensagem);

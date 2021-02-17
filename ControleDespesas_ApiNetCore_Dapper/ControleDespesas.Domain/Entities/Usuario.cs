@@ -20,7 +20,10 @@ namespace ControleDespesas.Domain.Entities
             Privilegio = privilegio;
         }
 
-        public Usuario(int id) => Id = id;
+        public Usuario(int id)
+        {
+            Id = id;
+        }
 
         public void Validar()
         {

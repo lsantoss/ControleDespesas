@@ -18,7 +18,10 @@ namespace ControleDespesas.Domain.Entities
             ImagemPerfil = imagemPerfil;
         }
 
-        public Pessoa(int id) => Id = id;
+        public Pessoa(int id)
+        {
+            Id = id;
+        }
 
         public void Validar()
         {

@@ -39,7 +39,10 @@ namespace ControleDespesas.Domain.Entities
             ArquivoComprovante = arquivoComprovante;
         }
 
-        public Pagamento(int id) => Id = id;
+        public Pagamento(int id)
+        {
+            Id = id;
+        }
 
         public void Validar()
         {

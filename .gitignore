@@ -7,6 +7,8 @@ ControleDespesas_ApiNetCore_Dapper/ControleDespesas.Api/obj/
 ControleDespesas_ApiNetCore_Dapper/ControleDespesas.Api/wwwroot/log
 ControleDespesas_ApiNetCore_Dapper/ControleDespesas.Domain/bin/
 ControleDespesas_ApiNetCore_Dapper/ControleDespesas.Domain/obj/
+ControleDespesas_ApiNetCore_Dapper/ControleDespesas.Infra/bin/
+ControleDespesas_ApiNetCore_Dapper/ControleDespesas.Infra/obj/
 ControleDespesas_ApiNetCore_Dapper/ControleDespesas.Infra.Data/bin/
 ControleDespesas_ApiNetCore_Dapper/ControleDespesas.Infra.Data/obj/
 ControleDespesas_ApiNetCore_Dapper/ControleDespesas.Test/bin/

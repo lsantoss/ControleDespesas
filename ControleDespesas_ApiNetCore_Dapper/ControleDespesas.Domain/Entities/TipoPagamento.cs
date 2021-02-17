@@ -14,7 +14,10 @@ namespace ControleDespesas.Domain.Entities
             Descricao = descricao;
         }
 
-        public TipoPagamento(int id) => Id = id;
+        public TipoPagamento(int id)
+        {
+            Id = id;
+        }
 
         public void Validar()
         {

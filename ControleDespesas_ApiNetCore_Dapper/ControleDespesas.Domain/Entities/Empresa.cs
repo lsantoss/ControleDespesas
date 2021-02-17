@@ -16,7 +16,10 @@ namespace ControleDespesas.Domain.Entities
             Logo = logo;
         }
 
-        public Empresa(int id) => Id = id;
+        public Empresa(int id)
+        {
+            Id = id;
+        }
 
         public void Validar()
         {

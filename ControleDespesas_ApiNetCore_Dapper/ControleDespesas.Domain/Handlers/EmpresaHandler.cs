@@ -1,16 +1,12 @@
 ﻿using ControleDespesas.Domain.Commands.Empresa.Input;
-using ControleDespesas.Domain.Commands.Empresa.Output;
-using ControleDespesas.Domain.Entities;
 using ControleDespesas.Domain.Helpers;
 using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Infra.Commands;
 using LSCode.Facilitador.Api.Interfaces.Commands;
-using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
 using Microsoft.AspNetCore.Http;
 using System;
-using System.Collections.Generic;
 
 namespace ControleDespesas.Domain.Handlers
 {

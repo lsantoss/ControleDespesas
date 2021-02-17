@@ -55,10 +55,9 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
 
                 var result = _repository.Listar();
 
-                if (result != null && result.Count > 0)
-                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<EmpresaQueryResult>, Notificacao>("Lista de empresas obtida com sucesso", result));
-                else
-                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<EmpresaQueryResult>, Notificacao>("Nenhuma empresa cadastrada atualmente", new List<EmpresaQueryResult>()));
+                var mensagem = result.Count > 0 ? "Lista de empresas obtida com sucesso" : "Nenhuma empresa cadastrada atualmente";
+
+                return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<EmpresaQueryResult>, Notificacao>(mensagem, result));
             }
             catch (Exception e)
             {
@@ -73,13 +72,11 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <remarks><h2><b>Consulta a Empresa pelo Id.</b></h2></remarks>
         /// <param name="id">Parâmetro requerido Id da Empresa</param>
         /// <response code="200">OK Request</response>
-        /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [Route("v1/empresas/{id}")]
         [ProducesResponseType(typeof(ApiResponse<EmpresaQueryResult, Notificacao>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<EmpresaQueryResult, Notificacao>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<EmpresaQueryResult, Notificacao>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<EmpresaQueryResult, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<EmpresaQueryResult, Notificacao>> Empresa(int id)
@@ -91,10 +88,9 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
 
                 var result = _repository.Obter(id);
 
-                if (result != null)
-                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<EmpresaQueryResult, Notificacao>("Empresa obtida com sucesso", result));
-                else
-                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<EmpresaQueryResult, Notificacao>("Empresa não cadastrada", result));
+                var mensagem = result != null ? "Empresa obtida com sucesso" : "Empresa não cadastrada";
+
+                return StatusCode(StatusCodes.Status200OK, new ApiResponse<EmpresaQueryResult, Notificacao>(mensagem, result));
             }
             catch (Exception e)
             {
@@ -108,15 +104,17 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// </summary>                
         /// <remarks><h2><b>Inclui nova Empresa na base de dados.</b></h2></remarks>
         /// <param name="command">Parâmetro requerido command de Insert</param>
-        /// <response code="200">OK Request</response>
+        /// <response code="201">Created</response>
         /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
+        /// <response code="422">Unprocessable Entity</response>
         /// <response code="500">Internal Server Error</response>
         [HttpPost]
         [Route("v1/empresas")]
-        [ProducesResponseType(typeof(ApiResponse<AdicionarEmpresaCommandOutput, Notificacao>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<AdicionarEmpresaCommandOutput, Notificacao>), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ApiResponse<AdicionarEmpresaCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<AdicionarEmpresaCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<AdicionarEmpresaCommandOutput, Notificacao>), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(typeof(ApiResponse<AdicionarEmpresaCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<AdicionarEmpresaCommandOutput, Notificacao>> EmpresaInserir([FromBody] AdicionarEmpresaCommand command)
         {
@@ -148,12 +146,14 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="200">OK Request</response>
         /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
+        /// <response code="422">Unprocessable Entity</response>
         /// <response code="500">Internal Server Error</response>
         [HttpPut]
         [Route("v1/empresas/{id}")]
         [ProducesResponseType(typeof(ApiResponse<AtualizarEmpresaCommandOutput, Notificacao>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<AtualizarEmpresaCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<AtualizarEmpresaCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<AtualizarEmpresaCommandOutput, Notificacao>), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(typeof(ApiResponse<AtualizarEmpresaCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<AtualizarEmpresaCommandOutput, Notificacao>> EmpresaAlterar(int id, [FromBody] AtualizarEmpresaCommand command)
         {
@@ -182,14 +182,14 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <remarks><h2><b>Exclui Empresa na base de dados.</b></h2></remarks>
         /// <param name="id">Parâmetro requerido Id da Empresa</param>        
         /// <response code="200">OK Request</response>
-        /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
+        /// <response code="422">Unprocessable Entity</response>
         /// <response code="500">Internal Server Error</response>
         [HttpDelete]
         [Route("v1/empresas/{id}")]
         [ProducesResponseType(typeof(ApiResponse<ApagarEmpresaCommandOutput, Notificacao>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<ApagarEmpresaCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<ApagarEmpresaCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<ApagarEmpresaCommandOutput, Notificacao>), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(typeof(ApiResponse<ApagarEmpresaCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<ApagarEmpresaCommandOutput, Notificacao>> EmpresaExcluir(int id)
         {

@@ -165,6 +165,8 @@ namespace ControleDespesas.Api
 
             app.UseElmah();
 
+            app.UseAPITokenMiddlerware();
+
             app.UseSwagger();
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "ControleDespesas"); });
 

@@ -23,15 +23,11 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
     {
         private readonly IEmpresaRepository _repository;
         private readonly IEmpresaHandler _handler;
-        private readonly SettingsAPI _settings;
 
-        public EmpresaController(IEmpresaRepository repository,
-                                 IEmpresaHandler handler,
-                                 SettingsAPI settings)
+        public EmpresaController(IEmpresaRepository repository, IEmpresaHandler handler)
         {
             _repository = repository;
             _handler = handler;
-            _settings = settings;
         }
 
         /// <summary>
@@ -50,9 +46,6 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
-                if (Request.Headers["ChaveAPI"].ToString() != _settings.ChaveAPI)
-                    return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
-
                 var result = _repository.Listar();
 
                 var mensagem = result.Count > 0 ? "Lista de empresas obtida com sucesso" : "Nenhuma empresa cadastrada atualmente";
@@ -83,9 +76,6 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
-                if (Request.Headers["ChaveAPI"].ToString() != _settings.ChaveAPI)
-                    return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
-
                 var result = _repository.Obter(id);
 
                 var mensagem = result != null ? "Empresa obtida com sucesso" : "Empresa não cadastrada";
@@ -119,10 +109,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         public ActionResult<ApiResponse<AdicionarEmpresaCommandOutput, Notificacao>> EmpresaInserir([FromBody] AdicionarEmpresaCommand command)
         {
             try
-            {
-                if (Request.Headers["ChaveAPI"].ToString() != _settings.ChaveAPI)
-                    return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
-                                
+            {                 
                 var result = _handler.Handler(command);
 
                 if (result.Sucesso)
@@ -159,9 +146,6 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
-                if (Request.Headers["ChaveAPI"].ToString() != _settings.ChaveAPI)
-                    return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
-
                 var result = _handler.Handler(id, command);
 
                 if (result.Sucesso)
@@ -195,9 +179,6 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
-                if (Request.Headers["ChaveAPI"].ToString() != _settings.ChaveAPI)
-                    return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<object, Notificacao>("Acesso negado", new List<Notificacao>() { new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada") }));
-
                 var result = _handler.Handler(id);
 
                 if (result.Sucesso)

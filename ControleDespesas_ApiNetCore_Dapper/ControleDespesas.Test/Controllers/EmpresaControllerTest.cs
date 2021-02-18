@@ -30,7 +30,7 @@ namespace ControleDespesas.Test.Controllers
 
             _repository = new EmpresaRepository(MockSettingsInfraData);
             _handler = new EmpresaHandler(_repository);
-            _controller = new EmpresaController(_repository, _handler, MockSettingsAPI);
+            _controller = new EmpresaController(_repository, _handler);
             _controller.ControllerContext.HttpContext = new DefaultHttpContext();
             _controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = MockSettingsAPI.ChaveAPI;
         }

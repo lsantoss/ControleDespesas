@@ -1,5 +1,4 @@
-﻿using ControleDespesas.Api.Settings;
-using ControleDespesas.Domain.Commands.Empresa.Input;
+﻿using ControleDespesas.Domain.Commands.Empresa.Input;
 using ControleDespesas.Domain.Commands.Empresa.Output;
 using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;

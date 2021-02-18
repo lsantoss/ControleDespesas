@@ -32,7 +32,7 @@ namespace ControleDespesas.Test.Controllers
             _repositoryUsuario = new UsuarioRepository(MockSettingsInfraData);
             _repositoryPessoa = new PessoaRepository(MockSettingsInfraData);
             _handler = new PessoaHandler(_repositoryPessoa);
-            _controller = new PessoaController(_repositoryPessoa, _handler, MockSettingsAPI);
+            _controller = new PessoaController(_repositoryPessoa, _handler);
             _controller.ControllerContext.HttpContext = new DefaultHttpContext();
             _controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = MockSettingsAPI.ChaveAPI;
         }
@@ -132,7 +132,7 @@ namespace ControleDespesas.Test.Controllers
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
 
-            Assert.AreEqual(200, responseObj.StatusCode);
+            Assert.AreEqual(201, responseObj.StatusCode);
 
             Assert.True(responseObj.Value.Sucesso);
             Assert.AreEqual("Pessoa gravada com sucesso!", responseObj.Value.Mensagem);

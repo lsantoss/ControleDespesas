@@ -61,7 +61,7 @@ namespace ControleDespesas.Test.Handlers
 
             _repositoryPessoa.Salvar(pessoa);
 
-            var retorno = _handler.Handler(pessoaCommand);
+            var retorno = _handler.Handler(pessoaCommand.Id, pessoaCommand);
 
             var retornoDados = (AtualizarPessoaCommandOutput)retorno.Dados;
 

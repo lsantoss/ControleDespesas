@@ -1,12 +1,11 @@
 ﻿using ControleDespesas.Domain.Commands.TipoPagamento.Input;
-using ControleDespesas.Domain.Commands.TipoPagamento.Output;
-using ControleDespesas.Domain.Entities;
 using ControleDespesas.Domain.Helpers;
 using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
+using ControleDespesas.Infra.Commands;
 using LSCode.Facilitador.Api.Interfaces.Commands;
-using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
+using Microsoft.AspNetCore.Http;
 using System;
 
 namespace ControleDespesas.Domain.Handlers
@@ -24,18 +23,33 @@ namespace ControleDespesas.Domain.Handlers
         {
             try
             {
-                TipoPagamento tipoPagamento = TipoPagamentoHelper.GerarEntidade(command);
+                if (command == null)
+                    return new CommandResult(StatusCodes.Status400BadRequest,
+                                             "Parâmentros inválidos",
+                                             "Parâmetros de entrada",
+                                             "Parâmetros de entrada estão nulos");
+
+                if (!command.ValidarCommand())
+                    return new CommandResult(StatusCodes.Status422UnprocessableEntity,
+                                             "Parâmentros inválidos",
+                                             command.Notificacoes);
+
+                var tipoPagamento = TipoPagamentoHelper.GerarEntidade(command);
 
                 AddNotificacao(tipoPagamento.Notificacoes);
 
                 if (Invalido)
-                    return new CommandResult<Notificacao>(422, "Inconsistência(s) no(s) dado(s)", Notificacoes);
+                    return new CommandResult(StatusCodes.Status422UnprocessableEntity,
+                                             "Inconsistência(s) no(s) dado(s)",
+                                             Notificacoes);
 
                 tipoPagamento = _repository.Salvar(tipoPagamento);
 
-                AdicionarTipoPagamentoCommandOutput dadosRetorno = TipoPagamentoHelper.GerarDadosRetornoInsert(tipoPagamento);
+                var dadosRetorno = TipoPagamentoHelper.GerarDadosRetornoInsert(tipoPagamento);
 
-                return new CommandResult<Notificacao>(201, "Tipo Pagamento gravado com sucesso!", dadosRetorno);
+                return new CommandResult(StatusCodes.Status201Created, 
+                                         "Tipo Pagamento gravado com sucesso!", 
+                                         dadosRetorno);
             }
             catch (Exception e)
             {
@@ -43,25 +57,45 @@ namespace ControleDespesas.Domain.Handlers
             }
         }
 
-        public ICommandResult<Notificacao> Handler(AtualizarTipoPagamentoCommand command)
+        public ICommandResult<Notificacao> Handler(int id, AtualizarTipoPagamentoCommand command)
         {
             try
             {
-                TipoPagamento tipoPagamento = TipoPagamentoHelper.GerarEntidade(command);
+                if (command == null)
+                    return new CommandResult(StatusCodes.Status400BadRequest,
+                                             "Parâmentros inválidos",
+                                             "Parâmetros de entrada",
+                                             "Parâmetros de entrada estão nulos");
+
+                command.Id = id;
+
+                if (!command.ValidarCommand())
+                    return new CommandResult(StatusCodes.Status422UnprocessableEntity,
+                                             "Parâmentros inválidos",
+                                             command.Notificacoes);
+
+                var tipoPagamento = TipoPagamentoHelper.GerarEntidade(command);
 
                 AddNotificacao(tipoPagamento.Notificacoes);
 
-                if (!_repository.CheckId(tipoPagamento.Id))
-                    AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");
-
                 if (Invalido)
-                    return new CommandResult<Notificacao>(422, "Inconsistência(s) no(s) dado(s)", Notificacoes);
+                    return new CommandResult(StatusCodes.Status422UnprocessableEntity,
+                                             "Inconsistência(s) no(s) dado(s)",
+                                             Notificacoes);
+
+                if (!_repository.CheckId(tipoPagamento.Id))
+                    return new CommandResult(StatusCodes.Status422UnprocessableEntity,
+                                             "Inconsistência(s) no(s) dado(s)",
+                                             "Id",
+                                             "Id inválido. Este id não está cadastrado!");
 
                 _repository.Atualizar(tipoPagamento);
 
-                AtualizarTipoPagamentoCommandOutput dadosRetorno = TipoPagamentoHelper.GerarDadosRetornoUpdate(tipoPagamento);
+                var dadosRetorno = TipoPagamentoHelper.GerarDadosRetornoUpdate(tipoPagamento);
 
-                return new CommandResult<Notificacao>(200, "Tipo Pagamento atualizado com sucesso!", dadosRetorno);
+                return new CommandResult(StatusCodes.Status200OK,
+                                         "Tipo Pagamento atualizado com sucesso!",
+                                         dadosRetorno);
             }
             catch (Exception e)
             {
@@ -74,16 +108,18 @@ namespace ControleDespesas.Domain.Handlers
             try
             {
                 if (!_repository.CheckId(id))
-                    AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");
-
-                if (Invalido)
-                    return new CommandResult<Notificacao>(422, "Inconsistência(s) no(s) dado(s)", Notificacoes);
+                    return new CommandResult(StatusCodes.Status422UnprocessableEntity,
+                                             "Inconsistência(s) no(s) dado(s)",
+                                             "Id",
+                                             "Id inválido. Este id não está cadastrado!");
 
                 _repository.Deletar(id);
 
-                ApagarTipoPagamentoCommandOutput dadosRetorno = TipoPagamentoHelper.GerarDadosRetornoDelete(id);
+                var dadosRetorno = TipoPagamentoHelper.GerarDadosRetornoDelete(id);
 
-                return new CommandResult<Notificacao>(200, "Tipo Pagamento excluído com sucesso!", dadosRetorno);
+                return new CommandResult(StatusCodes.Status200OK,
+                                         "Tipo Pagamento excluído com sucesso!",
+                                         dadosRetorno);
             }
             catch (Exception e)
             {

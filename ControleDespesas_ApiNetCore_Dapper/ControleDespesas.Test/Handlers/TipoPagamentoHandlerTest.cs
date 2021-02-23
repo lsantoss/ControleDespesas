@@ -48,11 +48,11 @@ namespace ControleDespesas.Test.Handlers
         {
             var tipoPagamento = new SettingsTest().TipoPagamento1;
 
-            var empresaCommand = new SettingsTest().TipoPagamentoAtualizarCommand;
+            var tipoPagamentoCommand = new SettingsTest().TipoPagamentoAtualizarCommand;
 
             _repository.Salvar(tipoPagamento);
 
-            var retorno = _handler.Handler(empresaCommand);
+            var retorno = _handler.Handler(tipoPagamentoCommand.Id, tipoPagamentoCommand);
 
             var retornoDados = (AtualizarTipoPagamentoCommandOutput)retorno.Dados;
 
@@ -60,8 +60,8 @@ namespace ControleDespesas.Test.Handlers
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Tipo Pagamento atualizado com sucesso!", retorno.Mensagem);
-            Assert.AreEqual(empresaCommand.Id, retornoDados.Id);
-            Assert.AreEqual(empresaCommand.Descricao, retornoDados.Descricao);
+            Assert.AreEqual(tipoPagamentoCommand.Id, retornoDados.Id);
+            Assert.AreEqual(tipoPagamentoCommand.Descricao, retornoDados.Descricao);
         }
 
         [Test]

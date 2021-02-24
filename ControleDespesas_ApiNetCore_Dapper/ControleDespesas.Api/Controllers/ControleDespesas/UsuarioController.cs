@@ -215,30 +215,16 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<UsuarioTokenQueryResult, Notificacao>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<UsuarioTokenQueryResult, Notificacao>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<UsuarioTokenQueryResult, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<UsuarioQueryResult, Notificacao>> UsuarioLogin([FromBody] LoginUsuarioCommand command)
+        public ActionResult<ApiResponse<UsuarioTokenQueryResult, Notificacao>> UsuarioLogin([FromBody] LoginUsuarioCommand command)
         {
             try
             {
                 var result = _handler.Handler(command);
 
                 if (result.Sucesso)
-                {
-                    UsuarioQueryResult usuarioQR = (UsuarioQueryResult)result.Dados;
-
-                    string token = _tokenService.GenerateToken(usuarioQR);
-
-                    UsuarioTokenQueryResult usuarioTokenQR = new UsuarioTokenQueryResult() { 
-                        Id = usuarioQR.Id,
-                        Login = usuarioQR.Login,
-                        Senha = usuarioQR.Senha,
-                        Privilegio = usuarioQR.Privilegio,
-                        Token = token
-                    };
-
-                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<object, Notificacao>(result.Mensagem, usuarioTokenQR));
-                }
+                    return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
                 else
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
+                    return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
             }
             catch (Exception e)
             {

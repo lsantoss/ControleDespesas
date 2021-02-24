@@ -1,8 +1,10 @@
-﻿using ControleDespesas.Domain.Commands.Usuario.Output;
+﻿using ControleDespesas.Api.Services;
+using ControleDespesas.Domain.Commands.Usuario.Output;
 using ControleDespesas.Domain.Enums;
 using ControleDespesas.Domain.Handlers;
 using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
+using ControleDespesas.Domain.Interfaces.Services;
 using ControleDespesas.Domain.Query.Usuario.Results;
 using ControleDespesas.Infra.Data.Repositories;
 using ControleDespesas.Test.AppConfigurations.Base;
@@ -14,6 +16,7 @@ namespace ControleDespesas.Test.Handlers
 {
     class UsuarioHandlerTest : DatabaseTest
     {
+        private readonly ITokenJWTService _tokenJWTService;
         private readonly IUsuarioRepository _repository;
         private readonly IUsuarioHandler _handler;
 
@@ -21,8 +24,9 @@ namespace ControleDespesas.Test.Handlers
         {
             CriarBaseDeDadosETabelas();
 
+            _tokenJWTService = new TokenJWTService(MockSettingsAPI);
             _repository = new UsuarioRepository(MockSettingsInfraData);
-            _handler = new UsuarioHandler(_repository);
+            _handler = new UsuarioHandler(_repository, _tokenJWTService);
         }
 
         [SetUp]
@@ -98,7 +102,10 @@ namespace ControleDespesas.Test.Handlers
 
             var retorno = _handler.Handler(usuarioCommand);
 
-            var retornoDados = (UsuarioQueryResult)retorno.Dados;
+            var retornoDados = (UsuarioTokenQueryResult)retorno.Dados;
+
+            var usuarioQR = _repository.Logar(usuarioCommand.Login, usuarioCommand.Senha);
+            var token = _tokenJWTService.GenerateToken(usuarioQR);
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retornoDados));
 
@@ -108,6 +115,7 @@ namespace ControleDespesas.Test.Handlers
             Assert.AreEqual(usuarioCommand.Login, retornoDados.Login);
             Assert.AreEqual(usuarioCommand.Senha, retornoDados.Senha);
             Assert.AreEqual(EPrivilegioUsuario.Administrador, retornoDados.Privilegio);
+            Assert.AreEqual(token, retornoDados.Token);
         }
 
         [TearDown]

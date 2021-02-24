@@ -2,6 +2,8 @@
 using ControleDespesas.Domain.Helpers;
 using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
+using ControleDespesas.Domain.Interfaces.Services;
+using ControleDespesas.Domain.Query.Usuario.Results;
 using ControleDespesas.Infra.Commands;
 using LSCode.Facilitador.Api.Interfaces.Commands;
 using LSCode.Validador.ValidacoesNotificacoes;
@@ -13,10 +15,12 @@ namespace ControleDespesas.Domain.Handlers
     public class UsuarioHandler : Notificadora, IUsuarioHandler
     {
         private readonly IUsuarioRepository _repository;
+        private readonly ITokenJWTService _tokenJWTService;
 
-        public UsuarioHandler(IUsuarioRepository repository)
+        public UsuarioHandler(IUsuarioRepository repository, ITokenJWTService tokenJWTService)
         {
             _repository = repository;
+            _tokenJWTService = tokenJWTService;
         }
 
         public ICommandResult<Notificacao> Handler(AdicionarUsuarioCommand command)
@@ -170,12 +174,27 @@ namespace ControleDespesas.Domain.Handlers
 
                 var usuario = _repository.Logar(login, senha);
 
-                return usuario != null
-                    ? new CommandResult(StatusCodes.Status200OK, "Usuário logado com sucesso!", usuario)
-                    : new CommandResult(StatusCodes.Status422UnprocessableEntity,
-                                        "Inconsistência(s) no(s) dado(s)",
-                                        "Senha",
-                                        "Senha incorreta!");
+                if (usuario != null)
+                {
+                    var token = _tokenJWTService.GenerateToken(usuario);
+                    var usuarioComToken = new UsuarioTokenQueryResult() 
+                    { 
+                        Id = usuario.Id,
+                        Login = usuario.Login,
+                        Senha = usuario.Senha,
+                        Privilegio = usuario.Privilegio,
+                        Token = token
+                    };
+
+                    return new CommandResult(StatusCodes.Status200OK, "Usuário logado com sucesso!", usuarioComToken);
+                }
+                else
+                {
+                    return new CommandResult(StatusCodes.Status422UnprocessableEntity,
+                                             "Inconsistência(s) no(s) dado(s)",
+                                             "Senha",
+                                             "Senha incorreta!");
+                }
             }
             catch (Exception e)
             {

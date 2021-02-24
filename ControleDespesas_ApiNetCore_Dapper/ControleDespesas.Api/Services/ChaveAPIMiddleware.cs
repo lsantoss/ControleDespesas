@@ -26,7 +26,17 @@ namespace ControleDespesas.Api.Services
 			var path = httpContext.Request.Path.Value;
 			var chaveRecebida = httpContext.Request.Headers["ChaveAPI"].ToString();
 
-			var ignore = new string[] { "/swagger/index.html", "/swagger/v1/swagger.json", "/docs", "/" };
+			var ignore = new string[] {
+				"/",
+				"/docs",
+				"/swagger", 
+				"/swagger/index.html", 
+				"/swagger/v1/swagger.json", 
+				"/swagger/swagger-ui-bundle.js",
+				"/swagger/swagger-ui.css",
+				"/swagger/swagger-ui-standalone-preset.js",
+				"/swagger/favicon-32x32.png"
+			};
 
 			var ignorado = ignore.Any(x => path.Equals(x));
 

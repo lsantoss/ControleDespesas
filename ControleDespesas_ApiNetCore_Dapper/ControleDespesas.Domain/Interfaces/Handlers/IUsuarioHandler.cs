@@ -7,7 +7,7 @@ namespace ControleDespesas.Domain.Interfaces.Handlers
     public interface IUsuarioHandler
     {
         ICommandResult<Notificacao> Handler(AdicionarUsuarioCommand command);
-        ICommandResult<Notificacao> Handler(AtualizarUsuarioCommand command);
+        ICommandResult<Notificacao> Handler(int id, AtualizarUsuarioCommand command);
         ICommandResult<Notificacao> Handler(int id);
         ICommandResult<Notificacao> Handler(LoginUsuarioCommand command);
     }

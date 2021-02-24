@@ -56,7 +56,7 @@ namespace ControleDespesas.Test.Handlers
 
             _repository.Salvar(usuario);
 
-            var retorno = _handler.Handler(usuarioCommand);
+            var retorno = _handler.Handler(usuarioCommand.Id, usuarioCommand);
 
             var retornoDados = (AtualizarUsuarioCommandOutput)retorno.Dados;
 

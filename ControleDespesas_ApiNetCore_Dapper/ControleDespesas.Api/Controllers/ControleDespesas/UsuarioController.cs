@@ -56,10 +56,9 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
             {
                 var result = _repository.Listar();
 
-                if (result != null && result.Count > 0)
-                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<UsuarioQueryResult>, Notificacao>("Lista de usuários obtida com sucesso", result));
-                else
-                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<UsuarioQueryResult>, Notificacao>("Nenhum usuário cadastrado atualmente", new List<UsuarioQueryResult>()));
+                var mensagem = result.Count > 0 ? "Lista de usuários obtida com sucesso" : "Nenhum usuário cadastrado atualmente";
+
+                return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<UsuarioQueryResult>, Notificacao>(mensagem, result));
             }
             catch (Exception e)
             {
@@ -89,10 +88,9 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
             {
                 var result = _repository.Obter(id);
 
-                if (result != null)
-                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<UsuarioQueryResult, Notificacao>("Usuário obtido com sucesso", result));
-                else
-                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<UsuarioQueryResult, Notificacao>("Usuário não cadastrado", result));
+                var mensagem = result != null ? "Usuário obtido com sucesso" : "Usuário não cadastrado";
+
+                return StatusCode(StatusCodes.Status200OK, new ApiResponse<UsuarioQueryResult, Notificacao>(mensagem, result));
             }
             catch (Exception e)
             {
@@ -120,18 +118,12 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
-                if (command == null)
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
-
-                if (!command.ValidarCommand())
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
-
                 var result = _handler.Handler(command);
 
                 if (result.Sucesso)
-                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
+                    return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
                 else
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
+                    return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
             }
             catch (Exception e)
             {
@@ -160,20 +152,12 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
-                if (command == null)
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
-
-                command.Id = id;
-
-                if (!command.ValidarCommand())
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
-
-                var result = _handler.Handler(command);
+                var result = _handler.Handler(id, command);
 
                 if (result.Sucesso)
-                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
+                    return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
                 else
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
+                    return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
             }
             catch (Exception e)
             {
@@ -204,9 +188,9 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
                 var result = _handler.Handler(id);
 
                 if (result.Sucesso)
-                    return StatusCode(StatusCodes.Status200OK, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
+                    return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
                 else
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
+                    return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
             }
             catch (Exception e)
             {
@@ -235,12 +219,6 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         {
             try
             {
-                if (command == null)
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
-
-                if (!command.ValidarCommand())
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", command.Notificacoes));
-
                 var result = _handler.Handler(command);
 
                 if (result.Sucesso)

@@ -1,13 +1,11 @@
 ﻿using ControleDespesas.Domain.Commands.Usuario.Input;
-using ControleDespesas.Domain.Commands.Usuario.Output;
-using ControleDespesas.Domain.Entities;
 using ControleDespesas.Domain.Helpers;
 using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
-using ControleDespesas.Domain.Query.Usuario.Results;
+using ControleDespesas.Infra.Commands;
 using LSCode.Facilitador.Api.Interfaces.Commands;
-using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
+using Microsoft.AspNetCore.Http;
 using System;
 
 namespace ControleDespesas.Domain.Handlers
@@ -25,21 +23,39 @@ namespace ControleDespesas.Domain.Handlers
         {
             try
             {
-                Usuario usuario = UsuarioHelper.GerarEntidade(command);
+                if (command == null)
+                    return new CommandResult(StatusCodes.Status400BadRequest,
+                                             "Parâmentros inválidos",
+                                             "Parâmetros de entrada",
+                                             "Parâmetros de entrada estão nulos");
+
+                if (!command.ValidarCommand())
+                    return new CommandResult(StatusCodes.Status422UnprocessableEntity,
+                                             "Parâmentros inválidos",
+                                             command.Notificacoes);
+
+                var usuario = UsuarioHelper.GerarEntidade(command);
 
                 AddNotificacao(usuario.Notificacoes);
 
-                if (_repository.CheckLogin(usuario.Login.ToString()))
-                    AddNotificacao("Login", "Esse login não está disponível pois já está sendo usado por outro usuário");
-
                 if (Invalido)
-                    return new CommandResult<Notificacao>(422, "Inconsistência(s) no(s) dado(s)", Notificacoes);
+                    return new CommandResult(StatusCodes.Status422UnprocessableEntity,
+                                             "Inconsistência(s) no(s) dado(s)",
+                                             Notificacoes);
+
+                if (_repository.CheckLogin(usuario.Login))
+                    return new CommandResult(StatusCodes.Status422UnprocessableEntity,
+                                             "Inconsistência(s) no(s) dado(s)",
+                                             "Login",
+                                             "Esse login não está disponível pois já está sendo usado por outro usuário");
 
                 usuario = _repository.Salvar(usuario);
 
-                AdicionarUsuarioCommandOutput dadosRetorno = UsuarioHelper.GerarDadosRetornoInsert(usuario);
+                var dadosRetorno = UsuarioHelper.GerarDadosRetornoInsert(usuario);
 
-                return new CommandResult<Notificacao>(201, "Usuário gravado com sucesso!", dadosRetorno);
+                return new CommandResult(StatusCodes.Status201Created, 
+                                         "Usuário gravado com sucesso!", 
+                                         dadosRetorno);
             }
             catch (Exception e)
             {
@@ -47,33 +63,56 @@ namespace ControleDespesas.Domain.Handlers
             }
         }
 
-        public ICommandResult<Notificacao> Handler(AtualizarUsuarioCommand command)
+        public ICommandResult<Notificacao> Handler(int id, AtualizarUsuarioCommand command)
         {
             try
             {
-                Usuario usuario = UsuarioHelper.GerarEntidade(command);
+                if (command == null)
+                    return new CommandResult(StatusCodes.Status400BadRequest,
+                                             "Parâmentros inválidos",
+                                             "Parâmetros de entrada",
+                                             "Parâmetros de entrada estão nulos");
+
+                command.Id = id;
+
+                if (!command.ValidarCommand())
+                    return new CommandResult(StatusCodes.Status422UnprocessableEntity,
+                                             "Parâmentros inválidos",
+                                             command.Notificacoes);
+
+                var usuario = UsuarioHelper.GerarEntidade(command);
 
                 AddNotificacao(usuario.Notificacoes);
 
+                if (Invalido)
+                    return new CommandResult(StatusCodes.Status422UnprocessableEntity,
+                                             "Inconsistência(s) no(s) dado(s)",
+                                             Notificacoes);
+
                 if (!_repository.CheckId(usuario.Id))
-                    AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");
+                    return new CommandResult(StatusCodes.Status422UnprocessableEntity,
+                                             "Inconsistência(s) no(s) dado(s)",
+                                             "Id",
+                                             "Id inválido. Este id não está cadastrado!");
 
                 if (_repository.CheckLogin(usuario.Login.ToString()))
                 {
-                    UsuarioQueryResult userDoIdEnviadoBaseDados = _repository.Obter(usuario.Id);
+                    var userDoIdEnviadoBaseDados = _repository.Obter(usuario.Id);
 
                     if (userDoIdEnviadoBaseDados.Login != usuario.Login.ToString())
-                        AddNotificacao("Login", "Esse login não está disponível pois já está sendo usado por outro usuário");
+                        return new CommandResult(StatusCodes.Status422UnprocessableEntity,
+                                                 "Inconsistência(s) no(s) dado(s)",
+                                                 "Login",
+                                                 "Esse login não está disponível pois já está sendo usado por outro usuário");
                 }
-
-                if (Invalido)
-                    return new CommandResult<Notificacao>(422, "Inconsistência(s) no(s) dado(s)", Notificacoes);
 
                 _repository.Atualizar(usuario);
 
-                AtualizarUsuarioCommandOutput dadosRetorno = UsuarioHelper.GerarDadosRetornoUpdate(usuario);
+                var dadosRetorno = UsuarioHelper.GerarDadosRetornoUpdate(usuario);
 
-                return new CommandResult<Notificacao>(200, "Usuário atualizado com sucesso!", dadosRetorno);
+                return new CommandResult(StatusCodes.Status200OK, 
+                                         "Usuário atualizado com sucesso!", 
+                                         dadosRetorno);
             }
             catch (Exception e)
             {
@@ -86,16 +125,18 @@ namespace ControleDespesas.Domain.Handlers
             try
             {
                 if (!_repository.CheckId(id))
-                    AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");
-
-                if (Invalido)
-                    return new CommandResult<Notificacao>(422, "Inconsistência(s) no(s) dado(s)", Notificacoes);
+                    return new CommandResult(StatusCodes.Status422UnprocessableEntity,
+                                             "Inconsistência(s) no(s) dado(s)",
+                                             "Id",
+                                             "Id inválido. Este id não está cadastrado!");
 
                 _repository.Deletar(id);
 
-                ApagarUsuarioCommandOutput dadosRetorno = UsuarioHelper.GerarDadosRetornoDelete(id);
+                var dadosRetorno = UsuarioHelper.GerarDadosRetornoDelete(id);
 
-                return new CommandResult<Notificacao>(200, "Usuário excluído com sucesso!", dadosRetorno);
+                return new CommandResult(StatusCodes.Status200OK, 
+                                         "Usuário excluído com sucesso!", 
+                                         dadosRetorno);
             }
             catch (Exception e)
             {
@@ -107,26 +148,34 @@ namespace ControleDespesas.Domain.Handlers
         {
             try
             {
+                if (command == null)
+                    return new CommandResult(StatusCodes.Status400BadRequest,
+                                             "Parâmentros inválidos",
+                                             "Parâmetros de entrada",
+                                             "Parâmetros de entrada estão nulos");
+
+                if (!command.ValidarCommand())
+                    return new CommandResult(StatusCodes.Status422UnprocessableEntity,
+                                             "Parâmentros inválidos",
+                                             command.Notificacoes);
+
                 string login = command.Login;
                 string senha = command.Senha;
 
                 if (!_repository.CheckLogin(login))
-                    AddNotificacao("Login", "Login incorreto! Esse login de usuário não existe");
+                    return new CommandResult(StatusCodes.Status422UnprocessableEntity,
+                                             "Inconsistência(s) no(s) dado(s)",
+                                             "Login",
+                                             "Login incorreto! Esse login de usuário não existe");
 
-                if (Invalido)
-                    return new CommandResult<Notificacao>(422, "Inconsistência(s) no(s) dado(s)", Notificacoes);
+                var usuario = _repository.Logar(login, senha);
 
-                UsuarioQueryResult usuario = _repository.Logar(login, senha);
-
-                if (usuario != null)
-                {
-                    return new CommandResult<Notificacao>(200, "Usuário logado com sucesso!", usuario);
-                }
-                else
-                {
-                    AddNotificacao("Senha", "Senha incorreta!");
-                    return new CommandResult<Notificacao>(422, "Inconsistência(s) no(s) dado(s)", Notificacoes);
-                }
+                return usuario != null
+                    ? new CommandResult(StatusCodes.Status200OK, "Usuário logado com sucesso!", usuario)
+                    : new CommandResult(StatusCodes.Status422UnprocessableEntity,
+                                        "Inconsistência(s) no(s) dado(s)",
+                                        "Senha",
+                                        "Senha incorreta!");
             }
             catch (Exception e)
             {

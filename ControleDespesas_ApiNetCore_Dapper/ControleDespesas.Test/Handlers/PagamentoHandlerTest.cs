@@ -89,7 +89,7 @@ namespace ControleDespesas.Test.Handlers
             _repositoryPessoa.Salvar(pessoa);
             _repositoryPagamento.Salvar(pagamento);
 
-            var retorno = _handler.Handler(pagamentoCommand);
+            var retorno = _handler.Handler(pagamentoCommand.Id, pagamentoCommand);
 
             var retornoDados = (AtualizarPagamentoCommandOutput)retorno.Dados;
 

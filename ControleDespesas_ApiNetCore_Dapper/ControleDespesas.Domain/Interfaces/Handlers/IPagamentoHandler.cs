@@ -7,7 +7,7 @@ namespace ControleDespesas.Domain.Interfaces.Handlers
     public interface IPagamentoHandler
     {
         ICommandResult<Notificacao> Handler(AdicionarPagamentoCommand command);
-        ICommandResult<Notificacao> Handler(AtualizarPagamentoCommand command);
+        ICommandResult<Notificacao> Handler(int id, AtualizarPagamentoCommand command);
         ICommandResult<Notificacao> Handler(int id);
     }
 }

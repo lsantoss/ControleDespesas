@@ -1,10 +1,10 @@
-﻿using ControleDespesas.Api.Services;
+﻿using ControleDespesas.Api.Authentication;
 using ControleDespesas.Domain.Commands.Usuario.Output;
 using ControleDespesas.Domain.Enums;
 using ControleDespesas.Domain.Handlers;
+using ControleDespesas.Domain.Interfaces.Authentication;
 using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
-using ControleDespesas.Domain.Interfaces.Services;
 using ControleDespesas.Domain.Query.Usuario.Results;
 using ControleDespesas.Infra.Data.Repositories;
 using ControleDespesas.Test.AppConfigurations.Base;
@@ -16,7 +16,7 @@ namespace ControleDespesas.Test.Handlers
 {
     class UsuarioHandlerTest : DatabaseTest
     {
-        private readonly ITokenJWTService _tokenJWTService;
+        private readonly IJWTAuthentication _jwtAuthentication;
         private readonly IUsuarioRepository _repository;
         private readonly IUsuarioHandler _handler;
 
@@ -24,9 +24,9 @@ namespace ControleDespesas.Test.Handlers
         {
             CriarBaseDeDadosETabelas();
 
-            _tokenJWTService = new TokenJWTService(MockSettingsAPI);
+            _jwtAuthentication = new JWTAuthentication(MockSettingsAPI);
             _repository = new UsuarioRepository(MockSettingsInfraData);
-            _handler = new UsuarioHandler(_repository, _tokenJWTService);
+            _handler = new UsuarioHandler(_repository, _jwtAuthentication);
         }
 
         [SetUp]
@@ -105,7 +105,7 @@ namespace ControleDespesas.Test.Handlers
             var retornoDados = (UsuarioTokenQueryResult)retorno.Dados;
 
             var usuarioQR = _repository.Logar(usuarioCommand.Login, usuarioCommand.Senha);
-            var token = _tokenJWTService.GenerarTokenJwt(usuarioQR);
+            var token = _jwtAuthentication.GenerarTokenJwt(usuarioQR);
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retornoDados));
 

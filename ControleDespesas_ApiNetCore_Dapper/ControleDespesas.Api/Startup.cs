@@ -1,10 +1,10 @@
-﻿using ControleDespesas.Api.Middlewares;
-using ControleDespesas.Api.Services;
+﻿using ControleDespesas.Api.Authentication;
+using ControleDespesas.Api.Middlewares;
 using ControleDespesas.Api.Swagger;
 using ControleDespesas.Domain.Handlers;
+using ControleDespesas.Domain.Interfaces.Authentication;
 using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
-using ControleDespesas.Domain.Interfaces.Services;
 using ControleDespesas.Infra.Data.Repositories;
 using ControleDespesas.Infra.Settings;
 using ElmahCore.Mvc;
@@ -87,8 +87,7 @@ namespace ControleDespesas.Api
             #endregion
 
             #region Autenticação JWT
-            var keyString = Configuration.GetSection("SettingsAPI:ChaveJWT").Get<string>();
-            var key = Encoding.ASCII.GetBytes(keyString);
+            services.AddTransient<IJWTAuthentication, JWTAuthentication>();
 
             services.AddAuthentication(x =>
             {
@@ -101,7 +100,7 @@ namespace ControleDespesas.Api
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(settingsAPI.ChaveJWT)),
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
@@ -137,10 +136,6 @@ namespace ControleDespesas.Api
             services.AddTransient<ITipoPagamentoHandler, TipoPagamentoHandler>();
             services.AddTransient<IPagamentoHandler, PagamentoHandler>();
             services.AddTransient<IUsuarioHandler, UsuarioHandler>();
-            #endregion
-
-            #region Services
-            services.AddTransient<ITokenJWTService, TokenJWTService>();
             #endregion
 
             #region Indented Pretty Print Formatting JSON

@@ -1,8 +1,8 @@
 ﻿using ControleDespesas.Domain.Commands.Usuario.Input;
 using ControleDespesas.Domain.Helpers;
+using ControleDespesas.Domain.Interfaces.Authentication;
 using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
-using ControleDespesas.Domain.Interfaces.Services;
 using ControleDespesas.Domain.Query.Usuario.Results;
 using ControleDespesas.Infra.Commands;
 using LSCode.Facilitador.Api.Interfaces.Commands;
@@ -15,9 +15,9 @@ namespace ControleDespesas.Domain.Handlers
     public class UsuarioHandler : Notificadora, IUsuarioHandler
     {
         private readonly IUsuarioRepository _repository;
-        private readonly ITokenJWTService _tokenJWTService;
+        private readonly IJWTAuthentication _tokenJWTService;
 
-        public UsuarioHandler(IUsuarioRepository repository, ITokenJWTService tokenJWTService)
+        public UsuarioHandler(IUsuarioRepository repository, IJWTAuthentication tokenJWTService)
         {
             _repository = repository;
             _tokenJWTService = tokenJWTService;

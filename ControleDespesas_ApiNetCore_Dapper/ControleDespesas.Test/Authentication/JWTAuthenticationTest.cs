@@ -1,18 +1,18 @@
-﻿using ControleDespesas.Api.Services;
-using ControleDespesas.Domain.Interfaces.Services;
+﻿using ControleDespesas.Api.Authentication;
+using ControleDespesas.Domain.Interfaces.Authentication;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using NUnit.Framework;
 
-namespace ControleDespesas.Test.Service
+namespace ControleDespesas.Test.Authentication
 {
-    public class TokenJWTServiceTest : BaseTest
+    public class JWTAuthenticationTest : BaseTest
     {
-        private readonly ITokenJWTService _tokenJWTService;
+        private readonly IJWTAuthentication _jwtAuthentication;
 
-        public TokenJWTServiceTest()
+        public JWTAuthenticationTest()
         {
-            _tokenJWTService = new TokenJWTService(MockSettingsAPI);
+            _jwtAuthentication = new JWTAuthentication(MockSettingsAPI);
         }
 
         [SetUp]
@@ -23,7 +23,7 @@ namespace ControleDespesas.Test.Service
         {
             var usuarioQR = new SettingsTest().UsuarioQR;
 
-            var tokenJWT = _tokenJWTService.GenerarTokenJwt(usuarioQR);
+            var tokenJWT = _jwtAuthentication.GenerarTokenJwt(usuarioQR);
 
             TestContext.WriteLine(tokenJWT);
 

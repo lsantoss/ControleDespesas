@@ -1,8 +1,8 @@
 ﻿using ControleDespesas.Domain.Commands.Usuario.Input;
 using ControleDespesas.Domain.Commands.Usuario.Output;
+using ControleDespesas.Domain.Interfaces.Authentication;
 using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
-using ControleDespesas.Domain.Interfaces.Services;
 using ControleDespesas.Domain.Query.Usuario.Results;
 using ControleDespesas.Infra.Settings;
 using ElmahCore;
@@ -24,12 +24,12 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
     {
         private readonly IUsuarioRepository _repository;
         private readonly IUsuarioHandler _handler;
-        private readonly ITokenJWTService _tokenService;
+        private readonly IJWTAuthentication _tokenService;
         private readonly SettingsAPI _settings;
 
         public UsuarioController(IUsuarioRepository repository, 
                                  IUsuarioHandler handler, 
-                                 ITokenJWTService tokenService, 
+                                 IJWTAuthentication tokenService, 
                                  SettingsAPI settings)
         {
             _repository = repository;

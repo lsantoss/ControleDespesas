@@ -1,8 +1,8 @@
 ﻿using ControleDespesas.Domain.Query.Usuario.Results;
 
-namespace ControleDespesas.Domain.Interfaces.Services
+namespace ControleDespesas.Domain.Interfaces.Authentication
 {
-    public interface ITokenJWTService
+    public interface IJWTAuthentication
     {
         string GenerarTokenJwt(UsuarioQueryResult usuarioQR);
     }

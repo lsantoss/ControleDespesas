@@ -1,4 +1,4 @@
-﻿using ControleDespesas.Domain.Interfaces.Services;
+﻿using ControleDespesas.Domain.Interfaces.Authentication;
 using ControleDespesas.Domain.Query.Usuario.Results;
 using ControleDespesas.Infra.Settings;
 using Microsoft.IdentityModel.Tokens;
@@ -7,13 +7,13 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace ControleDespesas.Api.Services
+namespace ControleDespesas.Api.Authentication
 {
-    public class TokenJWTService : ITokenJWTService
+    public class JWTAuthentication : IJWTAuthentication
     {
         private readonly SettingsAPI _settings;
 
-        public TokenJWTService(SettingsAPI settings)
+        public JWTAuthentication(SettingsAPI settings)
         {
             _settings = settings;
         }

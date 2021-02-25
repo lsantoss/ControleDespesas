@@ -1,4 +1,5 @@
-﻿using ControleDespesas.Api.Services;
+﻿using ControleDespesas.Api.Middlewares;
+using ControleDespesas.Api.Services;
 using ControleDespesas.Api.Swagger;
 using ControleDespesas.Domain.Handlers;
 using ControleDespesas.Domain.Interfaces.Handlers;

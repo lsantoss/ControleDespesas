@@ -4,6 +4,6 @@ namespace ControleDespesas.Domain.Interfaces.Services
 {
     public interface ITokenJWTService
     {
-        string GenerateToken(UsuarioQueryResult usuarioQR);
+        string GenerarTokenJwt(UsuarioQueryResult usuarioQR);
     }
 }

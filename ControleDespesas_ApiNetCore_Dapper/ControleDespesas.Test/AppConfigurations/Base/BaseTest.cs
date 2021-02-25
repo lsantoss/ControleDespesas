@@ -1,4 +1,4 @@
-﻿using ControleDespesas.Api.Settings;
+﻿using ControleDespesas.Infra.Settings;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using NUnit.Framework;
 

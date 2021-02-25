@@ -1,10 +1,10 @@
-﻿using ControleDespesas.Api.Settings;
-using ControleDespesas.Domain.Commands.Usuario.Input;
+﻿using ControleDespesas.Domain.Commands.Usuario.Input;
 using ControleDespesas.Domain.Commands.Usuario.Output;
 using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Domain.Interfaces.Services;
 using ControleDespesas.Domain.Query.Usuario.Results;
+using ControleDespesas.Infra.Settings;
 using ElmahCore;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;

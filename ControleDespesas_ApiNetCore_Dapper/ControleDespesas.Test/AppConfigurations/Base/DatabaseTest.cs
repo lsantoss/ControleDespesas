@@ -1,4 +1,4 @@
-﻿using ControleDespesas.Infra.Data.Settings;
+﻿using ControleDespesas.Infra.Settings;
 using ControleDespesas.Test.AppConfigurations.QueriesSQL;
 using Dapper;
 using LSCode.ConexoesBD.DataContexts;

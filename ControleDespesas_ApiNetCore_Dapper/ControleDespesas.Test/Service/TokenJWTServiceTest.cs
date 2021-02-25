@@ -19,11 +19,11 @@ namespace ControleDespesas.Test.Service
         public void Setup() { }
 
         [Test]
-        public void GenerateToken()
+        public void GenerarTokenJwt()
         {
             var usuarioQR = new SettingsTest().UsuarioQR;
 
-            var tokenJWT = _tokenJWTService.GenerateToken(usuarioQR);
+            var tokenJWT = _tokenJWTService.GenerarTokenJwt(usuarioQR);
 
             TestContext.WriteLine(tokenJWT);
 

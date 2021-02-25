@@ -1,10 +1,10 @@
-﻿using ControleDespesas.Api.Settings;
-using ControleDespesas.Domain.Commands.Pagamento.Input;
+﻿using ControleDespesas.Domain.Commands.Pagamento.Input;
 using ControleDespesas.Domain.Commands.Pagamento.Output;
 using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Domain.Query.Pagamento.Input;
 using ControleDespesas.Domain.Query.Pagamento.Results;
+using ControleDespesas.Infra.Settings;
 using ElmahCore;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;

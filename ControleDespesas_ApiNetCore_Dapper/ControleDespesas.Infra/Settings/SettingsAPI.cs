@@ -1,4 +1,4 @@
-﻿namespace ControleDespesas.Api.Settings
+﻿namespace ControleDespesas.Infra.Settings
 {
     public class SettingsAPI
     {

@@ -105,7 +105,7 @@ namespace ControleDespesas.Test.Handlers
             var retornoDados = (UsuarioTokenQueryResult)retorno.Dados;
 
             var usuarioQR = _repository.Logar(usuarioCommand.Login, usuarioCommand.Senha);
-            var token = _tokenJWTService.GenerateToken(usuarioQR);
+            var token = _tokenJWTService.GenerarTokenJwt(usuarioQR);
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retornoDados));
 

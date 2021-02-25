@@ -1,4 +1,4 @@
-﻿using ControleDespesas.Api.Settings;
+﻿using ControleDespesas.Infra.Settings;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
 using Microsoft.AspNetCore.Builder;

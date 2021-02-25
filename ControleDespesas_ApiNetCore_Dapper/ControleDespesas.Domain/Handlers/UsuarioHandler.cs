@@ -176,7 +176,7 @@ namespace ControleDespesas.Domain.Handlers
 
                 if (usuario != null)
                 {
-                    var token = _tokenJWTService.GenerateToken(usuario);
+                    var token = _tokenJWTService.GenerarTokenJwt(usuario);
                     var usuarioComToken = new UsuarioTokenQueryResult() 
                     { 
                         Id = usuario.Id,

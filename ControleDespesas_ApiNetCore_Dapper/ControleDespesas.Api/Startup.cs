@@ -1,12 +1,11 @@
 ﻿using ControleDespesas.Api.Services;
-using ControleDespesas.Api.Settings;
 using ControleDespesas.Api.Swagger;
 using ControleDespesas.Domain.Handlers;
 using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Domain.Interfaces.Services;
 using ControleDespesas.Infra.Data.Repositories;
-using ControleDespesas.Infra.Data.Settings;
+using ControleDespesas.Infra.Settings;
 using ElmahCore.Mvc;
 using ElmahCore.Sql;
 using LSCode.ConexoesBD.DataContexts;

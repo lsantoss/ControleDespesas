@@ -47,9 +47,7 @@ namespace ControleDespesas.Api.Middlewares
 				var mensagem = "Acesso negado";
 				var notificacao = new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada");
 				var erros = new List<Notificacao>() { notificacao };
-
 				var retorno = new ApiResponse<object, Notificacao>(mensagem, erros);
-
 				var jsonRetorno = JsonConvert.SerializeObject(retorno);
 
 				httpContext.Response.ContentType = "application/json";

@@ -25,23 +25,16 @@ namespace ControleDespesas.Domain.Entities
 
         public void Validar()
         {
-            try
-            {
-                if (Usuario.Id <= 0)
-                    AddNotificacao("Id do Usuário", "Id do Usuário não é valido");
+            if (Usuario.Id <= 0)
+                AddNotificacao("Id do Usuário", "Id do Usuário não é valido");
 
-                if (string.IsNullOrEmpty(Nome))
-                    AddNotificacao("Nome", "Nome é um campo obrigatório");
-                else if (Nome.Length > 100)
-                    AddNotificacao("Nome", "Nome maior que o esperado");
+            if (string.IsNullOrEmpty(Nome))
+                AddNotificacao("Nome", "Nome é um campo obrigatório");
+            else if (Nome.Length > 100)
+                AddNotificacao("Nome", "Nome maior que o esperado");
 
-                if (string.IsNullOrEmpty(ImagemPerfil))
-                    AddNotificacao("ImagemPerfil", "ImagemPerfil é um campo obrigatório");
-            }
-            catch(Exception e)
-            {
-                throw e;
-            }
+            if (string.IsNullOrEmpty(ImagemPerfil))
+                AddNotificacao("ImagemPerfil", "ImagemPerfil é um campo obrigatório");
         }
     }
 }

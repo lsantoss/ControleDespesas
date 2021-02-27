@@ -6,7 +6,6 @@ using ControleDespesas.Infra.Commands;
 using LSCode.Facilitador.Api.Interfaces.Commands;
 using LSCode.Validador.ValidacoesNotificacoes;
 using Microsoft.AspNetCore.Http;
-using System;
 
 namespace ControleDespesas.Domain.Handlers
 {
@@ -21,110 +20,89 @@ namespace ControleDespesas.Domain.Handlers
 
         public ICommandResult<Notificacao> Handler(AdicionarPessoaCommand command)
         {
-            try
-            {
-                if (command == null)
-                    return new CommandResult(StatusCodes.Status400BadRequest,
-                                             "Parâmentros inválidos",
-                                             "Parâmetros de entrada",
-                                             "Parâmetros de entrada estão nulos");
+            if (command == null)
+                return new CommandResult(StatusCodes.Status400BadRequest,
+                                         "Parâmentros inválidos",
+                                         "Parâmetros de entrada",
+                                         "Parâmetros de entrada estão nulos");
 
-                if (!command.ValidarCommand())
-                    return new CommandResult(StatusCodes.Status422UnprocessableEntity,
-                                             "Parâmentros inválidos",
-                                             command.Notificacoes);
+            if (!command.ValidarCommand())
+                return new CommandResult(StatusCodes.Status422UnprocessableEntity,
+                                         "Parâmentros inválidos",
+                                         command.Notificacoes);
 
-                var pessoa = PessoaHelper.GerarEntidade(command);
+            var pessoa = PessoaHelper.GerarEntidade(command);
 
-                AddNotificacao(pessoa.Notificacoes);
+            AddNotificacao(pessoa.Notificacoes);
 
-                if (Invalido)
-                    return new CommandResult(StatusCodes.Status422UnprocessableEntity, 
-                                             "Inconsistência(s) no(s) dado(s)", 
-                                             Notificacoes);
+            if (Invalido)
+                return new CommandResult(StatusCodes.Status422UnprocessableEntity, 
+                                         "Inconsistência(s) no(s) dado(s)", 
+                                         Notificacoes);
 
-                pessoa = _repository.Salvar(pessoa);
+            pessoa = _repository.Salvar(pessoa);
 
-                var dadosRetorno = PessoaHelper.GerarDadosRetornoInsert(pessoa);
+            var dadosRetorno = PessoaHelper.GerarDadosRetornoInsert(pessoa);
 
-                return new CommandResult(StatusCodes.Status201Created, 
-                                         "Pessoa gravada com sucesso!", 
-                                         dadosRetorno);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            return new CommandResult(StatusCodes.Status201Created, 
+                                     "Pessoa gravada com sucesso!", 
+                                     dadosRetorno);
         }
 
         public ICommandResult<Notificacao> Handler(int id, AtualizarPessoaCommand command)
         {
-            try
-            {
-                if (command == null)
-                    return new CommandResult(StatusCodes.Status400BadRequest,
-                                                "Parâmetros de entrada",
-                                                "Parâmetros de entrada",
-                                                "Parâmetros de entrada estão nulos");
+            if (command == null)
+                return new CommandResult(StatusCodes.Status400BadRequest,
+                                         "Parâmetros de entrada",
+                                         "Parâmetros de entrada",
+                                         "Parâmetros de entrada estão nulos");
 
-                command.Id = id;
+            command.Id = id;
 
-                if (!command.ValidarCommand())
-                    return new CommandResult(StatusCodes.Status422UnprocessableEntity,
-                                             "Parâmentros inválidos",
-                                             command.Notificacoes);
+            if (!command.ValidarCommand())
+                return new CommandResult(StatusCodes.Status422UnprocessableEntity,
+                                         "Parâmentros inválidos",
+                                         command.Notificacoes);
 
-                var pessoa = PessoaHelper.GerarEntidade(command);
+            var pessoa = PessoaHelper.GerarEntidade(command);
 
-                AddNotificacao(pessoa.Notificacoes);
+            AddNotificacao(pessoa.Notificacoes);
 
-                if (Invalido)
-                    return new CommandResult(StatusCodes.Status422UnprocessableEntity,
-                                             "Inconsistência(s) no(s) dado(s)",
-                                             Notificacoes);
+            if (Invalido)
+                return new CommandResult(StatusCodes.Status422UnprocessableEntity,
+                                         "Inconsistência(s) no(s) dado(s)",
+                                         Notificacoes);
 
-                if (!_repository.CheckId(pessoa.Id))
-                    return new CommandResult(StatusCodes.Status422UnprocessableEntity,
-                                             "Inconsistência(s) no(s) dado(s)",
-                                             "Id",
-                                             "Id inválido. Este id não está cadastrado!");
+            if (!_repository.CheckId(pessoa.Id))
+                return new CommandResult(StatusCodes.Status422UnprocessableEntity,
+                                         "Inconsistência(s) no(s) dado(s)",
+                                         "Id",
+                                         "Id inválido. Este id não está cadastrado!");
 
-                _repository.Atualizar(pessoa);
+            _repository.Atualizar(pessoa);
 
-                var dadosRetorno = PessoaHelper.GerarDadosRetornoUpdate(pessoa);
+            var dadosRetorno = PessoaHelper.GerarDadosRetornoUpdate(pessoa);
 
-                return new CommandResult(StatusCodes.Status200OK, 
-                                         "Pessoa atualizada com sucesso!", 
-                                         dadosRetorno);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            return new CommandResult(StatusCodes.Status200OK, 
+                                     "Pessoa atualizada com sucesso!", 
+                                     dadosRetorno);
         }
 
         public ICommandResult<Notificacao> Handler(int id)
         {
-            try
-            {
-                if (!_repository.CheckId(id))
-                    return new CommandResult(StatusCodes.Status422UnprocessableEntity,
-                                             "Inconsistência(s) no(s) dado(s)",
-                                             "Id",
-                                             "Id inválido. Este id não está cadastrado!");
+            if (!_repository.CheckId(id))
+                return new CommandResult(StatusCodes.Status422UnprocessableEntity,
+                                         "Inconsistência(s) no(s) dado(s)",
+                                         "Id",
+                                         "Id inválido. Este id não está cadastrado!");
 
-                _repository.Deletar(id);
+            _repository.Deletar(id);
 
-                var dadosRetorno = PessoaHelper.GerarDadosRetornoDelete(id);
+            var dadosRetorno = PessoaHelper.GerarDadosRetornoDelete(id);
 
-                return new CommandResult(StatusCodes.Status200OK, 
-                                         "Pessoa excluída com sucesso!", 
-                                         dadosRetorno);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            return new CommandResult(StatusCodes.Status200OK, 
+                                     "Pessoa excluída com sucesso!", 
+                                     dadosRetorno);
         }
     }
 }

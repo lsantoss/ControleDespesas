@@ -16,7 +16,7 @@ namespace ControleDespesas.Test.Controllers
 
         public HealthCheckControllerTest()
         {
-            _controller = new HealthCheckController(MockSettingsAPI);
+            _controller = new HealthCheckController();
             _controller.ControllerContext.HttpContext = new DefaultHttpContext();
             _controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = MockSettingsAPI.ChaveAPI;
         }

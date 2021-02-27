@@ -1,7 +1,6 @@
 ﻿using ControleDespesas.Domain.Commands.TipoPagamento.Input;
 using ControleDespesas.Domain.Commands.TipoPagamento.Output;
 using ControleDespesas.Domain.Entities;
-using System;
 
 namespace ControleDespesas.Domain.Helpers
 {
@@ -9,79 +8,39 @@ namespace ControleDespesas.Domain.Helpers
     {
         public static TipoPagamento GerarEntidade(AdicionarTipoPagamentoCommand command)
         {
-            try
-            {
-                string descricao = command.Descricao;
-
-                TipoPagamento tipoPagamento = new TipoPagamento(0, descricao);
-                tipoPagamento.Validar();
-                return tipoPagamento;
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            TipoPagamento tipoPagamento = new TipoPagamento(0, command.Descricao);
+            tipoPagamento.Validar();
+            return tipoPagamento;
         }
 
         public static TipoPagamento GerarEntidade(AtualizarTipoPagamentoCommand command)
         {
-            try
-            {
-                int id = command.Id;
-                string descricao = command.Descricao;
-
-                TipoPagamento tipoPagamento = new TipoPagamento(id, descricao);
-                tipoPagamento.Validar();
-                return tipoPagamento;
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            TipoPagamento tipoPagamento = new TipoPagamento(command.Id, command.Descricao);
+            tipoPagamento.Validar();
+            return tipoPagamento;
         }
 
         public static AdicionarTipoPagamentoCommandOutput GerarDadosRetornoInsert(TipoPagamento tipoPagamento)
         {
-            try
+            return new AdicionarTipoPagamentoCommandOutput
             {
-                return new AdicionarTipoPagamentoCommandOutput
-                {
-                    Id = tipoPagamento.Id,
-                    Descricao = tipoPagamento.Descricao,
-                };
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+                Id = tipoPagamento.Id,
+                Descricao = tipoPagamento.Descricao,
+            };
         }
 
         public static AtualizarTipoPagamentoCommandOutput GerarDadosRetornoUpdate(TipoPagamento tipoPagamento)
         {
-            try
+            return new AtualizarTipoPagamentoCommandOutput
             {
-                return new AtualizarTipoPagamentoCommandOutput
-                {
-                    Id = tipoPagamento.Id,
-                    Descricao = tipoPagamento.Descricao,
-                };
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+                Id = tipoPagamento.Id,
+                Descricao = tipoPagamento.Descricao,
+            };
         }
 
         public static ApagarTipoPagamentoCommandOutput GerarDadosRetornoDelete(int id)
         {
-            try
-            {
-                return new ApagarTipoPagamentoCommandOutput { Id = id };
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            return new ApagarTipoPagamentoCommandOutput { Id = id };
         }
     }
 }

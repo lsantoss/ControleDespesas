@@ -1,7 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Reflection;
-using ElmahCore;
-using Microsoft.AspNetCore.Mvc;
 
 namespace ControleDespesas.Api.Controllers.Comum
 {
@@ -13,15 +11,7 @@ namespace ControleDespesas.Api.Controllers.Comum
         [Route("")]
         public object Home()
         {
-            try
-            {
-                return "Versão do Assembly da WebApi ==> " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            }
-            catch (Exception ex)
-            {
-                HttpContext.RiseError(ex);
-                return null;
-            }
+            return "Versão do Assembly da WebApi ==> " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
     }
 }

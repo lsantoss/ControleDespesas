@@ -3,13 +3,11 @@ using ControleDespesas.Domain.Commands.Empresa.Output;
 using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Domain.Query.Empresa.Results;
-using ElmahCore;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 
 namespace ControleDespesas.Api.Controllers.ControleDespesas
@@ -43,19 +41,9 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<List<EmpresaQueryResult>, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<List<EmpresaQueryResult>, Notificacao>> Empresas()
         {
-            try
-            {
-                var result = _repository.Listar();
-
-                var mensagem = result.Count > 0 ? "Lista de empresas obtida com sucesso" : "Nenhuma empresa cadastrada atualmente";
-
-                return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<EmpresaQueryResult>, Notificacao>(mensagem, result));
-            }
-            catch (Exception e)
-            {
-                HttpContext.RiseError(e);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
-            }
+            var result = _repository.Listar();
+            var mensagem = result.Count > 0 ? "Lista de empresas obtida com sucesso" : "Nenhuma empresa cadastrada atualmente";
+            return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<EmpresaQueryResult>, Notificacao>(mensagem, result));
         }
 
         /// <summary>
@@ -73,19 +61,9 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<EmpresaQueryResult, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<EmpresaQueryResult, Notificacao>> Empresa(int id)
         {
-            try
-            {
-                var result = _repository.Obter(id);
-
-                var mensagem = result != null ? "Empresa obtida com sucesso" : "Empresa não cadastrada";
-
-                return StatusCode(StatusCodes.Status200OK, new ApiResponse<EmpresaQueryResult, Notificacao>(mensagem, result));
-            }
-            catch (Exception e)
-            {
-                HttpContext.RiseError(e);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
-            }
+            var result = _repository.Obter(id);
+            var mensagem = result != null ? "Empresa obtida com sucesso" : "Empresa não cadastrada";
+            return StatusCode(StatusCodes.Status200OK, new ApiResponse<EmpresaQueryResult, Notificacao>(mensagem, result));
         }
 
         /// <summary>
@@ -106,21 +84,13 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<AdicionarEmpresaCommandOutput, Notificacao>), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(typeof(ApiResponse<AdicionarEmpresaCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<AdicionarEmpresaCommandOutput, Notificacao>> EmpresaInserir([FromBody] AdicionarEmpresaCommand command)
-        {
-            try
-            {                 
-                var result = _handler.Handler(command);
+        {               
+            var result = _handler.Handler(command);
 
-                if (result.Sucesso)
-                    return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
-                else
-                    return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
-            }
-            catch (Exception e)
-            {
-                HttpContext.RiseError(e);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
-            }
+            if (result.Sucesso)
+                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
+            else
+                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
         }
 
         /// <summary>
@@ -143,20 +113,12 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<AtualizarEmpresaCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<AtualizarEmpresaCommandOutput, Notificacao>> EmpresaAlterar(int id, [FromBody] AtualizarEmpresaCommand command)
         {
-            try
-            {
-                var result = _handler.Handler(id, command);
+            var result = _handler.Handler(id, command);
 
-                if (result.Sucesso)
-                    return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
-                else
-                    return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
-            }
-            catch (Exception e)
-            {
-                HttpContext.RiseError(e);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
-            }
+            if (result.Sucesso)
+                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
+            else
+                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
         }
 
         /// <summary>
@@ -176,20 +138,12 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<ApagarEmpresaCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<ApagarEmpresaCommandOutput, Notificacao>> EmpresaExcluir(int id)
         {
-            try
-            {
-                var result = _handler.Handler(id);
+            var result = _handler.Handler(id);
 
-                if (result.Sucesso)
-                    return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
-                else
-                    return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
-            }
-            catch (Exception e)
-            {
-                HttpContext.RiseError(e);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
-            }
+            if (result.Sucesso)
+                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
+            else
+                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
         }
     }
 }

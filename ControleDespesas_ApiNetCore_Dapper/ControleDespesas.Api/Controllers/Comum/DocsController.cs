@@ -1,7 +1,5 @@
-﻿using ElmahCore;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
 
 namespace ControleDespesas.Api.Controllers.Comum
 {
@@ -14,15 +12,7 @@ namespace ControleDespesas.Api.Controllers.Comum
         [AllowAnonymous]
         public IActionResult Index()
         {
-            try
-            {
-                return View();
-            }
-            catch (Exception ex)
-            {
-                HttpContext.RiseError(ex);
-                return null;
-            }
+            return View();
         }
     }
 }

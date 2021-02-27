@@ -21,34 +21,27 @@ namespace ControleDespesas.Domain.Commands.Pagamento.Input
 
         public bool ValidarCommand()
         {
-            try
-            {
-                if (Id <= 0)
-                    AddNotificacao("Id", "Id não é valido");
+            if (Id <= 0)
+                AddNotificacao("Id", "Id não é valido");
 
-                if (IdTipoPagamento <= 0)
-                    AddNotificacao("IdTipoPagamento", "IdTipoPagamento não é valido");
+            if (IdTipoPagamento <= 0)
+                AddNotificacao("IdTipoPagamento", "IdTipoPagamento não é valido");
 
-                if (IdEmpresa <= 0)
-                    AddNotificacao("IdEmpresa", "IdEmpresa não é valido");
+            if (IdEmpresa <= 0)
+                AddNotificacao("IdEmpresa", "IdEmpresa não é valido");
 
-                if (IdPessoa <= 0)
-                    AddNotificacao("IdPessoa", "IdPessoa não é valido");
+            if (IdPessoa <= 0)
+                AddNotificacao("IdPessoa", "IdPessoa não é valido");
 
-                if (string.IsNullOrEmpty(Descricao))
-                    AddNotificacao("Descricao", "Descricao é um campo obrigatório");
-                else if (Descricao.Length > 250)
-                    AddNotificacao("Descricao", "Descricao maior que o esperado");
+            if (string.IsNullOrEmpty(Descricao))
+                AddNotificacao("Descricao", "Descricao é um campo obrigatório");
+            else if (Descricao.Length > 250)
+                AddNotificacao("Descricao", "Descricao maior que o esperado");
 
-                if (Valor <= 0)
-                    AddNotificacao("Valor", "Valor não é valido");
+            if (Valor <= 0)
+                AddNotificacao("Valor", "Valor não é valido");
 
-                return Valido;
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            return Valido;
         }
     }
 }

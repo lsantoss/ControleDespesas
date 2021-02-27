@@ -6,7 +6,6 @@ using ControleDespesas.Infra.Commands;
 using LSCode.Facilitador.Api.Interfaces.Commands;
 using LSCode.Validador.ValidacoesNotificacoes;
 using Microsoft.AspNetCore.Http;
-using System;
 
 namespace ControleDespesas.Domain.Handlers
 {
@@ -21,110 +20,89 @@ namespace ControleDespesas.Domain.Handlers
 
         public ICommandResult<Notificacao> Handler(AdicionarEmpresaCommand command)
         {
-            try
-            {
-                if (command == null)
-                    return new CommandResult(StatusCodes.Status400BadRequest, 
-                                             "Parâmentros inválidos", 
-                                             "Parâmetros de entrada", 
-                                             "Parâmetros de entrada estão nulos");
+            if (command == null)
+                return new CommandResult(StatusCodes.Status400BadRequest, 
+                                         "Parâmentros inválidos", 
+                                         "Parâmetros de entrada", 
+                                         "Parâmetros de entrada estão nulos");
 
-                if (!command.ValidarCommand())
-                    return new CommandResult(StatusCodes.Status422UnprocessableEntity, 
-                                             "Parâmentros inválidos", 
-                                             command.Notificacoes);
+            if (!command.ValidarCommand())
+                return new CommandResult(StatusCodes.Status422UnprocessableEntity, 
+                                         "Parâmentros inválidos", 
+                                         command.Notificacoes);
 
-                var empresa = EmpresaHelper.GerarEntidade(command);
+            var empresa = EmpresaHelper.GerarEntidade(command);
 
-                AddNotificacao(empresa.Notificacoes);
+            AddNotificacao(empresa.Notificacoes);
 
-                if (Invalido)
-                    return new CommandResult(StatusCodes.Status422UnprocessableEntity, 
-                                             "Inconsistência(s) no(s) dado(s)", 
-                                             Notificacoes);
+            if (Invalido)
+                return new CommandResult(StatusCodes.Status422UnprocessableEntity, 
+                                         "Inconsistência(s) no(s) dado(s)", 
+                                         Notificacoes);
 
-                empresa = _repository.Salvar(empresa);
+            empresa = _repository.Salvar(empresa);
 
-                var dadosRetorno = EmpresaHelper.GerarDadosRetornoInsert(empresa);
+            var dadosRetorno = EmpresaHelper.GerarDadosRetornoInsert(empresa);
 
-                return new CommandResult(StatusCodes.Status201Created, 
-                                         "Empresa gravada com sucesso!", 
-                                         dadosRetorno);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            return new CommandResult(StatusCodes.Status201Created, 
+                                     "Empresa gravada com sucesso!", 
+                                     dadosRetorno);
         }
 
         public ICommandResult<Notificacao> Handler(int id, AtualizarEmpresaCommand command)
         {
-            try
-            {
-                if (command == null)
-                    return new CommandResult(StatusCodes.Status400BadRequest, 
-                                             "Parâmetros de entrada", 
-                                             "Parâmetros de entrada", 
-                                             "Parâmetros de entrada estão nulos");
+            if (command == null)
+                return new CommandResult(StatusCodes.Status400BadRequest, 
+                                         "Parâmetros de entrada", 
+                                         "Parâmetros de entrada", 
+                                         "Parâmetros de entrada estão nulos");
 
-                command.Id = id;
+            command.Id = id;
 
-                if (!command.ValidarCommand())
-                    return new CommandResult(StatusCodes.Status422UnprocessableEntity, 
-                                             "Parâmentros inválidos", 
-                                             command.Notificacoes);
+            if (!command.ValidarCommand())
+                return new CommandResult(StatusCodes.Status422UnprocessableEntity, 
+                                         "Parâmentros inválidos", 
+                                         command.Notificacoes);
 
-                var empresa = EmpresaHelper.GerarEntidade(command);
+            var empresa = EmpresaHelper.GerarEntidade(command);
 
-                AddNotificacao(empresa.Notificacoes);
+            AddNotificacao(empresa.Notificacoes);
 
-                if (Invalido)
-                    return new CommandResult(StatusCodes.Status422UnprocessableEntity, 
-                                             "Inconsistência(s) no(s) dado(s)", 
-                                             Notificacoes);
+            if (Invalido)
+                return new CommandResult(StatusCodes.Status422UnprocessableEntity, 
+                                         "Inconsistência(s) no(s) dado(s)", 
+                                         Notificacoes);
 
-                if (!_repository.CheckId(empresa.Id))
-                    return new CommandResult(StatusCodes.Status422UnprocessableEntity, 
-                                             "Inconsistência(s) no(s) dado(s)", 
-                                             "Id", 
-                                             "Id inválido. Este id não está cadastrado!");
+            if (!_repository.CheckId(empresa.Id))
+                return new CommandResult(StatusCodes.Status422UnprocessableEntity, 
+                                         "Inconsistência(s) no(s) dado(s)", 
+                                         "Id", 
+                                         "Id inválido. Este id não está cadastrado!");
 
-                _repository.Atualizar(empresa);
+            _repository.Atualizar(empresa);
 
-                var dadosRetorno = EmpresaHelper.GerarDadosRetornoUpdate(empresa);
+            var dadosRetorno = EmpresaHelper.GerarDadosRetornoUpdate(empresa);
 
-                return new CommandResult(StatusCodes.Status200OK, 
-                                         "Empresa atualizada com sucesso!", 
-                                         dadosRetorno);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            return new CommandResult(StatusCodes.Status200OK, 
+                                     "Empresa atualizada com sucesso!", 
+                                     dadosRetorno);
         }
 
         public ICommandResult<Notificacao> Handler(int id)
         {
-            try
-            {
-                if (!_repository.CheckId(id))
-                    return new CommandResult(StatusCodes.Status422UnprocessableEntity, 
-                                             "Inconsistência(s) no(s) dado(s)", 
-                                             "Id", 
-                                             "Id inválido. Este id não está cadastrado!");
+            if (!_repository.CheckId(id))
+                return new CommandResult(StatusCodes.Status422UnprocessableEntity, 
+                                         "Inconsistência(s) no(s) dado(s)", 
+                                         "Id", 
+                                         "Id inválido. Este id não está cadastrado!");
 
-                _repository.Deletar(id);
+            _repository.Deletar(id);
 
-                var dadosRetorno = EmpresaHelper.GerarDadosRetornoDelete(id);
+            var dadosRetorno = EmpresaHelper.GerarDadosRetornoDelete(id);
 
-                return new CommandResult(StatusCodes.Status200OK, 
-                                         "Empresa excluída com sucesso!", 
-                                         dadosRetorno);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            return new CommandResult(StatusCodes.Status200OK, 
+                                     "Empresa excluída com sucesso!", 
+                                     dadosRetorno);
         }
     }
 }

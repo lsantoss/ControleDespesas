@@ -1,7 +1,6 @@
 ﻿using ControleDespesas.Domain.Commands.Empresa.Input;
 using ControleDespesas.Domain.Commands.Empresa.Output;
 using ControleDespesas.Domain.Entities;
-using System;
 
 namespace ControleDespesas.Domain.Helpers
 {
@@ -9,83 +8,41 @@ namespace ControleDespesas.Domain.Helpers
     {
         public static Empresa GerarEntidade(AdicionarEmpresaCommand command)
         {
-            try
-            {
-                string nome = command.Nome;
-                string logo = command.Logo;
-
-                Empresa empresa = new Empresa(0, nome, logo);
-                empresa.Validar();
-                return empresa;
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            Empresa empresa = new Empresa(0, command.Nome, command.Logo);
+            empresa.Validar();
+            return empresa;
         }
 
         public static Empresa GerarEntidade(AtualizarEmpresaCommand command)
         {
-            try
-            {
-                int id = command.Id;
-                string nome = command.Nome;
-                string logo = command.Logo;
-
-                Empresa empresa = new Empresa(id, nome, logo);
-                empresa.Validar();
-                return empresa;
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            Empresa empresa = new Empresa(command.Id, command.Nome, command.Logo);
+            empresa.Validar();
+            return empresa;
         }
 
         public static AdicionarEmpresaCommandOutput GerarDadosRetornoInsert(Empresa empresa)
         {
-            try
+            return new AdicionarEmpresaCommandOutput
             {
-                return new AdicionarEmpresaCommandOutput
-                {
-                    Id = empresa.Id,
-                    Nome = empresa.Nome,
-                    Logo = empresa.Logo
-                };
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+                Id = empresa.Id,
+                Nome = empresa.Nome,
+                Logo = empresa.Logo
+            };
         }
 
         public static AtualizarEmpresaCommandOutput GerarDadosRetornoUpdate(Empresa empresa)
         {
-            try
+            return new AtualizarEmpresaCommandOutput
             {
-                return new AtualizarEmpresaCommandOutput
-                {
-                    Id = empresa.Id,
-                    Nome = empresa.Nome,
-                    Logo = empresa.Logo
-                };
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+                Id = empresa.Id,
+                Nome = empresa.Nome,
+                Logo = empresa.Logo
+            };
         }
 
         public static ApagarEmpresaCommandOutput GerarDadosRetornoDelete(int id)
         {
-            try
-            {
-                return new ApagarEmpresaCommandOutput { Id = id };
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            return new ApagarEmpresaCommandOutput { Id = id };
         }
     }
 }

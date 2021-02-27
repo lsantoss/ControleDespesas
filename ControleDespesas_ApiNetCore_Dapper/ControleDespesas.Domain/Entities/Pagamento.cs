@@ -46,29 +46,22 @@ namespace ControleDespesas.Domain.Entities
 
         public void Validar()
         {
-            try
-            {
-                if (TipoPagamento.Id <= 0)
-                    AddNotificacao("IdTipoPagamento", "IdTipoPagamento não é valido");
+            if (TipoPagamento.Id <= 0)
+                AddNotificacao("IdTipoPagamento", "IdTipoPagamento não é valido");
 
-                if (Empresa.Id <= 0)
-                    AddNotificacao("IdEmpresa", "IdEmpresa não é valido");
+            if (Empresa.Id <= 0)
+                AddNotificacao("IdEmpresa", "IdEmpresa não é valido");
 
-                if (Pessoa.Id <= 0)
-                    AddNotificacao("IdPessoa", "IdPessoa não é valido");
+            if (Pessoa.Id <= 0)
+                AddNotificacao("IdPessoa", "IdPessoa não é valido");
 
-                if (string.IsNullOrEmpty(Descricao))
-                    AddNotificacao("Descricao", "Descricao é um campo obrigatório");
-                else if (Descricao.Length > 250)
-                    AddNotificacao("Descricao", "Descricao maior que o esperado");
+            if (string.IsNullOrEmpty(Descricao))
+                AddNotificacao("Descricao", "Descricao é um campo obrigatório");
+            else if (Descricao.Length > 250)
+                AddNotificacao("Descricao", "Descricao maior que o esperado");
 
-                if (Valor <= 0)
-                    AddNotificacao("Valor", "Valor não é valido");
-            }
-            catch(Exception e)
-            {
-                throw e;
-            }
+            if (Valor <= 0)
+                AddNotificacao("Valor", "Valor não é valido");
         }
     }
 }

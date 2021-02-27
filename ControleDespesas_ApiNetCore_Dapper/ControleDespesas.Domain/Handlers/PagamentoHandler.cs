@@ -6,7 +6,6 @@ using ControleDespesas.Infra.Commands;
 using LSCode.Facilitador.Api.Interfaces.Commands;
 using LSCode.Validador.ValidacoesNotificacoes;
 using Microsoft.AspNetCore.Http;
-using System;
 
 namespace ControleDespesas.Domain.Handlers
 {
@@ -30,125 +29,104 @@ namespace ControleDespesas.Domain.Handlers
 
         public ICommandResult<Notificacao> Handler(AdicionarPagamentoCommand command)
         {
-            try
-            {
-                if (command == null)
-                    return new CommandResult(StatusCodes.Status400BadRequest,
-                                             "Parâmentros inválidos",
-                                             "Parâmetros de entrada",
-                                             "Parâmetros de entrada estão nulos");
+            if (command == null)
+                return new CommandResult(StatusCodes.Status400BadRequest,
+                                         "Parâmentros inválidos",
+                                         "Parâmetros de entrada",
+                                         "Parâmetros de entrada estão nulos");
 
-                if (!command.ValidarCommand())
-                    return new CommandResult(StatusCodes.Status422UnprocessableEntity,
-                                             "Parâmentros inválidos",
-                                             command.Notificacoes);
+            if (!command.ValidarCommand())
+                return new CommandResult(StatusCodes.Status422UnprocessableEntity,
+                                         "Parâmentros inválidos",
+                                         command.Notificacoes);
 
-                var pagamento = PagamentoHelper.GerarEntidade(command);
+            var pagamento = PagamentoHelper.GerarEntidade(command);
 
-                AddNotificacao(pagamento.Notificacoes);
+            AddNotificacao(pagamento.Notificacoes);
 
-                if(!_repositoryEmpresa.CheckId(pagamento.Empresa.Id))
-                    AddNotificacao("IdEmpresa", "Id inválido. Este id não está cadastrado!");
+            if(!_repositoryEmpresa.CheckId(pagamento.Empresa.Id))
+                AddNotificacao("IdEmpresa", "Id inválido. Este id não está cadastrado!");
 
-                if (!_repositoryPessoa.CheckId(pagamento.Pessoa.Id))
-                    AddNotificacao("IdPessoa", "Id inválido. Este id não está cadastrado!");
+            if (!_repositoryPessoa.CheckId(pagamento.Pessoa.Id))
+                AddNotificacao("IdPessoa", "Id inválido. Este id não está cadastrado!");
 
-                if (!_repositoryTipoPagamento.CheckId(pagamento.TipoPagamento.Id))
-                    AddNotificacao("IdTipoPagamento", "Id inválido. Este id não está cadastrado!");
+            if (!_repositoryTipoPagamento.CheckId(pagamento.TipoPagamento.Id))
+                AddNotificacao("IdTipoPagamento", "Id inválido. Este id não está cadastrado!");
 
-                if (Invalido)
-                    return new CommandResult(StatusCodes.Status422UnprocessableEntity, 
-                                             "Inconsistência(s) no(s) dado(s)", 
-                                             Notificacoes);
+            if (Invalido)
+                return new CommandResult(StatusCodes.Status422UnprocessableEntity, 
+                                         "Inconsistência(s) no(s) dado(s)", 
+                                         Notificacoes);
 
-                pagamento = _repository.Salvar(pagamento);
+            pagamento = _repository.Salvar(pagamento);
 
-                var dadosRetorno = PagamentoHelper.GerarDadosRetornoInsert(pagamento);
+            var dadosRetorno = PagamentoHelper.GerarDadosRetornoInsert(pagamento);
 
-                return new CommandResult(StatusCodes.Status201Created, 
-                                         "Pagamento gravado com sucesso!", 
-                                         dadosRetorno);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            return new CommandResult(StatusCodes.Status201Created, 
+                                     "Pagamento gravado com sucesso!", 
+                                     dadosRetorno);
         }
 
         public ICommandResult<Notificacao> Handler(int id, AtualizarPagamentoCommand command)
         {
-            try
-            {
-                if (command == null)
-                    return new CommandResult(StatusCodes.Status400BadRequest,
-                                             "Parâmentros inválidos",
-                                             "Parâmetros de entrada",
-                                             "Parâmetros de entrada estão nulos");
+            if (command == null)
+                return new CommandResult(StatusCodes.Status400BadRequest,
+                                         "Parâmentros inválidos",
+                                         "Parâmetros de entrada",
+                                         "Parâmetros de entrada estão nulos");
 
-                command.Id = id;
+            command.Id = id;
 
-                if (!command.ValidarCommand())
-                    return new CommandResult(StatusCodes.Status422UnprocessableEntity,
-                                             "Parâmentros inválidos",
-                                             command.Notificacoes);
+            if (!command.ValidarCommand())
+                return new CommandResult(StatusCodes.Status422UnprocessableEntity,
+                                         "Parâmentros inválidos",
+                                         command.Notificacoes);
 
-                var pagamento = PagamentoHelper.GerarEntidade(command);
+            var pagamento = PagamentoHelper.GerarEntidade(command);
 
-                AddNotificacao(pagamento.Notificacoes);
+            AddNotificacao(pagamento.Notificacoes);
 
-                if (!_repository.CheckId(pagamento.Id))
-                    AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");
+            if (!_repository.CheckId(pagamento.Id))
+                AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");
 
-                if (!_repositoryEmpresa.CheckId(pagamento.Empresa.Id))
-                    AddNotificacao("IdEmpresa", "Id inválido. Este id não está cadastrado!");
+            if (!_repositoryEmpresa.CheckId(pagamento.Empresa.Id))
+                AddNotificacao("IdEmpresa", "Id inválido. Este id não está cadastrado!");
 
-                if (!_repositoryPessoa.CheckId(pagamento.Pessoa.Id))
-                    AddNotificacao("IdPessoa", "Id inválido. Este id não está cadastrado!");
+            if (!_repositoryPessoa.CheckId(pagamento.Pessoa.Id))
+                AddNotificacao("IdPessoa", "Id inválido. Este id não está cadastrado!");
 
-                if (!_repositoryTipoPagamento.CheckId(pagamento.TipoPagamento.Id))
-                    AddNotificacao("IdTipoPagamento", "Id inválido. Este id não está cadastrado!");
+            if (!_repositoryTipoPagamento.CheckId(pagamento.TipoPagamento.Id))
+                AddNotificacao("IdTipoPagamento", "Id inválido. Este id não está cadastrado!");
 
-                if (Invalido)
-                    return new CommandResult(StatusCodes.Status422UnprocessableEntity, 
-                                             "Inconsistência(s) no(s) dado(s)", 
-                                             Notificacoes);
+            if (Invalido)
+                return new CommandResult(StatusCodes.Status422UnprocessableEntity, 
+                                         "Inconsistência(s) no(s) dado(s)", 
+                                         Notificacoes);
 
-                _repository.Atualizar(pagamento);
+            _repository.Atualizar(pagamento);
 
-                var dadosRetorno = PagamentoHelper.GerarDadosRetornoUpdate(pagamento);
+            var dadosRetorno = PagamentoHelper.GerarDadosRetornoUpdate(pagamento);
 
-                return new CommandResult(StatusCodes.Status200OK, 
-                                         "Pagamento atualizado com sucesso!", 
-                                         dadosRetorno);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            return new CommandResult(StatusCodes.Status200OK, 
+                                     "Pagamento atualizado com sucesso!", 
+                                     dadosRetorno);
         }
 
         public ICommandResult<Notificacao> Handler(int id)
         {
-            try
-            {
-                if (!_repository.CheckId(id))
-                    return new CommandResult(StatusCodes.Status422UnprocessableEntity,
-                                             "Inconsistência(s) no(s) dado(s)",
-                                             "Id",
-                                             "Id inválido. Este id não está cadastrado!");
+            if (!_repository.CheckId(id))
+                return new CommandResult(StatusCodes.Status422UnprocessableEntity,
+                                         "Inconsistência(s) no(s) dado(s)",
+                                         "Id",
+                                         "Id inválido. Este id não está cadastrado!");
 
-                _repository.Deletar(id);
+            _repository.Deletar(id);
 
-                var dadosRetorno = PagamentoHelper.GerarDadosRetornoDelete(id);
+            var dadosRetorno = PagamentoHelper.GerarDadosRetornoDelete(id);
 
-                return new CommandResult(StatusCodes.Status200OK, 
-                                         "Pagamento excluído com sucesso!", 
-                                         dadosRetorno);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            return new CommandResult(StatusCodes.Status200OK, 
+                                     "Pagamento excluído com sucesso!", 
+                                     dadosRetorno);
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using ControleDespesas.Domain.Commands.Pagamento.Input;
 using ControleDespesas.Domain.Commands.Pagamento.Output;
 using ControleDespesas.Domain.Entities;
-using System;
 
 namespace ControleDespesas.Domain.Helpers
 {
@@ -9,111 +8,77 @@ namespace ControleDespesas.Domain.Helpers
     {
         public static Pagamento GerarEntidade(AdicionarPagamentoCommand command)
         {
-            try
-            {
-                TipoPagamento tipoPagamento = new TipoPagamento(command.IdTipoPagamento);
-                Empresa empresa = new Empresa(command.IdEmpresa);
-                Pessoa pessoa = new Pessoa(command.IdPessoa);
-                string descricao = command.Descricao;
-                double valor = command.Valor;
-                DateTime dataVencimento = command.DataVencimento;
-                DateTime? dataPagamento = command.DataPagamento;
-                string arquivoPagamento = command.ArquivoPagamento;
-                string arquivoComprovante = command.ArquivoComprovante;
+            Pagamento pagamento = new Pagamento(
+                0,
+                new TipoPagamento(command.IdTipoPagamento),
+                new Empresa(command.IdEmpresa),
+                new Pessoa(command.IdPessoa),
+                command.Descricao,
+                command.Valor,
+                command.DataVencimento,
+                command.DataPagamento,
+                command.ArquivoPagamento,
+                command.ArquivoComprovante);
 
-                Pagamento pagamento = new Pagamento(0, tipoPagamento, empresa, pessoa, descricao, valor, dataVencimento, dataPagamento, arquivoPagamento, arquivoComprovante);
-                pagamento.Validar();
-                return pagamento;
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            pagamento.Validar();
+            return pagamento;
         }
 
         public static Pagamento GerarEntidade(AtualizarPagamentoCommand command)
         {
-            try
-            {
-                int id = command.Id;
-                TipoPagamento tipoPagamento = new TipoPagamento(command.IdTipoPagamento);
-                Empresa empresa = new Empresa(command.IdEmpresa);
-                Pessoa pessoa = new Pessoa(command.IdPessoa);
-                string descricao = command.Descricao;
-                double valor = command.Valor;
-                DateTime dataVencimento = command.DataVencimento;
-                DateTime? dataPagamento = command.DataPagamento;
-                string arquivoPagamento = command.ArquivoPagamento;
-                string arquivoComprovante = command.ArquivoComprovante;
+            Pagamento pagamento = new Pagamento(
+                command.Id,
+                new TipoPagamento(command.IdTipoPagamento),
+                new Empresa(command.IdEmpresa),
+                new Pessoa(command.IdPessoa),
+                command.Descricao,
+                command.Valor,
+                command.DataVencimento,
+                command.DataPagamento,
+                command.ArquivoPagamento,
+                command.ArquivoComprovante);
 
-                Pagamento pagamento = new Pagamento(id, tipoPagamento, empresa, pessoa, descricao, valor, dataVencimento, dataPagamento, arquivoPagamento, arquivoComprovante);
-                pagamento.Validar();
-                return pagamento;
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            pagamento.Validar();
+            return pagamento;
         }
 
         public static AdicionarPagamentoCommandOutput GerarDadosRetornoInsert(Pagamento pagamento)
         {
-            try
+            return new AdicionarPagamentoCommandOutput
             {
-                return new AdicionarPagamentoCommandOutput
-                {
-                    Id = pagamento.Id,
-                    IdTipoPagamento = pagamento.TipoPagamento.Id,
-                    IdEmpresa = pagamento.Empresa.Id,
-                    IdPessoa = pagamento.Pessoa.Id,
-                    Descricao = pagamento.Descricao,
-                    Valor = pagamento.Valor,
-                    DataVencimento = pagamento.DataVencimento,
-                    DataPagamento = pagamento.DataPagamento,
-                    ArquivoPagamento = pagamento.ArquivoPagamento,
-                    ArquivoComprovante = pagamento.ArquivoComprovante
-                };
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+                Id = pagamento.Id,
+                IdTipoPagamento = pagamento.TipoPagamento.Id,
+                IdEmpresa = pagamento.Empresa.Id,
+                IdPessoa = pagamento.Pessoa.Id,
+                Descricao = pagamento.Descricao,
+                Valor = pagamento.Valor,
+                DataVencimento = pagamento.DataVencimento,
+                DataPagamento = pagamento.DataPagamento,
+                ArquivoPagamento = pagamento.ArquivoPagamento,
+                ArquivoComprovante = pagamento.ArquivoComprovante
+            };
         }
 
         public static AtualizarPagamentoCommandOutput GerarDadosRetornoUpdate(Pagamento pagamento)
         {
-            try
+            return new AtualizarPagamentoCommandOutput
             {
-                return new AtualizarPagamentoCommandOutput
-                {
-                    Id = pagamento.Id,
-                    IdTipoPagamento = pagamento.TipoPagamento.Id,
-                    IdEmpresa = pagamento.Empresa.Id,
-                    IdPessoa = pagamento.Pessoa.Id,
-                    Descricao = pagamento.Descricao,
-                    Valor = pagamento.Valor,
-                    DataVencimento = pagamento.DataVencimento,
-                    DataPagamento = pagamento.DataPagamento,
-                    ArquivoPagamento = pagamento.ArquivoPagamento,
-                    ArquivoComprovante = pagamento.ArquivoComprovante
-                };
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+                Id = pagamento.Id,
+                IdTipoPagamento = pagamento.TipoPagamento.Id,
+                IdEmpresa = pagamento.Empresa.Id,
+                IdPessoa = pagamento.Pessoa.Id,
+                Descricao = pagamento.Descricao,
+                Valor = pagamento.Valor,
+                DataVencimento = pagamento.DataVencimento,
+                DataPagamento = pagamento.DataPagamento,
+                ArquivoPagamento = pagamento.ArquivoPagamento,
+                ArquivoComprovante = pagamento.ArquivoComprovante
+            };
         }
 
         public static ApagarPagamentoCommandOutput GerarDadosRetornoDelete(int id)
         {
-            try
-            {
-                return new ApagarPagamentoCommandOutput { Id = id };
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            return new ApagarPagamentoCommandOutput { Id = id };
         }
     }
 }

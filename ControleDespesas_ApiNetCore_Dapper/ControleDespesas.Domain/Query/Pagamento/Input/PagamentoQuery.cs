@@ -1,7 +1,6 @@
 ﻿using ControleDespesas.Domain.Enums;
 using LSCode.Facilitador.Api.Interfaces.Query;
 using LSCode.Validador.ValidacoesNotificacoes;
-using System;
 
 namespace ControleDespesas.Domain.Query.Pagamento.Input
 {
@@ -12,17 +11,10 @@ namespace ControleDespesas.Domain.Query.Pagamento.Input
 
         public bool ValidarQuery()
         {
-            try
-            {
-                if (IdPessoa <= 0)
-                    AddNotificacao("IdPessoa", "IdPessoa não é valido");
+            if (IdPessoa <= 0)
+                AddNotificacao("IdPessoa", "IdPessoa não é valido");
 
-                return Valido;
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            return Valido;
         }
     }
 }

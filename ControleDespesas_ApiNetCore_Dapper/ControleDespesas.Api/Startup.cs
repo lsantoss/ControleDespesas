@@ -153,16 +153,13 @@ namespace ControleDespesas.Api
                 app.UseHsts();
 
             app.UseHttpsRedirection();
-
             app.UseStaticFiles();
-
             app.UseAuthentication();
-
-            app.UseElmah();
 
             app.UseAPITokenMiddlerware();
             app.UseExceptionMiddleware();
 
+            app.UseElmah();
             app.UseSwagger();
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "ControleDespesas"); });
 

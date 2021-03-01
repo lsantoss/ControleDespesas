@@ -18,6 +18,7 @@ namespace ControleDespesas.Api.Middlewares
 		{
 			_next = next;
 		}
+
 		public async Task InvokeAsync(HttpContext httpContext)
 		{
 			try

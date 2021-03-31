@@ -6,7 +6,7 @@ namespace ControleDespesas.Domain.Interfaces.Repositories
 {
     public interface IEmpresaRepository
     {
-        Empresa Salvar(Empresa empresa);
+        int Salvar(Empresa empresa);
         void Atualizar(Empresa empresa);
         void Deletar(int id);
 

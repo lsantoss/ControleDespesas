@@ -39,9 +39,9 @@ namespace ControleDespesas.Test.Entities
         [Test]
         [TestCase(0)]
         [TestCase(-1)]
-        public void ValidarEntidade_IdEmpresaInvalido(int empresa)
+        public void ValidarEntidade_IdEmpresaInvalido(int idEmpresa)
         {
-            _pagamento.Empresa.Id = empresa;
+            _pagamento.Empresa.DefinirId(idEmpresa);
             _pagamento.Validar();
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_pagamento));

@@ -1,6 +1,6 @@
 ﻿namespace ControleDespesas.Domain.Commands.Empresa.Output
 {
-    public class AtualizarEmpresaCommandOutput
+    public class EmpresaCommandOutput
     {
         public int Id { get; set; }
         public string Nome { get; set; }

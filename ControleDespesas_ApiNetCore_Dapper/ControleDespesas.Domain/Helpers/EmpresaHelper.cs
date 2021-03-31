@@ -1,6 +1,7 @@
 ﻿using ControleDespesas.Domain.Commands.Empresa.Input;
 using ControleDespesas.Domain.Commands.Empresa.Output;
 using ControleDespesas.Domain.Entities;
+using ControleDespesas.Infra.Commands;
 
 namespace ControleDespesas.Domain.Helpers
 {
@@ -20,9 +21,9 @@ namespace ControleDespesas.Domain.Helpers
             return empresa;
         }
 
-        public static AdicionarEmpresaCommandOutput GerarDadosRetornoInsert(Empresa empresa)
+        public static EmpresaCommandOutput GerarDadosRetornoInsert(Empresa empresa)
         {
-            return new AdicionarEmpresaCommandOutput
+            return new EmpresaCommandOutput
             {
                 Id = empresa.Id,
                 Nome = empresa.Nome,
@@ -30,9 +31,9 @@ namespace ControleDespesas.Domain.Helpers
             };
         }
 
-        public static AtualizarEmpresaCommandOutput GerarDadosRetornoUpdate(Empresa empresa)
+        public static EmpresaCommandOutput GerarDadosRetornoUpdate(Empresa empresa)
         {
-            return new AtualizarEmpresaCommandOutput
+            return new EmpresaCommandOutput
             {
                 Id = empresa.Id,
                 Nome = empresa.Nome,
@@ -40,9 +41,9 @@ namespace ControleDespesas.Domain.Helpers
             };
         }
 
-        public static ApagarEmpresaCommandOutput GerarDadosRetornoDelete(int id)
+        public static CommandOutput GerarDadosRetornoDelete(int id)
         {
-            return new ApagarEmpresaCommandOutput { Id = id };
+            return new CommandOutput { Id = id };
         }
     }
 }

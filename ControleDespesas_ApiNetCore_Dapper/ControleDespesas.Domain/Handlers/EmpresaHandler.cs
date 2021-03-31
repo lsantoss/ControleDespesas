@@ -40,7 +40,9 @@ namespace ControleDespesas.Domain.Handlers
                                          "Inconsistência(s) no(s) dado(s)", 
                                          Notificacoes);
 
-            empresa = _repository.Salvar(empresa);
+            var id = _repository.Salvar(empresa);
+
+            empresa.DefinirId(id);
 
             var dadosRetorno = EmpresaHelper.GerarDadosRetornoInsert(empresa);
 

@@ -1,13 +1,12 @@
 ﻿using LSCode.Validador.ValidacoesNotificacoes;
-using System;
 
 namespace ControleDespesas.Domain.Entities
 {
     public class Empresa : Notificadora
     {
-        public int Id { get; set; }
-        public string Nome { get; set; }
-        public string Logo { get; set; }
+        public int Id { get; private set; }
+        public string Nome { get; private set; }
+        public string Logo { get; private set; }
 
         public Empresa(int id, string nome, string logo)
         {
@@ -19,6 +18,21 @@ namespace ControleDespesas.Domain.Entities
         public Empresa(int id)
         {
             Id = id;
+        }
+
+        public void DefinirId(int id)
+        {
+            Id = id;
+        }
+
+        public void DefinirNome(string nome)
+        {
+            Nome = nome;
+        }
+
+        public void DefinirLogo(string logo)
+        {
+            Logo = logo;
         }
 
         public void Validar()

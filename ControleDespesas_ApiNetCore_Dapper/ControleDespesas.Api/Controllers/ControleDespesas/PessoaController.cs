@@ -5,13 +5,11 @@ using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Domain.Query.Pessoa.Input;
 using ControleDespesas.Domain.Query.Pessoa.Results;
 using ControleDespesas.Infra.Commands;
-using ElmahCore;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 
 namespace ControleDespesas.Api.Controllers.ControleDespesas
@@ -49,25 +47,15 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<List<PessoaQueryResult>, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<List<PessoaQueryResult>, Notificacao>> Pessoas([FromQuery] ObterPessoasQuery query)
         {
-            try
-            {
-                if (query == null)
-                    return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
+            if (query == null)
+                return StatusCode(StatusCodes.Status400BadRequest, new ApiResponse<object, Notificacao>("Parâmentros inválidos", new List<Notificacao>() { new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos") }));
 
-                if (!query.ValidarQuery())
-                    return StatusCode(StatusCodes.Status422UnprocessableEntity, new ApiResponse<object, Notificacao>("Parâmentros inválidos", query.Notificacoes));
+            if (!query.ValidarQuery())
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, new ApiResponse<object, Notificacao>("Parâmentros inválidos", query.Notificacoes));
 
-                var result = _repository.Listar(query.IdUsuario);
-
-                var mensagem = result.Count > 0 ? "Lista de pessoas obtida com sucesso" : "Nenhuma pessoa cadastrada atualmente";
-
-                return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<PessoaQueryResult>, Notificacao>(mensagem, result));
-            }
-            catch (Exception e)
-            {
-                HttpContext.RiseError(e);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
-            }
+            var result = _repository.Listar(query.IdUsuario);
+            var mensagem = result.Count > 0 ? "Lista de pessoas obtida com sucesso" : "Nenhuma pessoa cadastrada atualmente";
+            return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<PessoaQueryResult>, Notificacao>(mensagem, result));
         }
 
         /// <summary>
@@ -85,19 +73,9 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<PessoaQueryResult, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<PessoaQueryResult, Notificacao>> Pessoa(int id)
         {
-            try
-            {
-                var result = _repository.Obter(id);
-
-                var mensagem = result != null ? "Pessoa obtida com sucesso" : "Pessoa não cadastrada";
-
-                return StatusCode(StatusCodes.Status200OK, new ApiResponse<PessoaQueryResult, Notificacao>(mensagem, result));
-            }
-            catch (Exception e)
-            {
-                HttpContext.RiseError(e);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
-            }
+            var result = _repository.Obter(id);
+            var mensagem = result != null ? "Pessoa obtida com sucesso" : "Pessoa não cadastrada";
+            return StatusCode(StatusCodes.Status200OK, new ApiResponse<PessoaQueryResult, Notificacao>(mensagem, result));
         }
 
         /// <summary>
@@ -119,20 +97,12 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<PessoaCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<PessoaCommandOutput, Notificacao>> PessoaInserir([FromBody] AdicionarPessoaCommand command)
         {
-            try
-            {
-                var result = _handler.Handler(command);
+            var result = _handler.Handler(command);
 
-                if (result.Sucesso)
-                    return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
-                else
-                    return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
-            }
-            catch (Exception e)
-            {
-                HttpContext.RiseError(e);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
-            }
+            if (result.Sucesso)
+                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
+            else
+                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
         }
 
         /// <summary>
@@ -155,20 +125,12 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<PessoaCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<PessoaCommandOutput, Notificacao>> PessoaAlterar(int id, [FromBody] AtualizarPessoaCommand command)
         {
-            try
-            {
-                var result = _handler.Handler(id, command);
+            var result = _handler.Handler(id, command);
 
-                if (result.Sucesso)
-                    return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
-                else
-                    return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
-            }
-            catch (Exception e)
-            {
-                HttpContext.RiseError(e);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
-            }
+            if (result.Sucesso)
+                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
+            else
+                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
         }
 
         /// <summary>
@@ -188,20 +150,12 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<CommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<CommandOutput, Notificacao>> PessoaExcluir(int id)
         {
-            try
-            {
-                var result = _handler.Handler(id);
+            var result = _handler.Handler(id);
 
-                if (result.Sucesso)
-                    return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
-                else
-                    return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
-            }
-            catch (Exception e)
-            {
-                HttpContext.RiseError(e);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
-            }
+            if (result.Sucesso)
+                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
+            else
+                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
         }
     }
 }

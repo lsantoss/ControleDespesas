@@ -1,6 +1,6 @@
 ﻿namespace ControleDespesas.Domain.Commands.Pessoa.Output
 {
-    public class AtualizarPessoaCommandOutput
+    public class PessoaCommandOutput
     {
         public int Id { get; set; }
         public int IdUsuario { get; set; }

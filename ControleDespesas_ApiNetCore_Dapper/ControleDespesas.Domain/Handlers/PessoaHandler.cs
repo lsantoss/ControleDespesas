@@ -40,7 +40,9 @@ namespace ControleDespesas.Domain.Handlers
                                          "Inconsistência(s) no(s) dado(s)", 
                                          Notificacoes);
 
-            pessoa = _repository.Salvar(pessoa);
+            var id = _repository.Salvar(pessoa);
+
+            pessoa.DefinirId(id);
 
             var dadosRetorno = PessoaHelper.GerarDadosRetornoInsert(pessoa);
 

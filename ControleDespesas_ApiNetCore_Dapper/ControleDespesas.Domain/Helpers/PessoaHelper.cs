@@ -1,6 +1,7 @@
 ﻿using ControleDespesas.Domain.Commands.Pessoa.Input;
 using ControleDespesas.Domain.Commands.Pessoa.Output;
 using ControleDespesas.Domain.Entities;
+using ControleDespesas.Infra.Commands;
 
 namespace ControleDespesas.Domain.Helpers
 {
@@ -30,9 +31,9 @@ namespace ControleDespesas.Domain.Helpers
             return pessoa;
         }
 
-        public static AdicionarPessoaCommandOutput GerarDadosRetornoInsert(Pessoa pessoa)
+        public static PessoaCommandOutput GerarDadosRetornoInsert(Pessoa pessoa)
         {
-            return new AdicionarPessoaCommandOutput
+            return new PessoaCommandOutput
             {
                 Id = pessoa.Id,
                 IdUsuario = pessoa.Usuario.Id,
@@ -41,9 +42,9 @@ namespace ControleDespesas.Domain.Helpers
             };
         }
 
-        public static AtualizarPessoaCommandOutput GerarDadosRetornoUpdate(Pessoa pessoa)
+        public static PessoaCommandOutput GerarDadosRetornoUpdate(Pessoa pessoa)
         {
-            return new AtualizarPessoaCommandOutput
+            return new PessoaCommandOutput
             {
                 Id = pessoa.Id,
                 IdUsuario = pessoa.Usuario.Id,
@@ -52,9 +53,9 @@ namespace ControleDespesas.Domain.Helpers
             };
         }
 
-        public static ApagarPessoaCommandOutput GerarDadosRetornoDelete(int id)
+        public static CommandOutput GerarDadosRetornoDelete(int id)
         {
-            return new ApagarPessoaCommandOutput { Id = id };
+            return new CommandOutput { Id = id };
         }
     }
 }

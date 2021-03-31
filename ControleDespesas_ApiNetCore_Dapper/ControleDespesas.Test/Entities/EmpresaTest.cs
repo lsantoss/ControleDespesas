@@ -66,8 +66,8 @@ namespace ControleDespesas.Test.Entities
         }
 
         [Test]
-        [TestCase("Lucas")]
-        [TestCase("Ronaldo")]
+        [TestCase("Oi")]
+        [TestCase("Vivo")]
         public void DefinirNome(string nome)
         {
             _empresa.DefinirNome(nome);

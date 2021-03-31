@@ -22,14 +22,13 @@ namespace ControleDespesas.Infra.Data.Repositories
             _dataContext = new DataContext(EBancoDadosRelacional.SQLServer, settings.ConnectionString);
         }
 
-        public Pessoa Salvar(Pessoa pessoa)
+        public int Salvar(Pessoa pessoa)
         {
             _parametros.Add("IdUsuario", pessoa.Usuario.Id, DbType.Int32);
             _parametros.Add("Nome", pessoa.Nome, DbType.String);
             _parametros.Add("ImagemPerfil", pessoa.ImagemPerfil, DbType.String);
 
-            pessoa.Id = _dataContext.SQLServerConexao.ExecuteScalar<int>(PessoaQueries.Salvar, _parametros);
-            return pessoa;
+            return _dataContext.SQLServerConexao.ExecuteScalar<int>(PessoaQueries.Salvar, _parametros);
         }
 
         public void Atualizar(Pessoa pessoa)

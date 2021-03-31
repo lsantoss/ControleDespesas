@@ -2,6 +2,7 @@
 using ControleDespesas.Domain.Handlers;
 using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
+using ControleDespesas.Infra.Commands;
 using ControleDespesas.Infra.Data.Repositories;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;
@@ -38,7 +39,7 @@ namespace ControleDespesas.Test.Handlers
 
             var retorno = _handler.Handler(pessoaCommand);
 
-            var retornoDados = (AdicionarPessoaCommandOutput)retorno.Dados;
+            var retornoDados = (PessoaCommandOutput)retorno.Dados;
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retornoDados));
 
@@ -63,7 +64,7 @@ namespace ControleDespesas.Test.Handlers
 
             var retorno = _handler.Handler(pessoaCommand.Id, pessoaCommand);
 
-            var retornoDados = (AtualizarPessoaCommandOutput)retorno.Dados;
+            var retornoDados = (PessoaCommandOutput)retorno.Dados;
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retornoDados));
 
@@ -86,7 +87,7 @@ namespace ControleDespesas.Test.Handlers
 
             var retorno = _handler.Handler(pessoa.Id);
 
-            var retornoDados = (ApagarPessoaCommandOutput)retorno.Dados;
+            var retornoDados = (CommandOutput)retorno.Dados;
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retornoDados));
 

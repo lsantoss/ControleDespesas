@@ -4,6 +4,7 @@ using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Domain.Query.Pessoa.Input;
 using ControleDespesas.Domain.Query.Pessoa.Results;
+using ControleDespesas.Infra.Commands;
 using ElmahCore;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
@@ -111,12 +112,12 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpPost]
         [Route("v1/pessoas")]
-        [ProducesResponseType(typeof(ApiResponse<AdicionarPessoaCommandOutput, Notificacao>), StatusCodes.Status201Created)]
-        [ProducesResponseType(typeof(ApiResponse<AdicionarPessoaCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(ApiResponse<AdicionarPessoaCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ApiResponse<AdicionarPessoaCommandOutput, Notificacao>), StatusCodes.Status422UnprocessableEntity)]
-        [ProducesResponseType(typeof(ApiResponse<AdicionarPessoaCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<AdicionarPessoaCommandOutput, Notificacao>> PessoaInserir([FromBody] AdicionarPessoaCommand command)
+        [ProducesResponseType(typeof(ApiResponse<PessoaCommandOutput, Notificacao>), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ApiResponse<PessoaCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<PessoaCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<PessoaCommandOutput, Notificacao>), StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(typeof(ApiResponse<PessoaCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
+        public ActionResult<ApiResponse<PessoaCommandOutput, Notificacao>> PessoaInserir([FromBody] AdicionarPessoaCommand command)
         {
             try
             {
@@ -147,12 +148,12 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpPut]
         [Route("v1/pessoas/{id}")]
-        [ProducesResponseType(typeof(ApiResponse<AtualizarPessoaCommandOutput, Notificacao>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<AtualizarPessoaCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(ApiResponse<AtualizarPessoaCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ApiResponse<AtualizarPessoaCommandOutput, Notificacao>), StatusCodes.Status422UnprocessableEntity)]
-        [ProducesResponseType(typeof(ApiResponse<AtualizarPessoaCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<AtualizarPessoaCommandOutput, Notificacao>> PessoaAlterar(int id, [FromBody] AtualizarPessoaCommand command)
+        [ProducesResponseType(typeof(ApiResponse<PessoaCommandOutput, Notificacao>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<PessoaCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<PessoaCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<PessoaCommandOutput, Notificacao>), StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(typeof(ApiResponse<PessoaCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
+        public ActionResult<ApiResponse<PessoaCommandOutput, Notificacao>> PessoaAlterar(int id, [FromBody] AtualizarPessoaCommand command)
         {
             try
             {
@@ -181,11 +182,11 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpDelete]
         [Route("v1/pessoas/{id}")]
-        [ProducesResponseType(typeof(ApiResponse<ApagarPessoaCommandOutput, Notificacao>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<ApagarPessoaCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ApiResponse<ApagarPessoaCommandOutput, Notificacao>), StatusCodes.Status422UnprocessableEntity)]
-        [ProducesResponseType(typeof(ApiResponse<ApagarPessoaCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<ApagarPessoaCommandOutput, Notificacao>> PessoaExcluir(int id)
+        [ProducesResponseType(typeof(ApiResponse<CommandOutput, Notificacao>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<CommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<CommandOutput, Notificacao>), StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(typeof(ApiResponse<CommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
+        public ActionResult<ApiResponse<CommandOutput, Notificacao>> PessoaExcluir(int id)
         {
             try
             {

@@ -1,14 +1,13 @@
 ﻿using LSCode.Validador.ValidacoesNotificacoes;
-using System;
 
 namespace ControleDespesas.Domain.Entities
 {
     public class Pessoa : Notificadora
     {
-        public int Id { get; set; }
-        public Usuario Usuario { get; set; }
-        public string Nome { get; set; }
-        public string ImagemPerfil { get; set; }
+        public int Id { get; private set; }
+        public Usuario Usuario { get; private set; }
+        public string Nome { get; private set; }
+        public string ImagemPerfil { get; private set; }
 
         public Pessoa(int id, Usuario usuario, string nome, string imagemPerfil)
         {
@@ -21,6 +20,26 @@ namespace ControleDespesas.Domain.Entities
         public Pessoa(int id)
         {
             Id = id;
+        }
+
+        public void DefinirId(int id)
+        {
+            Id = id;
+        }
+
+        public void DefinirUsuario(Usuario usuario)
+        {
+            Usuario = usuario;
+        }
+
+        public void DefinirNome(string nome)
+        {
+            Nome = nome;
+        }
+
+        public void DefinirImagemPerfil(string imagemPerfil)
+        {
+            ImagemPerfil = imagemPerfil;
         }
 
         public void Validar()

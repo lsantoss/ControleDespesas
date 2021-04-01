@@ -6,7 +6,7 @@ namespace ControleDespesas.Domain.Interfaces.Repositories
 {
     public interface IUsuarioRepository
     {
-        Usuario Salvar(Usuario usuario);
+        int Salvar(Usuario usuario);
         void Atualizar(Usuario usuario);
         void Deletar(int id);
 

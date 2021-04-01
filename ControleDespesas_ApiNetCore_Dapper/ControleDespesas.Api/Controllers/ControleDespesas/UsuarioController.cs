@@ -1,17 +1,14 @@
 ﻿using ControleDespesas.Domain.Commands.Usuario.Input;
 using ControleDespesas.Domain.Commands.Usuario.Output;
-using ControleDespesas.Domain.Interfaces.Authentication;
 using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Domain.Query.Usuario.Results;
-using ControleDespesas.Infra.Settings;
-using ElmahCore;
+using ControleDespesas.Infra.Commands;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 
 namespace ControleDespesas.Api.Controllers.ControleDespesas
@@ -24,18 +21,11 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
     {
         private readonly IUsuarioRepository _repository;
         private readonly IUsuarioHandler _handler;
-        private readonly IJWTAuthentication _tokenService;
-        private readonly SettingsAPI _settings;
 
-        public UsuarioController(IUsuarioRepository repository, 
-                                 IUsuarioHandler handler, 
-                                 IJWTAuthentication tokenService, 
-                                 SettingsAPI settings)
+        public UsuarioController(IUsuarioRepository repository, IUsuarioHandler handler)
         {
             _repository = repository;
             _handler = handler;
-            _tokenService = tokenService;
-            _settings = settings;
         }
 
         /// <summary>
@@ -52,19 +42,9 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<List<UsuarioQueryResult>, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<List<UsuarioQueryResult>, Notificacao>> Usuarios()
         {
-            try
-            {
-                var result = _repository.Listar();
-
-                var mensagem = result.Count > 0 ? "Lista de usuários obtida com sucesso" : "Nenhum usuário cadastrado atualmente";
-
-                return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<UsuarioQueryResult>, Notificacao>(mensagem, result));
-            }
-            catch (Exception e)
-            {
-                HttpContext.RiseError(e);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
-            }
+            var result = _repository.Listar();
+            var mensagem = result.Count > 0 ? "Lista de usuários obtida com sucesso" : "Nenhum usuário cadastrado atualmente";
+            return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<UsuarioQueryResult>, Notificacao>(mensagem, result));
         }
 
         /// <summary>
@@ -84,19 +64,9 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<UsuarioQueryResult, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<UsuarioQueryResult, Notificacao>> Usuario(int id)
         {
-            try
-            {
-                var result = _repository.Obter(id);
-
-                var mensagem = result != null ? "Usuário obtido com sucesso" : "Usuário não cadastrado";
-
-                return StatusCode(StatusCodes.Status200OK, new ApiResponse<UsuarioQueryResult, Notificacao>(mensagem, result));
-            }
-            catch (Exception e)
-            {
-                HttpContext.RiseError(e);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
-            }
+            var result = _repository.Obter(id);
+            var mensagem = result != null ? "Usuário obtido com sucesso" : "Usuário não cadastrado";
+            return StatusCode(StatusCodes.Status200OK, new ApiResponse<UsuarioQueryResult, Notificacao>(mensagem, result));
         }
 
         /// <summary>
@@ -110,26 +80,18 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpPost]
         [Route("v1/usuarios")]
-        [ProducesResponseType(typeof(ApiResponse<AdicionarUsuarioCommandOutput, Notificacao>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<AdicionarUsuarioCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(ApiResponse<AdicionarUsuarioCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ApiResponse<AdicionarUsuarioCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<AdicionarUsuarioCommandOutput, Notificacao>> UsuarioInserir([FromBody] AdicionarUsuarioCommand command)
+        [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput, Notificacao>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
+        public ActionResult<ApiResponse<UsuarioCommandOutput, Notificacao>> UsuarioInserir([FromBody] AdicionarUsuarioCommand command)
         {
-            try
-            {
-                var result = _handler.Handler(command);
+            var result = _handler.Handler(command);
 
-                if (result.Sucesso)
-                    return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
-                else
-                    return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
-            }
-            catch (Exception e)
-            {
-                HttpContext.RiseError(e);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
-            }
+            if (result.Sucesso)
+                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
+            else
+                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
         }
 
         /// <summary>
@@ -144,26 +106,18 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpPut]
         [Route("v1/usuarios/{id}")]
-        [ProducesResponseType(typeof(ApiResponse<AtualizarUsuarioCommandOutput, Notificacao>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<AtualizarUsuarioCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(ApiResponse<AtualizarUsuarioCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ApiResponse<AtualizarUsuarioCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<AtualizarUsuarioCommandOutput, Notificacao>> UsuarioAlterar(int id, [FromBody] AtualizarUsuarioCommand command)
+        [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput, Notificacao>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
+        public ActionResult<ApiResponse<UsuarioCommandOutput, Notificacao>> UsuarioAlterar(int id, [FromBody] AtualizarUsuarioCommand command)
         {
-            try
-            {
-                var result = _handler.Handler(id, command);
+            var result = _handler.Handler(id, command);
 
-                if (result.Sucesso)
-                    return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
-                else
-                    return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
-            }
-            catch (Exception e)
-            {
-                HttpContext.RiseError(e);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
-            }
+            if (result.Sucesso)
+                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
+            else
+                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
         }
 
         /// <summary>
@@ -177,26 +131,18 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpDelete]
         [Route("v1/usuarios/{id}")]
-        [ProducesResponseType(typeof(ApiResponse<ApagarUsuarioCommandOutput, Notificacao>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<ApagarUsuarioCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(ApiResponse<ApagarUsuarioCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ApiResponse<ApagarUsuarioCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<ApagarUsuarioCommandOutput, Notificacao>> UsuarioExcluir(int id)
+        [ProducesResponseType(typeof(ApiResponse<CommandOutput, Notificacao>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<CommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<CommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<CommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
+        public ActionResult<ApiResponse<CommandOutput, Notificacao>> UsuarioExcluir(int id)
         {
-            try
-            {
-                var result = _handler.Handler(id);
+            var result = _handler.Handler(id);
 
-                if (result.Sucesso)
-                    return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
-                else
-                    return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
-            }
-            catch (Exception e)
-            {
-                HttpContext.RiseError(e);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
-            }
+            if (result.Sucesso)
+                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
+            else
+                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
         }
 
         /// <summary>
@@ -217,20 +163,12 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<UsuarioTokenQueryResult, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<UsuarioTokenQueryResult, Notificacao>> UsuarioLogin([FromBody] LoginUsuarioCommand command)
         {
-            try
-            {
-                var result = _handler.Handler(command);
+            var result = _handler.Handler(command);
 
-                if (result.Sucesso)
-                    return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
-                else
-                    return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
-            }
-            catch (Exception e)
-            {
-                HttpContext.RiseError(e);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
-            }
+            if (result.Sucesso)
+                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
+            else
+                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
         }
     }
 }

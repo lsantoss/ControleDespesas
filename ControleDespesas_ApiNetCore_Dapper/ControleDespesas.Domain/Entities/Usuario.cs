@@ -1,16 +1,15 @@
 ﻿using ControleDespesas.Domain.Enums;
 using LSCode.Validador.ValidacoesBooleanas;
 using LSCode.Validador.ValidacoesNotificacoes;
-using System;
 
 namespace ControleDespesas.Domain.Entities
 {
     public class Usuario : Notificadora
     {
-        public int Id { get; set; }
-        public string Login { get; set; }
-        public string Senha { get; set; }
-        public EPrivilegioUsuario Privilegio { get; set; }
+        public int Id { get; private set; }
+        public string Login { get; private set; }
+        public string Senha { get; private set; }
+        public EPrivilegioUsuario Privilegio { get; private set; }
 
         public Usuario(int id, string login, string senha, EPrivilegioUsuario privilegio)
         {
@@ -23,6 +22,26 @@ namespace ControleDespesas.Domain.Entities
         public Usuario(int id)
         {
             Id = id;
+        }
+
+        public void DefinirId(int id)
+        {
+            Id = id;
+        }
+
+        public void DefinirLogin(string login)
+        {
+            Login = login;
+        }
+
+        public void DefinirSenha(string senha)
+        {
+            Senha = senha;
+        }
+
+        public void DefinirPrivilegio(EPrivilegioUsuario privilegio)
+        {
+            Privilegio = privilegio;
         }
 
         public void Validar()

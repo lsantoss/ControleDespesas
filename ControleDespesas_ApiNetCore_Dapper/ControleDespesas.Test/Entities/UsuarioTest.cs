@@ -1,4 +1,5 @@
 ﻿using ControleDespesas.Domain.Entities;
+using ControleDespesas.Domain.Enums;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
@@ -28,7 +29,7 @@ namespace ControleDespesas.Test.Entities
         [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
         public void ValidarEntidade_LoginInvalido(string login)
         {
-            _usuario.Login = login;
+            _usuario.DefinirLogin(login);
             _usuario.Validar();
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_usuario));
@@ -47,13 +48,70 @@ namespace ControleDespesas.Test.Entities
         [TestCase("AAAAAa")]
         public void ValidarEntidade_SenhaInvalida(string senha)
         {
-            _usuario.Senha = senha;
+            _usuario.DefinirSenha(senha);
             _usuario.Validar();
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_usuario));
 
             Assert.False(_usuario.Valido);
             Assert.AreNotEqual(0, _usuario.Notificacoes.Count);
+        }
+
+        [Test]
+        [TestCase(1)]
+        [TestCase(10)]
+        public void DefinirId(int id)
+        {
+            _usuario.DefinirId(id);
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_usuario));
+
+            Assert.AreEqual(id, _usuario.Id);
+            Assert.True(_usuario.Valido);
+            Assert.AreEqual(0, _usuario.Notificacoes.Count);
+        }
+
+        [Test]
+        [TestCase("lucas@com.br")]
+        [TestCase("carlos@com.br")]
+        public void DefinirLogin(string login)
+        {
+            _usuario.DefinirLogin(login);
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_usuario));
+
+            Assert.AreEqual(login, _usuario.Login);
+            Assert.True(_usuario.Valido);
+            Assert.AreEqual(0, _usuario.Notificacoes.Count);
+        }
+
+        [Test]
+        [TestCase("Minhasenha123")]
+        [TestCase("Senha123456")]
+        public void DefinirSenha(string senha)
+        {
+            _usuario.DefinirSenha(senha);
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_usuario));
+
+            Assert.AreEqual(senha, _usuario.Senha);
+            Assert.True(_usuario.Valido);
+            Assert.AreEqual(0, _usuario.Notificacoes.Count);
+        }
+
+        [Test]
+        [TestCase(EPrivilegioUsuario.Administrador)]
+        [TestCase(EPrivilegioUsuario.Escrita)]
+        [TestCase(EPrivilegioUsuario.SomenteLeitura)]
+        public void DefinirPrivilegio(EPrivilegioUsuario privilegio)
+        {
+            _usuario.DefinirPrivilegio(privilegio);
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_usuario));
+
+            Assert.AreEqual(privilegio, _usuario.Privilegio);
+            Assert.True(_usuario.Valido);
+            Assert.AreEqual(0, _usuario.Notificacoes.Count);
         }
 
         [TearDown]

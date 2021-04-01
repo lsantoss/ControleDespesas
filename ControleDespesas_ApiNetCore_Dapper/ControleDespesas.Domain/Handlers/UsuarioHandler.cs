@@ -50,7 +50,9 @@ namespace ControleDespesas.Domain.Handlers
                                          "Login",
                                          "Esse login não está disponível pois já está sendo usado por outro usuário");
 
-            usuario = _repository.Salvar(usuario);
+            var id = _repository.Salvar(usuario);
+
+            usuario.DefinirId(id);
 
             var dadosRetorno = UsuarioHelper.GerarDadosRetornoInsert(usuario);
 

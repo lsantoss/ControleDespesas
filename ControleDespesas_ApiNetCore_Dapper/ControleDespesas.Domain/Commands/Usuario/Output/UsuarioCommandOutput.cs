@@ -2,7 +2,7 @@
 
 namespace ControleDespesas.Domain.Commands.Usuario.Output
 {
-    public class AdicionarUsuarioCommandOutput
+    public class UsuarioCommandOutput
     {
         public int Id { get; set; }
         public string Login { get; set; }

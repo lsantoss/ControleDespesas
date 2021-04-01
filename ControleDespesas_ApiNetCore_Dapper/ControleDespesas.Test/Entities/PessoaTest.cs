@@ -27,7 +27,7 @@ namespace ControleDespesas.Test.Entities
         [TestCase(-1)]
         public void ValidarEntidade_IdUsuarioInvalido(int id)
         {
-            _pessoa.Usuario.Id = id;
+            _pessoa.Usuario.DefinirId(id);
             _pessoa.Validar();
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_pessoa));

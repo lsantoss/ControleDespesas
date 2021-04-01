@@ -1,12 +1,11 @@
 ﻿using LSCode.Validador.ValidacoesNotificacoes;
-using System;
 
 namespace ControleDespesas.Domain.Entities
 {
     public class TipoPagamento : Notificadora
     {
-        public int Id { get; set; }
-        public string Descricao { get; set; }
+        public int Id { get; private set; }
+        public string Descricao { get; private set; }
 
         public TipoPagamento(int id, string descricao)
         {
@@ -17,6 +16,16 @@ namespace ControleDespesas.Domain.Entities
         public TipoPagamento(int id)
         {
             Id = id;
+        }
+
+        public void DefinirId(int id)
+        {
+            Id = id;
+        }
+
+        public void DefinirDescricao(string descricao)
+        {
+            Descricao = descricao;
         }
 
         public void Validar()

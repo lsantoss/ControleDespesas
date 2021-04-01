@@ -3,14 +3,12 @@ using ControleDespesas.Domain.Commands.TipoPagamento.Output;
 using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Domain.Query.TipoPagamento.Results;
-using ControleDespesas.Infra.Settings;
-using ElmahCore;
+using ControleDespesas.Infra.Commands;
 using LSCode.Facilitador.Api.Models.Results;
 using LSCode.Validador.ValidacoesNotificacoes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 
 namespace ControleDespesas.Api.Controllers.ControleDespesas
@@ -23,15 +21,11 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
     {
         private readonly ITipoPagamentoRepository _repository;
         private readonly ITipoPagamentoHandler _handler;
-        private readonly SettingsAPI _settings;
 
-        public TipoPagamentoController(ITipoPagamentoRepository repository, 
-                                       ITipoPagamentoHandler handler,
-                                       SettingsAPI settings)
+        public TipoPagamentoController(ITipoPagamentoRepository repository, ITipoPagamentoHandler handler)
         {
             _repository = repository;
             _handler = handler;
-            _settings = settings;
         }
 
         /// <summary>
@@ -48,19 +42,9 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<List<TipoPagamentoQueryResult>, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<List<TipoPagamentoQueryResult>, Notificacao>> TipoPagamentos()
         {
-            try
-            {
-                var result = _repository.Listar();
-
-                var mensagem = result.Count > 0 ? "Lista de tipos de pagamento obtida com sucesso" : "Nenhum tipo de pagamento cadastrado atualmente";
-
-                return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<TipoPagamentoQueryResult>, Notificacao>(mensagem, result));
-            }
-            catch (Exception e)
-            {
-                HttpContext.RiseError(e);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
-            }
+            var result = _repository.Listar();
+            var mensagem = result.Count > 0 ? "Lista de tipos de pagamento obtida com sucesso" : "Nenhum tipo de pagamento cadastrado atualmente";
+            return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<TipoPagamentoQueryResult>, Notificacao>(mensagem, result));
         }
 
         /// <summary>
@@ -80,19 +64,9 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoQueryResult, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<TipoPagamentoQueryResult, Notificacao>> TipoPagamento(int id)
         {
-            try
-            {
-                var result = _repository.Obter(id);
-
-                var mensagem = result != null ? "Tipo de pagameto obtido com sucesso" : "Tipo de pagamento não cadastrado";
-
-                return StatusCode(StatusCodes.Status200OK, new ApiResponse<TipoPagamentoQueryResult, Notificacao>(mensagem, result));
-            }
-            catch (Exception e)
-            {
-                HttpContext.RiseError(e);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
-            }
+            var result = _repository.Obter(id);
+            var mensagem = result != null ? "Tipo de pagameto obtido com sucesso" : "Tipo de pagamento não cadastrado";
+            return StatusCode(StatusCodes.Status200OK, new ApiResponse<TipoPagamentoQueryResult, Notificacao>(mensagem, result));
         }
 
         /// <summary>
@@ -106,26 +80,18 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpPost]
         [Route("v1/tipos-pagamentos")]
-        [ProducesResponseType(typeof(ApiResponse<AdicionarTipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<AdicionarTipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(ApiResponse<AdicionarTipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ApiResponse<AdicionarTipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<AdicionarTipoPagamentoCommandOutput, Notificacao>> TipoPagamentoInserir([FromBody] AdicionarTipoPagamentoCommand command)
+        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
+        public ActionResult<ApiResponse<TipoPagamentoCommandOutput, Notificacao>> TipoPagamentoInserir([FromBody] AdicionarTipoPagamentoCommand command)
         {
-            try
-            {
-                var result = _handler.Handler(command);
+            var result = _handler.Handler(command);
 
-                if (result.Sucesso)
-                    return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
-                else
-                    return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
-            }
-            catch (Exception e)
-            {
-                HttpContext.RiseError(e);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
-            }
+            if (result.Sucesso)
+                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
+            else
+                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
         }
 
         /// <summary>
@@ -140,26 +106,18 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpPut]
         [Route("v1/tipos-pagamentos/{id}")]
-        [ProducesResponseType(typeof(ApiResponse<AtualizarTipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<AtualizarTipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(ApiResponse<AtualizarTipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ApiResponse<AtualizarTipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<AtualizarTipoPagamentoCommandOutput, Notificacao>> TipoPagamentoAlterar(int id, [FromBody] AtualizarTipoPagamentoCommand command)
+        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
+        public ActionResult<ApiResponse<TipoPagamentoCommandOutput, Notificacao>> TipoPagamentoAlterar(int id, [FromBody] AtualizarTipoPagamentoCommand command)
         {
-            try
-            {
-                var result = _handler.Handler(id, command);
+            var result = _handler.Handler(id, command);
 
-                if (result.Sucesso)
-                    return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
-                else
-                    return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
-            }
-            catch (Exception e)
-            {
-                HttpContext.RiseError(e);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
-            }
+            if (result.Sucesso)
+                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
+            else
+                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
         }
 
         /// <summary>
@@ -173,26 +131,18 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpDelete]
         [Route("v1/tipos-pagamentos/{id}")]
-        [ProducesResponseType(typeof(ApiResponse<ApagarTipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<ApagarTipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(ApiResponse<ApagarTipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ApiResponse<ApagarTipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<ApagarTipoPagamentoCommandOutput, Notificacao>> TipoPagamentoExcluir(int id)
+        [ProducesResponseType(typeof(ApiResponse<CommandOutput, Notificacao>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<CommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<CommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<CommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
+        public ActionResult<ApiResponse<CommandOutput, Notificacao>> TipoPagamentoExcluir(int id)
         {
-            try
-            {
-                var result = _handler.Handler(id);
+            var result = _handler.Handler(id);
 
-                if (result.Sucesso)
-                    return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
-                else
-                    return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
-            }
-            catch (Exception e)
-            {
-                HttpContext.RiseError(e);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse<object, Notificacao>("Erro", new List<Notificacao>() { new Notificacao("Erro", e.Message) }));
-            }
+            if (result.Sucesso)
+                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
+            else
+                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
         }
     }
 }

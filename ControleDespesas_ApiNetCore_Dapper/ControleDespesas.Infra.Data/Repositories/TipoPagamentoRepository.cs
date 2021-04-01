@@ -22,12 +22,11 @@ namespace ControleDespesas.Infra.Data.Repositories
             _dataContext = new DataContext(EBancoDadosRelacional.SQLServer, settings.ConnectionString);
         }
 
-        public TipoPagamento Salvar(TipoPagamento tipoPagamento)
+        public int Salvar(TipoPagamento tipoPagamento)
         {
             _parametros.Add("Descricao", tipoPagamento.Descricao, DbType.String);
 
-            tipoPagamento.Id = _dataContext.SQLServerConexao.ExecuteScalar<int>(TipoPagamentoQueries.Salvar, _parametros);
-            return tipoPagamento;
+            return _dataContext.SQLServerConexao.ExecuteScalar<int>(TipoPagamentoQueries.Salvar, _parametros); ;
         }
 
         public void Atualizar(TipoPagamento tipoPagamento)

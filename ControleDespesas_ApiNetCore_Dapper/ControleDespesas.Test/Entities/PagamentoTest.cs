@@ -27,7 +27,7 @@ namespace ControleDespesas.Test.Entities
         [TestCase(-1)]
         public void ValidarEntidade_IdTipoPagamentoInvalido(int idTipoPagamento)
         {
-            _pagamento.TipoPagamento.Id = idTipoPagamento;
+            _pagamento.TipoPagamento.DefinirId(idTipoPagamento);
             _pagamento.Validar();
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_pagamento));

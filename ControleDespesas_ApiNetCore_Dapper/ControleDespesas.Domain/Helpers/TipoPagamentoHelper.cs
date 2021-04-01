@@ -1,6 +1,7 @@
 ﻿using ControleDespesas.Domain.Commands.TipoPagamento.Input;
 using ControleDespesas.Domain.Commands.TipoPagamento.Output;
 using ControleDespesas.Domain.Entities;
+using ControleDespesas.Infra.Commands;
 
 namespace ControleDespesas.Domain.Helpers
 {
@@ -20,27 +21,27 @@ namespace ControleDespesas.Domain.Helpers
             return tipoPagamento;
         }
 
-        public static AdicionarTipoPagamentoCommandOutput GerarDadosRetornoInsert(TipoPagamento tipoPagamento)
+        public static TipoPagamentoCommandOutput GerarDadosRetornoInsert(TipoPagamento tipoPagamento)
         {
-            return new AdicionarTipoPagamentoCommandOutput
+            return new TipoPagamentoCommandOutput
             {
                 Id = tipoPagamento.Id,
                 Descricao = tipoPagamento.Descricao,
             };
         }
 
-        public static AtualizarTipoPagamentoCommandOutput GerarDadosRetornoUpdate(TipoPagamento tipoPagamento)
+        public static TipoPagamentoCommandOutput GerarDadosRetornoUpdate(TipoPagamento tipoPagamento)
         {
-            return new AtualizarTipoPagamentoCommandOutput
+            return new TipoPagamentoCommandOutput
             {
                 Id = tipoPagamento.Id,
                 Descricao = tipoPagamento.Descricao,
             };
         }
 
-        public static ApagarTipoPagamentoCommandOutput GerarDadosRetornoDelete(int id)
+        public static CommandOutput GerarDadosRetornoDelete(int id)
         {
-            return new ApagarTipoPagamentoCommandOutput { Id = id };
+            return new CommandOutput { Id = id };
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace ControleDespesas.Domain.Commands.TipoPagamento.Output
 {
-    public class AtualizarTipoPagamentoCommandOutput
+    public class TipoPagamentoCommandOutput
     {
         public int Id { get; set; }
         public string Descricao { get; set; }

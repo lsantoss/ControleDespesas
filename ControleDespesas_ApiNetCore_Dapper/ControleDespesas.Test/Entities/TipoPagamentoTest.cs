@@ -28,13 +28,41 @@ namespace ControleDespesas.Test.Entities
         [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
         public void ValidarEntidade_DescricaoInvalida(string descricao)
         {
-            _tipoPagamento.Descricao = descricao;
+            _tipoPagamento.DefinirDescricao(descricao);
             _tipoPagamento.Validar();
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_tipoPagamento));
 
             Assert.False(_tipoPagamento.Valido);
             Assert.AreNotEqual(0, _tipoPagamento.Notificacoes.Count);
+        }
+
+        [Test]
+        [TestCase(1)]
+        [TestCase(10)]
+        public void DefinirId(int id)
+        {
+            _tipoPagamento.DefinirId(id);
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_tipoPagamento));
+
+            Assert.AreEqual(id, _tipoPagamento.Id);
+            Assert.True(_tipoPagamento.Valido);
+            Assert.AreEqual(0, _tipoPagamento.Notificacoes.Count);
+        }
+
+        [Test]
+        [TestCase("Saneamento")]
+        [TestCase("Telecomunicações")]
+        public void DefinirNome(string descricao)
+        {
+            _tipoPagamento.DefinirDescricao(descricao);
+
+            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_tipoPagamento));
+
+            Assert.AreEqual(descricao, _tipoPagamento.Descricao);
+            Assert.True(_tipoPagamento.Valido);
+            Assert.AreEqual(0, _tipoPagamento.Notificacoes.Count);
         }
 
         [TearDown]

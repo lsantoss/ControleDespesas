@@ -40,7 +40,9 @@ namespace ControleDespesas.Domain.Handlers
                                          "Inconsistência(s) no(s) dado(s)",
                                          Notificacoes);
 
-            tipoPagamento = _repository.Salvar(tipoPagamento);
+            var id = _repository.Salvar(tipoPagamento);
+
+            tipoPagamento.DefinirId(id);
 
             var dadosRetorno = TipoPagamentoHelper.GerarDadosRetornoInsert(tipoPagamento);
 

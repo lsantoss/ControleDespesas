@@ -6,7 +6,7 @@ namespace ControleDespesas.Domain.Interfaces.Repositories
 {
     public interface ITipoPagamentoRepository
     {
-        TipoPagamento Salvar(TipoPagamento tipoPagamento);
+        int Salvar(TipoPagamento tipoPagamento);
         void Atualizar(TipoPagamento tipoPagamento);
         void Deletar(int id);
 

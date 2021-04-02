@@ -1,9 +1,9 @@
-﻿using ControleDespesas.Api.Authentication;
-using ControleDespesas.Api.Controllers.ControleDespesas;
+﻿using ControleDespesas.Api.Controllers.ControleDespesas;
 using ControleDespesas.Domain.Commands.Usuario.Output;
 using ControleDespesas.Domain.Handlers;
-using ControleDespesas.Domain.Interfaces.Authentication;
+using ControleDespesas.Domain.Helpers;
 using ControleDespesas.Domain.Interfaces.Handlers;
+using ControleDespesas.Domain.Interfaces.Helpers;
 using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Domain.Query.Usuario.Results;
 using ControleDespesas.Infra.Commands;
@@ -23,7 +23,7 @@ namespace ControleDespesas.Test.Controllers
 {
     public class UsuarioControllerTest : DatabaseTest
     {
-        private readonly IJWTAuthentication _jwtAuthentication;
+        private readonly ITokenJwtHelper _tokenJwtHelper;
         private readonly IUsuarioRepository _repository;
         private readonly IUsuarioHandler _handler;
         private readonly UsuarioController _controller;
@@ -32,9 +32,9 @@ namespace ControleDespesas.Test.Controllers
         {
             CriarBaseDeDadosETabelas();
 
-            _jwtAuthentication = new JWTAuthentication(MockSettingsAPI);
+            _tokenJwtHelper = new TokenJwtHelper(MockSettingsAPI);
             _repository = new UsuarioRepository(MockSettingsInfraData);
-            _handler = new UsuarioHandler(_repository, _jwtAuthentication);
+            _handler = new UsuarioHandler(_repository, _tokenJwtHelper);
             _controller = new UsuarioController(_repository, _handler);
             _controller.ControllerContext.HttpContext = new DefaultHttpContext();
             _controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = MockSettingsAPI.ChaveAPI;

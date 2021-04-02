@@ -1,9 +1,9 @@
-﻿using ControleDespesas.Api.Authentication;
-using ControleDespesas.Api.Middlewares;
+﻿using ControleDespesas.Api.Middlewares;
 using ControleDespesas.Api.Swagger;
 using ControleDespesas.Domain.Handlers;
-using ControleDespesas.Domain.Interfaces.Authentication;
+using ControleDespesas.Domain.Helpers;
 using ControleDespesas.Domain.Interfaces.Handlers;
+using ControleDespesas.Domain.Interfaces.Helpers;
 using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Infra.Data.Repositories;
 using ControleDespesas.Infra.Settings;
@@ -87,8 +87,6 @@ namespace ControleDespesas.Api
             #endregion
 
             #region Autenticação JWT
-            services.AddTransient<IJWTAuthentication, JWTAuthentication>();
-
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -136,6 +134,10 @@ namespace ControleDespesas.Api
             services.AddTransient<ITipoPagamentoHandler, TipoPagamentoHandler>();
             services.AddTransient<IPagamentoHandler, PagamentoHandler>();
             services.AddTransient<IUsuarioHandler, UsuarioHandler>();
+            #endregion
+
+            #region Helpers
+            services.AddTransient<ITokenJwtHelper, TokenJwtHelper>();
             #endregion
 
             #region Indented Pretty Print Formatting JSON

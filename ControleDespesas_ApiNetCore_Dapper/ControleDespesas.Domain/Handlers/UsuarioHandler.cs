@@ -1,7 +1,7 @@
 ﻿using ControleDespesas.Domain.Commands.Usuario.Input;
 using ControleDespesas.Domain.Helpers;
-using ControleDespesas.Domain.Interfaces.Authentication;
 using ControleDespesas.Domain.Interfaces.Handlers;
+using ControleDespesas.Domain.Interfaces.Helpers;
 using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Domain.Query.Usuario.Results;
 using ControleDespesas.Infra.Commands;
@@ -14,12 +14,12 @@ namespace ControleDespesas.Domain.Handlers
     public class UsuarioHandler : Notificadora, IUsuarioHandler
     {
         private readonly IUsuarioRepository _repository;
-        private readonly IJWTAuthentication _tokenJWTService;
+        private readonly ITokenJwtHelper _tokenJwtHelper;
 
-        public UsuarioHandler(IUsuarioRepository repository, IJWTAuthentication tokenJWTService)
+        public UsuarioHandler(IUsuarioRepository repository, ITokenJwtHelper tokenJwtHelper)
         {
             _repository = repository;
-            _tokenJWTService = tokenJWTService;
+            _tokenJwtHelper = tokenJwtHelper;
         }
 
         public ICommandResult<Notificacao> Handler(AdicionarUsuarioCommand command)
@@ -154,7 +154,7 @@ namespace ControleDespesas.Domain.Handlers
 
             if (usuario != null)
             {
-                var token = _tokenJWTService.GenerarTokenJwt(usuario);
+                var token = _tokenJwtHelper.GenerarTokenJwt(usuario);
                 var usuarioComToken = new UsuarioTokenQueryResult() 
                 { 
                     Id = usuario.Id,

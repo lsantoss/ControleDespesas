@@ -5,16 +5,16 @@ namespace ControleDespesas.Domain.Entities
 {
     public class Pagamento : Notificadora
     {
-        public int Id { get; set; }
-        public TipoPagamento TipoPagamento { get; set; }
-        public Empresa Empresa { get; set; }
-        public Pessoa Pessoa { get; set; }
-        public string Descricao { get; set; }
-        public double Valor { get; set; }
-        public DateTime DataVencimento { get; set; }
-        public DateTime? DataPagamento { get; set; }
-        public string ArquivoPagamento { get; set; }
-        public string ArquivoComprovante { get; set; }
+        public int Id { get; private set; }
+        public TipoPagamento TipoPagamento { get; private set; }
+        public Empresa Empresa { get; private set; }
+        public Pessoa Pessoa { get; private set; }
+        public string Descricao { get; private set; }
+        public double Valor { get; private set; }
+        public DateTime DataVencimento { get; private set; }
+        public DateTime? DataPagamento { get; private set; }
+        public string ArquivoPagamento { get; private set; }
+        public string ArquivoComprovante { get; private set; }
 
         public Pagamento(int id, 
                          TipoPagamento tipoPagamento, 
@@ -42,6 +42,56 @@ namespace ControleDespesas.Domain.Entities
         public Pagamento(int id)
         {
             Id = id;
+        }
+
+        public void DefinirId(int id)
+        {
+            Id = id;
+        }
+
+        public void DefinirTipoPagamento(TipoPagamento tipoPagamento)
+        {
+            TipoPagamento = tipoPagamento;
+        }
+
+        public void DefinirEmpresa(Empresa empresa)
+        {
+            Empresa = empresa;
+        }
+
+        public void DefinirPessoa(Pessoa pessoa)
+        {
+            Pessoa = pessoa;
+        }
+
+        public void DefinirDescricao(string descricao)
+        {
+            Descricao = descricao;
+        }
+
+        public void DefinirValor(double valor)
+        {
+            Valor = valor;
+        }
+
+        public void DefinirDataVencimento(DateTime dataVencimento)
+        {
+            DataVencimento = dataVencimento;
+        }
+
+        public void DefinirDataPagamento(DateTime? dataPagamento)
+        {
+            DataPagamento = dataPagamento;
+        }
+
+        public void DefinirArquivoPagamento(string arquivoPagamento)
+        {
+            ArquivoPagamento = arquivoPagamento;
+        }
+
+        public void DefinirArquivoComprovante(string arquivoComprovante)
+        {
+            ArquivoComprovante = arquivoComprovante;
         }
 
         public void Validar()

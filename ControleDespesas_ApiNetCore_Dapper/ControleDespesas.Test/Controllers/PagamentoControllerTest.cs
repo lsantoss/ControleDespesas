@@ -4,6 +4,7 @@ using ControleDespesas.Domain.Handlers;
 using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Domain.Query.Pagamento.Results;
+using ControleDespesas.Infra.Commands;
 using ControleDespesas.Infra.Data.Repositories;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Models;
@@ -39,7 +40,7 @@ namespace ControleDespesas.Test.Controllers
             _repositoryTipoPagamento = new TipoPagamentoRepository(MockSettingsInfraData);
             _repositoryPagamento = new PagamentoRepository(MockSettingsInfraData);
             _handler = new PagamentoHandler(_repositoryPagamento, _repositoryEmpresa, _repositoryPessoa, _repositoryTipoPagamento);
-            _controller = new PagamentoController(_repositoryPagamento, _handler, MockSettingsAPI);
+            _controller = new PagamentoController(_repositoryPagamento, _handler);
             _controller.ControllerContext.HttpContext = new DefaultHttpContext();
             _controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = MockSettingsAPI.ChaveAPI;
         }
@@ -327,7 +328,7 @@ namespace ControleDespesas.Test.Controllers
             var pagamento2 = new SettingsTest().Pagamento2;
             var pagamento3 = new SettingsTest().Pagamento3;
 
-            pagamento3.Pessoa = pagamento1.Pessoa;
+            pagamento3.DefinirPessoa(pagamento1.Pessoa);
 
             var valorTotalEsperado = pagamento2.Valor + pagamento3.Valor;
 
@@ -383,7 +384,7 @@ namespace ControleDespesas.Test.Controllers
 
             var responseJson = JsonConvert.SerializeObject(response);
 
-            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<AdicionarPagamentoCommandOutput, Notificacao>>>(responseJson);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<PagamentoCommandOutput, Notificacao>>>(responseJson);
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
 
@@ -424,7 +425,7 @@ namespace ControleDespesas.Test.Controllers
 
             var responseJson = JsonConvert.SerializeObject(response);
 
-            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<AtualizarPagamentoCommandOutput, Notificacao>>>(responseJson);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<PagamentoCommandOutput, Notificacao>>>(responseJson);
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
 
@@ -463,7 +464,7 @@ namespace ControleDespesas.Test.Controllers
 
             var responseJson = JsonConvert.SerializeObject(response);
 
-            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<ApagarPagamentoCommandOutput, Notificacao>>>(responseJson);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<CommandOutput, Notificacao>>>(responseJson);
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
 

@@ -70,7 +70,7 @@ namespace ControleDespesas.Test.Entities
         [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
         public void ValidarEntidade_DescricaoInvalida(string descricao)
         {
-            _pagamento.Descricao = descricao;
+            _pagamento.DefinirDescricao(descricao);
             _pagamento.Validar();
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_pagamento));
@@ -84,7 +84,7 @@ namespace ControleDespesas.Test.Entities
         [TestCase(-1)]
         public void ValidarEntidade_ValorInvalido(double valor)
         {
-            _pagamento.Valor = valor;
+            _pagamento.DefinirValor(valor);
             _pagamento.Validar();
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_pagamento));

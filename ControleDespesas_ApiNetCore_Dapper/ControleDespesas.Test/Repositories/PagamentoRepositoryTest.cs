@@ -332,7 +332,7 @@ namespace ControleDespesas.Test.Repositories
             var pagamento2 = new SettingsTest().Pagamento2;
             var pagamento3 = new SettingsTest().Pagamento3;
 
-            pagamento3.Pessoa = pagamento1.Pessoa;
+            pagamento3.DefinirPessoa(pagamento1.Pessoa);
 
             var valorTotalEsperado = pagamento2.Valor + pagamento3.Valor;
 

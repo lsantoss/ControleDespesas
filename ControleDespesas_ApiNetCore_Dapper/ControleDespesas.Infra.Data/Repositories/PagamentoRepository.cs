@@ -26,7 +26,7 @@ namespace ControleDespesas.Infra.Data.Repositories
             _dataContext = new DataContext(EBancoDadosRelacional.SQLServer, settings.ConnectionString);
         }
 
-        public Pagamento Salvar(Pagamento pagamento)
+        public int Salvar(Pagamento pagamento)
         {
             _parametros.Add("IdTipoPagamento", pagamento.TipoPagamento.Id, DbType.Int32);
             _parametros.Add("IdEmpresa", pagamento.Empresa.Id, DbType.Int32);
@@ -38,8 +38,7 @@ namespace ControleDespesas.Infra.Data.Repositories
             _parametros.Add("ArquivoPagamento", pagamento.ArquivoPagamento, DbType.String);
             _parametros.Add("ArquivoComprovante", pagamento.ArquivoComprovante, DbType.String);
 
-            pagamento.Id = _dataContext.SQLServerConexao.ExecuteScalar<int>(PagamentoQueries.Salvar, _parametros);
-            return pagamento;
+            return _dataContext.SQLServerConexao.ExecuteScalar<int>(PagamentoQueries.Salvar, _parametros);
         }
 
         public void Atualizar(Pagamento pagamento)

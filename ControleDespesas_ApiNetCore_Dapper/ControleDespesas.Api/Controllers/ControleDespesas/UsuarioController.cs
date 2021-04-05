@@ -29,7 +29,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         }
 
         /// <summary>
-        /// Usuarios
+        /// Usuários
         /// </summary>                
         /// <remarks><h2><b>Lista todos os Usuários.</b></h2></remarks>
         /// <response code="200">OK Request</response>
@@ -48,18 +48,16 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         }
 
         /// <summary>
-        /// Usuario
+        /// Usuário
         /// </summary>                
-        /// <remarks><h2><b>Consulta o Usuário.</b></h2></remarks>
+        /// <remarks><h2><b>Consulta o Usuário pelo Id.</b></h2></remarks>
         /// <param name="id">Parâmetro requerido Id do Usuário</param>
         /// <response code="200">OK Request</response>
-        /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [Route("v1/usuarios/{id}")]
         [ProducesResponseType(typeof(ApiResponse<UsuarioQueryResult, Notificacao>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<UsuarioQueryResult, Notificacao>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<UsuarioQueryResult, Notificacao>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<UsuarioQueryResult, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<UsuarioQueryResult, Notificacao>> Usuario(int id)
@@ -70,19 +68,21 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         }
 
         /// <summary>
-        /// Incluir Usuario 
+        /// Incluir Usuário 
         /// </summary>                
         /// <remarks><h2><b>Inclui novo Usuário na base de dados.</b></h2></remarks>
         /// <param name="command">Parâmetro requerido command de Insert</param>
-        /// <response code="200">OK Request</response>
+        /// <response code="201">Created</response>
         /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
+        /// <response code="422">Unprocessable Entity</response>
         /// <response code="500">Internal Server Error</response>
         [HttpPost]
         [Route("v1/usuarios")]
-        [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput, Notificacao>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput, Notificacao>), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput, Notificacao>), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<UsuarioCommandOutput, Notificacao>> UsuarioInserir([FromBody] AdicionarUsuarioCommand command)
         {
@@ -95,7 +95,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         }
 
         /// <summary>
-        /// Alterar Usuario
+        /// Alterar Usuário
         /// </summary>        
         /// <remarks><h2><b>Altera Usuário na base de dados.</b></h2></remarks>  
         /// <param name="id">Parâmetro requerido Id do Usuário</param>      
@@ -103,12 +103,14 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="200">OK Request</response>
         /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
+        /// <response code="422">Unprocessable Entity</response>
         /// <response code="500">Internal Server Error</response>
         [HttpPut]
         [Route("v1/usuarios/{id}")]
         [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput, Notificacao>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput, Notificacao>), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<UsuarioCommandOutput, Notificacao>> UsuarioAlterar(int id, [FromBody] AtualizarUsuarioCommand command)
         {
@@ -121,19 +123,19 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         }
 
         /// <summary>
-        /// Excluir Usuario
+        /// Excluir Usuário
         /// </summary>                
         /// <remarks><h2><b>Exclui Usuário na base de dados.</b></h2></remarks>
         /// <param name="id">Parâmetro requerido Id do Usuário</param>      
         /// <response code="200">OK Request</response>
-        /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
+        /// <response code="422">Unprocessable Entity</response>
         /// <response code="500">Internal Server Error</response>
         [HttpDelete]
         [Route("v1/usuarios/{id}")]
         [ProducesResponseType(typeof(ApiResponse<CommandOutput, Notificacao>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<CommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<CommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<CommandOutput, Notificacao>), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(typeof(ApiResponse<CommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<CommandOutput, Notificacao>> UsuarioExcluir(int id)
         {
@@ -146,13 +148,14 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         }
 
         /// <summary>
-        /// Login Usuario
+        /// Login Usuário
         /// </summary>                
         /// <remarks><h2><b>Loga Usuário com credências corretas.</b></h2></remarks>
         /// <param name="command">Parâmetro requerido command de Login</param>
         /// <response code="200">OK Request</response>
         /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
+        /// <response code="422">Unprocessable Entity</response>
         /// <response code="500">Internal Server Error</response>
         [AllowAnonymous]
         [HttpPost]
@@ -160,6 +163,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<UsuarioTokenQueryResult, Notificacao>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<UsuarioTokenQueryResult, Notificacao>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<UsuarioTokenQueryResult, Notificacao>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<UsuarioTokenQueryResult, Notificacao>), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(typeof(ApiResponse<UsuarioTokenQueryResult, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<UsuarioTokenQueryResult, Notificacao>> UsuarioLogin([FromBody] LoginUsuarioCommand command)
         {

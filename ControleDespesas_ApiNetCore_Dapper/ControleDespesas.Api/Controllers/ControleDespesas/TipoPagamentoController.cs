@@ -50,16 +50,14 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <summary>
         /// Tipo de Pagamento
         /// </summary>                
-        /// <remarks><h2><b>Consulta o Tipo de Pagamento.</b></h2></remarks>
+        /// <remarks><h2><b>Consulta o Tipo de Pagamento pelo Id.</b></h2></remarks>
         /// <param name="id">Parâmetro requerido Id do Tipo de Pagamento</param>
         /// <response code="200">OK Request</response>
-        /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [Route("v1/tipos-pagamentos/{id}")]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoQueryResult, Notificacao>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoQueryResult, Notificacao>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoQueryResult, Notificacao>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoQueryResult, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<TipoPagamentoQueryResult, Notificacao>> TipoPagamento(int id)
@@ -74,15 +72,17 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// </summary>                
         /// <remarks><h2><b>Inclui novo Tipo de Pagamento na base de dados.</b></h2></remarks>
         /// <param name="command">Parâmetro requerido command de Insert</param>
-        /// <response code="200">OK Request</response>
+        /// <response code="201">Created</response>
         /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
+        /// <response code="422">Unprocessable Entity</response>
         /// <response code="500">Internal Server Error</response>
         [HttpPost]
         [Route("v1/tipos-pagamentos")]
-        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<TipoPagamentoCommandOutput, Notificacao>> TipoPagamentoInserir([FromBody] AdicionarTipoPagamentoCommand command)
         {
@@ -103,12 +103,14 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="200">OK Request</response>
         /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
+        /// <response code="422">Unprocessable Entity</response>
         /// <response code="500">Internal Server Error</response>
         [HttpPut]
         [Route("v1/tipos-pagamentos/{id}")]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<TipoPagamentoCommandOutput, Notificacao>> TipoPagamentoAlterar(int id, [FromBody] AtualizarTipoPagamentoCommand command)
         {
@@ -126,14 +128,12 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <remarks><h2><b>Exclui Tipo de Pagamento na base de dados.</b></h2></remarks>
         /// <param name="id">Parâmetro requerido Id do Tipo de Pagamento</param>  
         /// <response code="200">OK Request</response>
-        /// <response code="400">Bad Request</response>
-        /// <response code="401">Unauthorized</response>
+        /// <response code="422">Unprocessable Entity</response>
         /// <response code="500">Internal Server Error</response>
         [HttpDelete]
         [Route("v1/tipos-pagamentos/{id}")]
         [ProducesResponseType(typeof(ApiResponse<CommandOutput, Notificacao>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<CommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(ApiResponse<CommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<CommandOutput, Notificacao>), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(typeof(ApiResponse<CommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
         public ActionResult<ApiResponse<CommandOutput, Notificacao>> TipoPagamentoExcluir(int id)
         {

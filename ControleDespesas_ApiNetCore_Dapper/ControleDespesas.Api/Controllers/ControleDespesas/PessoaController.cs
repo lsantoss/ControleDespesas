@@ -32,7 +32,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <summary>
         /// Pessoas
         /// </summary>                
-        /// <remarks><h2><b>Lista todas as Pessoas.</b></h2></remarks>
+        /// <remarks><h2><b>Lista Pessoas.</b></h2></remarks>
         /// <param name="query">Parâmetro requerido query de busca</param>
         /// <response code="200">OK Request</response>
         /// <response code="400">Bad Request</response>
@@ -42,6 +42,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [HttpGet]
         [Route("v1/pessoas")]
         [ProducesResponseType(typeof(ApiResponse<List<PessoaQueryResult>, Notificacao>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<List<PessoaQueryResult>, Notificacao>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<List<PessoaQueryResult>, Notificacao>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<List<PessoaQueryResult>, Notificacao>), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(typeof(ApiResponse<List<PessoaQueryResult>, Notificacao>), StatusCodes.Status500InternalServerError)]
@@ -61,7 +62,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <summary>
         /// Pessoa
         /// </summary>                
-        /// <remarks><h2><b>Consulta a Pessoa.</b></h2></remarks>
+        /// <remarks><h2><b>Consulta a Pessoa pelo Id.</b></h2></remarks>
         /// <param name="id">Parâmetro requerido Id da Pessoa</param>
         /// <response code="200">OK Request</response>
         /// <response code="401">Unauthorized</response>

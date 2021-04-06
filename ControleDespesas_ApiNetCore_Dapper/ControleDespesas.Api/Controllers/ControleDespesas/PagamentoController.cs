@@ -41,6 +41,12 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<List<PagamentoQueryResult>>), StatusCodes.Status500InternalServerError)]
         public IActionResult Pagamentos([FromQuery] PagamentoQuery query)
         {
+            if (query == null)
+                return ResultInputNull();
+
+            if (!query.ValidarQuery())
+                return ResultNotifications(query.Notificacoes);
+
             return ResultGetList(_repository.Listar(query.IdPessoa, query.Status));
         }
 
@@ -115,6 +121,12 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<PagamentoGastosQueryResult>), StatusCodes.Status500InternalServerError)]
         public IActionResult ObterGastos([FromQuery] PagamentoGastosQuery query)
         {
+            if (query == null)
+                return ResultInputNull();
+
+            if (!query.ValidarQuery())
+                return ResultNotifications(query.Notificacoes);
+
             return ResultGet(_repository.ObterGastos(query.IdPessoa, query.Ano, query.Mes));
         }
 

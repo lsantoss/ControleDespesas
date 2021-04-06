@@ -1,5 +1,5 @@
-﻿using ElmahCore;
-using LSCode.Facilitador.Api.Models.Results;
+﻿using ControleDespesas.Infra.Response;
+using ElmahCore;
 using LSCode.Validador.ValidacoesNotificacoes;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -32,7 +32,7 @@ namespace ControleDespesas.Api.Middlewares
 				var mensagem = "Erro";
 				var notificacao = new Notificacao("Erro", ex.Message);
 				var erros = new List<Notificacao>() { notificacao };
-				var retorno = new ApiResponse<object, Notificacao>(mensagem, erros);
+				var retorno = new ApiResponse<object>(mensagem, erros);
 				var jsonRetorno = JsonConvert.SerializeObject(retorno);
 
 				httpContext.Response.ContentType = "application/json";

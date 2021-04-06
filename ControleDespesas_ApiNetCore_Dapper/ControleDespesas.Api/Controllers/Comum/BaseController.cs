@@ -61,7 +61,6 @@ namespace ControleDespesas.Api.Controllers.Comum
             var notificacao = new Notificacao("Parâmetros de entrada", "ChaveParâmetros de entrada estão nulos");
             var erros = new List<Notificacao>() { notificacao };
             var response = new ApiResponse<object>(mensagem, erros);
-
             return StatusCode(StatusCodes.Status400BadRequest, response);
         }
 

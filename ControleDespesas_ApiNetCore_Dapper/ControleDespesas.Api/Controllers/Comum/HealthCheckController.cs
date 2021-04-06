@@ -1,16 +1,11 @@
-﻿using LSCode.Facilitador.Api.Models.Results;
-using LSCode.Validador.ValidacoesNotificacoes;
-using Microsoft.AspNetCore.Authorization;
+﻿using ControleDespesas.Infra.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControleDespesas.Api.Controllers.Comum
 {
-    [Authorize]
     [ApiController]
-    [Consumes("application/json")]
-    [Produces("application/json")]
-    public class HealthCheckController : ControllerBase
+    public class HealthCheckController : BaseController
     {
         /// <summary>
         /// Health Check
@@ -21,13 +16,15 @@ namespace ControleDespesas.Api.Controllers.Comum
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [Route("v1/healthCheck")]
-        [ProducesResponseType(typeof(ApiResponse<string, Notificacao>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<string, Notificacao>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ApiResponse<string, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<string, Notificacao>> HealthCheck()
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status500InternalServerError)]
+        public IActionResult HealthCheck()
         {
-            var retorno = new ApiResponse<string, Notificacao>("Sucesso", "API Controle de Despesas - OK");
-            return StatusCode(StatusCodes.Status200OK, retorno);
+            var mensagem = "Sucesso";
+            var dados = "API Controle de Despesas - OK";
+            var response = new ApiResponse<string>(mensagem, dados);
+            return StatusCode(StatusCodes.Status200OK, response);
         }        
     }
 }

@@ -1,23 +1,19 @@
-﻿using ControleDespesas.Domain.Commands.TipoPagamento.Input;
+﻿using ControleDespesas.Api.Controllers.Comum;
+using ControleDespesas.Domain.Commands.TipoPagamento.Input;
 using ControleDespesas.Domain.Commands.TipoPagamento.Output;
 using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Domain.Query.TipoPagamento.Results;
 using ControleDespesas.Infra.Commands;
-using LSCode.Facilitador.Api.Models.Results;
-using LSCode.Validador.ValidacoesNotificacoes;
-using Microsoft.AspNetCore.Authorization;
+using ControleDespesas.Infra.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
 namespace ControleDespesas.Api.Controllers.ControleDespesas
 {
-    [Authorize]
     [ApiController]
-    [Consumes("application/json")]
-    [Produces("application/json")]
-    public class TipoPagamentoController : ControllerBase
+    public class TipoPagamentoController : BaseController
     {
         private readonly ITipoPagamentoRepository _repository;
         private readonly ITipoPagamentoHandler _handler;
@@ -37,14 +33,12 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [Route("v1/tipos-pagamentos")]
-        [ProducesResponseType(typeof(ApiResponse<List<TipoPagamentoQueryResult>, Notificacao>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<List<TipoPagamentoQueryResult>, Notificacao>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ApiResponse<List<TipoPagamentoQueryResult>, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<List<TipoPagamentoQueryResult>, Notificacao>> TipoPagamentos()
+        [ProducesResponseType(typeof(ApiResponse<List<TipoPagamentoQueryResult>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<List<TipoPagamentoQueryResult>>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<List<TipoPagamentoQueryResult>>), StatusCodes.Status500InternalServerError)]
+        public IActionResult TipoPagamentos()
         {
-            var result = _repository.Listar();
-            var mensagem = result.Count > 0 ? "Lista de tipos de pagamento obtida com sucesso" : "Nenhum tipo de pagamento cadastrado atualmente";
-            return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<TipoPagamentoQueryResult>, Notificacao>(mensagem, result));
+            return ResultGetList(_repository.Listar());
         }
 
         /// <summary>
@@ -57,14 +51,12 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [Route("v1/tipos-pagamentos/{id}")]
-        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoQueryResult, Notificacao>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoQueryResult, Notificacao>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoQueryResult, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<TipoPagamentoQueryResult, Notificacao>> TipoPagamento(int id)
+        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoQueryResult>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoQueryResult>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoQueryResult>), StatusCodes.Status500InternalServerError)]
+        public IActionResult TipoPagamento(int id)
         {
-            var result = _repository.Obter(id);
-            var mensagem = result != null ? "Tipo de pagameto obtido com sucesso" : "Tipo de pagamento não cadastrado";
-            return StatusCode(StatusCodes.Status200OK, new ApiResponse<TipoPagamentoQueryResult, Notificacao>(mensagem, result));
+            return ResultGet(_repository.Obter(id));
         }
 
         /// <summary>
@@ -79,19 +71,14 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpPost]
         [Route("v1/tipos-pagamentos")]
-        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status201Created)]
-        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status422UnprocessableEntity)]
-        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<TipoPagamentoCommandOutput, Notificacao>> TipoPagamentoInserir([FromBody] AdicionarTipoPagamentoCommand command)
+        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput>), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput>), StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput>), StatusCodes.Status500InternalServerError)]
+        public IActionResult TipoPagamentoInserir([FromBody] AdicionarTipoPagamentoCommand command)
         {
-            var result = _handler.Handler(command);
-
-            if (result.Sucesso)
-                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
-            else
-                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
+            return ResultHandler(_handler.Handler(command));
         }
 
         /// <summary>
@@ -107,19 +94,14 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpPut]
         [Route("v1/tipos-pagamentos/{id}")]
-        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status422UnprocessableEntity)]
-        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<TipoPagamentoCommandOutput, Notificacao>> TipoPagamentoAlterar(int id, [FromBody] AtualizarTipoPagamentoCommand command)
+        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput>), StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput>), StatusCodes.Status500InternalServerError)]
+        public IActionResult TipoPagamentoAlterar(int id, [FromBody] AtualizarTipoPagamentoCommand command)
         {
-            var result = _handler.Handler(id, command);
-
-            if (result.Sucesso)
-                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
-            else
-                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
+            return ResultHandler(_handler.Handler(id, command));
         }
 
         /// <summary>
@@ -132,17 +114,12 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpDelete]
         [Route("v1/tipos-pagamentos/{id}")]
-        [ProducesResponseType(typeof(ApiResponse<CommandOutput, Notificacao>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<CommandOutput, Notificacao>), StatusCodes.Status422UnprocessableEntity)]
-        [ProducesResponseType(typeof(ApiResponse<CommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<CommandOutput, Notificacao>> TipoPagamentoExcluir(int id)
+        [ProducesResponseType(typeof(ApiResponse<CommandOutput>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<CommandOutput>), StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(typeof(ApiResponse<CommandOutput>), StatusCodes.Status500InternalServerError)]
+        public IActionResult TipoPagamentoExcluir(int id)
         {
-            var result = _handler.Handler(id);
-
-            if (result.Sucesso)
-                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
-            else
-                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
+            return ResultHandler(_handler.Handler(id));
         }
     }
 }

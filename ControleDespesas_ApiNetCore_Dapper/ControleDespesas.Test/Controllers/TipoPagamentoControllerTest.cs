@@ -6,12 +6,11 @@ using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Domain.Query.TipoPagamento.Results;
 using ControleDespesas.Infra.Commands;
 using ControleDespesas.Infra.Data.Repositories;
+using ControleDespesas.Infra.Response;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Models;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
-using LSCode.Facilitador.Api.Models.Results;
-using LSCode.Validador.ValidacoesNotificacoes;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -50,18 +49,18 @@ namespace ControleDespesas.Test.Controllers
             _repository.Salvar(tipoPagamento2);
             _repository.Salvar(tipoPagamento3);
 
-            var response = _controller.TipoPagamentos().Result;
+            var response = _controller.TipoPagamentos();
 
             var responseJson = JsonConvert.SerializeObject(response);
 
-            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<List<TipoPagamentoQueryResult>, Notificacao>>>(responseJson);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<List<TipoPagamentoQueryResult>>>>(responseJson);
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
 
             Assert.AreEqual(200, responseObj.StatusCode);
 
             Assert.True(responseObj.Value.Sucesso);
-            Assert.AreEqual("Lista de tipos de pagamento obtida com sucesso", responseObj.Value.Mensagem);
+            Assert.AreEqual("Lista obtida com sucesso", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
 
             Assert.AreEqual(tipoPagamento1.Id, responseObj.Value.Dados[0].Id);
@@ -85,18 +84,18 @@ namespace ControleDespesas.Test.Controllers
             _repository.Salvar(tipoPagamento2);
             _repository.Salvar(tipoPagamento3);
 
-            var response = _controller.TipoPagamento(tipoPagamento2.Id).Result;
+            var response = _controller.TipoPagamento(tipoPagamento2.Id);
 
             var responseJson = JsonConvert.SerializeObject(response);
 
-            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<TipoPagamentoQueryResult, Notificacao>>>(responseJson);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<TipoPagamentoQueryResult>>>(responseJson);
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
 
             Assert.AreEqual(200, responseObj.StatusCode);
 
             Assert.True(responseObj.Value.Sucesso);
-            Assert.AreEqual("Tipo de pagameto obtido com sucesso", responseObj.Value.Mensagem);
+            Assert.AreEqual("Registro obtido com sucesso", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
 
             Assert.AreEqual(tipoPagamento2.Id, responseObj.Value.Dados.Id);
@@ -108,11 +107,11 @@ namespace ControleDespesas.Test.Controllers
         {
             var command = new SettingsTest().TipoPagamentoAdicionarCommand;
 
-            var response = _controller.TipoPagamentoInserir(command).Result;
+            var response = _controller.TipoPagamentoInserir(command);
 
             var responseJson = JsonConvert.SerializeObject(response);
 
-            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<TipoPagamentoCommandOutput, Notificacao>>>(responseJson);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<TipoPagamentoCommandOutput>>>(responseJson);
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
 
@@ -135,11 +134,11 @@ namespace ControleDespesas.Test.Controllers
 
             _repository.Salvar(tipoPagamento);
 
-            var response = _controller.TipoPagamentoAlterar(command.Id, command).Result;
+            var response = _controller.TipoPagamentoAlterar(command.Id, command);
 
             var responseJson = JsonConvert.SerializeObject(response);
 
-            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<TipoPagamentoCommandOutput, Notificacao>>>(responseJson);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<TipoPagamentoCommandOutput>>>(responseJson);
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
 
@@ -160,11 +159,11 @@ namespace ControleDespesas.Test.Controllers
 
             _repository.Salvar(tipoPagamento);
 
-            var response = _controller.TipoPagamentoExcluir(tipoPagamento.Id).Result;
+            var response = _controller.TipoPagamentoExcluir(tipoPagamento.Id);
 
             var responseJson = JsonConvert.SerializeObject(response);
 
-            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<CommandOutput, Notificacao>>>(responseJson);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<CommandOutput>>>(responseJson);
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
 

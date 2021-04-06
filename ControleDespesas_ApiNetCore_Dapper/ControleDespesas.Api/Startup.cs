@@ -158,7 +158,6 @@ namespace ControleDespesas.Api
             app.UseStaticFiles();
             app.UseAuthentication();
 
-            app.UseAPITokenMiddlerware();
             app.UseExceptionMiddleware();
 
             app.UseElmah();

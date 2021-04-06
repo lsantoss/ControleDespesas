@@ -8,12 +8,11 @@ using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Domain.Query.Usuario.Results;
 using ControleDespesas.Infra.Commands;
 using ControleDespesas.Infra.Data.Repositories;
+using ControleDespesas.Infra.Response;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Models;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
-using LSCode.Facilitador.Api.Models.Results;
-using LSCode.Validador.ValidacoesNotificacoes;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -54,18 +53,18 @@ namespace ControleDespesas.Test.Controllers
             _repository.Salvar(usuario2);
             _repository.Salvar(usuario3);
 
-            var response = _controller.Usuarios().Result;
+            var response = _controller.Usuarios();
 
             var responseJson = JsonConvert.SerializeObject(response);
 
-            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<List<UsuarioQueryResult>, Notificacao>>>(responseJson);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<List<UsuarioQueryResult>>>>(responseJson);
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
 
             Assert.AreEqual(200, responseObj.StatusCode);
 
             Assert.True(responseObj.Value.Sucesso);
-            Assert.AreEqual("Lista de usuários obtida com sucesso", responseObj.Value.Mensagem);
+            Assert.AreEqual("Lista obtida com sucesso", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
 
             Assert.AreEqual(usuario1.Id, responseObj.Value.Dados[0].Id);
@@ -95,18 +94,18 @@ namespace ControleDespesas.Test.Controllers
             _repository.Salvar(usuario2);
             _repository.Salvar(usuario3);
 
-            var response = _controller.Usuario(usuario2.Id).Result;
+            var response = _controller.Usuario(usuario2.Id);
 
             var responseJson = JsonConvert.SerializeObject(response);
 
-            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<UsuarioQueryResult, Notificacao>>>(responseJson);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<UsuarioQueryResult>>>(responseJson);
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
 
             Assert.AreEqual(200, responseObj.StatusCode);
 
             Assert.True(responseObj.Value.Sucesso);
-            Assert.AreEqual("Usuário obtido com sucesso", responseObj.Value.Mensagem);
+            Assert.AreEqual("Registro obtido com sucesso", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
 
             Assert.AreEqual(usuario2.Id, responseObj.Value.Dados.Id);
@@ -120,11 +119,11 @@ namespace ControleDespesas.Test.Controllers
         {
             var command = new SettingsTest().UsuarioAdicionarCommand;
 
-            var response = _controller.UsuarioInserir(command).Result;
+            var response = _controller.UsuarioInserir(command);
 
             var responseJson = JsonConvert.SerializeObject(response);
 
-            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<UsuarioCommandOutput, Notificacao>>>(responseJson);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<UsuarioCommandOutput>>>(responseJson);
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
 
@@ -149,11 +148,11 @@ namespace ControleDespesas.Test.Controllers
 
             _repository.Salvar(usuario);
 
-            var response = _controller.UsuarioAlterar(command.Id, command).Result;
+            var response = _controller.UsuarioAlterar(command.Id, command);
 
             var responseJson = JsonConvert.SerializeObject(response);
 
-            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<UsuarioCommandOutput, Notificacao>>>(responseJson);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<UsuarioCommandOutput>>>(responseJson);
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
 
@@ -176,11 +175,11 @@ namespace ControleDespesas.Test.Controllers
 
             _repository.Salvar(usuario);
 
-            var response = _controller.UsuarioExcluir(usuario.Id).Result;
+            var response = _controller.UsuarioExcluir(usuario.Id);
 
             var responseJson = JsonConvert.SerializeObject(response);
 
-            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<CommandOutput, Notificacao>>>(responseJson);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<CommandOutput>>>(responseJson);
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
 
@@ -202,11 +201,11 @@ namespace ControleDespesas.Test.Controllers
 
             _repository.Salvar(usuario);
 
-            var response = _controller.UsuarioLogin(command).Result;
+            var response = _controller.UsuarioLogin(command);
 
             var responseJson = JsonConvert.SerializeObject(response);
 
-            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<UsuarioQueryResult, Notificacao>>>(responseJson);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<UsuarioQueryResult>>>(responseJson);
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
 

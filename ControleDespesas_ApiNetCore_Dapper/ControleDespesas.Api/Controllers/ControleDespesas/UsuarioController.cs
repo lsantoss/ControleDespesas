@@ -1,11 +1,11 @@
-﻿using ControleDespesas.Domain.Commands.Usuario.Input;
+﻿using ControleDespesas.Api.Controllers.Comum;
+using ControleDespesas.Domain.Commands.Usuario.Input;
 using ControleDespesas.Domain.Commands.Usuario.Output;
 using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Domain.Query.Usuario.Results;
 using ControleDespesas.Infra.Commands;
-using LSCode.Facilitador.Api.Models.Results;
-using LSCode.Validador.ValidacoesNotificacoes;
+using ControleDespesas.Infra.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,11 +13,8 @@ using System.Collections.Generic;
 
 namespace ControleDespesas.Api.Controllers.ControleDespesas
 {
-    [Authorize]
     [ApiController]
-    [Consumes("application/json")]
-    [Produces("application/json")]
-    public class UsuarioController : ControllerBase
+    public class UsuarioController : BaseController
     {
         private readonly IUsuarioRepository _repository;
         private readonly IUsuarioHandler _handler;
@@ -37,14 +34,12 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [Route("v1/usuarios")]
-        [ProducesResponseType(typeof(ApiResponse<List<UsuarioQueryResult>, Notificacao>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<List<UsuarioQueryResult>, Notificacao>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ApiResponse<List<UsuarioQueryResult>, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<List<UsuarioQueryResult>, Notificacao>> Usuarios()
+        [ProducesResponseType(typeof(ApiResponse<List<UsuarioQueryResult>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<List<UsuarioQueryResult>>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<List<UsuarioQueryResult>>), StatusCodes.Status500InternalServerError)]
+        public IActionResult Usuarios()
         {
-            var result = _repository.Listar();
-            var mensagem = result.Count > 0 ? "Lista de usuários obtida com sucesso" : "Nenhum usuário cadastrado atualmente";
-            return StatusCode(StatusCodes.Status200OK, new ApiResponse<List<UsuarioQueryResult>, Notificacao>(mensagem, result));
+            return ResultGetList(_repository.Listar());
         }
 
         /// <summary>
@@ -57,14 +52,12 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [Route("v1/usuarios/{id}")]
-        [ProducesResponseType(typeof(ApiResponse<UsuarioQueryResult, Notificacao>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<UsuarioQueryResult, Notificacao>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ApiResponse<UsuarioQueryResult, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<UsuarioQueryResult, Notificacao>> Usuario(int id)
+        [ProducesResponseType(typeof(ApiResponse<UsuarioQueryResult>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<UsuarioQueryResult>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<UsuarioQueryResult>), StatusCodes.Status500InternalServerError)]
+        public IActionResult Usuario(int id)
         {
-            var result = _repository.Obter(id);
-            var mensagem = result != null ? "Usuário obtido com sucesso" : "Usuário não cadastrado";
-            return StatusCode(StatusCodes.Status200OK, new ApiResponse<UsuarioQueryResult, Notificacao>(mensagem, result));
+            return ResultGet(_repository.Obter(id));
         }
 
         /// <summary>
@@ -79,19 +72,14 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpPost]
         [Route("v1/usuarios")]
-        [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput, Notificacao>), StatusCodes.Status201Created)]
-        [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput, Notificacao>), StatusCodes.Status422UnprocessableEntity)]
-        [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<UsuarioCommandOutput, Notificacao>> UsuarioInserir([FromBody] AdicionarUsuarioCommand command)
+        [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput>), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput>), StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput>), StatusCodes.Status500InternalServerError)]
+        public IActionResult UsuarioInserir([FromBody] AdicionarUsuarioCommand command)
         {
-            var result = _handler.Handler(command);
-
-            if (result.Sucesso)
-                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
-            else
-                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
+            return ResultHandler(_handler.Handler(command));
         }
 
         /// <summary>
@@ -107,19 +95,14 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpPut]
         [Route("v1/usuarios/{id}")]
-        [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput, Notificacao>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput, Notificacao>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput, Notificacao>), StatusCodes.Status422UnprocessableEntity)]
-        [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<UsuarioCommandOutput, Notificacao>> UsuarioAlterar(int id, [FromBody] AtualizarUsuarioCommand command)
+        [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput>), StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput>), StatusCodes.Status500InternalServerError)]
+        public IActionResult UsuarioAlterar(int id, [FromBody] AtualizarUsuarioCommand command)
         {
-            var result = _handler.Handler(id, command);
-
-            if (result.Sucesso)
-                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
-            else
-                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
+            return ResultHandler(_handler.Handler(id, command));
         }
 
         /// <summary>
@@ -133,18 +116,13 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpDelete]
         [Route("v1/usuarios/{id}")]
-        [ProducesResponseType(typeof(ApiResponse<CommandOutput, Notificacao>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<CommandOutput, Notificacao>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ApiResponse<CommandOutput, Notificacao>), StatusCodes.Status422UnprocessableEntity)]
-        [ProducesResponseType(typeof(ApiResponse<CommandOutput, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<CommandOutput, Notificacao>> UsuarioExcluir(int id)
+        [ProducesResponseType(typeof(ApiResponse<CommandOutput>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<CommandOutput>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<CommandOutput>), StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(typeof(ApiResponse<CommandOutput>), StatusCodes.Status500InternalServerError)]
+        public IActionResult UsuarioExcluir(int id)
         {
-            var result = _handler.Handler(id);
-
-            if (result.Sucesso)
-                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
-            else
-                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
+            return ResultHandler(_handler.Handler(id));
         }
 
         /// <summary>
@@ -160,19 +138,14 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [AllowAnonymous]
         [HttpPost]
         [Route("v1/usuarios/login")]
-        [ProducesResponseType(typeof(ApiResponse<UsuarioTokenQueryResult, Notificacao>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<UsuarioTokenQueryResult, Notificacao>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(ApiResponse<UsuarioTokenQueryResult, Notificacao>), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ApiResponse<UsuarioTokenQueryResult, Notificacao>), StatusCodes.Status422UnprocessableEntity)]
-        [ProducesResponseType(typeof(ApiResponse<UsuarioTokenQueryResult, Notificacao>), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ApiResponse<UsuarioTokenQueryResult, Notificacao>> UsuarioLogin([FromBody] LoginUsuarioCommand command)
+        [ProducesResponseType(typeof(ApiResponse<UsuarioTokenQueryResult>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<UsuarioTokenQueryResult>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<UsuarioTokenQueryResult>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<UsuarioTokenQueryResult>), StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(typeof(ApiResponse<UsuarioTokenQueryResult>), StatusCodes.Status500InternalServerError)]
+        public IActionResult UsuarioLogin([FromBody] LoginUsuarioCommand command)
         {
-            var result = _handler.Handler(command);
-
-            if (result.Sucesso)
-                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Dados));
-            else
-                return StatusCode(result.StatusCode, new ApiResponse<object, Notificacao>(result.Mensagem, result.Erros));
+            return ResultHandler(_handler.Handler(command));
         }
     }
 }

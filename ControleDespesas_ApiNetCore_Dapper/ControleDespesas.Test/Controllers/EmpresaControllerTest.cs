@@ -6,12 +6,11 @@ using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Domain.Query.Empresa.Results;
 using ControleDespesas.Infra.Commands;
 using ControleDespesas.Infra.Data.Repositories;
+using ControleDespesas.Infra.Response;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Models;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
-using LSCode.Facilitador.Api.Models.Results;
-using LSCode.Validador.ValidacoesNotificacoes;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -50,18 +49,18 @@ namespace ControleDespesas.Test.Controllers
             _repository.Salvar(empresa2);
             _repository.Salvar(empresa3);
 
-            var response = _controller.Empresas().Result;
+            var response = _controller.Empresas();
 
             var responseJson = JsonConvert.SerializeObject(response);
 
-            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<List<EmpresaQueryResult>, Notificacao>>>(responseJson);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<List<EmpresaQueryResult>>>>(responseJson);
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
 
             Assert.AreEqual(200, responseObj.StatusCode);
 
             Assert.True(responseObj.Value.Sucesso);
-            Assert.AreEqual("Lista de empresas obtida com sucesso", responseObj.Value.Mensagem);
+            Assert.AreEqual("Lista obtida com sucesso", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
 
             Assert.AreEqual(empresa1.Id, responseObj.Value.Dados[0].Id);
@@ -88,18 +87,18 @@ namespace ControleDespesas.Test.Controllers
             _repository.Salvar(empresa2);
             _repository.Salvar(empresa3);
 
-            var response = _controller.Empresa(empresa2.Id).Result;
+            var response = _controller.Empresa(empresa2.Id);
 
             var responseJson = JsonConvert.SerializeObject(response);
 
-            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<EmpresaQueryResult, Notificacao>>>(responseJson);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<EmpresaQueryResult>>>(responseJson);
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
 
             Assert.AreEqual(200, responseObj.StatusCode);
 
             Assert.True(responseObj.Value.Sucesso);
-            Assert.AreEqual("Empresa obtida com sucesso", responseObj.Value.Mensagem);
+            Assert.AreEqual("Registro obtido com sucesso", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
 
             Assert.AreEqual(empresa2.Id, responseObj.Value.Dados.Id);
@@ -112,11 +111,11 @@ namespace ControleDespesas.Test.Controllers
         {
             var command = new SettingsTest().EmpresaAdicionarCommand;
 
-            var response = _controller.EmpresaInserir(command).Result;
+            var response = _controller.EmpresaInserir(command);
 
             var responseJson = JsonConvert.SerializeObject(response);
 
-            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<EmpresaCommandOutput, Notificacao>>>(responseJson);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<EmpresaCommandOutput>>>(responseJson);
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
 
@@ -140,11 +139,11 @@ namespace ControleDespesas.Test.Controllers
 
             _repository.Salvar(empresa);
 
-            var response = _controller.EmpresaAlterar(command.Id, command).Result;
+            var response = _controller.EmpresaAlterar(command.Id, command);
 
             var responseJson = JsonConvert.SerializeObject(response);
 
-            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<EmpresaCommandOutput, Notificacao>>>(responseJson);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<EmpresaCommandOutput>>>(responseJson);
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
 
@@ -166,11 +165,11 @@ namespace ControleDespesas.Test.Controllers
 
             _repository.Salvar(empresa);
 
-            var response = _controller.EmpresaExcluir(empresa.Id).Result;
+            var response = _controller.EmpresaExcluir(empresa.Id);
 
             var responseJson = JsonConvert.SerializeObject(response);
 
-            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponseModel<CommandOutput, Notificacao>>>(responseJson);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<CommandOutput>>>(responseJson);
 
             TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
 

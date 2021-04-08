@@ -28,27 +28,8 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
         #endregion
 
         #region[Dados de teste para Banco de Dados]
-        public Type TipoBancoDeDdos { get; }
-        public EBancoDadosRelacional BancoDeDadosRelacional { get; }
-        public EBancoDadosNaoRelacional BancoDeDadosNaoRelacional { get; }
-
         public string ConnectionSQLServerReal { get; }
         public string ConnectionSQLServerTest { get; }
-
-        public string ConnectionMySqlReal { get; }
-        public string ConnectionMySqlTest { get; }
-
-        public string ConnectionSQLiteReal { get; }
-        public string ConnectionSQLiteTest { get; }
-
-        public string ConnectionPostgreSQLReal { get; }
-        public string ConnectionPostgreSQLTest { get; }
-
-        public string ConnectionOracleReal { get; }
-        public string ConnectionOracleTest { get; }
-
-        public string ConnectionMongoDBReal { get; }
-        public string ConnectionMongoDBTest { get; }
         #endregion
 
         #region [Dados de teste para Empresa]
@@ -116,21 +97,8 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
             #endregion
 
             #region[Setando dados teste para Banco de Dados]
-            TipoBancoDeDdos = _configuration.GetValue<int>("SettingsTest:TipoBancoDeDdos") == 1 ? typeof(EBancoDadosRelacional) : typeof(EBancoDadosNaoRelacional);
-            BancoDeDadosRelacional = _configuration.GetValue<EBancoDadosRelacional>("SettingsTest:BancoDeDadosRelacional");
-            BancoDeDadosNaoRelacional = _configuration.GetValue<EBancoDadosNaoRelacional>("SettingsTest:BancoDeDadosNaoRelacional");
             ConnectionSQLServerReal = _configuration.GetValue<string>("SettingsTest:ConnectionSQLServerReal");
             ConnectionSQLServerTest = _configuration.GetValue<string>("SettingsTest:ConnectionSQLServerTest");
-            ConnectionMySqlReal = _configuration.GetValue<string>("SettingsTest:ConnectionMySqlReal");
-            ConnectionMySqlTest = _configuration.GetValue<string>("SettingsTest:ConnectionMySqlTest");
-            ConnectionSQLiteReal = _configuration.GetValue<string>("SettingsTest:ConnectionSQLiteReal");
-            ConnectionSQLiteTest = _configuration.GetValue<string>("SettingsTest:ConnectionSQLiteTest");
-            ConnectionPostgreSQLReal = _configuration.GetValue<string>("SettingsTest:ConnectionPostgreSQLReal");
-            ConnectionPostgreSQLTest = _configuration.GetValue<string>("SettingsTest:ConnectionPostgreSQLTest");
-            ConnectionOracleReal = _configuration.GetValue<string>("SettingsTest:ConnectionOracleReal");
-            ConnectionOracleTest = _configuration.GetValue<string>("SettingsTest:ConnectionOracleTest");
-            ConnectionMongoDBReal = _configuration.GetValue<string>("SettingsTest:ConnectionMongoDBReal");
-            ConnectionMongoDBTest = _configuration.GetValue<string>("SettingsTest:ConnectionMongoDBTest");
             #endregion
 
             #region[Setando dados de teste para Empresa]

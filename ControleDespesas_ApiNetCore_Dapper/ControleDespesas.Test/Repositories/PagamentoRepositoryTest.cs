@@ -38,7 +38,6 @@ namespace ControleDespesas.Test.Repositories
             _repositoryUsuario.Salvar(usuario);
 
             var pagamento = new SettingsTest().Pagamento1;
-
             _repositoryTipoPagamento.Salvar(pagamento.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento.Empresa);
             _repositoryPessoa.Salvar(pagamento.Pessoa);
@@ -65,14 +64,12 @@ namespace ControleDespesas.Test.Repositories
             _repositoryUsuario.Salvar(usuario);
 
             var pagamento = new SettingsTest().Pagamento1;
-
             _repositoryTipoPagamento.Salvar(pagamento.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento.Empresa);
             _repositoryPessoa.Salvar(pagamento.Pessoa);
             _repositoryPagamento.Salvar(pagamento);
 
             pagamento = new SettingsTest().Pagamento1Editado;
-
             _repositoryPagamento.Atualizar(pagamento);
 
             var retorno = _repositoryPagamento.Obter(pagamento.Id);
@@ -96,13 +93,12 @@ namespace ControleDespesas.Test.Repositories
             _repositoryUsuario.Salvar(usuario);
 
             var pagamento1 = new SettingsTest().Pagamento1;
-            var pagamento2 = new SettingsTest().Pagamento2;
-
             _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento1.Empresa);
             _repositoryPessoa.Salvar(pagamento1.Pessoa);
             _repositoryPagamento.Salvar(pagamento1);
 
+            var pagamento2 = new SettingsTest().Pagamento2;
             _repositoryTipoPagamento.Salvar(pagamento2.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento2.Empresa);
             _repositoryPagamento.Salvar(pagamento2);
@@ -129,8 +125,7 @@ namespace ControleDespesas.Test.Repositories
             var usuario = new SettingsTest().Usuario1;
             _repositoryUsuario.Salvar(usuario);
 
-            var pagamento = new SettingsTest().Pagamento1;
-            
+            var pagamento = new SettingsTest().Pagamento1;            
             _repositoryTipoPagamento.Salvar(pagamento.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento.Empresa);
             _repositoryPessoa.Salvar(pagamento.Pessoa);
@@ -157,18 +152,17 @@ namespace ControleDespesas.Test.Repositories
             _repositoryUsuario.Salvar(usuario);
 
             var pagamento1 = new SettingsTest().Pagamento1;
-            var pagamento2 = new SettingsTest().Pagamento2;
-            var pagamento3 = new SettingsTest().Pagamento3;
-
             _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento1.Empresa);
             _repositoryPessoa.Salvar(pagamento1.Pessoa);
             _repositoryPagamento.Salvar(pagamento1);
 
+            var pagamento2 = new SettingsTest().Pagamento2;
             _repositoryTipoPagamento.Salvar(pagamento2.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento2.Empresa);
             _repositoryPagamento.Salvar(pagamento2);
 
+            var pagamento3 = new SettingsTest().Pagamento3;
             _repositoryTipoPagamento.Salvar(pagamento3.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento3.Empresa);
             _repositoryPessoa.Salvar(pagamento3.Pessoa);
@@ -204,18 +198,17 @@ namespace ControleDespesas.Test.Repositories
             _repositoryUsuario.Salvar(usuario);
 
             var pagamento1 = new SettingsTest().Pagamento1;
-            var pagamento2 = new SettingsTest().Pagamento2;
-            var pagamento3 = new SettingsTest().Pagamento3;
-
             _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento1.Empresa);
             _repositoryPessoa.Salvar(pagamento1.Pessoa);
             _repositoryPagamento.Salvar(pagamento1);
 
+            var pagamento2 = new SettingsTest().Pagamento2;
             _repositoryTipoPagamento.Salvar(pagamento2.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento2.Empresa);
             _repositoryPagamento.Salvar(pagamento2);
 
+            var pagamento3 = new SettingsTest().Pagamento3;
             _repositoryTipoPagamento.Salvar(pagamento3.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento3.Empresa);
             _repositoryPessoa.Salvar(pagamento3.Pessoa);
@@ -251,18 +244,17 @@ namespace ControleDespesas.Test.Repositories
             _repositoryUsuario.Salvar(usuario);
 
             var pagamento1 = new SettingsTest().Pagamento1;
-            var pagamento2 = new SettingsTest().Pagamento2;
-            var pagamento3 = new SettingsTest().Pagamento3;
-
             _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento1.Empresa);
             _repositoryPessoa.Salvar(pagamento1.Pessoa);
             _repositoryPagamento.Salvar(pagamento1);
 
+            var pagamento2 = new SettingsTest().Pagamento2;
             _repositoryTipoPagamento.Salvar(pagamento2.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento2.Empresa);
             _repositoryPagamento.Salvar(pagamento2);
 
+            var pagamento3 = new SettingsTest().Pagamento3;
             _repositoryTipoPagamento.Salvar(pagamento3.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento3.Empresa);
             _repositoryPessoa.Salvar(pagamento3.Pessoa);
@@ -289,7 +281,6 @@ namespace ControleDespesas.Test.Repositories
             _repositoryUsuario.Salvar(usuario);
 
             var pagamento = new SettingsTest().Pagamento1;
-
             _repositoryTipoPagamento.Salvar(pagamento.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento.Empresa);
             _repositoryPessoa.Salvar(pagamento.Pessoa);
@@ -309,7 +300,6 @@ namespace ControleDespesas.Test.Repositories
             _repositoryUsuario.Salvar(usuario);
 
             var pagamento = new SettingsTest().Pagamento1;
-
             _repositoryTipoPagamento.Salvar(pagamento.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento.Empresa);
             _repositoryPessoa.Salvar(pagamento.Pessoa);
@@ -327,27 +317,25 @@ namespace ControleDespesas.Test.Repositories
         {
             var usuario = new SettingsTest().Usuario1;
             _repositoryUsuario.Salvar(usuario);
-
+                        
             var pagamento1 = new SettingsTest().Pagamento1;
-            var pagamento2 = new SettingsTest().Pagamento2;
-            var pagamento3 = new SettingsTest().Pagamento3;
-
-            pagamento3.DefinirPessoa(pagamento1.Pessoa);
-
-            var valorTotalEsperado = pagamento2.Valor + pagamento3.Valor;
-
             _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento1.Empresa);
             _repositoryPessoa.Salvar(pagamento1.Pessoa);
             _repositoryPagamento.Salvar(pagamento1);
 
+            var pagamento2 = new SettingsTest().Pagamento2;
             _repositoryTipoPagamento.Salvar(pagamento2.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento2.Empresa);
             _repositoryPagamento.Salvar(pagamento2);
 
+            var pagamento3 = new SettingsTest().Pagamento3;
+            pagamento3.DefinirPessoa(pagamento1.Pessoa);
             _repositoryTipoPagamento.Salvar(pagamento3.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento3.Empresa);
             _repositoryPagamento.Salvar(pagamento3);
+
+            var valorTotalEsperado = pagamento2.Valor + pagamento3.Valor;
 
             var retorno = _repositoryPagamento.ObterGastos(pagamento1.Pessoa.Id, 2020, 11);
 
@@ -363,7 +351,6 @@ namespace ControleDespesas.Test.Repositories
             _repositoryUsuario.Salvar(usuario);
 
             var pagamento = new SettingsTest().Pagamento1;
-
             _repositoryTipoPagamento.Salvar(pagamento.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento.Empresa);
             _repositoryPessoa.Salvar(pagamento.Pessoa);
@@ -386,13 +373,12 @@ namespace ControleDespesas.Test.Repositories
             _repositoryUsuario.Salvar(usuario);
 
             var pagamento1 = new SettingsTest().Pagamento1;
-            var pagamento2 = new SettingsTest().Pagamento2;
-
             _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento1.Empresa);
             _repositoryPessoa.Salvar(pagamento1.Pessoa);
             _repositoryPagamento.Salvar(pagamento1);
 
+            var pagamento2 = new SettingsTest().Pagamento2;
             _repositoryTipoPagamento.Salvar(pagamento2.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento2.Empresa);
             _repositoryPagamento.Salvar(pagamento2);

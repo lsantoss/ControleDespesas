@@ -71,11 +71,12 @@ namespace ControleDespesas.Test.Repositories
             _repositoryUsuario.Salvar(usuario);
 
             var pessoa1 = new SettingsTest().Pessoa1;
-            var pessoa2 = new SettingsTest().Pessoa2;
-            var pessoa3 = new SettingsTest().Pessoa3;
-
             _repositoryPessoa.Salvar(pessoa1);
+
+            var pessoa2 = new SettingsTest().Pessoa2;
             _repositoryPessoa.Salvar(pessoa2);
+
+            var pessoa3 = new SettingsTest().Pessoa3;
             _repositoryPessoa.Salvar(pessoa3);
 
             _repositoryPessoa.Deletar(pessoa2.Id);
@@ -102,7 +103,6 @@ namespace ControleDespesas.Test.Repositories
             _repositoryUsuario.Salvar(usuario);
 
             var pessoa = new SettingsTest().Pessoa1;
-
             _repositoryPessoa.Salvar(pessoa);
 
             var retorno = _repositoryPessoa.Obter(pessoa.Id);
@@ -122,11 +122,12 @@ namespace ControleDespesas.Test.Repositories
             _repositoryUsuario.Salvar(usuario);
 
             var pessoa1 = new SettingsTest().Pessoa1;
-            var pessoa2 = new SettingsTest().Pessoa2;
-            var pessoa3 = new SettingsTest().Pessoa3;
-
             _repositoryPessoa.Salvar(pessoa1);
+
+            var pessoa2 = new SettingsTest().Pessoa2;
             _repositoryPessoa.Salvar(pessoa2);
+
+            var pessoa3 = new SettingsTest().Pessoa3;
             _repositoryPessoa.Salvar(pessoa3);
 
             var retorno = _repositoryPessoa.Listar(usuario.Id);
@@ -175,11 +176,12 @@ namespace ControleDespesas.Test.Repositories
             _repositoryUsuario.Salvar(usuario);
 
             var pessoa1 = new SettingsTest().Pessoa1;
-            var pessoa2 = new SettingsTest().Pessoa2;
-            var pessoa3 = new SettingsTest().Pessoa3;
-
             _repositoryPessoa.Salvar(pessoa1);
+
+            var pessoa2 = new SettingsTest().Pessoa2;
             _repositoryPessoa.Salvar(pessoa2);
+
+            var pessoa3 = new SettingsTest().Pessoa3;
             _repositoryPessoa.Salvar(pessoa3);
 
             var maxId = _repositoryPessoa.LocalizarMaxId();

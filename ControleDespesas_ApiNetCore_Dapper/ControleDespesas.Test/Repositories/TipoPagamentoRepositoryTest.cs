@@ -56,11 +56,12 @@ namespace ControleDespesas.Test.Repositories
         public void Deletar()
         {
             var tipoPagamento1 = new SettingsTest().TipoPagamento1;
-            var tipoPagamento2 = new SettingsTest().TipoPagamento2;
-            var tipoPagamento3 = new SettingsTest().TipoPagamento3;
-
             _repository.Salvar(tipoPagamento1);
+
+            var tipoPagamento2 = new SettingsTest().TipoPagamento2;
             _repository.Salvar(tipoPagamento2);
+
+            var tipoPagamento3 = new SettingsTest().TipoPagamento3;
             _repository.Salvar(tipoPagamento3);
 
             _repository.Deletar(tipoPagamento2.Id);
@@ -94,11 +95,12 @@ namespace ControleDespesas.Test.Repositories
         public void Listar()
         {
             var tipoPagamento1 = new SettingsTest().TipoPagamento1;
-            var tipoPagamento2 = new SettingsTest().TipoPagamento2;
-            var tipoPagamento3 = new SettingsTest().TipoPagamento3;
-
             _repository.Salvar(tipoPagamento1);
+
+            var tipoPagamento2 = new SettingsTest().TipoPagamento2;
             _repository.Salvar(tipoPagamento2);
+
+            var tipoPagamento3 = new SettingsTest().TipoPagamento3;
             _repository.Salvar(tipoPagamento3);
 
             var retorno = _repository.Listar();
@@ -135,11 +137,12 @@ namespace ControleDespesas.Test.Repositories
         public void LocalizarMaxId()
         {
             var tipoPagamento1 = new SettingsTest().TipoPagamento1;
-            var tipoPagamento2 = new SettingsTest().TipoPagamento2;
-            var tipoPagamento3 = new SettingsTest().TipoPagamento3;
-
             _repository.Salvar(tipoPagamento1);
+
+            var tipoPagamento2 = new SettingsTest().TipoPagamento2;
             _repository.Salvar(tipoPagamento2);
+
+            var tipoPagamento3 = new SettingsTest().TipoPagamento3;
             _repository.Salvar(tipoPagamento3);
 
             var maxId = _repository.LocalizarMaxId();

@@ -58,11 +58,12 @@ namespace ControleDespesas.Test.Repositories
         public void Deletar()
         {
             var empresa1 = new SettingsTest().Empresa1;
-            var empresa2 = new SettingsTest().Empresa2;
-            var empresa3 = new SettingsTest().Empresa3;
-
             _repository.Salvar(empresa1);
+
+            var empresa2 = new SettingsTest().Empresa2;
             _repository.Salvar(empresa2);
+
+            var empresa3 = new SettingsTest().Empresa3;
             _repository.Salvar(empresa3);
 
             _repository.Deletar(empresa2.Id);
@@ -99,11 +100,12 @@ namespace ControleDespesas.Test.Repositories
         public void Listar()
         {
             var empresa1 = new SettingsTest().Empresa1;
-            var empresa2 = new SettingsTest().Empresa2;
-            var empresa3 = new SettingsTest().Empresa3;
-
             _repository.Salvar(empresa1);
+
+            var empresa2 = new SettingsTest().Empresa2;
             _repository.Salvar(empresa2);
+
+            var empresa3 = new SettingsTest().Empresa3;
             _repository.Salvar(empresa3);
 
             var retorno = _repository.Listar();
@@ -143,11 +145,12 @@ namespace ControleDespesas.Test.Repositories
         public void LocalizarMaxId()
         {
             var empresa1 = new SettingsTest().Empresa1;
-            var empresa2 = new SettingsTest().Empresa2;
-            var empresa3 = new SettingsTest().Empresa3;
-
             _repository.Salvar(empresa1);
+
+            var empresa2 = new SettingsTest().Empresa2;
             _repository.Salvar(empresa2);
+
+            var empresa3 = new SettingsTest().Empresa3;
             _repository.Salvar(empresa3);
 
             var maxId = _repository.LocalizarMaxId();

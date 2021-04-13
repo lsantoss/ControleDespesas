@@ -3,7 +3,6 @@ using ControleDespesas.Infra.Data.Repositories;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
-using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace ControleDespesas.Test.Repositories
@@ -61,11 +60,12 @@ namespace ControleDespesas.Test.Repositories
         public void Deletar()
         {
             var usuario1 = new SettingsTest().Usuario1;
-            var usuario2 = new SettingsTest().Usuario2;
-            var usuario3 = new SettingsTest().Usuario3;
-
             _repository.Salvar(usuario1);
+
+            var usuario2 = new SettingsTest().Usuario2;
             _repository.Salvar(usuario2);
+
+            var usuario3 = new SettingsTest().Usuario3;
             _repository.Salvar(usuario3);
 
             _repository.Deletar(usuario2.Id);
@@ -105,11 +105,12 @@ namespace ControleDespesas.Test.Repositories
         public void Listar()
         {
             var usuario1 = new SettingsTest().Usuario1;
-            var usuario2 = new SettingsTest().Usuario2;
-            var usuario3 = new SettingsTest().Usuario3;
-
             _repository.Salvar(usuario1);
+
+            var usuario2 = new SettingsTest().Usuario2;
             _repository.Salvar(usuario2);
+
+            var usuario3 = new SettingsTest().Usuario3;
             _repository.Salvar(usuario3);
 
             var retorno = _repository.Listar();
@@ -184,11 +185,12 @@ namespace ControleDespesas.Test.Repositories
         public void LocalizarMaxId()
         {
             var usuario1 = new SettingsTest().Usuario1;
-            var usuario2 = new SettingsTest().Usuario2;
-            var usuario3 = new SettingsTest().Usuario3;
-
             _repository.Salvar(usuario1);
+
+            var usuario2 = new SettingsTest().Usuario2;
             _repository.Salvar(usuario2);
+
+            var usuario3 = new SettingsTest().Usuario3;
             _repository.Salvar(usuario3);
 
             var maxId = _repository.LocalizarMaxId();

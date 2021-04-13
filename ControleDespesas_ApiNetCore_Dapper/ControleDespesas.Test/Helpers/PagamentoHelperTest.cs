@@ -18,7 +18,7 @@ namespace ControleDespesas.Test.Helpers
 
             var entidade = PagamentoHelper.GerarEntidade(command);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(entidade));
+            TestContext.WriteLine(entidade.FormatarJsonDeSaida());
 
             Assert.AreEqual(0, entidade.Id);
             Assert.AreEqual(command.IdTipoPagamento, entidade.TipoPagamento.Id);
@@ -41,7 +41,7 @@ namespace ControleDespesas.Test.Helpers
 
             var entidade = PagamentoHelper.GerarEntidade(command);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(entidade));
+            TestContext.WriteLine(entidade.FormatarJsonDeSaida());
 
             Assert.AreEqual(command.Id, entidade.Id);
             Assert.AreEqual(command.IdTipoPagamento, entidade.TipoPagamento.Id);
@@ -64,7 +64,7 @@ namespace ControleDespesas.Test.Helpers
 
             var command = PagamentoHelper.GerarDadosRetornoInsert(entidade);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(command));
+            TestContext.WriteLine(command.FormatarJsonDeSaida());
 
             Assert.AreEqual(entidade.Id, command.Id);
             Assert.AreEqual(entidade.TipoPagamento.Id, command.IdTipoPagamento);
@@ -85,7 +85,7 @@ namespace ControleDespesas.Test.Helpers
 
             var command = PagamentoHelper.GerarDadosRetornoUpdate(entidade);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(command));
+            TestContext.WriteLine(command.FormatarJsonDeSaida());
 
             Assert.AreEqual(entidade.Id, command.Id);
             Assert.AreEqual(entidade.TipoPagamento.Id, command.IdTipoPagamento);
@@ -106,7 +106,7 @@ namespace ControleDespesas.Test.Helpers
 
             var command = PagamentoHelper.GerarDadosRetornoDelete(entidade.Id);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(command));
+            TestContext.WriteLine(command.FormatarJsonDeSaida());
 
             Assert.AreEqual(entidade.Id, command.Id);
         }

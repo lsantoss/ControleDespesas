@@ -34,7 +34,7 @@ namespace ControleDespesas.Test.Repositories
 
             var retorno = _repositoryPessoa.Obter(pessoa.Id);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+            TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
             Assert.AreEqual(pessoa.Id, retorno.Id);
             Assert.AreEqual(pessoa.Usuario.Id, retorno.IdUsuario);
@@ -56,7 +56,7 @@ namespace ControleDespesas.Test.Repositories
 
             var retorno = _repositoryPessoa.Obter(pessoa.Id);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+            TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
             Assert.AreEqual(pessoa.Id, retorno.Id);
             Assert.AreEqual(pessoa.Usuario.Id, retorno.IdUsuario);
@@ -82,7 +82,7 @@ namespace ControleDespesas.Test.Repositories
 
             var retorno = _repositoryPessoa.Listar(usuario.Id);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+            TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
             Assert.AreEqual(pessoa1.Id, retorno[0].Id);
             Assert.AreEqual(pessoa1.Usuario.Id, retorno[0].IdUsuario);
@@ -107,7 +107,7 @@ namespace ControleDespesas.Test.Repositories
 
             var retorno = _repositoryPessoa.Obter(pessoa.Id);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+            TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
             Assert.AreEqual(pessoa.Id, retorno.Id);
             Assert.AreEqual(pessoa.Usuario.Id, retorno.IdUsuario);
@@ -131,7 +131,7 @@ namespace ControleDespesas.Test.Repositories
 
             var retorno = _repositoryPessoa.Listar(usuario.Id);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+            TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
             Assert.AreEqual(pessoa1.Id, retorno[0].Id);
             Assert.AreEqual(pessoa1.Usuario.Id, retorno[0].IdUsuario);

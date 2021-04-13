@@ -29,7 +29,7 @@ namespace ControleDespesas.Test.Repositories
 
             var retorno = _repository.Obter(tipoPagamento.Id);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+            TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
             Assert.AreEqual(tipoPagamento.Id, retorno.Id);
             Assert.AreEqual(tipoPagamento.Descricao, retorno.Descricao);
@@ -46,7 +46,7 @@ namespace ControleDespesas.Test.Repositories
 
             var retorno = _repository.Obter(tipoPagamento.Id);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+            TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
             Assert.AreEqual(tipoPagamento.Id, retorno.Id);
             Assert.AreEqual(tipoPagamento.Descricao, retorno.Descricao);
@@ -67,7 +67,7 @@ namespace ControleDespesas.Test.Repositories
 
             var retorno = _repository.Listar();
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+            TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
             Assert.AreEqual(tipoPagamento1.Id, retorno[0].Id);
             Assert.AreEqual(tipoPagamento1.Descricao, retorno[0].Descricao);
@@ -84,7 +84,7 @@ namespace ControleDespesas.Test.Repositories
 
             var retorno = _repository.Obter(tipoPagamento.Id);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+            TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
             Assert.AreEqual(tipoPagamento.Id, retorno.Id);
             Assert.AreEqual(tipoPagamento.Descricao, retorno.Descricao);
@@ -103,7 +103,7 @@ namespace ControleDespesas.Test.Repositories
 
             var retorno = _repository.Listar();
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+            TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
             Assert.AreEqual(tipoPagamento1.Id, retorno[0].Id);
             Assert.AreEqual(tipoPagamento1.Descricao, retorno[0].Descricao);

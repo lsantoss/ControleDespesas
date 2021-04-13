@@ -46,7 +46,7 @@ namespace ControleDespesas.Test.Repositories
 
             var retorno = _repositoryPagamento.Obter(pagamento.Id);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+            TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
             Assert.AreEqual(pagamento.Id, retorno.Id);
             Assert.AreEqual(pagamento.TipoPagamento.Id, retorno.TipoPagamento.Id);
@@ -77,7 +77,7 @@ namespace ControleDespesas.Test.Repositories
 
             var retorno = _repositoryPagamento.Obter(pagamento.Id);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+            TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
             Assert.AreEqual(pagamento.Id, retorno.Id);
             Assert.AreEqual(pagamento.TipoPagamento.Id, retorno.TipoPagamento.Id);
@@ -111,7 +111,7 @@ namespace ControleDespesas.Test.Repositories
 
             var retorno = _repositoryPagamento.Listar(pagamento1.Pessoa.Id, null);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+            TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
             Assert.AreEqual(pagamento2.Id, retorno[0].Id);
             Assert.AreEqual(pagamento2.TipoPagamento.Id, retorno[0].TipoPagamento.Id);
@@ -138,7 +138,7 @@ namespace ControleDespesas.Test.Repositories
 
             var retorno = _repositoryPagamento.Obter(pagamento.Id);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+            TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
             Assert.AreEqual(pagamento.Id, retorno.Id);
             Assert.AreEqual(pagamento.TipoPagamento.Id, retorno.TipoPagamento.Id);
@@ -176,7 +176,7 @@ namespace ControleDespesas.Test.Repositories
 
             var retorno = _repositoryPagamento.Listar(pagamento1.Pessoa.Id, null);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+            TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
             Assert.AreEqual(pagamento1.Id, retorno[0].Id);
             Assert.AreEqual(pagamento1.TipoPagamento.Id, retorno[0].TipoPagamento.Id);
@@ -223,7 +223,7 @@ namespace ControleDespesas.Test.Repositories
 
             var retorno = _repositoryPagamento.Listar(pagamento1.Pessoa.Id, EPagamentoStatus.Pago);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+            TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
             Assert.AreEqual(pagamento1.Id, retorno[0].Id);
             Assert.AreEqual(pagamento1.TipoPagamento.Id, retorno[0].TipoPagamento.Id);
@@ -270,7 +270,7 @@ namespace ControleDespesas.Test.Repositories
 
             var retorno = _repositoryPagamento.Listar(pagamento3.Pessoa.Id, EPagamentoStatus.Pendente);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+            TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
             Assert.AreEqual(pagamento3.Id, retorno[0].Id);
             Assert.AreEqual(pagamento3.TipoPagamento.Id, retorno[0].TipoPagamento.Id);
@@ -297,7 +297,7 @@ namespace ControleDespesas.Test.Repositories
 
             var retorno = _repositoryPagamento.ObterArquivoPagamento(pagamento.Id);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+            TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
             Assert.AreEqual(pagamento.ArquivoPagamento, retorno.Arquivo);
         }
@@ -317,7 +317,7 @@ namespace ControleDespesas.Test.Repositories
 
             var retorno = _repositoryPagamento.ObterArquivoComprovante(pagamento.Id);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+            TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
             Assert.AreEqual(pagamento.ArquivoComprovante, retorno.Arquivo);
         }
@@ -351,7 +351,7 @@ namespace ControleDespesas.Test.Repositories
 
             var retorno = _repositoryPagamento.ObterGastos(pagamento1.Pessoa.Id, 2020, 11);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+            TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
             Assert.AreEqual(valorTotalEsperado, retorno.Valor);
         }

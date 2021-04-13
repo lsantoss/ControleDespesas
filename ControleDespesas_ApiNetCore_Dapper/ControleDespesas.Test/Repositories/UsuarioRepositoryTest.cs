@@ -30,7 +30,7 @@ namespace ControleDespesas.Test.Repositories
 
             var retorno = _repository.Obter(usuario.Id);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+            TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
             Assert.AreEqual(usuario.Id, retorno.Id);
             Assert.AreEqual(usuario.Login, retorno.Login);
@@ -49,7 +49,7 @@ namespace ControleDespesas.Test.Repositories
 
             var retorno = _repository.Obter(usuario.Id);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+            TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
             Assert.AreEqual(usuario.Id, retorno.Id);
             Assert.AreEqual(usuario.Login, retorno.Login);
@@ -72,7 +72,7 @@ namespace ControleDespesas.Test.Repositories
 
             var retorno = _repository.Listar();
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+            TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
             Assert.AreEqual(usuario1.Id, retorno[0].Id);
             Assert.AreEqual(usuario1.Login, retorno[0].Login);
@@ -93,7 +93,7 @@ namespace ControleDespesas.Test.Repositories
 
             var retorno = _repository.Obter(usuario.Id);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+            TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
             Assert.AreEqual(usuario.Id, retorno.Id);
             Assert.AreEqual(usuario.Login, retorno.Login);
@@ -114,7 +114,7 @@ namespace ControleDespesas.Test.Repositories
 
             var retorno = _repository.Listar();
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+            TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
             Assert.AreEqual(usuario1.Id, retorno[0].Id);
             Assert.AreEqual(usuario1.Login, retorno[0].Login);
@@ -140,7 +140,7 @@ namespace ControleDespesas.Test.Repositories
 
             var retorno = _repository.Logar(usuario.Login.ToString(), usuario.Senha.ToString());
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retorno));
+            TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
             Assert.AreEqual(usuario.Id, retorno.Id);
             Assert.AreEqual(usuario.Login, retorno.Login);

@@ -18,7 +18,7 @@ namespace ControleDespesas.Test.Helpers
 
             var entidade = PessoaHelper.GerarEntidade(command);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(entidade));
+            TestContext.WriteLine(entidade.FormatarJsonDeSaida());
 
             Assert.AreEqual(0, entidade.Id);
             Assert.AreEqual(command.IdUsuario, entidade.Usuario.Id);
@@ -35,7 +35,7 @@ namespace ControleDespesas.Test.Helpers
 
             var entidade = PessoaHelper.GerarEntidade(command);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(entidade));
+            TestContext.WriteLine(entidade.FormatarJsonDeSaida());
 
             Assert.AreEqual(command.Id, entidade.Id);
             Assert.AreEqual(command.IdUsuario, entidade.Usuario.Id);
@@ -52,7 +52,7 @@ namespace ControleDespesas.Test.Helpers
 
             var command = PessoaHelper.GerarDadosRetornoInsert(entidade);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(command));
+            TestContext.WriteLine(command.FormatarJsonDeSaida());
 
             Assert.AreEqual(entidade.Id, command.Id);
             Assert.AreEqual(entidade.Usuario.Id, command.IdUsuario);
@@ -67,7 +67,7 @@ namespace ControleDespesas.Test.Helpers
 
             var command = PessoaHelper.GerarDadosRetornoUpdate(entidade);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(command));
+            TestContext.WriteLine(command.FormatarJsonDeSaida());
 
             Assert.AreEqual(entidade.Id, command.Id);
             Assert.AreEqual(entidade.Usuario.Id, command.IdUsuario);
@@ -82,7 +82,7 @@ namespace ControleDespesas.Test.Helpers
 
             var command = PessoaHelper.GerarDadosRetornoDelete(entidade.Id);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(command));
+            TestContext.WriteLine(command.FormatarJsonDeSaida());
 
             Assert.AreEqual(entidade.Id, command.Id);
         }

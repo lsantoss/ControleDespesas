@@ -54,35 +54,30 @@ namespace ControleDespesas.Test.Controllers
             _repositoryUsuario.Salvar(usuario);
 
             var pagamento1 = new SettingsTest().Pagamento1;
-            var pagamento2 = new SettingsTest().Pagamento2;
-            var pagamento3 = new SettingsTest().Pagamento3;
-
             _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento1.Empresa);
             _repositoryPessoa.Salvar(pagamento1.Pessoa);
             _repositoryPagamento.Salvar(pagamento1);
 
+            var pagamento2 = new SettingsTest().Pagamento2;
             _repositoryTipoPagamento.Salvar(pagamento2.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento2.Empresa);
             _repositoryPagamento.Salvar(pagamento2);
 
+            var pagamento3 = new SettingsTest().Pagamento3;
             _repositoryTipoPagamento.Salvar(pagamento3.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento3.Empresa);
             _repositoryPessoa.Salvar(pagamento3.Pessoa);
             _repositoryPagamento.Salvar(pagamento3);
 
             var query = new SettingsTest().PagamentoQuery;
-
             var response = _controller.Pagamentos(query);
-
             var responseJson = JsonConvert.SerializeObject(response);
-
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<List<PagamentoQueryResult>>>>(responseJson);
 
             TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
 
             Assert.AreEqual(200, responseObj.StatusCode);
-
             Assert.True(responseObj.Value.Sucesso);
             Assert.AreEqual("Lista obtida com sucesso", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
@@ -113,35 +108,30 @@ namespace ControleDespesas.Test.Controllers
             _repositoryUsuario.Salvar(usuario);
 
             var pagamento1 = new SettingsTest().Pagamento1;
-            var pagamento2 = new SettingsTest().Pagamento2;
-            var pagamento3 = new SettingsTest().Pagamento3;
-
             _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento1.Empresa);
             _repositoryPessoa.Salvar(pagamento1.Pessoa);
             _repositoryPagamento.Salvar(pagamento1);
 
+            var pagamento2 = new SettingsTest().Pagamento2;
             _repositoryTipoPagamento.Salvar(pagamento2.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento2.Empresa);
             _repositoryPagamento.Salvar(pagamento2);
 
+            var pagamento3 = new SettingsTest().Pagamento3;
             _repositoryTipoPagamento.Salvar(pagamento3.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento3.Empresa);
             _repositoryPessoa.Salvar(pagamento3.Pessoa);
             _repositoryPagamento.Salvar(pagamento3);
 
             var query = new SettingsTest().PagamentoQueryPagos;
-
             var response = _controller.Pagamentos(query);
-
             var responseJson = JsonConvert.SerializeObject(response);
-
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<List<PagamentoQueryResult>>>>(responseJson);
 
             TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
 
             Assert.AreEqual(200, responseObj.StatusCode);
-
             Assert.True(responseObj.Value.Sucesso);
             Assert.AreEqual("Lista obtida com sucesso", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
@@ -172,35 +162,30 @@ namespace ControleDespesas.Test.Controllers
             _repositoryUsuario.Salvar(usuario);
 
             var pagamento1 = new SettingsTest().Pagamento1;
-            var pagamento2 = new SettingsTest().Pagamento2;
-            var pagamento3 = new SettingsTest().Pagamento3;
-
             _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento1.Empresa);
             _repositoryPessoa.Salvar(pagamento1.Pessoa);
             _repositoryPagamento.Salvar(pagamento1);
 
+            var pagamento2 = new SettingsTest().Pagamento2;
             _repositoryTipoPagamento.Salvar(pagamento2.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento2.Empresa);
             _repositoryPagamento.Salvar(pagamento2);
 
+            var pagamento3 = new SettingsTest().Pagamento3;
             _repositoryTipoPagamento.Salvar(pagamento3.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento3.Empresa);
             _repositoryPessoa.Salvar(pagamento3.Pessoa);
             _repositoryPagamento.Salvar(pagamento3);
 
             var query = new SettingsTest().PagamentoQueryPendentes;
-
             var response = _controller.Pagamentos(query);
-
             var responseJson = JsonConvert.SerializeObject(response);
-
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<List<PagamentoQueryResult>>>>(responseJson);
 
             TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
 
             Assert.AreEqual(200, responseObj.StatusCode);
-
             Assert.True(responseObj.Value.Sucesso);
             Assert.AreEqual("Lista obtida com sucesso", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
@@ -222,27 +207,23 @@ namespace ControleDespesas.Test.Controllers
             _repositoryUsuario.Salvar(usuario);
 
             var pagamento1 = new SettingsTest().Pagamento1;
-            var pagamento2 = new SettingsTest().Pagamento2;
-
             _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento1.Empresa);
             _repositoryPessoa.Salvar(pagamento1.Pessoa);
             _repositoryPagamento.Salvar(pagamento1);
 
+            var pagamento2 = new SettingsTest().Pagamento2;
             _repositoryTipoPagamento.Salvar(pagamento2.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento2.Empresa);
             _repositoryPagamento.Salvar(pagamento2);
 
             var response = _controller.Pagamento(pagamento2.Id);
-
             var responseJson = JsonConvert.SerializeObject(response);
-
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<PagamentoQueryResult>>>(responseJson);
 
             TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
 
             Assert.AreEqual(200, responseObj.StatusCode);
-
             Assert.True(responseObj.Value.Sucesso);
             Assert.AreEqual("Registro obtido com sucesso", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
@@ -264,22 +245,18 @@ namespace ControleDespesas.Test.Controllers
             _repositoryUsuario.Salvar(usuario);
 
             var pagamento1 = new SettingsTest().Pagamento1;
-
             _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento1.Empresa);
             _repositoryPessoa.Salvar(pagamento1.Pessoa);
             _repositoryPagamento.Salvar(pagamento1);
 
             var response = _controller.ObterArquivoPagamento(pagamento1.Id);
-
             var responseJson = JsonConvert.SerializeObject(response);
-
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<PagamentoArquivoQueryResult>>>(responseJson);
 
             TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
 
             Assert.AreEqual(200, responseObj.StatusCode);
-
             Assert.True(responseObj.Value.Sucesso);
             Assert.AreEqual("Registro obtido com sucesso", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
@@ -294,22 +271,18 @@ namespace ControleDespesas.Test.Controllers
             _repositoryUsuario.Salvar(usuario);
 
             var pagamento1 = new SettingsTest().Pagamento1;
-
             _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento1.Empresa);
             _repositoryPessoa.Salvar(pagamento1.Pessoa);
             _repositoryPagamento.Salvar(pagamento1);
 
             var response = _controller.ObterArquivoComprovante(pagamento1.Id);
-
             var responseJson = JsonConvert.SerializeObject(response);
-
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<PagamentoArquivoQueryResult>>>(responseJson);
 
             TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
 
             Assert.AreEqual(200, responseObj.StatusCode);
-
             Assert.True(responseObj.Value.Sucesso);
             Assert.AreEqual("Registro obtido com sucesso", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
@@ -324,38 +297,32 @@ namespace ControleDespesas.Test.Controllers
             _repositoryUsuario.Salvar(usuario);
 
             var pagamento1 = new SettingsTest().Pagamento1;
-            var pagamento2 = new SettingsTest().Pagamento2;
-            var pagamento3 = new SettingsTest().Pagamento3;
-
-            pagamento3.DefinirPessoa(pagamento1.Pessoa);
-
-            var valorTotalEsperado = pagamento2.Valor + pagamento3.Valor;
-
             _repositoryTipoPagamento.Salvar(pagamento1.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento1.Empresa);
             _repositoryPessoa.Salvar(pagamento1.Pessoa);
             _repositoryPagamento.Salvar(pagamento1);
 
+            var pagamento2 = new SettingsTest().Pagamento2;
             _repositoryTipoPagamento.Salvar(pagamento2.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento2.Empresa);
             _repositoryPagamento.Salvar(pagamento2);
 
+            var pagamento3 = new SettingsTest().Pagamento3;
+            pagamento3.DefinirPessoa(pagamento1.Pessoa);
             _repositoryTipoPagamento.Salvar(pagamento3.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento3.Empresa);
             _repositoryPagamento.Salvar(pagamento3);
 
+            var valorTotalEsperado = pagamento2.Valor + pagamento3.Valor;
+
             var query = new SettingsTest().PagamentoGastosQuery;
-
             var response = _controller.ObterGastos(query);
-
             var responseJson = JsonConvert.SerializeObject(response);
-
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<PagamentoGastosQueryResult>>>(responseJson);
 
             TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
 
             Assert.AreEqual(200, responseObj.StatusCode);
-
             Assert.True(responseObj.Value.Sucesso);
             Assert.AreEqual("Registro obtido com sucesso", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
@@ -370,25 +337,22 @@ namespace ControleDespesas.Test.Controllers
             _repositoryUsuario.Salvar(usuario);
 
             var tipoPagamento = new SettingsTest().Pagamento1.TipoPagamento;
-            var empresa = new SettingsTest().Pagamento1.Empresa ;
-            var pessoa = new SettingsTest().Pagamento1.Pessoa;
-
-            var command = new SettingsTest().PagamentoAdicionarCommand;
-
             _repositoryTipoPagamento.Salvar(tipoPagamento);
+
+            var empresa = new SettingsTest().Pagamento1.Empresa;
             _repositoryEmpresa.Salvar(empresa);
+
+            var pessoa = new SettingsTest().Pagamento1.Pessoa;
             _repositoryPessoa.Salvar(pessoa);
 
+            var command = new SettingsTest().PagamentoAdicionarCommand;
             var response = _controller.PagamentoInserir(command);
-
             var responseJson = JsonConvert.SerializeObject(response);
-
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<PagamentoCommandOutput>>>(responseJson);
 
             TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
 
             Assert.AreEqual(201, responseObj.StatusCode);
-
             Assert.True(responseObj.Value.Sucesso);
             Assert.AreEqual("Pagamento gravado com sucesso!", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
@@ -412,24 +376,19 @@ namespace ControleDespesas.Test.Controllers
             _repositoryUsuario.Salvar(usuario);
 
             var pagamento = new SettingsTest().Pagamento1;
-
-            var command = new SettingsTest().PagamentoAtualizarCommand;
-
             _repositoryTipoPagamento.Salvar(pagamento.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento.Empresa);
             _repositoryPessoa.Salvar(pagamento.Pessoa);
             _repositoryPagamento.Salvar(pagamento);
 
+            var command = new SettingsTest().PagamentoAtualizarCommand;
             var response = _controller.PagamentoAlterar(command.Id, command);
-
             var responseJson = JsonConvert.SerializeObject(response);
-
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<PagamentoCommandOutput>>>(responseJson);
 
             TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
 
             Assert.AreEqual(200, responseObj.StatusCode);
-
             Assert.True(responseObj.Value.Sucesso);
             Assert.AreEqual("Pagamento atualizado com sucesso!", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
@@ -453,22 +412,18 @@ namespace ControleDespesas.Test.Controllers
             _repositoryUsuario.Salvar(usuario);
 
             var pagamento = new SettingsTest().Pagamento1;
-
             _repositoryTipoPagamento.Salvar(pagamento.TipoPagamento);
             _repositoryEmpresa.Salvar(pagamento.Empresa) ;
             _repositoryPessoa.Salvar(pagamento.Pessoa);
             _repositoryPagamento.Salvar(pagamento);
 
             var response = _controller.PagamentoExcluir(pagamento.Id);
-
             var responseJson = JsonConvert.SerializeObject(response);
-
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<CommandOutput>>>(responseJson);
 
             TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
 
             Assert.AreEqual(200, responseObj.StatusCode);
-
             Assert.True(responseObj.Value.Sucesso);
             Assert.AreEqual("Pagamento excluído com sucesso!", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);

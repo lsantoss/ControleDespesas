@@ -42,23 +42,21 @@ namespace ControleDespesas.Test.Controllers
         public void Empresas()
         {
             var empresa1 = new SettingsTest().Empresa1;
-            var empresa2 = new SettingsTest().Empresa2;
-            var empresa3 = new SettingsTest().Empresa3;
-
             _repository.Salvar(empresa1);
+
+            var empresa2 = new SettingsTest().Empresa2;
             _repository.Salvar(empresa2);
+
+            var empresa3 = new SettingsTest().Empresa3;
             _repository.Salvar(empresa3);
 
             var response = _controller.Empresas();
-
             var responseJson = JsonConvert.SerializeObject(response);
-
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<List<EmpresaQueryResult>>>>(responseJson);
 
             TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
 
             Assert.AreEqual(200, responseObj.StatusCode);
-
             Assert.True(responseObj.Value.Sucesso);
             Assert.AreEqual("Lista obtida com sucesso", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
@@ -80,23 +78,21 @@ namespace ControleDespesas.Test.Controllers
         public void Empresa()
         {
             var empresa1 = new SettingsTest().Empresa1;
-            var empresa2 = new SettingsTest().Empresa2;
-            var empresa3 = new SettingsTest().Empresa3;
-
             _repository.Salvar(empresa1);
+
+            var empresa2 = new SettingsTest().Empresa2;
             _repository.Salvar(empresa2);
+
+            var empresa3 = new SettingsTest().Empresa3;
             _repository.Salvar(empresa3);
 
             var response = _controller.Empresa(empresa2.Id);
-
             var responseJson = JsonConvert.SerializeObject(response);
-
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<EmpresaQueryResult>>>(responseJson);
 
             TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
 
             Assert.AreEqual(200, responseObj.StatusCode);
-
             Assert.True(responseObj.Value.Sucesso);
             Assert.AreEqual("Registro obtido com sucesso", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
@@ -110,17 +106,13 @@ namespace ControleDespesas.Test.Controllers
         public void EmpresaInserir()
         {
             var command = new SettingsTest().EmpresaAdicionarCommand;
-
             var response = _controller.EmpresaInserir(command);
-
             var responseJson = JsonConvert.SerializeObject(response);
-
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<EmpresaCommandOutput>>>(responseJson);
 
             TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
 
             Assert.AreEqual(201, responseObj.StatusCode);
-
             Assert.True(responseObj.Value.Sucesso);
             Assert.AreEqual("Empresa gravada com sucesso!", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
@@ -134,21 +126,16 @@ namespace ControleDespesas.Test.Controllers
         public void EmpresaAlterar()
         {
             var empresa = new SettingsTest().Empresa1;
-
-            var command = new SettingsTest().EmpresaAtualizarCommand;
-
             _repository.Salvar(empresa);
 
+            var command = new SettingsTest().EmpresaAtualizarCommand;
             var response = _controller.EmpresaAlterar(command.Id, command);
-
             var responseJson = JsonConvert.SerializeObject(response);
-
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<EmpresaCommandOutput>>>(responseJson);
 
             TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
 
             Assert.AreEqual(200, responseObj.StatusCode);
-
             Assert.True(responseObj.Value.Sucesso);
             Assert.AreEqual("Empresa atualizada com sucesso!", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
@@ -162,19 +149,15 @@ namespace ControleDespesas.Test.Controllers
         public void EmpresaExcluir()
         {
             var empresa = new SettingsTest().Empresa1;
-
             _repository.Salvar(empresa);
 
             var response = _controller.EmpresaExcluir(empresa.Id);
-
             var responseJson = JsonConvert.SerializeObject(response);
-
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<CommandOutput>>>(responseJson);
 
             TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
 
             Assert.AreEqual(200, responseObj.StatusCode);
-
             Assert.True(responseObj.Value.Sucesso);
             Assert.AreEqual("Empresa excluída com sucesso!", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);

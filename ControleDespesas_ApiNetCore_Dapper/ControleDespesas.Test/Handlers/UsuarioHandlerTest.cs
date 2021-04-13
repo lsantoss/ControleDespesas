@@ -37,9 +37,7 @@ namespace ControleDespesas.Test.Handlers
         public void Handler_AdicionarUsuario()
         {
             var usuarioCommand = new SettingsTest().UsuarioAdicionarCommand;
-
             var retorno = _handler.Handler(usuarioCommand);
-
             var retornoDados = (UsuarioCommandOutput)retorno.Dados;
 
             TestContext.WriteLine(retornoDados.FormatarJsonDeSaida());
@@ -56,13 +54,10 @@ namespace ControleDespesas.Test.Handlers
         public void Handler_AtualizarUsuario()
         {
             var usuario = new SettingsTest().Usuario1;
-
-            var usuarioCommand = new SettingsTest().UsuarioAtualizarCommand;
-
             _repository.Salvar(usuario);
 
+            var usuarioCommand = new SettingsTest().UsuarioAtualizarCommand;
             var retorno = _handler.Handler(usuarioCommand.Id, usuarioCommand);
-
             var retornoDados = (UsuarioCommandOutput)retorno.Dados;
 
             TestContext.WriteLine(retornoDados.FormatarJsonDeSaida());
@@ -82,7 +77,6 @@ namespace ControleDespesas.Test.Handlers
             _repository.Salvar(usuario);
 
             var retorno = _handler.Handler(usuario.Id);
-
             var retornoDados = (CommandOutput)retorno.Dados;
 
             TestContext.WriteLine(retornoDados.FormatarJsonDeSaida());
@@ -96,13 +90,10 @@ namespace ControleDespesas.Test.Handlers
         public void Handler_LoginUsuario()
         {
             var usuario = new SettingsTest().Usuario1;
-
-            var usuarioCommand = new SettingsTest().UsuarioLoginCommand;
-
             _repository.Salvar(usuario);
 
+            var usuarioCommand = new SettingsTest().UsuarioLoginCommand;
             var retorno = _handler.Handler(usuarioCommand);
-
             var retornoDados = (UsuarioTokenQueryResult)retorno.Dados;
 
             var usuarioQR = _repository.Logar(usuarioCommand.Login, usuarioCommand.Senha);

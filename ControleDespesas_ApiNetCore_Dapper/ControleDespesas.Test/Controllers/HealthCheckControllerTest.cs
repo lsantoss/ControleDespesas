@@ -27,9 +27,7 @@ namespace ControleDespesas.Test.Controllers
         public void PagamentoHealthCheck()
         {
             var response = _controller.HealthCheck();
-
             var responseJson = JsonConvert.SerializeObject(response);
-
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<string>>>(responseJson);
 
             TestContext.WriteLine(responseObj.FormatarJsonDeSaida());

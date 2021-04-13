@@ -36,9 +36,7 @@ namespace ControleDespesas.Test.Handlers
             _repositoryUsuario.Salvar(usuario);
 
             var pessoaCommand = new SettingsTest().PessoaAdicionarCommand;
-
             var retorno = _handler.Handler(pessoaCommand);
-
             var retornoDados = (PessoaCommandOutput)retorno.Dados;
 
             TestContext.WriteLine(retornoDados.FormatarJsonDeSaida());
@@ -57,13 +55,10 @@ namespace ControleDespesas.Test.Handlers
             _repositoryUsuario.Salvar(usuario);
 
             var pessoa = new SettingsTest().Pessoa1;
-
-            var pessoaCommand = new SettingsTest().PessoaAtualizarCommand;
-
             _repositoryPessoa.Salvar(pessoa);
 
+            var pessoaCommand = new SettingsTest().PessoaAtualizarCommand;
             var retorno = _handler.Handler(pessoaCommand.Id, pessoaCommand);
-
             var retornoDados = (PessoaCommandOutput)retorno.Dados;
 
             TestContext.WriteLine(retornoDados.FormatarJsonDeSaida());
@@ -82,11 +77,9 @@ namespace ControleDespesas.Test.Handlers
             _repositoryUsuario.Salvar(usuario);
 
             var pessoa = new SettingsTest().Pessoa1;
-
             _repositoryPessoa.Salvar(pessoa);
 
             var retorno = _handler.Handler(pessoa.Id);
-
             var retornoDados = (CommandOutput)retorno.Dados;
 
             TestContext.WriteLine(retornoDados.FormatarJsonDeSaida());

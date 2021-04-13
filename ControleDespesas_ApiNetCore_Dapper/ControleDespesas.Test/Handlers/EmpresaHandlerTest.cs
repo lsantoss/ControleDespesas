@@ -31,9 +31,7 @@ namespace ControleDespesas.Test.Handlers
         public void Handler_AdicionarEmpresa()
         {
             var empresaCommand = new SettingsTest().EmpresaAdicionarCommand;
-
             var retorno = _handler.Handler(empresaCommand);
-
             var retornoDados = (EmpresaCommandOutput)retorno.Dados;
 
             TestContext.WriteLine(retornoDados.FormatarJsonDeSaida());
@@ -48,13 +46,11 @@ namespace ControleDespesas.Test.Handlers
         [Test]
         public void Handler_AtualizarEmpresa()
         {
-            var empresaCommand = new SettingsTest().EmpresaAtualizarCommand;
-
             var empresa = new SettingsTest().Empresa1;
             _repository.Salvar(empresa);
 
+            var empresaCommand = new SettingsTest().EmpresaAtualizarCommand;
             var retorno = _handler.Handler(empresa.Id, empresaCommand);
-
             var retornoDados = (EmpresaCommandOutput)retorno.Dados;
 
             TestContext.WriteLine(retornoDados.FormatarJsonDeSaida());
@@ -73,7 +69,6 @@ namespace ControleDespesas.Test.Handlers
             _repository.Salvar(empresa);
 
             var retorno = _handler.Handler(empresa.Id);
-
             var retornoDados = (CommandOutput)retorno.Dados;
 
             TestContext.WriteLine(retornoDados.FormatarJsonDeSaida());

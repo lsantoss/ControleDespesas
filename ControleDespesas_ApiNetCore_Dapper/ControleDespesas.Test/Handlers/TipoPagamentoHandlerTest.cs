@@ -31,9 +31,7 @@ namespace ControleDespesas.Test.Handlers
         public void Handler_AdicionarTipoPagamento()
         {
             var tipoPagamentoCommand = new SettingsTest().TipoPagamentoAdicionarCommand;
-
             var retorno = _handler.Handler(tipoPagamentoCommand);
-
             var retornoDados = (TipoPagamentoCommandOutput)retorno.Dados;
 
             TestContext.WriteLine(retornoDados.FormatarJsonDeSaida());
@@ -48,13 +46,10 @@ namespace ControleDespesas.Test.Handlers
         public void Handler_AtualizarTipoPagamento()
         {
             var tipoPagamento = new SettingsTest().TipoPagamento1;
-
-            var tipoPagamentoCommand = new SettingsTest().TipoPagamentoAtualizarCommand;
-
             _repository.Salvar(tipoPagamento);
 
+            var tipoPagamentoCommand = new SettingsTest().TipoPagamentoAtualizarCommand;
             var retorno = _handler.Handler(tipoPagamentoCommand.Id, tipoPagamentoCommand);
-
             var retornoDados = (TipoPagamentoCommandOutput)retorno.Dados;
 
             TestContext.WriteLine(retornoDados.FormatarJsonDeSaida());
@@ -69,11 +64,9 @@ namespace ControleDespesas.Test.Handlers
         public void Handler_ApagarTipoPagamento()
         {
             var tipoPagamento = new SettingsTest().TipoPagamento1;
-
             _repository.Salvar(tipoPagamento);
 
             var retorno = _handler.Handler(tipoPagamento.Id);
-
             var retornoDados = (CommandOutput)retorno.Dados;
 
             TestContext.WriteLine(retornoDados.FormatarJsonDeSaida());

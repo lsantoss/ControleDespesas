@@ -43,17 +43,16 @@ namespace ControleDespesas.Test.Handlers
             _repositoryUsuario.Salvar(usuario);
 
             var tipoPagamento = new SettingsTest().Pagamento1.TipoPagamento;
-            var empresa = new SettingsTest().Pagamento1.Empresa;
-            var pessoa = new SettingsTest().Pagamento1.Pessoa;
-
-            var pagamentoCommand = new SettingsTest().PagamentoAdicionarCommand;
-
             _repositoryTipoPagamento.Salvar(tipoPagamento);
+
+            var empresa = new SettingsTest().Pagamento1.Empresa;
             _repositoryEmpresa.Salvar(empresa);
+
+            var pessoa = new SettingsTest().Pagamento1.Pessoa;
             _repositoryPessoa.Salvar(pessoa);
 
+            var pagamentoCommand = new SettingsTest().PagamentoAdicionarCommand;
             var retorno = _handler.Handler(pagamentoCommand);
-
             var retornoDados = (PagamentoCommandOutput)retorno.Dados;
 
             TestContext.WriteLine(retornoDados.FormatarJsonDeSaida());
@@ -79,19 +78,19 @@ namespace ControleDespesas.Test.Handlers
             _repositoryUsuario.Salvar(usuario);
 
             var tipoPagamento = new SettingsTest().Pagamento1.TipoPagamento;
-            var empresa = new SettingsTest().Pagamento1.Empresa;
-            var pessoa = new SettingsTest().Pagamento1.Pessoa;
-            var pagamento = new SettingsTest().Pagamento1;
-
-            var pagamentoCommand = new SettingsTest().PagamentoAtualizarCommand;
-
             _repositoryTipoPagamento.Salvar(tipoPagamento);
+
+            var empresa = new SettingsTest().Pagamento1.Empresa;
             _repositoryEmpresa.Salvar(empresa);
+
+            var pessoa = new SettingsTest().Pagamento1.Pessoa;
             _repositoryPessoa.Salvar(pessoa);
+
+            var pagamento = new SettingsTest().Pagamento1;
             _repositoryPagamento.Salvar(pagamento);
 
+            var pagamentoCommand = new SettingsTest().PagamentoAtualizarCommand;
             var retorno = _handler.Handler(pagamentoCommand.Id, pagamentoCommand);
-
             var retornoDados = (PagamentoCommandOutput)retorno.Dados;
 
             TestContext.WriteLine(retornoDados.FormatarJsonDeSaida());
@@ -117,17 +116,18 @@ namespace ControleDespesas.Test.Handlers
             _repositoryUsuario.Salvar(usuario);
 
             var tipoPagamento = new SettingsTest().Pagamento1.TipoPagamento;
-            var empresa = new SettingsTest().Pagamento1.Empresa;
-            var pessoa = new SettingsTest().Pagamento1.Pessoa;
-            var pagamento = new SettingsTest().Pagamento1;
-
             _repositoryTipoPagamento.Salvar(tipoPagamento);
+
+            var empresa = new SettingsTest().Pagamento1.Empresa;
             _repositoryEmpresa.Salvar(empresa);
+
+            var pessoa = new SettingsTest().Pagamento1.Pessoa;
             _repositoryPessoa.Salvar(pessoa);
+
+            var pagamento = new SettingsTest().Pagamento1;
             _repositoryPagamento.Salvar(pagamento);
 
             var retorno = _handler.Handler(pagamento.Id);
-
             var retornoDados = (CommandOutput)retorno.Dados;
 
             TestContext.WriteLine(retornoDados.FormatarJsonDeSaida());

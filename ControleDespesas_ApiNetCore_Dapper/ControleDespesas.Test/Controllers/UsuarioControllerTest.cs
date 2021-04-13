@@ -46,23 +46,21 @@ namespace ControleDespesas.Test.Controllers
         public void Usuarios()
         {
             var usuario1 = new SettingsTest().Usuario1;
-            var usuario2 = new SettingsTest().Usuario2;
-            var usuario3 = new SettingsTest().Usuario3;
-
             _repository.Salvar(usuario1);
+
+            var usuario2 = new SettingsTest().Usuario2;
             _repository.Salvar(usuario2);
+
+            var usuario3 = new SettingsTest().Usuario3;
             _repository.Salvar(usuario3);
 
             var response = _controller.Usuarios();
-
             var responseJson = JsonConvert.SerializeObject(response);
-
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<List<UsuarioQueryResult>>>>(responseJson);
 
             TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
 
             Assert.AreEqual(200, responseObj.StatusCode);
-
             Assert.True(responseObj.Value.Sucesso);
             Assert.AreEqual("Lista obtida com sucesso", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
@@ -87,23 +85,21 @@ namespace ControleDespesas.Test.Controllers
         public void Usuario()
         {
             var usuario1 = new SettingsTest().Usuario1;
-            var usuario2 = new SettingsTest().Usuario2;
-            var usuario3 = new SettingsTest().Usuario3;
-
             _repository.Salvar(usuario1);
+
+            var usuario2 = new SettingsTest().Usuario2;
             _repository.Salvar(usuario2);
+
+            var usuario3 = new SettingsTest().Usuario3;
             _repository.Salvar(usuario3);
 
             var response = _controller.Usuario(usuario2.Id);
-
             var responseJson = JsonConvert.SerializeObject(response);
-
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<UsuarioQueryResult>>>(responseJson);
 
             TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
 
             Assert.AreEqual(200, responseObj.StatusCode);
-
             Assert.True(responseObj.Value.Sucesso);
             Assert.AreEqual("Registro obtido com sucesso", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
@@ -118,17 +114,13 @@ namespace ControleDespesas.Test.Controllers
         public void UsuarioInserir()
         {
             var command = new SettingsTest().UsuarioAdicionarCommand;
-
             var response = _controller.UsuarioInserir(command);
-
             var responseJson = JsonConvert.SerializeObject(response);
-
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<UsuarioCommandOutput>>>(responseJson);
 
             TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
 
             Assert.AreEqual(201, responseObj.StatusCode);
-
             Assert.True(responseObj.Value.Sucesso);
             Assert.AreEqual("Usuário gravado com sucesso!", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
@@ -143,21 +135,16 @@ namespace ControleDespesas.Test.Controllers
         public void UsuarioAlterar()
         {
             var usuario = new SettingsTest().Usuario1;
-
-            var command = new SettingsTest().UsuarioAtualizarCommand;
-
             _repository.Salvar(usuario);
 
+            var command = new SettingsTest().UsuarioAtualizarCommand;
             var response = _controller.UsuarioAlterar(command.Id, command);
-
             var responseJson = JsonConvert.SerializeObject(response);
-
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<UsuarioCommandOutput>>>(responseJson);
 
             TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
 
             Assert.AreEqual(200, responseObj.StatusCode);
-
             Assert.True(responseObj.Value.Sucesso);
             Assert.AreEqual("Usuário atualizado com sucesso!", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
@@ -172,19 +159,15 @@ namespace ControleDespesas.Test.Controllers
         public void UsuarioExcluir()
         {
             var usuario = new SettingsTest().Usuario1;
-
             _repository.Salvar(usuario);
 
             var response = _controller.UsuarioExcluir(usuario.Id);
-
             var responseJson = JsonConvert.SerializeObject(response);
-
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<CommandOutput>>>(responseJson);
 
             TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
 
             Assert.AreEqual(200, responseObj.StatusCode);
-
             Assert.True(responseObj.Value.Sucesso);
             Assert.AreEqual("Usuário excluído com sucesso!", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
@@ -196,21 +179,16 @@ namespace ControleDespesas.Test.Controllers
         public void UsuarioLogin()
         {
             var usuario = new SettingsTest().Usuario1;
-
-            var command = new SettingsTest().UsuarioLoginCommand;
-
             _repository.Salvar(usuario);
 
+            var command = new SettingsTest().UsuarioLoginCommand;
             var response = _controller.UsuarioLogin(command);
-
             var responseJson = JsonConvert.SerializeObject(response);
-
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<UsuarioQueryResult>>>(responseJson);
 
             TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
 
             Assert.AreEqual(200, responseObj.StatusCode);
-
             Assert.True(responseObj.Value.Sucesso);
             Assert.AreEqual("Usuário logado com sucesso!", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);

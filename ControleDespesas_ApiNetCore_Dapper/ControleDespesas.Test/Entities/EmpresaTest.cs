@@ -16,7 +16,7 @@ namespace ControleDespesas.Test.Entities
         [Test]
         public void ValidarEntidade_Valida()
         {
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_empresa));
+            TestContext.WriteLine(_empresa.FormatarJsonDeSaida());
 
             Assert.True(_empresa.Valido);
             Assert.AreEqual(0, _empresa.Notificacoes.Count);
@@ -31,7 +31,7 @@ namespace ControleDespesas.Test.Entities
             _empresa.DefinirNome(nome);
             _empresa.Validar();
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_empresa));
+            TestContext.WriteLine(_empresa.FormatarJsonDeSaida());
 
             Assert.False(_empresa.Valido);
             Assert.AreNotEqual(0, _empresa.Notificacoes.Count);
@@ -45,7 +45,7 @@ namespace ControleDespesas.Test.Entities
             _empresa.DefinirLogo(logo);
             _empresa.Validar();
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_empresa));
+            TestContext.WriteLine(_empresa.FormatarJsonDeSaida());
 
             Assert.False(_empresa.Valido);
             Assert.AreNotEqual(0, _empresa.Notificacoes.Count);
@@ -58,7 +58,7 @@ namespace ControleDespesas.Test.Entities
         {
             _empresa.DefinirId(id);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_empresa));
+            TestContext.WriteLine(_empresa.FormatarJsonDeSaida());
 
             Assert.AreEqual(id, _empresa.Id);
             Assert.True(_empresa.Valido);
@@ -72,7 +72,7 @@ namespace ControleDespesas.Test.Entities
         {
             _empresa.DefinirNome(nome);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_empresa));
+            TestContext.WriteLine(_empresa.FormatarJsonDeSaida());
 
             Assert.AreEqual(nome, _empresa.Nome);
             Assert.True(_empresa.Valido);
@@ -86,7 +86,7 @@ namespace ControleDespesas.Test.Entities
         {
             _empresa.DefinirLogo(logo);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_empresa));
+            TestContext.WriteLine(_empresa.FormatarJsonDeSaida());
 
             Assert.AreEqual(logo, _empresa.Logo);
             Assert.True(_empresa.Valido);

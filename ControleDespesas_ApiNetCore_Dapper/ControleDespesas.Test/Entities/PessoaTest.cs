@@ -16,7 +16,7 @@ namespace ControleDespesas.Test.Entities
         [Test]
         public void ValidarEntidade_Valida()
         {
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_pessoa));
+            TestContext.WriteLine(_pessoa.FormatarJsonDeSaida());
 
             Assert.True(_pessoa.Valido);
             Assert.AreEqual(0, _pessoa.Notificacoes.Count);
@@ -30,7 +30,7 @@ namespace ControleDespesas.Test.Entities
             _pessoa.Usuario.DefinirId(id);
             _pessoa.Validar();
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_pessoa));
+            TestContext.WriteLine(_pessoa.FormatarJsonDeSaida());
 
             Assert.False(_pessoa.Valido);
             Assert.AreNotEqual(0, _pessoa.Notificacoes.Count);
@@ -45,7 +45,7 @@ namespace ControleDespesas.Test.Entities
             _pessoa.DefinirNome(nome);
             _pessoa.Validar();
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_pessoa));
+            TestContext.WriteLine(_pessoa.FormatarJsonDeSaida());
 
             Assert.False(_pessoa.Valido);
             Assert.AreNotEqual(0, _pessoa.Notificacoes.Count);
@@ -59,7 +59,7 @@ namespace ControleDespesas.Test.Entities
             _pessoa.DefinirImagemPerfil(imagemPerfil);
             _pessoa.Validar();
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_pessoa));
+            TestContext.WriteLine(_pessoa.FormatarJsonDeSaida());
 
             Assert.False(_pessoa.Valido);
             Assert.AreNotEqual(0, _pessoa.Notificacoes.Count);
@@ -72,7 +72,7 @@ namespace ControleDespesas.Test.Entities
         {
             _pessoa.DefinirId(id);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_pessoa));
+            TestContext.WriteLine(_pessoa.FormatarJsonDeSaida());
 
             Assert.AreEqual(id, _pessoa.Id);
             Assert.True(_pessoa.Valido);
@@ -86,7 +86,7 @@ namespace ControleDespesas.Test.Entities
         {
             _pessoa.DefinirNome(nome);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_pessoa));
+            TestContext.WriteLine(_pessoa.FormatarJsonDeSaida());
 
             Assert.AreEqual(nome, _pessoa.Nome);
             Assert.True(_pessoa.Valido);
@@ -100,7 +100,7 @@ namespace ControleDespesas.Test.Entities
 
             _pessoa.DefinirUsuario(usuario);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_pessoa));
+            TestContext.WriteLine(_pessoa.FormatarJsonDeSaida());
 
             Assert.AreEqual(usuario, _pessoa.Usuario);
             Assert.True(_pessoa.Valido);
@@ -114,7 +114,7 @@ namespace ControleDespesas.Test.Entities
         {
             _pessoa.DefinirImagemPerfil(logo);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_pessoa));
+            TestContext.WriteLine(_pessoa.FormatarJsonDeSaida());
 
             Assert.AreEqual(logo, _pessoa.ImagemPerfil);
             Assert.True(_pessoa.Valido);

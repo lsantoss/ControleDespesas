@@ -20,7 +20,7 @@ namespace ControleDespesas.Test.Commands.Usuario
             var valido = _command.ValidarCommand();
             var notificacoes = _command.Notificacoes.Count;
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_command));
+            TestContext.WriteLine(_command.FormatarJsonDeSaida());
 
             Assert.True(valido);
             Assert.AreEqual(0, notificacoes);
@@ -35,7 +35,7 @@ namespace ControleDespesas.Test.Commands.Usuario
             var valido = _command.ValidarCommand();
             var notificacoes = _command.Notificacoes.Count;
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_command));
+            TestContext.WriteLine(_command.FormatarJsonDeSaida());
 
             Assert.False(valido);
             Assert.AreNotEqual(0, notificacoes);
@@ -51,7 +51,7 @@ namespace ControleDespesas.Test.Commands.Usuario
             var valido = _command.ValidarCommand();
             var notificacoes = _command.Notificacoes.Count;
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_command));
+            TestContext.WriteLine(_command.FormatarJsonDeSaida());
 
             Assert.False(valido);
             Assert.AreNotEqual(0, notificacoes);
@@ -71,7 +71,7 @@ namespace ControleDespesas.Test.Commands.Usuario
             var valido = _command.ValidarCommand();
             var notificacoes = _command.Notificacoes.Count;
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_command));
+            TestContext.WriteLine(_command.FormatarJsonDeSaida());
 
             Assert.False(valido);
             Assert.AreNotEqual(0, notificacoes);
@@ -86,7 +86,7 @@ namespace ControleDespesas.Test.Commands.Usuario
             var valido = _command.ValidarCommand();
             var notificacoes = _command.Notificacoes.Count;
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_command));
+            TestContext.WriteLine(_command.FormatarJsonDeSaida());
 
             Assert.False(valido);
             Assert.AreNotEqual(0, notificacoes);

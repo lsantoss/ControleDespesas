@@ -16,7 +16,7 @@ namespace ControleDespesas.Test.Entities
         [Test]
         public void ValidarEntidade_Valida()
         {
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_pagamento));
+            TestContext.WriteLine(_pagamento.FormatarJsonDeSaida());
 
             Assert.True(_pagamento.Valido);
             Assert.AreEqual(0, _pagamento.Notificacoes.Count);
@@ -30,7 +30,7 @@ namespace ControleDespesas.Test.Entities
             _pagamento.TipoPagamento.DefinirId(idTipoPagamento);
             _pagamento.Validar();
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_pagamento));
+            TestContext.WriteLine(_pagamento.FormatarJsonDeSaida());
 
             Assert.False(_pagamento.Valido);
             Assert.AreNotEqual(0, _pagamento.Notificacoes.Count);
@@ -44,7 +44,7 @@ namespace ControleDespesas.Test.Entities
             _pagamento.Empresa.DefinirId(idEmpresa);
             _pagamento.Validar();
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_pagamento));
+            TestContext.WriteLine(_pagamento.FormatarJsonDeSaida());
 
             Assert.False(_pagamento.Valido);
             Assert.AreNotEqual(0, _pagamento.Notificacoes.Count);
@@ -58,7 +58,7 @@ namespace ControleDespesas.Test.Entities
             _pagamento.Pessoa.DefinirId(idPessoa);
             _pagamento.Validar();
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_pagamento));
+            TestContext.WriteLine(_pagamento.FormatarJsonDeSaida());
 
             Assert.False(_pagamento.Valido);
             Assert.AreNotEqual(0, _pagamento.Notificacoes.Count);
@@ -73,7 +73,7 @@ namespace ControleDespesas.Test.Entities
             _pagamento.DefinirDescricao(descricao);
             _pagamento.Validar();
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_pagamento));
+            TestContext.WriteLine(_pagamento.FormatarJsonDeSaida());
 
             Assert.False(_pagamento.Valido);
             Assert.AreNotEqual(0, _pagamento.Notificacoes.Count);
@@ -87,7 +87,7 @@ namespace ControleDespesas.Test.Entities
             _pagamento.DefinirValor(valor);
             _pagamento.Validar();
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_pagamento));
+            TestContext.WriteLine(_pagamento.FormatarJsonDeSaida());
 
             Assert.False(_pagamento.Valido);
             Assert.AreNotEqual(0, _pagamento.Notificacoes.Count);

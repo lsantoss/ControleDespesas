@@ -16,8 +16,15 @@ namespace ControleDespesas.Test.AppConfigurations.Base
 
         public DatabaseTest()
         {
-            MockSettingsInfraData = new SettingsInfraData() { ConnectionString = MockSettingsTest.ConnectionSQLServerTest };            
+            MockSettingsInfraData = new SettingsInfraData() 
+            { 
+                ConnectionString = MockSettingsTest.ConnectionSQLServerTest 
+            };            
         }  
+
+        protected void CriarBaseDeDadosETabelas() => RodarScripts(QueriesSQLServer.QueriesCreate);
+
+        protected void DroparTabelas() => RodarScripts(QueriesSQLServer.QueriesDrop);
 
         private void RodarScripts(List<string> queries)
         {
@@ -25,7 +32,7 @@ namespace ControleDespesas.Test.AppConfigurations.Base
             {
                 DataContext ctx = new DataContext(EBancoDadosRelacional.SQLServer, MockSettingsInfraData.ConnectionString);
 
-                foreach (string sql in queries) 
+                foreach (string sql in queries)
                     ctx.SQLServerConexao.Execute(sql);
             }
             catch (Exception ex)
@@ -33,9 +40,5 @@ namespace ControleDespesas.Test.AppConfigurations.Base
                 throw new Exception($"Erro ao rodar scripts: {ex.Message}");
             }
         }
-
-        protected void CriarBaseDeDadosETabelas() => RodarScripts(QueriesSQLServer.QueriesCreate);
-
-        protected void DroparTabelas() => RodarScripts(QueriesSQLServer.QueriesDrop);
     }
 }

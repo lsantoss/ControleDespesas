@@ -6,7 +6,7 @@ namespace ControleDespesas.Test.AppConfigurations.Util
 {
     public static class FotmatadorJson
     {
-        public static string FormatarJsonDeSaida<TEntity>(string json)
+        public static string FormatarJsonDeSaida<TEntity>(this string json)
         {
             var options = new JsonSerializerOptions() { WriteIndented = true, Encoder = JavaScriptEncoder.Create(UnicodeRanges.All) };
             var objeto = JsonSerializer.Deserialize<TEntity>(json);
@@ -14,7 +14,7 @@ namespace ControleDespesas.Test.AppConfigurations.Util
             return retorno;
         }
 
-        public static string FormatarJsonDeSaida<TEntity>(TEntity objeto)
+        public static string FormatarJsonDeSaida<TEntity>(this TEntity objeto)
         {
             var options = new JsonSerializerOptions() { WriteIndented = true, Encoder = JavaScriptEncoder.Create(UnicodeRanges.All) };
             var retorno = JsonSerializer.Serialize(objeto, options);

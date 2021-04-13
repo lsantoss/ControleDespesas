@@ -19,7 +19,7 @@ namespace ControleDespesas.Test.Query.Pagamento
             var valido = _query.ValidarQuery();
             var notificacoes = _query.Notificacoes.Count;
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_query));
+            TestContext.WriteLine(_query.FormatarJsonDeSaida());
 
             Assert.True(valido);
             Assert.AreEqual(0, notificacoes);
@@ -34,7 +34,7 @@ namespace ControleDespesas.Test.Query.Pagamento
             var valido = _query.ValidarQuery();
             var notificacoes = _query.Notificacoes.Count;
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_query));
+            TestContext.WriteLine(_query.FormatarJsonDeSaida());
 
             Assert.False(valido);
             Assert.AreNotEqual(0, notificacoes);
@@ -50,7 +50,7 @@ namespace ControleDespesas.Test.Query.Pagamento
             var valido = _query.ValidarQuery();
             var notificacoes = _query.Notificacoes.Count;
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_query));
+            TestContext.WriteLine(_query.FormatarJsonDeSaida());
 
             Assert.False(valido);
             Assert.AreNotEqual(0, notificacoes);
@@ -66,7 +66,7 @@ namespace ControleDespesas.Test.Query.Pagamento
             var valido = _query.ValidarQuery();
             var notificacoes = _query.Notificacoes.Count;
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(_query));
+            TestContext.WriteLine(_query.FormatarJsonDeSaida());
 
             Assert.False(valido);
             Assert.AreNotEqual(0, notificacoes);

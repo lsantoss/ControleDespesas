@@ -11,7 +11,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControleDespesas.Test", "Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControleDespesas.Domain", "ControleDespesas.Domain\ControleDespesas.Domain.csproj", "{EB5DABB5-1D60-413E-A822-9BACEFC46E00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControleDespesas.Infra", "ControleDespesas.Infra\ControleDespesas.Infra.csproj", "{45D08376-B4EC-43ED-8BF5-416522D825F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControleDespesas.Infra", "ControleDespesas.Infra\ControleDespesas.Infra.csproj", "{45D08376-B4EC-43ED-8BF5-416522D825F1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0 - Api", "0 - Api", "{C8D85CA2-5B66-4A37-A0CF-CEAF847AA86E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Domain", "1 - Domain", "{888D6C84-57B6-483C-9DAD-5DE8224154F8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Infra", "2 - Infra", "{6E2E7856-5B12-4814-9D2B-8919C40770DE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5 - Test", "5 - Test", "{213ACF66-A492-4391-9AAC-2EA2AF0B7757}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - IoC", "3 - IoC", "{A31BBD16-CAEA-4F55-A349-9493FCB6133B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Workers", "4 - Workers", "{C67061B4-728C-4CB0-8C07-98CB9A468005}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +54,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B213DE3A-5279-4312-A99F-C0D2ED887AE8} = {C8D85CA2-5B66-4A37-A0CF-CEAF847AA86E}
+		{3FD1C90A-6925-4A86-AC0F-1472E6B739C3} = {6E2E7856-5B12-4814-9D2B-8919C40770DE}
+		{6D1823F1-DF91-471B-96DD-4EC59D023436} = {213ACF66-A492-4391-9AAC-2EA2AF0B7757}
+		{EB5DABB5-1D60-413E-A822-9BACEFC46E00} = {888D6C84-57B6-483C-9DAD-5DE8224154F8}
+		{45D08376-B4EC-43ED-8BF5-416522D825F1} = {6E2E7856-5B12-4814-9D2B-8919C40770DE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA520C97-C2EF-42DF-8CD5-7EE3E1701E70}

@@ -1,3 +1,6 @@
-USE [master]
+USE [master] 
 
-CREATE DATABASE [ControleDespesas]
+IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = 'ControleDespesas')
+BEGIN
+CREATE DATABASE ControleDespesas
+END

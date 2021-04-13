@@ -42,7 +42,7 @@ namespace ControleDespesas.Test.Handlers
 
             var retornoDados = (UsuarioCommandOutput)retorno.Dados;
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retornoDados));
+            TestContext.WriteLine(retornoDados.FormatarJsonDeSaida());
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Usuário gravado com sucesso!", retorno.Mensagem);
@@ -65,7 +65,7 @@ namespace ControleDespesas.Test.Handlers
 
             var retornoDados = (UsuarioCommandOutput)retorno.Dados;
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retornoDados));
+            TestContext.WriteLine(retornoDados.FormatarJsonDeSaida());
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Usuário atualizado com sucesso!", retorno.Mensagem);
@@ -85,7 +85,7 @@ namespace ControleDespesas.Test.Handlers
 
             var retornoDados = (CommandOutput)retorno.Dados;
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retornoDados));
+            TestContext.WriteLine(retornoDados.FormatarJsonDeSaida());
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Usuário excluído com sucesso!", retorno.Mensagem);
@@ -108,7 +108,7 @@ namespace ControleDespesas.Test.Handlers
             var usuarioQR = _repository.Logar(usuarioCommand.Login, usuarioCommand.Senha);
             var token = _tokenJwtHelper.GenerarTokenJwt(usuarioQR);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retornoDados));
+            TestContext.WriteLine(retornoDados.FormatarJsonDeSaida());
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Usuário logado com sucesso!", retorno.Mensagem);

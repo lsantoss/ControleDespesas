@@ -55,7 +55,7 @@ namespace ControleDespesas.Test.Controllers
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<List<EmpresaQueryResult>>>>(responseJson);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
+            TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
 
             Assert.AreEqual(200, responseObj.StatusCode);
 
@@ -93,7 +93,7 @@ namespace ControleDespesas.Test.Controllers
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<EmpresaQueryResult>>>(responseJson);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
+            TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
 
             Assert.AreEqual(200, responseObj.StatusCode);
 
@@ -117,7 +117,7 @@ namespace ControleDespesas.Test.Controllers
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<EmpresaCommandOutput>>>(responseJson);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
+            TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
 
             Assert.AreEqual(201, responseObj.StatusCode);
 
@@ -145,7 +145,7 @@ namespace ControleDespesas.Test.Controllers
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<EmpresaCommandOutput>>>(responseJson);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
+            TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
 
             Assert.AreEqual(200, responseObj.StatusCode);
 
@@ -171,7 +171,7 @@ namespace ControleDespesas.Test.Controllers
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<CommandOutput>>>(responseJson);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
+            TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
 
             Assert.AreEqual(200, responseObj.StatusCode);
 

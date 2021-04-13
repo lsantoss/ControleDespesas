@@ -32,10 +32,9 @@ namespace ControleDespesas.Test.Controllers
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<string>>>(responseJson);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
+            TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
 
             Assert.AreEqual(200, responseObj.StatusCode);
-
             Assert.True(responseObj.Value.Sucesso);
             Assert.AreEqual("Sucesso", responseObj.Value.Mensagem);
             Assert.AreEqual("API Controle de Despesas - OK", responseObj.Value.Dados);

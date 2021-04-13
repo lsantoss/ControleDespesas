@@ -59,7 +59,7 @@ namespace ControleDespesas.Test.Controllers
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<List<UsuarioQueryResult>>>>(responseJson);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
+            TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
 
             Assert.AreEqual(200, responseObj.StatusCode);
 
@@ -100,7 +100,7 @@ namespace ControleDespesas.Test.Controllers
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<UsuarioQueryResult>>>(responseJson);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
+            TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
 
             Assert.AreEqual(200, responseObj.StatusCode);
 
@@ -125,7 +125,7 @@ namespace ControleDespesas.Test.Controllers
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<UsuarioCommandOutput>>>(responseJson);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
+            TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
 
             Assert.AreEqual(201, responseObj.StatusCode);
 
@@ -154,7 +154,7 @@ namespace ControleDespesas.Test.Controllers
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<UsuarioCommandOutput>>>(responseJson);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
+            TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
 
             Assert.AreEqual(200, responseObj.StatusCode);
 
@@ -181,7 +181,7 @@ namespace ControleDespesas.Test.Controllers
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<CommandOutput>>>(responseJson);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
+            TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
 
             Assert.AreEqual(200, responseObj.StatusCode);
 
@@ -207,7 +207,7 @@ namespace ControleDespesas.Test.Controllers
 
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<UsuarioQueryResult>>>(responseJson);
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(responseObj));
+            TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
 
             Assert.AreEqual(200, responseObj.StatusCode);
 

@@ -36,7 +36,7 @@ namespace ControleDespesas.Test.Handlers
 
             var retornoDados = (TipoPagamentoCommandOutput)retorno.Dados;
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retornoDados));
+            TestContext.WriteLine(retornoDados.FormatarJsonDeSaida());
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Tipo Pagamento gravado com sucesso!", retorno.Mensagem);
@@ -57,7 +57,7 @@ namespace ControleDespesas.Test.Handlers
 
             var retornoDados = (TipoPagamentoCommandOutput)retorno.Dados;
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retornoDados));
+            TestContext.WriteLine(retornoDados.FormatarJsonDeSaida());
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Tipo Pagamento atualizado com sucesso!", retorno.Mensagem);
@@ -76,7 +76,7 @@ namespace ControleDespesas.Test.Handlers
 
             var retornoDados = (CommandOutput)retorno.Dados;
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retornoDados));
+            TestContext.WriteLine(retornoDados.FormatarJsonDeSaida());
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Tipo Pagamento excluído com sucesso!", retorno.Mensagem);

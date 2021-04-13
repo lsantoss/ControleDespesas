@@ -41,7 +41,7 @@ namespace ControleDespesas.Test.Handlers
 
             var retornoDados = (PessoaCommandOutput)retorno.Dados;
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retornoDados));
+            TestContext.WriteLine(retornoDados.FormatarJsonDeSaida());
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Pessoa gravada com sucesso!", retorno.Mensagem);
@@ -66,7 +66,7 @@ namespace ControleDespesas.Test.Handlers
 
             var retornoDados = (PessoaCommandOutput)retorno.Dados;
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retornoDados));
+            TestContext.WriteLine(retornoDados.FormatarJsonDeSaida());
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Pessoa atualizada com sucesso!", retorno.Mensagem);
@@ -89,7 +89,7 @@ namespace ControleDespesas.Test.Handlers
 
             var retornoDados = (CommandOutput)retorno.Dados;
 
-            TestContext.WriteLine(FotmatadorJson.FormatarJsonDeSaida(retornoDados));
+            TestContext.WriteLine(retornoDados.FormatarJsonDeSaida());
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Pessoa excluída com sucesso!", retorno.Mensagem);

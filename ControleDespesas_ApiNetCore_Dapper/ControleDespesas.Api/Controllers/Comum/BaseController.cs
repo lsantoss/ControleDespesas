@@ -11,6 +11,7 @@ namespace ControleDespesas.Api.Controllers.Comum
 {
     [Authorize]
     [TypeFilter(typeof(ChaveApiActionFilter))]
+    [TypeFilter(typeof(RequestResponseApiAttribute))]
     [Consumes("application/json")]
     [Produces("application/json")]
     public class BaseController : ControllerBase

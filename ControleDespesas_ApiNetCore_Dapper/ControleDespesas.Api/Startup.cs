@@ -6,6 +6,7 @@ using ControleDespesas.Domain.Interfaces.Handlers;
 using ControleDespesas.Domain.Interfaces.Helpers;
 using ControleDespesas.Domain.Interfaces.Repositories;
 using ControleDespesas.Infra.Data.Repositories;
+using ControleDespesas.Infra.Interfaces.Repositories;
 using ControleDespesas.Infra.Settings;
 using ElmahCore.Mvc;
 using ElmahCore.Sql;
@@ -125,7 +126,8 @@ namespace ControleDespesas.Api
             services.AddTransient<IEmpresaRepository, EmpresaRepository>();
             services.AddTransient<ITipoPagamentoRepository, TipoPagamentoRepository>();
             services.AddTransient<IPagamentoRepository, PagamentoRepository>();
-            services.AddTransient<IUsuarioRepository, UsuarioRepository>();
+            services.AddTransient<IUsuarioRepository, UsuarioRepository>(); 
+            services.AddTransient<ILogRequestResponseRepository, LogRequestResponseRepository>(); 
             #endregion
 
             #region Handler

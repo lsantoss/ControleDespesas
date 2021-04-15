@@ -73,11 +73,12 @@ namespace ControleDespesas.Api.ActionFilters
         private string FormatRequest(HttpContext context)
         {
             HttpRequest request = context.Request;
-
-            return $"Http Request Information: " +
-                        $"Path: {request.Path} {Environment.NewLine}" +
-                        $"QueryString: {request.QueryString} {Environment.NewLine}" +
-                        $"Request Body: {ObterBodyRequest(request.Body)}";
+            StringBuilder informacoesRequest = new StringBuilder();
+            informacoesRequest.AppendLine($"Http Request Information: ");
+            informacoesRequest.AppendLine($"Path: {request.Path} {Environment.NewLine}");
+            informacoesRequest.AppendLine($"QueryString: {request.QueryString} {Environment.NewLine}");
+            informacoesRequest.AppendLine($"Request Body: {ObterBodyRequest(request.Body)}");
+            return informacoesRequest.ToString();
         }
 
         private static string ObterBodyRequest(Stream streamRequestBody)

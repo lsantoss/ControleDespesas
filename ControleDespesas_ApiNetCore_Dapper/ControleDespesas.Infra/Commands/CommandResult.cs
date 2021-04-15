@@ -1,6 +1,7 @@
 ﻿using LSCode.Facilitador.Api.Interfaces.Commands;
 using LSCode.Validador.ValidacoesNotificacoes;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ControleDespesas.Infra.Commands
 {
@@ -12,22 +13,13 @@ namespace ControleDespesas.Infra.Commands
         public object Dados { get; set; }
         public IReadOnlyCollection<Notificacao> Erros { get; set; }
 
-        public CommandResult(int statusCode, bool sucesso, string mensagem, object dados, List<Notificacao> erros)
+        public CommandResult(int statusCode, bool sucesso, string mensagem, object dados, IEnumerable<Notificacao> erros)
         {
             StatusCode = statusCode;
             Sucesso = sucesso;
             Mensagem = mensagem;
             Dados = dados;
-            Erros = erros;
-        }
-
-        public CommandResult(int statusCode, string mensagem, string propriedade, string notificacaoMensagem)
-        {
-            StatusCode = statusCode;
-            Sucesso = false;
-            Mensagem = mensagem;
-            Dados = null;
-            Erros = new List<Notificacao>() { new Notificacao(propriedade, notificacaoMensagem) };
+            Erros = erros.ToList();
         }
 
         public CommandResult(int statusCode, string mensagem, object dados)
@@ -39,13 +31,22 @@ namespace ControleDespesas.Infra.Commands
             Erros = null;
         }
 
-        public CommandResult(int statusCode, string mensagem, List<Notificacao> erros)
+        public CommandResult(int statusCode, string mensagem, string propriedade, string notificacaoMensagem)
         {
             StatusCode = statusCode;
             Sucesso = false;
             Mensagem = mensagem;
             Dados = null;
-            Erros = erros;
+            Erros = new List<Notificacao>() { new Notificacao(propriedade, notificacaoMensagem) };
+        }
+
+        public CommandResult(int statusCode, string mensagem, IEnumerable<Notificacao> erros)
+        {
+            StatusCode = statusCode;
+            Sucesso = false;
+            Mensagem = mensagem;
+            Dados = null;
+            Erros = erros.ToList();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using LSCode.Validador.ValidacoesNotificacoes;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ControleDespesas.Infra.Response
 {
@@ -12,12 +13,12 @@ namespace ControleDespesas.Infra.Response
 
         public ApiResponse() { }
 
-        public ApiResponse(bool sucesso, string mensagem, TDados dados, List<Notificacao> erros)
+        public ApiResponse(bool sucesso, string mensagem, TDados dados, IEnumerable<Notificacao> erros)
         {
             Sucesso = sucesso;
             Mensagem = mensagem;
             Dados = dados;
-            Erros = erros;
+            Erros = erros.ToList();
         }
 
         public ApiResponse(string mensagem, TDados dados)
@@ -28,12 +29,12 @@ namespace ControleDespesas.Infra.Response
             Erros = null;
         }
 
-        public ApiResponse(string mensagem, List<Notificacao> erros)
+        public ApiResponse(string mensagem, IEnumerable<Notificacao> erros)
         {
             Sucesso = false;
             Mensagem = mensagem;
             Dados = null;
-            Erros = erros;
+            Erros = erros.ToList();
         }
     }
 }

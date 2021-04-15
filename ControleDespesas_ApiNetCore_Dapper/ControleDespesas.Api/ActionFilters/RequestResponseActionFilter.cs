@@ -11,11 +11,11 @@ using System.Text;
 
 namespace ControleDespesas.Api.ActionFilters
 {
-    public class RequestResponseApiAttribute : ActionFilterAttribute
+    public class RequestResponseActionFilter : ActionFilterAttribute
     {
         private readonly ILogRequestResponseRepository _logRequestResponseRepository;
 
-        public RequestResponseApiAttribute(ILogRequestResponseRepository logRequestResponseRepository)
+        public RequestResponseActionFilter(ILogRequestResponseRepository logRequestResponseRepository)
         {
             _logRequestResponseRepository = logRequestResponseRepository;
         }

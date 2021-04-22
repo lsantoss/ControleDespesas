@@ -13,6 +13,8 @@ namespace ControleDespesas.Api.ActionFilters
 {
     public class RequestResponseActionFilter : ActionFilterAttribute
     {
+        private Stopwatch _stopwatch;
+        private DateTime _dataRequest;
         private readonly ILogRequestResponseRepository _logRequestResponseRepository;
 
         public RequestResponseActionFilter(ILogRequestResponseRepository logRequestResponseRepository)
@@ -20,59 +22,40 @@ namespace ControleDespesas.Api.ActionFilters
             _logRequestResponseRepository = logRequestResponseRepository;
         }
 
+        public override void OnActionExecuting(ActionExecutingContext context)
+        {
+            _dataRequest = DateTime.Now;
+            _stopwatch = Stopwatch.StartNew();
+        }
+
         public override void OnActionExecuted(ActionExecutedContext context)
         {
             if (context.Exception != null)
                 return;
 
-            if (context.HttpContext.Request.Path.HasValue && context.HttpContext.Request.Path.Value.Contains("hangfire"))
-                return;
+            var dataResponse = DateTime.Now;
+            var tempoDuracao = _stopwatch.ElapsedMilliseconds;
+            _stopwatch.Stop();
 
-            var request = FormatRequest(context.HttpContext);
-
-            object response;
-            try
-            {
-                response = ((ObjectResult)context.Result).Value;
-            }
-            catch
-            {
-                response = "No Content";
-            }
-
-            long elapsedTime = 0;
-
-            Stopwatch stopWatch = null;
-            DateTime dataEnvio = DateTime.Now;
-
-            if (context.HttpContext.Items.ContainsKey(GetType().FullName))
-            {
-                stopWatch = context.HttpContext.Items[GetType().FullName] as Stopwatch;
-                stopWatch.Stop();
-            }
-
-            if (context.HttpContext.Items.ContainsKey("DataEnvio"))
-                dataEnvio = (DateTime)context.HttpContext.Items["DataEnvio"];
-
-            if (stopWatch != null) elapsedTime = stopWatch.ElapsedMilliseconds;
+            var request = FormatRequest(context.HttpContext.Request);
+            var response = FormatarResponse(context);
 
             var logRequestResponse = new LogRequestResponse()
             {
                 MachineName = Environment.MachineName,
-                DataEnvio = dataEnvio,
-                DataRecebimento = DateTime.Now,
+                DataEnvio = _dataRequest,
+                DataRecebimento = dataResponse,
                 EndPoint = context.ActionDescriptor.DisplayName,
                 Request = request,
                 Response = JsonConvert.SerializeObject(response),
-                TempoDuracao = elapsedTime
+                TempoDuracao = tempoDuracao
             };
 
             _logRequestResponseRepository.Adicionar(logRequestResponse);
         }
 
-        private string FormatRequest(HttpContext context)
+        private string FormatRequest(HttpRequest request)
         {
-            HttpRequest request = context.Request;
             StringBuilder informacoesRequest = new StringBuilder();
             informacoesRequest.AppendLine($"Http Request Information: ");
             informacoesRequest.AppendLine($"Path: {request.Path} {Environment.NewLine}");
@@ -81,21 +64,33 @@ namespace ControleDespesas.Api.ActionFilters
             return informacoesRequest.ToString();
         }
 
-        private static string ObterBodyRequest(Stream streamRequestBody)
+        private object FormatarResponse(ActionExecutedContext context)
         {
-            var bodyStr = "";
+            try
+            {
+                return ((ObjectResult)context.Result).Value;
+            }
+            catch
+            {
+                return "No Content";
+            }
+        }
 
+        private string ObterBodyRequest(Stream streamRequestBody)
+        {
             using (var stream = new MemoryStream())
             {
                 if (streamRequestBody.CanSeek)
                 {
                     streamRequestBody.Seek(0, SeekOrigin.Begin);
                     streamRequestBody.CopyTo(stream);
-                    bodyStr = Encoding.UTF8.GetString(stream.ToArray());
+                    return Encoding.UTF8.GetString(stream.ToArray());
+                }
+                else
+                {
+                    return string.Empty;
                 }
             }
-
-            return bodyStr;
         }
     }
 }

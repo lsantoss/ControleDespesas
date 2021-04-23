@@ -5,12 +5,12 @@ BEGIN
 	CREATE TABLE [dbo].[LogRequestResponse](
 		[LogRequestResponseId] [bigint] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
 		[MachineName] [varchar](250) NOT NULL,
-		[DataEnvio] [datetime] NULL,
-		[DataRecebimento] [datetime] NULL,
+		[DataRequest] [datetime] NOT NULL,
+		[DataResponse] [datetime] NOT NULL,
 		[EndPoint] [varchar](250) NOT NULL,
 		[Request] [nvarchar](max) NOT NULL,
-		[Response] [nvarchar](max) NULL,
-		[TempoDuracao] [bigint] NULL,
+		[Response] [nvarchar](max) NOT NULL,
+		[TempoDuracao] [bigint] NOT NULL,
 	 CONSTRAINT [PK_LogRequestResponse] PRIMARY KEY CLUSTERED 
 	(
 		[LogRequestResponseId] ASC

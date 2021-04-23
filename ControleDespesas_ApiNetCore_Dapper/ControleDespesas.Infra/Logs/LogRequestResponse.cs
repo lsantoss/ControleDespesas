@@ -6,8 +6,8 @@ namespace ControleDespesas.Infra.Logs
     {
         public int LogRequestResponseId { get; set; }
         public string MachineName { get; set; }
-        public DateTime DataEnvio { get; set; }
-        public DateTime DataRecebimento { get; set; }
+        public DateTime DataRequest { get; set; }
+        public DateTime DataResponse { get; set; }
         public string EndPoint { get; set; }
         public string Request { get; set; }
         public string Response { get; set; }

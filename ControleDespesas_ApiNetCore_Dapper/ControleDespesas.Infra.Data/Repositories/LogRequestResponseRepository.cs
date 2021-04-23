@@ -21,8 +21,8 @@ namespace ControleDespesas.Infra.Data.Repositories
         public void Adicionar(LogRequestResponse entidade)
         {
             _parametros.Add("@MachineName", entidade.MachineName);
-            _parametros.Add("@DataEnvio", entidade.DataEnvio);
-            _parametros.Add("@DataRecebimento", entidade.DataRecebimento);
+            _parametros.Add("@DataRequest", entidade.DataRequest);
+            _parametros.Add("@DataResponse", entidade.DataResponse);
             _parametros.Add("@EndPoint", entidade.EndPoint);
             _parametros.Add("@Request", entidade.Request);
             _parametros.Add("@Response", entidade.Response);

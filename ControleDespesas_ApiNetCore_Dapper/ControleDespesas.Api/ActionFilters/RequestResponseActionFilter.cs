@@ -43,8 +43,8 @@ namespace ControleDespesas.Api.ActionFilters
             var logRequestResponse = new LogRequestResponse()
             {
                 MachineName = Environment.MachineName,
-                DataEnvio = _dataRequest,
-                DataRecebimento = dataResponse,
+                DataRequest = _dataRequest,
+                DataResponse = dataResponse,
                 EndPoint = context.ActionDescriptor.DisplayName,
                 Request = request,
                 Response = JsonConvert.SerializeObject(response),
@@ -56,12 +56,19 @@ namespace ControleDespesas.Api.ActionFilters
 
         private string FormatRequest(HttpRequest request)
         {
-            StringBuilder informacoesRequest = new StringBuilder();
-            informacoesRequest.AppendLine($"Http Request Information: ");
-            informacoesRequest.AppendLine($"Path: {request.Path} {Environment.NewLine}");
-            informacoesRequest.AppendLine($"QueryString: {request.QueryString} {Environment.NewLine}");
-            informacoesRequest.AppendLine($"Request Body: {ObterBodyRequest(request.Body)}");
-            return informacoesRequest.ToString();
+            StringBuilder requestLog = new StringBuilder();
+
+            if(request.Path.HasValue)
+                requestLog.AppendLine($"Path: {request.Path}");
+
+            if (request.QueryString.HasValue)
+                requestLog.AppendLine($"QueryString: {request.QueryString}");
+
+            var body = ObterBodyRequest(request.Body);
+            if (!string.IsNullOrWhiteSpace(body))
+                requestLog.AppendLine($"Body: {body}");
+
+            return requestLog.ToString();
         }
 
         private object FormatarResponse(ActionExecutedContext context)

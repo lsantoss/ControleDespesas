@@ -4,16 +4,16 @@
     {
         public static string Adicionar { get; } = @"INSERT INTO LogRequestResponse
                                                         (MachineName
-                                                        ,DataEnvio
-                                                        ,DataRecebimento
+                                                        ,DataRequest
+                                                        ,DataResponse
                                                         ,EndPoint
                                                         ,Request
                                                         ,Response
                                                         ,TempoDuracao)
                                                     VALUES
                                                         (@MachineName
-                                                        ,@DataEnvio
-                                                        ,@DataRecebimento
+                                                        ,@DataRequest
+                                                        ,@DataResponse
                                                         ,@EndPoint
                                                         ,@Request
                                                         ,@Response

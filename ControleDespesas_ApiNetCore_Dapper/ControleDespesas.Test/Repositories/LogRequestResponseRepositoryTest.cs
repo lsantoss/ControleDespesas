@@ -1,11 +1,9 @@
 ﻿using ControleDespesas.Infra.Data.Repositories;
 using ControleDespesas.Infra.Interfaces.Repositories;
-using ControleDespesas.Infra.Logs;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
 using NUnit.Framework;
-using System;
 
 namespace ControleDespesas.Test.Repositories
 {
@@ -29,11 +27,11 @@ namespace ControleDespesas.Test.Repositories
             var logRequestResponse = new SettingsTest().LogRequestResponse1;
             _repository.Salvar(logRequestResponse);
 
-            var retorno = _repository.Obter(logRequestResponse.LogRequestResponseId);
+            var retorno = _repository.Obter(logRequestResponse.Id);
 
             TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
-            Assert.AreEqual(logRequestResponse.LogRequestResponseId, retorno.LogRequestResponseId);
+            Assert.AreEqual(logRequestResponse.Id, retorno.Id);
             Assert.AreEqual(logRequestResponse.MachineName, retorno.MachineName);
             Assert.AreEqual(logRequestResponse.DataRequest.ToString("dd/MM/yyyyy hh:mm:ss"), retorno.DataRequest.ToString("dd/MM/yyyyy hh:mm:ss"));
             Assert.AreEqual(logRequestResponse.DataResponse.ToString("dd/MM/yyyyy hh:mm:ss"), retorno.DataResponse.ToString("dd/MM/yyyyy hh:mm:ss"));
@@ -49,11 +47,11 @@ namespace ControleDespesas.Test.Repositories
             var logRequestResponse = new SettingsTest().LogRequestResponse1;
             _repository.Salvar(logRequestResponse);
 
-            var retorno = _repository.Obter(logRequestResponse.LogRequestResponseId);
+            var retorno = _repository.Obter(logRequestResponse.Id);
 
             TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
-            Assert.AreEqual(logRequestResponse.LogRequestResponseId, retorno.LogRequestResponseId);
+            Assert.AreEqual(logRequestResponse.Id, retorno.Id);
             Assert.AreEqual(logRequestResponse.MachineName, retorno.MachineName);
             Assert.AreEqual(logRequestResponse.DataRequest.ToString("dd/MM/yyyyy hh:mm:ss"), retorno.DataRequest.ToString("dd/MM/yyyyy hh:mm:ss"));
             Assert.AreEqual(logRequestResponse.DataResponse.ToString("dd/MM/yyyyy hh:mm:ss"), retorno.DataResponse.ToString("dd/MM/yyyyy hh:mm:ss"));
@@ -76,7 +74,7 @@ namespace ControleDespesas.Test.Repositories
 
             TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
-            Assert.AreEqual(logRequestResponse1.LogRequestResponseId, retorno[0].LogRequestResponseId);
+            Assert.AreEqual(logRequestResponse1.Id, retorno[0].Id);
             Assert.AreEqual(logRequestResponse1.MachineName, retorno[0].MachineName);
             Assert.AreEqual(logRequestResponse1.DataRequest.ToString("dd/MM/yyyyy hh:mm:ss"), retorno[0].DataRequest.ToString("dd/MM/yyyyy hh:mm:ss"));
             Assert.AreEqual(logRequestResponse1.DataResponse.ToString("dd/MM/yyyyy hh:mm:ss"), retorno[0].DataResponse.ToString("dd/MM/yyyyy hh:mm:ss"));
@@ -85,7 +83,7 @@ namespace ControleDespesas.Test.Repositories
             Assert.AreEqual(logRequestResponse1.Response, retorno[0].Response);
             Assert.AreEqual(logRequestResponse1.TempoDuracao, retorno[0].TempoDuracao);
 
-            Assert.AreEqual(logRequestResponse2.LogRequestResponseId, retorno[1].LogRequestResponseId);
+            Assert.AreEqual(logRequestResponse2.Id, retorno[1].Id);
             Assert.AreEqual(logRequestResponse2.MachineName, retorno[1].MachineName);
             Assert.AreEqual(logRequestResponse2.DataRequest.ToString("dd/MM/yyyyy hh:mm:ss"), retorno[1].DataRequest.ToString("dd/MM/yyyyy hh:mm:ss"));
             Assert.AreEqual(logRequestResponse2.DataResponse.ToString("dd/MM/yyyyy hh:mm:ss"), retorno[1].DataResponse.ToString("dd/MM/yyyyy hh:mm:ss"));

@@ -20,7 +20,7 @@
                                                     ,@TempoDuracao)";
 
         public static string Obter { get; } = @"SELECT 
-                                                    LogRequestResponseId AS LogRequestResponseId, 
+                                                    Id AS Id, 
                                                     MachineName AS MachineName,
                                                     DataRequest AS DataRequest,
                                                     DataResponse AS DataResponse,
@@ -29,10 +29,10 @@
                                                     Response AS Response,
                                                     TempoDuracao AS TempoDuracao
                                                 FROM LogRequestResponse 
-                                                WHERE LogRequestResponseId = @LogRequestResponseId";
+                                                WHERE Id = @Id";
 
         public static string Listar { get; } = @"SELECT 
-                                                    LogRequestResponseId AS LogRequestResponseId, 
+                                                    Id AS Id, 
                                                     MachineName AS MachineName,
                                                     DataRequest AS DataRequest,
                                                     DataResponse AS DataResponse,
@@ -41,6 +41,6 @@
                                                     Response AS Response,
                                                     TempoDuracao AS TempoDuracao
                                                 FROM LogRequestResponse  
-                                                ORDER BY LogRequestResponseId ASC";
+                                                ORDER BY Id ASC";
     }
 }

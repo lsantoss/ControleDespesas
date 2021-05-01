@@ -36,7 +36,7 @@ namespace ControleDespesas.Infra.Data.Repositories
 
         public LogRequestResponse Obter(int id)
         {
-            _parametros.Add("LogRequestResponseId", id, DbType.Int32);
+            _parametros.Add("Id", id, DbType.Int32);
 
             return _dataContext.SQLServerConexao.Query<LogRequestResponse>(LogRequestResponseQueries.Obter, _parametros).FirstOrDefault();
         }

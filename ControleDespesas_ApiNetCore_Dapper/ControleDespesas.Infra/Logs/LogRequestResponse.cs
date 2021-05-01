@@ -4,7 +4,7 @@ namespace ControleDespesas.Infra.Logs
 {
     public class LogRequestResponse
     {
-        public int LogRequestResponseId { get; set; }
+        public int Id { get; set; }
         public string MachineName { get; set; }
         public DateTime DataRequest { get; set; }
         public DateTime DataResponse { get; set; }

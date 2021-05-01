@@ -482,7 +482,7 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
 
             LogRequestResponse1 = new LogRequestResponse()
             {
-                LogRequestResponseId = _configuration.GetValue<int>("SettingsTest:LogRequestResponse1:LogRequestResponseId"),
+                Id = _configuration.GetValue<int>("SettingsTest:LogRequestResponse1:Id"),
                 MachineName = _configuration.GetValue<string>("SettingsTest:LogRequestResponse1:MachineName"),
                 DataRequest = _configuration.GetValue<DateTime>("SettingsTest:LogRequestResponse1:DataRequest"),
                 DataResponse = _configuration.GetValue<DateTime>("SettingsTest:LogRequestResponse1:DataResponse"),
@@ -494,7 +494,7 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
 
             LogRequestResponse2 = new LogRequestResponse()
             {
-                LogRequestResponseId = _configuration.GetValue<int>("SettingsTest:LogRequestResponse2:LogRequestResponseId"),
+                Id = _configuration.GetValue<int>("SettingsTest:LogRequestResponse2:Id"),
                 MachineName = _configuration.GetValue<string>("SettingsTest:LogRequestResponse2:MachineName"),
                 DataRequest = _configuration.GetValue<DateTime>("SettingsTest:LogRequestResponse2:DataRequest"),
                 DataResponse = _configuration.GetValue<DateTime>("SettingsTest:LogRequestResponse2:DataResponse"),

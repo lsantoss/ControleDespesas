@@ -59,7 +59,7 @@ namespace ControleDespesas.Api.Controllers.Comum
         protected IActionResult ResultInputNull()
         {
             var mensagem = "Parâmentros inválidos";
-            var notificacao = new Notificacao("Parâmetros de entrada", "ChaveParâmetros de entrada estão nulos");
+            var notificacao = new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos");
             var erros = new List<Notificacao>() { notificacao };
             var response = new ApiResponse<object>(mensagem, erros);
             return StatusCode(StatusCodes.Status400BadRequest, response);
@@ -71,6 +71,15 @@ namespace ControleDespesas.Api.Controllers.Comum
             var mensagem = "Parâmentros inválidos";
             var response = new ApiResponse<object>(mensagem, notificacoes);
             return StatusCode(StatusCodes.Status422UnprocessableEntity, response);
+        }
+
+        [NonAction]
+        protected IActionResult ResultHealthCheck()
+        {
+            var mensagem = "Sucesso";
+            var dados = "API Controle de Despesas - OK";
+            var response = new ApiResponse<string>(mensagem, dados);
+            return StatusCode(StatusCodes.Status200OK, response);
         }
     }
 }

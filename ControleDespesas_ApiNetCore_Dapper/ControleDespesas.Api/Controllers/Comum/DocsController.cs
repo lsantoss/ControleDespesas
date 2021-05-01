@@ -1,14 +1,15 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using ControleDespesas.Api.ActionFilters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControleDespesas.Api.Controllers.Comum
 {
-    [RequireHttps]
-    [Route("docs")]
     [ApiExplorerSettings(IgnoreApi = true)]
+    [TypeFilter(typeof(RequestResponseActionFilter))]
+    [Route("docs")]
     public class DocsController : Controller
     {
-        [Route(""), HttpGet]
+        [HttpGet]
         [AllowAnonymous]
         public IActionResult Index()
         {

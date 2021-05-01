@@ -21,10 +21,7 @@ namespace ControleDespesas.Api.Controllers.Comum
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status500InternalServerError)]
         public IActionResult HealthCheck()
         {
-            var mensagem = "Sucesso";
-            var dados = "API Controle de Despesas - OK";
-            var response = new ApiResponse<string>(mensagem, dados);
-            return StatusCode(StatusCodes.Status200OK, response);
+            return ResultHealthCheck();
         }        
     }
 }

@@ -5,7 +5,7 @@ using ControleDespesas.Domain.Query.Empresa.Results;
 using ControleDespesas.Domain.Query.Pagamento.Results;
 using ControleDespesas.Domain.Query.Pessoa.Results;
 using ControleDespesas.Domain.Query.TipoPagamento.Results;
-using ControleDespesas.Infra.Data.Queries;
+using ControleDespesas.Infra.Data.Repositories.Queries;
 using ControleDespesas.Infra.Settings;
 using Dapper;
 using LSCode.ConexoesBD.DataContexts;

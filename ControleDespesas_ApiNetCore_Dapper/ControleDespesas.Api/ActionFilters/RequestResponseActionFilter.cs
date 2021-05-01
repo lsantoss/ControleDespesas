@@ -51,7 +51,7 @@ namespace ControleDespesas.Api.ActionFilters
                 TempoDuracao = tempoDuracao
             };
 
-            _logRequestResponseRepository.Adicionar(logRequestResponse);
+            _logRequestResponseRepository.Salvar(logRequestResponse);
         }
 
         private string FormatRequest(HttpRequest request)

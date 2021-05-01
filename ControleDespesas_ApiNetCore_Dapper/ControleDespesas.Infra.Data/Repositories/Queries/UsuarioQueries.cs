@@ -1,4 +1,4 @@
-﻿namespace ControleDespesas.Infra.Data.Queries
+﻿namespace ControleDespesas.Infra.Data.Repositories.Queries
 {
     public static class UsuarioQueries
     {
@@ -21,7 +21,7 @@
 
         public static string Deletar { get; } = @"DELETE FROM Usuario WHERE Id = @Id";
 
-        public static string Obter { get; } =    @"SELECT 
+        public static string Obter { get; } = @"SELECT 
                                                         Id AS Id,  
                                                         Login AS Login,  
                                                         Senha AS Senha,  

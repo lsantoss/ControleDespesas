@@ -106,23 +106,46 @@ namespace ControleDespesas.Test.AppConfigurations.QueriesSQL
                                                                 REFERENCES [dbo].[TipoPagamento] ([Id])
 
                                                                 ALTER TABLE [dbo].[Pagamento] CHECK CONSTRAINT [FK_Pagamento_TipoPagamento]
-                                                                END";        
+                                                                END";
 
-        private static string DropTableUsuario { get; } = @"USE [ControleDespesasTest]
-                                                            IF OBJECT_ID('dbo.Usuario', 'U') IS NOT NULL 
-                                                            DROP TABLE dbo.Usuario";
+        private static string CreateTableLogRequestResponse { get; } = @"USE [ControleDespesasTest] 
+                                                                         IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE' AND TABLE_NAME='LogRequestResponse') 
+                                                                         BEGIN
+	                                                                        CREATE TABLE [dbo].[LogRequestResponse](
+		                                                                        [LogRequestResponseId] [bigint] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
+		                                                                        [MachineName] [varchar](250) NOT NULL,
+		                                                                        [DataRequest] [datetime] NOT NULL,
+		                                                                        [DataResponse] [datetime] NOT NULL,
+		                                                                        [EndPoint] [varchar](250) NOT NULL,
+		                                                                        [Request] [nvarchar](max) NOT NULL,
+		                                                                        [Response] [nvarchar](max) NOT NULL,
+		                                                                        [TempoDuracao] [bigint] NOT NULL,
+	                                                                            CONSTRAINT [PK_LogRequestResponse] PRIMARY KEY CLUSTERED 
+	                                                                        (
+		                                                                        [LogRequestResponseId] ASC
+	                                                                        )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	                                                                        ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+                                                                         END";
+
+        private static string DropTableLogRequestResponse { get; } = @"USE [ControleDespesasTest]
+                                                                       IF OBJECT_ID('dbo.LogRequestResponse', 'U') IS NOT NULL 
+                                                                       DROP TABLE dbo.LogRequestResponse";
 
         private static string DropTablePagamento { get; } = @"USE [ControleDespesasTest]
                                                               IF OBJECT_ID('dbo.Pagamento', 'U') IS NOT NULL 
                                                               DROP TABLE dbo.Pagamento";
 
-        private static string DropTableTipoPagamento { get; } = @"USE [ControleDespesasTest]
-                                                                  IF OBJECT_ID('dbo.TipoPagamento', 'U') IS NOT NULL 
-                                                                  DROP TABLE dbo.TipoPagamento";
-
         private static string DropTablePessoa { get; } = @"USE [ControleDespesasTest]
                                                            IF OBJECT_ID('dbo.Pessoa', 'U') IS NOT NULL 
                                                            DROP TABLE dbo.Pessoa";
+
+        private static string DropTableUsuario { get; } = @"USE [ControleDespesasTest]
+                                                            IF OBJECT_ID('dbo.Usuario', 'U') IS NOT NULL 
+                                                            DROP TABLE dbo.Usuario";
+
+        private static string DropTableTipoPagamento { get; } = @"USE [ControleDespesasTest]
+                                                                  IF OBJECT_ID('dbo.TipoPagamento', 'U') IS NOT NULL 
+                                                                  DROP TABLE dbo.TipoPagamento";
 
         private static string DropTableEmpresa { get; } = @"USE [ControleDespesasTest]
                                                             IF OBJECT_ID('dbo.Empresa', 'U') IS NOT NULL 
@@ -143,11 +166,13 @@ namespace ControleDespesas.Test.AppConfigurations.QueriesSQL
             CreateTableEmpresa,
             CreateTableTipoPagamento,
             CreateTablePessoa,
-            CreateTablePagamento
+            CreateTablePagamento,
+            CreateTableLogRequestResponse
         };
 
         public static List<string> QueriesDrop { get; } = new List<string>()
         {
+            DropTableLogRequestResponse,
             DropTablePagamento,
             DropTablePessoa,
             DropTableUsuario,

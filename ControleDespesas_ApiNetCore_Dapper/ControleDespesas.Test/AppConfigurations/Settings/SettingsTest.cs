@@ -8,7 +8,7 @@ using ControleDespesas.Domain.Enums;
 using ControleDespesas.Domain.Query.Pagamento.Input;
 using ControleDespesas.Domain.Query.Pessoa.Input;
 using ControleDespesas.Domain.Query.Usuario.Results;
-using LSCode.ConexoesBD.Enums;
+using ControleDespesas.Infra.Logs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -17,31 +17,40 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
 {
     public class SettingsTest
     {
-        #region[IConfiguration - appsettings.json]
-        private IConfiguration _configuration { get; }
-        #endregion
+        #region [IConfiguration - appsettings.json]
 
-        #region[Dados de teste para API]
+        private IConfiguration _configuration { get; }
+
+        #endregion [IConfiguration - appsettings.json]
+
+        #region [Dados de teste para API]
+
         public string ControleDespesasAPINetCore { get; }
         public string ChaveAPI { get; }
         public string ChaveJWT { get; }
-        #endregion
 
-        #region[Dados de teste para Banco de Dados]
+        #endregion [Dados de teste para API]
+
+        #region [Dados de teste para Banco de Dados]
+
         public string ConnectionSQLServerReal { get; }
         public string ConnectionSQLServerTest { get; }
-        #endregion
+
+        #endregion [Dados de teste para Banco de Dados]
 
         #region [Dados de teste para Empresa]
+
         public AdicionarEmpresaCommand EmpresaAdicionarCommand { get; }
         public AtualizarEmpresaCommand EmpresaAtualizarCommand { get; }
         public Empresa Empresa1 { get; }
         public Empresa Empresa2 { get; }
         public Empresa Empresa3 { get; }
         public Empresa Empresa1Editada { get; }
-        #endregion
 
-        #region[Dados de teste para Pessoa]
+        #endregion [Dados de teste para Empresa]
+
+        #region [Dados de teste para Pessoa]
+
         public AdicionarPessoaCommand PessoaAdicionarCommand { get; }
         public AtualizarPessoaCommand PessoaAtualizarCommand { get; }
         public ObterPessoasQuery PessoaObterQuery { get; }
@@ -49,18 +58,22 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
         public Pessoa Pessoa2 { get; }
         public Pessoa Pessoa3 { get; }
         public Pessoa Pessoa1Editada { get; }
-        #endregion
 
-        #region[Dados de teste para TipoPagamento]
+        #endregion [Dados de teste para Pessoa]
+
+        #region [Dados de teste para TipoPagamento]
+
         public AdicionarTipoPagamentoCommand TipoPagamentoAdicionarCommand { get; }
         public AtualizarTipoPagamentoCommand TipoPagamentoAtualizarCommand { get; }
         public TipoPagamento TipoPagamento1 { get; }
         public TipoPagamento TipoPagamento2 { get; }
         public TipoPagamento TipoPagamento3 { get; }
         public TipoPagamento TipoPagamento1Editado { get; }
-        #endregion
 
-        #region[Dados de teste para Pagamento]
+        #endregion [Dados de teste para TipoPagamento]
+
+        #region [Dados de teste para Pagamento]
+
         public AdicionarPagamentoCommand PagamentoAdicionarCommand { get; }
         public AtualizarPagamentoCommand PagamentoAtualizarCommand { get; }
         public PagamentoQuery PagamentoQuery { get; }
@@ -71,9 +84,11 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
         public Pagamento Pagamento2 { get; }
         public Pagamento Pagamento3 { get; }
         public Pagamento Pagamento1Editado { get; }
-        #endregion
 
-        #region[Dados de teste para Usuario]
+        #endregion [Dados de teste para Pagamento]
+
+        #region [Dados de teste para Usuario]
+
         public AdicionarUsuarioCommand UsuarioAdicionarCommand { get; }
         public AtualizarUsuarioCommand UsuarioAtualizarCommand { get; }
         public LoginUsuarioCommand UsuarioLoginCommand { get; }
@@ -82,26 +97,41 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
         public Usuario Usuario2 { get; }
         public Usuario Usuario3 { get; }
         public Usuario Usuario1Editado { get; }
-        #endregion
+
+        #endregion [Dados de teste para Usuario]
+
+        #region [Dados de teste para LogRequestResponse]
+
+        public LogRequestResponse LogRequestResponse1 { get; }
+        public LogRequestResponse LogRequestResponse2 { get; }
+
+        #endregion [Dados de teste para LogRequestResponse]
 
         public SettingsTest()
         {
-            #region[Setando IConfiguration - appsettings.json]
-            _configuration = new ServiceCollection().AddTransient<IConfiguration>(sp => new ConfigurationBuilder().AddJsonFile("appsettings.json").Build()).BuildServiceProvider().GetService<IConfiguration>();
-            #endregion
+            #region [Setando IConfiguration - appsettings.json]
 
-            #region[Dados de teste para API]
+            _configuration = new ServiceCollection().AddTransient<IConfiguration>(sp => new ConfigurationBuilder().AddJsonFile("appsettings.json").Build()).BuildServiceProvider().GetService<IConfiguration>();
+
+            #endregion [Setando IConfiguration - appsettings.json]
+
+            #region [Dados de teste para API]
+
             ControleDespesasAPINetCore = _configuration.GetValue<string>("SettingsTest:ControleDespesasAPINetCore");
             ChaveAPI = _configuration.GetValue<string>("SettingsTest:ChaveAPI");
             ChaveJWT = _configuration.GetValue<string>("SettingsTest:ChaveJWT");
-            #endregion
 
-            #region[Setando dados teste para Banco de Dados]
+            #endregion [Dados de teste para API]
+
+            #region [Setando dados teste para Banco de Dados]
+
             ConnectionSQLServerReal = _configuration.GetValue<string>("SettingsTest:ConnectionSQLServerReal");
             ConnectionSQLServerTest = _configuration.GetValue<string>("SettingsTest:ConnectionSQLServerTest");
-            #endregion
 
-            #region[Setando dados de teste para Empresa]
+            #endregion [Setando dados teste para Banco de Dados]
+
+            #region [Setando dados de teste para Empresa]
+
             EmpresaAdicionarCommand = new AdicionarEmpresaCommand()
             {
                 Nome = _configuration.GetValue<string>("SettingsTest:EmpresaAdicionarCommand:Nome"),
@@ -138,9 +168,11 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                 _configuration.GetValue<string>("SettingsTest:Empresa1Editada:Nome"),
                 _configuration.GetValue<string>("SettingsTest:Empresa1Editada:Logo")
             );
-            #endregion
 
-            #region[Setando dados de teste para Pessoa]
+            #endregion [Setando dados de teste para Empresa]
+
+            #region [Setando dados de teste para Pessoa]
+
             PessoaAdicionarCommand = new AdicionarPessoaCommand()
             {
                 IdUsuario = _configuration.GetValue<int>("SettingsTest:PessoaAdicionarCommand:IdUsuario"),
@@ -188,9 +220,11 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                 _configuration.GetValue<string>("SettingsTest:Pessoa1Editada:Nome"),
                 _configuration.GetValue<string>("SettingsTest:Pessoa1Editada:ImagemPerfil")
             );
-            #endregion
 
-            #region[Setando dados de teste para TipoPagamento]
+            #endregion [Setando dados de teste para Pessoa]
+
+            #region [Setando dados de teste para TipoPagamento]
+
             TipoPagamentoAdicionarCommand = new AdicionarTipoPagamentoCommand()
             {
                 Descricao = _configuration.GetValue<string>("SettingsTest:TipoPagamentoAdicionarCommand:Descricao")
@@ -221,9 +255,11 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                 _configuration.GetValue<int>("SettingsTest:TipoPagamento1Editado:Id"),
                 _configuration.GetValue<string>("SettingsTest:TipoPagamento1Editado:Descricao")
             );
-            #endregion
 
-            #region[Setando dados de teste para Pagamento]
+            #endregion [Setando dados de teste para TipoPagamento]
+
+            #region [Setando dados de teste para Pagamento]
+
             PagamentoAdicionarCommand = new AdicionarPagamentoCommand()
             {
                 IdTipoPagamento = _configuration.GetValue<int>("SettingsTest:PagamentoAdicionarCommand:IdTipoPagamento"),
@@ -375,9 +411,11 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                 _configuration.GetValue<string>("SettingsTest:Pagamento1Editado:ArquivoPagamento"),
                 _configuration.GetValue<string>("SettingsTest:Pagamento1Editado:ArquivoComprovante")
             );
-            #endregion
 
-            #region[Setando dados de teste para Usuario]
+            #endregion [Setando dados de teste para Pagamento]
+
+            #region[ Setando dados de teste para Usuario]
+
             UsuarioAdicionarCommand = new AdicionarUsuarioCommand()
             {
                 Login = _configuration.GetValue<string>("SettingsTest:UsuarioAdicionarCommand:Login"),
@@ -437,7 +475,36 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                 _configuration.GetValue<EPrivilegioUsuario>("SettingsTest:Usuario1Editado:Privilegio")
 
             );
-            #endregion
-        }        
+
+            #endregion Setando dados de teste para Usuario]
+
+            #region [Setando dados de teste para LogRequestResponse]
+
+            LogRequestResponse1 = new LogRequestResponse()
+            {
+                LogRequestResponseId = _configuration.GetValue<int>("SettingsTest:LogRequestResponse1:LogRequestResponseId"),
+                MachineName = _configuration.GetValue<string>("SettingsTest:LogRequestResponse1:MachineName"),
+                DataRequest = _configuration.GetValue<DateTime>("SettingsTest:LogRequestResponse1:DataRequest"),
+                DataResponse = _configuration.GetValue<DateTime>("SettingsTest:LogRequestResponse1:DataResponse"),
+                EndPoint = _configuration.GetValue<string>("SettingsTest:LogRequestResponse1:EndPoint"),
+                Request = _configuration.GetValue<string>("SettingsTest:LogRequestResponse1:Request"),
+                Response = _configuration.GetValue<string>("SettingsTest:LogRequestResponse1:Response"),
+                TempoDuracao = _configuration.GetValue<long?>("SettingsTest:LogRequestResponse1:TempoDuracao")
+            };
+
+            LogRequestResponse2 = new LogRequestResponse()
+            {
+                LogRequestResponseId = _configuration.GetValue<int>("SettingsTest:LogRequestResponse2:LogRequestResponseId"),
+                MachineName = _configuration.GetValue<string>("SettingsTest:LogRequestResponse2:MachineName"),
+                DataRequest = _configuration.GetValue<DateTime>("SettingsTest:LogRequestResponse2:DataRequest"),
+                DataResponse = _configuration.GetValue<DateTime>("SettingsTest:LogRequestResponse2:DataResponse"),
+                EndPoint = _configuration.GetValue<string>("SettingsTest:LogRequestResponse2:EndPoint"),
+                Request = _configuration.GetValue<string>("SettingsTest:LogRequestResponse2:Request"),
+                Response = _configuration.GetValue<string>("SettingsTest:LogRequestResponse2:Response"),
+                TempoDuracao = _configuration.GetValue<long?>("SettingsTest:LogRequestResponse2:TempoDuracao")
+            };
+
+            #endregion [Setando dados de teste para LogRequestResponse]
+        }
     }
 }

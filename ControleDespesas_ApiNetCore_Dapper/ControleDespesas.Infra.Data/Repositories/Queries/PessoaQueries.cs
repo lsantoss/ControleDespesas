@@ -1,4 +1,4 @@
-﻿namespace ControleDespesas.Infra.Data.Queries
+﻿namespace ControleDespesas.Infra.Data.Repositories.Queries
 {
     public static class PessoaQueries
     {

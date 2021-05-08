@@ -11,7 +11,6 @@ using ControleDespesas.Infra.Settings;
 using ElmahCore.Mvc;
 using ElmahCore.Sql;
 using LSCode.ConexoesBD.DataContexts;
-using LSCode.Validador.ValidacoesNotificacoes;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -20,9 +19,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
-using Swashbuckle.AspNetCore.Swagger;
-using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace ControleDespesas.Api

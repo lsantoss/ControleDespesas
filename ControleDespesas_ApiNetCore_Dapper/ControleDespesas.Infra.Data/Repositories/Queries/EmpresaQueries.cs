@@ -12,18 +12,18 @@
                                                     Id AS Id, 
                                                     Nome AS Nome,
                                                     Logo AS Logo 
-                                                FROM Empresa 
+                                                FROM Empresa WITH(NOLOCK)
                                                 WHERE Id = @Id";
 
         public static string Listar { get; } = @"SELECT 
                                                     Id AS Id, 
                                                     Nome AS Nome,
                                                     Logo AS Logo 
-                                                FROM Empresa 
+                                                FROM Empresa WITH(NOLOCK)
                                                 ORDER BY Id ASC";
 
-        public static string CheckId { get; } = @"SELECT Id FROM Empresa WHERE Id = @Id";
+        public static string CheckId { get; } = @"SELECT Id FROM Empresa WITH(NOLOCK) WHERE Id = @Id";
 
-        public static string LocalizarMaxId { get; } = @"SELECT MAX(Id) FROM Empresa";
+        public static string LocalizarMaxId { get; } = @"SELECT MAX(Id) FROM Empresa WITH(NOLOCK)";
     }
 }

@@ -28,7 +28,7 @@
                                                     Request AS Request,
                                                     Response AS Response,
                                                     TempoDuracao AS TempoDuracao
-                                                FROM LogRequestResponse 
+                                                FROM LogRequestResponse WITH(NOLOCK)
                                                 WHERE Id = @Id";
 
         public static string Listar { get; } = @"SELECT 
@@ -40,7 +40,7 @@
                                                     Request AS Request,
                                                     Response AS Response,
                                                     TempoDuracao AS TempoDuracao
-                                                FROM LogRequestResponse  
+                                                FROM LogRequestResponse WITH(NOLOCK) 
                                                 ORDER BY Id ASC";
     }
 }

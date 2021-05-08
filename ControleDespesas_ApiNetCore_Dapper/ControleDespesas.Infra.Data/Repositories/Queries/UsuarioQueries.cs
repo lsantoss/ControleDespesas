@@ -26,15 +26,15 @@
                                                         Login AS Login,  
                                                         Senha AS Senha,  
                                                         Privilegio AS Privilegio  
-                                                        FROM Usuario  
-                                                    WHERE Id = @Id";
+                                                FROM Usuario WITH(NOLOCK) 
+                                                WHERE Id = @Id";
 
         public static string Listar { get; } = @"SELECT 
                                                     Id AS Id,  
                                                     Login AS Login,  
                                                     Senha AS Senha,  
                                                     Privilegio AS Privilegio  
-                                                FROM Usuario 
+                                                FROM Usuario WITH(NOLOCK)
                                                 ORDER BY Id ASC";
 
         public static string Logar { get; } = @"SELECT 
@@ -42,13 +42,13 @@
                                                     Login AS Login,  
                                                     Senha AS Senha,  
                                                     Privilegio AS Privilegio  
-                                                FROM Usuario 
+                                                FROM Usuario WITH(NOLOCK)
                                                 WHERE Login = @Login and Senha = @Senha";
 
-        public static string CheckLogin { get; } = @"SELECT Login FROM Usuario WHERE Login = @Login";
+        public static string CheckLogin { get; } = @"SELECT Login FROM Usuario WITH(NOLOCK) WHERE Login = @Login";
 
-        public static string CheckId { get; } = @"SELECT Id FROM Usuario WHERE Id = @Id";
+        public static string CheckId { get; } = @"SELECT Id FROM Usuario WITH(NOLOCK) WHERE Id = @Id";
 
-        public static string LocalizarMaxId { get; } = @"SELECT MAX(Id) FROM Usuario";
+        public static string LocalizarMaxId { get; } = @"SELECT MAX(Id) FROM Usuario WITH(NOLOCK)";
     }
 }

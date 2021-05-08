@@ -127,6 +127,44 @@ namespace ControleDespesas.Test.AppConfigurations.QueriesSQL
 	                                                                        ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
                                                                          END";
 
+        private static string CreateTableELMAH_Error { get; } = @"USE [ControleDespesasTest] 
+                                                                IF NOT EXISTS (SELECT 1 FROM sys.tables WHERE name='ELMAH_Error')
+                                                                BEGIN
+	                                                                CREATE TABLE [dbo].[ELMAH_Error]
+	                                                                (
+		                                                                [ErrorId]     UNIQUEIDENTIFIER NOT NULL,
+		                                                                [Application] NVARCHAR(60)  COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+		                                                                [Host]        NVARCHAR(50)  COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+		                                                                [Type]        NVARCHAR(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+		                                                                [Source]      NVARCHAR(60)  COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+		                                                                [Message]     NVARCHAR(500) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+		                                                                [User]        NVARCHAR(50)  COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+		                                                                [StatusCode]  INT NOT NULL,
+		                                                                [TimeUtc]     DATETIME NOT NULL,
+		                                                                [Sequence]    INT IDENTITY (1, 1) NOT NULL,
+		                                                                [AllXml]      NVARCHAR(MAX) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL 
+	                                                                ) 
+	                                                                ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+	   
+	                                                                ALTER TABLE [dbo].[ELMAH_Error] WITH NOCHECK ADD 
+		                                                                CONSTRAINT [PK_ELMAH_Error] PRIMARY KEY NONCLUSTERED ([ErrorId]) ON [PRIMARY] 
+	
+	                                                                ALTER TABLE [dbo].[ELMAH_Error] ADD 
+		                                                                CONSTRAINT [DF_ELMAH_Error_ErrorId] DEFAULT (NEWID()) FOR [ErrorId]
+	
+	                                                                CREATE NONCLUSTERED INDEX [IX_ELMAH_Error_App_Time_Seq] ON [dbo].[ELMAH_Error] 
+	                                                                (
+		                                                                [Application]   ASC,
+		                                                                [TimeUtc]       DESC,
+		                                                                [Sequence]      DESC
+	                                                                ) 
+	                                                                ON [PRIMARY]
+                                                                END";
+
+        private static string DropTableELMAH_Error { get; } = @"USE [ControleDespesasTest]
+                                                                IF OBJECT_ID('dbo.ELMAH_Error', 'U') IS NOT NULL 
+                                                                DROP TABLE dbo.ELMAH_Error";
+
         private static string DropTableLogRequestResponse { get; } = @"USE [ControleDespesasTest]
                                                                        IF OBJECT_ID('dbo.LogRequestResponse', 'U') IS NOT NULL 
                                                                        DROP TABLE dbo.LogRequestResponse";
@@ -167,11 +205,13 @@ namespace ControleDespesas.Test.AppConfigurations.QueriesSQL
             CreateTableTipoPagamento,
             CreateTablePessoa,
             CreateTablePagamento,
-            CreateTableLogRequestResponse
+            CreateTableLogRequestResponse,
+            CreateTableELMAH_Error
         };
 
         public static List<string> QueriesDrop { get; } = new List<string>()
         {
+            DropTableELMAH_Error,
             DropTableLogRequestResponse,
             DropTablePagamento,
             DropTablePessoa,

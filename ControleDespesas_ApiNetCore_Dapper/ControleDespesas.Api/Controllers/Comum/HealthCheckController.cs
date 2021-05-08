@@ -1,4 +1,5 @@
-﻿using ControleDespesas.Infra.Response;
+﻿using ControleDespesas.Infra.Interfaces.Repositories;
+using ControleDespesas.Infra.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,6 +8,13 @@ namespace ControleDespesas.Api.Controllers.Comum
     [ApiController]
     public class HealthCheckController : BaseController
     {
+        private readonly IHealthCheckRepository _repository;
+
+        public HealthCheckController(IHealthCheckRepository repository)
+        {
+            _repository = repository;
+        }
+
         /// <summary>
         /// Health Check
         /// </summary>        
@@ -21,6 +29,8 @@ namespace ControleDespesas.Api.Controllers.Comum
         [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status500InternalServerError)]
         public IActionResult HealthCheck()
         {
+            _repository.Verificar();
+
             return ResultHealthCheck();
         }        
     }

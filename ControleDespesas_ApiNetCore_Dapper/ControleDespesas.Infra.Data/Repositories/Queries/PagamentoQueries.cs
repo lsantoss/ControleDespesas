@@ -61,10 +61,10 @@
                                                     Pessoa.Nome AS Nome,
                                                     Pessoa.ImagemPerfil AS ImagemPerfil
 
-                                                FROM Pagamento 
-                                                INNER JOIN TipoPagamento ON Pagamento.IdTipoPagamento = TipoPagamento.Id 
-                                                INNER JOIN Empresa ON Pagamento.IdEmpresa = Empresa.Id 
-                                                INNER JOIN Pessoa ON Pagamento.IdPessoa = Pessoa.Id 
+                                                FROM Pagamento WITH(NOLOCK)
+                                                INNER JOIN TipoPagamento WITH(NOLOCK) ON Pagamento.IdTipoPagamento = TipoPagamento.Id 
+                                                INNER JOIN Empresa WITH(NOLOCK) ON Pagamento.IdEmpresa = Empresa.Id 
+                                                INNER JOIN Pessoa WITH(NOLOCK) ON Pagamento.IdPessoa = Pessoa.Id 
 
                                                 WHERE Pagamento.Id = @Id";
 
@@ -90,10 +90,10 @@
                                                     Pessoa.IdUsuario AS IdUsuario,
                                                     Pessoa.ImagemPerfil AS ImagemPerfil
 
-                                                FROM Pagamento 
-                                                INNER JOIN TipoPagamento ON Pagamento.IdTipoPagamento = TipoPagamento.Id 
-                                                INNER JOIN Empresa ON Pagamento.IdEmpresa = Empresa.Id 
-                                                INNER JOIN Pessoa ON Pagamento.IdPessoa = Pessoa.Id 
+                                                FROM Pagamento WITH(NOLOCK)
+                                                INNER JOIN TipoPagamento WITH(NOLOCK) ON Pagamento.IdTipoPagamento = TipoPagamento.Id 
+                                                INNER JOIN Empresa WITH(NOLOCK) ON Pagamento.IdEmpresa = Empresa.Id 
+                                                INNER JOIN Pessoa WITH(NOLOCK) ON Pagamento.IdPessoa = Pessoa.Id 
 
                                                 WHERE Pagamento.IdPessoa = @IdPessoa 
 
@@ -121,10 +121,10 @@
                                                                        Pessoa.IdUsuario AS IdUsuario,
                                                                        Pessoa.ImagemPerfil AS ImagemPerfil
 
-                                                                   FROM Pagamento 
-                                                                   INNER JOIN TipoPagamento ON Pagamento.IdTipoPagamento = TipoPagamento.Id 
-                                                                   INNER JOIN Empresa ON Pagamento.IdEmpresa = Empresa.Id 
-                                                                   INNER JOIN Pessoa ON Pagamento.IdPessoa = Pessoa.Id 
+                                                                   FROM Pagamento WITH(NOLOCK) 
+                                                                   INNER JOIN TipoPagamento WITH(NOLOCK) ON Pagamento.IdTipoPagamento = TipoPagamento.Id 
+                                                                   INNER JOIN Empresa WITH(NOLOCK) ON Pagamento.IdEmpresa = Empresa.Id 
+                                                                   INNER JOIN Pessoa WITH(NOLOCK) ON Pagamento.IdPessoa = Pessoa.Id 
 
                                                                    WHERE Pagamento.IdPessoa = @IdPessoa
                                                                    AND Pagamento.DataPagamento is not NULL
@@ -153,37 +153,41 @@
                                                                        Pessoa.IdUsuario AS IdUsuario,
                                                                        Pessoa.ImagemPerfil AS ImagemPerfil
 
-                                                                   FROM Pagamento 
-                                                                   INNER JOIN TipoPagamento ON Pagamento.IdTipoPagamento = TipoPagamento.Id 
-                                                                   INNER JOIN Empresa ON Pagamento.IdEmpresa = Empresa.Id 
-                                                                   INNER JOIN Pessoa ON Pagamento.IdPessoa = Pessoa.Id 
+                                                                   FROM Pagamento WITH(NOLOCK)
+                                                                   INNER JOIN TipoPagamento WITH(NOLOCK) ON Pagamento.IdTipoPagamento = TipoPagamento.Id 
+                                                                   INNER JOIN Empresa WITH(NOLOCK) ON Pagamento.IdEmpresa = Empresa.Id 
+                                                                   INNER JOIN Pessoa WITH(NOLOCK) ON Pagamento.IdPessoa = Pessoa.Id 
 
                                                                    WHERE Pagamento.IdPessoa = @IdPessoa
                                                                    AND Pagamento.DataPagamento is NULL 
 
                                                                    ORDER BY Pagamento.Id ASC";
 
-        public static string ObterArquivoPagamento { get; } = @"SELECT ArquivoPagamento AS Arquivo FROM Pagamento WHERE Id = @IdPagamento";
+        public static string ObterArquivoPagamento { get; } = @"SELECT ArquivoPagamento AS Arquivo 
+                                                                FROM Pagamento WITH(NOLOCK) 
+                                                                WHERE Id = @IdPagamento";
 
-        public static string ObterArquivoComprovante { get; } = @"SELECT ArquivoComprovante AS Arquivo FROM Pagamento WHERE Id = @IdPagamento";
+        public static string ObterArquivoComprovante { get; } = @"SELECT ArquivoComprovante AS Arquivo 
+                                                                  FROM Pagamento WITH(NOLOCK) 
+                                                                  WHERE Id = @IdPagamento";
 
         public static string ObterGastos { get; } = @"SELECT SUM(Pagamento.Valor) As Valor 
-                                                      FROM Pagamento
+                                                      FROM Pagamento WITH(NOLOCK)
                                                       WHERE Pagamento.IdPessoa = @IdPessoa";
 
         public static string ObterGastosAno { get; } = @"SELECT SUM(Pagamento.Valor) As Valor 
-                                                         FROM Pagamento
+                                                         FROM Pagamento WITH(NOLOCK)
                                                          WHERE Pagamento.IdPessoa = @IdPessoa 
                                                          AND YEAR(Pagamento.DataVencimento) = @Ano";
 
         public static string ObterGastosAnoMes { get; } = @"SELECT SUM(Pagamento.Valor) As Valor 
-                                                            FROM Pagamento
+                                                            FROM Pagamento WITH(NOLOCK)
                                                             WHERE Pagamento.IdPessoa = @IdPessoa 
                                                             AND YEAR(Pagamento.DataVencimento) = @Ano
                                                             AND MONTH(Pagamento.DataVencimento) = @Mes";
 
-        public static string CheckId { get; } = @"SELECT Id FROM Pagamento WHERE Id = @Id";
+        public static string CheckId { get; } = @"SELECT Id FROM Pagamento WITH(NOLOCK) WHERE Id = @Id";
 
-        public static string LocalizarMaxId { get; } = @"SELECT MAX(Id) FROM Pagamento";
+        public static string LocalizarMaxId { get; } = @"SELECT MAX(Id) FROM Pagamento WITH(NOLOCK)";
     }
 }

@@ -36,6 +36,7 @@ namespace ControleDespesas.Api
         public void ConfigureServices(IServiceCollection services)
         {
             #region AppSettings
+
             SettingsAPI settingsAPI = new SettingsAPI();
             Configuration.GetSection("SettingsAPI").Bind(settingsAPI);
             services.AddSingleton(settingsAPI);
@@ -43,9 +44,11 @@ namespace ControleDespesas.Api
             SettingsInfraData settingsInfraData = new SettingsInfraData();
             Configuration.GetSection("SettingsInfraData").Bind(settingsInfraData);
             services.AddSingleton(settingsInfraData);
+
             #endregion
 
             #region Swagger
+
             services.AddSwaggerGen(swagger =>
             {
                 swagger.DescribeAllEnumsAsStrings();
@@ -85,9 +88,11 @@ namespace ControleDespesas.Api
                     {"Bearer", new string[] { }},
                 });
             });
+
             #endregion
 
             #region Autenticação JWT
+
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -104,9 +109,11 @@ namespace ControleDespesas.Api
                     ValidateAudience = false
                 };
             });
+
             #endregion
 
             #region Log Elmah
+
             //Log em Memória
             //services.AddElmah(options => { options.Path = @"elmah"; });
 
@@ -115,37 +122,49 @@ namespace ControleDespesas.Api
 
             //Log salvando no banco de dados
             services.AddElmah<SqlErrorLog>(options => { options.ConnectionString = Configuration["SettingsInfraData:ConnectionString"]; });
+
             #endregion
 
             #region DataContext
+
             services.AddScoped<DataContext>();
+
             #endregion
 
             #region Repositories
+
             services.AddTransient<IPessoaRepository, PessoaRepository>();
             services.AddTransient<IEmpresaRepository, EmpresaRepository>();
             services.AddTransient<ITipoPagamentoRepository, TipoPagamentoRepository>();
             services.AddTransient<IPagamentoRepository, PagamentoRepository>();
             services.AddTransient<IUsuarioRepository, UsuarioRepository>(); 
-            services.AddTransient<ILogRequestResponseRepository, LogRequestResponseRepository>(); 
+            services.AddTransient<ILogRequestResponseRepository, LogRequestResponseRepository>();
+            services.AddTransient<IHealthCheckRepository, HealthCheckRepository>();
+
             #endregion
 
             #region Handler
+
             services.AddTransient<IPessoaHandler, PessoaHandler>();
             services.AddTransient<IEmpresaHandler, EmpresaHandler>();
             services.AddTransient<ITipoPagamentoHandler, TipoPagamentoHandler>();
             services.AddTransient<IPagamentoHandler, PagamentoHandler>();
             services.AddTransient<IUsuarioHandler, UsuarioHandler>();
+
             #endregion
 
             #region Helpers
+
             services.AddTransient<ITokenJwtHelper, TokenJwtHelper>();
+
             #endregion
 
             #region Indented Pretty Print Formatting JSON
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddJsonOptions(options => {
                 options.SerializerSettings.Formatting = Formatting.Indented;
             });
+
             #endregion
         }
 

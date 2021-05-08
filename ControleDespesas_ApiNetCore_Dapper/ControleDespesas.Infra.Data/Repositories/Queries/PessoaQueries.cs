@@ -13,7 +13,7 @@
                                                     IdUsuario AS IdUsuario,
                                                     Nome AS Nome,
                                                     ImagemPerfil AS ImagemPerfil 
-                                                FROM Pessoa 
+                                                FROM Pessoa WITH(NOLOCK)
                                                 WHERE Id = @Id";
 
         public static string Listar { get; } = @"SELECT
@@ -21,12 +21,12 @@
                                                     IdUsuario AS IdUsuario,
                                                     Nome AS Nome,
                                                     ImagemPerfil AS ImagemPerfil 
-                                                FROM Pessoa 
+                                                FROM Pessoa WITH(NOLOCK)
                                                 WHERE IdUsuario = @IdUsuario 
                                                 ORDER BY Id ASC";
 
-        public static string CheckId { get; } = @"SELECT Id FROM Pessoa WHERE Id = @Id";
+        public static string CheckId { get; } = @"SELECT Id FROM Pessoa WITH(NOLOCK) WHERE Id = @Id";
 
-        public static string LocalizarMaxId { get; } = @"SELECT MAX(Id) FROM Pessoa";
+        public static string LocalizarMaxId { get; } = @"SELECT MAX(Id) FROM Pessoa WITH(NOLOCK)";
     }
 }

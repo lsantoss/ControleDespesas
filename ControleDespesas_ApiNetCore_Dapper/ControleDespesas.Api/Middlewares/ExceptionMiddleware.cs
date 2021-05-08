@@ -29,8 +29,8 @@ namespace ControleDespesas.Api.Middlewares
 			{
 				httpContext.RiseError(ex);
 
-				var mensagem = "Erro";
-				var notificacao = new Notificacao("Erro", ex.Message);
+				var mensagem = "Exception";
+				var notificacao = new Notificacao(ex.GetType().FullName, ex.Message);
 				var erros = new List<Notificacao>() { notificacao };
 				var retorno = new ApiResponse<object>(mensagem, erros);
 				var jsonRetorno = JsonConvert.SerializeObject(retorno);

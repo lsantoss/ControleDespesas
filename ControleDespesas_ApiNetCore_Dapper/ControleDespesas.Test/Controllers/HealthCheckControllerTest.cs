@@ -1,4 +1,6 @@
 ﻿using ControleDespesas.Api.Controllers.Comum;
+using ControleDespesas.Infra.Data.Repositories;
+using ControleDespesas.Infra.Interfaces.Repositories;
 using ControleDespesas.Infra.Response;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Models;
@@ -11,17 +13,19 @@ namespace ControleDespesas.Test.Controllers
 {
     public class HealthCheckControllerTest : DatabaseTest
     {
+        private readonly IHealthCheckRepository _repository;
         private readonly HealthCheckController _controller;
 
         public HealthCheckControllerTest()
         {
-            _controller = new HealthCheckController();
+            _repository = new HealthCheckRepository(MockSettingsInfraData);
+            _controller = new HealthCheckController(_repository);
             _controller.ControllerContext.HttpContext = new DefaultHttpContext();
             _controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = MockSettingsAPI.ChaveAPI;
         }
 
         [SetUp]
-        public void Setup() { }
+        public void Setup() => CriarBaseDeDadosETabelas();
 
         [Test]
         public void PagamentoHealthCheck()
@@ -40,6 +44,6 @@ namespace ControleDespesas.Test.Controllers
         }
 
         [TearDown]
-        public void TearDown() { }
+        public void TearDown() => DroparTabelas();
     }
 }

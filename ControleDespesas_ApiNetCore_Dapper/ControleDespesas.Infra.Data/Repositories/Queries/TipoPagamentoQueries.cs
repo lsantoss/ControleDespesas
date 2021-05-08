@@ -11,17 +11,17 @@
         public static string Obter { get; } = @"SELECT 
                                                     Id AS Id,  
                                                     Descricao AS Descricao  
-                                                FROM TipoPagamento  
+                                                FROM TipoPagamento WITH(NOLOCK) 
                                                 WHERE Id = @Id";
 
         public static string Listar { get; } = @"SELECT  
                                                     Id AS Id,  
                                                     Descricao AS Descricao  
-                                                FROM TipoPagamento  
+                                                FROM TipoPagamento WITH(NOLOCK) 
                                                 ORDER BY Id ASC";
 
-        public static string CheckId { get; } = @"SELECT Id FROM TipoPagamento WHERE Id = @Id";
+        public static string CheckId { get; } = @"SELECT Id FROM TipoPagamento WITH(NOLOCK) WHERE Id = @Id";
 
-        public static string LocalizarMaxId { get; } = @"SELECT MAX(Id) FROM TipoPagamento";
+        public static string LocalizarMaxId { get; } = @"SELECT MAX(Id) FROM TipoPagamento WITH(NOLOCK)";
     }
 }

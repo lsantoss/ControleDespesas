@@ -54,6 +54,7 @@ namespace ControleDespesas.Api
                 swagger.DescribeAllEnumsAsStrings();
                 swagger.DescribeAllParametersInCamelCase();
                 swagger.IncludeXmlComments($@"{AppDomain.CurrentDomain.BaseDirectory}\Swagger.xml");
+                swagger.OperationFilter<SwaggerSecurityFilter>();
                 swagger.OperationFilter<SwaggerNonBodyParameterFilter>();
                 swagger.OperationFilter<SwaggerClassTypeIgnoreFilter<Notificadora>>();
                 swagger.OperationFilter<SwaggerJsonIgnoreFilter>();
@@ -83,10 +84,10 @@ namespace ControleDespesas.Api
                     Type = "apiKey"
                 });
 
-                swagger.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
-                {
-                    {"Bearer", new string[] { }},
-                });
+                //swagger.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
+                //{
+                //    {"Bearer", new string[] { }},
+                //});
             });
 
             #endregion

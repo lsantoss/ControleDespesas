@@ -2,29 +2,31 @@
 using ControleDespesas.Infra.Interfaces.Repositories;
 using ControleDespesas.Infra.Settings;
 using Dapper;
-using LSCode.ConexoesBD.DataContexts;
-using LSCode.ConexoesBD.Enums;
+using System.Data.SqlClient;
 
 namespace ControleDespesas.Infra.Data.Repositories
 {
     public class HealthCheckRepository : IHealthCheckRepository
     {
-        private readonly DataContext _dataContext;
+        private readonly SettingsInfraData _settingsInfraData;
 
-        public HealthCheckRepository(SettingsInfraData settings)
+        public HealthCheckRepository(SettingsInfraData settingsInfraData)
         {
-            _dataContext = new DataContext(EBancoDadosRelacional.SQLServer, settings.ConnectionString);
+            _settingsInfraData = settingsInfraData;
         }
 
         public void Verificar()
         {
-            _dataContext.SQLServerConexao.Query(HealthCheckQueries.VerificarELMAH_Error);
-            _dataContext.SQLServerConexao.Query(HealthCheckQueries.VerificarLogRequestResponse);
-            _dataContext.SQLServerConexao.Query(HealthCheckQueries.VerificarTipoPagamento);
-            _dataContext.SQLServerConexao.Query(HealthCheckQueries.VerificarEmpresa);
-            _dataContext.SQLServerConexao.Query(HealthCheckQueries.VerificarUsuario);
-            _dataContext.SQLServerConexao.Query(HealthCheckQueries.VerificarPessoa);
-            _dataContext.SQLServerConexao.Query(HealthCheckQueries.VerificarPagamento);
+            using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
+            {
+                connection.Query(HealthCheckQueries.VerificarELMAH_Error);
+                connection.Query(HealthCheckQueries.VerificarLogRequestResponse);
+                connection.Query(HealthCheckQueries.VerificarTipoPagamento);
+                connection.Query(HealthCheckQueries.VerificarEmpresa);
+                connection.Query(HealthCheckQueries.VerificarUsuario);
+                connection.Query(HealthCheckQueries.VerificarPessoa);
+                connection.Query(HealthCheckQueries.VerificarPagamento);
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 
+
 namespace ControleDespesas.Api.Swagger
 {
     public class SwaggerJsonIgnoreFilter : IOperationFilter

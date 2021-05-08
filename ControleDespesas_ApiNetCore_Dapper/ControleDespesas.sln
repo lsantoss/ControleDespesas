@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Infra", "2 - Infra", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Test", "3 - Test", "{213ACF66-A492-4391-9AAC-2EA2AF0B7757}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControleDespesas.Infra.Crosscuting", "ControleDespesas.Infra.Crosscuting\ControleDespesas.Infra.Crosscuting.csproj", "{4775D16F-1D44-4377-87C9-A7C3BE8553D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{45D08376-B4EC-43ED-8BF5-416522D825F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45D08376-B4EC-43ED-8BF5-416522D825F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45D08376-B4EC-43ED-8BF5-416522D825F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4775D16F-1D44-4377-87C9-A7C3BE8553D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4775D16F-1D44-4377-87C9-A7C3BE8553D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4775D16F-1D44-4377-87C9-A7C3BE8553D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4775D16F-1D44-4377-87C9-A7C3BE8553D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +63,7 @@ Global
 		{6D1823F1-DF91-471B-96DD-4EC59D023436} = {213ACF66-A492-4391-9AAC-2EA2AF0B7757}
 		{EB5DABB5-1D60-413E-A822-9BACEFC46E00} = {888D6C84-57B6-483C-9DAD-5DE8224154F8}
 		{45D08376-B4EC-43ED-8BF5-416522D825F1} = {6E2E7856-5B12-4814-9D2B-8919C40770DE}
+		{4775D16F-1D44-4377-87C9-A7C3BE8553D2} = {6E2E7856-5B12-4814-9D2B-8919C40770DE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA520C97-C2EF-42DF-8CD5-7EE3E1701E70}

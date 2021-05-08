@@ -4,22 +4,21 @@ using ControleDespesas.Domain.Query.Empresa.Results;
 using ControleDespesas.Infra.Data.Repositories.Queries;
 using ControleDespesas.Infra.Settings;
 using Dapper;
-using LSCode.ConexoesBD.DataContexts;
-using LSCode.ConexoesBD.Enums;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 
 namespace ControleDespesas.Infra.Data.Repositories
 {
     public class EmpresaRepository : IEmpresaRepository
     {
+        private readonly SettingsInfraData _settingsInfraData;
         private readonly DynamicParameters _parametros = new DynamicParameters();
-        private readonly DataContext _dataContext;
 
-        public EmpresaRepository(SettingsInfraData settings)
+        public EmpresaRepository(SettingsInfraData settingsInfraData)
         {
-            _dataContext = new DataContext(EBancoDadosRelacional.SQLServer, settings.ConnectionString);
+            _settingsInfraData = settingsInfraData;
         }
 
         public int Salvar(Empresa empresa)
@@ -27,7 +26,10 @@ namespace ControleDespesas.Infra.Data.Repositories
             _parametros.Add("Nome", empresa.Nome, DbType.String);
             _parametros.Add("Logo", empresa.Logo, DbType.String);
 
-            return _dataContext.SQLServerConexao.ExecuteScalar<int>(EmpresaQueries.Salvar, _parametros);
+            using(var connection = new SqlConnection(_settingsInfraData.ConnectionString))
+            {
+                return connection.ExecuteScalar<int>(EmpresaQueries.Salvar, _parametros);
+            }
         }
 
         public void Atualizar(Empresa empresa)
@@ -36,38 +38,56 @@ namespace ControleDespesas.Infra.Data.Repositories
             _parametros.Add("Nome", empresa.Nome, DbType.String);
             _parametros.Add("Logo", empresa.Logo, DbType.String);
 
-            _dataContext.SQLServerConexao.Execute(EmpresaQueries.Atualizar, _parametros);
+            using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
+            {
+                connection.Execute(EmpresaQueries.Atualizar, _parametros);
+            }
         }
 
         public void Deletar(int id)
         {
-            _parametros.Add("Id", id, DbType.Int32);                
+            _parametros.Add("Id", id, DbType.Int32);
 
-            _dataContext.SQLServerConexao.Execute(EmpresaQueries.Deletar, _parametros);
+            using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
+            {
+                connection.Execute(EmpresaQueries.Deletar, _parametros);
+            }
         }
 
         public EmpresaQueryResult Obter(int id)
         {
             _parametros.Add("Id", id, DbType.Int32);
 
-            return _dataContext.SQLServerConexao.Query<EmpresaQueryResult>(EmpresaQueries.Obter, _parametros).FirstOrDefault();
+            using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
+            {
+                return connection.Query<EmpresaQueryResult>(EmpresaQueries.Obter, _parametros).FirstOrDefault();
+            }
         }
 
         public List<EmpresaQueryResult> Listar()
         {
-            return _dataContext.SQLServerConexao.Query<EmpresaQueryResult>(EmpresaQueries.Listar).ToList();
+            using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
+            {
+                return connection.Query<EmpresaQueryResult>(EmpresaQueries.Listar).ToList();
+            }
         }
 
         public bool CheckId(int id)
         {
             _parametros.Add("Id", id, DbType.Int32);
 
-            return _dataContext.SQLServerConexao.Query<bool>(EmpresaQueries.CheckId, _parametros).FirstOrDefault();
+            using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
+            {
+                return connection.Query<bool>(EmpresaQueries.CheckId, _parametros).FirstOrDefault();
+            }
         }
 
         public int LocalizarMaxId()
         {
-            return _dataContext.SQLServerConexao.Query<int>(EmpresaQueries.LocalizarMaxId).FirstOrDefault();
+            using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
+            {
+                return connection.Query<int>(EmpresaQueries.LocalizarMaxId).FirstOrDefault();
+            }
         }
     }
 }

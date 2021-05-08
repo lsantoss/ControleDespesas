@@ -4,22 +4,21 @@ using ControleDespesas.Domain.Query.Usuario.Results;
 using ControleDespesas.Infra.Data.Repositories.Queries;
 using ControleDespesas.Infra.Settings;
 using Dapper;
-using LSCode.ConexoesBD.DataContexts;
-using LSCode.ConexoesBD.Enums;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 
 namespace ControleDespesas.Infra.Data.Repositories
 {
     public class UsuarioRepository : IUsuarioRepository
     {
+        private readonly SettingsInfraData _settingsInfraData;
         private readonly DynamicParameters _parametros = new DynamicParameters();
-        private readonly DataContext _dataContext;
 
-        public UsuarioRepository(SettingsInfraData settings)
+        public UsuarioRepository(SettingsInfraData settingsInfraData)
         {
-            _dataContext = new DataContext(EBancoDadosRelacional.SQLServer, settings.ConnectionString);
+            _settingsInfraData = settingsInfraData;
         }
 
         public int Salvar(Usuario usuario)
@@ -28,7 +27,10 @@ namespace ControleDespesas.Infra.Data.Repositories
             _parametros.Add("Senha", usuario.Senha, DbType.String);
             _parametros.Add("Privilegio", usuario.Privilegio, DbType.Int16);
 
-            return _dataContext.SQLServerConexao.ExecuteScalar<int>(UsuarioQueries.Salvar, _parametros);
+            using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
+            {
+                return connection.ExecuteScalar<int>(UsuarioQueries.Salvar, _parametros);
+            }
         }
 
         public void Atualizar(Usuario usuario)
@@ -38,26 +40,38 @@ namespace ControleDespesas.Infra.Data.Repositories
             _parametros.Add("Senha", usuario.Senha, DbType.String);
             _parametros.Add("Privilegio", usuario.Privilegio, DbType.Int16);
 
-            _dataContext.SQLServerConexao.Execute(UsuarioQueries.Atualizar, _parametros);
+            using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
+            {
+                connection.Execute(UsuarioQueries.Atualizar, _parametros);
+            }
         }
 
         public void Deletar(int id)
         {
             _parametros.Add("Id", id, DbType.Int32);
 
-            _dataContext.SQLServerConexao.Execute(UsuarioQueries.Deletar, _parametros);
+            using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
+            {
+                connection.Execute(UsuarioQueries.Deletar, _parametros);
+            }
         }
 
         public UsuarioQueryResult Obter(int id)
         {
             _parametros.Add("Id", id, DbType.Int32);
 
-            return _dataContext.SQLServerConexao.Query<UsuarioQueryResult>(UsuarioQueries.Obter, _parametros).FirstOrDefault();
+            using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
+            {
+                return connection.Query<UsuarioQueryResult>(UsuarioQueries.Obter, _parametros).FirstOrDefault();
+            }
         }
 
         public List<UsuarioQueryResult> Listar()
         {
-            return _dataContext.SQLServerConexao.Query<UsuarioQueryResult>(UsuarioQueries.Listar).ToList();
+            using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
+            {
+                return connection.Query<UsuarioQueryResult>(UsuarioQueries.Listar).ToList();
+            }
         }
 
         public UsuarioQueryResult Logar(string login, string senha)
@@ -65,28 +79,38 @@ namespace ControleDespesas.Infra.Data.Repositories
             _parametros.Add("Login", login, DbType.String);
             _parametros.Add("Senha", senha, DbType.String);
 
-            return _dataContext.SQLServerConexao.Query<UsuarioQueryResult>(UsuarioQueries.Logar, _parametros).FirstOrDefault();
+            using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
+            {
+                return connection.Query<UsuarioQueryResult>(UsuarioQueries.Logar, _parametros).FirstOrDefault();
+            }
         }
 
         public bool CheckLogin(string login)
         {
             _parametros.Add("Login", login, DbType.String);
 
-            string retono = _dataContext.SQLServerConexao.Query<string>(UsuarioQueries.CheckLogin, _parametros).FirstOrDefault();
-
-            return retono != null ? true : false;
+            using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
+            {
+                return connection.Query<string>(UsuarioQueries.CheckLogin, _parametros).Any();
+            }
         }
 
         public bool CheckId(int id)
         {
             _parametros.Add("Id", id, DbType.Int32);
 
-            return _dataContext.SQLServerConexao.Query<bool>(UsuarioQueries.CheckId, _parametros).FirstOrDefault();
+            using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
+            {
+                return connection.Query<bool>(UsuarioQueries.CheckId, _parametros).FirstOrDefault();
+            }
         }
 
         public int LocalizarMaxId()
         {
-            return _dataContext.SQLServerConexao.Query<int>(UsuarioQueries.LocalizarMaxId).FirstOrDefault();
+            using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
+            {
+                return connection.Query<int>(UsuarioQueries.LocalizarMaxId).FirstOrDefault();
+            }
         }
     }
 }

@@ -1,11 +1,10 @@
 ﻿using ControleDespesas.Infra.Settings;
 using ControleDespesas.Test.AppConfigurations.QueriesSQL;
 using Dapper;
-using LSCode.ConexoesBD.DataContexts;
-using LSCode.ConexoesBD.Enums;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace ControleDespesas.Test.AppConfigurations.Base
 {
@@ -30,10 +29,13 @@ namespace ControleDespesas.Test.AppConfigurations.Base
         {
             try
             {
-                DataContext ctx = new DataContext(EBancoDadosRelacional.SQLServer, MockSettingsInfraData.ConnectionString);
-
                 foreach (string sql in queries)
-                    ctx.SQLServerConexao.Execute(sql);
+                {
+                    using (var connection = new SqlConnection(MockSettingsInfraData.ConnectionString))
+                    {
+                        connection.Execute(sql);
+                    }
+                }
             }
             catch (Exception ex)
             {

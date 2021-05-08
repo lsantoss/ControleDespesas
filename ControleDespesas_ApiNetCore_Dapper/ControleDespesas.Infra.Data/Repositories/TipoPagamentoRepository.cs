@@ -4,29 +4,31 @@ using ControleDespesas.Domain.Query.TipoPagamento.Results;
 using ControleDespesas.Infra.Data.Repositories.Queries;
 using ControleDespesas.Infra.Settings;
 using Dapper;
-using LSCode.ConexoesBD.DataContexts;
-using LSCode.ConexoesBD.Enums;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 
 namespace ControleDespesas.Infra.Data.Repositories
 {
     public class TipoPagamentoRepository : ITipoPagamentoRepository
     {
+        private readonly SettingsInfraData _settingsInfraData;
         private readonly DynamicParameters _parametros = new DynamicParameters();
-        private readonly DataContext _dataContext;
 
-        public TipoPagamentoRepository(SettingsInfraData settings)
+        public TipoPagamentoRepository(SettingsInfraData settingsInfraData)
         {
-            _dataContext = new DataContext(EBancoDadosRelacional.SQLServer, settings.ConnectionString);
+            _settingsInfraData = settingsInfraData;
         }
 
         public int Salvar(TipoPagamento tipoPagamento)
         {
             _parametros.Add("Descricao", tipoPagamento.Descricao, DbType.String);
 
-            return _dataContext.SQLServerConexao.ExecuteScalar<int>(TipoPagamentoQueries.Salvar, _parametros); ;
+            using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
+            {
+                return connection.ExecuteScalar<int>(TipoPagamentoQueries.Salvar, _parametros);
+            }
         }
 
         public void Atualizar(TipoPagamento tipoPagamento)
@@ -34,38 +36,56 @@ namespace ControleDespesas.Infra.Data.Repositories
             _parametros.Add("Id", tipoPagamento.Id, DbType.Int32);
             _parametros.Add("Descricao", tipoPagamento.Descricao, DbType.String);
 
-            _dataContext.SQLServerConexao.Execute(TipoPagamentoQueries.Atualizar, _parametros);
+            using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
+            {
+                connection.Execute(TipoPagamentoQueries.Atualizar, _parametros);
+            }
         }
 
         public void Deletar(int id)
         {
             _parametros.Add("Id", id, DbType.Int32);
 
-            _dataContext.SQLServerConexao.Execute(TipoPagamentoQueries.Deletar, _parametros);
+            using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
+            {
+                connection.Execute(TipoPagamentoQueries.Deletar, _parametros);
+            }
         }
 
         public TipoPagamentoQueryResult Obter(int id)
         {
             _parametros.Add("Id", id, DbType.Int32);
 
-            return _dataContext.SQLServerConexao.Query<TipoPagamentoQueryResult>(TipoPagamentoQueries.Obter, _parametros).FirstOrDefault();
+            using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
+            {
+                return connection.Query<TipoPagamentoQueryResult>(TipoPagamentoQueries.Obter, _parametros).FirstOrDefault();
+            }
         }
 
         public List<TipoPagamentoQueryResult> Listar()
         {
-            return _dataContext.SQLServerConexao.Query<TipoPagamentoQueryResult>(TipoPagamentoQueries.Listar).ToList();
+            using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
+            {
+                return connection.Query<TipoPagamentoQueryResult>(TipoPagamentoQueries.Listar).ToList();
+            }
         }
 
         public bool CheckId(int id)
         {
             _parametros.Add("Id", id, DbType.Int32);
 
-            return _dataContext.SQLServerConexao.Query<bool>(TipoPagamentoQueries.CheckId, _parametros).FirstOrDefault();
+            using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
+            {
+                return connection.Query<bool>(TipoPagamentoQueries.CheckId, _parametros).FirstOrDefault();
+            }
         }
 
         public int LocalizarMaxId()
         {
-            return _dataContext.SQLServerConexao.Query<int>(TipoPagamentoQueries.LocalizarMaxId).FirstOrDefault();
+            using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
+            {
+                return connection.Query<int>(TipoPagamentoQueries.LocalizarMaxId).FirstOrDefault();
+            }
         }
     }
 }

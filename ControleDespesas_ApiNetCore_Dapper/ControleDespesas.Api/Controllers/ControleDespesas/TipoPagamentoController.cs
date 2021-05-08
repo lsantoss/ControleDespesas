@@ -110,11 +110,13 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <remarks><h2><b>Exclui Tipo de Pagamento na base de dados.</b></h2></remarks>
         /// <param name="id">Parâmetro requerido Id do Tipo de Pagamento</param>  
         /// <response code="200">OK Request</response>
+        /// <response code="401">Unauthorized</response>
         /// <response code="422">Unprocessable Entity</response>
         /// <response code="500">Internal Server Error</response>
         [HttpDelete]
         [Route("v1/tipos-pagamentos/{id}")]
         [ProducesResponseType(typeof(ApiResponse<CommandOutput>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<CommandOutput>), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(typeof(ApiResponse<CommandOutput>), StatusCodes.Status500InternalServerError)]
         public IActionResult TipoPagamentoExcluir(int id)

@@ -1,10 +1,10 @@
-﻿using ControleDespesas.Domain.Entities;
-using ControleDespesas.Domain.Enums;
-using ControleDespesas.Domain.Interfaces.Repositories;
-using ControleDespesas.Domain.Query.Empresa.Results;
-using ControleDespesas.Domain.Query.Pagamento.Results;
-using ControleDespesas.Domain.Query.Pessoa.Results;
-using ControleDespesas.Domain.Query.TipoPagamento.Results;
+﻿using ControleDespesas.Domain.Empresas.Query.Results;
+using ControleDespesas.Domain.Pagamentos.Entities;
+using ControleDespesas.Domain.Pagamentos.Enums;
+using ControleDespesas.Domain.Pagamentos.Interfaces.Repositories;
+using ControleDespesas.Domain.Pagamentos.Query.Results;
+using ControleDespesas.Domain.Pessoas.Query.Results;
+using ControleDespesas.Domain.TiposPagamentos.Query.Results;
 using ControleDespesas.Infra.Data.Repositories.Queries;
 using ControleDespesas.Infra.Settings;
 using Dapper;

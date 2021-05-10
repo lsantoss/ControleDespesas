@@ -1,10 +1,10 @@
 ﻿using ControleDespesas.Api.Controllers.Comum;
-using ControleDespesas.Domain.Commands.Pagamento.Input;
-using ControleDespesas.Domain.Commands.Pagamento.Output;
-using ControleDespesas.Domain.Interfaces.Handlers;
-using ControleDespesas.Domain.Interfaces.Repositories;
-using ControleDespesas.Domain.Query.Pagamento.Input;
-using ControleDespesas.Domain.Query.Pagamento.Results;
+using ControleDespesas.Domain.Pagamentos.Commands.Input;
+using ControleDespesas.Domain.Pagamentos.Commands.Output;
+using ControleDespesas.Domain.Pagamentos.Interfaces.Handlers;
+using ControleDespesas.Domain.Pagamentos.Interfaces.Repositories;
+using ControleDespesas.Domain.Pagamentos.Query.Input;
+using ControleDespesas.Domain.Pagamentos.Query.Results;
 using ControleDespesas.Infra.Commands;
 using ControleDespesas.Infra.Response;
 using Microsoft.AspNetCore.Http;

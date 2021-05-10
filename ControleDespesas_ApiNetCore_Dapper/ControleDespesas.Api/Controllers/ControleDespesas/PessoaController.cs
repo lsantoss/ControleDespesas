@@ -1,10 +1,10 @@
 ﻿using ControleDespesas.Api.Controllers.Comum;
-using ControleDespesas.Domain.Commands.Pessoa.Input;
-using ControleDespesas.Domain.Commands.Pessoa.Output;
-using ControleDespesas.Domain.Interfaces.Handlers;
-using ControleDespesas.Domain.Interfaces.Repositories;
-using ControleDespesas.Domain.Query.Pessoa.Input;
-using ControleDespesas.Domain.Query.Pessoa.Results;
+using ControleDespesas.Domain.Pessoas.Commands.Input;
+using ControleDespesas.Domain.Pessoas.Commands.Output;
+using ControleDespesas.Domain.Pessoas.Interfaces.Handlers;
+using ControleDespesas.Domain.Pessoas.Interfaces.Repositories;
+using ControleDespesas.Domain.Pessoas.Query.Input;
+using ControleDespesas.Domain.Pessoas.Query.Results;
 using ControleDespesas.Infra.Commands;
 using ControleDespesas.Infra.Response;
 using Microsoft.AspNetCore.Http;

@@ -1,9 +1,9 @@
 ﻿using ControleDespesas.Api.Controllers.Comum;
-using ControleDespesas.Domain.Commands.Empresa.Input;
-using ControleDespesas.Domain.Commands.Empresa.Output;
-using ControleDespesas.Domain.Interfaces.Handlers;
-using ControleDespesas.Domain.Interfaces.Repositories;
-using ControleDespesas.Domain.Query.Empresa.Results;
+using ControleDespesas.Domain.Empresas.Commands.Input;
+using ControleDespesas.Domain.Empresas.Commands.Output;
+using ControleDespesas.Domain.Empresas.Interfaces.Handlers;
+using ControleDespesas.Domain.Empresas.Interfaces.Repositories;
+using ControleDespesas.Domain.Empresas.Query.Results;
 using ControleDespesas.Infra.Commands;
 using ControleDespesas.Infra.Response;
 using Microsoft.AspNetCore.Http;

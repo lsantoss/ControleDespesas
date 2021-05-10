@@ -1,6 +1,6 @@
-﻿using ControleDespesas.Domain.Entities;
-using ControleDespesas.Domain.Interfaces.Repositories;
-using ControleDespesas.Domain.Query.TipoPagamento.Results;
+﻿using ControleDespesas.Domain.TiposPagamentos.Entities;
+using ControleDespesas.Domain.TiposPagamentos.Interfaces.Repositories;
+using ControleDespesas.Domain.TiposPagamentos.Query.Results;
 using ControleDespesas.Infra.Data.Repositories.Queries;
 using ControleDespesas.Infra.Settings;
 using Dapper;

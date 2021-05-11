@@ -4,11 +4,11 @@ namespace ControleDespesas.Test.AppConfigurations.QueriesSQL
 {
     public static class QueriesSQLServer
     {
-        private static string CreateDataBase { get; } = @"USE [master] 
-                                                          IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = 'ControleDespesasTest')
-                                                          BEGIN
-                                                            CREATE DATABASE ControleDespesasTest
-                                                          END";
+        public static string CreateDataBase { get; } = @"USE [master] 
+                                                         IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = 'ControleDespesasTest')
+                                                         BEGIN
+                                                           CREATE DATABASE ControleDespesasTest
+                                                         END";
 
         private static string CreateTableUsuario { get; } = @"USE [ControleDespesasTest] 
                                                                 IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE' AND TABLE_NAME='Usuario') 
@@ -189,17 +189,8 @@ namespace ControleDespesas.Test.AppConfigurations.QueriesSQL
                                                             IF OBJECT_ID('dbo.Empresa', 'U') IS NOT NULL 
                                                             DROP TABLE dbo.Empresa";
 
-        private static string DropDataBase { get; } = @"USE [master] DROP DATABASE IF EXISTS [ControleDespesasTest]";
-
-        private static string MatarSessoes { get; } = @"DECLARE @kill varchar(8000) = ''
-                                                        SELECT @kill = sys.dm_exec_sessions.session_id
-                                                        FROM sys.dm_exec_sessions
-                                                        WHERE database_id = db_id('ControleDespesasTest')
-                                                        EXEC('kill ' + @kill)";
-
         public static List<string> QueriesCreate { get; } = new List<string>()
         {
-            CreateDataBase,
             CreateTableUsuario,
             CreateTableEmpresa,
             CreateTableTipoPagamento,

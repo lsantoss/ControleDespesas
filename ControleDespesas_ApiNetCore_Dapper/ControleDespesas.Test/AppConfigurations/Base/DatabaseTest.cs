@@ -13,6 +13,8 @@ namespace ControleDespesas.Test.AppConfigurations.Base
     {
         protected SettingsInfraData MockSettingsInfraData { get; }
 
+        private bool createDatabase = true;
+
         public DatabaseTest()
         {
             MockSettingsInfraData = new SettingsInfraData() 
@@ -29,9 +31,18 @@ namespace ControleDespesas.Test.AppConfigurations.Base
         {
             try
             {
+                if (createDatabase)
+                {
+                    createDatabase = false;
+                    using (var connection = new SqlConnection(MockSettingsTest.ConnectionSQLServerReal))
+                    {
+                        connection.Execute(QueriesSQLServer.CreateDataBase);
+                    }
+                }                
+
                 foreach (string sql in queries)
                 {
-                    using (var connection = new SqlConnection(MockSettingsInfraData.ConnectionString))
+                    using (var connection = new SqlConnection(MockSettingsTest.ConnectionSQLServerTest))
                     {
                         connection.Execute(sql);
                     }

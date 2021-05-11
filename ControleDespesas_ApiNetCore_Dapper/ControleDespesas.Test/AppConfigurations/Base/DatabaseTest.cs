@@ -1,10 +1,9 @@
 ﻿using ControleDespesas.Infra.Settings;
-using ControleDespesas.Test.AppConfigurations.QueriesSQL;
 using Dapper;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 
 namespace ControleDespesas.Test.AppConfigurations.Base
 {
@@ -13,44 +12,64 @@ namespace ControleDespesas.Test.AppConfigurations.Base
     {
         protected SettingsInfraData MockSettingsInfraData { get; }
 
-        private bool createDatabase = true;
+        private string ScriptsPath { get; }
+        private bool CreateDatabase { get; set; }
 
         public DatabaseTest()
         {
             MockSettingsInfraData = new SettingsInfraData() 
             { 
                 ConnectionString = MockSettingsTest.ConnectionSQLServerTest 
-            };            
+            };
+
+            ScriptsPath = $@"{AppDomain.CurrentDomain.BaseDirectory}\AppConfigurations\QueriesSQL";
+            CreateDatabase = true;
         }  
 
-        protected void CriarBaseDeDadosETabelas() => RodarScripts(QueriesSQLServer.QueriesCreate);
-
-        protected void DroparTabelas() => RodarScripts(QueriesSQLServer.QueriesDrop);
-
-        private void RodarScripts(List<string> queries)
+        protected void CriarBaseDeDadosETabelas()
         {
             try
             {
-                if (createDatabase)
+                using (var streamReader = new StreamReader($@"{ScriptsPath}\CREATE.sql"))
                 {
-                    createDatabase = false;
-                    using (var connection = new SqlConnection(MockSettingsTest.ConnectionSQLServerReal))
-                    {
-                        connection.Execute(QueriesSQLServer.CreateDataBase);
-                    }
-                }                
+                    var scripts = streamReader.ReadToEnd().Split("GO");
 
-                foreach (string sql in queries)
-                {
+                    if (CreateDatabase)
+                    {
+                        CreateDatabase = false;
+                        using (var connection = new SqlConnection(MockSettingsTest.ConnectionSQLServerReal))
+                        {
+                            connection.Execute(scripts[0]);
+                        }
+                    }
+
                     using (var connection = new SqlConnection(MockSettingsTest.ConnectionSQLServerTest))
                     {
-                        connection.Execute(sql);
+                        connection.Execute(scripts[1]);
                     }
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception($"Erro ao rodar scripts: {ex.Message}");
+                throw new Exception($"Erro ao nos scripts de create: {ex.Message}");
+            }            
+        }
+
+        protected void DroparTabelas()
+        {
+            try
+            {
+                using (var streamReader = new StreamReader($@"{ScriptsPath}\DROP.sql"))
+                {
+                    using (var connection = new SqlConnection(MockSettingsTest.ConnectionSQLServerTest))
+                    {
+                        connection.Execute(streamReader.ReadToEnd());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao nos scripts de drop: {ex.Message}");
             }
         }
     }

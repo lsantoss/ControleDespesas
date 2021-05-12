@@ -45,7 +45,8 @@ namespace ControleDespesas.Test.AppConfigurations.Base
 
                     using (var connection = new SqlConnection(MockSettingsTest.ConnectionSQLServerTest))
                     {
-                        connection.Execute(scripts[1]);
+                        foreach(var script in scripts)
+                            connection.Execute(script);
                     }
                 }
             }

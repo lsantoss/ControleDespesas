@@ -72,14 +72,5 @@ namespace ControleDespesas.Api.Controllers.Comum
             var response = new ApiResponse<object>(mensagem, notificacoes);
             return StatusCode(StatusCodes.Status422UnprocessableEntity, response);
         }
-
-        [NonAction]
-        protected IActionResult ResultHealthCheck()
-        {
-            var mensagem = "Sucesso";
-            var dados = "API Controle de Despesas - OK";
-            var response = new ApiResponse<string>(mensagem, dados);
-            return StatusCode(StatusCodes.Status200OK, response);
-        }
     }
 }

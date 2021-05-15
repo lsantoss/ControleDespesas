@@ -4,13 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ControleDespesas.Api.Controllers.Comum
 {
+    [AllowAnonymous]
     [ApiExplorerSettings(IgnoreApi = true)]
     [TypeFilter(typeof(RequestResponseActionFilter))]
-    [Route("docs")]
     public class DocsController : Controller
     {
-        [HttpGet]
-        [AllowAnonymous]
+        [HttpGet("docs")]
         public IActionResult Index()
         {
             return View();

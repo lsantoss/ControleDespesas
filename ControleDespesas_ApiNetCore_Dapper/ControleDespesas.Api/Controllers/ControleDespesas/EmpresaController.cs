@@ -6,6 +6,7 @@ using ControleDespesas.Domain.Empresas.Interfaces.Repositories;
 using ControleDespesas.Domain.Empresas.Query.Results;
 using ControleDespesas.Infra.Commands;
 using ControleDespesas.Infra.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ using System.Collections.Generic;
 namespace ControleDespesas.Api.Controllers.ControleDespesas
 {
     [ApiController]
+    [Authorize(Roles = "Administrador")]
     public class EmpresaController : BaseController
     {
         private readonly IEmpresaRepository _repository;

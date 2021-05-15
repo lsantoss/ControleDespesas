@@ -1,12 +1,18 @@
-﻿using ControleDespesas.Infra.Interfaces.Repositories;
+﻿using ControleDespesas.Api.ActionFilters;
+using ControleDespesas.Infra.Interfaces.Repositories;
 using ControleDespesas.Infra.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControleDespesas.Api.Controllers.Comum
 {
     [ApiController]
-    public class HealthCheckController : BaseController
+    [AllowAnonymous]
+    [TypeFilter(typeof(ChaveApiActionFilter))]
+    [Consumes("application/json")]
+    [Produces("application/json")]
+    public class HealthCheckController : ControllerBase
     {
         private readonly IHealthCheckRepository _repository;
 
@@ -31,7 +37,7 @@ namespace ControleDespesas.Api.Controllers.Comum
         {
             _repository.Verificar();
 
-            return ResultHealthCheck();
+            return StatusCode(StatusCodes.Status200OK, new ApiResponse<string>("Sucesso", "API Controle de Despesas - OK"));
         }        
     }
 }

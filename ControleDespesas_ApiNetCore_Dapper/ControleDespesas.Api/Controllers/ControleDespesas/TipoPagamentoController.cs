@@ -6,6 +6,7 @@ using ControleDespesas.Domain.TiposPagamentos.Interfaces.Repositories;
 using ControleDespesas.Domain.TiposPagamentos.Query.Results;
 using ControleDespesas.Infra.Commands;
 using ControleDespesas.Infra.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -33,6 +34,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [Route("v1/tipos-pagamentos")]
+        [Authorize(Roles = "Administrador")]
         [ProducesResponseType(typeof(ApiResponse<List<TipoPagamentoQueryResult>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<List<TipoPagamentoQueryResult>>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<List<TipoPagamentoQueryResult>>), StatusCodes.Status500InternalServerError)]
@@ -51,6 +53,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [Route("v1/tipos-pagamentos/{id}")]
+        [Authorize(Roles = "Administrador")]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoQueryResult>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoQueryResult>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoQueryResult>), StatusCodes.Status500InternalServerError)]
@@ -71,6 +74,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpPost]
         [Route("v1/tipos-pagamentos")]
+        [Authorize(Roles = "Administrador")]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput>), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput>), StatusCodes.Status401Unauthorized)]
@@ -94,6 +98,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpPut]
         [Route("v1/tipos-pagamentos/{id}")]
+        [Authorize(Roles = "Administrador")]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput>), StatusCodes.Status401Unauthorized)]
@@ -115,6 +120,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpDelete]
         [Route("v1/tipos-pagamentos/{id}")]
+        [Authorize(Roles = "Administrador")]
         [ProducesResponseType(typeof(ApiResponse<CommandOutput>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<CommandOutput>), StatusCodes.Status422UnprocessableEntity)]

@@ -14,7 +14,6 @@ using System.Collections.Generic;
 namespace ControleDespesas.Api.Controllers.ControleDespesas
 {
     [ApiController]
-    [Authorize(Roles = "Administrador")]
     public class EmpresaController : BaseController
     {
         private readonly IEmpresaRepository _repository;
@@ -35,6 +34,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [Route("v1/empresas")]
+        [Authorize(Roles = "Administrador")]
         [ProducesResponseType(typeof(ApiResponse<List<EmpresaQueryResult>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<List<EmpresaQueryResult>>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<List<EmpresaQueryResult>>), StatusCodes.Status500InternalServerError)]
@@ -53,6 +53,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [Route("v1/empresas/{id}")]
+        [Authorize(Roles = "Administrador")]
         [ProducesResponseType(typeof(ApiResponse<EmpresaQueryResult>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<EmpresaQueryResult>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<EmpresaQueryResult>), StatusCodes.Status500InternalServerError)]
@@ -73,6 +74,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpPost]
         [Route("v1/empresas")]
+        [Authorize(Roles = "Administrador")]
         [ProducesResponseType(typeof(ApiResponse<EmpresaCommandOutput>), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ApiResponse<EmpresaCommandOutput>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<EmpresaCommandOutput>), StatusCodes.Status401Unauthorized)]
@@ -96,6 +98,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpPut]
         [Route("v1/empresas/{id}")]
+        [Authorize(Roles = "Administrador")]
         [ProducesResponseType(typeof(ApiResponse<EmpresaCommandOutput>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<EmpresaCommandOutput>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<EmpresaCommandOutput>), StatusCodes.Status401Unauthorized)]
@@ -117,6 +120,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpDelete]
         [Route("v1/empresas/{id}")]
+        [Authorize(Roles = "Administrador")]
         [ProducesResponseType(typeof(ApiResponse<CommandOutput>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<CommandOutput>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<CommandOutput>), StatusCodes.Status422UnprocessableEntity)]

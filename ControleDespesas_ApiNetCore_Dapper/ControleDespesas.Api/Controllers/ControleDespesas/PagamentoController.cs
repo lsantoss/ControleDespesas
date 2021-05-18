@@ -7,6 +7,7 @@ using ControleDespesas.Domain.Pagamentos.Query.Input;
 using ControleDespesas.Domain.Pagamentos.Query.Results;
 using ControleDespesas.Infra.Commands;
 using ControleDespesas.Infra.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -35,6 +36,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [Route("v1/pagamentos")]
+        [Authorize(Roles = "Administrador, Escrita, SomenteLeitura")]
         [ProducesResponseType(typeof(ApiResponse<List<PagamentoQueryResult>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<List<PagamentoQueryResult>>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<List<PagamentoQueryResult>>), StatusCodes.Status422UnprocessableEntity)]
@@ -60,6 +62,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [Route("v1/pagamentos/{id}")]
+        [Authorize(Roles = "Administrador, Escrita, SomenteLeitura")]
         [ProducesResponseType(typeof(ApiResponse<PagamentoQueryResult>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<PagamentoQueryResult>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<PagamentoQueryResult>), StatusCodes.Status500InternalServerError)]
@@ -78,6 +81,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [Route("v1/pagamentos/{id}/arquivo-pagamento")]
+        [Authorize(Roles = "Administrador, Escrita, SomenteLeitura")]
         [ProducesResponseType(typeof(ApiResponse<PagamentoArquivoQueryResult>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<PagamentoArquivoQueryResult>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<PagamentoArquivoQueryResult>), StatusCodes.Status500InternalServerError)]
@@ -96,6 +100,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [Route("v1/pagamentos/{id}/arquivo-comprovante")]
+        [Authorize(Roles = "Administrador, Escrita, SomenteLeitura")]
         [ProducesResponseType(typeof(ApiResponse<PagamentoArquivoQueryResult>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<PagamentoArquivoQueryResult>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<PagamentoArquivoQueryResult>), StatusCodes.Status500InternalServerError)]
@@ -115,6 +120,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [Route("v1/pagamentos/gastos")]
+        [Authorize(Roles = "Administrador, Escrita, SomenteLeitura")]
         [ProducesResponseType(typeof(ApiResponse<PagamentoGastosQueryResult>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<PagamentoGastosQueryResult>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<PagamentoGastosQueryResult>), StatusCodes.Status422UnprocessableEntity)]
@@ -142,6 +148,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpPost]
         [Route("v1/pagamentos")]
+        [Authorize(Roles = "Administrador, Escrita")]
         [ProducesResponseType(typeof(ApiResponse<PagamentoCommandOutput>), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ApiResponse<PagamentoCommandOutput>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<PagamentoCommandOutput>), StatusCodes.Status401Unauthorized)]
@@ -165,6 +172,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpPut]
         [Route("v1/pagamentos/{id}")]
+        [Authorize(Roles = "Administrador, Escrita")]
         [ProducesResponseType(typeof(ApiResponse<PagamentoCommandOutput>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<PagamentoCommandOutput>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<PagamentoCommandOutput>), StatusCodes.Status401Unauthorized)]
@@ -186,6 +194,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="500">Internal Server Error</response>
         [HttpDelete]
         [Route("v1/pagamentos/{id}")]
+        [Authorize(Roles = "Administrador, Escrita")]
         [ProducesResponseType(typeof(ApiResponse<CommandOutput>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<CommandOutput>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<CommandOutput>), StatusCodes.Status422UnprocessableEntity)]

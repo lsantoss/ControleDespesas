@@ -27,10 +27,9 @@ namespace ControleDespesas.Domain.TiposPagamentos.Handlers
                 return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Parâmentros inválidos", command.Notificacoes);
 
             var tipoPagamento = TipoPagamentoHelper.GerarEntidade(command);
-            AddNotificacao(tipoPagamento.Notificacoes);
 
-            if (Invalido)
-                return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", Notificacoes);
+            if (tipoPagamento.Invalido)
+                return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", tipoPagamento.Notificacoes);
 
             var id = _repository.Salvar(tipoPagamento);
             tipoPagamento.DefinirId(id);
@@ -49,10 +48,9 @@ namespace ControleDespesas.Domain.TiposPagamentos.Handlers
                 return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Parâmentros inválidos", command.Notificacoes);
 
             var tipoPagamento = TipoPagamentoHelper.GerarEntidade(command);
-            AddNotificacao(tipoPagamento.Notificacoes);
 
-            if (Invalido)
-                return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", Notificacoes);
+            if (tipoPagamento.Invalido)
+                return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", tipoPagamento.Notificacoes);
 
             if (!_repository.CheckId(tipoPagamento.Id))
                 return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", "Id", "Id inválido. Este id não está cadastrado!");

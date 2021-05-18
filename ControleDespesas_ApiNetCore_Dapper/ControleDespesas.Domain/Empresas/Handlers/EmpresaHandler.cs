@@ -27,10 +27,9 @@ namespace ControleDespesas.Domain.Empresas.Handlers
                 return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Parâmentros inválidos", command.Notificacoes);
 
             var empresa = EmpresaHelper.GerarEntidade(command);
-            AddNotificacao(empresa.Notificacoes);
 
-            if (Invalido)
-                return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", Notificacoes);
+            if (empresa.Invalido)
+                return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", empresa.Notificacoes);
 
             var id = _repository.Salvar(empresa);
             empresa.DefinirId(id);
@@ -49,10 +48,9 @@ namespace ControleDespesas.Domain.Empresas.Handlers
                 return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Parâmentros inválidos", command.Notificacoes);
 
             var empresa = EmpresaHelper.GerarEntidade(command);
-            AddNotificacao(empresa.Notificacoes);
 
-            if (Invalido)
-                return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", Notificacoes);
+            if (empresa.Invalido)
+                return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", empresa.Notificacoes);
 
             if (!_repository.CheckId(empresa.Id))
                 return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", "Id", "Id inválido. Este id não está cadastrado!");

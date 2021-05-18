@@ -32,7 +32,7 @@ namespace ControleDespesas.Test.Pessoas.Controllers
 
             _repositoryUsuario = new UsuarioRepository(MockSettingsInfraData);
             _repositoryPessoa = new PessoaRepository(MockSettingsInfraData);
-            _handler = new PessoaHandler(_repositoryPessoa);
+            _handler = new PessoaHandler(_repositoryPessoa, _repositoryUsuario);
             _controller = new PessoaController(_repositoryPessoa, _handler);
             _controller.ControllerContext.HttpContext = new DefaultHttpContext();
             _controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = MockSettingsAPI.ChaveAPI;

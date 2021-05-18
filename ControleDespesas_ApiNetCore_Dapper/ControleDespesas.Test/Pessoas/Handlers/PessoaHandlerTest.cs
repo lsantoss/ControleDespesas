@@ -24,7 +24,7 @@ namespace ControleDespesas.Test.Pessoas.Handlers
 
             _repositoryUsuario = new UsuarioRepository(MockSettingsInfraData);
             _repositoryPessoa = new PessoaRepository(MockSettingsInfraData);
-            _handler = new PessoaHandler(_repositoryPessoa);
+            _handler = new PessoaHandler(_repositoryPessoa, _repositoryUsuario);
         }
 
         [SetUp]

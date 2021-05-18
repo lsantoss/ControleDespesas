@@ -39,7 +39,9 @@ namespace ControleDespesas.Domain.Pagamentos.Handlers
                 return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Parâmentros inválidos", command.Notificacoes);
 
             var pagamento = PagamentoHelper.GerarEntidade(command);
-            AddNotificacao(pagamento.Notificacoes);
+
+            if (pagamento.Invalido)
+                return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", pagamento.Notificacoes);
 
             if (!_repositoryEmpresa.CheckId(pagamento.Empresa.Id))
                 AddNotificacao("IdEmpresa", "Id inválido. Este id não está cadastrado!");
@@ -70,7 +72,9 @@ namespace ControleDespesas.Domain.Pagamentos.Handlers
                 return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Parâmentros inválidos", command.Notificacoes);
 
             var pagamento = PagamentoHelper.GerarEntidade(command);
-            AddNotificacao(pagamento.Notificacoes);
+
+            if (pagamento.Invalido)
+                return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", pagamento.Notificacoes);
 
             if (!_repository.CheckId(pagamento.Id))
                 AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");

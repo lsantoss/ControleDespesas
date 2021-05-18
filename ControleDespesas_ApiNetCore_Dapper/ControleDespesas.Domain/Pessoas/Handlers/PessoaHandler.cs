@@ -2,6 +2,7 @@
 using ControleDespesas.Domain.Pessoas.Helpers;
 using ControleDespesas.Domain.Pessoas.Interfaces.Handlers;
 using ControleDespesas.Domain.Pessoas.Interfaces.Repositories;
+using ControleDespesas.Domain.Usuarios.Interfaces.Repositories;
 using ControleDespesas.Infra.Commands;
 using LSCode.Facilitador.Api.Interfaces.Commands;
 using LSCode.Validador.ValidacoesNotificacoes;
@@ -12,10 +13,13 @@ namespace ControleDespesas.Domain.Pessoas.Handlers
     public class PessoaHandler : Notificadora, IPessoaHandler
     {
         private readonly IPessoaRepository _repository;
+        private readonly IUsuarioRepository _repositoryUsuario;
 
-        public PessoaHandler(IPessoaRepository repository)
+        public PessoaHandler(IPessoaRepository repository,
+                             IUsuarioRepository repositoryUsuario)
         {
             _repository = repository;
+            _repositoryUsuario = repositoryUsuario;
         }
 
         public ICommandResult<Notificacao> Handler(AdicionarPessoaCommand command)
@@ -27,10 +31,12 @@ namespace ControleDespesas.Domain.Pessoas.Handlers
                 return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Parâmentros inválidos", command.Notificacoes);
 
             var pessoa = PessoaHelper.GerarEntidade(command);
-            AddNotificacao(pessoa.Notificacoes);
 
-            if (Invalido)
-                return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", Notificacoes);
+            if (pessoa.Invalido)
+                return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", pessoa.Notificacoes);
+
+            if (!_repositoryUsuario.CheckId(pessoa.Usuario.Id))
+                return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", "IdUsuario", "Id inválido. Este id não está cadastrado!");
 
             var id = _repository.Salvar(pessoa);
             pessoa.DefinirId(id);
@@ -49,13 +55,18 @@ namespace ControleDespesas.Domain.Pessoas.Handlers
                 return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Parâmentros inválidos", command.Notificacoes);
 
             var pessoa = PessoaHelper.GerarEntidade(command);
-            AddNotificacao(pessoa.Notificacoes);
+
+            if (pessoa.Invalido)
+                return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", pessoa.Notificacoes);
+
+            if (!_repository.CheckId(pessoa.Id))
+                AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");
+
+            if (!_repositoryUsuario.CheckId(pessoa.Usuario.Id))
+                AddNotificacao("IdUsuario", "Id inválido. Este id não está cadastrado!");
 
             if (Invalido)
                 return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", Notificacoes);
-
-            if (!_repository.CheckId(pessoa.Id))
-                return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", "Id", "Id inválido. Este id não está cadastrado!");
 
             _repository.Atualizar(pessoa);
             var dadosRetorno = PessoaHelper.GerarDadosRetornoUpdate(pessoa);

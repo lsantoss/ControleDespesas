@@ -4,7 +4,7 @@ using System.Text.Unicode;
 
 namespace ControleDespesas.Test.AppConfigurations.Util
 {
-    public static class FotmatadorJson
+    public static class FormatadorJson
     {
         public static string FormatarJsonDeSaida<TEntity>(this string json)
         {

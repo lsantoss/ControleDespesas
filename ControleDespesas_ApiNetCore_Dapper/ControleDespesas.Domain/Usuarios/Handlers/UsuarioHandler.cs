@@ -31,10 +31,9 @@ namespace ControleDespesas.Domain.Usuarios.Handlers
                 return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Parâmentros inválidos", command.Notificacoes);
 
             var usuario = UsuarioHelper.GerarEntidade(command);
-            AddNotificacao(usuario.Notificacoes);
 
-            if (Invalido)
-                return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", Notificacoes);
+            if (usuario.Invalido)
+                return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", usuario.Notificacoes);
 
             if (_repository.CheckLogin(usuario.Login))
                 return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", "Login", "Esse login não está disponível pois já está sendo usado por outro usuário");
@@ -56,10 +55,9 @@ namespace ControleDespesas.Domain.Usuarios.Handlers
                 return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Parâmentros inválidos", command.Notificacoes);
 
             var usuario = UsuarioHelper.GerarEntidade(command);
-            AddNotificacao(usuario.Notificacoes);
 
-            if (Invalido)
-                return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", Notificacoes);
+            if (usuario.Invalido)
+                return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", usuario.Notificacoes);
 
             if (!_repository.CheckId(usuario.Id))
                 return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", "Id", "Id inválido. Este id não está cadastrado!");
@@ -84,7 +82,6 @@ namespace ControleDespesas.Domain.Usuarios.Handlers
 
             _repository.Deletar(id);
             var dadosRetorno = UsuarioHelper.GerarDadosRetornoDelete(id);
-
             return new CommandResult(StatusCodes.Status200OK, "Usuário excluído com sucesso!", dadosRetorno);
         }
 

@@ -82,6 +82,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="201">Created</response>
         /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
+        /// <response code="403">Forbidden</response>
         /// <response code="422">Unprocessable Entity</response>
         /// <response code="500">Internal Server Error</response>
         [HttpPost]
@@ -106,6 +107,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <response code="200">OK Request</response>
         /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
+        /// <response code="403">Forbidden</response>
         /// <response code="422">Unprocessable Entity</response>
         /// <response code="500">Internal Server Error</response>
         [HttpPut]
@@ -128,6 +130,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <param name="id">Parâmetro requerido Id da Pessoa</param>       
         /// <response code="200">OK Request</response>
         /// <response code="401">Unauthorized</response>
+        /// <response code="403">Forbidden</response>
         /// <response code="422">Unprocessable Entity</response>
         /// <response code="500">Internal Server Error</response>
         [HttpDelete]

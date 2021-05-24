@@ -3,7 +3,7 @@ using ControleDespesas.Domain.Pessoas.Commands.Input;
 using ControleDespesas.Domain.Pessoas.Commands.Output;
 using ControleDespesas.Domain.Pessoas.Interfaces.Handlers;
 using ControleDespesas.Domain.Pessoas.Interfaces.Repositories;
-using ControleDespesas.Domain.Pessoas.Query.Input;
+using ControleDespesas.Domain.Pessoas.Query.Parameters;
 using ControleDespesas.Domain.Pessoas.Query.Results;
 using ControleDespesas.Infra.Commands;
 using ControleDespesas.Infra.Response;

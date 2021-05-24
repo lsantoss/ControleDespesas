@@ -160,17 +160,9 @@ namespace ControleDespesas.Infra.Data.Repositories
             _parametros.Add("Ano", ano, DbType.Int32);
             _parametros.Add("Mes", mes, DbType.Int32);
 
-            string sql = "";
-            if (ano == null && mes == null)
-                sql = PagamentoQueries.ObterGastos;
-            else if (mes == null)
-                sql = PagamentoQueries.ObterGastosAno;
-            else
-                sql = PagamentoQueries.ObterGastosAnoMes;
-
             using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
             {
-                return connection.Query<PagamentoGastosQueryResult>(sql, _parametros).FirstOrDefault();
+                return connection.Query<PagamentoGastosQueryResult>(PagamentoQueries.ObterGastos, _parametros).FirstOrDefault();
             }
         }
 

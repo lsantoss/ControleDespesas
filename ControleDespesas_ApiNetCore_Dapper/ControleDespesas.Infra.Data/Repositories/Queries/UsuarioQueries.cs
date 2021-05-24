@@ -22,10 +22,10 @@
         public static string Deletar { get; } = @"DELETE FROM Usuario WHERE Id = @Id";
 
         public static string Obter { get; } = @"SELECT 
-                                                        Id AS Id,  
-                                                        Login AS Login,  
-                                                        Senha AS Senha,  
-                                                        Privilegio AS Privilegio  
+                                                    Id AS Id,  
+                                                    Login AS Login,  
+                                                    Senha AS Senha,  
+                                                    Privilegio AS Privilegio  
                                                 FROM Usuario WITH(NOLOCK) 
                                                 WHERE Id = @Id";
 

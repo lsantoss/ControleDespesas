@@ -173,18 +173,9 @@
 
         public static string ObterGastos { get; } = @"SELECT SUM(Pagamento.Valor) As Valor 
                                                       FROM Pagamento WITH(NOLOCK)
-                                                      WHERE Pagamento.IdPessoa = @IdPessoa";
-
-        public static string ObterGastosAno { get; } = @"SELECT SUM(Pagamento.Valor) As Valor 
-                                                         FROM Pagamento WITH(NOLOCK)
-                                                         WHERE Pagamento.IdPessoa = @IdPessoa 
-                                                         AND YEAR(Pagamento.DataVencimento) = @Ano";
-
-        public static string ObterGastosAnoMes { get; } = @"SELECT SUM(Pagamento.Valor) As Valor 
-                                                            FROM Pagamento WITH(NOLOCK)
-                                                            WHERE Pagamento.IdPessoa = @IdPessoa 
-                                                            AND YEAR(Pagamento.DataVencimento) = @Ano
-                                                            AND MONTH(Pagamento.DataVencimento) = @Mes";
+                                                      WHERE Pagamento.IdPessoa = @IdPessoa
+                                                      AND YEAR(Pagamento.DataVencimento)  = ISNULL(@Ano, YEAR(Pagamento.DataVencimento))
+                                                      AND MONTH(Pagamento.DataVencimento)  = ISNULL(@Mes, MONTH(Pagamento.DataVencimento))";
 
         public static string CheckId { get; } = @"SELECT Id FROM Pagamento WITH(NOLOCK) WHERE Id = @Id";
 

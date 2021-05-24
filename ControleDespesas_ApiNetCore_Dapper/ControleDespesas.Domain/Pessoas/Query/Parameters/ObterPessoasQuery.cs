@@ -1,7 +1,7 @@
 ﻿using LSCode.Facilitador.Api.Interfaces.Query;
 using LSCode.Validador.ValidacoesNotificacoes;
 
-namespace ControleDespesas.Domain.Pessoas.Query.Input
+namespace ControleDespesas.Domain.Pessoas.Query.Parameters
 {
     public class ObterPessoasQuery : Notificadora, QueryPadrao
     {

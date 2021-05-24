@@ -2,7 +2,7 @@
 using LSCode.Facilitador.Api.Interfaces.Query;
 using LSCode.Validador.ValidacoesNotificacoes;
 
-namespace ControleDespesas.Domain.Pagamentos.Query.Input
+namespace ControleDespesas.Domain.Pagamentos.Query.Parameters
 {
     public class PagamentoQuery : Notificadora, QueryPadrao
     {

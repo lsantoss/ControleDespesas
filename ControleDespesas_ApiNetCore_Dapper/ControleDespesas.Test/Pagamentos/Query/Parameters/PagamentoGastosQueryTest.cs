@@ -1,10 +1,10 @@
-﻿using ControleDespesas.Domain.Pagamentos.Query.Input;
+﻿using ControleDespesas.Domain.Pagamentos.Query.Parameters;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
 using NUnit.Framework;
 
-namespace ControleDespesas.Test.Pagamentos.Query.Inputs
+namespace ControleDespesas.Test.Pagamentos.Query.Parameters
 {
     public class PagamentoGastosQueryTest : BaseTest
     {

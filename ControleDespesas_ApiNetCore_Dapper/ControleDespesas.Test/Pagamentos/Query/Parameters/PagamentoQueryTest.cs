@@ -1,17 +1,17 @@
-﻿using ControleDespesas.Domain.Pessoas.Query.Input;
+﻿using ControleDespesas.Domain.Pagamentos.Query.Parameters;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
 using NUnit.Framework;
 
-namespace ControleDespesas.Test.Pessoas.Query.Input
+namespace ControleDespesas.Test.Pagamentos.Query.Parameters
 {
-    public class ObterPessoasQueryTest : BaseTest
+    public class PagamentoQueryTest : BaseTest
     {
-        private ObterPessoasQuery _query;
+        private PagamentoQuery _query;
 
         [SetUp]
-        public void Setup() => _query = new SettingsTest().PessoaObterQuery;
+        public void Setup() => _query = new SettingsTest().PagamentoQuery;
 
         [Test]
         public void ValidarCommand_Valido()
@@ -28,9 +28,9 @@ namespace ControleDespesas.Test.Pessoas.Query.Input
         [Test]
         [TestCase(0)]
         [TestCase(-1)]
-        public void ValidarCommand_IdUsuarioInvalido(int idUsuario)
+        public void ValidarCommand_IdPessoaInvalido(int idPessoa)
         {
-            _query.IdUsuario = idUsuario;
+            _query.IdPessoa = idPessoa;
             var valido = _query.ValidarQuery();
             var notificacoes = _query.Notificacoes.Count;
 

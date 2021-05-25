@@ -1,7 +1,20 @@
 ﻿@page
 @model ControleDespesas.WebApp.Pages.Home.IndexModel
-@{
-}
 
-<p>Teste 123dasda...</p>
-<p>@Model.Message</p>
+<h3>Nova Empresa:</h3>
+
+<br />
+
+<form method="post">
+    Nome:
+    <input asp-for="Empresa.Nome" />
+
+    <br /><br />
+
+    Logo:
+    <input asp-for="Empresa.Logo" />
+
+    <br /><br />
+
+    <input type="submit" />
+</form>

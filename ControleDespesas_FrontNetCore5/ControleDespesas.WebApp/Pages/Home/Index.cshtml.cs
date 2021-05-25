@@ -1,15 +1,27 @@
+using ControleDespesas.WebApp.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
+using System.Threading.Tasks;
 
 namespace ControleDespesas.WebApp.Pages.Home
 {
     public class IndexModel : PageModel
     {
-        public string Message { get; private set; } = "PageModel in C#";
+        [BindProperty]
+        public Empresa Empresa { get; set; }
 
         public void OnGet()
         {
-            Message += $" Server time is { DateTime.Now }";
+
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (!ModelState.IsValid)
+                return Page();
+
+            return RedirectToPage("./Index");
         }
     }
 }

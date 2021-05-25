@@ -22,7 +22,6 @@
                                                     @DataVencimento,
                                                     @ArquivoPagamento,
                                                     @ArquivoComprovante); 
-
                                                 SELECT SCOPE_IDENTITY();";
 
         public static string Atualizar { get; } = @"UPDATE Pagamento SET
@@ -48,24 +47,19 @@
                                                     Pagamento.Valor AS Valor,
                                                     Pagamento.DataPagamento AS DataPagamento,
                                                     Pagamento.DataVencimento AS DataVencimento,
-
                                                     TipoPagamento.Id AS Id,
                                                     TipoPagamento.Descricao AS Descricao, 
-
                                                     Empresa.Id AS Id,
                                                     Empresa.Nome AS Nome, 
                                                     Empresa.Logo AS Logo,
-
                                                     Pessoa.Id AS Id, 
                                                     Pessoa.IdUsuario AS IdUsuario,
                                                     Pessoa.Nome AS Nome,
                                                     Pessoa.ImagemPerfil AS ImagemPerfil
-
                                                 FROM Pagamento WITH(NOLOCK)
                                                 INNER JOIN TipoPagamento WITH(NOLOCK) ON Pagamento.IdTipoPagamento = TipoPagamento.Id 
                                                 INNER JOIN Empresa WITH(NOLOCK) ON Pagamento.IdEmpresa = Empresa.Id 
                                                 INNER JOIN Pessoa WITH(NOLOCK) ON Pagamento.IdPessoa = Pessoa.Id 
-
                                                 WHERE Pagamento.Id = @Id";
 
         public static string Listar { get; } = @"SELECT 
@@ -77,26 +71,20 @@
                                                     Pagamento.Valor AS Valor,
                                                     Pagamento.DataPagamento AS DataPagamento,
                                                     Pagamento.DataVencimento AS DataVencimento,
-
                                                     TipoPagamento.Id AS Id,
                                                     TipoPagamento.Descricao AS Descricao, 
-
                                                     Empresa.Id AS Id,
                                                     Empresa.Nome AS Nome, 
                                                     Empresa.Logo AS Logo,
-
                                                     Pessoa.Id AS Id, 
                                                     Pessoa.Nome AS Nome,
                                                     Pessoa.IdUsuario AS IdUsuario,
                                                     Pessoa.ImagemPerfil AS ImagemPerfil
-
                                                 FROM Pagamento WITH(NOLOCK)
                                                 INNER JOIN TipoPagamento WITH(NOLOCK) ON Pagamento.IdTipoPagamento = TipoPagamento.Id 
                                                 INNER JOIN Empresa WITH(NOLOCK) ON Pagamento.IdEmpresa = Empresa.Id 
                                                 INNER JOIN Pessoa WITH(NOLOCK) ON Pagamento.IdPessoa = Pessoa.Id 
-
                                                 WHERE Pagamento.IdPessoa = @IdPessoa 
-
                                                 ORDER BY Pagamento.Id ASC";
 
         public static string ListarPagamentoConcluido { get; } = @"SELECT 
@@ -108,27 +96,21 @@
                                                                        Pagamento.Valor AS Valor,
                                                                        Pagamento.DataPagamento AS DataPagamento,
                                                                        Pagamento.DataVencimento AS DataVencimento,
-
                                                                        TipoPagamento.Id AS Id,
                                                                        TipoPagamento.Descricao AS Descricao, 
-
                                                                        Empresa.Id AS Id,
                                                                        Empresa.Nome AS Nome, 
                                                                        Empresa.Logo AS Logo,
-
                                                                        Pessoa.Id AS Id, 
                                                                        Pessoa.Nome AS Nome,
                                                                        Pessoa.IdUsuario AS IdUsuario,
                                                                        Pessoa.ImagemPerfil AS ImagemPerfil
-
                                                                    FROM Pagamento WITH(NOLOCK) 
                                                                    INNER JOIN TipoPagamento WITH(NOLOCK) ON Pagamento.IdTipoPagamento = TipoPagamento.Id 
                                                                    INNER JOIN Empresa WITH(NOLOCK) ON Pagamento.IdEmpresa = Empresa.Id 
                                                                    INNER JOIN Pessoa WITH(NOLOCK) ON Pagamento.IdPessoa = Pessoa.Id 
-
                                                                    WHERE Pagamento.IdPessoa = @IdPessoa
                                                                    AND Pagamento.DataPagamento is not NULL
-
                                                                    ORDER BY Pagamento.Id ASC";
 
         public static string ListarPagamentoPendente { get; } = @"SELECT 
@@ -140,27 +122,21 @@
                                                                        Pagamento.Valor AS Valor,
                                                                        Pagamento.DataPagamento AS DataPagamento,
                                                                        Pagamento.DataVencimento AS DataVencimento,
-
                                                                        TipoPagamento.Id AS Id,
                                                                        TipoPagamento.Descricao AS Descricao, 
-
                                                                        Empresa.Id AS Id,
                                                                        Empresa.Nome AS Nome, 
                                                                        Empresa.Logo AS Logo,
-
                                                                        Pessoa.Id AS Id, 
                                                                        Pessoa.Nome AS Nome,
                                                                        Pessoa.IdUsuario AS IdUsuario,
                                                                        Pessoa.ImagemPerfil AS ImagemPerfil
-
                                                                    FROM Pagamento WITH(NOLOCK)
                                                                    INNER JOIN TipoPagamento WITH(NOLOCK) ON Pagamento.IdTipoPagamento = TipoPagamento.Id 
                                                                    INNER JOIN Empresa WITH(NOLOCK) ON Pagamento.IdEmpresa = Empresa.Id 
                                                                    INNER JOIN Pessoa WITH(NOLOCK) ON Pagamento.IdPessoa = Pessoa.Id 
-
                                                                    WHERE Pagamento.IdPessoa = @IdPessoa
                                                                    AND Pagamento.DataPagamento is NULL 
-
                                                                    ORDER BY Pagamento.Id ASC";
 
         public static string ObterArquivoPagamento { get; } = @"SELECT ArquivoPagamento AS Arquivo 

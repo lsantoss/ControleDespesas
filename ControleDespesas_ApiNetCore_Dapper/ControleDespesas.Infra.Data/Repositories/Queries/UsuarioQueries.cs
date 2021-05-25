@@ -10,7 +10,6 @@
                                                     @Login,
                                                     @Senha,
                                                     @Privilegio); 
-
                                                 SELECT SCOPE_IDENTITY();";
 
         public static string Atualizar { get; } = @"UPDATE Usuario SET 

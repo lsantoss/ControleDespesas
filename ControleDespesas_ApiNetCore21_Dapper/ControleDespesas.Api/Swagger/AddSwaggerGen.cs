@@ -13,7 +13,6 @@ namespace ControleDespesas.Api.Swagger
             {
                 swagger.DescribeAllEnumsAsStrings();
                 swagger.DescribeAllParametersInCamelCase();
-                swagger.IncludeXmlComments($@"{AppDomain.CurrentDomain.BaseDirectory}\Swagger.xml");
                 swagger.OperationFilter<SwaggerSecurityFilter>();
                 swagger.OperationFilter<SwaggerNonBodyParameterFilter>();
                 swagger.OperationFilter<SwaggerClassTypeIgnoreFilter<Notificadora>>();

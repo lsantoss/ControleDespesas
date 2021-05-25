@@ -54,7 +54,11 @@ namespace ControleDespesas.Api
 
             app.UseElmah();
             app.UseSwagger();
-            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "ControleDespesas"); });
+            app.UseSwaggerUI(c => 
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "ControleDespesas");
+                //c.SwaggerEndpoint("/controle-despesas-apinc21-dapper/swagger/v1/swagger.json", "ControleDespesas");
+            });
 
             app.UseMvc();
         }

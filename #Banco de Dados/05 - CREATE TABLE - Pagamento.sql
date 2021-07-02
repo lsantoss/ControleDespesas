@@ -5,7 +5,7 @@ BEGIN
 CREATE TABLE [dbo].[Pagamento](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[IdTipoPagamento] [int] NOT NULL,
-	[IdEmpresa] [int] NOT NULL,
+	[IdEmpresa] [bigint] NOT NULL,
 	[IdPessoa] [int] NOT NULL,
 	[Descricao] [nvarchar](250) NOT NULL,
 	[Valor] [money] NOT NULL,

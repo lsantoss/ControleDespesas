@@ -3,7 +3,7 @@ USE [ControleDespesas]
 IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE' AND TABLE_NAME='Empresa') 
 BEGIN
     CREATE TABLE [dbo].[Empresa] (
-        [Id] [int] IDENTITY(1,1) NOT NULL,
+        [Id] [bigint] IDENTITY(1,1) NOT NULL,
         [Nome] [nvarchar](100) NOT NULL,
         [Logo] [text] NOT NULL,
         CONSTRAINT [PK_Empresa] PRIMARY KEY CLUSTERED 

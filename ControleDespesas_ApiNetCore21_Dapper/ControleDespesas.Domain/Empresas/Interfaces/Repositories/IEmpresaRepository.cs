@@ -6,14 +6,14 @@ namespace ControleDespesas.Domain.Empresas.Interfaces.Repositories
 {
     public interface IEmpresaRepository
     {
-        int Salvar(Empresa empresa);
+        long Salvar(Empresa empresa);
         void Atualizar(Empresa empresa);
-        void Deletar(int id);
+        void Deletar(long id);
 
-        EmpresaQueryResult Obter(int id);
+        EmpresaQueryResult Obter(long id);
         List<EmpresaQueryResult> Listar();
 
-        bool CheckId(int id);
-        int LocalizarMaxId();
+        bool CheckId(long id);
+        long LocalizarMaxId();
     }
 }

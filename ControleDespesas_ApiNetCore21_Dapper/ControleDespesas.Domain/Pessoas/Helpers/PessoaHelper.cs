@@ -56,7 +56,7 @@ namespace ControleDespesas.Domain.Pessoas.Helpers
 
         public static CommandOutput GerarDadosRetornoDelete(int id)
         {
-            return new CommandOutput { Id = id };
+            return new CommandOutput(id);
         }
     }
 }

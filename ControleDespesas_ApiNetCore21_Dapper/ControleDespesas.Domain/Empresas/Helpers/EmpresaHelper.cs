@@ -9,41 +9,22 @@ namespace ControleDespesas.Domain.Empresas.Helpers
     {
         public static Empresa GerarEntidade(AdicionarEmpresaCommand command)
         {
-            Empresa empresa = new Empresa(0, command.Nome, command.Logo);
-            empresa.Validar();
-            return empresa;
+            return new Empresa(command.Nome, command.Logo);
         }
 
         public static Empresa GerarEntidade(AtualizarEmpresaCommand command)
         {
-            Empresa empresa = new Empresa(command.Id, command.Nome, command.Logo);
-            empresa.Validar();
-            return empresa;
+            return new Empresa(command.Id, command.Nome, command.Logo);
         }
 
-        public static EmpresaCommandOutput GerarDadosRetornoInsert(Empresa empresa)
+        public static EmpresaCommandOutput GerarDadosRetorno(Empresa empresa)
         {
-            return new EmpresaCommandOutput
-            {
-                Id = empresa.Id,
-                Nome = empresa.Nome,
-                Logo = empresa.Logo
-            };
+            return new EmpresaCommandOutput(empresa.Id, empresa.Nome, empresa.Logo);
         }
 
-        public static EmpresaCommandOutput GerarDadosRetornoUpdate(Empresa empresa)
+        public static CommandOutput GerarDadosRetorno(long id)
         {
-            return new EmpresaCommandOutput
-            {
-                Id = empresa.Id,
-                Nome = empresa.Nome,
-                Logo = empresa.Logo
-            };
-        }
-
-        public static CommandOutput GerarDadosRetornoDelete(int id)
-        {
-            return new CommandOutput { Id = id };
+            return new CommandOutput(id);
         }
     }
 }

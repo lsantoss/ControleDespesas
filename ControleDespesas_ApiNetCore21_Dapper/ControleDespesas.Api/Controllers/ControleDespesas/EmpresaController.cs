@@ -30,6 +30,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// </summary>                
         /// <remarks><h2><b>Lista todas as Empresas.</b></h2></remarks>
         /// <response code="200">OK Request</response>
+        /// <response code="204">No Content</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="403">Forbidden</response>
         /// <response code="500">Internal Server Error</response>
@@ -37,7 +38,9 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [Route("v1/empresas")]
         [Authorize(Roles = "Administrador")]
         [ProducesResponseType(typeof(ApiResponse<List<EmpresaQueryResult>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ApiResponse<List<EmpresaQueryResult>>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(ApiResponse<List<EmpresaQueryResult>>), StatusCodes.Status500InternalServerError)]
         public IActionResult Empresas()
         {
@@ -50,6 +53,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <remarks><h2><b>Consulta a Empresa pelo Id.</b></h2></remarks>
         /// <param name="id">Parâmetro requerido Id da Empresa</param>
         /// <response code="200">OK Request</response>
+        /// <response code="204">No Content</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="403">Forbidden</response>
         /// <response code="500">Internal Server Error</response>
@@ -57,9 +61,11 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [Route("v1/empresas/{id}")]
         [Authorize(Roles = "Administrador")]
         [ProducesResponseType(typeof(ApiResponse<EmpresaQueryResult>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ApiResponse<EmpresaQueryResult>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(ApiResponse<EmpresaQueryResult>), StatusCodes.Status500InternalServerError)]
-        public IActionResult Empresa(int id)
+        public IActionResult Empresa(long id)
         {
             return ResultGet(_repository.Obter(id));
         }
@@ -81,6 +87,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<EmpresaCommandOutput>), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ApiResponse<EmpresaCommandOutput>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<EmpresaCommandOutput>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(ApiResponse<EmpresaCommandOutput>), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(typeof(ApiResponse<EmpresaCommandOutput>), StatusCodes.Status500InternalServerError)]
         public IActionResult EmpresaInserir([FromBody] AdicionarEmpresaCommand command)
@@ -106,9 +113,10 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<EmpresaCommandOutput>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<EmpresaCommandOutput>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<EmpresaCommandOutput>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(ApiResponse<EmpresaCommandOutput>), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(typeof(ApiResponse<EmpresaCommandOutput>), StatusCodes.Status500InternalServerError)]
-        public IActionResult EmpresaAlterar(int id, [FromBody] AtualizarEmpresaCommand command)
+        public IActionResult EmpresaAlterar(long id, [FromBody] AtualizarEmpresaCommand command)
         {
             return ResultHandler(_handler.Handler(id, command));
         }
@@ -128,9 +136,10 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [Authorize(Roles = "Administrador")]
         [ProducesResponseType(typeof(ApiResponse<CommandOutput>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<CommandOutput>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(ApiResponse<CommandOutput>), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(typeof(ApiResponse<CommandOutput>), StatusCodes.Status500InternalServerError)]
-        public IActionResult EmpresaExcluir(int id)
+        public IActionResult EmpresaExcluir(long id)
         {
             return ResultHandler(_handler.Handler(id));
         }

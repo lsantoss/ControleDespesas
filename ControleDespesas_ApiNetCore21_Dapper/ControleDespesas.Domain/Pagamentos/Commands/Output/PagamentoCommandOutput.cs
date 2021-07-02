@@ -6,7 +6,7 @@ namespace ControleDespesas.Domain.Pagamentos.Commands.Output
     {
         public int Id { get; set; }
         public int IdTipoPagamento { get; set; }
-        public int IdEmpresa { get; set; }
+        public long IdEmpresa { get; set; }
         public int IdPessoa { get; set; }
         public string Descricao { get; set; }
         public double Valor { get; set; }

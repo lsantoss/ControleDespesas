@@ -2,6 +2,6 @@
 {
     public interface ICommandOutput
     {
-        int Id { get; set; }
+        long Id { get; set; }
     }
 }

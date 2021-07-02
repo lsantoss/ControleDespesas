@@ -145,31 +145,31 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
 
             EmpresaAtualizarCommand = new AtualizarEmpresaCommand()
             {
-                Id = _configuration.GetValue<int>("SettingsTest:EmpresaAtualizarCommand:Id"),
+                Id = _configuration.GetValue<long>("SettingsTest:EmpresaAtualizarCommand:Id"),
                 Nome = _configuration.GetValue<string>("SettingsTest:EmpresaAtualizarCommand:Nome"),
                 Logo = _configuration.GetValue<string>("SettingsTest:EmpresaAtualizarCommand:Logo")
             };
 
             Empresa1 = new Empresa(
-                _configuration.GetValue<int>("SettingsTest:Empresa1:Id"),
+                _configuration.GetValue<long>("SettingsTest:Empresa1:Id"),
                 _configuration.GetValue<string>("SettingsTest:Empresa1:Nome"),
                 _configuration.GetValue<string>("SettingsTest:Empresa1:Logo")
             );
 
             Empresa2 = new Empresa(
-                _configuration.GetValue<int>("SettingsTest:Empresa2:Id"),
+                _configuration.GetValue<long>("SettingsTest:Empresa2:Id"),
                 _configuration.GetValue<string>("SettingsTest:Empresa2:Nome"),
                 _configuration.GetValue<string>("SettingsTest:Empresa2:Logo")
             );
 
             Empresa3 = new Empresa(
-                _configuration.GetValue<int>("SettingsTest:Empresa3:Id"),
+                _configuration.GetValue<long>("SettingsTest:Empresa3:Id"),
                 _configuration.GetValue<string>("SettingsTest:Empresa3:Nome"),
                 _configuration.GetValue<string>("SettingsTest:Empresa3:Logo")
             );
 
             Empresa1Editada = new Empresa(
-                _configuration.GetValue<int>("SettingsTest:Empresa1Editada:Id"),
+                _configuration.GetValue<long>("SettingsTest:Empresa1Editada:Id"),
                 _configuration.GetValue<string>("SettingsTest:Empresa1Editada:Nome"),
                 _configuration.GetValue<string>("SettingsTest:Empresa1Editada:Logo")
             );
@@ -324,7 +324,7 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                     _configuration.GetValue<string>("SettingsTest:Pagamento1:TipoPagamento:Descricao")
                 ),
                 new Empresa(
-                    _configuration.GetValue<int>("SettingsTest:Pagamento1:Empresa:Id"),
+                    _configuration.GetValue<long>("SettingsTest:Pagamento1:Empresa:Id"),
                     _configuration.GetValue<string>("SettingsTest:Pagamento1:Empresa:Nome"),
                     _configuration.GetValue<string>("SettingsTest:Pagamento1:Empresa:Logo")
                 ),
@@ -349,7 +349,7 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                     _configuration.GetValue<string>("SettingsTest:Pagamento2:TipoPagamento:Descricao")
                 ),
                 new Empresa(
-                    _configuration.GetValue<int>("SettingsTest:Pagamento2:Empresa:Id"),
+                    _configuration.GetValue<long>("SettingsTest:Pagamento2:Empresa:Id"),
                     _configuration.GetValue<string>("SettingsTest:Pagamento2:Empresa:Nome"),
                     _configuration.GetValue<string>("SettingsTest:Pagamento2:Empresa:Logo")
                 ),
@@ -374,7 +374,7 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                     _configuration.GetValue<string>("SettingsTest:Pagamento3:TipoPagamento:Descricao")
                 ),
                 new Empresa(
-                    _configuration.GetValue<int>("SettingsTest:Pagamento3:Empresa:Id"),
+                    _configuration.GetValue<long>("SettingsTest:Pagamento3:Empresa:Id"),
                     _configuration.GetValue<string>("SettingsTest:Pagamento3:Empresa:Nome"),
                     _configuration.GetValue<string>("SettingsTest:Pagamento3:Empresa:Logo")
                 ),
@@ -399,7 +399,7 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
                     _configuration.GetValue<string>("SettingsTest:Pagamento1Editado:TipoPagamento:Descricao")
                 ),
                 new Empresa(
-                    _configuration.GetValue<int>("SettingsTest:Pagamento1Editado:Empresa:Id"),
+                    _configuration.GetValue<long>("SettingsTest:Pagamento1Editado:Empresa:Id"),
                     _configuration.GetValue<string>("SettingsTest:Pagamento1Editado:Empresa:Nome"),
                     _configuration.GetValue<string>("SettingsTest:Pagamento1Editado:Empresa:Logo")
                 ),

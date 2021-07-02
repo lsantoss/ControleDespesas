@@ -78,7 +78,7 @@ namespace ControleDespesas.Test.Usuarios.Helpers
         [Test]
         public void GerarDadosRetornoDelte()
         {
-            var entidade = new SettingsTest().Empresa1;
+            var entidade = new SettingsTest().Usuario1;
 
             var command = UsuarioHelper.GerarDadosRetornoDelete(entidade.Id);
 

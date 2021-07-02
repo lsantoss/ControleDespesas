@@ -19,31 +19,29 @@ namespace ControleDespesas.Api.Controllers.Comum
         [NonAction]
         protected IActionResult ResultGetList<T>(IList<T> lista)
         {
-            string mensagem;
-
             if (lista.Count > 0)
-                mensagem = "Lista obtida com sucesso";
+            {
+                var response = new ApiResponse<IList<T>>("Lista obtida com sucesso", lista);
+                return StatusCode(StatusCodes.Status200OK, response);
+            }
             else
-                mensagem = "Nenhum registro cadastrado atualmente";
-
-            var response = new ApiResponse<IList<T>>(mensagem, lista);
-
-            return StatusCode(StatusCodes.Status200OK, response);
+            {
+                return StatusCode(StatusCodes.Status204NoContent);
+            }
         }
 
         [NonAction]
         protected IActionResult ResultGet<T>(T registro)
         {
-            string mensagem;
-
             if (registro != null)
-                mensagem = "Registro obtido com sucesso";
+            {
+                var response = new ApiResponse<object>("Registro obtido com sucesso", registro);
+                return StatusCode(StatusCodes.Status200OK, response);
+            }
             else
-                mensagem = "Nenhum registro cadastrado atualmente";
-
-            var response = new ApiResponse<object>(mensagem, registro);
-
-            return StatusCode(StatusCodes.Status200OK, response);
+            {
+                return StatusCode(StatusCodes.Status204NoContent);
+            }
         }
 
         [NonAction]

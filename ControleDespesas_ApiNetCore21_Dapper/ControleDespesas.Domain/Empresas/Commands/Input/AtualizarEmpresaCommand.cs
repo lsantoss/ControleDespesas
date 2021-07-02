@@ -7,7 +7,7 @@ namespace ControleDespesas.Domain.Empresas.Commands.Input
     public class AtualizarEmpresaCommand : Notificadora, CommandPadrao
     {
         [JsonIgnore]
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string Nome { get; set; }
         public string Logo { get; set; }
 

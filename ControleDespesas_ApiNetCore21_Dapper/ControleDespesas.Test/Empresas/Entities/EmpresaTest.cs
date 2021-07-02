@@ -23,74 +23,72 @@ namespace ControleDespesas.Test.Empresas.Entities
         }
 
         [Test]
-        [TestCase(null)]
-        [TestCase("")]
-        [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
-        public void ValidarEntidade_NomeInvalido(string nome)
+        [TestCase(0, null, null)]
+        [TestCase(0, "", "")]
+        public void ValidarEntidade_Invalido(long id, string nome, string logo)
         {
-            _empresa.DefinirNome(nome);
-            _empresa.Validar();
+            var _empresa1 = new Empresa(id);
+            var _empresa2 = new Empresa(nome, logo);
+            var _empresa3 = new Empresa(id, nome, logo);
 
-            TestContext.WriteLine(_empresa.FormatarJsonDeSaida());
+            TestContext.WriteLine("Contrutor 1:");
+            TestContext.WriteLine(_empresa1.FormatarJsonDeSaida());
+            TestContext.WriteLine("\nContrutor 2:");
+            TestContext.WriteLine(_empresa2.FormatarJsonDeSaida());
+            TestContext.WriteLine("\nContrutor 3:");
+            TestContext.WriteLine(_empresa3.FormatarJsonDeSaida());
 
-            Assert.False(_empresa.Valido);
-            Assert.AreNotEqual(0, _empresa.Notificacoes.Count);
+            Assert.False(_empresa1.Valido);
+            Assert.AreNotEqual(0, _empresa1.Notificacoes.Count);
+
+            Assert.False(_empresa2.Valido);
+            Assert.AreNotEqual(0, _empresa2.Notificacoes.Count);
+
+            Assert.False(_empresa3.Valido);
+            Assert.AreNotEqual(0, _empresa3.Notificacoes.Count);
         }
 
         [Test]
-        [TestCase(null)]
-        [TestCase("")]
-        public void ValidarEntidade_LogoInvalido(string logo)
-        {
-            _empresa.DefinirLogo(logo);
-            _empresa.Validar();
-
-            TestContext.WriteLine(_empresa.FormatarJsonDeSaida());
-
-            Assert.False(_empresa.Valido);
-            Assert.AreNotEqual(0, _empresa.Notificacoes.Count);
-        }
-
-        [Test]
-        [TestCase(1)]
-        [TestCase(10)]
-        public void DefinirId(int id)
+        [TestCase(-1)]
+        [TestCase(0)]
+        public void DefinirId_Invalido(long id)
         {
             _empresa.DefinirId(id);
 
             TestContext.WriteLine(_empresa.FormatarJsonDeSaida());
 
             Assert.AreEqual(id, _empresa.Id);
-            Assert.True(_empresa.Valido);
-            Assert.AreEqual(0, _empresa.Notificacoes.Count);
+            Assert.False(_empresa.Valido);
+            Assert.AreNotEqual(0, _empresa.Notificacoes.Count);
         }
 
         [Test]
-        [TestCase("Oi")]
-        [TestCase("Vivo")]
-        public void DefinirNome(string nome)
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        public void DefinirNome_Invalido(string nome)
         {
             _empresa.DefinirNome(nome);
 
             TestContext.WriteLine(_empresa.FormatarJsonDeSaida());
 
             Assert.AreEqual(nome, _empresa.Nome);
-            Assert.True(_empresa.Valido);
-            Assert.AreEqual(0, _empresa.Notificacoes.Count);
+            Assert.False(_empresa.Valido);
+            Assert.AreNotEqual(0, _empresa.Notificacoes.Count);
         }
 
         [Test]
-        [TestCase("Imagem.png")]
-        [TestCase("Logo.png")]
-        public void DefinirLogo(string logo)
+        [TestCase(null)]
+        [TestCase("")]
+        public void DefinirLogo_Invalido(string logo)
         {
             _empresa.DefinirLogo(logo);
 
             TestContext.WriteLine(_empresa.FormatarJsonDeSaida());
 
             Assert.AreEqual(logo, _empresa.Logo);
-            Assert.True(_empresa.Valido);
-            Assert.AreEqual(0, _empresa.Notificacoes.Count);
+            Assert.False(_empresa.Valido);
+            Assert.AreNotEqual(0, _empresa.Notificacoes.Count);
         }
 
         [TearDown]

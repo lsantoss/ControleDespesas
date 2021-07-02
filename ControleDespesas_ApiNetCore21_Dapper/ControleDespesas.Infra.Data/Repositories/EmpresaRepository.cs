@@ -21,20 +21,20 @@ namespace ControleDespesas.Infra.Data.Repositories
             _settingsInfraData = settingsInfraData;
         }
 
-        public int Salvar(Empresa empresa)
+        public long Salvar(Empresa empresa)
         {
             _parametros.Add("Nome", empresa.Nome, DbType.String);
             _parametros.Add("Logo", empresa.Logo, DbType.String);
 
             using(var connection = new SqlConnection(_settingsInfraData.ConnectionString))
             {
-                return connection.ExecuteScalar<int>(EmpresaQueries.Salvar, _parametros);
+                return connection.ExecuteScalar<long>(EmpresaQueries.Salvar, _parametros);
             }
         }
 
         public void Atualizar(Empresa empresa)
         {
-            _parametros.Add("Id", empresa.Id, DbType.Int32);
+            _parametros.Add("Id", empresa.Id, DbType.Int64);
             _parametros.Add("Nome", empresa.Nome, DbType.String);
             _parametros.Add("Logo", empresa.Logo, DbType.String);
 
@@ -44,9 +44,9 @@ namespace ControleDespesas.Infra.Data.Repositories
             }
         }
 
-        public void Deletar(int id)
+        public void Deletar(long id)
         {
-            _parametros.Add("Id", id, DbType.Int32);
+            _parametros.Add("Id", id, DbType.Int64);
 
             using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
             {
@@ -54,9 +54,9 @@ namespace ControleDespesas.Infra.Data.Repositories
             }
         }
 
-        public EmpresaQueryResult Obter(int id)
+        public EmpresaQueryResult Obter(long id)
         {
-            _parametros.Add("Id", id, DbType.Int32);
+            _parametros.Add("Id", id, DbType.Int64);
 
             using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
             {
@@ -72,9 +72,9 @@ namespace ControleDespesas.Infra.Data.Repositories
             }
         }
 
-        public bool CheckId(int id)
+        public bool CheckId(long id)
         {
-            _parametros.Add("Id", id, DbType.Int32);
+            _parametros.Add("Id", id, DbType.Int64);
 
             using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
             {
@@ -82,11 +82,11 @@ namespace ControleDespesas.Infra.Data.Repositories
             }
         }
 
-        public int LocalizarMaxId()
+        public long LocalizarMaxId()
         {
             using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
             {
-                return connection.Query<int>(EmpresaQueries.LocalizarMaxId).FirstOrDefault();
+                return connection.Query<long>(EmpresaQueries.LocalizarMaxId).FirstOrDefault();
             }
         }
     }

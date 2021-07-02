@@ -2,8 +2,15 @@
 {
     public class EmpresaCommandOutput
     {
-        public int Id { get; set; }
-        public string Nome { get; set; }
-        public string Logo { get; set; }
+        public long Id { get; private set; }
+        public string Nome { get; private set; }
+        public string Logo { get; private set; }
+
+        public EmpresaCommandOutput(long id, string nome, string logo)
+        {
+            Id = id;
+            Nome = nome;
+            Logo = logo;
+        }
     }
 }

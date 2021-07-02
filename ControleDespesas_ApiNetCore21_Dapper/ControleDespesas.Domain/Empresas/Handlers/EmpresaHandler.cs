@@ -33,14 +33,16 @@ namespace ControleDespesas.Domain.Empresas.Handlers
 
             var id = _repository.Salvar(empresa);
             empresa.DefinirId(id);
-            var dadosRetorno = EmpresaHelper.GerarDadosRetornoInsert(empresa);
+
+            var dadosRetorno = EmpresaHelper.GerarDadosRetorno(empresa);
+
             return new CommandResult(StatusCodes.Status201Created, "Empresa gravada com sucesso!", dadosRetorno);
         }
 
-        public ICommandResult<Notificacao> Handler(int id, AtualizarEmpresaCommand command)
+        public ICommandResult<Notificacao> Handler(long id, AtualizarEmpresaCommand command)
         {
             if (command == null)
-                return new CommandResult(StatusCodes.Status400BadRequest, "Parâmetros de entrada", "Parâmetros de entrada", "Parâmetros de entrada estão nulos");
+                return new CommandResult(StatusCodes.Status400BadRequest, "Parâmentros inválidos", "Parâmetros de entrada", "Parâmetros de entrada estão nulos");
 
             command.Id = id;
 
@@ -56,17 +58,21 @@ namespace ControleDespesas.Domain.Empresas.Handlers
                 return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", "Id", "Id inválido. Este id não está cadastrado!");
 
             _repository.Atualizar(empresa);
-            var dadosRetorno = EmpresaHelper.GerarDadosRetornoUpdate(empresa);
+
+            var dadosRetorno = EmpresaHelper.GerarDadosRetorno(empresa);
+
             return new CommandResult(StatusCodes.Status200OK, "Empresa atualizada com sucesso!", dadosRetorno);
         }
 
-        public ICommandResult<Notificacao> Handler(int id)
+        public ICommandResult<Notificacao> Handler(long id)
         {
             if (!_repository.CheckId(id))
                 return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", "Id", "Id inválido. Este id não está cadastrado!");
 
             _repository.Deletar(id);
-            var dadosRetorno = EmpresaHelper.GerarDadosRetornoDelete(id);
+
+            var dadosRetorno = EmpresaHelper.GerarDadosRetorno(id);
+
             return new CommandResult(StatusCodes.Status200OK, "Empresa excluída com sucesso!", dadosRetorno);
         }
     }

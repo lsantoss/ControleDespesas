@@ -22,26 +22,23 @@ namespace ControleDespesas.Api.ActionFilters
         {
             IHeaderDictionary header = context.HttpContext.Request.Headers;
 
-            if (!header.ContainsKey("ChaveAPI") || string.IsNullOrEmpty(header["ChaveAPI"]))
+            if ((!header.ContainsKey("ChaveAPI") || string.IsNullOrEmpty(header["ChaveAPI"])) && header["ChaveAPI"] != _settings.ChaveAPI)
             {
-                if (header["ChaveAPI"] != _settings.ChaveAPI)
+                var mensagem = "Acesso negado";
+                var notificacao = new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada");
+                var erros = new List<Notificacao>() { notificacao };
+                var retorno = new ApiResponse<object>(mensagem, erros);
+                var jsonRetorno = JsonConvert.SerializeObject(retorno);
+
+                context.Result = new ContentResult()
                 {
-                    var mensagem = "Acesso negado";
-                    var notificacao = new Notificacao("Chave da API", "ChaveAPI não corresponde com a chave esperada");
-                    var erros = new List<Notificacao>() { notificacao };
-                    var retorno = new ApiResponse<object>(mensagem, erros);
-                    var jsonRetorno = JsonConvert.SerializeObject(retorno);
+                    StatusCode = StatusCodes.Status401Unauthorized,
+                    ContentType = "application/json",
+                    Content = jsonRetorno
+                };
 
-                    context.Result = new ContentResult()
-                    {
-                        StatusCode = StatusCodes.Status401Unauthorized,
-                        ContentType = "application/json",
-                        Content = jsonRetorno
-                    };
-
-                    base.OnActionExecuting(context);
-                    return;
-                }                
+                base.OnActionExecuting(context);
+                return;   
             }
 
             base.OnActionExecuting(context);

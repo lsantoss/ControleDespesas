@@ -17,7 +17,7 @@ namespace ControleDespesas.Api.Swagger
 
             if (methodInfo.MemberType == MemberTypes.Method)
             {
-                var allowAnonymous = methodInfo.CustomAttributes.Where(x => x.AttributeType.Name == "AllowAnonymousAttribute").Any();
+                var allowAnonymous = methodInfo.CustomAttributes.Any(x => x.AttributeType.Name == "AllowAnonymousAttribute");
 
                 if (!allowAnonymous)
                 {

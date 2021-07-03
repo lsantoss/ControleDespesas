@@ -12,7 +12,7 @@ namespace ControleDespesas.Test.Usuarios.Helpers
 
         public TokenJwtHelperTest()
         {
-            _tokenJwtHelper = new TokenJwtHelper(MockSettingsAPI);
+            _tokenJwtHelper = new TokenJwtHelper(MockSettingsApi);
         }
 
         [SetUp]

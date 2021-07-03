@@ -21,7 +21,7 @@ namespace ControleDespesas.Test.HealthCheck.Controllers
             _repository = new HealthCheckRepository(MockSettingsInfraData);
             _controller = new HealthCheckController(_repository);
             _controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            _controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = MockSettingsAPI.ChaveAPI;
+            _controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = MockSettingsApi.ChaveAPI;
         }
 
         [SetUp]

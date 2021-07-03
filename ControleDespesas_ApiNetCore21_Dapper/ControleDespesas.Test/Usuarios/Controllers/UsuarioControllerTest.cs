@@ -31,12 +31,12 @@ namespace ControleDespesas.Test.Usuarios.Controllers
         {
             CriarBaseDeDadosETabelas();
 
-            _tokenJwtHelper = new TokenJwtHelper(MockSettingsAPI);
+            _tokenJwtHelper = new TokenJwtHelper(MockSettingsApi);
             _repository = new UsuarioRepository(MockSettingsInfraData);
             _handler = new UsuarioHandler(_repository, _tokenJwtHelper);
             _controller = new UsuarioController(_repository, _handler);
             _controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            _controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = MockSettingsAPI.ChaveAPI;
+            _controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = MockSettingsApi.ChaveAPI;
         }
 
         [SetUp]

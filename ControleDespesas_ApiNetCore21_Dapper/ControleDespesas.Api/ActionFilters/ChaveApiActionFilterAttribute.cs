@@ -11,9 +11,9 @@ namespace ControleDespesas.Api.ActionFilters
 {
     public class ChaveApiActionFilterAttribute : ActionFilterAttribute
     {
-        private readonly SettingsAPI _settings;
+        private readonly SettingsApi _settings;
 
-        public ChaveApiActionFilterAttribute(SettingsAPI settings)
+        public ChaveApiActionFilterAttribute(SettingsApi settings)
         {
             _settings = settings;
         }

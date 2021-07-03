@@ -32,7 +32,7 @@ namespace ControleDespesas.Test.TiposPagamentos.Controllers
             _handler = new TipoPagamentoHandler(_repository);
             _controller = new TipoPagamentoController(_repository, _handler);
             _controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            _controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = MockSettingsAPI.ChaveAPI;
+            _controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = MockSettingsApi.ChaveAPI;
         }
 
         [SetUp]

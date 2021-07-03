@@ -25,7 +25,7 @@ namespace ControleDespesas.Test.Usuarios.Handlers
         {
             CriarBaseDeDadosETabelas();
 
-            _tokenJwtHelper = new TokenJwtHelper(MockSettingsAPI);
+            _tokenJwtHelper = new TokenJwtHelper(MockSettingsApi);
             _repository = new UsuarioRepository(MockSettingsInfraData);
             _handler = new UsuarioHandler(_repository, _tokenJwtHelper);
         }

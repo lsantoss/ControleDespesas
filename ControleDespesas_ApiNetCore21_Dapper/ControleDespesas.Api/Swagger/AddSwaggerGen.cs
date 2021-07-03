@@ -42,11 +42,6 @@ namespace ControleDespesas.Api.Swagger
                     Name = "Authorization",
                     Type = "apiKey"
                 });
-
-                //swagger.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
-                //{
-                //    {"Bearer", new string[] { }},
-                //});
             });
 
             return services;

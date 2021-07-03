@@ -1,6 +1,6 @@
 ﻿namespace ControleDespesas.Infra.Settings
 {
-    public class SettingsAPI
+    public class SettingsApi
     {
         public string ControleDespesasAPINetCore { get; set; }
         public string ChaveAPI { get; set; }

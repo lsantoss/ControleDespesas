@@ -35,7 +35,7 @@ namespace ControleDespesas.Test.Pessoas.Controllers
             _handler = new PessoaHandler(_repositoryPessoa, _repositoryUsuario);
             _controller = new PessoaController(_repositoryPessoa, _handler);
             _controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            _controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = MockSettingsAPI.ChaveAPI;
+            _controller.ControllerContext.HttpContext.Request.Headers["ChaveAPI"] = MockSettingsApi.ChaveAPI;
         }
 
         [SetUp]

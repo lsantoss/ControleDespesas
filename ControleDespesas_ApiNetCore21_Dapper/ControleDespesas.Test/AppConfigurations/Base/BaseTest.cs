@@ -4,17 +4,16 @@ using NUnit.Framework;
 
 namespace ControleDespesas.Test.AppConfigurations.Base
 {
-    [TestFixture]
     public class BaseTest
     {
         protected SettingsTest MockSettingsTest { get; }
-        protected SettingsAPI MockSettingsAPI { get; }
+        protected SettingsApi MockSettingsApi { get; }
 
         public BaseTest()
         {
             MockSettingsTest = new SettingsTest();
 
-            MockSettingsAPI = new SettingsAPI()
+            MockSettingsApi = new SettingsApi()
             {
                 ControleDespesasAPINetCore = MockSettingsTest.ControleDespesasAPINetCore,
                 ChaveAPI = MockSettingsTest.ChaveAPI,

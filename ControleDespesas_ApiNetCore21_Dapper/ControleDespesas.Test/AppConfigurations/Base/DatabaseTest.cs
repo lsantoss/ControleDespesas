@@ -1,13 +1,11 @@
 ﻿using ControleDespesas.Infra.Settings;
 using Dapper;
-using NUnit.Framework;
 using System;
 using System.Data.SqlClient;
 using System.IO;
 
 namespace ControleDespesas.Test.AppConfigurations.Base
 {
-    [TestFixture]
     public class DatabaseTest : BaseTest
     {
         protected SettingsInfraData MockSettingsInfraData { get; }

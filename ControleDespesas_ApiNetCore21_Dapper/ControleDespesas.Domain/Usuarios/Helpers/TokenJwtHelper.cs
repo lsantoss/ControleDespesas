@@ -11,9 +11,9 @@ namespace ControleDespesas.Domain.Usuarios.Helpers
 {
     public class TokenJwtHelper : ITokenJwtHelper
     {
-        private readonly SettingsAPI _settings;
+        private readonly SettingsApi _settings;
 
-        public TokenJwtHelper(SettingsAPI settings)
+        public TokenJwtHelper(SettingsApi settings)
         {
             _settings = settings;
         }

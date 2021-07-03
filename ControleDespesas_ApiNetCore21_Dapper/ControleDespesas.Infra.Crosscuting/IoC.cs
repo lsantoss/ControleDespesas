@@ -32,7 +32,7 @@ namespace ControleDespesas.Infra.Crosscuting
     {
         public static IServiceCollection AddAppSettings(this IServiceCollection services, IConfiguration configuration)
         {
-            SettingsAPI settingsAPI = new SettingsAPI();
+            SettingsApi settingsAPI = new SettingsApi();
             configuration.GetSection("SettingsAPI").Bind(settingsAPI);
             services.AddSingleton(settingsAPI);
 
@@ -95,14 +95,10 @@ namespace ControleDespesas.Infra.Crosscuting
 
         public static IServiceCollection AddElmahCore(this IServiceCollection services, IConfiguration configuration)
         {
-            //Log em Memória
-            //services.AddElmah(options => { options.Path = @"elmah"; });
-
-            ////Log salvando em XML
-            //services.AddElmah<XmlFileErrorLog>(options => { options.LogPath = "~/log"; });
-
-            //Log salvando no banco de dados
-            services.AddElmah<SqlErrorLog>(options => { options.ConnectionString = configuration["SettingsInfraData:ConnectionString"]; });
+            services.AddElmah<SqlErrorLog>(options => 
+            {
+                options.ConnectionString = configuration["SettingsInfraData:ConnectionString"]; 
+            });
 
             return services;
         }

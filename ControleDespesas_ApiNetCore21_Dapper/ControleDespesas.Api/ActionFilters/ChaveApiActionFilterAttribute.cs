@@ -9,11 +9,11 @@ using System.Collections.Generic;
 
 namespace ControleDespesas.Api.ActionFilters
 {
-    public class ChaveApiActionFilter : ActionFilterAttribute
+    public class ChaveApiActionFilterAttribute : ActionFilterAttribute
     {
         private readonly SettingsAPI _settings;
 
-        public ChaveApiActionFilter(SettingsAPI settings)
+        public ChaveApiActionFilterAttribute(SettingsAPI settings)
         {
             _settings = settings;
         }

@@ -6,7 +6,7 @@ namespace ControleDespesas.Api.Controllers.Comum
 {
     [AllowAnonymous]
     [ApiExplorerSettings(IgnoreApi = true)]
-    [TypeFilter(typeof(RequestResponseActionFilter))]
+    [TypeFilter(typeof(RequestResponseActionFilterAttribute))]
     public class DocsController : Controller
     {
         [HttpGet("docs")]

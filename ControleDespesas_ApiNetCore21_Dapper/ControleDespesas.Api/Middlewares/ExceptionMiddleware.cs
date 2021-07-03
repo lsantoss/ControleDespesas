@@ -38,8 +38,6 @@ namespace ControleDespesas.Api.Middlewares
 				httpContext.Response.ContentType = "application/json";
 				httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
 				await httpContext.Response.WriteAsync(jsonRetorno);
-
-				return;
 			}
 		}
 	}

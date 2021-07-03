@@ -10,8 +10,8 @@ using System.Collections.Generic;
 namespace ControleDespesas.Api.Controllers.Comum
 {
     [Authorize]
-    [TypeFilter(typeof(ChaveApiActionFilter))]
-    [TypeFilter(typeof(RequestResponseActionFilter))]
+    [TypeFilter(typeof(ChaveApiActionFilterAttribute))]
+    [TypeFilter(typeof(RequestResponseActionFilterAttribute))]
     [Consumes("application/json")]
     [Produces("application/json")]
     public class BaseController : ControllerBase

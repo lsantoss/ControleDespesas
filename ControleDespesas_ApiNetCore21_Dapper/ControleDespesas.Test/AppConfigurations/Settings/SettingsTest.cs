@@ -237,27 +237,27 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
 
             TipoPagamentoAtualizarCommand = new AtualizarTipoPagamentoCommand()
             {
-                Id = _configuration.GetValue<int>("SettingsTest:TipoPagamentoAtualizarCommand:Id"),
+                Id = _configuration.GetValue<long>("SettingsTest:TipoPagamentoAtualizarCommand:Id"),
                 Descricao = _configuration.GetValue<string>("SettingsTest:TipoPagamentoAtualizarCommand:Descricao")
             };
 
             TipoPagamento1 = new TipoPagamento(
-                _configuration.GetValue<int>("SettingsTest:TipoPagamento1:Id"),
+                _configuration.GetValue<long>("SettingsTest:TipoPagamento1:Id"),
                 _configuration.GetValue<string>("SettingsTest:TipoPagamento1:Descricao")
             );
 
             TipoPagamento2 = new TipoPagamento(
-                _configuration.GetValue<int>("SettingsTest:TipoPagamento2:Id"),
+                _configuration.GetValue<long>("SettingsTest:TipoPagamento2:Id"),
                 _configuration.GetValue<string>("SettingsTest:TipoPagamento2:Descricao")
             );
 
             TipoPagamento3 = new TipoPagamento(
-                _configuration.GetValue<int>("SettingsTest:TipoPagamento3:Id"),
+                _configuration.GetValue<long>("SettingsTest:TipoPagamento3:Id"),
                 _configuration.GetValue<string>("SettingsTest:TipoPagamento3:Descricao")
             );
 
             TipoPagamento1Editado = new TipoPagamento(
-                _configuration.GetValue<int>("SettingsTest:TipoPagamento1Editado:Id"),
+                _configuration.GetValue<long>("SettingsTest:TipoPagamento1Editado:Id"),
                 _configuration.GetValue<string>("SettingsTest:TipoPagamento1Editado:Descricao")
             );
 
@@ -320,7 +320,7 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
             Pagamento1 = new Pagamento(
                 _configuration.GetValue<int>("SettingsTest:Pagamento1:Id"),
                 new TipoPagamento(
-                    _configuration.GetValue<int>("SettingsTest:Pagamento1:TipoPagamento:Id"),
+                    _configuration.GetValue<long>("SettingsTest:Pagamento1:TipoPagamento:Id"),
                     _configuration.GetValue<string>("SettingsTest:Pagamento1:TipoPagamento:Descricao")
                 ),
                 new Empresa(
@@ -345,7 +345,7 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
             Pagamento2 = new Pagamento(
                  _configuration.GetValue<int>("SettingsTest:Pagamento2:Id"),
                 new TipoPagamento(
-                    _configuration.GetValue<int>("SettingsTest:Pagamento2:TipoPagamento:Id"),
+                    _configuration.GetValue<long>("SettingsTest:Pagamento2:TipoPagamento:Id"),
                     _configuration.GetValue<string>("SettingsTest:Pagamento2:TipoPagamento:Descricao")
                 ),
                 new Empresa(
@@ -370,7 +370,7 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
             Pagamento3 = new Pagamento(
                  _configuration.GetValue<int>("SettingsTest:Pagamento3:Id"),
                 new TipoPagamento(
-                    _configuration.GetValue<int>("SettingsTest:Pagamento3:TipoPagamento:Id"),
+                    _configuration.GetValue<long>("SettingsTest:Pagamento3:TipoPagamento:Id"),
                     _configuration.GetValue<string>("SettingsTest:Pagamento3:TipoPagamento:Descricao")
                 ),
                 new Empresa(
@@ -395,7 +395,7 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
             Pagamento1Editado = new Pagamento(
                 _configuration.GetValue<int>("SettingsTest:Pagamento1Editado:Id"),
                 new TipoPagamento(
-                    _configuration.GetValue<int>("SettingsTest:Pagamento1Editado:TipoPagamento:Id"),
+                    _configuration.GetValue<long>("SettingsTest:Pagamento1Editado:TipoPagamento:Id"),
                     _configuration.GetValue<string>("SettingsTest:Pagamento1Editado:TipoPagamento:Descricao")
                 ),
                 new Empresa(

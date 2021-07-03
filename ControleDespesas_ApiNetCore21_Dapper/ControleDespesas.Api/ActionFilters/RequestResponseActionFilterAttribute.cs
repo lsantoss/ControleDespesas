@@ -11,13 +11,13 @@ using System.Text;
 
 namespace ControleDespesas.Api.ActionFilters
 {
-    public class RequestResponseActionFilter : ActionFilterAttribute
+    public class RequestResponseActionFilterAttribute : ActionFilterAttribute
     {
         private Stopwatch _stopwatch;
         private DateTime _dataRequest;
         private readonly ILogRequestResponseRepository _logRequestResponseRepository;
 
-        public RequestResponseActionFilter(ILogRequestResponseRepository logRequestResponseRepository)
+        public RequestResponseActionFilterAttribute(ILogRequestResponseRepository logRequestResponseRepository)
         {
             _logRequestResponseRepository = logRequestResponseRepository;
         }

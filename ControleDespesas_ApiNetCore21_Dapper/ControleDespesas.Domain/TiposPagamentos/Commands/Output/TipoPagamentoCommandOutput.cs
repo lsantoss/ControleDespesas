@@ -2,7 +2,13 @@
 {
     public class TipoPagamentoCommandOutput
     {
-        public int Id { get; set; }
-        public string Descricao { get; set; }
+        public long Id { get; private set; }
+        public string Descricao { get; private set; }
+
+        public TipoPagamentoCommandOutput(long id, string descricao)
+        {
+            Id = id;
+            Descricao = descricao;
+        }
     }
 }

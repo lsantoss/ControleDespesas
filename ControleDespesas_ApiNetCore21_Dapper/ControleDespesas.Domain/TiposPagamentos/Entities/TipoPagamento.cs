@@ -4,32 +4,37 @@ namespace ControleDespesas.Domain.TiposPagamentos.Entities
 {
     public class TipoPagamento : Notificadora
     {
-        public int Id { get; private set; }
+        public long Id { get; private set; }
         public string Descricao { get; private set; }
 
-        public TipoPagamento(int id, string descricao)
+        public TipoPagamento(long id)
         {
-            Id = id;
-            Descricao = descricao;
+            DefinirId(id);
         }
 
-        public TipoPagamento(int id)
+        public TipoPagamento(string descricao)
         {
-            Id = id;
+            DefinirDescricao(descricao);
         }
 
-        public void DefinirId(int id)
+        public TipoPagamento(long id, string descricao)
+        {
+            DefinirId(id);
+            DefinirDescricao(descricao);
+        }
+
+        public void DefinirId(long id)
         {
             Id = id;
+
+            if (Id <= 0)
+                AddNotificacao("Id", "Id não é valido");
         }
 
         public void DefinirDescricao(string descricao)
         {
             Descricao = descricao;
-        }
 
-        public void Validar()
-        {
             if (string.IsNullOrEmpty(Descricao))
                 AddNotificacao("Descricao", "Descricao é um campo obrigatório");
             else if (Descricao.Length > 250)

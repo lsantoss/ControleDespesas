@@ -9,37 +9,20 @@ namespace ControleDespesas.Domain.TiposPagamentos.Helpers
     {
         public static TipoPagamento GerarEntidade(AdicionarTipoPagamentoCommand command)
         {
-            TipoPagamento tipoPagamento = new TipoPagamento(0, command.Descricao);
-            tipoPagamento.Validar();
-            return tipoPagamento;
+            return new TipoPagamento(command.Descricao);
         }
 
         public static TipoPagamento GerarEntidade(AtualizarTipoPagamentoCommand command)
         {
-            TipoPagamento tipoPagamento = new TipoPagamento(command.Id, command.Descricao);
-            tipoPagamento.Validar();
-            return tipoPagamento;
+            return new TipoPagamento(command.Id, command.Descricao);
         }
 
-        public static TipoPagamentoCommandOutput GerarDadosRetornoInsert(TipoPagamento tipoPagamento)
+        public static TipoPagamentoCommandOutput GerarDadosRetorno(TipoPagamento tipoPagamento)
         {
-            return new TipoPagamentoCommandOutput
-            {
-                Id = tipoPagamento.Id,
-                Descricao = tipoPagamento.Descricao,
-            };
+            return new TipoPagamentoCommandOutput(tipoPagamento.Id, tipoPagamento.Descricao);
         }
 
-        public static TipoPagamentoCommandOutput GerarDadosRetornoUpdate(TipoPagamento tipoPagamento)
-        {
-            return new TipoPagamentoCommandOutput
-            {
-                Id = tipoPagamento.Id,
-                Descricao = tipoPagamento.Descricao,
-            };
-        }
-
-        public static CommandOutput GerarDadosRetornoDelete(int id)
+        public static CommandOutput GerarDadosRetornoDelete(long id)
         {
             return new CommandOutput(id);
         }

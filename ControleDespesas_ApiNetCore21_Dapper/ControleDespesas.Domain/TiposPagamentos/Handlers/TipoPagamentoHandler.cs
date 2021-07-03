@@ -33,11 +33,13 @@ namespace ControleDespesas.Domain.TiposPagamentos.Handlers
 
             var id = _repository.Salvar(tipoPagamento);
             tipoPagamento.DefinirId(id);
-            var dadosRetorno = TipoPagamentoHelper.GerarDadosRetornoInsert(tipoPagamento);
+
+            var dadosRetorno = TipoPagamentoHelper.GerarDadosRetorno(tipoPagamento);
+
             return new CommandResult(StatusCodes.Status201Created, "Tipo Pagamento gravado com sucesso!", dadosRetorno);
         }
 
-        public ICommandResult<Notificacao> Handler(int id, AtualizarTipoPagamentoCommand command)
+        public ICommandResult<Notificacao> Handler(long id, AtualizarTipoPagamentoCommand command)
         {
             if (command == null)
                 return new CommandResult(StatusCodes.Status400BadRequest, "Parâmentros inválidos", "Parâmetros de entrada", "Parâmetros de entrada estão nulos");
@@ -56,17 +58,21 @@ namespace ControleDespesas.Domain.TiposPagamentos.Handlers
                 return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", "Id", "Id inválido. Este id não está cadastrado!");
 
             _repository.Atualizar(tipoPagamento);
-            var dadosRetorno = TipoPagamentoHelper.GerarDadosRetornoUpdate(tipoPagamento);
+
+            var dadosRetorno = TipoPagamentoHelper.GerarDadosRetorno(tipoPagamento);
+
             return new CommandResult(StatusCodes.Status200OK, "Tipo Pagamento atualizado com sucesso!", dadosRetorno);
         }
 
-        public ICommandResult<Notificacao> Handler(int id)
+        public ICommandResult<Notificacao> Handler(long id)
         {
             if (!_repository.CheckId(id))
                 return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", "Id", "Id inválido. Este id não está cadastrado!");
 
             _repository.Deletar(id);
+
             var dadosRetorno = TipoPagamentoHelper.GerarDadosRetornoDelete(id);
+
             return new CommandResult(StatusCodes.Status200OK, "Tipo Pagamento excluído com sucesso!", dadosRetorno);
         }
     }

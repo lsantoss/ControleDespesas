@@ -4,6 +4,7 @@ using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
 using NUnit.Framework;
+using System.Data.SqlClient;
 
 namespace ControleDespesas.Test.TiposPagamentos.Repositories
 {
@@ -22,7 +23,7 @@ namespace ControleDespesas.Test.TiposPagamentos.Repositories
         public void Setup() => CriarBaseDeDadosETabelas();
 
         [Test]
-        public void Salvar()
+        public void Salvar_Valido()
         {
             var tipoPagamento = new SettingsTest().TipoPagamento1;
             _repository.Salvar(tipoPagamento);
@@ -36,7 +37,20 @@ namespace ControleDespesas.Test.TiposPagamentos.Repositories
         }
 
         [Test]
-        public void Atualizar()
+        [TestCase(null)]
+        [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        public void Salvar_Descricao_Invalido(string descricao)
+        {
+            var tipoPagamento = new SettingsTest().TipoPagamento1;
+            tipoPagamento.DefinirDescricao(descricao);
+
+            TestContext.WriteLine(tipoPagamento.FormatarJsonDeSaida());
+
+            Assert.Throws<SqlException>(() => { _repository.Salvar(tipoPagamento); });
+        }
+
+        [Test]
+        public void Atualizar_Valido()
         {
             var tipoPagamento = new SettingsTest().TipoPagamento1;
             _repository.Salvar(tipoPagamento);
@@ -50,6 +64,22 @@ namespace ControleDespesas.Test.TiposPagamentos.Repositories
 
             Assert.AreEqual(tipoPagamento.Id, retorno.Id);
             Assert.AreEqual(tipoPagamento.Descricao, retorno.Descricao);
+        }
+
+        [Test]
+        [TestCase(null)]
+        [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        public void Atualizar_Descricao_Invalido_Exception(string descricao)
+        {
+            var tipoPagamento = new SettingsTest().TipoPagamento1;
+            _repository.Salvar(tipoPagamento);
+
+            tipoPagamento = new SettingsTest().TipoPagamento1Editado;
+            tipoPagamento.DefinirDescricao(descricao);
+
+            TestContext.WriteLine(tipoPagamento.FormatarJsonDeSaida());
+
+            Assert.Throws<SqlException>(() => { _repository.Atualizar(tipoPagamento); });
         }
 
         [Test]
@@ -78,7 +108,7 @@ namespace ControleDespesas.Test.TiposPagamentos.Repositories
         }
 
         [Test]
-        public void Obter()
+        public void Obter_ObjetoPreenchido()
         {
             var tipoPagamento = new SettingsTest().TipoPagamento1;
             _repository.Salvar(tipoPagamento);
@@ -92,7 +122,17 @@ namespace ControleDespesas.Test.TiposPagamentos.Repositories
         }
 
         [Test]
-        public void Listar()
+        public void Obter_ObjetoNulo()
+        {
+            var retorno = _repository.Obter(1);
+
+            TestContext.WriteLine(retorno.FormatarJsonDeSaida());
+
+            Assert.Null(retorno);
+        }
+
+        [Test]
+        public void Listar_ListaPreenchida()
         {
             var tipoPagamento1 = new SettingsTest().TipoPagamento1;
             _repository.Salvar(tipoPagamento1);
@@ -115,6 +155,16 @@ namespace ControleDespesas.Test.TiposPagamentos.Repositories
 
             Assert.AreEqual(tipoPagamento3.Id, retorno[2].Id);
             Assert.AreEqual(tipoPagamento3.Descricao, retorno[2].Descricao);
+        }
+
+        [Test]
+        public void Listar_ListaVazia()
+        {
+            var retorno = _repository.Listar();
+
+            TestContext.WriteLine(retorno.FormatarJsonDeSaida());
+
+            Assert.AreEqual(0, retorno.Count);
         }
 
         [Test]

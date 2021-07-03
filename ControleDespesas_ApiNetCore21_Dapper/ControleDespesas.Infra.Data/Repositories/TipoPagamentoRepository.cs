@@ -21,19 +21,19 @@ namespace ControleDespesas.Infra.Data.Repositories
             _settingsInfraData = settingsInfraData;
         }
 
-        public int Salvar(TipoPagamento tipoPagamento)
+        public long Salvar(TipoPagamento tipoPagamento)
         {
             _parametros.Add("Descricao", tipoPagamento.Descricao, DbType.String);
 
             using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
             {
-                return connection.ExecuteScalar<int>(TipoPagamentoQueries.Salvar, _parametros);
+                return connection.ExecuteScalar<long>(TipoPagamentoQueries.Salvar, _parametros);
             }
         }
 
         public void Atualizar(TipoPagamento tipoPagamento)
         {
-            _parametros.Add("Id", tipoPagamento.Id, DbType.Int32);
+            _parametros.Add("Id", tipoPagamento.Id, DbType.Int64);
             _parametros.Add("Descricao", tipoPagamento.Descricao, DbType.String);
 
             using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
@@ -42,9 +42,9 @@ namespace ControleDespesas.Infra.Data.Repositories
             }
         }
 
-        public void Deletar(int id)
+        public void Deletar(long id)
         {
-            _parametros.Add("Id", id, DbType.Int32);
+            _parametros.Add("Id", id, DbType.Int64);
 
             using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
             {
@@ -52,9 +52,9 @@ namespace ControleDespesas.Infra.Data.Repositories
             }
         }
 
-        public TipoPagamentoQueryResult Obter(int id)
+        public TipoPagamentoQueryResult Obter(long id)
         {
-            _parametros.Add("Id", id, DbType.Int32);
+            _parametros.Add("Id", id, DbType.Int64);
 
             using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
             {
@@ -70,9 +70,9 @@ namespace ControleDespesas.Infra.Data.Repositories
             }
         }
 
-        public bool CheckId(int id)
+        public bool CheckId(long id)
         {
-            _parametros.Add("Id", id, DbType.Int32);
+            _parametros.Add("Id", id, DbType.Int64);
 
             using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
             {
@@ -80,11 +80,11 @@ namespace ControleDespesas.Infra.Data.Repositories
             }
         }
 
-        public int LocalizarMaxId()
+        public long LocalizarMaxId()
         {
             using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
             {
-                return connection.Query<int>(TipoPagamentoQueries.LocalizarMaxId).FirstOrDefault();
+                return connection.Query<long>(TipoPagamentoQueries.LocalizarMaxId).FirstOrDefault();
             }
         }
     }

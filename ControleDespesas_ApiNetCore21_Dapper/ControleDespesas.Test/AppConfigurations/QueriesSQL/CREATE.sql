@@ -80,7 +80,7 @@ END
 IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE' AND TABLE_NAME='TipoPagamento') 
 BEGIN
     CREATE TABLE [dbo].[TipoPagamento](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Id] [bigint] IDENTITY(1,1) NOT NULL,
 	[Descricao] [nvarchar](250) NOT NULL,
     CONSTRAINT [PK_TipoPagamento] PRIMARY KEY CLUSTERED 
 	(
@@ -118,7 +118,7 @@ IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TA
 BEGIN
 	CREATE TABLE [dbo].[Pagamento](
 		[Id] [int] IDENTITY(1,1) NOT NULL,
-		[IdTipoPagamento] [int] NOT NULL,
+		[IdTipoPagamento] [bigint] NOT NULL,
 		[IdEmpresa] [bigint] NOT NULL,
 		[IdPessoa] [int] NOT NULL,
 		[Descricao] [nvarchar](250) NOT NULL,

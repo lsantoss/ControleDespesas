@@ -39,7 +39,7 @@ namespace ControleDespesas.Test.TiposPagamentos.Controllers
         public void Setup() => CriarBaseDeDadosETabelas();
 
         [Test]
-        public void TipoPagamentos()
+        public void TipoPagamentos_ListaPreenchida_200OK()
         {
             var tipoPagamento1 = new SettingsTest().TipoPagamento1;
             _repository.Salvar(tipoPagamento1);
@@ -72,7 +72,19 @@ namespace ControleDespesas.Test.TiposPagamentos.Controllers
         }
 
         [Test]
-        public void TipoPagamento()
+        public void TipoPagamentos_ListaVazia_204NoContent()
+        {
+            var response = _controller.TipoPagamentos();
+            var responseJson = JsonConvert.SerializeObject(response);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<List<TipoPagamentoQueryResult>>>>(responseJson);
+
+            TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
+
+            Assert.AreEqual(204, responseObj.StatusCode);
+        }
+
+        [Test]
+        public void TipoPagamento_ObjetoPreenchido_200OK()
         {
             var tipoPagamento1 = new SettingsTest().TipoPagamento1;
             _repository.Salvar(tipoPagamento1);
@@ -99,9 +111,22 @@ namespace ControleDespesas.Test.TiposPagamentos.Controllers
         }
 
         [Test]
-        public void TipoPagamentoInserir()
+        public void TipoPagamento_ObjetoNull_204NoContent()
+        {
+            var response = _controller.TipoPagamento(1);
+            var responseJson = JsonConvert.SerializeObject(response);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<TipoPagamentoQueryResult>>>(responseJson);
+
+            TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
+
+            Assert.AreEqual(204, responseObj.StatusCode);
+        }
+
+        [Test]
+        public void TipoPagamentoInserir_201Created()
         {
             var command = new SettingsTest().TipoPagamentoAdicionarCommand;
+
             var response = _controller.TipoPagamentoInserir(command);
             var responseJson = JsonConvert.SerializeObject(response);
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<TipoPagamentoCommandOutput>>>(responseJson);
@@ -118,12 +143,51 @@ namespace ControleDespesas.Test.TiposPagamentos.Controllers
         }
 
         [Test]
-        public void TipoPagamentoAlterar()
+        public void TipoPagamentoInserir_CommandNull_400BadRequest()
+        {
+            var response = _controller.TipoPagamentoInserir(null);
+            var responseJson = JsonConvert.SerializeObject(response);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<TipoPagamentoCommandOutput>>>(responseJson);
+
+            TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
+
+            Assert.AreEqual(400, responseObj.StatusCode);
+            Assert.False(responseObj.Value.Sucesso);
+            Assert.AreEqual("Parâmentros inválidos", responseObj.Value.Mensagem);
+            Assert.Null(responseObj.Value.Dados);
+            Assert.AreNotEqual(0, responseObj.Value.Erros.Count);
+        }
+
+        [Test]
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        public void TipoPagamentoInserir_Descricao_Invalido_422UnprocessableEntity(string descricao)
+        {
+            var command = new SettingsTest().TipoPagamentoAdicionarCommand;
+            command.Descricao = descricao;
+
+            var response = _controller.TipoPagamentoInserir(command);
+            var responseJson = JsonConvert.SerializeObject(response);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<TipoPagamentoCommandOutput>>>(responseJson);
+
+            TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
+
+            Assert.AreEqual(422, responseObj.StatusCode);
+            Assert.False(responseObj.Value.Sucesso);
+            Assert.AreEqual("Parâmentros inválidos", responseObj.Value.Mensagem);
+            Assert.Null(responseObj.Value.Dados);
+            Assert.AreNotEqual(0, responseObj.Value.Erros.Count);
+        }
+
+        [Test]
+        public void TipoPagamentoAlterar_200OK()
         {
             var tipoPagamento = new SettingsTest().TipoPagamento1;
             _repository.Salvar(tipoPagamento);
 
             var command = new SettingsTest().TipoPagamentoAtualizarCommand;
+
             var response = _controller.TipoPagamentoAlterar(command.Id, command);
             var responseJson = JsonConvert.SerializeObject(response);
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<TipoPagamentoCommandOutput>>>(responseJson);
@@ -140,7 +204,86 @@ namespace ControleDespesas.Test.TiposPagamentos.Controllers
         }
 
         [Test]
-        public void TipoPagamentoExcluir()
+        public void TipoPagamentoAlterar_Command_Null_400BadRequest()
+        {
+            var response = _controller.TipoPagamentoAlterar(0, null);
+            var responseJson = JsonConvert.SerializeObject(response);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<TipoPagamentoCommandOutput>>>(responseJson);
+
+            TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
+
+            Assert.AreEqual(400, responseObj.StatusCode);
+            Assert.False(responseObj.Value.Sucesso);
+            Assert.AreEqual("Parâmentros inválidos", responseObj.Value.Mensagem);
+            Assert.Null(responseObj.Value.Dados);
+            Assert.AreNotEqual(0, responseObj.Value.Erros.Count);
+        }
+
+        [Test]
+        [TestCase(1)]
+        public void TipoPagamentoAlterar_Id_NaoCadastrado_422UnprocessableEntity(long id)
+        {
+            var command = new SettingsTest().TipoPagamentoAtualizarCommand;
+            command.Id = id;
+
+            var response = _controller.TipoPagamentoAlterar(command.Id, command);
+            var responseJson = JsonConvert.SerializeObject(response);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<TipoPagamentoCommandOutput>>>(responseJson);
+
+            TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
+
+            Assert.AreEqual(422, responseObj.StatusCode);
+            Assert.False(responseObj.Value.Sucesso);
+            Assert.AreEqual("Inconsistência(s) no(s) dado(s)", responseObj.Value.Mensagem);
+            Assert.Null(responseObj.Value.Dados);
+            Assert.AreNotEqual(0, responseObj.Value.Erros.Count);
+        }
+
+        [Test]
+        [TestCase(0)]
+        [TestCase(-1)]
+        public void TipoPagamentoAlterar_Id_Invalido_422UnprocessableEntity(long id)
+        {
+            var command = new SettingsTest().TipoPagamentoAtualizarCommand;
+            command.Id = id;
+
+            var response = _controller.TipoPagamentoAlterar(command.Id, command);
+            var responseJson = JsonConvert.SerializeObject(response);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<TipoPagamentoCommandOutput>>>(responseJson);
+
+            TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
+
+            Assert.AreEqual(422, responseObj.StatusCode);
+            Assert.False(responseObj.Value.Sucesso);
+            Assert.AreEqual("Parâmentros inválidos", responseObj.Value.Mensagem);
+            Assert.Null(responseObj.Value.Dados);
+            Assert.AreNotEqual(0, responseObj.Value.Erros.Count);
+        }
+
+        [Test]
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        public void TipoPagamentoAlterar_Descricao_Invalido_422UnprocessableEntity(string descricao)
+        {
+            var command = new SettingsTest().TipoPagamentoAtualizarCommand;
+            command.Descricao = descricao;
+
+            var response = _controller.TipoPagamentoAlterar(command.Id, command);
+            var responseJson = JsonConvert.SerializeObject(response);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<TipoPagamentoCommandOutput>>>(responseJson);
+
+            TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
+
+            Assert.AreEqual(422, responseObj.StatusCode);
+            Assert.False(responseObj.Value.Sucesso);
+            Assert.AreEqual("Parâmentros inválidos", responseObj.Value.Mensagem);
+            Assert.Null(responseObj.Value.Dados);
+            Assert.AreNotEqual(0, responseObj.Value.Erros.Count);
+        }
+
+        [Test]
+        public void TipoPagamentoExcluir_200OK()
         {
             var tipoPagamento = new SettingsTest().TipoPagamento1;
             _repository.Salvar(tipoPagamento);
@@ -157,6 +300,23 @@ namespace ControleDespesas.Test.TiposPagamentos.Controllers
             Assert.Null(responseObj.Value.Erros);
 
             Assert.AreEqual(tipoPagamento.Id, responseObj.Value.Dados.Id);
+        }
+
+        [Test]
+        [TestCase(1)]
+        public void TipoPagamentoExcluir_Id_NaoCadastrado_422UnprocessableEntity(long id)
+        {
+            var response = _controller.TipoPagamentoExcluir(id);
+            var responseJson = JsonConvert.SerializeObject(response);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<CommandOutput>>>(responseJson);
+
+            TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
+
+            Assert.AreEqual(422, responseObj.StatusCode);
+            Assert.False(responseObj.Value.Sucesso);
+            Assert.AreEqual("Inconsistência(s) no(s) dado(s)", responseObj.Value.Mensagem);
+            Assert.Null(responseObj.Value.Dados);
+            Assert.AreNotEqual(0, responseObj.Value.Erros.Count);
         }
 
         [TearDown]

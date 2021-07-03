@@ -9,7 +9,7 @@ namespace ControleDespesas.Api.Controllers.Comum
 {
     [ApiController]
     [AllowAnonymous]
-    [TypeFilter(typeof(ChaveApiActionFilter))]
+    [TypeFilter(typeof(ChaveApiActionFilterAttribute))]
     [Consumes("application/json")]
     [Produces("application/json")]
     public class HealthCheckController : ControllerBase

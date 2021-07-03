@@ -14,18 +14,34 @@ namespace ControleDespesas.Test.Empresas.Entities
         public void Setup() => _empresa = new SettingsTest().Empresa1;
 
         [Test]
-        public void ValidarEntidade_Valida()
+        [TestCase(1, "Oi", "Logo")]
+        public void Construtores_Valido(long id, string nome, string logo)
         {
-            TestContext.WriteLine(_empresa.FormatarJsonDeSaida());
+            var _empresa1 = new Empresa(id);
+            var _empresa2 = new Empresa(nome, logo);
+            var _empresa3 = new Empresa(id, nome, logo);
 
-            Assert.True(_empresa.Valido);
-            Assert.AreEqual(0, _empresa.Notificacoes.Count);
+            TestContext.WriteLine("Contrutor 1:");
+            TestContext.WriteLine(_empresa1.FormatarJsonDeSaida());
+            TestContext.WriteLine("\nContrutor 2:");
+            TestContext.WriteLine(_empresa2.FormatarJsonDeSaida());
+            TestContext.WriteLine("\nContrutor 3:");
+            TestContext.WriteLine(_empresa3.FormatarJsonDeSaida());
+
+            Assert.True(_empresa1.Valido);
+            Assert.AreEqual(0, _empresa1.Notificacoes.Count);
+
+            Assert.True(_empresa2.Valido);
+            Assert.AreEqual(0, _empresa2.Notificacoes.Count);
+
+            Assert.True(_empresa3.Valido);
+            Assert.AreEqual(0, _empresa3.Notificacoes.Count);
         }
 
         [Test]
         [TestCase(0, null, null)]
         [TestCase(0, "", "")]
-        public void ValidarEntidade_Invalido(long id, string nome, string logo)
+        public void Construtores_Invalido(long id, string nome, string logo)
         {
             var _empresa1 = new Empresa(id);
             var _empresa2 = new Empresa(nome, logo);

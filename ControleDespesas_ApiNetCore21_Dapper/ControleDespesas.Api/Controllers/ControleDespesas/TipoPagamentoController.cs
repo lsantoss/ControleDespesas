@@ -30,6 +30,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// </summary>                
         /// <remarks><h2><b>Lista todos os Tipos de Pagamentos.</b></h2></remarks>
         /// <response code="200">OK Request</response>
+        /// <response code="204">No Content</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="403">Forbidden</response>
         /// <response code="500">Internal Server Error</response>
@@ -37,7 +38,9 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [Route("v1/tipos-pagamentos")]
         [Authorize(Roles = "Administrador")]
         [ProducesResponseType(typeof(ApiResponse<List<TipoPagamentoQueryResult>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ApiResponse<List<TipoPagamentoQueryResult>>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(ApiResponse<List<TipoPagamentoQueryResult>>), StatusCodes.Status500InternalServerError)]
         public IActionResult TipoPagamentos()
         {
@@ -50,6 +53,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// <remarks><h2><b>Consulta o Tipo de Pagamento pelo Id.</b></h2></remarks>
         /// <param name="id">Parâmetro requerido Id do Tipo de Pagamento</param>
         /// <response code="200">OK Request</response>
+        /// <response code="204">No Content</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="403">Forbidden</response>
         /// <response code="500">Internal Server Error</response>
@@ -57,9 +61,11 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [Route("v1/tipos-pagamentos/{id}")]
         [Authorize(Roles = "Administrador")]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoQueryResult>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoQueryResult>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoQueryResult>), StatusCodes.Status500InternalServerError)]
-        public IActionResult TipoPagamento(int id)
+        public IActionResult TipoPagamento(long id)
         {
             return ResultGet(_repository.Obter(id));
         }
@@ -81,6 +87,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput>), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput>), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput>), StatusCodes.Status500InternalServerError)]
         public IActionResult TipoPagamentoInserir([FromBody] AdicionarTipoPagamentoCommand command)
@@ -106,9 +113,10 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput>), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput>), StatusCodes.Status500InternalServerError)]
-        public IActionResult TipoPagamentoAlterar(int id, [FromBody] AtualizarTipoPagamentoCommand command)
+        public IActionResult TipoPagamentoAlterar(long id, [FromBody] AtualizarTipoPagamentoCommand command)
         {
             return ResultHandler(_handler.Handler(id, command));
         }
@@ -128,9 +136,10 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [Authorize(Roles = "Administrador")]
         [ProducesResponseType(typeof(ApiResponse<CommandOutput>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(ApiResponse<CommandOutput>), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(typeof(ApiResponse<CommandOutput>), StatusCodes.Status500InternalServerError)]
-        public IActionResult TipoPagamentoExcluir(int id)
+        public IActionResult TipoPagamentoExcluir(long id)
         {
             return ResultHandler(_handler.Handler(id));
         }

@@ -4,7 +4,7 @@ IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TA
 BEGIN
 CREATE TABLE [dbo].[Pagamento](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[IdTipoPagamento] [int] NOT NULL,
+	[IdTipoPagamento] [bigint] NOT NULL,
 	[IdEmpresa] [bigint] NOT NULL,
 	[IdPessoa] [int] NOT NULL,
 	[Descricao] [nvarchar](250) NOT NULL,

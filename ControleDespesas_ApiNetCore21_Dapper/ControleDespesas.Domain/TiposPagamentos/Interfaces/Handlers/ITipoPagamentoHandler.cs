@@ -7,7 +7,7 @@ namespace ControleDespesas.Domain.TiposPagamentos.Interfaces.Handlers
     public interface ITipoPagamentoHandler
     {
         ICommandResult<Notificacao> Handler(AdicionarTipoPagamentoCommand command);
-        ICommandResult<Notificacao> Handler(int id, AtualizarTipoPagamentoCommand command);
-        ICommandResult<Notificacao> Handler(int id);
+        ICommandResult<Notificacao> Handler(long id, AtualizarTipoPagamentoCommand command);
+        ICommandResult<Notificacao> Handler(long id);
     }
 }

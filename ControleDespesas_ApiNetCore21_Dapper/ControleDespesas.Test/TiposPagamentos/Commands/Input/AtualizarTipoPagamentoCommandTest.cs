@@ -26,11 +26,30 @@ namespace ControleDespesas.Test.TiposPagamentos.Commands.Input
         }
 
         [Test]
-        [TestCase(0)]
-        [TestCase(-1)]
-        public void ValidarCommand_IdInvalido(int id)
+        [TestCase(0, null)]
+        [TestCase(0, "")]
+        [TestCase(-1, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        public void ValidarCommand_Invalido(long id, string descricao)
         {
             _command.Id = id;
+            _command.Descricao = descricao;
+
+            var valido = _command.ValidarCommand();
+            var notificacoes = _command.Notificacoes.Count;
+
+            TestContext.WriteLine(_command.FormatarJsonDeSaida());
+
+            Assert.False(valido);
+            Assert.AreNotEqual(0, notificacoes);
+        }
+
+        [Test]
+        [TestCase(0)]
+        [TestCase(-1)]
+        public void ValidarCommand_Id_Invalido(int id)
+        {
+            _command.Id = id;
+
             var valido = _command.ValidarCommand();
             var notificacoes = _command.Notificacoes.Count;
 
@@ -44,9 +63,10 @@ namespace ControleDespesas.Test.TiposPagamentos.Commands.Input
         [TestCase(null)]
         [TestCase("")]
         [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
-        public void ValidarCommand_DescricaoInvalido(string descricao)
+        public void ValidarCommand_Descricao_Invalido(string descricao)
         {
             _command.Descricao = descricao;
+
             var valido = _command.ValidarCommand();
             var notificacoes = _command.Notificacoes.Count;
 

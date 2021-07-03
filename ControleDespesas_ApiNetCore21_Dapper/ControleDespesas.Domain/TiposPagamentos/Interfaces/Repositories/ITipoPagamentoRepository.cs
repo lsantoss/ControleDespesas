@@ -6,14 +6,14 @@ namespace ControleDespesas.Domain.TiposPagamentos.Interfaces.Repositories
 {
     public interface ITipoPagamentoRepository
     {
-        int Salvar(TipoPagamento tipoPagamento);
+        long Salvar(TipoPagamento tipoPagamento);
         void Atualizar(TipoPagamento tipoPagamento);
-        void Deletar(int id);
+        void Deletar(long id);
 
-        TipoPagamentoQueryResult Obter(int id);
+        TipoPagamentoQueryResult Obter(long id);
         List<TipoPagamentoQueryResult> Listar();
 
-        bool CheckId(int id);
-        int LocalizarMaxId();
+        bool CheckId(long id);
+        long LocalizarMaxId();
     }
 }

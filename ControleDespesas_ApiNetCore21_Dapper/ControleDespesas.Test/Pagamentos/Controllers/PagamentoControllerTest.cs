@@ -23,6 +23,7 @@ using System.Collections.Generic;
 
 namespace ControleDespesas.Test.Pagamentos.Controllers
 {
+    [TestFixture]
     public class PagamentoControllerTest : DatabaseTest
     {
         private readonly IUsuarioRepository _repositoryUsuario;

@@ -6,6 +6,7 @@ using NUnit.Framework;
 
 namespace ControleDespesas.Test.Pessoas.Query.Parameters
 {
+    [TestFixture]
     public class ObterPessoasQueryTest : BaseTest
     {
         private ObterPessoasQuery _query;

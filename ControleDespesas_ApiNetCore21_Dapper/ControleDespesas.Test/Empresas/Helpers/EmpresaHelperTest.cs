@@ -7,6 +7,7 @@ using NUnit.Framework;
 
 namespace ControleDespesas.Test.Empresas.Helpers
 {
+    [TestFixture]
     public class EmpresaHelperTest : BaseTest
     {
         [SetUp]

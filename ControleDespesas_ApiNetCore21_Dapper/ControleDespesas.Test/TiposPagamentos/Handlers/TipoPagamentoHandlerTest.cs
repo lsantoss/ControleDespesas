@@ -12,6 +12,7 @@ using NUnit.Framework;
 
 namespace ControleDespesas.Test.TiposPagamentos.Handlers
 {
+    [TestFixture]
     public class TipoPagamentoHandlerTest : DatabaseTest
     {
         private readonly ITipoPagamentoRepository _repository;

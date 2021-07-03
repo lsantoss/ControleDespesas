@@ -7,6 +7,7 @@ using NUnit.Framework;
 
 namespace ControleDespesas.Test.TiposPagamentos.Helpers
 {
+    [TestFixture]
     public class TipoPagamentoHelperTest : BaseTest
     {
         [SetUp]

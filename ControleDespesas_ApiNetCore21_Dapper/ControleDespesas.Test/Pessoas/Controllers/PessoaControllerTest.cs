@@ -19,6 +19,7 @@ using System.Collections.Generic;
 
 namespace ControleDespesas.Test.Pessoas.Controllers
 {
+    [TestFixture]
     public class PessoaControllerTest : DatabaseTest
     {
         private readonly IUsuarioRepository _repositoryUsuario;

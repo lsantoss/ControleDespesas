@@ -6,6 +6,7 @@ using NUnit.Framework;
 
 namespace ControleDespesas.Test.Pessoas.Entities
 {
+    [TestFixture]
     public class PessoaTest : BaseTest
     {
         private Pessoa _pessoa;

@@ -17,6 +17,7 @@ using System.Collections.Generic;
 
 namespace ControleDespesas.Test.Empresas.Controllers
 {
+    [TestFixture]
     public class EmpresaControllerTest : DatabaseTest
     {
         private readonly IEmpresaRepository _repository;

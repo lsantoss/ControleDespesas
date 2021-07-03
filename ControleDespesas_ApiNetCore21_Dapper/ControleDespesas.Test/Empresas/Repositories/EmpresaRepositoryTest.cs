@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 
 namespace ControleDespesas.Test.Empresas.Repositories
 {
+    [TestFixture]
     public class EmpresaRepositoryTest : DatabaseTest
     {
         private readonly IEmpresaRepository _repository;

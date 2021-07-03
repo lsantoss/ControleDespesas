@@ -11,6 +11,7 @@ using NUnit.Framework;
 
 namespace ControleDespesas.Test.HealthCheck.Controllers
 {
+    [TestFixture]
     public class HealthCheckControllerTest : DatabaseTest
     {
         private readonly IHealthCheckRepository _repository;

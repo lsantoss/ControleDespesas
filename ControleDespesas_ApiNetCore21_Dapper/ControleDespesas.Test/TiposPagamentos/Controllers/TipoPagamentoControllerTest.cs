@@ -18,6 +18,7 @@ using System.Collections.Generic;
 
 namespace ControleDespesas.Test.TiposPagamentos.Controllers
 {
+    [TestFixture]
     public class TipoPagamentoControllerTest : DatabaseTest
     {
         private readonly ITipoPagamentoRepository _repository;

@@ -6,6 +6,7 @@ using NUnit.Framework;
 
 namespace ControleDespesas.Test.Empresas.Entities
 {
+    [TestFixture]
     public class EmpresaTest : BaseTest
     {
         private Empresa _empresa;

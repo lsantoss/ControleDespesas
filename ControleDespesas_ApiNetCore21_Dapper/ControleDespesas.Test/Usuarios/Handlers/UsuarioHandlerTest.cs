@@ -15,6 +15,7 @@ using NUnit.Framework;
 
 namespace ControleDespesas.Test.Usuarios.Handlers
 {
+    [TestFixture]
     class UsuarioHandlerTest : DatabaseTest
     {
         private readonly ITokenJwtHelper _tokenJwtHelper;

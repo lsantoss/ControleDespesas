@@ -12,6 +12,7 @@ using NUnit.Framework;
 
 namespace ControleDespesas.Test.Empresas.Handlers
 {
+    [TestFixture]
     public class EmpresaHandlerTest : DatabaseTest
     {
         private readonly IEmpresaRepository _repository;

@@ -7,6 +7,7 @@ using NUnit.Framework;
 
 namespace ControleDespesas.Test.Usuarios.Commands.Input
 {
+    [TestFixture]
     public class AtualizarUsuarioCommandTest : BaseTest
     {
         private AtualizarUsuarioCommand _command;

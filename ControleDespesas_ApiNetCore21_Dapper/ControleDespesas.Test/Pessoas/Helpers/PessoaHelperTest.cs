@@ -6,6 +6,7 @@ using NUnit.Framework;
 
 namespace ControleDespesas.Test.Pessoas.Helpers
 {
+    [TestFixture]
     public class PessoaHelperTest : BaseTest
     {
         [SetUp]

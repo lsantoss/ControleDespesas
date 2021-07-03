@@ -12,6 +12,7 @@ using NUnit.Framework;
 
 namespace ControleDespesas.Test.Pessoas.Handlers
 {
+    [TestFixture]
     public class PessoaHandlerTest : DatabaseTest
     {
         private readonly IUsuarioRepository _repositoryUsuario;

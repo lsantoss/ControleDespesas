@@ -6,6 +6,7 @@ using NUnit.Framework;
 
 namespace ControleDespesas.Test.Pagamentos.Query.Parameters
 {
+    [TestFixture]
     public class PagamentoQueryTest : BaseTest
     {
         private PagamentoQuery _query;

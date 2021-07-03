@@ -13,6 +13,7 @@ using System;
 
 namespace ControleDespesas.Test.Pagamentos.Repositories
 {
+    [TestFixture]
     public class PagamentoRepositoryTest : DatabaseTest
     {
         private readonly IUsuarioRepository _repositoryUsuario;

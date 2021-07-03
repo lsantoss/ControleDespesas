@@ -6,6 +6,7 @@ using NUnit.Framework;
 
 namespace ControleDespesas.Test.Usuarios.Helpers
 {
+    [TestFixture]
     public class TokenJwtHelperTest : BaseTest
     {
         private readonly ITokenJwtHelper _tokenJwtHelper;

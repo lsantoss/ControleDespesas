@@ -16,6 +16,7 @@ using System;
 
 namespace ControleDespesas.Test.Pagamentos.Handlers
 {
+    [TestFixture]
     public class PagamentoHandlerTest : DatabaseTest
     {
         private readonly IUsuarioRepository _repositoryUsuario;

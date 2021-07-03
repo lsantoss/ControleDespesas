@@ -6,6 +6,7 @@ using NUnit.Framework;
 
 namespace ControleDespesas.Test.TiposPagamentos.Entities
 {
+    [TestFixture]
     public class TipoPagamentoTest : BaseTest
     {
         private TipoPagamento _tipoPagamento;

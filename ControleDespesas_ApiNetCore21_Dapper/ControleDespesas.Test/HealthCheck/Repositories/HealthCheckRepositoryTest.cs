@@ -5,6 +5,7 @@ using NUnit.Framework;
 
 namespace ControleDespesas.Test.HealthCheck.Repositories
 {
+    [TestFixture]
     public class HealthCheckRepositoryTest : DatabaseTest
     {
         private readonly IHealthCheckRepository _repository;

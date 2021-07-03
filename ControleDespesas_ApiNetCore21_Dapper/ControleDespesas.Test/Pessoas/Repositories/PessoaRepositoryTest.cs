@@ -8,6 +8,7 @@ using NUnit.Framework;
 
 namespace ControleDespesas.Test.Pessoas.Repositories
 {
+    [TestFixture]
     public class PessoaRepositoryTest : DatabaseTest
     {
         private readonly IUsuarioRepository _repositoryUsuario;

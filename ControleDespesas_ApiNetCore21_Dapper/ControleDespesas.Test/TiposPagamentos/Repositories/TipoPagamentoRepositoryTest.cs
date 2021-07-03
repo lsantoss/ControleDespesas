@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 
 namespace ControleDespesas.Test.TiposPagamentos.Repositories
 {
+    [TestFixture]
     public class TipoPagamentoRepositoryTest : DatabaseTest
     {
         private readonly ITipoPagamentoRepository _repository;

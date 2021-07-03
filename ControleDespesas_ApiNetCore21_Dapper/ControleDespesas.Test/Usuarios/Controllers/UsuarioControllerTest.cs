@@ -20,6 +20,7 @@ using System.Collections.Generic;
 
 namespace ControleDespesas.Test.Usuarios.Controllers
 {
+    [TestFixture]
     public class UsuarioControllerTest : DatabaseTest
     {
         private readonly ITokenJwtHelper _tokenJwtHelper;

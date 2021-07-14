@@ -28,13 +28,40 @@
                                                 FROM Usuario WITH(NOLOCK) 
                                                 WHERE Id = @Id";
 
+        public static string ObterContendoRegistrosFilhos { get; } = @"SELECT 
+                                                                         Usuario.Id AS Id,  
+                                                                         Usuario.Login AS Login,  
+                                                                         Usuario.Senha AS Senha,  
+                                                                         Usuario.Privilegio AS Privilegio,
+                                                                         Pessoa.Id AS Id,
+                                                                         Pessoa.IdUsuario AS IdUsuario,
+                                                                         Pessoa.Nome AS Nome,
+                                                                         Pessoa.ImagemPerfil AS ImagemPerfil 
+                                                                       FROM Usuario WITH(NOLOCK)
+                                                                       LEFT JOIN Pessoa WITH(NOLOCK) ON Usuario.Id = Pessoa.IdUsuario
+                                                                       WHERE Usuario.Id = @Id
+                                                                       ORDER BY Usuario.Id, Pessoa.Id";
+
         public static string Listar { get; } = @"SELECT 
                                                     Id AS Id,  
                                                     Login AS Login,  
                                                     Senha AS Senha,  
                                                     Privilegio AS Privilegio  
-                                                FROM Usuario WITH(NOLOCK)
-                                                ORDER BY Id ASC";
+                                                 FROM Usuario WITH(NOLOCK)
+                                                 ORDER BY Id ASC";
+
+        public static string ListarContendoRegistrosFilhos { get; } = @"SELECT 
+                                                                            Usuario.Id AS Id,  
+                                                                            Usuario.Login AS Login,  
+                                                                            Usuario.Senha AS Senha,  
+                                                                            Usuario.Privilegio AS Privilegio,
+                                                                            Pessoa.Id AS Id,
+                                                                            Pessoa.IdUsuario AS IdUsuario,
+                                                                            Pessoa.Nome AS Nome,
+                                                                            Pessoa.ImagemPerfil AS ImagemPerfil 
+                                                                        FROM Usuario WITH(NOLOCK)
+                                                                        LEFT JOIN Pessoa WITH(NOLOCK) ON Usuario.Id = Pessoa.IdUsuario
+                                                                        ORDER BY Usuario.Id, Pessoa.Id";
 
         public static string Logar { get; } = @"SELECT 
                                                     Id AS Id,  

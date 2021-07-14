@@ -3,13 +3,14 @@ using LSCode.Facilitador.Api.Interfaces.Commands;
 using LSCode.Validador.ValidacoesBooleanas;
 using LSCode.Validador.ValidacoesNotificacoes;
 using Newtonsoft.Json;
+using System;
 
 namespace ControleDespesas.Domain.Usuarios.Commands.Input
 {
     public class AtualizarUsuarioCommand : Notificadora, CommandPadrao
     {
         [JsonIgnore]
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string Login { get; set; }
         public string Senha { get; set; }
         public EPrivilegioUsuario Privilegio { get; set; }
@@ -19,12 +20,12 @@ namespace ControleDespesas.Domain.Usuarios.Commands.Input
             if (Id <= 0)
                 AddNotificacao("Id", "Id não é valido");
 
-            if (string.IsNullOrEmpty(Login))
+            if (string.IsNullOrWhiteSpace(Login))
                 AddNotificacao("Login", "Login é um campo obrigatório");
             else if (Login.Length > 50)
                 AddNotificacao("Login", "Login maior que o esperado");
 
-            if (string.IsNullOrEmpty(Senha))
+            if (string.IsNullOrWhiteSpace(Senha))
                 AddNotificacao("Senha", "Senha é um campo obrigatório");
             else if (Senha.Length < 6)
                 AddNotificacao("Senha", "Senha deve conter no mínimo 6 caracteres");
@@ -37,8 +38,8 @@ namespace ControleDespesas.Domain.Usuarios.Commands.Input
             else if (!ValidacaoBooleana.ContemNumero(Senha))
                 AddNotificacao("SenhaMedia", "Senha deve conter no mínimo 1 número");
 
-            if ((int)Privilegio <= 0)
-                AddNotificacao("Privilegio", "Privilegio é um campo obrigatório");
+            if (!Enum.IsDefined(typeof(EPrivilegioUsuario), Privilegio))
+                AddNotificacao("Privilegio", "Privilegio não é válido");
 
             return Valido;
         }

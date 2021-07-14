@@ -12,14 +12,7 @@
 					"name": "Health Check",
 					"request": {
 						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{TokenJWT}}",
-									"type": "string"
-								}
-							]
+							"type": "noauth"
 						},
 						"method": "GET",
 						"header": [
@@ -30,12 +23,10 @@
 							}
 						],
 						"url": {
-							"raw": "https://localhost:44323/v1/healthCheck",
-							"protocol": "https",
+							"raw": "{{URL_Base}}/v1/healthCheck",
 							"host": [
-								"localhost"
+								"{{URL_Base}}"
 							],
-							"port": "44323",
 							"path": [
 								"v1",
 								"healthCheck"
@@ -71,13 +62,19 @@
 							}
 						],
 						"url": {
-							"raw": "{{URL_Base}}/v1/usuarios",
+							"raw": "{{URL_Base}}/v1/usuarios?RegistrosFilhos=false",
 							"host": [
 								"{{URL_Base}}"
 							],
 							"path": [
 								"v1",
 								"usuarios"
+							],
+							"query": [
+								{
+									"key": "RegistrosFilhos",
+									"value": "false"
+								}
 							]
 						}
 					},
@@ -105,7 +102,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{URL_Base}}/v1/usuarios/:id",
+							"raw": "{{URL_Base}}/v1/usuarios/:id?RegistrosFilhos=false",
 							"host": [
 								"{{URL_Base}}"
 							],
@@ -114,10 +111,16 @@
 								"usuarios",
 								":id"
 							],
+							"query": [
+								{
+									"key": "RegistrosFilhos",
+									"value": "false"
+								}
+							],
 							"variable": [
 								{
 									"key": "id",
-									"value": "1"
+									"value": "2"
 								}
 							]
 						}
@@ -482,7 +485,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "1"
+									"value": "105"
 								}
 							]
 						}
@@ -523,7 +526,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "104"
+									"value": "105"
 								}
 							]
 						}
@@ -853,7 +856,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"idUsuario\": 1,\r\n    \"nome\": \"Lucas Santos\",\r\n    \"imagemPerfil\": \"FotoPerfilBase64\"\r\n}",
+							"raw": "{\r\n    \"idUsuario\": 2,\r\n    \"nome\": \"Lucas Santos\",\r\n    \"imagemPerfil\": \"FotoPerfilBase64\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -991,7 +994,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{URL_Base}}/v1/pagamentos?idPessoa=1",
+							"raw": "{{URL_Base}}/v1/pagamentos?idPessoa=2",
 							"host": [
 								"{{URL_Base}}"
 							],
@@ -1002,7 +1005,7 @@
 							"query": [
 								{
 									"key": "idPessoa",
-									"value": "1"
+									"value": "2"
 								},
 								{
 									"key": "status",
@@ -1161,7 +1164,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{URL_Base}}/v1/pagamentos/gastos?idPessoa=1&ano=2020&mes=5",
+							"raw": "{{URL_Base}}/v1/pagamentos/gastos?idPessoa=2",
 							"host": [
 								"{{URL_Base}}"
 							],
@@ -1173,15 +1176,17 @@
 							"query": [
 								{
 									"key": "idPessoa",
-									"value": "1"
+									"value": "2"
 								},
 								{
 									"key": "ano",
-									"value": "2020"
+									"value": "2021",
+									"disabled": true
 								},
 								{
 									"key": "mes",
-									"value": "5"
+									"value": "5",
+									"disabled": true
 								}
 							]
 						}
@@ -1211,7 +1216,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"idTipoPagamento\": 1,\r\n  \"idEmpresa\": 1,\r\n  \"idPessoa\": 1,\r\n  \"descricao\": \"Pagamento\",\r\n  \"valor\": 35.45,\r\n  \"dataVencimento\": \"2020-05-25T09:51:26\",\r\n  \"dataPagamento\": null,\r\n  \"arquivoPagamento\": \"arquivoPagamentoBase64String\",\r\n  \"arquivoComprovante\": null\r\n}",
+							"raw": "{\r\n  \"idTipoPagamento\": 1,\r\n  \"idEmpresa\": 1,\r\n  \"idPessoa\": 2,\r\n  \"descricao\": \"Pagamento\",\r\n  \"valor\": 20,\r\n  \"dataVencimento\": \"2021-06-25T09:51:26\",\r\n  \"dataPagamento\": null,\r\n  \"arquivoPagamento\": \"arquivoPagamentoBase64String\",\r\n  \"arquivoComprovante\": null\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

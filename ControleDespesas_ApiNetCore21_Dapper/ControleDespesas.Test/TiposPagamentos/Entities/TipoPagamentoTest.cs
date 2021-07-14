@@ -30,12 +30,18 @@ namespace ControleDespesas.Test.TiposPagamentos.Entities
             TestContext.WriteLine(_tipoPagamento3.FormatarJsonDeSaida());
 
             Assert.True(_tipoPagamento1.Valido);
+            Assert.AreEqual(id, _tipoPagamento1.Id);
+            Assert.Null(_tipoPagamento1.Descricao);
             Assert.AreEqual(0, _tipoPagamento1.Notificacoes.Count);
 
             Assert.True(_tipoPagamento2.Valido);
+            Assert.AreEqual(0, _tipoPagamento2.Id);
+            Assert.AreEqual(descricao, _tipoPagamento2.Descricao);
             Assert.AreEqual(0, _tipoPagamento2.Notificacoes.Count);
 
             Assert.True(_tipoPagamento3.Valido);
+            Assert.AreEqual(id, _tipoPagamento3.Id);
+            Assert.AreEqual(descricao, _tipoPagamento3.Descricao);
             Assert.AreEqual(0, _tipoPagamento3.Notificacoes.Count);
         }
 
@@ -57,12 +63,18 @@ namespace ControleDespesas.Test.TiposPagamentos.Entities
             TestContext.WriteLine(_tipoPagamento3.FormatarJsonDeSaida());
 
             Assert.False(_tipoPagamento1.Valido);
+            Assert.AreEqual(id, _tipoPagamento1.Id);
+            Assert.Null(_tipoPagamento1.Descricao);
             Assert.AreNotEqual(0, _tipoPagamento1.Notificacoes.Count);
 
             Assert.False(_tipoPagamento2.Valido);
+            Assert.AreEqual(0, _tipoPagamento2.Id);
+            Assert.AreEqual(descricao, _tipoPagamento2.Descricao);
             Assert.AreNotEqual(0, _tipoPagamento2.Notificacoes.Count);
 
             Assert.False(_tipoPagamento3.Valido);
+            Assert.AreEqual(id, _tipoPagamento3.Id);
+            Assert.AreEqual(descricao, _tipoPagamento3.Descricao);
             Assert.AreNotEqual(0, _tipoPagamento3.Notificacoes.Count);
         }
 

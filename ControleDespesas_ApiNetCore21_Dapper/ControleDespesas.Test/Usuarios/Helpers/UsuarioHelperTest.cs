@@ -1,4 +1,6 @@
-﻿using ControleDespesas.Domain.Usuarios.Helpers;
+﻿using ControleDespesas.Domain.Usuarios.Commands.Input;
+using ControleDespesas.Domain.Usuarios.Enums;
+using ControleDespesas.Domain.Usuarios.Helpers;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
@@ -13,7 +15,7 @@ namespace ControleDespesas.Test.Usuarios.Helpers
         public void Setup() { }
 
         [Test]
-        public void GerarEntidade_AdcionarUsuarioCommand()
+        public void GerarEntidade_AdcionarUsuarioCommand_Valido()
         {
             var command = new SettingsTest().UsuarioAdicionarCommand;
 
@@ -30,7 +32,32 @@ namespace ControleDespesas.Test.Usuarios.Helpers
         }
 
         [Test]
-        public void GerarEntidade_AtualizarUsuarioCommand()
+        [TestCase(null, null, -1)]
+        [TestCase("", "", 0)]
+        [TestCase("", "aaaaa1", 0)]
+        public void GerarEntidade_AdcionarUsuarioCommand_Invalido(string login, string senha, EPrivilegioUsuario privilegio)
+        {
+            var command = new AdicionarUsuarioCommand
+            {
+                Login = login,
+                Senha = senha,
+                Privilegio = privilegio
+            };
+
+            var entidade = UsuarioHelper.GerarEntidade(command);
+
+            TestContext.WriteLine(entidade.FormatarJsonDeSaida());
+
+            Assert.AreEqual(0, entidade.Id);
+            Assert.AreEqual(command.Login, entidade.Login);
+            Assert.AreEqual(command.Senha, entidade.Senha);
+            Assert.AreEqual(command.Privilegio, entidade.Privilegio);
+            Assert.False(entidade.Valido);
+            Assert.AreNotEqual(0, entidade.Notificacoes.Count);
+        }
+
+        [Test]
+        public void GerarEntidade_AtualizarUsuarioCommand_Valido()
         {
             var command = new SettingsTest().UsuarioAtualizarCommand;
 
@@ -47,11 +74,37 @@ namespace ControleDespesas.Test.Usuarios.Helpers
         }
 
         [Test]
-        public void GerarDadosRetornoInsert()
+        [TestCase(0, null, null, -1)]
+        [TestCase(0, "", "", 0)]
+        [TestCase(-1, "", "aaaaa1", 0)]
+        public void GerarEntidade_AtualizarUsuarioCommand_Invalido(long id, string login, string senha, EPrivilegioUsuario privilegio)
+        {
+            var command = new AtualizarUsuarioCommand
+            {
+                Id = id,
+                Login = login,
+                Senha = senha,
+                Privilegio = privilegio
+            };
+
+            var entidade = UsuarioHelper.GerarEntidade(command);
+
+            TestContext.WriteLine(entidade.FormatarJsonDeSaida());
+
+            Assert.AreEqual(command.Id, entidade.Id);
+            Assert.AreEqual(command.Login, entidade.Login);
+            Assert.AreEqual(command.Senha, entidade.Senha);
+            Assert.AreEqual(command.Privilegio, entidade.Privilegio);
+            Assert.False(entidade.Valido);
+            Assert.AreNotEqual(0, entidade.Notificacoes.Count);
+        }
+
+        [Test]
+        public void GerarDadosRetorno_Usuario()
         {
             var entidade = new SettingsTest().Usuario1;
 
-            var command = UsuarioHelper.GerarDadosRetornoInsert(entidade);
+            var command = UsuarioHelper.GerarDadosRetorno(entidade);
 
             TestContext.WriteLine(command.FormatarJsonDeSaida());
 
@@ -62,22 +115,7 @@ namespace ControleDespesas.Test.Usuarios.Helpers
         }
 
         [Test]
-        public void GerarDadosRetornoUpdate()
-        {
-            var entidade = new SettingsTest().Usuario1;
-
-            var command = UsuarioHelper.GerarDadosRetornoUpdate(entidade);
-
-            TestContext.WriteLine(command.FormatarJsonDeSaida());
-
-            Assert.AreEqual(entidade.Id, command.Id);
-            Assert.AreEqual(entidade.Login, command.Login);
-            Assert.AreEqual(entidade.Senha, command.Senha);
-            Assert.AreEqual(entidade.Privilegio, command.Privilegio);
-        }
-
-        [Test]
-        public void GerarDadosRetornoDelte()
+        public void GerarDadosRetorno_Id()
         {
             var entidade = new SettingsTest().Usuario1;
 

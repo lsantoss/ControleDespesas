@@ -30,12 +30,21 @@ namespace ControleDespesas.Test.Empresas.Entities
             TestContext.WriteLine(_empresa3.FormatarJsonDeSaida());
 
             Assert.True(_empresa1.Valido);
+            Assert.AreEqual(id, _empresa1.Id);
+            Assert.Null(_empresa1.Nome);
+            Assert.Null(_empresa1.Logo);
             Assert.AreEqual(0, _empresa1.Notificacoes.Count);
 
             Assert.True(_empresa2.Valido);
+            Assert.AreEqual(0, _empresa2.Id);
+            Assert.AreEqual(nome, _empresa2.Nome);
+            Assert.AreEqual(logo, _empresa2.Logo);
             Assert.AreEqual(0, _empresa2.Notificacoes.Count);
 
             Assert.True(_empresa3.Valido);
+            Assert.AreEqual(id, _empresa3.Id);
+            Assert.AreEqual(nome, _empresa3.Nome);
+            Assert.AreEqual(logo, _empresa3.Logo);
             Assert.AreEqual(0, _empresa3.Notificacoes.Count);
         }
 
@@ -56,12 +65,21 @@ namespace ControleDespesas.Test.Empresas.Entities
             TestContext.WriteLine(_empresa3.FormatarJsonDeSaida());
 
             Assert.False(_empresa1.Valido);
+            Assert.AreEqual(id, _empresa1.Id);
+            Assert.Null(_empresa1.Nome);
+            Assert.Null(_empresa1.Logo);
             Assert.AreNotEqual(0, _empresa1.Notificacoes.Count);
 
             Assert.False(_empresa2.Valido);
+            Assert.AreEqual(0, _empresa2.Id);
+            Assert.AreEqual(nome, _empresa2.Nome);
+            Assert.AreEqual(logo, _empresa2.Logo);
             Assert.AreNotEqual(0, _empresa2.Notificacoes.Count);
 
             Assert.False(_empresa3.Valido);
+            Assert.AreEqual(id, _empresa3.Id);
+            Assert.AreEqual(nome, _empresa3.Nome);
+            Assert.AreEqual(logo, _empresa3.Logo);
             Assert.AreNotEqual(0, _empresa3.Notificacoes.Count);
         }
 

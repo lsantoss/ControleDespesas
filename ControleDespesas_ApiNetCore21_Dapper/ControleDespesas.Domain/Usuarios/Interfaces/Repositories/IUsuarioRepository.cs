@@ -6,17 +6,20 @@ namespace ControleDespesas.Domain.Usuarios.Interfaces.Repositories
 {
     public interface IUsuarioRepository
     {
-        int Salvar(Usuario usuario);
+        long Salvar(Usuario usuario);
         void Atualizar(Usuario usuario);
-        void Deletar(int id);
+        void Deletar(long id);
 
-        UsuarioQueryResult Obter(int id);
+        UsuarioQueryResult Obter(long id);
+        UsuarioQueryResult ObterContendoRegistrosFilhos(long id);
+
         List<UsuarioQueryResult> Listar();
+        List<UsuarioQueryResult> ListarContendoRegistrosFilhos();
 
         UsuarioQueryResult Logar(string login, string senha);
 
         bool CheckLogin(string login);
-        bool CheckId(int id);
-        int LocalizarMaxId();
+        bool CheckId(long id);
+        long LocalizarMaxId();
     }
 }

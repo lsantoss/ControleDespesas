@@ -49,6 +49,22 @@ namespace ControleDespesas.Test.Empresas.Handlers
         }
 
         [Test]
+        public void Handler_AdicionarEmpresa_Nulo_Invalido()
+        {
+            AdicionarEmpresaCommand command = null;
+
+            var retorno = _handler.Handler(command);
+
+            TestContext.WriteLine(retorno.FormatarJsonDeSaida());
+
+            Assert.AreEqual(400, retorno.StatusCode);
+            Assert.False(retorno.Sucesso);
+            Assert.AreEqual("Parâmentros inválidos", retorno.Mensagem);
+            Assert.Null(retorno.Dados);
+            Assert.AreNotEqual(0, retorno.Erros.Count);
+        }
+
+        [Test]
         [TestCase(null, null)]
         [TestCase("", "")]
         [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "")]
@@ -130,6 +146,22 @@ namespace ControleDespesas.Test.Empresas.Handlers
             Assert.AreEqual(command.Nome, retornoDados.Nome);
             Assert.AreEqual(command.Logo, retornoDados.Logo);
             Assert.Null(retorno.Erros);
+        }
+
+        [Test]
+        public void Handler_AtualizarEmpresa_Nulo_Invalido()
+        {
+            AtualizarEmpresaCommand command = null;
+
+            var retorno = _handler.Handler(0, command);
+
+            TestContext.WriteLine(retorno.FormatarJsonDeSaida());
+
+            Assert.AreEqual(400, retorno.StatusCode);
+            Assert.False(retorno.Sucesso);
+            Assert.AreEqual("Parâmentros inválidos", retorno.Mensagem);
+            Assert.Null(retorno.Dados);
+            Assert.AreNotEqual(0, retorno.Erros.Count);
         }
 
         [Test]

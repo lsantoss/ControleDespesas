@@ -163,6 +163,28 @@ namespace ControleDespesas.Test.TiposPagamentos.Controllers
         [TestCase(null)]
         [TestCase("")]
         [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        public void TipoPagamentoInserir_Invalido_422UnprocessableEntity(string descricao)
+        {
+            var command = new SettingsTest().TipoPagamentoAdicionarCommand;
+            command.Descricao = descricao;
+
+            var response = _controller.TipoPagamentoInserir(command);
+            var responseJson = JsonConvert.SerializeObject(response);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<TipoPagamentoCommandOutput>>>(responseJson);
+
+            TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
+
+            Assert.AreEqual(422, responseObj.StatusCode);
+            Assert.False(responseObj.Value.Sucesso);
+            Assert.AreEqual("Parâmentros inválidos", responseObj.Value.Mensagem);
+            Assert.Null(responseObj.Value.Dados);
+            Assert.AreNotEqual(0, responseObj.Value.Erros.Count);
+        }
+
+        [Test]
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
         public void TipoPagamentoInserir_Descricao_Invalido_422UnprocessableEntity(string descricao)
         {
             var command = new SettingsTest().TipoPagamentoAdicionarCommand;
@@ -247,6 +269,28 @@ namespace ControleDespesas.Test.TiposPagamentos.Controllers
         {
             var command = new SettingsTest().TipoPagamentoAtualizarCommand;
             command.Id = id;
+
+            var response = _controller.TipoPagamentoAlterar(command.Id, command);
+            var responseJson = JsonConvert.SerializeObject(response);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<TipoPagamentoCommandOutput>>>(responseJson);
+
+            TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
+
+            Assert.AreEqual(422, responseObj.StatusCode);
+            Assert.False(responseObj.Value.Sucesso);
+            Assert.AreEqual("Parâmentros inválidos", responseObj.Value.Mensagem);
+            Assert.Null(responseObj.Value.Dados);
+            Assert.AreNotEqual(0, responseObj.Value.Erros.Count);
+        }
+
+        [Test]
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        public void TipoPagamentoAlterar_Invalido_422UnprocessableEntity(string descricao)
+        {
+            var command = new SettingsTest().TipoPagamentoAtualizarCommand;
+            command.Descricao = descricao;
 
             var response = _controller.TipoPagamentoAlterar(command.Id, command);
             var responseJson = JsonConvert.SerializeObject(response);

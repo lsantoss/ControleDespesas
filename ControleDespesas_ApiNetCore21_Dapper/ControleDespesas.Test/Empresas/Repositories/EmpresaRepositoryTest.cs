@@ -204,18 +204,25 @@ namespace ControleDespesas.Test.Empresas.Repositories
         }
 
         [Test]
-        public void CheckId()
+        public void CheckId_Encontrado()
         {
             var empresa = new SettingsTest().Empresa1;
             _repository.Salvar(empresa);
 
             var idExistente = _repository.CheckId(empresa.Id);
-            var idNaoExiste = _repository.CheckId(25);
 
             TestContext.WriteLine(idExistente);
-            TestContext.WriteLine(idNaoExiste);
 
             Assert.True(idExistente);
+        }
+
+        [Test]
+        public void CheckId_NaoEncontrado()
+        {
+            var idNaoExiste = _repository.CheckId(25);
+
+            TestContext.WriteLine(idNaoExiste);
+
             Assert.False(idNaoExiste);
         }
 

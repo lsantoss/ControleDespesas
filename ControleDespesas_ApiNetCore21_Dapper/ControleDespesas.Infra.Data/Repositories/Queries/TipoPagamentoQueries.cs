@@ -18,7 +18,7 @@
                                                     Id AS Id,  
                                                     Descricao AS Descricao  
                                                 FROM TipoPagamento WITH(NOLOCK) 
-                                                ORDER BY Id ASC";
+                                                ORDER BY Id";
 
         public static string CheckId { get; } = @"SELECT Id FROM TipoPagamento WITH(NOLOCK) WHERE Id = @Id";
 

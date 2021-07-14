@@ -3,6 +3,8 @@ using ControleDespesas.Domain.Usuarios.Interfaces.Helpers;
 using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using NUnit.Framework;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 
 namespace ControleDespesas.Test.Usuarios.Helpers
 {
@@ -26,10 +28,17 @@ namespace ControleDespesas.Test.Usuarios.Helpers
 
             var tokenJWT = _tokenJwtHelper.GenerarTokenJwt(usuarioQR);
 
-            TestContext.WriteLine(tokenJWT);
+            var userTokenJWT = new JwtSecurityTokenHandler().ReadToken(tokenJWT) as JwtSecurityToken;
 
-            Assert.IsNotNull(tokenJWT);
-            Assert.IsNotEmpty(tokenJWT);
+            var unique_nameValido = userTokenJWT.Claims.Any(claim => claim.Type == "unique_name" && claim.Value == "lucas@123");
+            var roleValido = userTokenJWT.Claims.Any(claim => claim.Type == "role" && claim.Value == "Administrador");
+
+            TestContext.WriteLine(tokenJWT);
+            TestContext.WriteLine();
+            TestContext.WriteLine(userTokenJWT);
+
+            Assert.True(unique_nameValido);
+            Assert.True(roleValido);
         }
 
         [TearDown]

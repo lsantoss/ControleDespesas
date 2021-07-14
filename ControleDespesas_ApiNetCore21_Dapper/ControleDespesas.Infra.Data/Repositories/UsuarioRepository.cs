@@ -1,4 +1,5 @@
-﻿using ControleDespesas.Domain.Usuarios.Entities;
+﻿using ControleDespesas.Domain.Pessoas.Query.Results;
+using ControleDespesas.Domain.Usuarios.Entities;
 using ControleDespesas.Domain.Usuarios.Interfaces.Repositories;
 using ControleDespesas.Domain.Usuarios.Query.Results;
 using ControleDespesas.Infra.Data.Repositories.Queries;
@@ -21,7 +22,7 @@ namespace ControleDespesas.Infra.Data.Repositories
             _settingsInfraData = settingsInfraData;
         }
 
-        public int Salvar(Usuario usuario)
+        public long Salvar(Usuario usuario)
         {
             _parametros.Add("Login", usuario.Login, DbType.String);
             _parametros.Add("Senha", usuario.Senha, DbType.String);
@@ -35,7 +36,7 @@ namespace ControleDespesas.Infra.Data.Repositories
 
         public void Atualizar(Usuario usuario)
         {
-            _parametros.Add("Id", usuario.Id, DbType.Int32);
+            _parametros.Add("Id", usuario.Id, DbType.Int64);
             _parametros.Add("Login", usuario.Login, DbType.String);
             _parametros.Add("Senha", usuario.Senha, DbType.String);
             _parametros.Add("Privilegio", usuario.Privilegio, DbType.Int16);
@@ -46,9 +47,9 @@ namespace ControleDespesas.Infra.Data.Repositories
             }
         }
 
-        public void Deletar(int id)
+        public void Deletar(long id)
         {
-            _parametros.Add("Id", id, DbType.Int32);
+            _parametros.Add("Id", id, DbType.Int64);
 
             using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
             {
@@ -56,13 +57,43 @@ namespace ControleDespesas.Infra.Data.Repositories
             }
         }
 
-        public UsuarioQueryResult Obter(int id)
+        public UsuarioQueryResult Obter(long id)
         {
-            _parametros.Add("Id", id, DbType.Int32);
+            _parametros.Add("Id", id, DbType.Int64);
 
             using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
             {
                 return connection.Query<UsuarioQueryResult>(UsuarioQueries.Obter, _parametros).FirstOrDefault();
+            }
+        }
+
+        public UsuarioQueryResult ObterContendoRegistrosFilhos(long id)
+        {
+            _parametros.Add("Id", id, DbType.Int64);
+
+            var usuarioDic = new Dictionary<long, UsuarioQueryResult>();
+            UsuarioQueryResult usuarioQR = new UsuarioQueryResult();
+
+            using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
+            {
+                return connection.Query<UsuarioQueryResult, PessoaQueryResult, UsuarioQueryResult>(
+                    UsuarioQueries.ObterContendoRegistrosFilhos,
+                    map: (usuario, pessoa) =>
+                    {
+                        if (usuario != null)
+                            if (!usuarioDic.TryGetValue(usuario.Id, out usuarioQR))
+                                usuarioDic.Add(usuario.Id, usuarioQR = usuario);
+
+                        if (usuarioQR.Pessoas == null)
+                            usuarioQR.Pessoas = new List<PessoaQueryResult>();
+
+                        if (pessoa != null)
+                            usuarioQR.Pessoas.Add(pessoa);
+
+                        return usuarioQR;
+                    },
+                    _parametros,
+                    splitOn: "Id, Id").FirstOrDefault();
             }
         }
 
@@ -71,6 +102,33 @@ namespace ControleDespesas.Infra.Data.Repositories
             using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
             {
                 return connection.Query<UsuarioQueryResult>(UsuarioQueries.Listar).ToList();
+            }
+        }
+
+        public List<UsuarioQueryResult> ListarContendoRegistrosFilhos()
+        {
+            var usuarioDic = new Dictionary<long, UsuarioQueryResult>();
+            UsuarioQueryResult usuarioQR = new UsuarioQueryResult();
+
+            using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
+            {
+                return connection.Query<UsuarioQueryResult, PessoaQueryResult, UsuarioQueryResult>(
+                    UsuarioQueries.ListarContendoRegistrosFilhos,
+                    map: (usuario, pessoa) =>
+                    {
+                        if (usuario != null)
+                            if (!usuarioDic.TryGetValue(usuario.Id, out usuarioQR))
+                                usuarioDic.Add(usuario.Id, usuarioQR = usuario);
+
+                        if (usuarioQR.Pessoas == null)
+                            usuarioQR.Pessoas = new List<PessoaQueryResult>();
+
+                        if (pessoa != null)
+                            usuarioQR.Pessoas.Add(pessoa);
+
+                        return usuarioQR;
+                    },
+                    splitOn: "Id, Id").Distinct().ToList();
             }
         }
 
@@ -95,9 +153,9 @@ namespace ControleDespesas.Infra.Data.Repositories
             }
         }
 
-        public bool CheckId(int id)
+        public bool CheckId(long id)
         {
-            _parametros.Add("Id", id, DbType.Int32);
+            _parametros.Add("Id", id, DbType.Int64);
 
             using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
             {
@@ -105,11 +163,11 @@ namespace ControleDespesas.Infra.Data.Repositories
             }
         }
 
-        public int LocalizarMaxId()
+        public long LocalizarMaxId()
         {
             using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
             {
-                return connection.Query<int>(UsuarioQueries.LocalizarMaxId).FirstOrDefault();
+                return connection.Query<long>(UsuarioQueries.LocalizarMaxId).FirstOrDefault();
             }
         }
     }

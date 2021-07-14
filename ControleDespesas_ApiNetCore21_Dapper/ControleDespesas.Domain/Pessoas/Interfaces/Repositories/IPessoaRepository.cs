@@ -11,7 +11,7 @@ namespace ControleDespesas.Domain.Pessoas.Interfaces.Repositories
         void Deletar(int id);
 
         PessoaQueryResult Obter(int id);
-        List<PessoaQueryResult> Listar(int idUsuario);
+        List<PessoaQueryResult> Listar(long idUsuario);
 
         bool CheckId(int id);
         int LocalizarMaxId();

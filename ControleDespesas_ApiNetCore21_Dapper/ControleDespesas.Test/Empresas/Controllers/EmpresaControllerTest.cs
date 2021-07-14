@@ -1,4 +1,5 @@
 ﻿using ControleDespesas.Api.Controllers.ControleDespesas;
+using ControleDespesas.Domain.Empresas.Commands.Input;
 using ControleDespesas.Domain.Empresas.Commands.Output;
 using ControleDespesas.Domain.Empresas.Handlers;
 using ControleDespesas.Domain.Empresas.Interfaces.Handlers;
@@ -162,6 +163,31 @@ namespace ControleDespesas.Test.Empresas.Controllers
         }
 
         [Test]
+        [TestCase(null, null)]
+        [TestCase("", "")]
+        [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "")]
+        public void EmpresaInserir_Invalido_422UnprocessableEntity(string nome, string logo)
+        {
+            var command = new AdicionarEmpresaCommand
+            {
+                Nome = nome,
+                Logo = logo
+            };
+
+            var response = _controller.EmpresaInserir(command);
+            var responseJson = JsonConvert.SerializeObject(response);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<EmpresaCommandOutput>>>(responseJson);
+
+            TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
+
+            Assert.AreEqual(422, responseObj.StatusCode);
+            Assert.False(responseObj.Value.Sucesso);
+            Assert.AreEqual("Parâmentros inválidos", responseObj.Value.Mensagem);
+            Assert.Null(responseObj.Value.Dados);
+            Assert.AreNotEqual(0, responseObj.Value.Erros.Count);
+        }
+
+        [Test]
         [TestCase(null)]
         [TestCase("")]
         [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
@@ -271,6 +297,32 @@ namespace ControleDespesas.Test.Empresas.Controllers
         {
             var command = new SettingsTest().EmpresaAtualizarCommand;
             command.Id = id;
+
+            var response = _controller.EmpresaAlterar(command.Id, command);
+            var responseJson = JsonConvert.SerializeObject(response);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<EmpresaCommandOutput>>>(responseJson);
+
+            TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
+
+            Assert.AreEqual(422, responseObj.StatusCode);
+            Assert.False(responseObj.Value.Sucesso);
+            Assert.AreEqual("Parâmentros inválidos", responseObj.Value.Mensagem);
+            Assert.Null(responseObj.Value.Dados);
+            Assert.AreNotEqual(0, responseObj.Value.Erros.Count);
+        }
+
+        [Test]
+        [TestCase(0, null, null)]
+        [TestCase(0, "", "")]
+        [TestCase(-1, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "")]
+        public void EmpresaAlterar_Invalido_422UnprocessableEntity(long id, string nome, string logo)
+        {
+            var command = new AtualizarEmpresaCommand
+            {
+                Id = id,
+                Nome = nome,
+                Logo = logo
+            };
 
             var response = _controller.EmpresaAlterar(command.Id, command);
             var responseJson = JsonConvert.SerializeObject(response);

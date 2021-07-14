@@ -48,6 +48,22 @@ namespace ControleDespesas.Test.TiposPagamentos.Handlers
         }
 
         [Test]
+        public void Handler_AdicionarTipoPagamento_Nulo_Invalido()
+        {
+            AdicionarTipoPagamentoCommand command = null;
+
+            var retorno = _handler.Handler(command);
+
+            TestContext.WriteLine(retorno.FormatarJsonDeSaida());
+
+            Assert.AreEqual(400, retorno.StatusCode);
+            Assert.False(retorno.Sucesso);
+            Assert.AreEqual("Parâmentros inválidos", retorno.Mensagem);
+            Assert.Null(retorno.Dados);
+            Assert.AreNotEqual(0, retorno.Erros.Count);
+        }
+
+        [Test]
         [TestCase(null)]
         [TestCase("")]
         [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
@@ -110,6 +126,22 @@ namespace ControleDespesas.Test.TiposPagamentos.Handlers
             Assert.AreEqual(tipoPagamentoCommand.Id, retornoDados.Id);
             Assert.AreEqual(tipoPagamentoCommand.Descricao, retornoDados.Descricao);
             Assert.Null(retorno.Erros);
+        }
+
+        [Test]
+        public void Handler_AtualizarTipoPagamento_Nulo_Invalido()
+        {
+            AtualizarTipoPagamentoCommand command = null;
+
+            var retorno = _handler.Handler(0, command);
+
+            TestContext.WriteLine(retorno.FormatarJsonDeSaida());
+
+            Assert.AreEqual(400, retorno.StatusCode);
+            Assert.False(retorno.Sucesso);
+            Assert.AreEqual("Parâmentros inválidos", retorno.Mensagem);
+            Assert.Null(retorno.Dados);
+            Assert.AreNotEqual(0, retorno.Erros.Count);
         }
 
         [Test]

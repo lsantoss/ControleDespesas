@@ -10,12 +10,12 @@ namespace ControleDespesas.Domain.Usuarios.Commands.Input
 
         public bool ValidarCommand()
         {
-            if (string.IsNullOrEmpty(Login))
+            if (string.IsNullOrWhiteSpace(Login))
                 AddNotificacao("Login", "Login é um campo obrigatório");
             else if (Login.Length > 50)
                 AddNotificacao("Login", "Login maior que o esperado");
 
-            if (string.IsNullOrEmpty(Senha))
+            if (string.IsNullOrWhiteSpace(Senha))
                 AddNotificacao("Senha", "Senha é um campo obrigatório");
 
             return Valido;

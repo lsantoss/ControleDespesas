@@ -20,7 +20,7 @@
                                                     Nome AS Nome,
                                                     Logo AS Logo 
                                                 FROM Empresa WITH(NOLOCK)
-                                                ORDER BY Id ASC";
+                                                ORDER BY Id";
 
         public static string CheckId { get; } = @"SELECT Id FROM Empresa WITH(NOLOCK) WHERE Id = @Id";
 

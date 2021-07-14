@@ -22,14 +22,15 @@ namespace ControleDespesas.Domain.Usuarios.Helpers
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_settings.ChaveJWT);
+            var subject = new ClaimsIdentity(new Claim[]
+            {
+                new Claim(ClaimTypes.Name, usuarioQR.Login.ToString()),
+                new Claim(ClaimTypes.Role, usuarioQR.Privilegio.ToString())
+            });
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Name, usuarioQR.Login.ToString()),
-                    new Claim(ClaimTypes.Role, usuarioQR.Privilegio.ToString())
-                }),
+                Subject = subject,
                 Expires = DateTime.UtcNow.AddHours(2),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };

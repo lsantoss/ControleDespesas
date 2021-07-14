@@ -4,6 +4,7 @@ using ControleDespesas.Test.AppConfigurations.Base;
 using ControleDespesas.Test.AppConfigurations.Settings;
 using ControleDespesas.Test.AppConfigurations.Util;
 using NUnit.Framework;
+using System.Data.SqlClient;
 
 namespace ControleDespesas.Test.Usuarios.Repositories
 {
@@ -23,7 +24,7 @@ namespace ControleDespesas.Test.Usuarios.Repositories
         public void Setup() => CriarBaseDeDadosETabelas();
 
         [Test]
-        public void Salvar()
+        public void Salvar_Valido()
         {
             var usuario = new SettingsTest().Usuario1;
             _repository.Salvar(usuario);
@@ -39,7 +40,33 @@ namespace ControleDespesas.Test.Usuarios.Repositories
         }
 
         [Test]
-        public void Atualizar()
+        [TestCase(null)]
+        [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        public void Salvar_Login_Invalido(string login)
+        {
+            var usuario = new SettingsTest().Usuario1;
+            usuario.DefinirLogin(login);
+
+            TestContext.WriteLine(usuario.FormatarJsonDeSaida());
+
+            Assert.Throws<SqlException>(() => { _repository.Salvar(usuario); });
+        }
+
+        [Test]
+        [TestCase(null)]
+        [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        public void Salvar_Senha_Invalido(string senha)
+        {
+            var usuario = new SettingsTest().Usuario1;
+            usuario.DefinirSenha(senha);
+
+            TestContext.WriteLine(usuario.FormatarJsonDeSaida());
+
+            Assert.Throws<SqlException>(() => { _repository.Salvar(usuario); });
+        }
+
+        [Test]
+        public void Atualizar_Valido()
         {
             var usuario = new SettingsTest().Usuario1;
             _repository.Salvar(usuario);
@@ -55,6 +82,36 @@ namespace ControleDespesas.Test.Usuarios.Repositories
             Assert.AreEqual(usuario.Login, retorno.Login);
             Assert.AreEqual(usuario.Senha, retorno.Senha);
             Assert.AreEqual(usuario.Privilegio, retorno.Privilegio);
+        }
+
+        [Test]
+        [TestCase(null)]
+        [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        public void Atualizar_Login_Valido(string login)
+        {
+            var usuario = new SettingsTest().Usuario1;
+            _repository.Salvar(usuario);
+
+            usuario.DefinirLogin(login);            
+
+            TestContext.WriteLine(usuario.FormatarJsonDeSaida());
+
+            Assert.Throws<SqlException>(() => { _repository.Atualizar(usuario); });
+        }
+
+        [Test]
+        [TestCase(null)]
+        [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        public void Atualizar_Senha_Valido(string senha)
+        {
+            var usuario = new SettingsTest().Usuario1;
+            _repository.Salvar(usuario);
+
+            usuario.DefinirSenha(senha);
+
+            TestContext.WriteLine(usuario.FormatarJsonDeSaida());
+
+            Assert.Throws<SqlException>(() => { _repository.Atualizar(usuario); });
         }
 
         [Test]
@@ -87,7 +144,7 @@ namespace ControleDespesas.Test.Usuarios.Repositories
         }
 
         [Test]
-        public void Obter()
+        public void Obter_ObjetoPreenchido()
         {
             var usuario = new SettingsTest().Usuario1;
             _repository.Salvar(usuario);
@@ -103,7 +160,17 @@ namespace ControleDespesas.Test.Usuarios.Repositories
         }
 
         [Test]
-        public void Listar()
+        public void Obter_ObjetoNulo()
+        {
+            var retorno = _repository.Obter(1);
+
+            TestContext.WriteLine(retorno.FormatarJsonDeSaida());
+
+            Assert.Null(retorno);
+        }
+
+        [Test]
+        public void Listar_ListaPreenchida()
         {
             var usuario1 = new SettingsTest().Usuario1;
             _repository.Salvar(usuario1);
@@ -135,7 +202,17 @@ namespace ControleDespesas.Test.Usuarios.Repositories
         }
 
         [Test]
-        public void Logar()
+        public void Listar_ListaVazia()
+        {
+            var retorno = _repository.Listar();
+
+            TestContext.WriteLine(retorno.FormatarJsonDeSaida());
+
+            Assert.AreEqual(0, retorno.Count);
+        }
+
+        [Test]
+        public void Logar_LoginEfetuado()
         {
             var usuario = new SettingsTest().Usuario1;
             _repository.Salvar(usuario);
@@ -151,34 +228,60 @@ namespace ControleDespesas.Test.Usuarios.Repositories
         }
 
         [Test]
-        public void CheckLogin()
+        public void Logar_LoginNaoEfetuado()
+        {
+            var usuario = new SettingsTest().Usuario1;
+
+            var retorno = _repository.Logar(usuario.Login.ToString(), usuario.Senha.ToString());
+
+            TestContext.WriteLine(retorno.FormatarJsonDeSaida());
+
+            Assert.Null(retorno);
+        }
+
+        [Test]
+        public void CheckLogin_LoginEncontrado()
         {
             var usuario = new SettingsTest().Usuario1;
             _repository.Salvar(usuario);
 
             var loginExistente = _repository.CheckLogin(usuario.Login.ToString());
-            var loginNaoExiste = _repository.CheckLogin("LoginErrado");
 
             TestContext.WriteLine(loginExistente);
-            TestContext.WriteLine(loginNaoExiste);
 
             Assert.True(loginExistente);
+        }
+
+        [Test]
+        public void CheckLogin_LoginNaoEncontrado()
+        {
+            var loginNaoExiste = _repository.CheckLogin("LoginErrado");
+
+            TestContext.WriteLine(loginNaoExiste);
+
             Assert.False(loginNaoExiste);
         }
 
         [Test]
-        public void CheckId()
+        public void CheckId_Encontrado()
         {
             var usuario = new SettingsTest().Usuario1;
             _repository.Salvar(usuario);
 
             var idExistente = _repository.CheckId(usuario.Id);
-            var idNaoExiste = _repository.CheckId(25);
 
             TestContext.WriteLine(idExistente);
-            TestContext.WriteLine(idNaoExiste);
 
             Assert.True(idExistente);
+        }
+
+        [Test]
+        public void CheckId_NaoEncontrado()
+        {
+            var idNaoExiste = _repository.CheckId(25);
+
+            TestContext.WriteLine(idNaoExiste);
+
             Assert.False(idNaoExiste);
         }
 

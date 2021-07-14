@@ -28,12 +28,32 @@ namespace ControleDespesas.Test.Usuarios.Commands.Input
         }
 
         [Test]
+        [TestCase(null, null, -1)]
+        [TestCase("", "", 0)]
+        [TestCase("", "aaaaa1", 0)]
+        public void ValidarCommand_Invalido(string login, string senha, EPrivilegioUsuario privilegio)
+        {
+            _command.Login = login;
+            _command.Senha = senha;
+            _command.Privilegio = privilegio;
+
+            var valido = _command.ValidarCommand();
+            var notificacoes = _command.Notificacoes.Count;
+
+            TestContext.WriteLine(_command.FormatarJsonDeSaida());
+
+            Assert.False(valido);
+            Assert.AreNotEqual(0, notificacoes);
+        }
+
+        [Test]
         [TestCase(null)]
         [TestCase("")]
         [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
-        public void ValidarCommand_LoginInvalido(string login)
+        public void ValidarCommand_Login_Invalido(string login)
         {
             _command.Login = login;
+
             var valido = _command.ValidarCommand();
             var notificacoes = _command.Notificacoes.Count;
 
@@ -54,6 +74,7 @@ namespace ControleDespesas.Test.Usuarios.Commands.Input
         public void ValidarCommand_SenhaInvalida(string senha)
         {
             _command.Senha = senha;
+
             var valido = _command.ValidarCommand();
             var notificacoes = _command.Notificacoes.Count;
 
@@ -64,11 +85,13 @@ namespace ControleDespesas.Test.Usuarios.Commands.Input
         }
 
         [Test]
-        [TestCase(0)]
         [TestCase(-1)]
-        public void ValidarCommand_PrivilegioInvalido(int privilegio)
+        [TestCase(0)]
+        [TestCase(10)]
+        public void ValidarCommand_PrivilegioInvalido(EPrivilegioUsuario privilegio)
         {
-            _command.Privilegio = (EPrivilegioUsuario)privilegio;
+            _command.Privilegio = privilegio;
+
             var valido = _command.ValidarCommand();
             var notificacoes = _command.Notificacoes.Count;
 

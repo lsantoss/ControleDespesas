@@ -200,28 +200,28 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
 
             Pessoa1 = new Pessoa(
                 _configuration.GetValue<int>("SettingsTest:Pessoa1:Id"),
-                new Usuario(_configuration.GetValue<int>("SettingsTest:Pessoa1:IdUsuario")),
+                new Usuario(_configuration.GetValue<long>("SettingsTest:Pessoa1:IdUsuario")),
                 _configuration.GetValue<string>("SettingsTest:Pessoa1:Nome"),
                 _configuration.GetValue<string>("SettingsTest:Pessoa1:ImagemPerfil")
             );
 
             Pessoa2 = new Pessoa(
                 _configuration.GetValue<int>("SettingsTest:Pessoa2:Id"),
-                new Usuario(_configuration.GetValue<int>("SettingsTest:Pessoa2:IdUsuario")),
+                new Usuario(_configuration.GetValue<long>("SettingsTest:Pessoa2:IdUsuario")),
                 _configuration.GetValue<string>("SettingsTest:Pessoa2:Nome"),
                 _configuration.GetValue<string>("SettingsTest:Pessoa2:ImagemPerfil")
             );
 
             Pessoa3 = new Pessoa(
                 _configuration.GetValue<int>("SettingsTest:Pessoa3:Id"),
-                new Usuario(_configuration.GetValue<int>("SettingsTest:Pessoa3:IdUsuario")),
+                new Usuario(_configuration.GetValue<long>("SettingsTest:Pessoa3:IdUsuario")),
                 _configuration.GetValue<string>("SettingsTest:Pessoa3:Nome"),
                 _configuration.GetValue<string>("SettingsTest:Pessoa3:ImagemPerfil")
             );
 
             Pessoa1Editada = new Pessoa(
                 _configuration.GetValue<int>("SettingsTest:Pessoa1Editada:Id"),
-                new Usuario(_configuration.GetValue<int>("SettingsTest:Pessoa1Editada:IdUsuario")),
+                new Usuario(_configuration.GetValue<long>("SettingsTest:Pessoa1Editada:IdUsuario")),
                 _configuration.GetValue<string>("SettingsTest:Pessoa1Editada:Nome"),
                 _configuration.GetValue<string>("SettingsTest:Pessoa1Editada:ImagemPerfil")
             );
@@ -430,7 +430,7 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
 
             UsuarioAtualizarCommand = new AtualizarUsuarioCommand()
             {
-                Id = _configuration.GetValue<int>("SettingsTest:UsuarioAtualizarCommand:Id"),
+                Id = _configuration.GetValue<long>("SettingsTest:UsuarioAtualizarCommand:Id"),
                 Login = _configuration.GetValue<string>("SettingsTest:UsuarioAtualizarCommand:Login"),
                 Senha = _configuration.GetValue<string>("SettingsTest:UsuarioAtualizarCommand:Senha"),
                 Privilegio = _configuration.GetValue<EPrivilegioUsuario>("SettingsTest:UsuarioAtualizarCommand:Privilegio")
@@ -444,21 +444,21 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
 
             UsuarioQR = new UsuarioQueryResult()
             {
-                Id = _configuration.GetValue<int>("SettingsTest:UsuarioQR:Id"),
+                Id = _configuration.GetValue<long>("SettingsTest:UsuarioQR:Id"),
                 Login = _configuration.GetValue<string>("SettingsTest:UsuarioQR:Login"),
                 Senha = _configuration.GetValue<string>("SettingsTest:UsuarioQR:Senha"),
                 Privilegio = _configuration.GetValue<EPrivilegioUsuario>("SettingsTest:UsuarioQR:Privilegio")
             };
 
             Usuario1 = new Usuario(
-                _configuration.GetValue<int>("SettingsTest:Usuario1:Id"),
+                _configuration.GetValue<long>("SettingsTest:Usuario1:Id"),
                 _configuration.GetValue<string>("SettingsTest:Usuario1:Login"),
                 _configuration.GetValue<string>("SettingsTest:Usuario1:Senha"),
                 _configuration.GetValue<EPrivilegioUsuario>("SettingsTest:Usuario1:Privilegio")
             );
 
             Usuario2 = new Usuario(
-                _configuration.GetValue<int>("SettingsTest:Usuario2:Id"),
+                _configuration.GetValue<long>("SettingsTest:Usuario2:Id"),
                 _configuration.GetValue<string>("SettingsTest:Usuario2:Login"),
                 _configuration.GetValue<string>("SettingsTest:Usuario2:Senha"),
                 _configuration.GetValue<EPrivilegioUsuario>("SettingsTest:Usuario2:Privilegio")
@@ -466,7 +466,7 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
             );
 
             Usuario3 = new Usuario(
-                _configuration.GetValue<int>("SettingsTest:Usuario3:Id"),
+                _configuration.GetValue<long>("SettingsTest:Usuario3:Id"),
                 _configuration.GetValue<string>("SettingsTest:Usuario3:Login"),
                 _configuration.GetValue<string>("SettingsTest:Usuario3:Senha"),
                 _configuration.GetValue<EPrivilegioUsuario>("SettingsTest:Usuario3:Privilegio")
@@ -474,7 +474,7 @@ namespace ControleDespesas.Test.AppConfigurations.Settings
             );
 
             Usuario1Editado = new Usuario(
-                _configuration.GetValue<int>("SettingsTest:Usuario1Editado:Id"),
+                _configuration.GetValue<long>("SettingsTest:Usuario1Editado:Id"),
                 _configuration.GetValue<string>("SettingsTest:Usuario1Editado:Login"),
                 _configuration.GetValue<string>("SettingsTest:Usuario1Editado:Senha"),
                 _configuration.GetValue<EPrivilegioUsuario>("SettingsTest:Usuario1Editado:Privilegio")

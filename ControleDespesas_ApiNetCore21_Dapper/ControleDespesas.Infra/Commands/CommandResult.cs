@@ -13,15 +13,6 @@ namespace ControleDespesas.Infra.Commands
         public object Dados { get; set; }
         public IReadOnlyCollection<Notificacao> Erros { get; set; }
 
-        public CommandResult(int statusCode, bool sucesso, string mensagem, object dados, IEnumerable<Notificacao> erros)
-        {
-            StatusCode = statusCode;
-            Sucesso = sucesso;
-            Mensagem = mensagem;
-            Dados = dados;
-            Erros = erros.ToList();
-        }
-
         public CommandResult(int statusCode, string mensagem, object dados)
         {
             StatusCode = statusCode;
@@ -31,15 +22,6 @@ namespace ControleDespesas.Infra.Commands
             Erros = null;
         }
 
-        public CommandResult(int statusCode, string mensagem, string propriedade, string notificacaoMensagem)
-        {
-            StatusCode = statusCode;
-            Sucesso = false;
-            Mensagem = mensagem;
-            Dados = null;
-            Erros = new List<Notificacao>() { new Notificacao(propriedade, notificacaoMensagem) };
-        }
-
         public CommandResult(int statusCode, string mensagem, IEnumerable<Notificacao> erros)
         {
             StatusCode = statusCode;
@@ -47,6 +29,15 @@ namespace ControleDespesas.Infra.Commands
             Mensagem = mensagem;
             Dados = null;
             Erros = erros.ToList();
+        }
+
+        public CommandResult(int statusCode, string mensagem, string propriedade, string notificacaoMensagem)
+        {
+            StatusCode = statusCode;
+            Sucesso = false;
+            Mensagem = mensagem;
+            Dados = null;
+            Erros = new List<Notificacao>() { new Notificacao(propriedade, notificacaoMensagem) };
         }
     }
 }

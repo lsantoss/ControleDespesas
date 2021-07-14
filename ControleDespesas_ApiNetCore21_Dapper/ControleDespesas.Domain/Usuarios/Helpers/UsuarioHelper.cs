@@ -9,41 +9,20 @@ namespace ControleDespesas.Domain.Usuarios.Helpers
     {
         public static Usuario GerarEntidade(AdicionarUsuarioCommand command)
         {
-            Usuario usuario = new Usuario(0, command.Login, command.Senha, command.Privilegio);
-            usuario.Validar();
-            return usuario;
+            return new Usuario(command.Login, command.Senha, command.Privilegio);
         }
 
         public static Usuario GerarEntidade(AtualizarUsuarioCommand command)
         {
-            Usuario usuario = new Usuario(command.Id, command.Login, command.Senha, command.Privilegio);
-            usuario.Validar();
-            return usuario;
+            return new Usuario(command.Id, command.Login, command.Senha, command.Privilegio);
         }
 
-        public static UsuarioCommandOutput GerarDadosRetornoInsert(Usuario usuario)
+        public static UsuarioCommandOutput GerarDadosRetorno(Usuario usuario)
         {
-            return new UsuarioCommandOutput
-            {
-                Id = usuario.Id,
-                Login = usuario.Login,
-                Senha = usuario.Senha,
-                Privilegio = usuario.Privilegio
-            };
+            return new UsuarioCommandOutput(usuario.Id, usuario.Login, usuario.Senha, usuario.Privilegio);
         }
 
-        public static UsuarioCommandOutput GerarDadosRetornoUpdate(Usuario usuario)
-        {
-            return new UsuarioCommandOutput
-            {
-                Id = usuario.Id,
-                Login = usuario.Login,
-                Senha = usuario.Senha,
-                Privilegio = usuario.Privilegio
-            };
-        }
-
-        public static CommandOutput GerarDadosRetornoDelete(int id)
+        public static CommandOutput GerarDadosRetornoDelete(long id)
         {
             return new CommandOutput(id);
         }

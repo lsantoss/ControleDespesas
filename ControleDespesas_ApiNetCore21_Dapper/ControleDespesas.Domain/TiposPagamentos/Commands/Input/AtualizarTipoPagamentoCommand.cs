@@ -15,7 +15,7 @@ namespace ControleDespesas.Domain.TiposPagamentos.Commands.Input
             if (Id <= 0)
                 AddNotificacao("Id", "Id não é valido");
 
-            if (string.IsNullOrEmpty(Descricao))
+            if (string.IsNullOrWhiteSpace(Descricao))
                 AddNotificacao("Descricao", "Descricao é um campo obrigatório");
             else if (Descricao.Length > 250)
                 AddNotificacao("Descricao", "Descricao maior que o esperado");

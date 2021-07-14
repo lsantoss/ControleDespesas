@@ -66,9 +66,9 @@ namespace ControleDespesas.Infra.Data.Repositories
             }
         }
 
-        public List<PessoaQueryResult> Listar(int idUsuario)
+        public List<PessoaQueryResult> Listar(long idUsuario)
         {
-            _parametros.Add("IdUsuario", idUsuario, DbType.Int32);
+            _parametros.Add("IdUsuario", idUsuario, DbType.Int64);
 
             using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
             {

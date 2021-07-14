@@ -1,9 +1,9 @@
 ﻿using ControleDespesas.Domain.Usuarios.Commands.Input;
+using ControleDespesas.Domain.Usuarios.Commands.Output;
 using ControleDespesas.Domain.Usuarios.Helpers;
 using ControleDespesas.Domain.Usuarios.Interfaces.Handlers;
 using ControleDespesas.Domain.Usuarios.Interfaces.Helpers;
 using ControleDespesas.Domain.Usuarios.Interfaces.Repositories;
-using ControleDespesas.Domain.Usuarios.Query.Results;
 using ControleDespesas.Infra.Commands;
 using LSCode.Facilitador.Api.Interfaces.Commands;
 using LSCode.Validador.ValidacoesNotificacoes;
@@ -40,11 +40,13 @@ namespace ControleDespesas.Domain.Usuarios.Handlers
 
             var id = _repository.Salvar(usuario);
             usuario.DefinirId(id);
-            var dadosRetorno = UsuarioHelper.GerarDadosRetornoInsert(usuario);
+
+            var dadosRetorno = UsuarioHelper.GerarDadosRetorno(usuario);
+
             return new CommandResult(StatusCodes.Status201Created, "Usuário gravado com sucesso!", dadosRetorno);
         }
 
-        public ICommandResult<Notificacao> Handler(int id, AtualizarUsuarioCommand command)
+        public ICommandResult<Notificacao> Handler(long id, AtualizarUsuarioCommand command)
         {
             if (command == null)
                 return new CommandResult(StatusCodes.Status400BadRequest, "Parâmentros inválidos", "Parâmetros de entrada", "Parâmetros de entrada estão nulos");
@@ -62,26 +64,30 @@ namespace ControleDespesas.Domain.Usuarios.Handlers
             if (!_repository.CheckId(usuario.Id))
                 return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", "Id", "Id inválido. Este id não está cadastrado!");
 
-            if (_repository.CheckLogin(usuario.Login.ToString()))
+            if (_repository.CheckLogin(usuario.Login))
             {
                 var userDoIdEnviadoBaseDados = _repository.Obter(usuario.Id);
 
-                if (userDoIdEnviadoBaseDados.Login != usuario.Login.ToString())
+                if (userDoIdEnviadoBaseDados.Login != usuario.Login)
                     return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", "Login", "Esse login não está disponível pois já está sendo usado por outro usuário");
             }
 
             _repository.Atualizar(usuario);
-            var dadosRetorno = UsuarioHelper.GerarDadosRetornoUpdate(usuario);
+
+            var dadosRetorno = UsuarioHelper.GerarDadosRetorno(usuario);
+
             return new CommandResult(StatusCodes.Status200OK, "Usuário atualizado com sucesso!", dadosRetorno);
         }
 
-        public ICommandResult<Notificacao> Handler(int id)
+        public ICommandResult<Notificacao> Handler(long id)
         {
             if (!_repository.CheckId(id))
                 return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", "Id", "Id inválido. Este id não está cadastrado!");
 
             _repository.Deletar(id);
+
             var dadosRetorno = UsuarioHelper.GerarDadosRetornoDelete(id);
+
             return new CommandResult(StatusCodes.Status200OK, "Usuário excluído com sucesso!", dadosRetorno);
         }
 
@@ -101,15 +107,7 @@ namespace ControleDespesas.Domain.Usuarios.Handlers
             if (usuario != null)
             {
                 var token = _tokenJwtHelper.GenerarTokenJwt(usuario);
-                var usuarioComToken = new UsuarioTokenQueryResult()
-                {
-                    Id = usuario.Id,
-                    Login = usuario.Login,
-                    Senha = usuario.Senha,
-                    Privilegio = usuario.Privilegio,
-                    Token = token
-                };
-
+                var usuarioComToken = new TokenCommandOutput(token);
                 return new CommandResult(StatusCodes.Status200OK, "Usuário logado com sucesso!", usuarioComToken);
             }
             else

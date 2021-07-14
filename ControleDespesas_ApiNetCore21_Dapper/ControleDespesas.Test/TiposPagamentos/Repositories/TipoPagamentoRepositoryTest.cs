@@ -169,18 +169,25 @@ namespace ControleDespesas.Test.TiposPagamentos.Repositories
         }
 
         [Test]
-        public void CheckId()
+        public void CheckId_Encontrado()
         {
             var tipoPagamento = new SettingsTest().TipoPagamento1;
             _repository.Salvar(tipoPagamento);
 
             var idExistente = _repository.CheckId(tipoPagamento.Id);
-            var idNaoExiste = _repository.CheckId(25);
 
             TestContext.WriteLine(idExistente);
-            TestContext.WriteLine(idNaoExiste);
 
             Assert.True(idExistente);
+        }
+
+        [Test]
+        public void CheckId_NaoEncontrado()
+        {
+            var idNaoExiste = _repository.CheckId(25);
+
+            TestContext.WriteLine(idNaoExiste);
+
             Assert.False(idNaoExiste);
         }
 

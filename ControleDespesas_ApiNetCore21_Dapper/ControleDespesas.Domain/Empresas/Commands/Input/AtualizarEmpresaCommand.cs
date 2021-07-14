@@ -16,12 +16,12 @@ namespace ControleDespesas.Domain.Empresas.Commands.Input
             if (Id <= 0)
                 AddNotificacao("Id", "Id não é valido");
 
-            if (string.IsNullOrEmpty(Nome))
+            if (string.IsNullOrWhiteSpace(Nome))
                 AddNotificacao("Nome", "Nome é um campo obrigatório");
             else if (Nome.Length > 100)
                 AddNotificacao("Nome", "Nome maior que o esperado");
 
-            if (string.IsNullOrEmpty(Logo))
+            if (string.IsNullOrWhiteSpace(Logo))
                 AddNotificacao("Logo", "Logo é um campo obrigatório");
 
             return Valido;

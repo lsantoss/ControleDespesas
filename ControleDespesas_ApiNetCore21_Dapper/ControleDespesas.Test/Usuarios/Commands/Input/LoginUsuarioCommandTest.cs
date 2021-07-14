@@ -27,12 +27,15 @@ namespace ControleDespesas.Test.Usuarios.Commands.Input
         }
 
         [Test]
-        [TestCase(null)]
-        [TestCase("")]
-        [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
-        public void ValidarCommand_LoginInvalido(string login)
+        [TestCase(null, null)]
+        [TestCase("", "")]
+        [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "")]
+        [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", null)]
+        public void ValidarCommand_Invalido(string login, string senha)
         {
             _command.Login = login;
+            _command.Senha = senha;
+
             var valido = _command.ValidarCommand();
             var notificacoes = _command.Notificacoes.Count;
 
@@ -45,9 +48,27 @@ namespace ControleDespesas.Test.Usuarios.Commands.Input
         [Test]
         [TestCase(null)]
         [TestCase("")]
-        public void ValidarCommand_SenhaInvalido(string senha)
+        [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        public void ValidarCommand_Login_Invalido(string login)
+        {
+            _command.Login = login;
+
+            var valido = _command.ValidarCommand();
+            var notificacoes = _command.Notificacoes.Count;
+
+            TestContext.WriteLine(_command.FormatarJsonDeSaida());
+
+            Assert.False(valido);
+            Assert.AreNotEqual(0, notificacoes);
+        }
+
+        [Test]
+        [TestCase(null)]
+        [TestCase("")]
+        public void ValidarCommand_Senha_Invalido(string senha)
         {
             _command.Senha = senha;
+
             var valido = _command.ValidarCommand();
             var notificacoes = _command.Notificacoes.Count;
 

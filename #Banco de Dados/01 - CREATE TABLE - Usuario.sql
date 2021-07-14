@@ -3,7 +3,7 @@ USE [ControleDespesas]
 IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE' AND TABLE_NAME='Usuario') 
 BEGIN
 CREATE TABLE [dbo].[Usuario](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Id] [bigint] IDENTITY(1,1) NOT NULL,
 	[Login] [nvarchar](50) NOT NULL,
 	[Senha] [nvarchar](15) NOT NULL,
 	[Privilegio] [int] NOT NULL,

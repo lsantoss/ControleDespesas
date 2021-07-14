@@ -4,7 +4,7 @@ IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TA
 BEGIN
 CREATE TABLE [dbo].[Pessoa](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[IdUsuario] [int] NOT NULL,
+	[IdUsuario] [bigint] NOT NULL,
 	[Nome] [nvarchar](100) NOT NULL,
 	[ImagemPerfil] [text] NOT NULL,
     CONSTRAINT [PK_Pessoa] PRIMARY KEY CLUSTERED 

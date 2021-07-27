@@ -6,14 +6,17 @@ namespace ControleDespesas.Domain.Pessoas.Interfaces.Repositories
 {
     public interface IPessoaRepository
     {
-        int Salvar(Pessoa pessoa);
+        long Salvar(Pessoa pessoa);
         void Atualizar(Pessoa pessoa);
-        void Deletar(int id);
+        void Deletar(long id, long idUsuario);
 
-        PessoaQueryResult Obter(int id);
+        PessoaQueryResult Obter(long id, long idUsuario);
+        PessoaQueryResult ObterContendoRegistrosFilhos(long id, long idUsuario);
+
         List<PessoaQueryResult> Listar(long idUsuario);
+        List<PessoaQueryResult> ListarContendoRegistrosFilhos(long idUsuario);
 
-        bool CheckId(int id);
-        int LocalizarMaxId();
+        bool CheckId(long id);
+        long LocalizarMaxId();
     }
 }

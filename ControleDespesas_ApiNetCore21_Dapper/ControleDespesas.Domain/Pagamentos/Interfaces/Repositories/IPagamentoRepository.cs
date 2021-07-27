@@ -12,12 +12,12 @@ namespace ControleDespesas.Domain.Pagamentos.Interfaces.Repositories
         void Deletar(int id);
 
         PagamentoQueryResult Obter(int id);
-        List<PagamentoQueryResult> Listar(int idPessoa, EPagamentoStatus? status);
+        List<PagamentoQueryResult> Listar(long idPessoa, EPagamentoStatus? status);
 
         PagamentoArquivoQueryResult ObterArquivoPagamento(int idPagamento);
         PagamentoArquivoQueryResult ObterArquivoComprovante(int idPagamento);
 
-        PagamentoGastosQueryResult ObterGastos(int idPessoa, int? ano, int? mes);
+        PagamentoGastosQueryResult ObterGastos(long idPessoa, int? ano, int? mes);
 
         bool CheckId(int id);
         int LocalizarMaxId();

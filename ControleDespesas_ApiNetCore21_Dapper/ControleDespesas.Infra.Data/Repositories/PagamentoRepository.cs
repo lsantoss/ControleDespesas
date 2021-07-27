@@ -88,7 +88,7 @@ namespace ControleDespesas.Infra.Data.Repositories
                        {
                            pagamento.TipoPagamento = tipoPagamento;
                            pagamento.Empresa = empresa;
-                           pagamento.Pessoa = pessoa;
+                           //pagamento.Pessoa = pessoa;
                            return pagamento;
                        },
                        _parametros,
@@ -96,9 +96,9 @@ namespace ControleDespesas.Infra.Data.Repositories
             }
         }
 
-        public List<PagamentoQueryResult> Listar(int idPessoa, EPagamentoStatus? status)
+        public List<PagamentoQueryResult> Listar(long idPessoa, EPagamentoStatus? status)
         {
-            _parametros.Add("IdPessoa", idPessoa, DbType.Int32);
+            _parametros.Add("IdPessoa", idPessoa, DbType.Int64);
 
             string sql = "";
             switch (status)
@@ -126,7 +126,7 @@ namespace ControleDespesas.Infra.Data.Repositories
                  {
                      pagamento.TipoPagamento = tipoPagamento;
                      pagamento.Empresa = empresa;
-                     pagamento.Pessoa = pessoa;
+                     //pagamento.Pessoa = pessoa;
                      return pagamento;
                  },
                  _parametros,
@@ -154,9 +154,9 @@ namespace ControleDespesas.Infra.Data.Repositories
             }
         }
 
-        public PagamentoGastosQueryResult ObterGastos(int idPessoa, int? ano, int? mes)
+        public PagamentoGastosQueryResult ObterGastos(long idPessoa, int? ano, int? mes)
         {
-            _parametros.Add("IdPessoa", idPessoa, DbType.Int32);
+            _parametros.Add("IdPessoa", idPessoa, DbType.Int64);
             _parametros.Add("Ano", ano, DbType.Int32);
             _parametros.Add("Mes", mes, DbType.Int32);
 

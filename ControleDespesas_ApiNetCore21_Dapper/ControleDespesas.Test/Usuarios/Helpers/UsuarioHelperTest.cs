@@ -27,6 +27,7 @@ namespace ControleDespesas.Test.Usuarios.Helpers
             Assert.AreEqual(command.Login, entidade.Login);
             Assert.AreEqual(command.Senha, entidade.Senha);
             Assert.AreEqual(command.Privilegio, entidade.Privilegio);
+            Assert.AreEqual(0, entidade.Pessoas.Count);
             Assert.True(entidade.Valido);
             Assert.AreEqual(0, entidade.Notificacoes.Count);
         }
@@ -52,6 +53,7 @@ namespace ControleDespesas.Test.Usuarios.Helpers
             Assert.AreEqual(command.Login, entidade.Login);
             Assert.AreEqual(command.Senha, entidade.Senha);
             Assert.AreEqual(command.Privilegio, entidade.Privilegio);
+            Assert.AreEqual(0, entidade.Pessoas.Count);
             Assert.False(entidade.Valido);
             Assert.AreNotEqual(0, entidade.Notificacoes.Count);
         }
@@ -69,6 +71,7 @@ namespace ControleDespesas.Test.Usuarios.Helpers
             Assert.AreEqual(command.Login, entidade.Login);
             Assert.AreEqual(command.Senha, entidade.Senha);
             Assert.AreEqual(command.Privilegio, entidade.Privilegio);
+            Assert.AreEqual(0, entidade.Pessoas.Count);
             Assert.True(entidade.Valido);
             Assert.AreEqual(0, entidade.Notificacoes.Count);
         }
@@ -95,6 +98,7 @@ namespace ControleDespesas.Test.Usuarios.Helpers
             Assert.AreEqual(command.Login, entidade.Login);
             Assert.AreEqual(command.Senha, entidade.Senha);
             Assert.AreEqual(command.Privilegio, entidade.Privilegio);
+            Assert.AreEqual(0, entidade.Pessoas.Count);
             Assert.False(entidade.Valido);
             Assert.AreNotEqual(0, entidade.Notificacoes.Count);
         }

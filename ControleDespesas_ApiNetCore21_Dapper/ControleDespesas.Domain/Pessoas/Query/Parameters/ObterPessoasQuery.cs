@@ -1,11 +1,14 @@
 ﻿using LSCode.Facilitador.Api.Interfaces.Query;
 using LSCode.Validador.ValidacoesNotificacoes;
+using Newtonsoft.Json;
 
 namespace ControleDespesas.Domain.Pessoas.Query.Parameters
 {
     public class ObterPessoasQuery : Notificadora, QueryPadrao
     {
-        public int IdUsuario { get; set; }
+        [JsonIgnore]
+        public long IdUsuario { get; set; }
+        public bool RegistrosFilhos { get; set; }
 
         public bool ValidarQuery()
         {

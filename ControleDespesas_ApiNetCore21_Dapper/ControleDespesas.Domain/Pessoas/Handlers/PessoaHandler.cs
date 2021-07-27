@@ -35,16 +35,18 @@ namespace ControleDespesas.Domain.Pessoas.Handlers
             if (pessoa.Invalido)
                 return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", pessoa.Notificacoes);
 
-            if (!_repositoryUsuario.CheckId(pessoa.Usuario.Id))
+            if (!_repositoryUsuario.CheckId(pessoa.IdUsuario))
                 return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", "IdUsuario", "Id inválido. Este id não está cadastrado!");
 
             var id = _repository.Salvar(pessoa);
             pessoa.DefinirId(id);
-            var dadosRetorno = PessoaHelper.GerarDadosRetornoInsert(pessoa);
+
+            var dadosRetorno = PessoaHelper.GerarDadosRetorno(pessoa);
+
             return new CommandResult(StatusCodes.Status201Created, "Pessoa gravada com sucesso!", dadosRetorno);
         }
 
-        public ICommandResult<Notificacao> Handler(int id, AtualizarPessoaCommand command)
+        public ICommandResult<Notificacao> Handler(long id, AtualizarPessoaCommand command)
         {
             if (command == null)
                 return new CommandResult(StatusCodes.Status400BadRequest, "Parâmetros de entrada", "Parâmetros de entrada", "Parâmetros de entrada estão nulos");
@@ -62,24 +64,34 @@ namespace ControleDespesas.Domain.Pessoas.Handlers
             if (!_repository.CheckId(pessoa.Id))
                 AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");
 
-            if (!_repositoryUsuario.CheckId(pessoa.Usuario.Id))
+            if (!_repositoryUsuario.CheckId(pessoa.IdUsuario))
                 AddNotificacao("IdUsuario", "Id inválido. Este id não está cadastrado!");
 
             if (Invalido)
                 return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", Notificacoes);
 
             _repository.Atualizar(pessoa);
-            var dadosRetorno = PessoaHelper.GerarDadosRetornoUpdate(pessoa);
+
+            var dadosRetorno = PessoaHelper.GerarDadosRetorno(pessoa);
+
             return new CommandResult(StatusCodes.Status200OK, "Pessoa atualizada com sucesso!", dadosRetorno);
         }
 
-        public ICommandResult<Notificacao> Handler(int id)
+        public ICommandResult<Notificacao> Handler(long id, long idUsuario)
         {
             if (!_repository.CheckId(id))
-                return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", "Id", "Id inválido. Este id não está cadastrado!");
+                AddNotificacao("Id", "Id inválido. Este id não está cadastrado!");
 
-            _repository.Deletar(id);
+            if (!_repositoryUsuario.CheckId(idUsuario))
+                AddNotificacao("IdUsuario", "Id inválido. Este id não está cadastrado!");
+
+            if (Invalido)
+                return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Inconsistência(s) no(s) dado(s)", Notificacoes);
+
+            _repository.Deletar(id, idUsuario);
+
             var dadosRetorno = PessoaHelper.GerarDadosRetornoDelete(id);
+
             return new CommandResult(StatusCodes.Status200OK, "Pessoa excluída com sucesso!", dadosRetorno);
         }
     }

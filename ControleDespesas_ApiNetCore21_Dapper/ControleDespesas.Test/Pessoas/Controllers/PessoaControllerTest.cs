@@ -103,7 +103,7 @@ namespace ControleDespesas.Test.Pessoas.Controllers
 
             TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
 
-            Assert.AreEqual(200, responseObj.StatusCode);
+            Assert.AreEqual(204, responseObj.StatusCode);
             Assert.True(responseObj.Value.Sucesso);
             Assert.AreEqual("Registro obtido com sucesso", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);

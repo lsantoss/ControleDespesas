@@ -95,7 +95,7 @@ END
 IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE' AND TABLE_NAME='Pessoa') 
 BEGIN
 	CREATE TABLE [dbo].[Pessoa](
-		[Id] [int] IDENTITY(1,1) NOT NULL,
+		[Id] [bigint] IDENTITY(1,1) NOT NULL,
 		[IdUsuario] [bigint] NOT NULL,
 		[Nome] [nvarchar](100) NOT NULL,
 		[ImagemPerfil] [text] NOT NULL,
@@ -120,7 +120,7 @@ BEGIN
 		[Id] [int] IDENTITY(1,1) NOT NULL,
 		[IdTipoPagamento] [bigint] NOT NULL,
 		[IdEmpresa] [bigint] NOT NULL,
-		[IdPessoa] [int] NOT NULL,
+		[IdPessoa] [bigint] NOT NULL,
 		[Descricao] [nvarchar](250) NOT NULL,
 		[Valor] [money] NOT NULL,
 		[DataVencimento] [smalldatetime] NOT NULL,

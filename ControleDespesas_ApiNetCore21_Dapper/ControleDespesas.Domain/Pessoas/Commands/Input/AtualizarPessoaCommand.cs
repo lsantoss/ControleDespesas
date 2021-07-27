@@ -7,8 +7,8 @@ namespace ControleDespesas.Domain.Pessoas.Commands.Input
     public class AtualizarPessoaCommand : Notificadora, CommandPadrao
     {
         [JsonIgnore]
-        public int Id { get; set; }
-        public int IdUsuario { get; set; }
+        public long Id { get; set; }
+        public long IdUsuario { get; set; }
         public string Nome { get; set; }
         public string ImagemPerfil { get; set; }
 

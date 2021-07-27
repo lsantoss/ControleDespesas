@@ -97,6 +97,23 @@ namespace ControleDespesas.Test.Usuarios.Controllers
         }
 
         [Test]
+        public void Usuarios_ListaVazia_204NoContent()
+        {
+            var query = new ObterUsuarioQuery
+            {
+                RegistrosFilhos = false
+            };
+
+            var response = _controller.Usuarios(query);
+            var responseJson = JsonConvert.SerializeObject(response);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<List<UsuarioQueryResult>>>>(responseJson);
+
+            TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
+
+            Assert.AreEqual(204, responseObj.StatusCode);
+        }
+
+        [Test]
         public void Usuarios_ContendoRegistrosFilhos_ListaPreenchida_200OK()
         {
             var usuario1 = new SettingsTest().Usuario1;
@@ -157,11 +174,11 @@ namespace ControleDespesas.Test.Usuarios.Controllers
         }
 
         [Test]
-        public void Usuarios_ListaVazia_204NoContent()
+        public void Usuarios_ContendoRegistrosFilhos_ListaVazia_204NoContent()
         {
             var query = new ObterUsuarioQuery
             {
-                RegistrosFilhos = false
+                RegistrosFilhos = true
             };
 
             var response = _controller.Usuarios(query);
@@ -206,6 +223,23 @@ namespace ControleDespesas.Test.Usuarios.Controllers
             Assert.AreEqual(usuario2.Senha, responseObj.Value.Dados.Senha);
             Assert.AreEqual(usuario2.Privilegio, responseObj.Value.Dados.Privilegio);
             Assert.AreEqual(usuario2.Pessoas.Count, responseObj.Value.Dados.Pessoas.Count);
+        }
+
+        [Test]
+        public void Usuario_ObjetoNull_204NoContent()
+        {
+            var query = new ObterUsuarioQuery
+            {
+                RegistrosFilhos = false
+            };
+
+            var response = _controller.Usuario(1, query);
+            var responseJson = JsonConvert.SerializeObject(response);
+            var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<UsuarioQueryResult>>>(responseJson);
+
+            TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
+
+            Assert.AreEqual(204, responseObj.StatusCode);
         }
 
         [Test]
@@ -257,11 +291,11 @@ namespace ControleDespesas.Test.Usuarios.Controllers
         }
 
         [Test]
-        public void Usuario_ObjetoNull_204NoContent()
+        public void Usuario_ContendoRegistrosFilhos_ObjetoNull_204NoContent()
         {
             var query = new ObterUsuarioQuery
             {
-                RegistrosFilhos = false
+                RegistrosFilhos = true
             };
 
             var response = _controller.Usuario(1, query);

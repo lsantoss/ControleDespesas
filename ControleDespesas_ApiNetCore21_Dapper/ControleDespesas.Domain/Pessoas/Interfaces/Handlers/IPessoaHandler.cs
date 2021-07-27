@@ -7,7 +7,7 @@ namespace ControleDespesas.Domain.Pessoas.Interfaces.Handlers
     public interface IPessoaHandler
     {
         ICommandResult<Notificacao> Handler(AdicionarPessoaCommand command);
-        ICommandResult<Notificacao> Handler(int id, AtualizarPessoaCommand command);
-        ICommandResult<Notificacao> Handler(int id);
+        ICommandResult<Notificacao> Handler(long id, AtualizarPessoaCommand command);
+        ICommandResult<Notificacao> Handler(long id, long idUsuario);
     }
 }

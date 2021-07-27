@@ -30,29 +30,38 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         /// Pessoas
         /// </summary>                
         /// <remarks><h2><b>Lista Pessoas.</b></h2></remarks>
+        /// <param name="usuarioId">Parâmetro requerido Id do Usuário</param>
         /// <param name="query">Parâmetro requerido query de busca</param>
         /// <response code="200">OK Request</response>
+        /// <response code="204">No Content</response>
         /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
+        /// <response code="403">Forbidden</response>   
         /// <response code="422">Unprocessable Entity</response>
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
-        [Route("v1/pessoas")]
+        [Route("v1/usuarios/{usuarioId}/pessoas")]
         [Authorize(Roles = "Administrador, Escrita, SomenteLeitura")]
         [ProducesResponseType(typeof(ApiResponse<List<PessoaQueryResult>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ApiResponse<List<PessoaQueryResult>>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<List<PessoaQueryResult>>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(ApiResponse<List<PessoaQueryResult>>), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(typeof(ApiResponse<List<PessoaQueryResult>>), StatusCodes.Status500InternalServerError)]
-        public IActionResult Pessoas([FromQuery] ObterPessoasQuery query)
+        public IActionResult Pessoas(long usuarioId, [FromQuery] ObterPessoasQuery query)
         {
             if (query == null)
                 return ResultInputNull();
 
+            query.IdUsuario = usuarioId;
+
             if (!query.ValidarQuery())
                 return ResultNotifications(query.Notificacoes);
 
-            return ResultGetList(_repository.Listar(query.IdUsuario));
+            return !query.RegistrosFilhos
+                ? ResultGetList(_repository.Listar(query.IdUsuario))
+                : ResultGetList(_repository.ListarContendoRegistrosFilhos(query.IdUsuario));
         }
 
         /// <summary>
@@ -69,9 +78,9 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<PessoaQueryResult>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<PessoaQueryResult>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<PessoaQueryResult>), StatusCodes.Status500InternalServerError)]
-        public IActionResult Pessoa(int id)
+        public IActionResult Pessoa(long id)
         {
-            return ResultGet(_repository.Obter(id));
+            return ResultGet(_repository.Obter(id, 0));
         }
 
         /// <summary>
@@ -118,7 +127,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<PessoaCommandOutput>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<PessoaCommandOutput>), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(typeof(ApiResponse<PessoaCommandOutput>), StatusCodes.Status500InternalServerError)]
-        public IActionResult PessoaAlterar(int id, [FromBody] AtualizarPessoaCommand command)
+        public IActionResult PessoaAlterar(long id, [FromBody] AtualizarPessoaCommand command)
         {
             return ResultHandler(_handler.Handler(id, command));
         }
@@ -140,9 +149,9 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<CommandOutput>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse<CommandOutput>), StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(typeof(ApiResponse<CommandOutput>), StatusCodes.Status500InternalServerError)]
-        public IActionResult PessoaExcluir(int id)
+        public IActionResult PessoaExcluir(long id)
         {
-            return ResultHandler(_handler.Handler(id));
+            return ResultHandler(_handler.Handler(id, 0));
         }
     }
 }

@@ -5,7 +5,7 @@ namespace ControleDespesas.Domain.Pessoas.Commands.Input
 {
     public class AdicionarPessoaCommand : Notificadora, CommandPadrao
     {
-        public int IdUsuario { get; set; }
+        public long IdUsuario { get; set; }
         public string Nome { get; set; }
         public string ImagemPerfil { get; set; }
 

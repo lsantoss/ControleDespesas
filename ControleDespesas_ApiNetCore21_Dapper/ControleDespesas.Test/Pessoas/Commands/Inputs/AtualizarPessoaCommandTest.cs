@@ -27,11 +27,17 @@ namespace ControleDespesas.Test.Pessoas.Commands.Inputs
         }
 
         [Test]
-        [TestCase(0)]
-        [TestCase(-1)]
-        public void ValidarCommand_IdUsuarioInvalido(int id)
+        [TestCase(0, 0, null, null)]
+        [TestCase(-1, -1, "", "")]
+        [TestCase(0, 0, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "")]
+        [TestCase(0, 0, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", null)]
+        public void ValidarCommand_Invalido(long id, long idUsuario, string nome, string imagemPerfil)
         {
-            _command.IdUsuario = id;
+            _command.Id = id;
+            _command.IdUsuario = idUsuario;
+            _command.Nome = nome;
+            _command.ImagemPerfil = imagemPerfil;
+
             var valido = _command.ValidarCommand();
             var notificacoes = _command.Notificacoes.Count;
 
@@ -44,9 +50,26 @@ namespace ControleDespesas.Test.Pessoas.Commands.Inputs
         [Test]
         [TestCase(0)]
         [TestCase(-1)]
-        public void ValidarCommand_IdInvalido(int id)
+        public void ValidarCommand_Id_Invalido(int id)
         {
             _command.Id = id;
+
+            var valido = _command.ValidarCommand();
+            var notificacoes = _command.Notificacoes.Count;
+
+            TestContext.WriteLine(_command.FormatarJsonDeSaida());
+
+            Assert.False(valido);
+            Assert.AreNotEqual(0, notificacoes);
+        }
+
+        [Test]
+        [TestCase(0)]
+        [TestCase(-1)]
+        public void ValidarCommand_IdUsuario_Invalido(int idUsuario)
+        {
+            _command.IdUsuario = idUsuario;
+
             var valido = _command.ValidarCommand();
             var notificacoes = _command.Notificacoes.Count;
 
@@ -60,9 +83,10 @@ namespace ControleDespesas.Test.Pessoas.Commands.Inputs
         [TestCase(null)]
         [TestCase("")]
         [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
-        public void ValidarCommand_NomeInvalido(string nome)
+        public void ValidarCommand_Nome_Invalido(string nome)
         {
             _command.Nome = nome;
+
             var valido = _command.ValidarCommand();
             var notificacoes = _command.Notificacoes.Count;
 
@@ -75,9 +99,10 @@ namespace ControleDespesas.Test.Pessoas.Commands.Inputs
         [Test]
         [TestCase(null)]
         [TestCase("")]
-        public void ValidarCommand_ImagemPerfilInvalido(string imagemPerfil)
+        public void ValidarCommand_ImagemPerfil_Invalido(string imagemPerfil)
         {
             _command.ImagemPerfil = imagemPerfil;
+
             var valido = _command.ValidarCommand();
             var notificacoes = _command.Notificacoes.Count;
 

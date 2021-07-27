@@ -71,7 +71,7 @@ namespace ControleDespesas.Test.Usuarios.Commands.Input
         [TestCase("aaaaa1")]
         [TestCase("AAAAA1")]
         [TestCase("AAAAAa")]
-        public void ValidarCommand_SenhaInvalida(string senha)
+        public void ValidarCommand_Senha_Invalido(string senha)
         {
             _command.Senha = senha;
 

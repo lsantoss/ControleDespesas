@@ -1,5 +1,4 @@
 ﻿using ControleDespesas.Domain.Empresas.Query.Results;
-using ControleDespesas.Domain.Pessoas.Query.Results;
 using ControleDespesas.Domain.TiposPagamentos.Query.Results;
 using System;
 
@@ -14,6 +13,6 @@ namespace ControleDespesas.Domain.Pagamentos.Query.Results
         public DateTime? DataPagamento { get; set; }
         public TipoPagamentoQueryResult TipoPagamento { get; set; }
         public EmpresaQueryResult Empresa { get; set; }
-        public PessoaQueryResult Pessoa { get; set; }
+        //public PessoaQueryResult Pessoa { get; set; }
     }
 }

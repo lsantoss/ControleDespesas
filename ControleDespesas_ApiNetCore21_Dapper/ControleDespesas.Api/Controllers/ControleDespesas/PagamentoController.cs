@@ -44,12 +44,12 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         public IActionResult Pagamentos([FromQuery] PagamentoQuery query)
         {
             if (query == null)
-                return ResultInputNull();
+                return ResponseInputNull();
 
             if (!query.ValidarQuery())
-                return ResultNotifications(query.Notificacoes);
+                return ResponseNotifications(query.Notificacoes);
 
-            return ResultGetList(_repository.Listar(query.IdPessoa, query.Status));
+            return ResponseGetList(_repository.Listar(query.IdPessoa, query.Status));
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<PagamentoQueryResult>), StatusCodes.Status500InternalServerError)]
         public IActionResult Pagamento(int id)
         {
-            return ResultGet(_repository.Obter(id));
+            return ResponseGet(_repository.Obter(id));
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<PagamentoArquivoQueryResult>), StatusCodes.Status500InternalServerError)]
         public IActionResult ObterArquivoPagamento(int id)
         {
-            return ResultGet(_repository.ObterArquivoPagamento(id));
+            return ResponseGet(_repository.ObterArquivoPagamento(id));
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<PagamentoArquivoQueryResult>), StatusCodes.Status500InternalServerError)]
         public IActionResult ObterArquivoComprovante(int id)
         {
-            return ResultGet(_repository.ObterArquivoComprovante(id));
+            return ResponseGet(_repository.ObterArquivoComprovante(id));
         }
 
         /// <summary>
@@ -128,12 +128,12 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         public IActionResult ObterGastos([FromQuery] PagamentoGastosQuery query)
         {
             if (query == null)
-                return ResultInputNull();
+                return ResponseInputNull();
 
             if (!query.ValidarQuery())
-                return ResultNotifications(query.Notificacoes);
+                return ResponseNotifications(query.Notificacoes);
 
-            return ResultGet(_repository.ObterGastos(query.IdPessoa, query.Ano, query.Mes));
+            return ResponseGet(_repository.ObterGastos(query.IdPessoa, query.Ano, query.Mes));
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<PagamentoCommandOutput>), StatusCodes.Status500InternalServerError)]
         public IActionResult PagamentoInserir([FromBody] AdicionarPagamentoCommand command)
         {
-            return ResultHandler(_handler.Handler(command));
+            return ResponseHandler(_handler.Handler(command));
         }
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<PagamentoCommandOutput>), StatusCodes.Status500InternalServerError)]
         public IActionResult PagamentoAlterar(int id, [FromBody] AtualizarPagamentoCommand command)
         {
-            return ResultHandler(_handler.Handler(id, command));
+            return ResponseHandler(_handler.Handler(id, command));
         }
 
         /// <summary>
@@ -204,7 +204,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<CommandOutput>), StatusCodes.Status500InternalServerError)]
         public IActionResult PagamentoExcluir(int id)
         {
-            return ResultHandler(_handler.Handler(id));
+            return ResponseHandler(_handler.Handler(id));
         }
     }
 }

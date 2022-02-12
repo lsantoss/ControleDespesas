@@ -47,8 +47,8 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         public IActionResult Usuarios([FromQuery] ObterUsuarioQuery query)
         {
             return !query.RegistrosFilhos
-                ? ResultGetList(_repository.Listar())
-                : ResultGetList(_repository.ListarContendoRegistrosFilhos());
+                ? ResponseGetList(_repository.Listar())
+                : ResponseGetList(_repository.ListarContendoRegistrosFilhos());
         }
 
         /// <summary>
@@ -73,8 +73,8 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         public IActionResult Usuario(long id, [FromQuery] ObterUsuarioQuery query)
         {
             return !query.RegistrosFilhos
-                ? ResultGet(_repository.Obter(id)) 
-                : ResultGet(_repository.ObterContendoRegistrosFilhos(id));
+                ? ResponseGet(_repository.Obter(id)) 
+                : ResponseGet(_repository.ObterContendoRegistrosFilhos(id));
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput>), StatusCodes.Status500InternalServerError)]
         public IActionResult UsuarioInserir([FromBody] AdicionarUsuarioCommand command)
         {
-            return ResultHandler(_handler.Handler(command));
+            return ResponseHandler(_handler.Handler(command));
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<UsuarioCommandOutput>), StatusCodes.Status500InternalServerError)]
         public IActionResult UsuarioAlterar(long id, [FromBody] AtualizarUsuarioCommand command)
         {
-            return ResultHandler(_handler.Handler(id, command));
+            return ResponseHandler(_handler.Handler(id, command));
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<CommandOutput>), StatusCodes.Status500InternalServerError)]
         public IActionResult UsuarioExcluir(long id)
         {
-            return ResultHandler(_handler.Handler(id));
+            return ResponseHandler(_handler.Handler(id));
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<TokenCommandOutput>), StatusCodes.Status500InternalServerError)]
         public IActionResult UsuarioLogin([FromBody] LoginUsuarioCommand command)
         {
-            return ResultHandler(_handler.Handler(command));
+            return ResponseHandler(_handler.Handler(command));
         }
     }
 }

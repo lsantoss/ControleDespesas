@@ -22,10 +22,12 @@ namespace ControleDespesas.Domain.Pessoas.Handlers
             _repositoryUsuario = repositoryUsuario;
         }
 
-        public ICommandResult<Notificacao> Handler(AdicionarPessoaCommand command)
+        public ICommandResult<Notificacao> Handler(long idUsuario, AdicionarPessoaCommand command)
         {
             if (command == null)
                 return new CommandResult(StatusCodes.Status400BadRequest, "Parâmentros inválidos", "Parâmetros de entrada", "Parâmetros de entrada estão nulos");
+
+            command.IdUsuario = idUsuario;
 
             if (!command.ValidarCommand())
                 return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Parâmentros inválidos", command.Notificacoes);
@@ -46,12 +48,13 @@ namespace ControleDespesas.Domain.Pessoas.Handlers
             return new CommandResult(StatusCodes.Status201Created, "Pessoa gravada com sucesso!", dadosRetorno);
         }
 
-        public ICommandResult<Notificacao> Handler(long id, AtualizarPessoaCommand command)
+        public ICommandResult<Notificacao> Handler(long id, long idUsuario, AtualizarPessoaCommand command)
         {
             if (command == null)
-                return new CommandResult(StatusCodes.Status400BadRequest, "Parâmetros de entrada", "Parâmetros de entrada", "Parâmetros de entrada estão nulos");
+                return new CommandResult(StatusCodes.Status400BadRequest, "Parâmentros inválidos", "Parâmetros de entrada", "Parâmetros de entrada estão nulos");
 
             command.Id = id;
+            command.IdUsuario = idUsuario;
 
             if (!command.ValidarCommand())
                 return new CommandResult(StatusCodes.Status422UnprocessableEntity, "Parâmentros inválidos", command.Notificacoes);

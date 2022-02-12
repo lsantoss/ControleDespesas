@@ -44,7 +44,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<List<TipoPagamentoQueryResult>>), StatusCodes.Status500InternalServerError)]
         public IActionResult TipoPagamentos()
         {
-            return ResultGetList(_repository.Listar());
+            return ResponseGetList(_repository.Listar());
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoQueryResult>), StatusCodes.Status500InternalServerError)]
         public IActionResult TipoPagamento(long id)
         {
-            return ResultGet(_repository.Obter(id));
+            return ResponseGet(_repository.Obter(id));
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput>), StatusCodes.Status500InternalServerError)]
         public IActionResult TipoPagamentoInserir([FromBody] AdicionarTipoPagamentoCommand command)
         {
-            return ResultHandler(_handler.Handler(command));
+            return ResponseHandler(_handler.Handler(command));
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<TipoPagamentoCommandOutput>), StatusCodes.Status500InternalServerError)]
         public IActionResult TipoPagamentoAlterar(long id, [FromBody] AtualizarTipoPagamentoCommand command)
         {
-            return ResultHandler(_handler.Handler(id, command));
+            return ResponseHandler(_handler.Handler(id, command));
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<CommandOutput>), StatusCodes.Status500InternalServerError)]
         public IActionResult TipoPagamentoExcluir(long id)
         {
-            return ResultHandler(_handler.Handler(id));
+            return ResponseHandler(_handler.Handler(id));
         }
     }
 }

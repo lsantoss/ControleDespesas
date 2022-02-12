@@ -8,6 +8,7 @@
     <PackageReference Include="LSCode.Facilitador.Api" Version="2.6.0" />
     <PackageReference Include="LSCode.Validador" Version="2.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.1.1" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="5.2.1" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.2.1" />
   </ItemGroup>

@@ -58,7 +58,8 @@ namespace ControleDespesas.Test.Pessoas.Controllers
             _repositoryPessoa.Salvar(pessoa3);
 
             var query = new SettingsTest().PessoaObterQuery;
-            var response = _controller.Pessoas(query);
+
+            var response = _controller.Pessoas(usuario.Id, query);
             var responseJson = JsonConvert.SerializeObject(response);
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<List<PessoaQueryResult>>>>(responseJson);
 
@@ -97,13 +98,15 @@ namespace ControleDespesas.Test.Pessoas.Controllers
             var pessoa3 = new SettingsTest().Pessoa3;
             _repositoryPessoa.Salvar(pessoa3);
 
-            var response = _controller.Pessoa(pessoa2.Id);
+            var query = new SettingsTest().PessoaObterQuery;
+
+            var response = _controller.Pessoa(usuario.Id, pessoa2.Id, query);
             var responseJson = JsonConvert.SerializeObject(response);
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<PessoaQueryResult>>>(responseJson);
 
             TestContext.WriteLine(responseObj.FormatarJsonDeSaida());
 
-            Assert.AreEqual(204, responseObj.StatusCode);
+            Assert.AreEqual(200, responseObj.StatusCode);
             Assert.True(responseObj.Value.Sucesso);
             Assert.AreEqual("Registro obtido com sucesso", responseObj.Value.Mensagem);
             Assert.Null(responseObj.Value.Erros);
@@ -120,7 +123,8 @@ namespace ControleDespesas.Test.Pessoas.Controllers
             _repositoryUsuario.Salvar(usuario);
 
             var command = new SettingsTest().PessoaAdicionarCommand;
-            var response = _controller.PessoaInserir(command);
+
+            var response = _controller.PessoaInserir(usuario.Id, command);
             var responseJson = JsonConvert.SerializeObject(response);
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<PessoaCommandOutput>>>(responseJson);
 
@@ -146,7 +150,8 @@ namespace ControleDespesas.Test.Pessoas.Controllers
             _repositoryPessoa.Salvar(pessoa);
 
             var command = new SettingsTest().PessoaAtualizarCommand;
-            var response = _controller.PessoaAlterar(command.Id, command);
+
+            var response = _controller.PessoaAlterar(command.IdUsuario, command.Id, command);
             var responseJson = JsonConvert.SerializeObject(response);
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<PessoaCommandOutput>>>(responseJson);
 
@@ -171,7 +176,7 @@ namespace ControleDespesas.Test.Pessoas.Controllers
             var pessoa = new SettingsTest().Pessoa1;
             _repositoryPessoa.Salvar(pessoa);
 
-            var response = _controller.PessoaExcluir(pessoa.Id);
+            var response = _controller.PessoaExcluir(usuario.Id, pessoa.Id);
             var responseJson = JsonConvert.SerializeObject(response);
             var responseObj = JsonConvert.DeserializeObject<ApiTestResponse<ApiResponse<CommandOutput>>>(responseJson);
 

@@ -47,7 +47,7 @@ namespace ControleDespesas.Test.Pessoas.Handlers
 
             var pessoaCommand = new SettingsTest().PessoaAdicionarCommand;
 
-            var retorno = _handler.Handler(pessoaCommand);
+            var retorno = _handler.Handler(usuario.Id, pessoaCommand);
             var retornoDados = (PessoaCommandOutput)retorno.Dados;
 
             TestContext.WriteLine(retornoDados.FormatarJsonDeSaida());
@@ -64,7 +64,7 @@ namespace ControleDespesas.Test.Pessoas.Handlers
         {
             AdicionarPessoaCommand command = null;
 
-            var retorno = _handler.Handler(command);
+            var retorno = _handler.Handler(0, command);
 
             TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
@@ -89,7 +89,7 @@ namespace ControleDespesas.Test.Pessoas.Handlers
                 ImagemPerfil = imagemPerfil
             };
 
-            var retorno = _handler.Handler(command);
+            var retorno = _handler.Handler(command.IdUsuario, command);
 
             TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
@@ -107,7 +107,7 @@ namespace ControleDespesas.Test.Pessoas.Handlers
             var command = new SettingsTest().PessoaAdicionarCommand;
             command.IdUsuario = idUsuario;
 
-            var retorno = _handler.Handler(command);
+            var retorno = _handler.Handler(command.IdUsuario, command);
 
             TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
@@ -126,7 +126,7 @@ namespace ControleDespesas.Test.Pessoas.Handlers
             var command = new SettingsTest().PessoaAdicionarCommand;
             command.IdUsuario = idUsuario;
 
-            var retorno = _handler.Handler(command);
+            var retorno = _handler.Handler(command.IdUsuario, command);
 
             TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
@@ -146,7 +146,7 @@ namespace ControleDespesas.Test.Pessoas.Handlers
             var command = new SettingsTest().PessoaAdicionarCommand;
             command.Nome = nome;
 
-            var retorno = _handler.Handler(command);
+            var retorno = _handler.Handler(command.IdUsuario, command);
 
             TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
@@ -165,7 +165,7 @@ namespace ControleDespesas.Test.Pessoas.Handlers
             var command = new SettingsTest().PessoaAdicionarCommand;
             command.ImagemPerfil = imagemPerfil;
 
-            var retorno = _handler.Handler(command);
+            var retorno = _handler.Handler(command.IdUsuario, command);
 
             TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
@@ -185,18 +185,18 @@ namespace ControleDespesas.Test.Pessoas.Handlers
             var pessoa = new SettingsTest().Pessoa1;
             _repositoryPessoa.Salvar(pessoa);
 
-            var pessoaCommand = new SettingsTest().PessoaAtualizarCommand;
+            var command = new SettingsTest().PessoaAtualizarCommand;
 
-            var retorno = _handler.Handler(pessoaCommand.Id, pessoaCommand);
+            var retorno = _handler.Handler(command.Id, command.IdUsuario, command);
             var retornoDados = (PessoaCommandOutput)retorno.Dados;
 
             TestContext.WriteLine(retornoDados.FormatarJsonDeSaida());
 
             Assert.True(retorno.Sucesso);
             Assert.AreEqual("Pessoa atualizada com sucesso!", retorno.Mensagem);
-            Assert.AreEqual(pessoaCommand.Id, retornoDados.Id);
-            Assert.AreEqual(pessoaCommand.Nome, retornoDados.Nome);
-            Assert.AreEqual(pessoaCommand.ImagemPerfil, retornoDados.ImagemPerfil);
+            Assert.AreEqual(command.Id, retornoDados.Id);
+            Assert.AreEqual(command.Nome, retornoDados.Nome);
+            Assert.AreEqual(command.ImagemPerfil, retornoDados.ImagemPerfil);
         }
 
         [Test]
@@ -214,7 +214,7 @@ namespace ControleDespesas.Test.Pessoas.Handlers
                 ImagemPerfil = imagemPerfil
             };
 
-            var retorno = _handler.Handler(command.Id, command);
+            var retorno = _handler.Handler(command.Id, command.IdUsuario, command);
 
             TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
@@ -232,7 +232,7 @@ namespace ControleDespesas.Test.Pessoas.Handlers
             var command = new SettingsTest().PessoaAtualizarCommand;
             command.Id = id;
 
-            var retorno = _handler.Handler(command.Id, command);
+            var retorno = _handler.Handler(command.Id, command.IdUsuario, command);
 
             TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
@@ -251,7 +251,7 @@ namespace ControleDespesas.Test.Pessoas.Handlers
             var command = new SettingsTest().PessoaAtualizarCommand;
             command.Id = id;
 
-            var retorno = _handler.Handler(command.Id, command);
+            var retorno = _handler.Handler(command.Id, command.IdUsuario, command);
 
             TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
@@ -269,7 +269,7 @@ namespace ControleDespesas.Test.Pessoas.Handlers
             var command = new SettingsTest().PessoaAtualizarCommand;
             command.IdUsuario = idUsuario;
 
-            var retorno = _handler.Handler(command.Id, command);
+            var retorno = _handler.Handler(command.Id, command.IdUsuario, command);
 
             TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
@@ -288,7 +288,7 @@ namespace ControleDespesas.Test.Pessoas.Handlers
             var command = new SettingsTest().PessoaAtualizarCommand;
             command.IdUsuario = idUsuario;
 
-            var retorno = _handler.Handler(command.Id, command);
+            var retorno = _handler.Handler(command.Id, command.IdUsuario, command);
 
             TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
@@ -308,7 +308,7 @@ namespace ControleDespesas.Test.Pessoas.Handlers
             var command = new SettingsTest().PessoaAtualizarCommand;
             command.Nome = nome;
 
-            var retorno = _handler.Handler(command.Id, command);
+            var retorno = _handler.Handler(command.Id, command.IdUsuario, command);
 
             TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 
@@ -327,7 +327,7 @@ namespace ControleDespesas.Test.Pessoas.Handlers
             var command = new SettingsTest().PessoaAtualizarCommand;
             command.ImagemPerfil = imagemPerfil;
 
-            var retorno = _handler.Handler(command.Id, command);
+            var retorno = _handler.Handler(command.Id, command.IdUsuario, command);
 
             TestContext.WriteLine(retorno.FormatarJsonDeSaida());
 

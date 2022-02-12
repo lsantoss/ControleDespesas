@@ -44,7 +44,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<List<EmpresaQueryResult>>), StatusCodes.Status500InternalServerError)]
         public IActionResult Empresas()
         {
-            return ResultGetList(_repository.Listar());
+            return ResponseGetList(_repository.Listar());
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<EmpresaQueryResult>), StatusCodes.Status500InternalServerError)]
         public IActionResult Empresa(long id)
         {
-            return ResultGet(_repository.Obter(id));
+            return ResponseGet(_repository.Obter(id));
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<EmpresaCommandOutput>), StatusCodes.Status500InternalServerError)]
         public IActionResult EmpresaInserir([FromBody] AdicionarEmpresaCommand command)
         {
-            return ResultHandler(_handler.Handler(command));
+            return ResponseHandler(_handler.Handler(command));
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<EmpresaCommandOutput>), StatusCodes.Status500InternalServerError)]
         public IActionResult EmpresaAlterar(long id, [FromBody] AtualizarEmpresaCommand command)
         {
-            return ResultHandler(_handler.Handler(id, command));
+            return ResponseHandler(_handler.Handler(id, command));
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace ControleDespesas.Api.Controllers.ControleDespesas
         [ProducesResponseType(typeof(ApiResponse<CommandOutput>), StatusCodes.Status500InternalServerError)]
         public IActionResult EmpresaExcluir(long id)
         {
-            return ResultHandler(_handler.Handler(id));
+            return ResponseHandler(_handler.Handler(id));
         }
     }
 }

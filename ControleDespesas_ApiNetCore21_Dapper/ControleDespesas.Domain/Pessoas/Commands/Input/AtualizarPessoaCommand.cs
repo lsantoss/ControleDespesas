@@ -8,6 +8,7 @@ namespace ControleDespesas.Domain.Pessoas.Commands.Input
     {
         [JsonIgnore]
         public long Id { get; set; }
+        [JsonIgnore]
         public long IdUsuario { get; set; }
         public string Nome { get; set; }
         public string ImagemPerfil { get; set; }

@@ -1,10 +1,12 @@
 ﻿using LSCode.Facilitador.Api.Interfaces.Commands;
 using LSCode.Validador.ValidacoesNotificacoes;
+using Newtonsoft.Json;
 
 namespace ControleDespesas.Domain.Pessoas.Commands.Input
 {
     public class AdicionarPessoaCommand : Notificadora, CommandPadrao
     {
+        [JsonIgnore]
         public long IdUsuario { get; set; }
         public string Nome { get; set; }
         public string ImagemPerfil { get; set; }

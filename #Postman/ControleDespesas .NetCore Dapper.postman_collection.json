@@ -774,18 +774,26 @@
 							}
 						],
 						"url": {
-							"raw": "{{URL_Base}}/v1/pessoas?IdUsuario=1",
+							"raw": "{{URL_Base}}/v1/usuarios/:usuarioId/pessoas?RegistrosFilhos=false",
 							"host": [
 								"{{URL_Base}}"
 							],
 							"path": [
 								"v1",
+								"usuarios",
+								":usuarioId",
 								"pessoas"
 							],
 							"query": [
 								{
-									"key": "IdUsuario",
-									"value": "1"
+									"key": "RegistrosFilhos",
+									"value": "false"
+								}
+							],
+							"variable": [
+								{
+									"key": "usuarioId",
+									"value": "2"
 								}
 							]
 						}
@@ -814,19 +822,31 @@
 							}
 						],
 						"url": {
-							"raw": "{{URL_Base}}/v1/pessoas/:id",
+							"raw": "{{URL_Base}}/v1/usuarios/:usuarioId/pessoas/:id?RegistrosFilhos=false",
 							"host": [
 								"{{URL_Base}}"
 							],
 							"path": [
 								"v1",
+								"usuarios",
+								":usuarioId",
 								"pessoas",
 								":id"
 							],
+							"query": [
+								{
+									"key": "RegistrosFilhos",
+									"value": "false"
+								}
+							],
 							"variable": [
 								{
+									"key": "usuarioId",
+									"value": "2"
+								},
+								{
 									"key": "id",
-									"value": "1"
+									"value": "2"
 								}
 							]
 						}
@@ -864,13 +884,21 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL_Base}}/v1/pessoas",
+							"raw": "{{URL_Base}}/v1/usuarios/:usuarioId/pessoas",
 							"host": [
 								"{{URL_Base}}"
 							],
 							"path": [
 								"v1",
+								"usuarios",
+								":usuarioId",
 								"pessoas"
+							],
+							"variable": [
+								{
+									"key": "usuarioId",
+									"value": "2"
+								}
 							]
 						}
 					},
@@ -899,7 +927,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"idUsuario\": 1,\r\n  \"nome\": \"Lucas Santos Faria\",\r\n  \"imagemPerfil\": \"SemFotoBase64\"\r\n}",
+							"raw": "{\r\n  \"nome\": \"Lucas Santos Faria\",\r\n  \"imagemPerfil\": \"SemFotoBase64\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -907,19 +935,25 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL_Base}}/v1/pessoas/:id",
+							"raw": "{{URL_Base}}/v1/usuarios/:usuarioId/pessoas/:id",
 							"host": [
 								"{{URL_Base}}"
 							],
 							"path": [
 								"v1",
+								"usuarios",
+								":usuarioId",
 								"pessoas",
 								":id"
 							],
 							"variable": [
 								{
-									"key": "id",
+									"key": "usuarioId",
 									"value": "2"
+								},
+								{
+									"key": "id",
+									"value": "6"
 								}
 							]
 						}
@@ -948,19 +982,25 @@
 							}
 						],
 						"url": {
-							"raw": "{{URL_Base}}/v1/pessoas/:id",
+							"raw": "{{URL_Base}}/v1/usuarios/:usuarioId/pessoas/:id",
 							"host": [
 								"{{URL_Base}}"
 							],
 							"path": [
 								"v1",
+								"usuarios",
+								":usuarioId",
 								"pessoas",
 								":id"
 							],
 							"variable": [
 								{
-									"key": "id",
+									"key": "usuarioId",
 									"value": "2"
+								},
+								{
+									"key": "id",
+									"value": "4"
 								}
 							]
 						}

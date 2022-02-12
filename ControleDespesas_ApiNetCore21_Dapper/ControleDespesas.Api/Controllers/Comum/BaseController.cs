@@ -17,7 +17,7 @@ namespace ControleDespesas.Api.Controllers.Comum
     public class BaseController : ControllerBase
     {
         [NonAction]
-        protected IActionResult ResultGetList<T>(IList<T> lista)
+        protected IActionResult ResponseGetList<T>(IList<T> lista)
         {
             if (lista.Count > 0)
             {
@@ -31,7 +31,7 @@ namespace ControleDespesas.Api.Controllers.Comum
         }
 
         [NonAction]
-        protected IActionResult ResultGet<T>(T registro)
+        protected IActionResult ResponseGet<T>(T registro)
         {
             if (registro != null)
             {
@@ -45,7 +45,7 @@ namespace ControleDespesas.Api.Controllers.Comum
         }
 
         [NonAction]
-        protected IActionResult ResultHandler(ICommandResult<Notificacao> result)
+        protected IActionResult ResponseHandler(ICommandResult<Notificacao> result)
         {
             if (result.Sucesso)
                 return StatusCode(result.StatusCode, new ApiResponse<object>(result.Mensagem, result.Dados));
@@ -54,7 +54,7 @@ namespace ControleDespesas.Api.Controllers.Comum
         }
 
         [NonAction]
-        protected IActionResult ResultInputNull()
+        protected IActionResult ResponseInputNull()
         {
             var mensagem = "Parâmentros inválidos";
             var notificacao = new Notificacao("Parâmetros de entrada", "Parâmetros de entrada estão nulos");
@@ -64,7 +64,7 @@ namespace ControleDespesas.Api.Controllers.Comum
         }
 
         [NonAction]
-        protected IActionResult ResultNotifications(IReadOnlyCollection<Notificacao> notificacoes)
+        protected IActionResult ResponseNotifications(IReadOnlyCollection<Notificacao> notificacoes)
         {
             var mensagem = "Parâmentros inválidos";
             var response = new ApiResponse<object>(mensagem, notificacoes);

@@ -1,12 +1,12 @@
 ﻿using LSCode.Facilitador.Api.Interfaces.Query;
 using LSCode.Validador.ValidacoesNotificacoes;
-using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace ControleDespesas.Domain.Pessoas.Query.Parameters
 {
     public class ObterPessoasQuery : Notificadora, QueryPadrao
     {
-        [JsonIgnore]
+        [BindNever]
         public long IdUsuario { get; set; }
         public bool RegistrosFilhos { get; set; }
 

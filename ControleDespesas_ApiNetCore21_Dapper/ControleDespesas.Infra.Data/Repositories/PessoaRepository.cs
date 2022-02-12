@@ -38,10 +38,10 @@ namespace ControleDespesas.Infra.Data.Repositories
 
         public void Atualizar(Pessoa pessoa)
         {
-                _parametros.Add("Id", pessoa.Id, DbType.Int64);
-                _parametros.Add("IdUsuario", pessoa.IdUsuario, DbType.Int64);
-                _parametros.Add("Nome", pessoa.Nome, DbType.String);
-                _parametros.Add("ImagemPerfil", pessoa.ImagemPerfil, DbType.String);
+            _parametros.Add("Id", pessoa.Id, DbType.Int64);
+            _parametros.Add("IdUsuario", pessoa.IdUsuario, DbType.Int64);
+            _parametros.Add("Nome", pessoa.Nome, DbType.String);
+            _parametros.Add("ImagemPerfil", pessoa.ImagemPerfil, DbType.String);
 
             using (var connection = new SqlConnection(_settingsInfraData.ConnectionString))
             {
